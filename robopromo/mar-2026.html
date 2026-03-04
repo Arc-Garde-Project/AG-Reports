@@ -243,7 +243,6 @@ button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2p
 <div class="ag-fade" id="ag-fade">
 
 <div class="ag-header">
-  <div class="ag-brand-label">Arc Garde Media Buying</div>
   <div class="ag-logo-wrap">
     <a href="https://www.robopromo.ai/" target="_blank"><img src="https://framerusercontent.com/images/cZMPA2qkx3yORnq5yadUCAOutNo.png" alt="RoboPromo AI" class="ag-logo"></a>
   </div>
@@ -263,7 +262,7 @@ button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2p
 
 <div class="ag-chart-wrap">
   <h2 class="ag-chart-title">Monthly Trend</h2>
-  <p class="ag-chart-desc">Total views across all 7 platforms</p>
+  <p class="ag-chart-desc">Total views - growth from zero</p>
   <div class="ag-chart-canvas"><canvas id="trendChart"></canvas></div>
 </div>
 
@@ -302,8 +301,8 @@ button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2p
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const MONTH_INDEX=0;
-const allMonths=['Mar'];
+const MONTH_INDEX=1;
+const allMonths=['Start','Mar'];
 const platNames=['YouTube','Facebook','TikTok','Instagram','X (Twitter)','LinkedIn','Threads'];
 const platDotColors={YouTube:'#FF0000',Facebook:'#1877F2',TikTok:'#888',Instagram:'#E1306C','X (Twitter)':'#666',LinkedIn:'#0077B5',Threads:'#777'};
 const colors={primary:'#5B21B6',secondary:'#6C5CE7',accent:'#A29BFE'};
@@ -314,7 +313,7 @@ const D={
   fol:{YouTube:10,Facebook:2,TikTok:12,Instagram:11,'X (Twitter)':2,LinkedIn:1,Threads:0},
   totalViews:44698,totalEng:503,folNet:38,
   topPlat:'YouTube',topPlatVal:'19,207 views',
-  trendViews:[44698],
+  trendViews:[0,44698],
   alert:'<strong>Month 1 Baseline.</strong> All 7 accounts were created from scratch. This is the first month of organic content. No prior history, no existing audience. Every number here is net new.',
   insights:[
     'YouTube dominated with <span class="g">19,207 views</span> and 26.8 watch hours in month one, nearly half of all views',
