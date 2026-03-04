@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#0A0A0F">
+<title>RoboPromo AI KPI Report for March 2026</title>
+<meta name="description" content="March 2026 KPI report for RoboPromo AI. Monthly organic content performance across 7 platforms.">
+<meta property="og:title" content="RoboPromo AI KPI Report for March 2026">
+<meta property="og:description" content="March 2026 KPI report for RoboPromo AI. Monthly organic content performance across 7 platforms.">
+<meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#0A0A0F;margin:0;padding:0;overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{background:#0A0A0F;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#F2F2FA;min-height:100dvh;padding:0;margin:0;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+
+#ag-kpi{
+  background:linear-gradient(180deg,#0E0A1E 0%,#150E30 30%,#0A0A0F 100%);
+  padding:40px 60px 40px;max-width:100%;margin:0;position:relative;color:#F2F2FA;
+}
+
+.ag-inner{max-width:1200px;margin:0 auto}
+
+/* GLOBAL TOUCH & FOCUS */
+button,a,.ag-nav-btn,.ag-nav-menu a{
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2px}
+
+/* NAV */
+.ag-nav{position:fixed;top:calc(24px + env(safe-area-inset-top));right:calc(24px + env(safe-area-inset-right));z-index:1000}
+.ag-nav-btn{
+  display:flex;align-items:center;gap:8px;min-height:48px;min-width:48px;padding:10px 16px;border-radius:10px;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:500;
+  cursor:pointer;transition:all 0.3s ease;backdrop-filter:blur(12px);
+  animation:btnPulse 1.8s ease-in-out 3;animation-delay:1.5s;
+}
+@keyframes btnPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(108,92,231,0);border-color:rgba(255,255,255,0.1)}
+  50%{box-shadow:0 0 16px 4px rgba(108,92,231,0.25);border-color:rgba(108,92,231,0.5)}
+}
+@media(hover:hover){.ag-nav-btn:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.18)}}
+.ag-nav-btn:active{background:rgba(255,255,255,0.12)}
+.ag-nav-menu{
+  position:absolute;top:calc(100% + 8px);right:0;
+  background:rgba(15,15,20,0.95);border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px;padding:12px 8px;min-width:160px;
+  opacity:0;visibility:hidden;transform:translateY(-8px);
+  transition:all 0.25s ease;backdrop-filter:blur(16px);box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.ag-nav-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+.ag-nav-label{font-size:10px;color:#555;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:4px 12px 10px;border-bottom:1px solid rgba(255,255,255,0.05);margin-bottom:6px}
+.ag-nav-menu a{display:flex;align-items:center;padding:12px 14px;border-radius:8px;min-height:48px;color:#888;font-size:14px;font-weight:500;text-decoration:none;transition:all 0.2s ease}
+@media(hover:hover){.ag-nav-menu a:hover{background:rgba(255,255,255,0.06);color:#fff}}
+.ag-nav-menu a:active{background:rgba(255,255,255,0.08);color:#fff}
+.ag-nav-menu a.active{color:#fff;font-weight:600;background:rgba(255,255,255,0.04)}
+
+/* HEADER */
+.ag-header{text-align:center;margin-bottom:24px;padding-top:60px}
+.ag-brand-label{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:#B0B0C0;margin-bottom:20px;font-weight:600}
+.ag-logo-wrap{display:flex;justify-content:center;align-items:center;margin-bottom:12px}
+.ag-logo{height:56px;object-fit:contain}
+.ag-brand{font-size:36px;font-weight:700;letter-spacing:-0.5px;margin-bottom:8px;text-shadow:0 0 60px rgba(108,92,231,0.3)}
+.ag-period{font-size:15px;color:#808098;font-weight:400;letter-spacing:0.5px;margin-bottom:12px}
+.ag-badge{display:inline-block;padding:6px 16px;border-radius:16px;font-size:11px;font-weight:600;letter-spacing:1px;background:rgba(108,92,231,0.1);color:#A29BFE;border:1px solid rgba(108,92,231,0.18)}
+.ag-month1{display:inline-block;margin-left:8px;padding:4px 10px;border-radius:8px;font-size:10px;font-weight:700;letter-spacing:1px;background:rgba(74,222,128,0.1);color:#4ADE80;border:1px solid rgba(74,222,128,0.15)}
+
+/* CARDS */
+.ag-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.ag-card{
+  background:rgba(255,255,255,0.025);border-radius:16px;padding:22px 20px;
+  border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;transition:all 0.3s ease;
+}
+@media(hover:hover){.ag-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,0.1)}}
+.ag-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#6C5CE7,#A29BFE)}
+.ag-card.hero{border:none;background:linear-gradient(135deg,#5B21B6 0%,#6C5CE7 60%,#A29BFE 100%);box-shadow:0 12px 48px rgba(108,92,231,0.25)}
+.ag-card-label{font-size:11px;color:#4a4a4a;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px}
+.ag-card.hero .ag-card-label{color:rgba(255,255,255,0.7)}
+.ag-card-val{font-size:28px;font-weight:700;letter-spacing:-0.5px;color:#A29BFE;line-height:1.1}
+.ag-card.hero .ag-card-val{color:#fff;text-shadow:0 2px 14px rgba(0,0,0,0.2)}
+.ag-card-sub{font-size:14px;font-weight:500;margin-top:8px;color:#555}
+.ag-card-sub.up{color:#4ADE80}
+.ag-card.hero .ag-card-sub{color:rgba(255,255,255,0.85)}
+
+/* DIVIDER */
+.ag-divider{height:1px;margin:24px 0;border:none;background:linear-gradient(90deg,transparent,rgba(108,92,231,0.15),transparent)}
+
+/* CHARTS */
+.ag-chart-wrap{
+  background:rgba(255,255,255,0.02);border-radius:16px;padding:24px 28px;
+  border:1px solid rgba(255,255,255,0.05);margin-bottom:16px;position:relative;overflow:hidden;
+}
+.ag-chart-wrap::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:40%;height:1px;background:linear-gradient(90deg,transparent,rgba(108,92,231,0.3),transparent)}
+.ag-chart-title{font-size:18px;font-weight:700;margin-bottom:4px;letter-spacing:-0.3px}
+.ag-chart-desc{font-size:13px;color:#808098;margin-bottom:10px}
+.ag-chart-canvas{padding:4px 0;position:relative;height:260px}
+
+/* METRIC TOGGLE */
+.ag-metric-toggle{display:flex;justify-content:center;gap:10px;margin-bottom:20px}
+.ag-metric-btn{
+  padding:10px 20px;border-radius:10px;min-height:48px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);
+  color:#555;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.3s ease;
+}
+@media(hover:hover){.ag-metric-btn:hover{border-color:rgba(255,255,255,0.15);color:#888;background:rgba(255,255,255,0.06)}}
+.ag-metric-btn:active{background:rgba(255,255,255,0.08)}
+.ag-metric-btn.active{border:none;color:#fff;font-weight:600;background:linear-gradient(135deg,#5B21B6,#6C5CE7);box-shadow:0 6px 28px rgba(108,92,231,0.35)}
+
+/* TABLE */
+.ag-table-wrap{
+  background:rgba(255,255,255,0.02);border-radius:16px;padding:24px 28px;
+  border:1px solid rgba(255,255,255,0.05);margin-bottom:16px;
+}
+.ag-table-title{font-size:18px;font-weight:700;margin-bottom:16px;letter-spacing:-0.3px}
+.ag-table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ag-table{width:100%;border-collapse:separate;border-spacing:0}
+.ag-table th{font-size:11px;color:#4a4a4a;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.06)}
+.ag-table th:not(:first-child){text-align:right}
+.ag-table td{padding:12px 14px;font-size:14px;font-weight:500;color:#999;border-bottom:1px solid rgba(255,255,255,0.03);transition:background 0.2s ease}
+@media(hover:hover){.ag-table tr:hover td{background:rgba(255,255,255,0.015)}}
+.ag-table td:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
+.ag-table tr:last-child td{border-bottom:none;font-weight:700;color:#fff;font-size:15px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06)}
+.ag-table td:first-child{display:flex;align-items:center;gap:10px;white-space:nowrap}
+.ag-table .plat-icon{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ag-table .plat-name{color:#ccc;font-weight:600}
+
+/* PLATFORM DETAIL CARDS */
+.ag-plat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:16px}
+.ag-plat-card{
+  background:rgba(255,255,255,0.02);border-radius:16px;padding:20px 24px;
+  border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;
+}
+.ag-plat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.ag-plat-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.ag-plat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.ag-plat-name{font-size:15px;font-weight:700;color:#ccc}
+.ag-plat-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ag-plat-stat-label{font-size:10px;color:#4a4a4a;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.ag-plat-stat-val{font-size:18px;font-weight:700;color:#A29BFE}
+.ag-plat-stat-val.fol{color:#4ADE80}
+.ag-plat-extra{margin-top:10px;font-size:12px;color:#555;line-height:1.5}
+
+/* ALERT */
+.ag-alert{
+  padding:20px 24px;border-radius:14px;border:1px solid rgba(108,92,231,0.15);background:rgba(108,92,231,0.04);
+  margin-bottom:16px;display:flex;gap:14px;align-items:flex-start;
+}
+.ag-alert-icon{font-size:20px;margin-top:2px;color:#A29BFE}
+.ag-alert-text{font-size:14px;color:#B0B0C0;line-height:1.7}
+.ag-alert-text strong{color:#A29BFE}
+
+/* INSIGHTS */
+.ag-insights{
+  padding:24px 28px;border-radius:16px;border:1px solid rgba(34,197,94,0.1);
+  background:linear-gradient(135deg,rgba(34,197,94,0.04),rgba(34,197,94,0.005));
+  position:relative;overflow:hidden;margin-bottom:20px;
+}
+.ag-insights::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,#22C55E,#16A34A)}
+.ag-insights-title{font-size:11px;font-weight:700;color:#22C55E;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
+.ag-insight{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start}
+.ag-insight:last-child{margin-bottom:0}
+.ag-dot{width:8px;height:8px;border-radius:50%;background:#22C55E;margin-top:7px;flex-shrink:0;box-shadow:0 0 12px rgba(34,197,94,0.5)}
+.ag-insight p{font-size:14px;color:#9A9AB8;line-height:1.6}
+.ag-insight .g{color:#4ADE80;font-weight:600}
+.ag-insight .r{color:#F87171;font-weight:600}
+.ag-insight .v{color:#A29BFE;font-weight:600}
+
+/* FOOTER */
+.ag-footer{text-align:center;margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.03)}
+.ag-footer p{font-size:13px;color:#333;letter-spacing:0.5px}
+.ag-footer a{color:#4a4a4a;text-decoration:none;font-weight:600;transition:color 0.3s ease}
+@media(hover:hover){.ag-footer a:hover{color:#6C5CE7}}
+
+/* INTRO MODAL */
+.ag-modal-overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;z-index:2000;
+  background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:1;transition:opacity 0.3s ease;
+}
+.ag-modal-overlay.hide{opacity:0;pointer-events:none}
+.ag-modal{
+  background:linear-gradient(135deg,#141418,#1a1a22);
+  border:1px solid rgba(255,255,255,0.08);border-radius:20px;
+  padding:40px 44px;max-width:380px;width:90%;text-align:center;
+  box-shadow:0 24px 64px rgba(0,0,0,0.6);
+  transform:scale(1);transition:transform 0.3s ease;
+}
+.ag-modal-overlay.hide .ag-modal{transform:scale(0.95)}
+.ag-modal-icon{
+  width:52px;height:52px;border-radius:14px;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  display:inline-flex;align-items:center;justify-content:center;margin-bottom:20px;
+}
+.ag-modal h3{font-size:18px;font-weight:700;color:#fff;margin-bottom:10px}
+.ag-modal p{font-size:14px;color:#888;line-height:1.7;margin-bottom:24px}
+.ag-modal-btn{
+  padding:12px 32px;border-radius:10px;border:none;min-height:48px;
+  background:linear-gradient(135deg,#5B21B6,#6C5CE7);
+  color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;
+  cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 18px rgba(108,92,231,0.3);
+}
+@media(hover:hover){.ag-modal-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(108,92,231,0.4)}}
+.ag-modal-btn:active{opacity:0.9}
+
+.ag-fade{transition:opacity 0.35s ease}
+.ag-fade.fading{opacity:0}
+
+@media(max-width:1024px){
+  #ag-kpi{padding:48px 36px}.ag-cards{grid-template-columns:repeat(2,1fr)}.ag-brand{font-size:36px}
+  .ag-chart-wrap,.ag-table-wrap{padding:24px 20px}.ag-insights{padding:24px 20px}
+  .ag-plat-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  #ag-kpi{padding:36px 20px}.ag-cards{grid-template-columns:repeat(2,1fr);gap:14px}.ag-brand{font-size:28px}
+  .ag-card{padding:24px 20px}.ag-card-val{font-size:26px}.ag-card-label{font-size:10px;margin-bottom:10px}
+  .ag-chart-wrap,.ag-table-wrap{padding:20px 16px}.ag-chart-title{font-size:18px}.ag-chart-desc{font-size:12px}
+  .ag-insights{padding:20px 16px}.ag-insight p{font-size:14px}.ag-alert{padding:20px;flex-direction:column;gap:12px}
+  .ag-metric-toggle{gap:8px;flex-wrap:wrap;justify-content:center}
+  .ag-metric-btn{padding:10px 16px;font-size:13px}
+  .ag-divider{margin:20px 0}.ag-header{margin-bottom:24px}
+  .ag-modal{padding:32px 28px;max-width:320px}.ag-modal h3{font-size:16px}.ag-modal p{font-size:13px}
+  .ag-table{min-width:480px}
+  .ag-chart-canvas{height:220px}
+  .ag-plat-grid{grid-template-columns:1fr}
+  .ag-plat-stats{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:480px){
+  #ag-kpi{padding:28px 16px}.ag-cards{grid-template-columns:repeat(2,1fr)}
+  .ag-brand{font-size:24px}.ag-card-val{font-size:22px}.ag-card{padding:18px 16px}
+  .ag-chart-canvas{height:180px}
+  .ag-nav{top:calc(16px + env(safe-area-inset-top));right:calc(16px + env(safe-area-inset-right))}
+  .ag-plat-stat-val{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition-duration:0.01ms!important;animation-duration:0.01ms!important}
+  .ag-fade{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div class="ag-modal-overlay" id="ag-modal-overlay" onclick="dismissModal(event)" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="ag-modal">
+    <div class="ag-modal-icon">
+      <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><rect y="3" width="20" height="2" rx="1" fill="white"/><rect y="9" width="20" height="2" rx="1" fill="white"/><rect y="15" width="20" height="2" rx="1" fill="white"/></svg>
+    </div>
+    <h3 id="modal-title">Navigate Reports</h3>
+    <p>Use the <strong>Reports</strong> menu in the top-right corner to jump between monthly reports.</p>
+    <button class="ag-modal-btn" onclick="dismissModal()">Got it</button>
+  </div>
+</div>
+
+<div id="ag-kpi">
+
+<div class="ag-nav">
+  <button class="ag-nav-btn" onclick="document.querySelector('.ag-nav-menu').classList.toggle('open')" aria-label="Reports menu">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect y="3" width="20" height="2" rx="1" fill="white"/><rect y="9" width="20" height="2" rx="1" fill="white"/><rect y="15" width="20" height="2" rx="1" fill="white"/></svg>
+    <span>Reports</span>
+  </button>
+  <div class="ag-nav-menu" role="menu" aria-label="Report navigation">
+    <p class="ag-nav-label">Monthly Reports</p>
+    <a href="/robopromo/mar-2026" class="active">Mar 2026</a>
+    <a href="/robopromo">All Reports</a>
+  </div>
+</div>
+
+<div class="ag-inner">
+
+<div class="ag-fade" id="ag-fade">
+
+<div class="ag-header">
+  <div class="ag-brand-label">Arc Garde Media Buying</div>
+  <div class="ag-logo-wrap">
+    <a href="https://www.robopromo.ai/" target="_blank"><img src="https://www.robopromo.ai/logo.png" alt="RoboPromo AI" class="ag-logo" onerror="this.style.display='none'"></a>
+  </div>
+  <p class="ag-brand">RoboPromo AI</p>
+  <p class="ag-period">March 2026</p>
+  <span class="ag-badge">MONTHLY KPI REPORT</span>
+  <span class="ag-month1">MONTH 1</span>
+</div>
+
+<div class="ag-cards">
+  <div class="ag-card hero"><p class="ag-card-label">TOTAL VIEWS</p><p class="ag-card-val">44,698</p><p class="ag-card-sub">across 7 platforms</p></div>
+  <div class="ag-card"><p class="ag-card-label">ENGAGEMENTS</p><p class="ag-card-val">503</p><p class="ag-card-sub">total interactions</p></div>
+  <div class="ag-card"><p class="ag-card-label">FOLLOWER GROWTH</p><p class="ag-card-val" style="color:#4ADE80">+38</p><p class="ag-card-sub up">from zero (new accounts)</p></div>
+  <div class="ag-card"><p class="ag-card-label">TOP PLATFORM</p><p class="ag-card-val">YouTube</p><p class="ag-card-sub">19,207 views</p></div>
+</div>
+
+<hr class="ag-divider">
+
+<div class="ag-alert">
+  <span class="ag-alert-icon">&#9881;</span>
+  <p class="ag-alert-text"><strong>Month 1 Baseline.</strong> All 7 accounts were created from scratch. This is the first month of organic content. No prior history, no existing audience. Every number here is net new.</p>
+</div>
+
+<hr class="ag-divider">
+
+<div class="ag-metric-toggle">
+  <button class="ag-metric-btn active" onclick="setMetric('views')">Views</button>
+  <button class="ag-metric-btn" onclick="setMetric('eng')">Engagements</button>
+  <button class="ag-metric-btn" onclick="setMetric('fol')">Followers</button>
+</div>
+
+<div class="ag-chart-wrap">
+  <h2 class="ag-chart-title" id="chart-title">Views by Platform</h2>
+  <p class="ag-chart-desc" id="chart-desc">March 2026 performance across all 7 platforms</p>
+  <div class="ag-chart-canvas"><canvas id="platChart"></canvas></div>
+</div>
+
+<hr class="ag-divider">
+
+<div class="ag-table-wrap">
+  <h2 class="ag-table-title">Platform Breakdown</h2>
+  <div class="ag-table-scroll">
+    <table class="ag-table">
+      <thead><tr><th>Platform</th><th>Views</th><th>Engagements</th><th>Follower +/-</th></tr></thead>
+      <tbody id="ag-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="ag-divider">
+
+<div class="ag-plat-grid" id="ag-plat-grid"></div>
+
+<hr class="ag-divider">
+
+<div class="ag-insights">
+  <p class="ag-insights-title">Key Insights</p>
+  <div class="ag-insight"><div class="ag-dot"></div><p><span class="v">YouTube</span> dominated with <span class="g">19,207 views</span> and 26.8 watch hours in month one, nearly half of all views</p></div>
+  <div class="ag-insight"><div class="ag-dot"></div><p><span class="v">Facebook</span> surprised at #2 with <span class="g">9,500 views</span> and 7,200 unique viewers despite zero tracked engagements</p></div>
+  <div class="ag-insight"><div class="ag-dot"></div><p><span class="v">TikTok</span> delivered the highest engagement at <span class="g">182 interactions</span> (168 likes, 11 comments, 3 shares)</p></div>
+  <div class="ag-insight"><div class="ag-dot"></div><p><span class="v">Instagram</span> hit 177 engagements from 6,907 views for a <span class="g">2.6% engagement rate</span>, the strongest ratio</p></div>
+  <div class="ag-insight"><div class="ag-dot"></div><p><span class="r">X (Twitter)</span> had zero engagement across 22 posts with views between 8-40 per post. Needs strategy adjustment</p></div>
+  <div class="ag-insight"><div class="ag-dot"></div><p><span class="v">LinkedIn</span> and <span class="v">Threads</span> are early stage with minimal traction. LinkedIn had 199 impressions and 60 members reached</p></div>
+  <div class="ag-insight"><div class="ag-dot"></div><p>All <span class="g">+38 followers</span> are organic growth from zero. YouTube (+10) and TikTok (+12) lead follower acquisition</p></div>
+</div>
+
+</div>
+</div>
+
+<div class="ag-footer">
+  <p><a href="https://www.arcgarde.com" target="_blank">Arc Garde</a> - KPI Dashboard</p>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const platNames=['YouTube','Facebook','TikTok','Instagram','X (Twitter)','LinkedIn','Threads'];
+const platColors=['rgba(255,50,50,0.85)','rgba(24,119,242,0.85)','rgba(130,130,130,0.85)','rgba(225,48,108,0.85)','rgba(90,90,90,0.85)','rgba(0,119,181,0.85)','rgba(120,120,120,0.85)'];
+const platDotColors={YouTube:'#FF0000',Facebook:'#1877F2',TikTok:'#888',Instagram:'#E1306C','X (Twitter)':'#666',LinkedIn:'#0077B5',Threads:'#777'};
+
+const data={
+  views:{YouTube:19207,Facebook:9500,TikTok:8540,Instagram:6907,'X (Twitter)':345,LinkedIn:199,Threads:0},
+  eng:{YouTube:142,Facebook:0,TikTok:182,Instagram:177,'X (Twitter)':0,LinkedIn:0,Threads:2},
+  fol:{YouTube:10,Facebook:2,TikTok:12,Instagram:11,'X (Twitter)':2,LinkedIn:1,Threads:0},
+  details:{
+    YouTube:{views:19207,eng:142,fol:10,extra:'26.8 watch hours | 137 likes, 4 comments, 1 share'},
+    Facebook:{views:9500,eng:0,fol:2,extra:'7,200 unique viewers | 22 profile visits'},
+    TikTok:{views:8540,eng:182,fol:12,extra:'168 likes, 11 comments, 3 shares | 37 profile views'},
+    Instagram:{views:6907,eng:177,fol:11,extra:'132 likes, 15 comments, 3 shares, 4 saves'},
+    'X (Twitter)':{views:345,eng:0,fol:2,extra:'22 posts published | 0% engagement rate'},
+    LinkedIn:{views:199,eng:0,fol:1,extra:'60 members reached | Impressions-based metric'},
+    Threads:{views:0,eng:2,fol:0,extra:'Under 100 followers | Limited analytics available'}
+  },
+  totals:{views:44698,eng:503,fol:38}
+};
+
+let metric='views',platChart;
+
+function fmt(n){return n.toLocaleString()}
+
+function initCharts(){
+  const ctx=document.getElementById('platChart').getContext('2d');
+  const vals=platNames.map(p=>data[metric][p]);
+
+  platChart=new Chart(ctx,{
+    type:'bar',
+    data:{labels:platNames,datasets:[{
+      data:vals,
+      backgroundColor:platColors,
+      borderRadius:8,
+      borderSkipped:false,
+      maxBarThickness:60
+    }]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      layout:{padding:{top:8,bottom:4,left:4,right:4}},
+      animation:{duration:700,easing:'easeOutQuart'},
+      plugins:{legend:{display:false},tooltip:{
+        backgroundColor:'rgba(0,0,0,0.92)',titleColor:'#fff',bodyColor:'#ccc',
+        borderColor:'rgba(255,255,255,0.06)',borderWidth:1,padding:14,cornerRadius:10,
+        displayColors:false,titleFont:{size:14,weight:'600'},bodyFont:{size:14},
+        callbacks:{label:function(c){return fmt(c.raw)}}
+      }},
+      scales:{
+        x:{grid:{display:false},ticks:{color:'#666',font:{family:'Plus Jakarta Sans',size:12,weight:'500'},padding:8}},
+        y:{grid:{color:'rgba(255,255,255,0.025)',drawBorder:false},ticks:{color:'#3a3a3a',font:{size:12},padding:16,callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v}}}
+      }
+    }
+  });
+
+  buildTable();
+  buildPlatCards();
+}
+
+function setMetric(m){
+  metric=m;
+  document.querySelectorAll('.ag-metric-btn').forEach(btn=>btn.classList.remove('active'));
+  document.querySelectorAll('.ag-metric-btn')[{views:0,eng:1,fol:2}[m]].classList.add('active');
+
+  const titles={views:'Views by Platform',eng:'Engagements by Platform',fol:'Follower Growth by Platform'};
+  const descs={views:'March 2026 performance across all 7 platforms',eng:'Total interactions per platform',fol:'Net new followers from zero'};
+  document.getElementById('chart-title').textContent=titles[m];
+  document.getElementById('chart-desc').textContent=descs[m];
+
+  platChart.data.datasets[0].data=platNames.map(p=>data[m][p]);
+  platChart.update();
+}
+
+function buildTable(){
+  const tbody=document.getElementById('ag-tbody');
+  tbody.innerHTML='';
+  platNames.forEach(p=>{
+    const tr=document.createElement('tr');
+    const fVal=data.fol[p];const fStr=fVal>0?'+'+fmt(fVal):fmt(fVal);
+    tr.innerHTML='<td><span class="plat-icon" style="background:'+platDotColors[p]+'"></span><span class="plat-name">'+p+'</span></td><td>'+fmt(data.views[p])+'</td><td>'+fmt(data.eng[p])+'</td><td>'+fStr+'</td>';
+    tbody.appendChild(tr);
+  });
+  const trT=document.createElement('tr');
+  trT.innerHTML='<td>Total</td><td>'+fmt(data.totals.views)+'</td><td>'+fmt(data.totals.eng)+'</td><td>+'+fmt(data.totals.fol)+'</td>';
+  tbody.appendChild(trT);
+}
+
+function buildPlatCards(){
+  const grid=document.getElementById('ag-plat-grid');
+  grid.innerHTML='';
+  platNames.forEach(p=>{
+    const d=data.details[p];
+    const card=document.createElement('div');
+    card.className='ag-plat-card';
+    card.innerHTML='<div style="position:absolute;top:0;left:0;right:0;height:3px;background:'+platDotColors[p]+'"></div>'+
+      '<div class="ag-plat-head"><div class="ag-plat-dot" style="background:'+platDotColors[p]+'"></div><div class="ag-plat-name">'+p+'</div></div>'+
+      '<div class="ag-plat-stats">'+
+        '<div><div class="ag-plat-stat-label">Views</div><div class="ag-plat-stat-val">'+fmt(d.views)+'</div></div>'+
+        '<div><div class="ag-plat-stat-label">Engagement</div><div class="ag-plat-stat-val">'+fmt(d.eng)+'</div></div>'+
+        '<div><div class="ag-plat-stat-label">Followers</div><div class="ag-plat-stat-val fol">'+(d.fol>0?'+':'')+fmt(d.fol)+'</div></div>'+
+      '</div>'+
+      '<div class="ag-plat-extra">'+d.extra+'</div>';
+    grid.appendChild(card);
+  });
+}
+
+document.addEventListener('DOMContentLoaded',initCharts);
+
+// Intro modal
+function dismissModal(e){
+  if(e&&e.target!==document.getElementById('ag-modal-overlay'))return;
+  const overlay=document.getElementById('ag-modal-overlay');
+  overlay.classList.add('hide');
+  setTimeout(()=>{overlay.style.display='none';},300);
+  localStorage.setItem('ag-rp-modal-seen','1');
+}
+if(localStorage.getItem('ag-rp-modal-seen')){
+  const o=document.getElementById('ag-modal-overlay');
+  if(o){o.style.display='none';}
+}
+
+document.addEventListener('click',function(e){
+  const nav=document.querySelector('.ag-nav');
+  if(nav&&!nav.contains(e.target))document.querySelector('.ag-nav-menu').classList.remove('open');
+});
+</script>
+</body>
+</html>
