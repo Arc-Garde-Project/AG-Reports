@@ -277,7 +277,7 @@ button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2p
 <div class="ag-header">
   <div class="ag-brand-label">Arc Garde Media Buying</div>
   <div class="ag-logo-wrap">
-    <a href="https://www.robopromo.ai/" target="_blank"><img src="https://www.robopromo.ai/logo.png" alt="RoboPromo AI" class="ag-logo" onerror="this.style.display='none'"></a>
+    <a href="https://www.robopromo.ai/" target="_blank"><img src="https://framerusercontent.com/images/cZMPA2qkx3yORnq5yadUCAOutNo.png" alt="RoboPromo AI" class="ag-logo"></a>
   </div>
   <p class="ag-brand">RoboPromo AI</p>
   <p class="ag-period">March 2026</p>
@@ -373,36 +373,54 @@ const data={
   totals:{views:44698,eng:503,fol:38}
 };
 
+const months=['Mar'];
 let metric='views',platChart;
 
 function fmt(n){return n.toLocaleString()}
 
+function buildDatasets(m){
+  return platNames.map((p,i)=>{
+    const color=platColors[i];
+    const solid=platDotColors[p];
+    return {
+      label:p,
+      data:[data[m][p]],
+      borderColor:solid,
+      backgroundColor:solid+'20',
+      pointBackgroundColor:'#fff',
+      pointBorderColor:solid,
+      pointBorderWidth:3,
+      pointRadius:8,
+      pointHoverRadius:12,
+      borderWidth:3,
+      tension:0.35,
+      fill:false
+    };
+  });
+}
+
 function initCharts(){
   const ctx=document.getElementById('platChart').getContext('2d');
-  const vals=platNames.map(p=>data[metric][p]);
 
   platChart=new Chart(ctx,{
-    type:'bar',
-    data:{labels:platNames,datasets:[{
-      data:vals,
-      backgroundColor:platColors,
-      borderRadius:8,
-      borderSkipped:false,
-      maxBarThickness:60
-    }]},
+    type:'line',
+    data:{labels:months,datasets:buildDatasets(metric)},
     options:{
       responsive:true,maintainAspectRatio:false,
       layout:{padding:{top:8,bottom:4,left:4,right:4}},
       animation:{duration:700,easing:'easeOutQuart'},
-      plugins:{legend:{display:false},tooltip:{
+      plugins:{legend:{
+        display:true,position:'bottom',
+        labels:{color:'#888',font:{family:'Plus Jakarta Sans',size:12,weight:'500'},padding:16,usePointStyle:true,pointStyle:'circle',boxWidth:8}
+      },tooltip:{
         backgroundColor:'rgba(0,0,0,0.92)',titleColor:'#fff',bodyColor:'#ccc',
         borderColor:'rgba(255,255,255,0.06)',borderWidth:1,padding:14,cornerRadius:10,
-        displayColors:false,titleFont:{size:14,weight:'600'},bodyFont:{size:14},
-        callbacks:{label:function(c){return fmt(c.raw)}}
+        displayColors:true,titleFont:{size:14,weight:'600'},bodyFont:{size:14},
+        callbacks:{label:function(c){return c.dataset.label+': '+fmt(c.raw)}}
       }},
       scales:{
-        x:{grid:{display:false},ticks:{color:'#666',font:{family:'Plus Jakarta Sans',size:12,weight:'500'},padding:8}},
-        y:{grid:{color:'rgba(255,255,255,0.025)',drawBorder:false},ticks:{color:'#3a3a3a',font:{size:12},padding:16,callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v}}}
+        x:{grid:{display:false},ticks:{color:'#fff',font:{family:'Plus Jakarta Sans',size:14,weight:'600'},padding:12}},
+        y:{grid:{color:'rgba(255,255,255,0.025)',drawBorder:false},ticks:{color:'#3a3a3a',font:{size:12},padding:16,callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v}},beginAtZero:true}
       }
     }
   });
@@ -421,7 +439,7 @@ function setMetric(m){
   document.getElementById('chart-title').textContent=titles[m];
   document.getElementById('chart-desc').textContent=descs[m];
 
-  platChart.data.datasets[0].data=platNames.map(p=>data[m][p]);
+  platChart.data.datasets=buildDatasets(m);
   platChart.update();
 }
 
