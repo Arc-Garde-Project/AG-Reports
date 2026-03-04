@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Americana Tax Planning - Campaign Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #0A0A0F;
+  --card: #111118;
+  --card-deep: #0D0D14;
+  --border: #1A1A25;
+  --red: #C0392B;
+  --red-lt: #E74C3C;
+  --blue: #2C6FBB;
+  --blue-lt: #4A90D9;
+  --text: #E8E8F0;
+  --muted: #999;
+  --green: #2ECC71;
+  --cyan: #4DD0E1;
+  --amber: #F39C12;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(44,111,187,0.06) 0%, transparent 60%);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+.dashboard { max-width: 960px; margin: 0 auto; padding: 48px 24px; }
+
+/* Header */
+.header { text-align: center; margin-bottom: 40px; }
+.brand-label {
+  font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 20px; font-weight: 600;
+}
+.header-logo { max-width: 280px; margin: 0 auto 20px; display: block; }
+.subtitle { font-size: 13px; color: var(--muted); margin-bottom: 4px; font-weight: 400; }
+.date-range { font-size: 13px; color: var(--muted); font-weight: 400; }
+.divider {
+  width: 140px; height: 2px; margin: 24px auto 0; border-radius: 2px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+}
+
+/* Date Presets */
+.date-presets {
+  display: flex; justify-content: center; gap: 6px;
+  margin-bottom: 28px; flex-wrap: wrap;
+}
+.preset-btn {
+  padding: 7px 16px; border: 1px solid var(--border); border-radius: 20px;
+  background: transparent; color: var(--muted); font-size: 11px; font-weight: 600;
+  cursor: pointer; transition: all 0.3s ease; font-family: inherit;
+}
+.preset-btn.active {
+  background: linear-gradient(135deg, var(--blue), var(--blue-lt));
+  color: #fff; border-color: transparent;
+  box-shadow: 0 4px 16px rgba(44,111,187,0.35);
+}
+.preset-btn:hover:not(.active) { border-color: var(--blue); color: var(--blue-lt); }
+
+/* Campaign Toggle */
+.toggle-bar { display: flex; justify-content: center; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
+.campaign-btn {
+  padding: 9px 24px; border: 1px solid var(--border); border-radius: 24px;
+  background: transparent; color: var(--muted); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.3px; cursor: pointer; transition: all 0.3s ease; font-family: inherit;
+}
+.campaign-btn.active {
+  background: linear-gradient(135deg, var(--red), var(--red-lt));
+  color: #fff; border-color: transparent;
+  box-shadow: 0 4px 16px rgba(192,57,43,0.35);
+}
+.campaign-btn:hover:not(.active) { border-color: var(--blue); color: var(--blue-lt); }
+
+/* KPI Cards */
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+.kpi-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 20px 14px; text-align: center;
+  cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;
+}
+.kpi-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.kpi-card:hover {
+  border-color: rgba(44,111,187,0.3); transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+}
+.kpi-card.active {
+  border-color: var(--blue);
+  box-shadow: 0 0 28px rgba(44,111,187,0.18), 0 8px 24px rgba(0,0,0,0.3);
+}
+.kpi-card.active::after { opacity: 1; }
+.kpi-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 8px; font-weight: 500; }
+.kpi-value { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+
+/* Section Cards */
+.section-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 18px; padding: 28px 24px; margin-bottom: 24px;
+}
+.section-header { margin-bottom: 22px; }
+.section-title {
+  font-size: 12px; text-transform: uppercase; letter-spacing: 2px;
+  font-weight: 700; display: flex; align-items: center; gap: 10px;
+}
+.section-title::before {
+  content: ''; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.section-title.red { color: var(--red-lt); }
+.section-title.red::before { background: var(--red); box-shadow: 0 0 10px var(--red); }
+.section-title.blue { color: var(--blue-lt); }
+.section-title.blue::before { background: var(--blue); box-shadow: 0 0 10px var(--blue); }
+.section-title.green { color: var(--green); }
+.section-title.green::before { background: var(--green); box-shadow: 0 0 10px var(--green); }
+.section-title.cyan { color: var(--cyan); }
+.section-title.cyan::before { background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+.section-desc {
+  font-size: 12px; color: #666; margin-top: 8px; line-height: 1.7;
+  padding-left: 18px; font-weight: 400;
+}
+
+/* Chart Section */
+.chart-section {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 18px; padding: 28px 22px 18px; margin-bottom: 24px;
+}
+.chart-header { margin-bottom: 16px; }
+.chart-container { height: 280px; position: relative; }
+
+/* A/B Test */
+.ab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.ab-card {
+  background: var(--card-deep); border: 1px solid var(--border);
+  border-radius: 16px; padding: 24px 20px; text-align: center;
+  transition: all 0.3s ease;
+}
+.ab-card.winner-card { border-color: rgba(46,204,113,0.25); }
+.ab-card.loser-card { border-color: rgba(231,76,60,0.15); }
+.ab-pill {
+  display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+  padding: 5px 14px; border-radius: 20px; margin-bottom: 16px; text-transform: uppercase;
+}
+.ab-pill.win { background: rgba(46,204,113,0.12); color: var(--green); }
+.ab-pill.lose { background: rgba(231,76,60,0.12); color: var(--red-lt); }
+.ab-ad-name {
+  font-size: 11px; font-weight: 600; margin-bottom: 20px; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ab-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ab-stat-value { font-size: 20px; font-weight: 700; }
+.ab-stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+.ab-spend-bar {
+  height: 10px; border-radius: 5px; background: var(--card-deep);
+  margin: 20px 0 12px; overflow: hidden; display: flex; border: 1px solid var(--border);
+}
+.ab-spend-fill { height: 100%; transition: width 0.7s ease; }
+.ab-spend-fill.win { background: linear-gradient(90deg, var(--green), #27AE60); }
+.ab-spend-fill.lose { background: linear-gradient(90deg, var(--red), var(--red-lt)); }
+.ab-spend-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); font-weight: 600; }
+.ab-analysis {
+  font-size: 12px; line-height: 1.8; color: #777; padding: 16px 18px;
+  background: var(--card-deep); border-radius: 14px;
+  border-left: 3px solid var(--blue); margin-top: 8px;
+}
+
+/* Funnel */
+.funnel { display: flex; flex-direction: column; gap: 10px; }
+.funnel-step {
+  display: flex; align-items: center; gap: 14px; padding: 14px 18px;
+  background: var(--card-deep); border-radius: 14px;
+}
+.funnel-label { font-size: 12px; color: var(--muted); width: 90px; flex-shrink: 0; font-weight: 600; }
+.funnel-bar-wrap { flex: 1; height: 36px; background: rgba(255,255,255,0.03); border-radius: 10px; overflow: hidden; }
+.funnel-bar {
+  height: 100%; border-radius: 10px; transition: width 0.7s ease;
+  display: flex; align-items: center; justify-content: flex-end; padding-right: 12px;
+  font-size: 12px; font-weight: 700; color: #fff; min-width: 55px;
+}
+.funnel-bar.p25 { background: linear-gradient(90deg, var(--blue), var(--blue-lt)); box-shadow: 0 3px 12px rgba(44,111,187,0.35); }
+.funnel-bar.p50 { background: linear-gradient(90deg, var(--blue-lt), var(--cyan)); box-shadow: 0 3px 12px rgba(77,208,225,0.3); }
+.funnel-bar.p75 { background: linear-gradient(90deg, var(--cyan), var(--green)); box-shadow: 0 3px 12px rgba(46,204,113,0.3); }
+.funnel-bar.p100 { background: linear-gradient(90deg, var(--green), #27AE60); box-shadow: 0 3px 12px rgba(46,204,113,0.3); }
+.funnel-count { font-size: 14px; font-weight: 700; width: 80px; text-align: right; flex-shrink: 0; }
+
+/* Metric Cards (Hook/Hold/Completion) */
+.metric-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.metric-card {
+  background: var(--card-deep); border-radius: 16px; padding: 28px 16px;
+  text-align: center; border: 1px solid transparent; transition: all 0.3s ease;
+}
+.metric-card:hover { border-color: var(--border); transform: translateY(-2px); }
+.metric-card-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 10px; font-weight: 500; }
+.metric-card-value { font-size: 36px; font-weight: 800; letter-spacing: -1px; }
+.metric-card-value.high { color: var(--green); }
+.metric-card-value.medium { color: var(--cyan); }
+.metric-card-value.low { color: var(--red-lt); }
+.metric-card-sub { font-size: 11px; color: #555; margin-top: 8px; line-height: 1.5; }
+
+/* Fatigue Alerts */
+.alert-row {
+  display: flex; align-items: center; gap: 14px; padding: 14px 18px;
+  background: var(--card-deep); border-radius: 14px; margin-bottom: 10px;
+  border-left: 3px solid var(--red-lt); transition: all 0.3s ease;
+}
+.alert-row:hover { background: rgba(255,255,255,0.02); }
+.alert-row.medium { border-left-color: var(--amber); }
+.alert-severity {
+  font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 4px 10px;
+  border-radius: 6px; flex-shrink: 0;
+}
+.alert-severity.HIGH { background: rgba(231,76,60,0.15); color: var(--red-lt); }
+.alert-severity.MEDIUM { background: rgba(243,156,18,0.15); color: var(--amber); }
+.alert-info { flex: 1; }
+.alert-ad { font-size: 13px; font-weight: 600; }
+.alert-detail { font-size: 11px; color: #666; margin-top: 2px; }
+.alert-action { font-size: 11px; color: var(--red-lt); font-weight: 700; letter-spacing: 0.5px; }
+.no-alerts { text-align: center; padding: 24px; color: var(--green); font-size: 13px; font-weight: 500; }
+
+/* Leads Table */
+.leads-kpi { margin-bottom: 20px; }
+.leads-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.leads-table th {
+  text-align: left; padding: 10px 12px; font-size: 10px; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--muted); border-bottom: 1px solid var(--border); font-weight: 600;
+}
+.leads-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+.leads-table tr:hover td { background: rgba(255,255,255,0.02); }
+.lead-source { font-size: 10px; padding: 3px 10px; border-radius: 12px; font-weight: 600; }
+.lead-source.meta { background: rgba(44,111,187,0.15); color: var(--blue-lt); }
+.lead-source.organic { background: rgba(46,204,113,0.15); color: var(--green); }
+
+/* Footer */
+.footer { text-align: center; padding: 40px 0 20px; }
+.footer a { color: #444; font-size: 10px; letter-spacing: 3px; text-decoration: none; text-transform: uppercase; transition: color 0.3s; font-weight: 600; }
+.footer a:hover { color: var(--red); }
+.footer .generated { font-size: 10px; color: #333; margin-top: 8px; }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .dashboard { padding: 32px 16px; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .metric-cards { grid-template-columns: 1fr; }
+  .ab-grid { grid-template-columns: 1fr; }
+  .toggle-bar { gap: 6px; }
+  .campaign-btn { padding: 7px 16px; font-size: 11px; }
+  .header-logo { max-width: 200px; }
+  .date-presets { gap: 4px; }
+  .preset-btn { padding: 5px 10px; font-size: 10px; }
+  .section-card { padding: 22px 18px; }
+  .kpi-value { font-size: 22px; }
+  .metric-card-value { font-size: 28px; }
+}
+
+.campaign-section { display: none; }
+.campaign-section.active { display: block; }
+</style>
+</head>
+<body>
+<a href="/americana-tax" style="position:fixed;top:20px;right:20px;z-index:999;padding:8px 18px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(10,10,15,0.85);backdrop-filter:blur(8px);color:#888;font-size:12px;font-family:'Segoe UI',system-ui,sans-serif;text-decoration:none;transition:all 0.3s;letter-spacing:0.5px;">← Reports</a>
+
+<div class="dashboard">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="brand-label">Arc Garde Media Buying</div>
+    
+    <img src="https://americanataxplanning.com/wp-content/uploads/2020/03/americana-tax-planning-logo.png" alt="Americana Tax Planning" class="header-logo">
+    
+    <div class="subtitle">Lead Generation Campaign | Testing Phase</div>
+    <div class="date-range">Feb 24 - Feb 27, 2026 | Meta Ads</div>
+    <div class="divider"></div>
+  </div>
+
+  <!-- Date Presets -->
+  
+
+  <!-- Campaign Toggle -->
+  <div class="toggle-bar">
+    
+    <button class="campaign-btn active" onclick="switchView('prospecting')">Prospecting — Video Ads</button>
+    
+    <button class="campaign-btn" onclick="switchView('retargeting')">Retargeting — Static Image</button>
+    
+    <button class="campaign-btn" onclick="switchView('overview')">Overview</button>
+  </div>
+
+  <!-- ==================== PER-CAMPAIGN SECTIONS ==================== -->
+  
+  <div class="campaign-section active" id="section-prospecting">
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card active" onclick="switchMetric('prospecting', 'spend')">
+        <div class="kpi-label">Total Spend</div>
+        <div class="kpi-value" id="kpi-prospecting-spend">$85.84</div>
+      </div>
+      <div class="kpi-card" onclick="switchMetric('prospecting', 'impressions')">
+        <div class="kpi-label">Impressions</div>
+        <div class="kpi-value" id="kpi-prospecting-impressions">1,508</div>
+      </div>
+      <div class="kpi-card" onclick="switchMetric('prospecting', 'ctr')">
+        <div class="kpi-label">Avg CTR</div>
+        
+        
+        <div class="kpi-value" id="kpi-prospecting-ctr">4.11%</div>
+      </div>
+      <div class="kpi-card" onclick="switchMetric('prospecting', 'cpc')">
+        <div class="kpi-label">Avg CPC</div>
+        
+        
+        <div class="kpi-value" id="kpi-prospecting-cpc">$1.38</div>
+      </div>
+    </div>
+
+    <!-- Main Chart -->
+    <div class="chart-section">
+      <div class="chart-container">
+        <canvas id="chart-prospecting"></canvas>
+      </div>
+    </div>
+
+    <!-- Reach vs Frequency -->
+    <div class="chart-section">
+      <div class="chart-header">
+        <div class="section-title blue">Reach vs Frequency</div>
+        <div class="section-desc">Reach is how many unique people saw your ad. Frequency is how many times each person saw it. You want reach growing while frequency stays low.</div>
+      </div>
+      <div class="chart-container">
+        <canvas id="chart-rf-prospecting"></canvas>
+      </div>
+    </div>
+
+  </div>
+  
+  <div class="campaign-section" id="section-retargeting">
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card active" onclick="switchMetric('retargeting', 'spend')">
+        <div class="kpi-label">Total Spend</div>
+        <div class="kpi-value" id="kpi-retargeting-spend">$9.37</div>
+      </div>
+      <div class="kpi-card" onclick="switchMetric('retargeting', 'impressions')">
+        <div class="kpi-label">Impressions</div>
+        <div class="kpi-value" id="kpi-retargeting-impressions">215</div>
+      </div>
+      <div class="kpi-card" onclick="switchMetric('retargeting', 'ctr')">
+        <div class="kpi-label">Avg CTR</div>
+        
+        
+        <div class="kpi-value" id="kpi-retargeting-ctr">1.40%</div>
+      </div>
+      <div class="kpi-card" onclick="switchMetric('retargeting', 'cpc')">
+        <div class="kpi-label">Avg CPC</div>
+        
+        
+        <div class="kpi-value" id="kpi-retargeting-cpc">$3.12</div>
+      </div>
+    </div>
+
+    <!-- Main Chart -->
+    <div class="chart-section">
+      <div class="chart-container">
+        <canvas id="chart-retargeting"></canvas>
+      </div>
+    </div>
+
+    <!-- Reach vs Frequency -->
+    <div class="chart-section">
+      <div class="chart-header">
+        <div class="section-title blue">Reach vs Frequency</div>
+        <div class="section-desc">Reach is how many unique people saw your ad. Frequency is how many times each person saw it. You want reach growing while frequency stays low.</div>
+      </div>
+      <div class="chart-container">
+        <canvas id="chart-rf-retargeting"></canvas>
+      </div>
+    </div>
+
+  </div>
+  
+
+  <!-- ==================== OVERVIEW SECTION ==================== -->
+  <div class="campaign-section" id="section-overview">
+    <div class="kpi-grid">
+      <div class="kpi-card" style="cursor:default;">
+        <div class="kpi-label">Total Spend</div>
+        <div class="kpi-value" id="kpi-overview-spend">$95.21</div>
+      </div>
+      <div class="kpi-card" style="cursor:default;">
+        <div class="kpi-label">Impressions</div>
+        <div class="kpi-value" id="kpi-overview-impressions">1,723</div>
+      </div>
+      <div class="kpi-card" style="cursor:default;">
+        <div class="kpi-label">Total Clicks</div>
+        <div class="kpi-value" id="kpi-overview-clicks">65</div>
+      </div>
+      <div class="kpi-card" style="cursor:default;">
+        <div class="kpi-label">Total Leads</div>
+        <div class="kpi-value" id="kpi-overview-leads">0</div>
+      </div>
+    </div>
+    <div class="chart-section">
+      <div class="chart-header">
+        <div class="section-title cyan">Cost Efficiency Trends</div>
+        <div class="section-desc">How your cost per click is trending across all campaigns. Declining costs mean the algorithm is finding better audiences.</div>
+      </div>
+      <div class="chart-container">
+        <canvas id="chart-cost-trends"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SHARED SECTIONS ==================== -->
+
+  <!-- A/B Test Results -->
+  
+  
+  <div class="section-card video-only-section">
+    <div class="section-header">
+      <div class="section-title blue">A/B Test: Prospecting — Video Ads</div>
+      <div class="section-desc">Two versions of your ad running head to head. Meta's algorithm automatically gives more budget to the better performer, so spend share reveals the winner.</div>
+    </div>
+    <div class="ab-spend-bar">
+      <div class="ab-spend-fill win" style="width:98.1%"></div>
+      <div class="ab-spend-fill lose" style="width:1.9%"></div>
+    </div>
+    <div class="ab-spend-labels">
+      <span style="color:var(--green);">98.1% spend</span>
+      <span style="color:var(--red-lt);">1.9% spend</span>
+    </div>
+    <div class="ab-grid">
+      <div class="ab-card winner-card">
+        <span class="ab-pill win">Winner</span>
+        <div class="ab-ad-name">Ad 6 Los Angeles County ATP FEB 02 2026</div>
+        <div class="ab-stats">
+          <div class="ab-stat-item">
+            <div class="ab-stat-value" style="color:var(--green);">$84.21</div>
+            <div class="ab-stat-label">Spend</div>
+          </div>
+          <div class="ab-stat-item">
+            <div class="ab-stat-value">1,475</div>
+            <div class="ab-stat-label">Impressions</div>
+          </div>
+          <div class="ab-stat-item">
+            <div class="ab-stat-value" style="color:var(--blue-lt);">3.86%</div>
+            <div class="ab-stat-label">CTR</div>
+          </div>
+          
+          <div class="ab-stat-item">
+            <div class="ab-stat-value" style="color:var(--cyan);">6.3%</div>
+            <div class="ab-stat-label">Hook Rate</div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="ab-card loser-card">
+        <span class="ab-pill lose">Underperformer</span>
+        <div class="ab-ad-name">Ad 8 Los Angeles County ATP FEB 02 2026</div>
+        <div class="ab-stats">
+          <div class="ab-stat-item">
+            <div class="ab-stat-value" style="color:var(--red-lt);">$1.63</div>
+            <div class="ab-stat-label">Spend</div>
+          </div>
+          <div class="ab-stat-item">
+            <div class="ab-stat-value">33</div>
+            <div class="ab-stat-label">Impressions</div>
+          </div>
+          <div class="ab-stat-item">
+            <div class="ab-stat-value" style="color:var(--blue-lt);">15.15%</div>
+            <div class="ab-stat-label">CTR</div>
+          </div>
+          
+          <div class="ab-stat-item">
+            <div class="ab-stat-value" style="color:var(--cyan);">22.62%</div>
+            <div class="ab-stat-label">Hook Rate</div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div class="ab-analysis">Ad 6 Los Angeles County ATP FEB 02 2026 dominated with 98.1% of budget allocation. Loser had higher CTR (15.15% vs 3.86%) but Meta still favored winner's overall performance.</div>
+  </div>
+  
+  
+
+  <!-- Video Watch Funnel -->
+  
+  <div class="section-card video-only-section">
+    <div class="section-header">
+      <div class="section-title blue">Video Watch Funnel</div>
+      <div class="section-desc">How far viewers watch your video ads. Each bar shows the percentage who reached that point. Bigger drops between steps mean viewers are losing interest there.</div>
+    </div>
+    <div class="funnel">
+      
+      <div class="funnel-step">
+        <div class="funnel-label">Watched 25%</div>
+        <div class="funnel-bar-wrap"><div class="funnel-bar p25" id="funnel-p25-bar" style="width:100%">100%</div></div>
+        <div class="funnel-count" id="funnel-p25-count">100</div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-label">Watched 50%</div>
+        <div class="funnel-bar-wrap"><div class="funnel-bar p50" id="funnel-p50-bar" style="width:52.0%">52.0%</div></div>
+        <div class="funnel-count" id="funnel-p50-count">52</div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-label">Watched 75%</div>
+        <div class="funnel-bar-wrap"><div class="funnel-bar p75" id="funnel-p75-bar" style="width:42.0%">42.0%</div></div>
+        <div class="funnel-count" id="funnel-p75-count">42</div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-label">Watched 100%</div>
+        <div class="funnel-bar-wrap"><div class="funnel-bar p100" id="funnel-p100-bar" style="width:32.0%">32.0%</div></div>
+        <div class="funnel-count" id="funnel-p100-count">32</div>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- Attention Metrics -->
+  <div class="section-card video-only-section">
+    <div class="section-header">
+      <div class="section-title red">Attention Metrics</div>
+      <div class="section-desc">How well your video content hooks and holds viewers. These numbers tell you whether your creative is grabbing attention and keeping it.</div>
+    </div>
+    <div class="metric-cards">
+      <div class="metric-card">
+        <div class="metric-card-label">Hook Rate</div>
+        
+        <div class="metric-card-value low" id="metric-hook">6.63%</div>
+        <div class="metric-card-sub">% of viewers who watched at least 25% of your video. Above 30% is strong.</div>
+        
+      </div>
+      <div class="metric-card">
+        <div class="metric-card-label">Hold Rate</div>
+        
+        <div class="metric-card-value medium" id="metric-hold">42.0%</div>
+        <div class="metric-card-sub">Of those who started, how many stayed past 75%. Above 50% is excellent.</div>
+        
+      </div>
+      <div class="metric-card">
+        <div class="metric-card-label">Completion</div>
+        
+        <div class="metric-card-value high" id="metric-completion">32.0%</div>
+        <div class="metric-card-sub">% who watched the entire video. Above 20% is great for paid ads.</div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Creative Fatigue Alerts -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title red">Creative Fatigue Alerts</div>
+      <div class="section-desc">When the same audience sees your ad too many times, engagement drops. We track frequency and CTR to flag when it's time for fresh creative.</div>
+    </div>
+    
+    <div class="no-alerts">All creatives are performing within healthy frequency ranges. No rotation needed.</div>
+    
+  </div>
+
+  <!-- Lead Attribution -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title green">Lead Attribution</div>
+      <div class="section-desc">Leads traced from ad click to form submission. We track which leads came directly from your Meta campaigns vs. organic traffic.</div>
+    </div>
+    
+    <div class="kpi-grid leads-kpi">
+      <div class="kpi-card" style="cursor:default;"><div class="kpi-label">LP Views</div><div class="kpi-value">33</div></div>
+      <div class="kpi-card" style="cursor:default;"><div class="kpi-label">Unique Visitors</div><div class="kpi-value">22</div></div>
+      <div class="kpi-card" style="cursor:default;"><div class="kpi-label">Leads</div><div class="kpi-value">2</div></div>
+      <div class="kpi-card" style="cursor:default;"><div class="kpi-label">Conversion Rate</div><div class="kpi-value">9.09%</div></div>
+    </div>
+    <div class="kpi-grid leads-kpi" style="margin-top:14px;">
+      <div class="kpi-card" style="cursor:default;"><div class="kpi-label">Cost / Lead</div><div class="kpi-value">$47.60</div></div>
+      <div class="kpi-card" style="cursor:default;"><div class="kpi-label">Cost / LP View</div><div class="kpi-value">$2.89</div></div>
+      <div class="kpi-card" style="cursor:default;"><div class="kpi-label">Meta Attributed</div><div class="kpi-value">2</div></div>
+      <div class="kpi-card" style="cursor:default;"><div class="kpi-label">Total Spend</div><div class="kpi-value">$95.21</div></div>
+    </div>
+    
+    
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <a href="#">Arc Garde</a>
+    <div class="generated">Generated 2026-02-28 05:30 | Automated Media Buying Dashboard</div>
+  </div>
+</div>
+
+<script>
+var chartData = {"prospecting": {"labels": ["2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27"], "spend": [28.54, 19.75, 22.12, 15.43], "impressions": [480, 413, 263, 352], "clicks": [22, 18, 16, 6], "leads": [0, 0, 0, 0], "ctr": [4.58, 4.36, 6.08, 1.7], "cpc": [1.3, 1.1, 1.38, 2.57], "cpl": [null, null, null, null], "frequency": [1.12, 1.14, 1.14, 1.21], "reach": [385, 345, 236, 291], "hook_rate": [6.88, 7.75, 6.84, 4.83], "hold_rate": [54.55, 28.12, 44.44, 41.18], "thruplay": [28, 25, 13, 15], "cost_per_thruplay": [1.0193, 0.79, 1.7015, 1.0287], "p25": [33, 32, 18, 17], "p50": [20, 12, 11, 9], "p75": [18, 9, 8, 7], "p100": [12, 8, 8, 4], "completion_rate": [36.36, 25.0, 44.44, 23.53]}, "retargeting": {"labels": ["2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27"], "spend": [3.0700000000000003, 2.7600000000000002, 2.33, 1.21], "impressions": [67, 57, 54, 37], "clicks": [0, 1, 2, 0], "leads": [0, 0, 0, 0], "ctr": [0.0, 1.75, 3.7, 0.0], "cpc": [null, 2.76, 1.17, null], "cpl": [null, null, null, null], "frequency": [1.27, 1.2, 1.29, 1.29], "reach": [51, 47, 39, 27], "hook_rate": [null, null, null, null], "hold_rate": [null, null, null, null], "thruplay": [0, 0, 0, 0], "cost_per_thruplay": [null, null, null, null], "p25": [0, 0, 0, 0], "p50": [0, 0, 0, 0], "p75": [0, 0, 0, 0], "p100": [0, 0, 0, 0], "completion_rate": [null, null, null, null]}};
+var charts = {};
+var currentMetric = {};
+var fullChartData = JSON.parse(JSON.stringify(chartData));
+var campaignTypes = {"prospecting": "video", "retargeting": "static_image"};
+var videoCampaigns = ["prospecting"];
+
+var COLORS = {
+  red: '#C0392B', redLt: '#E74C3C',
+  blue: '#2C6FBB', blueLt: '#4A90D9',
+  green: '#2ECC71', cyan: '#4DD0E1',
+  text: '#E8E8F0', bg: '#0A0A0F',
+  border: '#1A1A25', amber: '#F39C12'
+};
+
+var metricConfig = {
+  spend:       { label: 'Spend ($)', prefix: '$', suffix: '', color: COLORS.red },
+  impressions: { label: 'Impressions', prefix: '', suffix: '', color: COLORS.blue },
+  ctr:         { label: 'CTR (%)', prefix: '', suffix: '%', color: COLORS.green },
+  cpc:         { label: 'CPC ($)', prefix: '$', suffix: '', color: COLORS.cyan },
+  cpl:         { label: 'CPL ($)', prefix: '$', suffix: '', color: COLORS.redLt },
+  frequency:   { label: 'Frequency', prefix: '', suffix: 'x', color: COLORS.amber },
+  reach:       { label: 'Reach', prefix: '', suffix: '', color: COLORS.blueLt },
+  hook_rate:   { label: 'Hook Rate (%)', prefix: '', suffix: '%', color: COLORS.blue },
+  hold_rate:   { label: 'Hold Rate (%)', prefix: '', suffix: '%', color: COLORS.green },
+  thruplay:    { label: 'ThruPlays', prefix: '', suffix: '', color: COLORS.cyan },
+  cost_per_thruplay: { label: 'Cost/ThruPlay ($)', prefix: '$', suffix: '', color: COLORS.red }
+};
+
+function fmtDate(d) {
+  var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var p = d.split('-');
+  if (p.length === 3) return m[parseInt(p[1])-1] + ' ' + parseInt(p[2]);
+  return d;
+}
+
+function hexToRgba(hex, alpha) {
+  hex = hex.replace('#', '');
+  return 'rgba(' + parseInt(hex.substring(0,2),16) + ',' + parseInt(hex.substring(2,4),16) + ',' + parseInt(hex.substring(4,6),16) + ',' + alpha + ')';
+}
+
+function fmtNum(n) { return n.toLocaleString(); }
+
+/* ---- Dynamic KPI Updates ---- */
+function sumArr(arr) { return arr.reduce(function(a,b){ return a + (b||0); }, 0); }
+function avgNonZero(arr) {
+  var vals = arr.filter(function(v){ return v !== null && v > 0; });
+  return vals.length ? vals.reduce(function(a,b){ return a+b; },0) / vals.length : 0;
+}
+
+function updateKPIs() {
+  for (var ck in chartData) {
+    var cd = chartData[ck];
+    var el;
+    el = document.getElementById('kpi-' + ck + '-spend');
+    if (el) el.textContent = '$' + sumArr(cd.spend).toFixed(2);
+    el = document.getElementById('kpi-' + ck + '-impressions');
+    if (el) el.textContent = fmtNum(Math.round(sumArr(cd.impressions)));
+    el = document.getElementById('kpi-' + ck + '-ctr');
+    if (el) { var tc = sumArr(cd.clicks || []); var ti = sumArr(cd.impressions); el.textContent = (ti ? (tc/ti*100).toFixed(2) : '0.00') + '%'; }
+    el = document.getElementById('kpi-' + ck + '-cpc');
+    if (el) { var ts = sumArr(cd.spend); var tc2 = sumArr(cd.clicks || []); el.textContent = '$' + (tc2 ? (ts/tc2).toFixed(2) : '0.00'); }
+  }
+  updateOverviewKPIs();
+  updateFunnel();
+  updateAttention();
+}
+
+function updateOverviewKPIs() {
+  var spend = 0, impr = 0, clicks = 0, leads = 0;
+  for (var ck in chartData) {
+    spend += sumArr(chartData[ck].spend);
+    impr += sumArr(chartData[ck].impressions);
+    clicks += sumArr(chartData[ck].clicks || []);
+    leads += sumArr(chartData[ck].leads || []);
+  }
+  var el;
+  el = document.getElementById('kpi-overview-spend');
+  if (el) el.textContent = '$' + spend.toFixed(2);
+  el = document.getElementById('kpi-overview-impressions');
+  if (el) el.textContent = fmtNum(Math.round(impr));
+  el = document.getElementById('kpi-overview-clicks');
+  if (el) el.textContent = fmtNum(Math.round(clicks));
+  el = document.getElementById('kpi-overview-leads');
+  if (el) el.textContent = fmtNum(Math.round(leads));
+}
+
+function updateFunnel() {
+  var p25 = 0, p50 = 0, p75 = 0, p100 = 0;
+  for (var i = 0; i < videoCampaigns.length; i++) {
+    var ck = videoCampaigns[i];
+    if (!chartData[ck]) continue;
+    p25 += sumArr(chartData[ck].p25 || []);
+    p50 += sumArr(chartData[ck].p50 || []);
+    p75 += sumArr(chartData[ck].p75 || []);
+    p100 += sumArr(chartData[ck].p100 || []);
+  }
+  var max = p25 || 1;
+  var steps = [
+    { key: 'p25', val: p25 },
+    { key: 'p50', val: p50 },
+    { key: 'p75', val: p75 },
+    { key: 'p100', val: p100 }
+  ];
+  for (var i = 0; i < steps.length; i++) {
+    var pct = Math.round((steps[i].val / max) * 100);
+    var bar = document.getElementById('funnel-' + steps[i].key + '-bar');
+    var count = document.getElementById('funnel-' + steps[i].key + '-count');
+    if (bar) { bar.style.width = pct + '%'; bar.textContent = pct + '%'; }
+    if (count) count.textContent = fmtNum(steps[i].val);
+  }
+}
+
+function updateAttention() {
+  var p25 = 0, p75 = 0, p100 = 0, impr = 0;
+  for (var i = 0; i < videoCampaigns.length; i++) {
+    var ck = videoCampaigns[i];
+    if (!chartData[ck]) continue;
+    p25 += sumArr(chartData[ck].p25 || []);
+    p75 += sumArr(chartData[ck].p75 || []);
+    p100 += sumArr(chartData[ck].p100 || []);
+    impr += sumArr(chartData[ck].impressions);
+  }
+  function setMetric(id, val) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (val === null) { el.textContent = 'N/A'; el.className = 'metric-card-value'; el.style.color = 'var(--muted)'; return; }
+    el.textContent = val.toFixed(2) + '%';
+    el.style.color = '';
+    el.className = 'metric-card-value ' + (id === 'metric-hook' ? (val >= 30 ? 'high' : val >= 15 ? 'medium' : 'low') : id === 'metric-hold' ? (val >= 50 ? 'high' : val >= 25 ? 'medium' : 'low') : (val >= 20 ? 'high' : val >= 10 ? 'medium' : 'low'));
+  }
+  setMetric('metric-hook', impr && p25 ? (p25/impr)*100 : null);
+  setMetric('metric-hold', p25 && p75 ? (p75/p25)*100 : null);
+  setMetric('metric-completion', p25 && p100 ? (p100/p25)*100 : null);
+}
+
+/* ---- Chart Builders ---- */
+function buildChart(canvasId, labels, data, metric) {
+  var canvas = document.getElementById(canvasId);
+  if (!canvas) return null;
+  var ctx = canvas.getContext('2d');
+  var cfg = metricConfig[metric] || metricConfig.spend;
+  if (charts[canvasId]) charts[canvasId].destroy();
+  var cleanData = data.map(function(v) { return v === null ? 0 : v; });
+  var grad = ctx.createLinearGradient(0, 0, 0, 280);
+  grad.addColorStop(0, hexToRgba(cfg.color, 0.25));
+  grad.addColorStop(1, 'rgba(0,0,0,0)');
+  charts[canvasId] = new Chart(ctx, {
+    type: 'line',
+    data: { labels: labels, datasets: [{
+      data: cleanData, borderColor: cfg.color, backgroundColor: grad,
+      fill: true, tension: 0.35, pointBackgroundColor: cfg.color,
+      pointBorderColor: COLORS.bg, pointBorderWidth: 2, pointRadius: 4,
+      pointHoverRadius: 7, borderWidth: 2.5
+    }]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1a1a25', titleColor: cfg.color, bodyColor: COLORS.text,
+          borderColor: cfg.color, borderWidth: 1, padding: 14, cornerRadius: 10,
+          displayColors: false, titleFont: { weight: '600' },
+          callbacks: { title: function(items) { return fmtDate(items[0].label); }, label: function(c) { return cfg.prefix + c.parsed.y.toLocaleString() + cfg.suffix; } }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#444', font: { size: 11 }, callback: function(val) { return fmtDate(this.getLabelForValue(val)); } } },
+        y: { grid: { color: 'rgba(44,111,187,0.06)', drawBorder: false },
+          ticks: { color: '#444', font: { size: 11 }, callback: function(v) { return cfg.prefix + v.toLocaleString() + cfg.suffix; } }
+        }
+      }
+    }
+  });
+  return charts[canvasId];
+}
+
+function buildRFChart(canvasId, labels, reachData, freqData) {
+  var canvas = document.getElementById(canvasId);
+  if (!canvas) return null;
+  if (charts[canvasId]) charts[canvasId].destroy();
+  var ctx = canvas.getContext('2d');
+  var reachGrad = ctx.createLinearGradient(0, 0, 0, 280);
+  reachGrad.addColorStop(0, hexToRgba(COLORS.blue, 0.15));
+  reachGrad.addColorStop(1, 'rgba(0,0,0,0)');
+  charts[canvasId] = new Chart(ctx, {
+    type: 'line',
+    data: { labels: labels, datasets: [
+      { label: 'Reach', data: reachData.map(function(v){return v||0;}), borderColor: COLORS.blue,
+        backgroundColor: reachGrad, fill: true, tension: 0.35, yAxisID: 'y',
+        pointBackgroundColor: COLORS.blue, pointBorderColor: COLORS.bg, pointBorderWidth: 2, pointRadius: 3, borderWidth: 2.5 },
+      { label: 'Frequency', data: freqData.map(function(v){return v||0;}), borderColor: COLORS.amber,
+        backgroundColor: 'transparent', fill: false, tension: 0.35, yAxisID: 'y1',
+        pointBackgroundColor: COLORS.amber, pointBorderColor: COLORS.bg, pointBorderWidth: 2, pointRadius: 3,
+        borderWidth: 2.5, borderDash: [6, 3] }
+    ]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: true, labels: { color: '#666', font: { size: 11 }, usePointStyle: true, pointStyle: 'circle', padding: 20 } },
+        tooltip: { backgroundColor: '#1a1a25', titleColor: COLORS.blue, bodyColor: COLORS.text, borderColor: COLORS.blue, borderWidth: 1, padding: 14, cornerRadius: 10, callbacks: { title: function(items) { return fmtDate(items[0].label); } } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#444', font: { size: 11 }, callback: function(val) { return fmtDate(this.getLabelForValue(val)); } } },
+        y: { type: 'linear', position: 'left', grid: { color: 'rgba(44,111,187,0.06)', drawBorder: false },
+          ticks: { color: COLORS.blue, font: { size: 11 } }, title: { display: true, text: 'Reach', color: COLORS.blue, font: { size: 11 } } },
+        y1: { type: 'linear', position: 'right', grid: { display: false },
+          ticks: { color: COLORS.amber, font: { size: 11 } }, title: { display: true, text: 'Frequency', color: COLORS.amber, font: { size: 11 } } }
+      }
+    }
+  });
+}
+
+function buildCostTrendsChart() {
+  var canvas = document.getElementById('chart-cost-trends');
+  if (!canvas) return;
+  var allDates = {};
+  for (var ck in chartData) {
+    var cd = chartData[ck];
+    for (var i = 0; i < cd.labels.length; i++) {
+      var d = cd.labels[i];
+      if (!allDates[d]) allDates[d] = { spend: 0, clicks: 0, thruplay: 0 };
+      allDates[d].spend += cd.spend[i] || 0;
+      allDates[d].clicks += cd.clicks ? (cd.clicks[i] || 0) : 0;
+      allDates[d].thruplay += cd.thruplay ? (cd.thruplay[i] || 0) : 0;
+    }
+  }
+  var dates = Object.keys(allDates).sort();
+  var cpcArr = [], cptArr = [];
+  for (var j = 0; j < dates.length; j++) {
+    var day = allDates[dates[j]];
+    cpcArr.push(day.clicks > 0 ? +(day.spend / day.clicks).toFixed(2) : 0);
+    cptArr.push(day.thruplay > 0 ? +(day.spend / day.thruplay).toFixed(4) : 0);
+  }
+  if (charts['chart-cost-trends']) charts['chart-cost-trends'].destroy();
+  charts['chart-cost-trends'] = new Chart(canvas.getContext('2d'), {
+    type: 'line',
+    data: { labels: dates, datasets: [
+      { label: 'CPC ($)', data: cpcArr, borderColor: COLORS.cyan, tension: 0.35, fill: false,
+        pointBackgroundColor: COLORS.cyan, pointBorderColor: COLORS.bg, pointBorderWidth: 2, pointRadius: 3, borderWidth: 2.5 },
+      { label: 'Cost/ThruPlay ($)', data: cptArr, borderColor: COLORS.red, tension: 0.35, fill: false,
+        pointBackgroundColor: COLORS.red, pointBorderColor: COLORS.bg, pointBorderWidth: 2, pointRadius: 3, borderWidth: 2.5,
+        borderDash: [6, 3] }
+    ]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: true, labels: { color: '#666', font: { size: 11 }, usePointStyle: true, pointStyle: 'circle', padding: 20 } },
+        tooltip: { backgroundColor: '#1a1a25', titleColor: COLORS.cyan, bodyColor: COLORS.text, borderColor: COLORS.blue, borderWidth: 1, padding: 14, cornerRadius: 10,
+          callbacks: { title: function(items) { return fmtDate(items[0].label); }, label: function(c) { return '$' + c.parsed.y.toFixed(2); } } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#444', font: { size: 11 }, callback: function(val) { return fmtDate(this.getLabelForValue(val)); } } },
+        y: { grid: { color: 'rgba(44,111,187,0.06)', drawBorder: false },
+          ticks: { color: '#444', font: { size: 11 }, callback: function(v) { return '$' + v; } } }
+      }
+    }
+  });
+}
+
+/* ---- Date Preset Filtering ---- */
+function filterDates(start, end, btn) {
+  document.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  for (var campKey in fullChartData) {
+    var full = fullChartData[campKey];
+    var filtered = { labels: [] };
+    var metrics = Object.keys(full);
+    metrics.forEach(function(m) { if (m !== 'labels') filtered[m] = []; });
+    for (var i = 0; i < full.labels.length; i++) {
+      var d = full.labels[i];
+      if (d >= start && d <= end) {
+        filtered.labels.push(d);
+        metrics.forEach(function(m) { if (m !== 'labels') filtered[m].push(full[m][i]); });
+      }
+    }
+    chartData[campKey] = filtered;
+  }
+  initAllCharts();
+  updateKPIs();
+}
+
+/* ---- View Switching ---- */
+function switchView(view) {
+  var btns = document.querySelectorAll('.campaign-btn');
+  btns.forEach(function(b) { b.classList.remove('active'); });
+  btns.forEach(function(b, i) {
+    var keys = Object.keys(chartData);
+    if (i < keys.length && keys[i] === view) b.classList.add('active');
+    if (view === 'overview' && i === btns.length - 1) b.classList.add('active');
+  });
+  document.querySelectorAll('.campaign-section').forEach(function(s) { s.classList.remove('active'); });
+  var target = document.getElementById('section-' + view);
+  if (target) target.classList.add('active');
+
+  // Hide video-only sections (funnel, attention metrics) when viewing a non-video campaign
+  var isVideo = (view === 'overview' || videoCampaigns.indexOf(view) >= 0);
+  document.querySelectorAll('.video-only-section').forEach(function(s) {
+    s.style.display = isVideo ? '' : 'none';
+  });
+}
+
+function switchMetric(campKey, metric) {
+  currentMetric[campKey] = metric;
+  var section = document.getElementById('section-' + campKey);
+  if (section) {
+    section.querySelectorAll('.kpi-card').forEach(function(c) { c.classList.remove('active'); });
+    section.querySelectorAll('.kpi-card').forEach(function(c) {
+      var oc = c.getAttribute('onclick') || '';
+      if (oc.indexOf("'" + metric + "'") >= 0) c.classList.add('active');
+    });
+  }
+  var cd = chartData[campKey];
+  if (cd) buildChart('chart-' + campKey, cd.labels, cd[metric] || cd.spend, metric);
+}
+
+/* ---- Init ---- */
+function initAllCharts() {
+  for (var campKey in chartData) {
+    var cd = chartData[campKey];
+    var metric = currentMetric[campKey] || 'spend';
+    buildChart('chart-' + campKey, cd.labels, cd[metric] || cd.spend, metric);
+    buildRFChart('chart-rf-' + campKey, cd.labels, cd.reach, cd.frequency);
+  }
+  buildCostTrendsChart();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  for (var k in chartData) currentMetric[k] = 'spend';
+  initAllCharts();
+});
+</script>
+</body>
+</html>
