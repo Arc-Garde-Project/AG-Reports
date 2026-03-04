@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#0A0A0F">
+<title>RoboPromo AI Campaign Reports</title>
+<meta name="description" content="Campaign reports for RoboPromo AI. Performance dashboards and ad testing results.">
+<meta property="og:title" content="RoboPromo AI Campaign Reports">
+<meta property="og:description" content="Campaign reports for RoboPromo AI. Performance dashboards and ad testing results.">
+<meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0A0F;
+  --card: #111118;
+  --border: #1A1A25;
+  --text: #F2F2FA;
+  --muted: #B0B0C0;
+  --accent: #6C5CE7;
+  --accent-lt: #A29BFE;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(108,92,231,0.06) 0%, transparent 60%);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+  display: flex; align-items: center; justify-content: center;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+.portal { text-align: center; padding: 60px 24px; max-width: 600px; }
+.brand-label {
+  font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 24px; font-weight: 600;
+}
+.logo-link { display: inline-block; margin-bottom: 20px; }
+.logo-link img { max-width: 260px; display: block; }
+.subtitle { font-size: 14px; color: var(--muted); font-weight: 400; letter-spacing: 1px; }
+.divider {
+  width: 140px; height: 2px; margin: 24px auto 32px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-lt));
+}
+.coming-soon {
+  display: inline-block; padding: 12px 32px; border-radius: 14px;
+  background: var(--card); border: 1px solid var(--border);
+  font-size: 12px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--accent-lt);
+}
+.footer { margin-top: 48px; }
+.footer a {
+  color: #5A5A70; font-size: 10px; letter-spacing: 3px; text-decoration: none;
+  text-transform: uppercase; transition: color 0.3s; font-weight: 600;
+}
+.footer a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="portal">
+  <div class="brand-label">Arc Garde Media Buying</div>
+  <a href="https://www.robopromo.ai/" target="_blank" class="logo-link">
+    <img src="https://www.robopromo.ai/logo.png" alt="RoboPromo AI" onerror="this.parentElement.innerHTML='<div style=&quot;font-size:28px;font-weight:800;color:#F2F2FA;letter-spacing:-1px;&quot;>RoboPromo AI</div>'">
+  </a>
+  <div class="subtitle">Campaign Reports</div>
+  <div class="divider"></div>
+  <div class="coming-soon">Reports Coming Soon</div>
+  <div class="footer">
+    <a href="https://www.arcgarde.com" target="_blank">Arc Garde</a>
+  </div>
+</div>
+</body>
+</html>
