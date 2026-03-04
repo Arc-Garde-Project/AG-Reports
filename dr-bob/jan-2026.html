@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#1A0D00">
+<title>Dr. Bob + Deep Waters | January 2026 KPI Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#000;margin:0;padding:0;overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{background:#000;font-family:'Roboto',sans-serif;color:#fff;min-height:100dvh;padding:0;margin:0;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+
+#ag-kpi{
+  background:linear-gradient(180deg,#1C0E00 0%,#2A1400 30%,#1A0D00 100%);
+  padding:40px 60px 40px;max-width:100%;margin:0;position:relative;transition:background 0.6s ease;color:#fff;
+}
+#ag-kpi.dw{background:linear-gradient(180deg,#04101E 0%,#0A1E35 30%,#061526 100%)}
+#ag-kpi.cb{background:linear-gradient(180deg,#120822 0%,#1E1040 30%,#130A24 100%)}
+
+.ag-inner{max-width:1200px;margin:0 auto}
+
+/* GLOBAL TOUCH & FOCUS */
+button,a,.ag-toggle-btn,.ag-metric-btn,.ag-nav-btn,.ag-modal-btn,.ag-nav-menu a{
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2px}
+
+/* NAV */
+.ag-nav{position:fixed;top:calc(24px + env(safe-area-inset-top));right:calc(24px + env(safe-area-inset-right));z-index:1000}
+.ag-nav-btn{
+  display:flex;align-items:center;gap:8px;min-height:48px;min-width:48px;padding:10px 16px;border-radius:10px;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  color:#fff;font-family:'Roboto',sans-serif;font-size:13px;font-weight:500;
+  cursor:pointer;transition:all 0.3s ease;backdrop-filter:blur(12px);
+}
+@media(hover:hover){.ag-nav-btn:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.18)}}
+.ag-nav-btn:active{background:rgba(255,255,255,0.12)}
+.ag-nav-menu{
+  position:absolute;top:calc(100% + 8px);right:0;
+  background:rgba(15,15,20,0.95);border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px;padding:12px 8px;min-width:160px;
+  opacity:0;visibility:hidden;transform:translateY(-8px);
+  transition:all 0.25s ease;backdrop-filter:blur(16px);box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.ag-nav-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+.ag-nav-label{font-size:10px;color:#555;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:4px 12px 10px;border-bottom:1px solid rgba(255,255,255,0.05);margin-bottom:6px}
+.ag-nav-menu a{display:flex;align-items:center;padding:12px 14px;border-radius:8px;min-height:48px;color:#888;font-size:14px;font-weight:500;text-decoration:none;transition:all 0.2s ease}
+@media(hover:hover){.ag-nav-menu a:hover{background:rgba(255,255,255,0.06);color:#fff}}
+.ag-nav-menu a:active{background:rgba(255,255,255,0.08);color:#fff}
+.ag-nav-menu a.active{color:#fff;font-weight:600;background:rgba(255,255,255,0.04)}
+
+/* TOGGLE */
+.ag-toggle{display:flex;justify-content:center;gap:12px;margin-bottom:28px;padding-top:60px}
+.ag-toggle-btn{
+  padding:12px 28px;border-radius:10px;min-height:48px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);
+  color:#555;font-family:'Roboto',sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:all 0.3s ease;
+}
+@media(hover:hover){.ag-toggle-btn:hover{border-color:rgba(255,255,255,0.15);color:#888;background:rgba(255,255,255,0.06)}}
+.ag-toggle-btn:active{background:rgba(255,255,255,0.08)}
+.ag-toggle-btn.active{border:none;color:#fff;font-weight:600}
+.ag-toggle-btn.active.db-active{background:linear-gradient(135deg,#8B1E3F,#E85D04);box-shadow:0 6px 28px rgba(232,93,4,0.35)}
+.ag-toggle-btn.active.dw-active{background:linear-gradient(135deg,#0D2137,#4A90A4);box-shadow:0 6px 28px rgba(74,144,164,0.35)}
+.ag-toggle-btn.active.cb-active{background:linear-gradient(135deg,#5B21B6,#A855F7);box-shadow:0 6px 28px rgba(168,85,247,0.35)}
+
+/* HEADER */
+.ag-header{text-align:center;margin-bottom:24px}
+.ag-brand{font-size:36px;font-weight:700;letter-spacing:-0.5px;margin-bottom:8px;transition:text-shadow 0.5s ease}
+.ag-brand.db{text-shadow:0 0 60px rgba(232,93,4,0.3)}
+.ag-brand.dw{text-shadow:0 0 60px rgba(74,144,164,0.35)}
+.ag-brand.cb{text-shadow:0 0 60px rgba(168,85,247,0.35)}
+.ag-period{font-size:15px;color:#666;font-weight:400;letter-spacing:0.5px;margin-bottom:12px}
+.ag-badge{display:inline-block;padding:6px 16px;border-radius:16px;font-size:11px;font-weight:600;letter-spacing:1px}
+.ag-badge.db{background:rgba(232,93,4,0.1);color:#E85D04;border:1px solid rgba(232,93,4,0.18)}
+.ag-badge.dw{background:rgba(74,144,164,0.1);color:#4A90A4;border:1px solid rgba(74,144,164,0.18)}
+.ag-badge.cb{background:rgba(168,85,247,0.1);color:#A855F7;border:1px solid rgba(168,85,247,0.18)}
+
+/* CARDS */
+.ag-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.ag-card{
+  background:rgba(255,255,255,0.025);border-radius:16px;padding:22px 20px;
+  border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;transition:all 0.3s ease;
+}
+@media(hover:hover){.ag-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,0.1)}}
+.ag-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transition:background 0.5s ease}
+.ag-card.db::before{background:linear-gradient(90deg,#8B1E3F,#E85D04)}
+.ag-card.dw::before{background:linear-gradient(90deg,#2C5A6E,#4A90A4)}
+.ag-card.cb::before{background:linear-gradient(90deg,#7C3AED,#A855F7)}
+.ag-card.hero{border:none}
+.ag-card.hero.db{background:linear-gradient(135deg,#8B1E3F 0%,#E85D04 60%,#F9A825 100%);box-shadow:0 12px 48px rgba(232,93,4,0.25)}
+.ag-card.hero.dw{background:linear-gradient(135deg,#0D2137 0%,#2C5A6E 60%,#4A90A4 100%);box-shadow:0 12px 48px rgba(74,144,164,0.25)}
+.ag-card.hero.cb{background:linear-gradient(135deg,#5B21B6 0%,#7C3AED 60%,#A855F7 100%);box-shadow:0 12px 48px rgba(168,85,247,0.25)}
+.ag-card-label{font-size:11px;color:#4a4a4a;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px}
+.ag-card.hero .ag-card-label{color:rgba(255,255,255,0.7)}
+.ag-card-val{font-size:28px;font-weight:700;letter-spacing:-0.5px;transition:color 0.5s ease;line-height:1.1}
+.ag-card-val.db{color:#E85D04}.ag-card-val.dw{color:#4A90A4}.ag-card-val.cb{color:#A855F7}
+.ag-card.hero .ag-card-val{color:#fff;text-shadow:0 2px 14px rgba(0,0,0,0.2)}
+.ag-card-sub{font-size:14px;font-weight:500;margin-top:8px}
+.ag-card-sub.up{color:#4ADE80}.ag-card-sub.down{color:#F87171}.ag-card-sub.neutral{color:#555}
+.ag-card.hero .ag-card-sub{color:rgba(255,255,255,0.85)}
+
+/* DIVIDER */
+.ag-divider{height:1px;margin:24px 0;border:none;transition:background 0.5s ease}
+.ag-divider.db{background:linear-gradient(90deg,transparent,rgba(232,93,4,0.15),transparent)}
+.ag-divider.dw{background:linear-gradient(90deg,transparent,rgba(74,144,164,0.15),transparent)}
+.ag-divider.cb{background:linear-gradient(90deg,transparent,rgba(168,85,247,0.15),transparent)}
+
+/* CHARTS */
+.ag-chart-wrap{
+  background:rgba(255,255,255,0.02);border-radius:16px;padding:24px 28px;
+  border:1px solid rgba(255,255,255,0.05);margin-bottom:16px;position:relative;overflow:hidden;
+}
+.ag-chart-wrap::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:40%;height:1px;transition:background 0.5s ease}
+.ag-chart-wrap.db::before{background:linear-gradient(90deg,transparent,rgba(232,93,4,0.3),transparent)}
+.ag-chart-wrap.dw::before{background:linear-gradient(90deg,transparent,rgba(74,144,164,0.3),transparent)}
+.ag-chart-wrap.cb::before{background:linear-gradient(90deg,transparent,rgba(168,85,247,0.3),transparent)}
+.ag-chart-title{font-size:18px;font-weight:700;margin-bottom:4px;letter-spacing:-0.3px}
+.ag-chart-desc{font-size:13px;color:#4a4a4a;margin-bottom:10px}
+.ag-chart-canvas{padding:4px 0;position:relative;height:220px}
+
+/* TABLE */
+.ag-table-wrap{
+  background:rgba(255,255,255,0.02);border-radius:16px;padding:24px 28px;
+  border:1px solid rgba(255,255,255,0.05);margin-bottom:16px;
+}
+.ag-table-title{font-size:18px;font-weight:700;margin-bottom:16px;letter-spacing:-0.3px}
+.ag-table{width:100%;border-collapse:separate;border-spacing:0}
+.ag-table th{font-size:11px;color:#4a4a4a;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.06)}
+.ag-table th:not(:first-child){text-align:right}
+.ag-table td{padding:12px 14px;font-size:14px;font-weight:500;color:#999;border-bottom:1px solid rgba(255,255,255,0.03);transition:background 0.2s ease}
+@media(hover:hover){.ag-table tr:hover td{background:rgba(255,255,255,0.015)}}
+.ag-table td:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
+.ag-table tr:last-child td{border-bottom:none;font-weight:700;color:#fff;font-size:15px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06)}
+.ag-table td:first-child{display:flex;align-items:center;gap:10px;white-space:nowrap}
+.ag-table .plat-icon{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ag-table .plat-name{color:#ccc;font-weight:600}
+
+/* ALERT */
+.ag-alert{
+  padding:20px 24px;border-radius:14px;border:1px solid rgba(248,113,113,0.12);background:rgba(248,113,113,0.03);
+  margin-bottom:16px;display:flex;gap:14px;align-items:flex-start;
+}
+.ag-alert-icon{font-size:20px;margin-top:2px;color:#F87171}
+.ag-alert-text{font-size:14px;color:#aaa;line-height:1.7}
+.ag-alert-text strong{color:#F87171}
+
+/* INSIGHTS */
+.ag-insights{
+  padding:24px 28px;border-radius:16px;border:1px solid rgba(34,197,94,0.1);
+  background:linear-gradient(135deg,rgba(34,197,94,0.04),rgba(34,197,94,0.005));
+  position:relative;overflow:hidden;margin-bottom:20px;
+}
+.ag-insights::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,#22C55E,#16A34A)}
+.ag-insights-title{font-size:11px;font-weight:700;color:#22C55E;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
+.ag-insight{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start}
+.ag-insight:last-child{margin-bottom:0}
+.ag-dot{width:8px;height:8px;border-radius:50%;background:#22C55E;margin-top:7px;flex-shrink:0;box-shadow:0 0 12px rgba(34,197,94,0.5)}
+.ag-insight p{font-size:14px;color:#999;line-height:1.6}
+.ag-insight .g{color:#4ADE80;font-weight:600}
+.ag-insight .r{color:#F87171;font-weight:600}
+
+/* FOOTER */
+.ag-footer{text-align:center;margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.03)}
+.ag-footer p{font-size:13px;color:#333;letter-spacing:0.5px}
+.ag-footer a{color:#4a4a4a;text-decoration:none;font-weight:600;transition:color 0.3s ease}
+@media(hover:hover){.ag-footer a:hover{color:#E85D04}}
+@media(hover:hover){#ag-kpi.dw .ag-footer a:hover{color:#4A90A4}}
+@media(hover:hover){#ag-kpi.cb .ag-footer a:hover{color:#A855F7}}
+
+/* LOGO */
+.ag-logo-wrap{display:flex;justify-content:center;align-items:center;gap:20px;margin-bottom:12px}
+.ag-logo{height:56px;object-fit:contain;transition:opacity 0.4s ease}
+.ag-logo.hidden{display:none}
+.ag-logo-divider{width:1px;height:40px;background:rgba(255,255,255,0.12);display:none}
+.ag-logo-divider.show{display:block}
+
+/* INTRO MODAL */
+.ag-modal-overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;z-index:2000;
+  background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:1;transition:opacity 0.3s ease;
+}
+.ag-modal-overlay.hide{opacity:0;pointer-events:none}
+.ag-modal{
+  background:linear-gradient(135deg,#141418,#1a1a22);
+  border:1px solid rgba(255,255,255,0.08);border-radius:20px;
+  padding:40px 44px;max-width:380px;width:90%;text-align:center;
+  box-shadow:0 24px 64px rgba(0,0,0,0.6);
+  transform:scale(1);transition:transform 0.3s ease;
+}
+.ag-modal-overlay.hide .ag-modal{transform:scale(0.95)}
+.ag-modal-icon{
+  width:52px;height:52px;border-radius:14px;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  display:inline-flex;align-items:center;justify-content:center;margin-bottom:20px;
+}
+.ag-modal h3{font-size:18px;font-weight:700;color:#fff;margin-bottom:10px}
+.ag-modal p{font-size:14px;color:#888;line-height:1.7;margin-bottom:24px}
+.ag-modal-btn{
+  padding:12px 32px;border-radius:10px;border:none;
+  background:linear-gradient(135deg,#8B1E3F,#E85D04);
+  color:#fff;font-family:'Roboto',sans-serif;font-size:14px;font-weight:600;
+  cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 18px rgba(232,93,4,0.3);
+}
+@media(hover:hover){.ag-modal-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(232,93,4,0.4)}}
+.ag-modal-btn:active{opacity:0.9}
+.ag-modal-btn{min-height:48px}
+
+.ag-fade{transition:opacity 0.35s ease}
+.ag-fade.fading{opacity:0}
+
+/* TABLE SCROLL */
+.ag-table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* LOGO */
+.ag-logo-wrap{display:flex;justify-content:center;align-items:center;gap:20px;margin-bottom:12px}
+.ag-logo{height:56px;object-fit:contain;transition:opacity 0.4s ease}
+.ag-logo.hidden{display:none}
+.ag-logo-divider{width:1px;height:40px;background:rgba(255,255,255,0.12);display:none}
+.ag-logo-divider.show{display:block}
+
+@media(max-width:1024px){
+  #ag-kpi{padding:48px 36px}.ag-cards{grid-template-columns:repeat(2,1fr)}.ag-brand{font-size:36px}
+  .ag-chart-wrap,.ag-table-wrap{padding:24px 20px}.ag-insights{padding:24px 20px}.ag-logo{height:60px}
+}
+@media(max-width:768px){
+  #ag-kpi{padding:36px 20px}.ag-cards{grid-template-columns:repeat(2,1fr);gap:14px}.ag-brand{font-size:28px}
+  .ag-card{padding:24px 20px}.ag-card-val{font-size:26px}.ag-card-label{font-size:10px;margin-bottom:10px}
+  .ag-chart-wrap,.ag-table-wrap{padding:20px 16px}.ag-chart-title{font-size:18px}.ag-chart-desc{font-size:12px}
+  .ag-insights{padding:20px 16px}.ag-insight p{font-size:14px}.ag-alert{padding:20px;flex-direction:column;gap:12px}
+  .ag-toggle{gap:10px;margin-bottom:28px}.ag-toggle-btn{padding:12px 20px;font-size:14px}
+  .ag-divider{margin:20px 0}.ag-header{margin-bottom:24px}.ag-logo{height:48px}.ag-logo-wrap{gap:16px}
+  .ag-modal{padding:32px 28px;max-width:320px}.ag-modal h3{font-size:16px}.ag-modal p{font-size:13px}
+  .ag-table{min-width:400px}
+  .ag-chart-canvas{height:200px}
+}
+@media(max-width:480px){
+  #ag-kpi{padding:28px 16px}.ag-cards{grid-template-columns:repeat(2,1fr)}.ag-toggle{flex-wrap:wrap;justify-content:center;gap:8px}
+  .ag-toggle-btn{padding:12px 16px;font-size:13px;flex:1;min-width:0;text-align:center}
+  .ag-brand{font-size:24px}.ag-card-val{font-size:22px}.ag-card{padding:18px 16px}.ag-logo{height:40px}
+  .ag-chart-canvas{height:180px}
+  .ag-nav{top:calc(16px + env(safe-area-inset-top));right:calc(16px + env(safe-area-inset-right))}
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition-duration:0.01ms!important;animation-duration:0.01ms!important}
+  .ag-fade{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div class="ag-modal-overlay" id="ag-modal-overlay" onclick="dismissModal(event)" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="ag-modal">
+    <div class="ag-modal-icon">
+      <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><rect y="3" width="20" height="2" rx="1" fill="white"/><rect y="9" width="20" height="2" rx="1" fill="white"/><rect y="15" width="20" height="2" rx="1" fill="white"/></svg>
+    </div>
+    <h3 id="modal-title">Switch Between Reports</h3>
+    <p>Use the <strong>Reports</strong> menu in the top-right corner to jump between monthly reports.</p>
+    <button class="ag-modal-btn" onclick="dismissModal()">Got it</button>
+  </div>
+</div>
+
+<div id="ag-kpi">
+
+<div class="ag-nav">
+  <button class="ag-nav-btn" onclick="document.querySelector('.ag-nav-menu').classList.toggle('open')" aria-label="Reports menu">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect y="3" width="20" height="2" rx="1" fill="white"/><rect y="9" width="20" height="2" rx="1" fill="white"/><rect y="15" width="20" height="2" rx="1" fill="white"/></svg>
+    <span>Reports</span>
+  </button>
+  <div class="ag-nav-menu" role="menu" aria-label="Report navigation">
+    <p class="ag-nav-label">Monthly Reports</p>
+    <a href="/dr-bob/dec-2025">Dec</a><a href="/dr-bob/jan-2026" class="active">Jan</a><a href="/dr-bob/feb-2026">Feb</a><a href="/dr-bob">4-Month</a>
+  </div>
+</div>
+
+<div class="ag-inner">
+
+<div class="ag-toggle">
+  <button class="ag-toggle-btn active db-active" onclick="setBrand('db')">Dr. Bob Beare</button>
+  <button class="ag-toggle-btn" onclick="setBrand('dw')">Deep Waters Recovery</button>
+  <button class="ag-toggle-btn" onclick="setBrand('cb')">Combined</button>
+</div>
+
+<div class="ag-fade" id="ag-fade">
+
+<div class="ag-header">
+  <div class="ag-logo-wrap" id="ag-logo-wrap">
+    <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Dr%20Bob/Bob%20Beare%20Logo.png" alt="Dr. Bob Beare" class="ag-logo" id="logo-db">
+    <div class="ag-logo-divider" id="logo-divider"></div>
+    <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Dr%20Bob/Deepwaters%20Logo.png" alt="Deep Waters Recovery" class="ag-logo hidden" id="logo-dw">
+  </div>
+  <p class="ag-brand db" id="ag-brand">Dr. Bob Beare</p>
+  <p class="ag-period">January 2026</p>
+  <span class="ag-badge db" id="ag-badge">MONTHLY KPI REPORT</span>
+</div>
+
+<div class="ag-cards" id="ag-cards">
+  <div class="ag-card db" id="card-0"><p class="ag-card-label" id="c0-label">VIEWS</p><p class="ag-card-val db" id="c0-val"></p><p class="ag-card-sub neutral" id="c0-sub">across 5 platforms</p></div>
+  <div class="ag-card db" id="card-1"><p class="ag-card-label" id="c1-label">ENGAGEMENTS</p><p class="ag-card-val db" id="c1-val"></p><p class="ag-card-sub neutral" id="c1-sub">total interactions</p></div>
+  <div class="ag-card db" id="card-2"><p class="ag-card-label" id="c2-label">FOLLOWER CHANGE</p><p class="ag-card-val db" id="c2-val"></p><p class="ag-card-sub neutral" id="c2-sub">net this month</p></div>
+  <div class="ag-card hero db" id="card-3"><p class="ag-card-label" id="c3-label">TOP PLATFORM</p><p class="ag-card-val" id="c3-val"></p><p class="ag-card-sub" id="c3-sub"></p></div>
+</div>
+
+<hr class="ag-divider db" id="divider-1">
+
+<div class="ag-chart-wrap db" id="trend-wrap">
+  <h2 class="ag-chart-title">4-Month Trend</h2>
+  <p class="ag-chart-desc" id="trend-desc">Monthly views &mdash; Nov through Feb</p>
+  <div class="ag-chart-canvas"><canvas id="trendChart"></canvas></div>
+</div>
+
+
+<hr class="ag-divider db" id="divider-2">
+
+<div class="ag-table-wrap" id="table-wrap">
+  <h2 class="ag-table-title">Platform Details</h2>
+  <div class="ag-table-scroll">
+    <table class="ag-table" id="ag-table">
+      <thead><tr><th>Platform</th><th>Views</th><th>Engagements</th><th>Follower +/-</th></tr></thead>
+      <tbody id="ag-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="ag-divider db" id="divider-3">
+
+<div class="ag-alert" id="ag-alert" style="display:none">
+  <span class="ag-alert-icon">&#9888;</span>
+  <p class="ag-alert-text" id="ag-alert-text"></p>
+</div>
+
+<div class="ag-insights" id="ag-insights">
+  <p class="ag-insights-title">Key Insights</p>
+  <div id="ag-insight-list"></div>
+</div>
+
+</div>
+</div>
+
+<div class="ag-footer">
+  <p><a href="https://www.arcgarde.com" target="_blank">Arc Garde</a> &mdash; KPI Dashboard</p>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const MONTH_INDEX=2;
+const allMonths=['Nov','Dec','Jan','Feb'];
+const platNames=['Instagram','TikTok','YouTube','Facebook','Threads'];
+const platColorsRGBA=['rgba(225,48,108,0.85)','rgba(130,130,130,0.85)','rgba(255,50,50,0.85)','rgba(24,119,242,0.85)','rgba(90,90,90,0.85)'];
+const platDotColors={Instagram:'#E1306C',TikTok:'#888',YouTube:'#FF0000',Facebook:'#1877F2',Threads:'#666'};
+
+const D={
+  db:{
+    name:'Dr. Bob Beare',cls:'db',
+    colors:{primary:'#8B1E3F',secondary:'#E85D04',accent:'#F9A825'},
+    views:{Instagram:8611,TikTok:22000,YouTube:23681,Facebook:10000,Threads:206},eng:{Instagram:151,TikTok:644,YouTube:295,Facebook:365,Threads:42},fol:{Instagram:-729,TikTok:14,YouTube:12,Facebook:6,Threads:1},
+    totalViews:64498,totalEng:1497,folNet:-696,
+    topPlat:'YouTube',topPlatVal:'23,681 views',
+    trendViews:[59700, 67609, 64498, 50261],
+    insights:['YouTube peaked at <span class="g">23,681 views</span> &mdash; best single-platform month for Dr. Bob','TikTok hit <span class="g">22,000 views</span> &mdash; also its best month','Instagram engagement collapsed from 1,084 to <span class="r">151</span> &mdash; down 86%','Instagram lost <span class="r">729 followers</span> in a single month &mdash; catastrophic drop'],
+    alert:'Instagram lost <strong>729 followers</strong> in January alone. Engagement crashed 86% from December. This is the worst single month across the entire tracking period.'
+  },
+  dw:{
+    name:'Deep Waters Recovery',cls:'dw',
+    colors:{primary:'#0D2137',secondary:'#2C5A6E',accent:'#4A90A4'},
+    views:{Instagram:6084,TikTok:15000,YouTube:15034,Facebook:862,Threads:68},eng:{Instagram:157,TikTok:341,YouTube:260,Facebook:40,Threads:2},fol:{Instagram:9,TikTok:8,YouTube:17,Facebook:4,Threads:0},
+    totalViews:37048,totalEng:800,folNet:38,
+    topPlat:'YouTube',topPlatVal:'15,034 views',
+    trendViews:[29583, 17818, 37048, 27544],
+    insights:['Breakout month at <span class="g">37,048 views</span> &mdash; up 108% from December','TikTok exploded to <span class="g">15,000 views</span> &mdash; up 155% from last month','YouTube rebounded to <span class="g">15,034 views</span> matching its November peak','Engagement more than doubled to <span class="g">800 interactions</span>'],
+    alert:null
+  },
+  cb:{
+    name:'Combined Results',cls:'cb',
+    colors:{primary:'#5B21B6',secondary:'#7C3AED',accent:'#A855F7'},
+    views:{Instagram:14695,TikTok:37000,YouTube:38715,Facebook:10862,Threads:274},eng:{Instagram:308,TikTok:985,YouTube:555,Facebook:405,Threads:44},fol:{Instagram:-720,TikTok:22,YouTube:29,Facebook:10,Threads:1},
+    totalViews:101546,totalEng:2297,folNet:-658,
+    topPlat:'YouTube',topPlatVal:'38,715 views',
+    trendViews:[89283, 85427, 101546, 77805],
+    insights:['First time breaking <span class="g">100,000 combined views</span> in a single month','Deepwaters surged 108% while Dr. Bob held steady &mdash; both brands contributing','TikTok combined hit <span class="g">37,000 views</span> &mdash; strongest platform performance yet','Follower losses at <span class="r">-658</span> entirely from Dr. Bob Instagram (-729)'],
+    alert:'Best views month at <strong>101,546</strong> but worst follower month at <strong>-658</strong>. The Instagram crisis is accelerating while content reach is actually growing.'
+  }
+};
+
+let brand='db',trendChart;
+
+function fmt(n){return n.toLocaleString();}
+
+function brandGradient(ctx,c){
+  const g=ctx.createLinearGradient(0,0,ctx.canvas.width,0);
+  g.addColorStop(0,c.primary);g.addColorStop(0.5,c.secondary);g.addColorStop(1,c.accent);return g;
+}
+function brandArea(ctx,c){
+  const g=ctx.createLinearGradient(0,0,0,ctx.canvas.height);
+  g.addColorStop(0,c.accent+'30');g.addColorStop(0.6,c.secondary+'0A');g.addColorStop(1,'transparent');return g;
+}
+
+function initCharts(){
+  const b=D[brand];
+
+  // Trend line chart
+  const ctx1=document.getElementById('trendChart').getContext('2d');
+  const pointRadii=allMonths.map((_,i)=>i===MONTH_INDEX?10:5);
+  const pointBorders=allMonths.map((_,i)=>i===MONTH_INDEX?4:2);
+  trendChart=new Chart(ctx1,{
+    type:'line',
+    data:{labels:allMonths,datasets:[{
+      data:b.trendViews,
+      borderColor:brandGradient(ctx1,b.colors),borderWidth:3,
+      pointBackgroundColor:allMonths.map((_,i)=>i===MONTH_INDEX?'#fff':b.colors.accent),
+      pointBorderColor:b.colors.primary,
+      pointBorderWidth:pointBorders,pointRadius:pointRadii,pointHoverRadius:12,
+      fill:true,backgroundColor:brandArea(ctx1,b.colors),tension:0.35
+    }]},
+    options:{
+      responsive:true,maintainAspectRatio:false,layout:{padding:{top:8,bottom:4,left:4,right:4}},
+      interaction:{intersect:false,mode:'index'},animation:{duration:700,easing:'easeOutQuart'},
+      plugins:{legend:{display:false},tooltip:{
+        backgroundColor:'rgba(0,0,0,0.92)',titleColor:'#fff',bodyColor:'#ccc',
+        borderColor:'rgba(255,255,255,0.06)',borderWidth:1,padding:14,cornerRadius:10,
+        displayColors:false,titleFont:{size:14,weight:'600'},bodyFont:{size:14},
+        callbacks:{label:function(c){return fmt(c.raw)}}
+      }},
+      scales:{
+        x:{grid:{display:false},ticks:{color:allMonths.map((_,i)=>i===MONTH_INDEX?'#fff':'#555'),font:{family:'Roboto',size:14,weight:'500'},padding:12}},
+        y:{grid:{color:'rgba(255,255,255,0.025)',drawBorder:false},ticks:{color:'#3a3a3a',font:{size:12},padding:16,callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v}}}
+      }
+    }
+  });
+
+  updateAll();
+}
+
+function setBrand(b){
+  const fade=document.getElementById('ag-fade');
+  fade.classList.add('fading');
+  setTimeout(()=>{
+    brand=b;
+    document.querySelectorAll('.ag-toggle-btn').forEach(btn=>btn.classList.remove('active','db-active','dw-active','cb-active'));
+    const btns=document.querySelectorAll('.ag-toggle-btn');
+    btns[{db:0,dw:1,cb:2}[b]].classList.add('active',b+'-active');
+    const container=document.getElementById('ag-kpi');
+    container.className='';container.id='ag-kpi';
+    if(b==='dw')container.classList.add('dw');
+    if(b==='cb')container.classList.add('cb');
+    updateAll();
+    fade.classList.remove('fading');
+  },350);
+}
+
+function updateAll(){
+  const b=D[brand],c=b.cls;
+  // Logos
+  const logoDB=document.getElementById('logo-db');
+  const logoDW=document.getElementById('logo-dw');
+  const logoDivider=document.getElementById('logo-divider');
+  if(c==='db'){logoDB.classList.remove('hidden');logoDW.classList.add('hidden');logoDivider.classList.remove('show');}
+  else if(c==='dw'){logoDB.classList.add('hidden');logoDW.classList.remove('hidden');logoDivider.classList.remove('show');}
+  else{logoDB.classList.remove('hidden');logoDW.classList.remove('hidden');logoDivider.classList.add('show');}
+
+  document.getElementById('ag-brand').className='ag-brand '+c;
+  document.getElementById('ag-brand').textContent=b.name;
+  document.getElementById('ag-badge').className='ag-badge '+c;
+  document.querySelectorAll('.ag-card').forEach(card=>{card.classList.remove('db','dw','cb');card.classList.add(c);});
+  document.getElementById('card-3').className='ag-card hero '+c;
+  document.querySelectorAll('.ag-card-val').forEach(el=>{el.classList.remove('db','dw','cb');el.classList.add(c);});
+  document.getElementById('c0-val').textContent=fmt(b.totalViews);
+  document.getElementById('c1-val').textContent=fmt(b.totalEng);
+  const fNet=b.folNet;
+  document.getElementById('c2-val').textContent=(fNet>=0?'+':'')+fmt(fNet);
+  document.getElementById('c2-sub').className='ag-card-sub '+(fNet>=0?'up':'down');
+  document.getElementById('c3-val').textContent=b.topPlat;
+  document.getElementById('c3-sub').textContent=b.topPlatVal;
+  document.getElementById('trend-wrap').className='ag-chart-wrap '+c;
+  document.querySelectorAll('.ag-divider').forEach(d=>{d.className='ag-divider '+c;});
+
+  // Update trend chart
+  const ctx1=document.getElementById('trendChart').getContext('2d');
+  trendChart.data.datasets[0].data=b.trendViews;
+  trendChart.data.datasets[0].borderColor=brandGradient(ctx1,b.colors);
+  trendChart.data.datasets[0].backgroundColor=brandArea(ctx1,b.colors);
+  trendChart.data.datasets[0].pointBackgroundColor=allMonths.map((_,i)=>i===MONTH_INDEX?'#fff':b.colors.accent);
+  trendChart.data.datasets[0].pointBorderColor=b.colors.primary;
+  trendChart.update();
+
+  // Table
+  const tbody=document.getElementById('ag-tbody');
+  tbody.innerHTML='';
+  platNames.forEach(p=>{
+    const tr=document.createElement('tr');
+    const fVal=b.fol[p];const fStr=(fVal>=0?'+':'')+fmt(fVal);
+    tr.innerHTML='<td><span class="plat-icon" style="background:'+platDotColors[p]+'"></span><span class="plat-name">'+p+'</span></td><td>'+fmt(b.views[p])+'</td><td>'+fmt(b.eng[p])+'</td><td>'+fStr+'</td>';
+    tbody.appendChild(tr);
+  });
+  const trT=document.createElement('tr');
+  const totalFol=platNames.reduce((a,p)=>a+b.fol[p],0);
+  trT.innerHTML='<td>Total</td><td>'+fmt(b.totalViews)+'</td><td>'+fmt(b.totalEng)+'</td><td>'+(totalFol>=0?'+':'')+fmt(totalFol)+'</td>';
+  tbody.appendChild(trT);
+
+  // Insights
+  const list=document.getElementById('ag-insight-list');
+  list.innerHTML='';
+  b.insights.forEach(txt=>{
+    const div=document.createElement('div');div.className='ag-insight';
+    div.innerHTML='<div class="ag-dot"></div><p>'+txt+'</p>';
+    list.appendChild(div);
+  });
+
+  // Alert
+  const alertEl=document.getElementById('ag-alert');
+  if(b.alert){alertEl.style.display='flex';document.getElementById('ag-alert-text').innerHTML=b.alert;}
+  else{alertEl.style.display='none';}
+}
+
+document.addEventListener('DOMContentLoaded',initCharts);
+
+// Intro modal
+function dismissModal(e){
+  if(e&&e.target!==document.getElementById('ag-modal-overlay'))return;
+  const overlay=document.getElementById('ag-modal-overlay');
+  overlay.classList.add('hide');
+  setTimeout(()=>{overlay.style.display='none';},300);
+  localStorage.setItem('ag-kpi-modal-seen','1');
+}
+if(localStorage.getItem('ag-kpi-modal-seen')){
+  const o=document.getElementById('ag-modal-overlay');
+  if(o){o.style.display='none';}
+}
+
+document.addEventListener('click',function(e){
+  const nav=document.querySelector('.ag-nav');
+  if(nav&&!nav.contains(e.target))document.querySelector('.ag-nav-menu').classList.remove('open');
+});
+</script>
+</body>
+</html>
