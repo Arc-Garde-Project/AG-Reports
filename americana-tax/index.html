@@ -2,34 +2,199 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Americana Tax Planning — Ad Testing Reports</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#0A0A0F">
+<title>Americana Tax Planning — Campaign Reports</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0A0A0F;font-family:'Segoe UI',system-ui,sans-serif;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center}
-.wrap{text-align:center;padding:40px;max-width:600px}
-h1{font-size:24px;font-weight:700;margin-bottom:6px;letter-spacing:-0.5px}
-.sub{font-size:13px;color:#555;margin-bottom:32px}
-.reports{display:flex;flex-direction:column;gap:10px;align-items:center}
-a.report{display:block;padding:14px 28px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);
-  background:rgba(255,255,255,0.03);color:#999;font-size:14px;font-weight:500;text-decoration:none;
-  transition:all 0.3s ease;min-width:280px}
-a.report:hover{border-color:rgba(255,255,255,0.15);color:#fff;background:rgba(255,255,255,0.06)}
-.badge{font-size:11px;color:#444;display:block;margin-top:3px}
+:root {
+  --bg: #0A0A0F;
+  --card: #111118;
+  --card-deep: #0D0D14;
+  --border: #1A1A25;
+  --red: #C0392B;
+  --red-lt: #E74C3C;
+  --blue: #2C6FBB;
+  --blue-lt: #4A90D9;
+  --text: #E8E8F0;
+  --muted: #999;
+  --green: #2ECC71;
+  --cyan: #4DD0E1;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(44,111,187,0.06) 0%, transparent 60%);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+}
+
+.portal { max-width: 800px; margin: 0 auto; padding: 60px 24px 40px; }
+
+/* ── Header ── */
+.header { text-align: center; margin-bottom: 48px; }
+.brand-label {
+  font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 20px; font-weight: 600;
+}
+.header-logo { max-width: 280px; margin: 0 auto 20px; display: block; }
+.header-title {
+  font-size: 14px; color: var(--muted); font-weight: 400; letter-spacing: 1px;
+}
+.divider {
+  width: 140px; height: 2px; margin: 24px auto 0; border-radius: 2px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+}
+
+/* ── Section ── */
+.section { margin-bottom: 40px; }
+.section-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 3px;
+  color: #555; font-weight: 700; margin-bottom: 16px; padding-left: 4px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-label::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+}
+.section-label.red::before { background: var(--red); box-shadow: 0 0 8px var(--red); }
+.section-label.blue::before { background: var(--blue); box-shadow: 0 0 8px var(--blue); }
+
+/* ── Report Cards ── */
+.reports-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.report-card {
+  display: block; text-decoration: none; position: relative;
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px 20px; transition: all 0.3s; overflow: hidden;
+  touch-action: manipulation;
+}
+.report-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+  opacity: 0; transition: opacity 0.3s;
+}
+.report-card:hover {
+  border-color: rgba(44,111,187,0.3); transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+}
+.report-card:hover::after { opacity: 1; }
+.report-card:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+.report-title {
+  font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 6px;
+}
+.report-date {
+  font-size: 12px; color: #666; font-weight: 400;
+}
+.report-type {
+  display: flex; align-items: center; gap: 6px; margin-top: 12px;
+  font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px;
+  color: #555; font-weight: 600;
+}
+.report-type-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+}
+.report-type-dot.ad-test { background: var(--red); }
+.report-type-dot.dashboard { background: var(--blue); }
+
+/* ── Badge ── */
+.badge {
+  position: absolute; top: 16px; right: 16px;
+  font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 12px;
+  background: rgba(46,204,113,0.12); color: var(--green);
+}
+
+/* ── Footer ── */
+.footer { text-align: center; padding: 32px 0 0; border-top: 1px solid var(--border); margin-top: 16px; }
+.footer a {
+  color: #444; font-size: 10px; letter-spacing: 3px; text-decoration: none;
+  text-transform: uppercase; transition: color 0.3s; font-weight: 600;
+}
+.footer a:hover { color: var(--red); }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .portal { padding: 40px 16px 32px; }
+  .header-logo { max-width: 220px; }
+  .report-title { font-size: 14px; }
+}
+@media (max-width: 480px) {
+  .reports-grid { grid-template-columns: 1fr; }
+  .portal { padding: 32px 12px 24px; }
+  .header { margin-bottom: 32px; }
+  .report-card { padding: 20px 16px; }
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>Americana Tax Planning</h1>
-  <p class="sub">Ad Testing Stage Reports</p>
-  <div class="reports">
-    <a class="report" href="/americana-tax/la-w1">LA County — Week 1<span class="badge">Feb 4 - 8, 2026</span></a>
-    <a class="report" href="/americana-tax/oc-w1">Orange County — Week 1<span class="badge">Feb 9 - 13, 2026</span></a>
-    <a class="report" href="/americana-tax/la-w2">LA County — Week 2<span class="badge">Feb 14 - 19, 2026</span></a>
-    <a class="report" href="/americana-tax/oc-w2">Orange County — Week 2<span class="badge">Feb 20 - 23, 2026</span></a>
-    <a class="report" href="/americana-tax/feb-24-28">Campaign Dashboard<span class="badge">Feb 24 - 28, 2026</span></a>
-    <a class="report" href="/americana-tax/feb-28-mar-3">Campaign Dashboard<span class="badge">Feb 28 - Mar 3, 2026</span></a>
+
+<div class="portal">
+  <div class="header">
+    <div class="brand-label">Arc Garde Media Buying</div>
+    <img src="https://americanataxplanning.com/wp-content/uploads/2020/03/americana-tax-planning-logo.png" alt="Americana Tax Planning" class="header-logo">
+    <div class="header-title">Campaign Reports</div>
+    <div class="divider"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-label red">Ad Testing</div>
+    <div class="reports-grid">
+      <a class="report-card" href="/americana-tax/la-w1">
+        <div class="report-title">LA County — Week 1</div>
+        <div class="report-date">Feb 4 - 8, 2026</div>
+        <div class="report-type"><span class="report-type-dot ad-test"></span> Ad Test</div>
+      </a>
+      <a class="report-card" href="/americana-tax/oc-w1">
+        <div class="report-title">Orange County — Week 1</div>
+        <div class="report-date">Feb 9 - 13, 2026</div>
+        <div class="report-type"><span class="report-type-dot ad-test"></span> Ad Test</div>
+      </a>
+      <a class="report-card" href="/americana-tax/la-w2">
+        <div class="report-title">LA County — Week 2</div>
+        <div class="report-date">Feb 14 - 19, 2026</div>
+        <div class="report-type"><span class="report-type-dot ad-test"></span> Ad Test</div>
+      </a>
+      <a class="report-card" href="/americana-tax/oc-w2">
+        <div class="report-title">Orange County — Week 2</div>
+        <div class="report-date">Feb 20 - 23, 2026</div>
+        <div class="report-type"><span class="report-type-dot ad-test"></span> Ad Test</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label blue">Campaign Dashboards</div>
+    <div class="reports-grid">
+      <a class="report-card" href="/americana-tax/feb-24-28">
+        <div class="report-title">Campaign Dashboard</div>
+        <div class="report-date">Feb 24 - 28, 2026</div>
+        <div class="report-type"><span class="report-type-dot dashboard"></span> Dashboard</div>
+      </a>
+      <a class="report-card" href="/americana-tax/feb-28-mar-3">
+        <span class="badge">Latest</span>
+        <div class="report-title">Campaign Dashboard</div>
+        <div class="report-date">Feb 28 - Mar 3, 2026</div>
+        <div class="report-type"><span class="report-type-dot dashboard"></span> Dashboard</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="https://www.arcgarde.com" target="_blank">Arc Garde</a>
   </div>
 </div>
+
 </body>
 </html>
