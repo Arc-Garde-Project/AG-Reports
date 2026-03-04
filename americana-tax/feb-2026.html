@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#0A0A0F">
+<title>Americana Tax Planning — February 2026 Monthly Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #0A0A0F;
+  --card: #111118;
+  --card-deep: #0D0D14;
+  --border: #1A1A25;
+  --red: #C0392B;
+  --red-lt: #E74C3C;
+  --blue: #2C6FBB;
+  --blue-lt: #4A90D9;
+  --text: #E8E8F0;
+  --muted: #999;
+  --green: #2ECC71;
+  --cyan: #4DD0E1;
+  --amber: #F39C12;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(44,111,187,0.06) 0%, transparent 60%);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+}
+.dashboard { max-width: 960px; margin: 0 auto; padding: 48px 24px; }
+
+/* ── Reports Nav Modal ── */
+.reports-btn {
+  position: fixed; top: 20px; right: 20px; z-index: 1000;
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 20px; min-height: 48px;
+  border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(10,10,15,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  color: #888; font-size: 13px; font-family: inherit; font-weight: 600;
+  cursor: pointer; transition: all 0.3s; letter-spacing: 0.5px;
+  touch-action: manipulation;
+}
+.reports-btn:hover { border-color: rgba(255,255,255,0.2); color: #ccc; }
+.reports-btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.reports-overlay {
+  position: fixed; inset: 0; z-index: 998;
+  background: rgba(0,0,0,0.5); opacity: 0;
+  pointer-events: none; transition: opacity 0.25s;
+}
+.reports-overlay.open { opacity: 1; pointer-events: auto; }
+.reports-nav {
+  position: fixed; top: 76px; right: 20px; z-index: 999;
+  width: 280px; padding: 12px;
+  background: rgba(17,17,24,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  opacity: 0; transform: translateY(-10px);
+  pointer-events: none; transition: opacity 0.25s, transform 0.25s;
+}
+.reports-nav.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.reports-nav-group {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
+  color: #555; padding: 8px 12px 4px; font-weight: 700;
+}
+.reports-nav-link {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 12px; min-height: 48px;
+  border-radius: 10px; color: #999; font-size: 13px; font-weight: 500;
+  text-decoration: none; transition: all 0.2s; touch-action: manipulation;
+}
+.reports-nav-link span { font-size: 11px; color: #555; }
+.reports-nav-link:hover { background: rgba(255,255,255,0.05); color: #fff; }
+.reports-nav-link.active { background: rgba(44,111,187,0.12); color: var(--blue-lt); }
+.reports-nav-link.active span { color: var(--blue); }
+.reports-nav-link:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+.reports-nav-all { justify-content: center; color: #666; font-size: 12px; }
+.reports-nav-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 6px 0; }
+
+/* ── Header ── */
+.header { text-align: center; margin-bottom: 40px; }
+.brand-label {
+  font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 20px; font-weight: 600;
+}
+.header-logo { max-width: 280px; margin: 0 auto 20px; display: block; }
+.subtitle { font-size: 14px; color: var(--muted); margin-bottom: 4px; font-weight: 500; }
+.date-range { font-size: 13px; color: #666; font-weight: 400; }
+.month-badge {
+  display: inline-block; margin-top: 16px;
+  font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  padding: 6px 18px; border-radius: 20px;
+  background: linear-gradient(135deg, rgba(192,57,43,0.15), rgba(44,111,187,0.15));
+  border: 1px solid rgba(192,57,43,0.2); color: var(--text);
+}
+.divider {
+  width: 140px; height: 2px; margin: 20px auto 0; border-radius: 2px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+}
+
+/* ── Hero KPIs ── */
+.hero-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 32px; }
+.hero-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px 16px; text-align: center; position: relative; overflow: hidden;
+}
+.hero-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--blue)); opacity: 1;
+}
+.hero-card.primary {
+  background: linear-gradient(135deg, rgba(192,57,43,0.12), rgba(44,111,187,0.08));
+  border-color: rgba(192,57,43,0.2);
+}
+.hero-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 10px; font-weight: 500; }
+.hero-value { font-size: 32px; font-weight: 800; letter-spacing: -1px; }
+.hero-sub { font-size: 11px; color: #555; margin-top: 6px; font-weight: 500; }
+
+/* ── Section Cards ── */
+.section-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 18px; padding: 28px 24px; margin-bottom: 24px;
+}
+.section-header { margin-bottom: 22px; }
+.section-title {
+  font-size: 12px; text-transform: uppercase; letter-spacing: 2px;
+  font-weight: 700; display: flex; align-items: center; gap: 10px;
+}
+.section-title::before {
+  content: ''; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.section-title.red { color: var(--red-lt); }
+.section-title.red::before { background: var(--red); box-shadow: 0 0 10px var(--red); }
+.section-title.blue { color: var(--blue-lt); }
+.section-title.blue::before { background: var(--blue); box-shadow: 0 0 10px var(--blue); }
+.section-title.green { color: var(--green); }
+.section-title.green::before { background: var(--green); box-shadow: 0 0 10px var(--green); }
+.section-title.cyan { color: var(--cyan); }
+.section-title.cyan::before { background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+.section-title.amber { color: var(--amber); }
+.section-title.amber::before { background: var(--amber); box-shadow: 0 0 10px var(--amber); }
+.section-desc {
+  font-size: 12px; color: #666; margin-top: 8px; line-height: 1.7;
+  padding-left: 18px; font-weight: 400;
+}
+
+/* ── Chart ── */
+.chart-section {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 18px; padding: 28px 22px 18px; margin-bottom: 24px;
+}
+.chart-container { height: 280px; position: relative; }
+
+/* ── Comparison Grid ── */
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.compare-card {
+  background: var(--card-deep); border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px 20px; text-align: center; transition: all 0.3s;
+}
+.compare-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+.compare-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
+  margin-bottom: 16px; font-weight: 700;
+}
+.compare-label.la { color: var(--red-lt); }
+.compare-label.oc { color: var(--blue-lt); }
+.compare-label.static { color: var(--amber); }
+.compare-label.video { color: var(--cyan); }
+.compare-stat { margin-bottom: 14px; }
+.compare-stat-value { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+.compare-stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+/* ── Winner Board Table ── */
+.winner-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.winner-table th {
+  text-align: left; padding: 10px 12px; font-size: 10px; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--muted); border-bottom: 1px solid var(--border); font-weight: 600;
+}
+.winner-table td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+.winner-table tr:hover td { background: rgba(255,255,255,0.02); }
+.winner-pill {
+  display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 1px;
+  padding: 3px 10px; border-radius: 12px; text-transform: uppercase;
+}
+.winner-pill.win { background: rgba(46,204,113,0.12); color: var(--green); }
+.geo-pill {
+  display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 1px;
+  padding: 3px 10px; border-radius: 12px;
+}
+.geo-pill.la { background: rgba(192,57,43,0.12); color: var(--red-lt); }
+.geo-pill.oc { background: rgba(44,111,187,0.12); color: var(--blue-lt); }
+
+/* ── Retarget Bars ── */
+.retarget-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.retarget-item { text-align: center; }
+.retarget-bar-wrap {
+  height: 120px; background: rgba(255,255,255,0.02); border-radius: 10px;
+  display: flex; align-items: flex-end; justify-content: center; padding: 0 4px 0;
+  margin-bottom: 8px;
+}
+.retarget-bar {
+  width: 100%; border-radius: 8px 8px 0 0; transition: all 0.3s;
+  min-height: 4px;
+}
+.retarget-name { font-size: 10px; color: var(--muted); font-weight: 600; }
+.retarget-spend { font-size: 11px; color: #666; margin-top: 2px; }
+.retarget-pct { font-size: 13px; font-weight: 700; margin-top: 4px; }
+
+/* ── Insight Rows ── */
+.insight-list { display: flex; flex-direction: column; gap: 12px; }
+.insight-item {
+  padding: 16px 18px; background: var(--card-deep); border-radius: 14px;
+  border-left: 3px solid var(--blue); font-size: 13px; line-height: 1.8; color: #888;
+}
+.insight-item.action { border-left-color: var(--green); }
+.insight-item.warning { border-left-color: var(--amber); }
+.insight-item strong { color: var(--text); font-weight: 600; }
+.insight-item .highlight { font-weight: 700; }
+.insight-item .green { color: var(--green); }
+.insight-item .red { color: var(--red-lt); }
+.insight-item .blue { color: var(--blue-lt); }
+.insight-item .amber { color: var(--amber); }
+
+/* ── Metric Cards Row ── */
+.metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+.metric-card {
+  background: var(--card-deep); border-radius: 16px; padding: 20px 14px;
+  text-align: center; border: 1px solid transparent; transition: all 0.3s;
+}
+.metric-card:hover { border-color: var(--border); transform: translateY(-2px); }
+.metric-card-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 8px; font-weight: 500; }
+.metric-card-value { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+.metric-card-sub { font-size: 11px; color: #555; margin-top: 6px; }
+.high { color: var(--green); }
+.medium { color: var(--cyan); }
+.low { color: var(--red-lt); }
+
+/* ── Footer ── */
+.footer { text-align: center; padding: 40px 0 20px; }
+.footer a { color: #444; font-size: 10px; letter-spacing: 3px; text-decoration: none; text-transform: uppercase; transition: color 0.3s; font-weight: 600; }
+.footer a:hover { color: var(--red); }
+.footer .generated { font-size: 10px; color: #333; margin-top: 8px; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .dashboard { padding: 36px 16px; }
+  .hero-grid { grid-template-columns: repeat(2, 1fr); }
+  .compare-grid { grid-template-columns: 1fr; }
+  .retarget-grid { grid-template-columns: repeat(3, 1fr); }
+  .metric-row { grid-template-columns: 1fr; }
+  .hero-value { font-size: 26px; }
+  .section-card { padding: 22px 18px; }
+  .header-logo { max-width: 200px; }
+  .winner-table { font-size: 11px; }
+  .winner-table th, .winner-table td { padding: 8px 6px; }
+  .reports-nav { right: 12px; width: calc(100vw - 24px); max-width: 320px; }
+  .reports-btn { right: 12px; }
+}
+@media (max-width: 480px) {
+  .dashboard { padding: 24px 12px; }
+  .hero-grid { gap: 8px; }
+  .hero-card { padding: 18px 12px; }
+  .hero-value { font-size: 22px; }
+  .chart-container { height: 220px; }
+  .compare-stat-value { font-size: 22px; }
+  .retarget-grid { grid-template-columns: repeat(2, 1fr); }
+  .retarget-bar-wrap { height: 80px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Reports Nav Modal -->
+<button class="reports-btn" onclick="toggleReportsNav()" aria-label="Open reports menu">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  Reports
+</button>
+<div class="reports-overlay" id="reportsOverlay" onclick="closeReportsNav()"></div>
+<nav class="reports-nav" id="reportsNav" role="navigation" aria-label="Reports navigation">
+  <div class="reports-nav-group">Ad Testing</div>
+  <a href="/americana-tax/la-w1" class="reports-nav-link">LA County — Week 1<span>Feb 4-8</span></a>
+  <a href="/americana-tax/oc-w1" class="reports-nav-link">OC County — Week 1<span>Feb 9-13</span></a>
+  <a href="/americana-tax/la-w2" class="reports-nav-link">LA County — Week 2<span>Feb 14-19</span></a>
+  <a href="/americana-tax/oc-w2" class="reports-nav-link">OC County — Week 2<span>Feb 20-23</span></a>
+  <a href="/americana-tax/feb-24-28" class="reports-nav-link">LA + OC — Week 5<span>Feb 24-28</span></a>
+  <a href="/americana-tax/feb-28-mar-3" class="reports-nav-link">LA + OC — Week 6<span>Feb 28 - Mar 3</span></a>
+  <div class="reports-nav-divider"></div>
+  <div class="reports-nav-group">Monthly Reports</div>
+  <a href="/americana-tax/feb-2026" class="reports-nav-link active">February 2026<span>Monthly</span></a>
+  <div class="reports-nav-divider"></div>
+  <a href="/americana-tax" class="reports-nav-link reports-nav-all">All Reports</a>
+</nav>
+
+<div class="dashboard">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="brand-label">Arc Garde Media Buying</div>
+    <img src="https://americanataxplanning.com/wp-content/uploads/2020/03/americana-tax-planning-logo.png" alt="Americana Tax Planning" class="header-logo">
+    <div class="subtitle">Monthly Campaign Report</div>
+    <div class="date-range">February 4 - March 3, 2026 | Meta Ads | LA + Orange County</div>
+    <span class="month-badge">6 Weeks of Testing</span>
+    <div class="divider"></div>
+  </div>
+
+  <!-- Hero KPIs -->
+  <div class="hero-grid">
+    <div class="hero-card primary">
+      <div class="hero-label">Total Ad Spend</div>
+      <div class="hero-value">$610.13</div>
+      <div class="hero-sub">Prospecting $530.73 + Retargeting $78.82</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-label">Confirmed Leads</div>
+      <div class="hero-value" style="color:var(--green);">12</div>
+      <div class="hero-sub">Via EngageBay CRM</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-label">Cost Per Lead</div>
+      <div class="hero-value" style="color:var(--blue-lt);">$50.84</div>
+      <div class="hero-sub">Blended average</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-label">Ads Tested</div>
+      <div class="hero-value">12</div>
+      <div class="hero-sub">6 A/B tests across 6 weeks</div>
+    </div>
+  </div>
+
+  <!-- Weekly Spend + Leads Chart -->
+  <div class="chart-section">
+    <div class="section-header" style="margin-bottom:16px;">
+      <div class="section-title blue">Weekly Performance</div>
+      <div class="section-desc">Total spend and confirmed leads per testing period. The campaign ran alternating LA and OC geo targets week over week.</div>
+    </div>
+    <div class="chart-container">
+      <canvas id="weeklyChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Ad Set Battle: LA vs OC -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title red">Ad Set Battle: LA vs Orange County</div>
+      <div class="section-desc">Which geo delivered better results across 3 testing rounds each. Orange County produced more leads at a lower cost per lead.</div>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <div class="compare-label la">LA County</div>
+        <div class="compare-stat">
+          <div class="compare-stat-value">$303.56</div>
+          <div class="compare-stat-label">Total Spend</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value">5</div>
+          <div class="compare-stat-label">Leads</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value" style="color:var(--red-lt);">$60.71</div>
+          <div class="compare-stat-label">Cost Per Lead</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value">3</div>
+          <div class="compare-stat-label">Rounds Tested</div>
+        </div>
+      </div>
+      <div class="compare-card" style="border-color:rgba(44,111,187,0.2);">
+        <div class="compare-label oc">Orange County</div>
+        <div class="compare-stat">
+          <div class="compare-stat-value">$306.57</div>
+          <div class="compare-stat-label">Total Spend</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value" style="color:var(--green);">7</div>
+          <div class="compare-stat-label">Leads</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value" style="color:var(--green);">$43.80</div>
+          <div class="compare-stat-label">Cost Per Lead</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value">3</div>
+          <div class="compare-stat-label">Rounds Tested</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Format Shift: Static vs Video -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title cyan">Format Shift: Static Image vs Video Ads</div>
+      <div class="section-desc">The campaign switched from static image prospecting ads (weeks 1-4) to video ads (weeks 5-6). Video delivered significantly better click-through rates and lower cost per click.</div>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <div class="compare-label static">Static Image Ads</div>
+        <div class="compare-stat">
+          <div class="compare-stat-value">$358.55</div>
+          <div class="compare-stat-label">Prospecting Spend</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value">8</div>
+          <div class="compare-stat-label">Leads (4 Weeks)</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value">1.65%</div>
+          <div class="compare-stat-label">Avg CTR</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value" style="color:var(--red-lt);">$6.29</div>
+          <div class="compare-stat-label">Avg CPC</div>
+        </div>
+      </div>
+      <div class="compare-card" style="border-color:rgba(77,208,225,0.2);">
+        <div class="compare-label video">Video Ads</div>
+        <div class="compare-stat">
+          <div class="compare-stat-value">$172.18</div>
+          <div class="compare-stat-label">Prospecting Spend</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value" style="color:var(--green);">4</div>
+          <div class="compare-stat-label">Leads (2 Weeks)</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value" style="color:var(--green);">3.38%</div>
+          <div class="compare-stat-label">Avg CTR</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value" style="color:var(--green);">$1.91</div>
+          <div class="compare-stat-label">Avg CPC</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ad Winner Board -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title green">Ad Winner Board</div>
+      <div class="section-desc">Every A/B test result across 6 weeks. Meta's algorithm allocates spend to the stronger performer, so budget share is the real score.</div>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="winner-table">
+      <thead>
+        <tr>
+          <th>Week</th>
+          <th>Geo</th>
+          <th>Winner</th>
+          <th>Spend</th>
+          <th>Share</th>
+          <th>Leads</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>W1 (Feb 4-8)</td>
+          <td><span class="geo-pill la">LA</span></td>
+          <td>Ad 1 <span class="winner-pill win">Winner</span></td>
+          <td>$68.87</td>
+          <td>99.2%</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>W2 (Feb 9-13)</td>
+          <td><span class="geo-pill oc">OC</span></td>
+          <td>Ad 2 <span class="winner-pill win">Winner</span></td>
+          <td>$75.99</td>
+          <td>78.5%</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>W3 (Feb 14-19)</td>
+          <td><span class="geo-pill la">LA</span></td>
+          <td>Ad 1 <span class="winner-pill win">Winner</span></td>
+          <td>$111.62</td>
+          <td>99.8%</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>W4 (Feb 20-23)</td>
+          <td><span class="geo-pill oc">OC</span></td>
+          <td>Ad 6 <span class="winner-pill win">Winner</span></td>
+          <td>$80.50</td>
+          <td>99.3%</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>W5 (Feb 24-27)</td>
+          <td><span class="geo-pill la">LA</span></td>
+          <td>Ad 6 Video <span class="winner-pill win">Winner</span></td>
+          <td>$84.21</td>
+          <td>98.1%</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>W6 (Feb 28-Mar 3)</td>
+          <td><span class="geo-pill oc">OC</span></td>
+          <td>Ad 10 Video <span class="winner-pill win">Winner</span></td>
+          <td>$84.82</td>
+          <td>98.2%</td>
+          <td>2</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- Video Performance (Weeks 5-6) -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title blue">Video Ad Performance (Weeks 5-6)</div>
+      <div class="section-desc">Hook rate measures if the first few seconds grab attention. Hold rate measures if people stay. Completion measures if they watch the whole thing.</div>
+    </div>
+    <div class="metric-row">
+      <div class="metric-card">
+        <div class="metric-card-label">Avg Hook Rate</div>
+        <div class="metric-card-value low">5.73%</div>
+        <div class="metric-card-sub">% who watched 25%+. Above 30% is strong. This needs work.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card-label">Avg Hold Rate</div>
+        <div class="metric-card-value medium">39.6%</div>
+        <div class="metric-card-sub">Of those hooked, how many stayed past 75%.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card-label">Avg Completion</div>
+        <div class="metric-card-value high">27.8%</div>
+        <div class="metric-card-sub">% who watched the full video. Above 20% is great.</div>
+      </div>
+    </div>
+    <div class="compare-grid" style="margin-top:16px;">
+      <div class="compare-card">
+        <div class="compare-label" style="color:var(--muted);">Week 5 (LA)</div>
+        <div class="compare-stat">
+          <div class="compare-stat-value" style="font-size:22px;">6.63%</div>
+          <div class="compare-stat-label">Hook Rate</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value" style="font-size:22px;">81</div>
+          <div class="compare-stat-label">ThruPlays</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value" style="font-size:22px;">$1.06</div>
+          <div class="compare-stat-label">Cost/ThruPlay</div>
+        </div>
+      </div>
+      <div class="compare-card">
+        <div class="compare-label" style="color:var(--muted);">Week 6 (OC)</div>
+        <div class="compare-stat">
+          <div class="compare-stat-value" style="font-size:22px;color:var(--amber);">4.83%</div>
+          <div class="compare-stat-label">Hook Rate</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value" style="font-size:22px;">44</div>
+          <div class="compare-stat-label">ThruPlays</div>
+        </div>
+        <div class="compare-stat">
+          <div class="compare-stat-value" style="font-size:22px;color:var(--amber);">$1.96</div>
+          <div class="compare-stat-label">Cost/ThruPlay</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Retargeting Creative Breakdown -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title amber">Retargeting Creative Breakdown</div>
+      <div class="section-desc">5 static images ran across all 6 weeks at $3/day. The algorithm quickly identified Static 2 as the top performer, giving it the majority of budget and impressions.</div>
+    </div>
+    <div class="retarget-grid">
+      <div class="retarget-item">
+        <div class="retarget-bar-wrap"><div class="retarget-bar" style="height:5%;background:var(--red);border-radius:6px 6px 0 0;"></div></div>
+        <div class="retarget-name">Static 1</div>
+        <div class="retarget-spend">$1.66</div>
+        <div class="retarget-pct" style="color:#666;">2.9%</div>
+      </div>
+      <div class="retarget-item">
+        <div class="retarget-bar-wrap"><div class="retarget-bar" style="height:100%;background:var(--green);border-radius:6px 6px 0 0;"></div></div>
+        <div class="retarget-name">Static 2</div>
+        <div class="retarget-spend">$33.29</div>
+        <div class="retarget-pct" style="color:var(--green);">57.8%</div>
+      </div>
+      <div class="retarget-item">
+        <div class="retarget-bar-wrap"><div class="retarget-bar" style="height:8%;background:var(--blue-lt);border-radius:6px 6px 0 0;"></div></div>
+        <div class="retarget-name">Static 3</div>
+        <div class="retarget-spend">$2.83</div>
+        <div class="retarget-pct" style="color:#666;">4.9%</div>
+      </div>
+      <div class="retarget-item">
+        <div class="retarget-bar-wrap"><div class="retarget-bar" style="height:42%;background:var(--blue);border-radius:6px 6px 0 0;"></div></div>
+        <div class="retarget-name">Static 4</div>
+        <div class="retarget-spend">$13.85</div>
+        <div class="retarget-pct" style="color:var(--blue-lt);">24.1%</div>
+      </div>
+      <div class="retarget-item">
+        <div class="retarget-bar-wrap"><div class="retarget-bar" style="height:18%;background:var(--cyan);border-radius:6px 6px 0 0;"></div></div>
+        <div class="retarget-name">Static 5</div>
+        <div class="retarget-spend">$5.96</div>
+        <div class="retarget-pct" style="color:#666;">10.3%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CPL Trend Chart -->
+  <div class="chart-section">
+    <div class="section-header" style="margin-bottom:16px;">
+      <div class="section-title green">Cost Per Lead Trend</div>
+      <div class="section-desc">How cost per lead evolved across each testing period. Lower is better. OC consistently delivered cheaper leads than LA.</div>
+    </div>
+    <div class="chart-container">
+      <canvas id="cplChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Insights & Recommendations -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title green">What Worked</div>
+    </div>
+    <div class="insight-list">
+      <div class="insight-item action">
+        <strong>Orange County outperformed LA County.</strong> OC delivered <span class="green highlight">7 leads at $43.80 CPL</span> vs LA's 5 leads at $60.71 CPL. With nearly identical spend ($306 vs $303), OC is the more efficient market. The audience responds faster and converts at a lower cost.
+      </div>
+      <div class="insight-item action">
+        <strong>Video ads crushed static images on engagement.</strong> Video CTR averaged <span class="green highlight">3.38%</span> vs static's 1.65%. Video CPC was <span class="green highlight">$1.91</span> vs static's $6.29. People engage with video content far more than static images for this audience. The format shift was the right call.
+      </div>
+      <div class="insight-item action">
+        <strong>Static Image 2 dominated retargeting.</strong> It captured <span class="green highlight">57.8% of all retargeting spend</span> across 6 weeks. The algorithm consistently chose it over the other 4 images. Static 4 was a distant second at 24.1%. The retargeting winner is clear.
+      </div>
+      <div class="insight-item action">
+        <strong>Landing page conversion improved over time.</strong> From 2.8-3.8% in weeks 2-4, the LP conversion rate jumped to <span class="green highlight">9.09% in weeks 5-6</span>. As the algorithm learned which audiences to target, the people landing on the page were more qualified and more likely to fill out the questionnaire.
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title amber">What Needs Attention</div>
+    </div>
+    <div class="insight-list">
+      <div class="insight-item warning">
+        <strong>Video hook rate is declining.</strong> Week 5 hook rate was <span class="amber highlight">6.63%</span>, week 6 dropped to <span class="amber highlight">4.83%</span>. Both are well below the 30% benchmark. The first 3 seconds of the video are not grabbing attention hard enough. The video creative needs a stronger opening hook.
+      </div>
+      <div class="insight-item warning">
+        <strong>CPC is trending up in week 6.</strong> Video CPC went from <span class="green highlight">$1.38</span> in week 5 to <span class="amber highlight">$3.08</span> in week 6. ThruPlays dropped from 81 to 44, while cost per ThruPlay nearly doubled ($1.06 to $1.96). This signals early creative fatigue on the video ads.
+      </div>
+      <div class="insight-item warning">
+        <strong>LA County is underperforming on CPL.</strong> LA's $60.71 CPL is <span class="red highlight">39% more expensive</span> than OC's $43.80. Week 3 (LA W2) was the worst at $128.48 CPL with only 1 lead. LA needs either better targeting, different creative angles, or reduced budget allocation.
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title blue">Recommended Next Steps</div>
+    </div>
+    <div class="insight-list">
+      <div class="insight-item action">
+        <strong>1. New video creative with a stronger hook.</strong> The current videos hold well (39.6% hold rate) and complete well (27.8%), but the opening 3 seconds are the weak link. Test a new opening: lead with the pain point or a bold claim in the first frame. The audience will stay if you can get them past the first 3 seconds.
+      </div>
+      <div class="insight-item action">
+        <strong>2. Shift budget toward Orange County.</strong> OC delivers 39% cheaper leads than LA. Consider a 60/40 or 70/30 OC/LA budget split instead of the current 50/50. Let the more efficient market carry the campaign.
+      </div>
+      <div class="insight-item action">
+        <strong>3. Kill underperforming retargeting creatives.</strong> Static 1, 3, and 5 combined only account for 18.1% of retargeting spend. Replace them with 3 new test images while keeping Static 2 (the proven winner) and Static 4 (the secondary performer) running.
+      </div>
+      <div class="insight-item action">
+        <strong>4. Stick with video for prospecting.</strong> The data is clear: video drives 2x the CTR and 3x lower CPC than static images. Even with the hook rate issue, video is the right format. Fix the creative, not the format.
+      </div>
+      <div class="insight-item action">
+        <strong>5. Move into scaling phase.</strong> After 6 weeks of testing, the winning formula is identified: video prospecting in Orange County with Static 2 retargeting. The next phase should increase daily budget from $20/day to $35-50/day on the winning combination and monitor CPL closely for the first 7 days.
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <a href="https://www.arcgarde.com" target="_blank">Arc Garde</a>
+    <div class="generated">Generated 2026-03-04 | Monthly Campaign Report</div>
+  </div>
+
+</div>
+
+<script>
+var COLORS = {
+  red: '#C0392B', redLt: '#E74C3C',
+  blue: '#2C6FBB', blueLt: '#4A90D9',
+  green: '#2ECC71', cyan: '#4DD0E1',
+  text: '#E8E8F0', bg: '#0A0A0F',
+  border: '#1A1A25', amber: '#F39C12'
+};
+
+function hexToRgba(hex, alpha) {
+  hex = hex.replace('#', '');
+  return 'rgba(' + parseInt(hex.substring(0,2),16) + ',' + parseInt(hex.substring(2,4),16) + ',' + parseInt(hex.substring(4,6),16) + ',' + alpha + ')';
+}
+
+/* Weekly Performance Chart */
+(function(){
+  var ctx = document.getElementById('weeklyChart').getContext('2d');
+  var weeks = ['W1\nLA', 'W2\nOC', 'W3\nLA', 'W4\nOC', 'W5\nLA', 'W6\nOC'];
+  var spend = [79.87, 114.78, 128.48, 93.59, 95.21, 98.20];
+  var leads = [2, 3, 1, 2, 2, 2];
+
+  var spendGrad = ctx.createLinearGradient(0, 0, 0, 280);
+  spendGrad.addColorStop(0, hexToRgba(COLORS.blue, 0.25));
+  spendGrad.addColorStop(1, 'rgba(0,0,0,0)');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: weeks,
+      datasets: [
+        {
+          label: 'Total Spend ($)',
+          data: spend,
+          backgroundColor: spend.map(function(s, i) {
+            return i % 2 === 0 ? hexToRgba(COLORS.red, 0.6) : hexToRgba(COLORS.blue, 0.6);
+          }),
+          borderColor: spend.map(function(s, i) {
+            return i % 2 === 0 ? COLORS.red : COLORS.blue;
+          }),
+          borderWidth: 1,
+          borderRadius: 8,
+          yAxisID: 'y',
+          order: 2
+        },
+        {
+          label: 'Leads',
+          data: leads,
+          type: 'line',
+          borderColor: COLORS.green,
+          backgroundColor: 'transparent',
+          pointBackgroundColor: COLORS.green,
+          pointBorderColor: COLORS.bg,
+          pointBorderWidth: 2,
+          pointRadius: 6,
+          pointHoverRadius: 9,
+          borderWidth: 3,
+          tension: 0.3,
+          yAxisID: 'y1',
+          order: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, labels: { color: '#666', font: { size: 11 }, usePointStyle: true, padding: 20 } },
+        tooltip: {
+          backgroundColor: '#1a1a25', titleColor: COLORS.blue, bodyColor: COLORS.text,
+          borderColor: COLORS.blue, borderWidth: 1, padding: 14, cornerRadius: 10
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#555', font: { size: 11 } } },
+        y: {
+          type: 'linear', position: 'left',
+          grid: { color: 'rgba(44,111,187,0.06)', drawBorder: false },
+          ticks: { color: '#555', font: { size: 11 }, callback: function(v) { return '$' + v; } },
+          title: { display: true, text: 'Spend ($)', color: '#555', font: { size: 11 } }
+        },
+        y1: {
+          type: 'linear', position: 'right',
+          grid: { display: false },
+          ticks: { color: COLORS.green, font: { size: 11 }, stepSize: 1 },
+          title: { display: true, text: 'Leads', color: COLORS.green, font: { size: 11 } },
+          min: 0, max: 5
+        }
+      }
+    }
+  });
+})();
+
+/* CPL Trend Chart */
+(function(){
+  var ctx = document.getElementById('cplChart').getContext('2d');
+  var weeks = ['W1 (LA)', 'W2 (OC)', 'W3 (LA)', 'W4 (OC)', 'W5 (LA)', 'W6 (OC)'];
+  var cpl = [39.94, 38.26, 128.48, 46.79, 47.60, 49.10];
+
+  var grad = ctx.createLinearGradient(0, 0, 0, 280);
+  grad.addColorStop(0, hexToRgba(COLORS.green, 0.2));
+  grad.addColorStop(1, 'rgba(0,0,0,0)');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: weeks,
+      datasets: [{
+        data: cpl,
+        borderColor: COLORS.green,
+        backgroundColor: grad,
+        fill: true,
+        tension: 0.35,
+        pointBackgroundColor: cpl.map(function(v) { return v > 100 ? COLORS.redLt : v > 50 ? COLORS.amber : COLORS.green; }),
+        pointBorderColor: COLORS.bg,
+        pointBorderWidth: 2,
+        pointRadius: 6,
+        pointHoverRadius: 9,
+        borderWidth: 3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1a1a25', titleColor: COLORS.green, bodyColor: COLORS.text,
+          borderColor: COLORS.green, borderWidth: 1, padding: 14, cornerRadius: 10,
+          displayColors: false,
+          callbacks: { label: function(c) { return 'CPL: $' + c.parsed.y.toFixed(2); } }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#555', font: { size: 11 } } },
+        y: {
+          grid: { color: 'rgba(44,111,187,0.06)', drawBorder: false },
+          ticks: { color: '#555', font: { size: 11 }, callback: function(v) { return '$' + v; } }
+        }
+      }
+    }
+  });
+})();
+
+/* Reports Nav */
+function toggleReportsNav() {
+  document.getElementById('reportsNav').classList.toggle('open');
+  document.getElementById('reportsOverlay').classList.toggle('open');
+}
+function closeReportsNav() {
+  document.getElementById('reportsNav').classList.remove('open');
+  document.getElementById('reportsOverlay').classList.remove('open');
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeReportsNav(); });
+</script>
+</body>
+</html>
