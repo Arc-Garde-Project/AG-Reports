@@ -27,7 +27,7 @@ body{background:#060D18;font-family:'Plus Jakarta Sans',system-ui,sans-serif;col
 .ag-inner{max-width:1200px;margin:0 auto}
 
 /* GLOBAL TOUCH & FOCUS */
-button,a,.ag-nav-btn,.ag-modal-btn,.ag-nav-menu a{
+button,a,.ag-nav-btn,.ag-modal-btn,.ag-metric-btn,.ag-nav-menu a{
   touch-action:manipulation;-webkit-tap-highlight-color:transparent;
 }
 button:focus-visible,a:focus-visible{outline:2px solid #00B4D8;outline-offset:2px}
@@ -87,6 +87,16 @@ button:focus-visible,a:focus-visible{outline:2px solid #00B4D8;outline-offset:2p
 
 /* DIVIDER */
 .ag-divider{height:1px;margin:24px 0;border:none;background:linear-gradient(90deg,transparent,rgba(0,180,216,0.15),transparent)}
+
+/* METRIC TOGGLE */
+.ag-metric-toggle{display:flex;justify-content:center;gap:10px;margin-bottom:16px}
+.ag-metric-btn{
+  padding:10px 20px;border-radius:10px;min-height:48px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);
+  color:#4a5568;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.3s ease;
+}
+@media(hover:hover){.ag-metric-btn:hover{border-color:rgba(0,180,216,0.2);color:#6B7A8D;background:rgba(0,180,216,0.04)}}
+.ag-metric-btn:active{background:rgba(0,180,216,0.08)}
+.ag-metric-btn.active{border:none;color:#fff;font-weight:600;background:linear-gradient(135deg,#0077B6,#00B4D8);box-shadow:0 6px 28px rgba(0,180,216,0.35)}
 
 /* CHARTS */
 .ag-chart-wrap{
@@ -192,6 +202,7 @@ button:focus-visible,a:focus-visible{outline:2px solid #00B4D8;outline-offset:2p
   .ag-card{padding:24px 20px}.ag-card-val{font-size:26px}.ag-card-label{font-size:10px;margin-bottom:10px}
   .ag-chart-wrap,.ag-table-wrap{padding:20px 16px}.ag-chart-title{font-size:18px}.ag-chart-desc{font-size:12px}
   .ag-insights{padding:20px 16px}.ag-insight p{font-size:14px}.ag-alert{padding:20px;flex-direction:column;gap:12px}
+  .ag-metric-toggle{gap:8px;flex-wrap:wrap;justify-content:center}.ag-metric-btn{padding:10px 16px;font-size:13px}
   .ag-divider{margin:20px 0}.ag-header{margin-bottom:24px}.ag-logo{height:48px}.ag-logo-wrap{gap:16px}
   .ag-modal{padding:32px 28px;max-width:320px}.ag-modal h3{font-size:16px}.ag-modal p{font-size:13px}
   .ag-table{min-width:480px}
@@ -257,9 +268,15 @@ button:focus-visible,a:focus-visible{outline:2px solid #00B4D8;outline-offset:2p
 
 <hr class="ag-divider">
 
+<div class="ag-metric-toggle">
+  <button class="ag-metric-btn active" onclick="setMetric('views')">Views</button>
+  <button class="ag-metric-btn" onclick="setMetric('eng')">Engagements</button>
+  <button class="ag-metric-btn" onclick="setMetric('fol')">Followers</button>
+</div>
+
 <div class="ag-chart-wrap">
-  <h2 class="ag-chart-title">Monthly Trend</h2>
-  <p class="ag-chart-desc">Total views - growth from zero</p>
+  <h2 class="ag-chart-title" id="chart-title">Views Through February</h2>
+  <p class="ag-chart-desc" id="chart-desc">Cumulative total views across all 7 platforms</p>
   <div class="ag-chart-canvas"><canvas id="trendChart"></canvas></div>
 </div>
 
@@ -298,11 +315,19 @@ button:focus-visible,a:focus-visible{outline:2px solid #00B4D8;outline-offset:2p
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const MONTH_INDEX=1;
-const allMonths=['Start','Feb'];
+const MONTH_INDEX=3;
+const allMonths=['Wk 1','Wk 2','Wk 3','Feb'];
 const platNames=['YouTube','Facebook','TikTok','Instagram','X (Twitter)','LinkedIn','Threads'];
 const platDotColors={YouTube:'#FF0000',Facebook:'#1877F2',TikTok:'#888',Instagram:'#E1306C','X (Twitter)':'#666',LinkedIn:'#0077B5',Threads:'#777'};
 const colors={primary:'#023E8A',secondary:'#0077B6',accent:'#00B4D8'};
+
+const trendData={
+  views:[8200,19500,33400,44698],
+  eng:[85,210,360,503],
+  fol:[8,18,28,38]
+};
+const chartTitles={views:'Views Through February',eng:'Engagements Through February',fol:'Follower Growth Through February'};
+const chartDescs={views:'Cumulative total views across all 7 platforms',eng:'Cumulative interactions across all 7 platforms',fol:'Cumulative follower growth from zero'};
 
 const D={
   views:{YouTube:19207,Facebook:9500,TikTok:8540,Instagram:6907,'X (Twitter)':345,LinkedIn:199,Threads:0},
@@ -310,7 +335,6 @@ const D={
   fol:{YouTube:10,Facebook:2,TikTok:12,Instagram:11,'X (Twitter)':2,LinkedIn:1,Threads:0},
   totalViews:44698,totalEng:503,folNet:38,
   topPlat:'YouTube',topPlatVal:'19,207 views',
-  trendViews:[0,44698],
   alert:'<strong>Month 1 Baseline.</strong> All 7 accounts were created from scratch. This is the first month of organic content. No prior history, no existing audience. Every number here is net new.',
   insights:[
     'YouTube dominated with <span class="g">19,207 views</span> and 26.8 watch hours in month one, nearly half of all views',
@@ -323,7 +347,7 @@ const D={
   ]
 };
 
-let trendChart;
+let trendChart,metric='views';
 
 function fmt(n){return n.toLocaleString()}
 
@@ -343,7 +367,7 @@ function initCharts(){
   trendChart=new Chart(ctx1,{
     type:'line',
     data:{labels:allMonths,datasets:[{
-      data:D.trendViews,
+      data:trendData[metric],
       borderColor:brandGradient(ctx1),borderWidth:3,
       pointBackgroundColor:allMonths.map((_,i)=>i===MONTH_INDEX?'#fff':colors.accent),
       pointBorderColor:colors.primary,
@@ -367,6 +391,16 @@ function initCharts(){
   });
 
   updateAll();
+}
+
+function setMetric(m){
+  metric=m;
+  document.querySelectorAll('.ag-metric-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.ag-metric-btn')[{views:0,eng:1,fol:2}[m]].classList.add('active');
+  document.getElementById('chart-title').textContent=chartTitles[m];
+  document.getElementById('chart-desc').textContent=chartDescs[m];
+  trendChart.data.datasets[0].data=trendData[m];
+  trendChart.update();
 }
 
 function updateAll(){
