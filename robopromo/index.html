@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
-<meta name="theme-color" content="#0A0A0F">
+<meta name="theme-color" content="#060D18">
 <title>RoboPromo AI Campaign Reports</title>
 <meta name="description" content="Campaign reports for RoboPromo AI. Performance dashboards and organic content KPI tracking.">
 <meta property="og:title" content="RoboPromo AI Campaign Reports">
@@ -16,19 +16,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0A0A0F;
-  --card: #111118;
-  --border: #1A1A25;
-  --text: #F2F2FA;
-  --muted: #B0B0C0;
-  --accent: #6C5CE7;
-  --accent-lt: #A29BFE;
+  --bg: #060D18;
+  --card: #0A1520;
+  --border: #122035;
+  --text: #E8EDF5;
+  --muted: #6B7A8D;
+  --accent: #0077B6;
+  --accent-lt: #00B4D8;
 }
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   background: var(--bg);
-  background-image: radial-gradient(ellipse at 50% 0%, rgba(108,92,231,0.06) 0%, transparent 60%);
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(0,180,216,0.06) 0%, transparent 60%);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   min-height: 100dvh;
@@ -36,15 +36,10 @@ body {
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 a{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+a:focus-visible{outline:2px solid var(--accent-lt);outline-offset:2px}
 .portal { text-align: center; padding: 60px 24px; max-width: 600px; width: 100%; }
-.brand-label {
-  font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 24px; font-weight: 600;
-}
 .logo-link { display: inline-block; margin-bottom: 12px; }
 .logo-link img { max-width: 260px; display: block; }
-.title { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 6px; }
 .subtitle { font-size: 14px; color: var(--muted); font-weight: 400; letter-spacing: 1px; }
 .divider {
   width: 140px; height: 2px; margin: 24px auto 32px; border-radius: 2px;
@@ -52,14 +47,14 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 }
 .section-label {
   font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-  color: #555; font-weight: 600; margin-bottom: 14px;
+  color: #3A5068; font-weight: 600; margin-bottom: 14px;
 }
 .reports { display: flex; flex-direction: column; gap: 12px; align-items: center; }
 .report-link {
   display: flex; align-items: center; justify-content: space-between;
   padding: 18px 24px; border-radius: 14px; width: 100%; max-width: 400px;
   border: 1px solid var(--border); background: rgba(255,255,255,0.02);
-  color: var(--muted); font-size: 15px; font-weight: 600; text-decoration: none;
+  color: #8899A6; font-size: 15px; font-weight: 600; text-decoration: none;
   transition: all 0.3s ease; min-height: 48px; position: relative; overflow: hidden;
 }
 .report-link::before {
@@ -68,25 +63,24 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   opacity: 0; transition: opacity 0.3s;
 }
 @media(hover:hover){
-  .report-link:hover { border-color: rgba(108,92,231,0.3); color: #fff; background: rgba(108,92,231,0.06); transform: translateY(-2px); }
+  .report-link:hover { border-color: rgba(0,180,216,0.3); color: #fff; background: rgba(0,180,216,0.06); transform: translateY(-2px); }
   .report-link:hover::before { opacity: 1; }
 }
-.report-link:active { background: rgba(108,92,231,0.08); }
+.report-link:active { background: rgba(0,180,216,0.08); }
 .report-badge {
   font-size: 10px; color: #4ADE80; font-weight: 700; letter-spacing: 1px;
   padding: 3px 8px; border-radius: 6px; background: rgba(74,222,128,0.08);
   border: 1px solid rgba(74,222,128,0.12);
 }
-.report-date { font-size: 12px; color: #555; font-weight: 400; margin-top: 2px; }
+.report-date { font-size: 12px; color: #3A5068; font-weight: 400; margin-top: 2px; }
 .footer { margin-top: 48px; }
 .footer a {
-  color: #5A5A70; font-size: 10px; letter-spacing: 3px; text-decoration: none;
+  color: #3A5068; font-size: 10px; letter-spacing: 3px; text-decoration: none;
   text-transform: uppercase; transition: color 0.3s; font-weight: 600;
 }
-@media(hover:hover){.footer a:hover { color: var(--accent); }}
+@media(hover:hover){.footer a:hover { color: var(--accent-lt); }}
 @media(max-width:480px){
   .portal{padding:40px 16px}
-  .title{font-size:24px}
   .report-link{padding:16px 20px;font-size:14px}
 }
 @media(prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important}}
@@ -97,13 +91,12 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   <a href="https://www.robopromo.ai/" target="_blank" class="logo-link">
     <img src="https://framerusercontent.com/images/cZMPA2qkx3yORnq5yadUCAOutNo.png" alt="RoboPromo AI">
   </a>
-  <div class="title">RoboPromo AI</div>
   <div class="subtitle">Campaign Reports</div>
   <div class="divider"></div>
   <div class="section-label">Monthly KPI Reports</div>
   <div class="reports">
-    <a href="/robopromo/mar-2026" class="report-link">
-      <div>March 2026<div class="report-date">Organic Content - 7 Platforms</div></div>
+    <a href="/robopromo/feb-2026" class="report-link">
+      <div>February 2026<div class="report-date">Organic Content - 7 Platforms</div></div>
       <span class="report-badge">LATEST</span>
     </a>
   </div>

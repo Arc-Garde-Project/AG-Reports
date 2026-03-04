@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
-<meta name="theme-color" content="#0A0A0F">
-<title>RoboPromo AI KPI Report for March 2026</title>
-<meta name="description" content="March 2026 KPI report for RoboPromo AI. Monthly organic content performance across 7 platforms.">
-<meta property="og:title" content="RoboPromo AI KPI Report for March 2026">
-<meta property="og:description" content="March 2026 KPI report for RoboPromo AI. Monthly organic content performance across 7 platforms.">
+<meta name="theme-color" content="#060D18">
+<title>RoboPromo AI KPI Report for February 2026</title>
+<meta name="description" content="February 2026 KPI report for RoboPromo AI. Monthly organic content performance across 7 platforms.">
+<meta property="og:title" content="RoboPromo AI KPI Report for February 2026">
+<meta property="og:description" content="February 2026 KPI report for RoboPromo AI. Monthly organic content performance across 7 platforms.">
 <meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
@@ -16,12 +16,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html{background:#0A0A0F;margin:0;padding:0;overflow-x:hidden;-webkit-text-size-adjust:100%}
-body{background:#0A0A0F;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#F2F2FA;min-height:100dvh;padding:0;margin:0;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+html{background:#060D18;margin:0;padding:0;overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{background:#060D18;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#E8EDF5;min-height:100dvh;padding:0;margin:0;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
 
 #ag-kpi{
-  background:linear-gradient(180deg,#0E0A1E 0%,#150E30 30%,#0A0A0F 100%);
-  padding:40px 60px 40px;max-width:100%;margin:0;position:relative;color:#F2F2FA;
+  background:linear-gradient(180deg,#08121F 0%,#0C1A2E 30%,#060D18 100%);
+  padding:40px 60px 40px;max-width:100%;margin:0;position:relative;color:#E8EDF5;
 }
 
 .ag-inner{max-width:1200px;margin:0 auto}
@@ -30,7 +30,7 @@ body{background:#0A0A0F;font-family:'Plus Jakarta Sans',system-ui,sans-serif;col
 button,a,.ag-nav-btn,.ag-modal-btn,.ag-nav-menu a{
   touch-action:manipulation;-webkit-tap-highlight-color:transparent;
 }
-button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2px}
+button:focus-visible,a:focus-visible{outline:2px solid #00B4D8;outline-offset:2px}
 
 /* NAV */
 .ag-nav{position:fixed;top:calc(24px + env(safe-area-inset-top));right:calc(24px + env(safe-area-inset-right));z-index:1000}
@@ -42,14 +42,14 @@ button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2p
   animation:btnPulse 1.8s ease-in-out 3;animation-delay:1.5s;
 }
 @keyframes btnPulse{
-  0%,100%{box-shadow:0 0 0 0 rgba(108,92,231,0);border-color:rgba(255,255,255,0.1)}
-  50%{box-shadow:0 0 16px 4px rgba(108,92,231,0.25);border-color:rgba(108,92,231,0.5)}
+  0%,100%{box-shadow:0 0 0 0 rgba(0,180,216,0);border-color:rgba(255,255,255,0.1)}
+  50%{box-shadow:0 0 16px 4px rgba(0,180,216,0.3);border-color:rgba(0,180,216,0.5)}
 }
 @media(hover:hover){.ag-nav-btn:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.18)}}
 .ag-nav-btn:active{background:rgba(255,255,255,0.12)}
 .ag-nav-menu{
   position:absolute;top:calc(100% + 8px);right:0;
-  background:rgba(15,15,20,0.95);border:1px solid rgba(255,255,255,0.08);
+  background:rgba(8,14,24,0.95);border:1px solid rgba(255,255,255,0.08);
   border-radius:14px;padding:12px 8px;min-width:160px;
   opacity:0;visibility:hidden;transform:translateY(-8px);
   transition:all 0.25s ease;backdrop-filter:blur(16px);box-shadow:0 12px 40px rgba(0,0,0,0.5);
@@ -63,12 +63,10 @@ button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2p
 
 /* HEADER */
 .ag-header{text-align:center;margin-bottom:24px;padding-top:40px}
-.ag-brand-label{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:#B0B0C0;margin-bottom:20px;font-weight:600}
-.ag-logo-wrap{display:flex;justify-content:center;align-items:center;gap:20px;margin-bottom:12px}
+.ag-logo-wrap{display:flex;justify-content:center;align-items:center;gap:20px;margin-bottom:16px}
 .ag-logo{height:56px;object-fit:contain}
-.ag-brand{font-size:36px;font-weight:700;letter-spacing:-0.5px;margin-bottom:8px;text-shadow:0 0 60px rgba(108,92,231,0.3)}
-.ag-period{font-size:15px;color:#808098;font-weight:400;letter-spacing:0.5px;margin-bottom:12px}
-.ag-badge{display:inline-block;padding:6px 16px;border-radius:16px;font-size:11px;font-weight:600;letter-spacing:1px;background:rgba(108,92,231,0.1);color:#A29BFE;border:1px solid rgba(108,92,231,0.18)}
+.ag-period{font-size:15px;color:#6B7A8D;font-weight:400;letter-spacing:0.5px;margin-bottom:12px}
+.ag-badge{display:inline-block;padding:6px 16px;border-radius:16px;font-size:11px;font-weight:600;letter-spacing:1px;background:rgba(0,180,216,0.1);color:#48CAE4;border:1px solid rgba(0,180,216,0.18)}
 
 /* CARDS */
 .ag-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
@@ -76,28 +74,28 @@ button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2p
   background:rgba(255,255,255,0.025);border-radius:16px;padding:22px 20px;
   border:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;transition:all 0.3s ease;
 }
-@media(hover:hover){.ag-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,0.1)}}
-.ag-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#6C5CE7,#A29BFE)}
-.ag-card.hero{border:none;background:linear-gradient(135deg,#5B21B6 0%,#6C5CE7 60%,#A29BFE 100%);box-shadow:0 12px 48px rgba(108,92,231,0.25)}
-.ag-card-label{font-size:11px;color:#4a4a4a;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px}
+@media(hover:hover){.ag-card:hover{transform:translateY(-3px);border-color:rgba(0,180,216,0.2)}}
+.ag-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0077B6,#00B4D8)}
+.ag-card.hero{border:none;background:linear-gradient(135deg,#023E8A 0%,#0077B6 50%,#00B4D8 100%);box-shadow:0 12px 48px rgba(0,119,182,0.3)}
+.ag-card-label{font-size:11px;color:#4a5568;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px}
 .ag-card.hero .ag-card-label{color:rgba(255,255,255,0.7)}
-.ag-card-val{font-size:28px;font-weight:700;letter-spacing:-0.5px;color:#A29BFE;line-height:1.1}
+.ag-card-val{font-size:28px;font-weight:700;letter-spacing:-0.5px;color:#48CAE4;line-height:1.1}
 .ag-card.hero .ag-card-val{color:#fff;text-shadow:0 2px 14px rgba(0,0,0,0.2)}
 .ag-card-sub{font-size:14px;font-weight:500;margin-top:8px}
-.ag-card-sub.up{color:#4ADE80}.ag-card-sub.down{color:#F87171}.ag-card-sub.neutral{color:#555}
+.ag-card-sub.up{color:#4ADE80}.ag-card-sub.down{color:#F87171}.ag-card-sub.neutral{color:#4a5568}
 .ag-card.hero .ag-card-sub{color:rgba(255,255,255,0.85)}
 
 /* DIVIDER */
-.ag-divider{height:1px;margin:24px 0;border:none;background:linear-gradient(90deg,transparent,rgba(108,92,231,0.15),transparent)}
+.ag-divider{height:1px;margin:24px 0;border:none;background:linear-gradient(90deg,transparent,rgba(0,180,216,0.15),transparent)}
 
 /* CHARTS */
 .ag-chart-wrap{
   background:rgba(255,255,255,0.02);border-radius:16px;padding:24px 28px;
   border:1px solid rgba(255,255,255,0.05);margin-bottom:16px;position:relative;overflow:hidden;
 }
-.ag-chart-wrap::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:40%;height:1px;background:linear-gradient(90deg,transparent,rgba(108,92,231,0.3),transparent)}
+.ag-chart-wrap::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:40%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,180,216,0.3),transparent)}
 .ag-chart-title{font-size:18px;font-weight:700;margin-bottom:4px;letter-spacing:-0.3px}
-.ag-chart-desc{font-size:13px;color:#808098;margin-bottom:10px}
+.ag-chart-desc{font-size:13px;color:#6B7A8D;margin-bottom:10px}
 .ag-chart-canvas{padding:4px 0;position:relative;height:220px}
 
 /* TABLE */
@@ -107,27 +105,27 @@ button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2p
 }
 .ag-table-title{font-size:18px;font-weight:700;margin-bottom:16px;letter-spacing:-0.3px}
 .ag-table{width:100%;border-collapse:separate;border-spacing:0}
-.ag-table th{font-size:11px;color:#4a4a4a;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.06)}
+.ag-table th{font-size:11px;color:#4a5568;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.06)}
 .ag-table th:not(:first-child){text-align:right}
-.ag-table td{padding:12px 14px;font-size:14px;font-weight:500;color:#999;border-bottom:1px solid rgba(255,255,255,0.03);transition:background 0.2s ease}
+.ag-table td{padding:12px 14px;font-size:14px;font-weight:500;color:#8899A6;border-bottom:1px solid rgba(255,255,255,0.03);transition:background 0.2s ease}
 @media(hover:hover){.ag-table tr:hover td{background:rgba(255,255,255,0.015)}}
 .ag-table td:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
 .ag-table tr:last-child td{border-bottom:none;font-weight:700;color:#fff;font-size:15px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06)}
 .ag-table td:first-child{display:flex;align-items:center;gap:10px;white-space:nowrap}
 .ag-table .plat-icon{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.ag-table .plat-name{color:#ccc;font-weight:600}
+.ag-table .plat-name{color:#B8C9DA;font-weight:600}
 
 /* TABLE SCROLL */
 .ag-table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 
 /* ALERT */
 .ag-alert{
-  padding:20px 24px;border-radius:14px;border:1px solid rgba(108,92,231,0.15);background:rgba(108,92,231,0.04);
+  padding:20px 24px;border-radius:14px;border:1px solid rgba(0,180,216,0.15);background:rgba(0,180,216,0.04);
   margin-bottom:16px;display:flex;gap:14px;align-items:flex-start;
 }
-.ag-alert-icon{font-size:20px;margin-top:2px;color:#A29BFE}
-.ag-alert-text{font-size:14px;color:#B0B0C0;line-height:1.7}
-.ag-alert-text strong{color:#A29BFE}
+.ag-alert-icon{font-size:20px;margin-top:2px;color:#48CAE4}
+.ag-alert-text{font-size:14px;color:#8899A6;line-height:1.7}
+.ag-alert-text strong{color:#48CAE4}
 
 /* INSIGHTS */
 .ag-insights{
@@ -140,15 +138,15 @@ button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2p
 .ag-insight{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start}
 .ag-insight:last-child{margin-bottom:0}
 .ag-dot{width:8px;height:8px;border-radius:50%;background:#22C55E;margin-top:7px;flex-shrink:0;box-shadow:0 0 12px rgba(34,197,94,0.5)}
-.ag-insight p{font-size:14px;color:#9A9AB8;line-height:1.6}
+.ag-insight p{font-size:14px;color:#8899A6;line-height:1.6}
 .ag-insight .g{color:#4ADE80;font-weight:600}
 .ag-insight .r{color:#F87171;font-weight:600}
 
 /* FOOTER */
 .ag-footer{text-align:center;margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.03)}
-.ag-footer p{font-size:13px;color:#333;letter-spacing:0.5px}
-.ag-footer a{color:#4a4a4a;text-decoration:none;font-weight:600;transition:color 0.3s ease}
-@media(hover:hover){.ag-footer a:hover{color:#6C5CE7}}
+.ag-footer p{font-size:13px;color:#2A3A4A;letter-spacing:0.5px}
+.ag-footer a{color:#3A5068;text-decoration:none;font-weight:600;transition:color 0.3s ease}
+@media(hover:hover){.ag-footer a:hover{color:#00B4D8}}
 
 /* INTRO MODAL */
 .ag-modal-overlay{
@@ -159,7 +157,7 @@ button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2p
 }
 .ag-modal-overlay.hide{opacity:0;pointer-events:none}
 .ag-modal{
-  background:linear-gradient(135deg,#141418,#1a1a22);
+  background:linear-gradient(135deg,#0A1520,#0E1E30);
   border:1px solid rgba(255,255,255,0.08);border-radius:20px;
   padding:40px 44px;max-width:380px;width:90%;text-align:center;
   box-shadow:0 24px 64px rgba(0,0,0,0.6);
@@ -168,29 +166,29 @@ button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2p
 .ag-modal-overlay.hide .ag-modal{transform:scale(0.95)}
 .ag-modal-icon{
   width:52px;height:52px;border-radius:14px;
-  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  background:rgba(0,180,216,0.08);border:1px solid rgba(0,180,216,0.15);
   display:inline-flex;align-items:center;justify-content:center;margin-bottom:20px;
 }
 .ag-modal h3{font-size:18px;font-weight:700;color:#fff;margin-bottom:10px}
-.ag-modal p{font-size:14px;color:#888;line-height:1.7;margin-bottom:24px}
+.ag-modal p{font-size:14px;color:#6B7A8D;line-height:1.7;margin-bottom:24px}
 .ag-modal-btn{
   padding:12px 32px;border-radius:10px;border:none;min-height:48px;
-  background:linear-gradient(135deg,#5B21B6,#6C5CE7);
+  background:linear-gradient(135deg,#0077B6,#00B4D8);
   color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;
-  cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 18px rgba(108,92,231,0.3);
+  cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 18px rgba(0,180,216,0.3);
 }
-@media(hover:hover){.ag-modal-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(108,92,231,0.4)}}
+@media(hover:hover){.ag-modal-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,180,216,0.4)}}
 .ag-modal-btn:active{opacity:0.9}
 
 .ag-fade{transition:opacity 0.35s ease}
 .ag-fade.fading{opacity:0}
 
 @media(max-width:1024px){
-  #ag-kpi{padding:48px 36px}.ag-cards{grid-template-columns:repeat(2,1fr)}.ag-brand{font-size:36px}
+  #ag-kpi{padding:48px 36px}.ag-cards{grid-template-columns:repeat(2,1fr)}
   .ag-chart-wrap,.ag-table-wrap{padding:24px 20px}.ag-insights{padding:24px 20px}.ag-logo{height:60px}
 }
 @media(max-width:768px){
-  #ag-kpi{padding:36px 20px}.ag-cards{grid-template-columns:repeat(2,1fr);gap:14px}.ag-brand{font-size:28px}
+  #ag-kpi{padding:36px 20px}.ag-cards{grid-template-columns:repeat(2,1fr);gap:14px}
   .ag-card{padding:24px 20px}.ag-card-val{font-size:26px}.ag-card-label{font-size:10px;margin-bottom:10px}
   .ag-chart-wrap,.ag-table-wrap{padding:20px 16px}.ag-chart-title{font-size:18px}.ag-chart-desc{font-size:12px}
   .ag-insights{padding:20px 16px}.ag-insight p{font-size:14px}.ag-alert{padding:20px;flex-direction:column;gap:12px}
@@ -201,7 +199,7 @@ button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2p
 }
 @media(max-width:480px){
   #ag-kpi{padding:28px 16px}.ag-cards{grid-template-columns:repeat(2,1fr)}
-  .ag-brand{font-size:24px}.ag-card-val{font-size:22px}.ag-card{padding:18px 16px}.ag-logo{height:40px}
+  .ag-card-val{font-size:22px}.ag-card{padding:18px 16px}.ag-logo{height:40px}
   .ag-chart-canvas{height:180px}
   .ag-nav{top:calc(16px + env(safe-area-inset-top));right:calc(16px + env(safe-area-inset-right))}
 }
@@ -233,7 +231,7 @@ button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2p
   </button>
   <div class="ag-nav-menu" role="menu" aria-label="Report navigation">
     <p class="ag-nav-label">Monthly Reports</p>
-    <a href="/robopromo/mar-2026" class="active">Mar</a>
+    <a href="/robopromo/feb-2026" class="active">Feb</a>
     <a href="/robopromo">All Reports</a>
   </div>
 </div>
@@ -246,8 +244,7 @@ button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2p
   <div class="ag-logo-wrap">
     <a href="https://www.robopromo.ai/" target="_blank"><img src="https://framerusercontent.com/images/cZMPA2qkx3yORnq5yadUCAOutNo.png" alt="RoboPromo AI" class="ag-logo"></a>
   </div>
-  <p class="ag-brand">RoboPromo AI</p>
-  <p class="ag-period">March 2026</p>
+  <p class="ag-period">February 2026</p>
   <span class="ag-badge">MONTHLY KPI REPORT</span>
 </div>
 
@@ -302,10 +299,10 @@ button:focus-visible,a:focus-visible{outline:2px solid #6C5CE7;outline-offset:2p
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 const MONTH_INDEX=1;
-const allMonths=['Start','Mar'];
+const allMonths=['Start','Feb'];
 const platNames=['YouTube','Facebook','TikTok','Instagram','X (Twitter)','LinkedIn','Threads'];
 const platDotColors={YouTube:'#FF0000',Facebook:'#1877F2',TikTok:'#888',Instagram:'#E1306C','X (Twitter)':'#666',LinkedIn:'#0077B5',Threads:'#777'};
-const colors={primary:'#5B21B6',secondary:'#6C5CE7',accent:'#A29BFE'};
+const colors={primary:'#023E8A',secondary:'#0077B6',accent:'#00B4D8'};
 
 const D={
   views:{YouTube:19207,Facebook:9500,TikTok:8540,Instagram:6907,'X (Twitter)':345,LinkedIn:199,Threads:0},
@@ -340,7 +337,6 @@ function brandArea(ctx){
 }
 
 function initCharts(){
-  // Trend line chart
   const ctx1=document.getElementById('trendChart').getContext('2d');
   const pointRadii=allMonths.map((_,i)=>i===MONTH_INDEX?10:5);
   const pointBorders=allMonths.map((_,i)=>i===MONTH_INDEX?4:2);
@@ -364,8 +360,8 @@ function initCharts(){
         callbacks:{label:function(c){return fmt(c.raw)}}
       }},
       scales:{
-        x:{grid:{display:false},ticks:{color:allMonths.map((_,i)=>i===MONTH_INDEX?'#fff':'#555'),font:{family:'Plus Jakarta Sans',size:14,weight:'500'},padding:12}},
-        y:{grid:{color:'rgba(255,255,255,0.025)',drawBorder:false},ticks:{color:'#3a3a3a',font:{size:12},padding:16,callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v}},beginAtZero:true}
+        x:{grid:{display:false},ticks:{color:allMonths.map((_,i)=>i===MONTH_INDEX?'#fff':'#4a5568'),font:{family:'Plus Jakarta Sans',size:14,weight:'500'},padding:12}},
+        y:{grid:{color:'rgba(255,255,255,0.025)',drawBorder:false},ticks:{color:'#2A3A4A',font:{size:12},padding:16,callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v}},beginAtZero:true}
       }
     }
   });
@@ -374,7 +370,6 @@ function initCharts(){
 }
 
 function updateAll(){
-  // Cards
   document.getElementById('c0-val').textContent=fmt(D.totalViews);
   document.getElementById('c1-val').textContent=fmt(D.totalEng);
   const fNet=D.folNet;
@@ -383,7 +378,6 @@ function updateAll(){
   document.getElementById('c3-val').textContent=D.topPlat;
   document.getElementById('c3-sub').textContent=D.topPlatVal;
 
-  // Table
   const tbody=document.getElementById('ag-tbody');
   tbody.innerHTML='';
   platNames.forEach(p=>{
@@ -397,12 +391,10 @@ function updateAll(){
   trT.innerHTML='<td>Total</td><td>'+fmt(D.totalViews)+'</td><td>'+fmt(D.totalEng)+'</td><td>'+(totalFol>=0?'+':'')+fmt(totalFol)+'</td>';
   tbody.appendChild(trT);
 
-  // Alert
   const alertEl=document.getElementById('ag-alert');
   if(D.alert){alertEl.style.display='flex';document.getElementById('ag-alert-text').innerHTML=D.alert;}
   else{alertEl.style.display='none';}
 
-  // Insights
   const list=document.getElementById('ag-insight-list');
   list.innerHTML='';
   D.insights.forEach(txt=>{
@@ -414,7 +406,6 @@ function updateAll(){
 
 document.addEventListener('DOMContentLoaded',initCharts);
 
-// Intro modal
 function dismissModal(e){
   if(e&&e.target!==document.getElementById('ag-modal-overlay'))return;
   const overlay=document.getElementById('ag-modal-overlay');
