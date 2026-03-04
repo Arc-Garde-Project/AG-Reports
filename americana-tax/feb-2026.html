@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
 <meta name="theme-color" content="#0A0A0F">
-<title>Americana Tax Planning — February 2026 Monthly Report</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Americana Tax Planning - February 2026 Monthly Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <style>
 :root {
@@ -18,15 +18,15 @@
   --red-lt: #E74C3C;
   --blue: #2C6FBB;
   --blue-lt: #4A90D9;
-  --text: #E8E8F0;
-  --muted: #999;
+  --text: #F2F2FA;
+  --muted: #B0B0C0;
   --green: #2ECC71;
   --cyan: #4DD0E1;
   --amber: #F39C12;
 }
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   background: var(--bg);
   background-image: radial-gradient(ellipse at 50% 0%, rgba(44,111,187,0.06) 0%, transparent 60%);
   color: var(--text);
@@ -95,7 +95,7 @@ body {
 }
 .header-logo { max-width: 280px; margin: 0 auto 20px; display: block; }
 .subtitle { font-size: 14px; color: var(--muted); margin-bottom: 4px; font-weight: 500; }
-.date-range { font-size: 13px; color: #666; font-weight: 400; }
+.date-range { font-size: 13px; color: #808098; font-weight: 400; }
 .month-badge {
   display: inline-block; margin-top: 16px;
   font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
@@ -123,8 +123,8 @@ body {
   border-color: rgba(192,57,43,0.2);
 }
 .hero-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 10px; font-weight: 500; }
-.hero-value { font-size: 32px; font-weight: 800; letter-spacing: -1px; }
-.hero-sub { font-size: 11px; color: #555; margin-top: 6px; font-weight: 500; }
+.hero-value { font-size: 38px; font-weight: 800; letter-spacing: -1.5px; }
+.hero-sub { font-size: 11px; color: #6A6A80; margin-top: 6px; font-weight: 500; }
 
 /* ── Section Cards ── */
 .section-card {
@@ -133,7 +133,7 @@ body {
 }
 .section-header { margin-bottom: 22px; }
 .section-title {
-  font-size: 12px; text-transform: uppercase; letter-spacing: 2px;
+  font-size: 13px; text-transform: uppercase; letter-spacing: 2.5px;
   font-weight: 700; display: flex; align-items: center; gap: 10px;
 }
 .section-title::before {
@@ -150,7 +150,7 @@ body {
 .section-title.amber { color: var(--amber); }
 .section-title.amber::before { background: var(--amber); box-shadow: 0 0 10px var(--amber); }
 .section-desc {
-  font-size: 12px; color: #666; margin-top: 8px; line-height: 1.7;
+  font-size: 13px; color: #808098; margin-top: 8px; line-height: 1.7;
   padding-left: 18px; font-weight: 400;
 }
 
@@ -177,7 +177,7 @@ body {
 .compare-label.static { color: var(--amber); }
 .compare-label.video { color: var(--cyan); }
 .compare-stat { margin-bottom: 14px; }
-.compare-stat-value { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+.compare-stat-value { font-size: 32px; font-weight: 800; letter-spacing: -0.5px; }
 .compare-stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
 
 /* ── Winner Board Table ── */
@@ -213,14 +213,14 @@ body {
   min-height: 4px;
 }
 .retarget-name { font-size: 10px; color: var(--muted); font-weight: 600; }
-.retarget-spend { font-size: 11px; color: #666; margin-top: 2px; }
+.retarget-spend { font-size: 11px; color: #808098; margin-top: 2px; }
 .retarget-pct { font-size: 13px; font-weight: 700; margin-top: 4px; }
 
 /* ── Insight Rows ── */
 .insight-list { display: flex; flex-direction: column; gap: 12px; }
 .insight-item {
   padding: 16px 18px; background: var(--card-deep); border-radius: 14px;
-  border-left: 3px solid var(--blue); font-size: 13px; line-height: 1.8; color: #888;
+  border-left: 3px solid var(--blue); font-size: 14px; line-height: 1.8; color: #9A9AB8;
 }
 .insight-item.action { border-left-color: var(--green); }
 .insight-item.warning { border-left-color: var(--amber); }
@@ -239,7 +239,7 @@ body {
 }
 .metric-card:hover { border-color: var(--border); transform: translateY(-2px); }
 .metric-card-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 8px; font-weight: 500; }
-.metric-card-value { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+.metric-card-value { font-size: 32px; font-weight: 800; letter-spacing: -0.5px; }
 .metric-card-sub { font-size: 11px; color: #555; margin-top: 6px; }
 .high { color: var(--green); }
 .medium { color: var(--cyan); }
@@ -247,9 +247,9 @@ body {
 
 /* ── Footer ── */
 .footer { text-align: center; padding: 40px 0 20px; }
-.footer a { color: #444; font-size: 10px; letter-spacing: 3px; text-decoration: none; text-transform: uppercase; transition: color 0.3s; font-weight: 600; }
+.footer a { color: #5A5A70; font-size: 10px; letter-spacing: 3px; text-decoration: none; text-transform: uppercase; transition: color 0.3s; font-weight: 600; }
 .footer a:hover { color: var(--red); }
-.footer .generated { font-size: 10px; color: #333; margin-top: 8px; }
+.footer .generated { font-size: 10px; color: #4A4A60; margin-top: 8px; }
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
@@ -258,7 +258,7 @@ body {
   .compare-grid { grid-template-columns: 1fr; }
   .retarget-grid { grid-template-columns: repeat(3, 1fr); }
   .metric-row { grid-template-columns: 1fr; }
-  .hero-value { font-size: 26px; }
+  .hero-value { font-size: 30px; }
   .section-card { padding: 22px 18px; }
   .header-logo { max-width: 200px; }
   .winner-table { font-size: 11px; }
@@ -270,9 +270,9 @@ body {
   .dashboard { padding: 24px 12px; }
   .hero-grid { gap: 8px; }
   .hero-card { padding: 18px 12px; }
-  .hero-value { font-size: 22px; }
+  .hero-value { font-size: 26px; }
   .chart-container { height: 220px; }
-  .compare-stat-value { font-size: 22px; }
+  .compare-stat-value { font-size: 26px; }
   .retarget-grid { grid-template-columns: repeat(2, 1fr); }
   .retarget-bar-wrap { height: 80px; }
 }
@@ -291,12 +291,12 @@ body {
 <div class="reports-overlay" id="reportsOverlay" onclick="closeReportsNav()"></div>
 <nav class="reports-nav" id="reportsNav" role="navigation" aria-label="Reports navigation">
   <div class="reports-nav-group">Ad Testing</div>
-  <a href="/americana-tax/la-w1" class="reports-nav-link">LA County — Week 1<span>Feb 4-8</span></a>
-  <a href="/americana-tax/oc-w1" class="reports-nav-link">OC County — Week 1<span>Feb 9-13</span></a>
-  <a href="/americana-tax/la-w2" class="reports-nav-link">LA County — Week 2<span>Feb 14-19</span></a>
-  <a href="/americana-tax/oc-w2" class="reports-nav-link">OC County — Week 2<span>Feb 20-23</span></a>
-  <a href="/americana-tax/feb-24-28" class="reports-nav-link">LA + OC — Week 5<span>Feb 24-28</span></a>
-  <a href="/americana-tax/feb-28-mar-3" class="reports-nav-link">LA + OC — Week 6<span>Feb 28 - Mar 3</span></a>
+  <a href="/americana-tax/la-w1" class="reports-nav-link">LA County - Week 1<span>Feb 4-8</span></a>
+  <a href="/americana-tax/oc-w1" class="reports-nav-link">OC County - Week 1<span>Feb 9-13</span></a>
+  <a href="/americana-tax/la-w2" class="reports-nav-link">LA County - Week 2<span>Feb 14-19</span></a>
+  <a href="/americana-tax/oc-w2" class="reports-nav-link">OC County - Week 2<span>Feb 20-23</span></a>
+  <a href="/americana-tax/feb-24-28" class="reports-nav-link">LA + OC - Week 5<span>Feb 24-28</span></a>
+  <a href="/americana-tax/feb-28-mar-3" class="reports-nav-link">LA + OC - Week 6<span>Feb 28 - Mar 3</span></a>
   <div class="reports-nav-divider"></div>
   <div class="reports-nav-group">Monthly Reports</div>
   <a href="/americana-tax/feb-2026" class="reports-nav-link active">February 2026<span>Monthly</span></a>
@@ -451,7 +451,7 @@ body {
   <div class="section-card">
     <div class="section-header">
       <div class="section-title green">A/B Test Results</div>
-      <div class="section-desc">Every A/B test across 6 weeks. Meta's algorithm allocates spend to the stronger performer — budget share shows which ad the algorithm favored, not a definitive winner at this spend level.</div>
+      <div class="section-desc">Every A/B test across 6 weeks. Meta's algorithm allocates spend to the stronger performer. Budget share shows which ad the algorithm favored, not a definitive result at this spend level.</div>
     </div>
     <div style="overflow-x:auto;">
     <table class="winner-table">
@@ -643,7 +643,7 @@ body {
         <strong>Static Image 2 dominated retargeting.</strong> It captured <span class="green highlight">57.8% of all retargeting spend</span> across 6 weeks. The algorithm consistently chose it over the other 4 images. Static 4 was a distant second at 24.1%. The retargeting front-runner is clear.
       </div>
       <div class="insight-item action">
-        <strong>Landing page conversion improved over time.</strong> From 2.8-3.8% in weeks 2-4, the LP conversion rate jumped to <span class="green highlight">9.09% in weeks 5-6</span>. As the algorithm learned which audiences to target, the people landing on the page were more qualified and more likely to fill out the questionnaire.
+        <strong>Landing page conversion improved over time.</strong> LP conversion rate climbed to <span class="green highlight">9.09% in weeks 5-6</span>, up from 2.8-5.7% in weeks 1-4. As the algorithm learned which audiences to target, the people landing on the page were more qualified and more likely to fill out the questionnaire.
       </div>
     </div>
   </div>
