@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Americana Tax Planning — LA County W2 (Feb 14-19)</title>
+</head>
+<body style="margin:0;background:#0A0A0F;">
+<a href="/americana-tax" style="position:fixed;top:20px;right:20px;z-index:999;padding:8px 18px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(10,10,15,0.85);backdrop-filter:blur(8px);color:#888;font-size:12px;font-family:'Segoe UI',system-ui,sans-serif;text-decoration:none;transition:all 0.3s;letter-spacing:0.5px;">← Reports</a>
+<!-- AMERICANA TAX PLANNING KPI DASHBOARD (LA COUNTY W2) - PART 1 (HTML + CSS) -->
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+#kpi-container-la2{max-width:900px;margin:0 auto;padding:32px 20px;font-family:'Inter','Segoe UI',system-ui,sans-serif;color:#E8E8F0;background:#0A0A0F;}
+.kpi-header{text-align:center;margin-bottom:32px;}
+.kpi-brand{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#666;margin-bottom:8px;}
+.kpi-subtitle{font-size:13px;color:#777;margin-bottom:6px;}
+.kpi-period{font-size:12px;color:#555;letter-spacing:1px;}
+.kpi-divider{width:60px;height:2px;background:linear-gradient(90deg,#C0392B,#2C6FBB);margin:16px auto 0;}
+.campaign-toggle{display:flex;justify-content:center;gap:8px;margin-bottom:24px;}
+.campaign-btn{padding:8px 20px;border:1px solid #222;border-radius:20px;background:transparent;color:#888;
+  font-size:12px;font-weight:600;cursor:pointer;transition:all 0.3s;letter-spacing:0.5px;}
+.campaign-btn.active{background:linear-gradient(135deg,#C0392B,#E74C3C);color:#FFFFFF;border-color:#C0392B;}
+.campaign-btn:hover:not(.active){border-color:#2C6FBB;color:#2C6FBB;}
+.kpi-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px;}
+.kpi-card{background:#111118;border:1px solid #1A1A25;border-radius:12px;padding:14px 12px;text-align:center;
+  cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,#C0392B,transparent);opacity:0;transition:opacity 0.3s;}
+.kpi-card:hover{border-color:#333;transform:translateY(-2px);}
+.kpi-card.active{border-color:#2C6FBB;box-shadow:0 0 20px rgba(44,111,187,0.15);}
+.kpi-card.active::before{opacity:1;}
+.kpi-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#666;margin-bottom:6px;}
+.kpi-value{font-size:22px;font-weight:700;color:#E8E8F0;margin-bottom:2px;}
+.kpi-change{font-size:11px;font-weight:600;}
+.green{color:#2ECC71;}.red{color:#E74C3C;}.blue{color:#2C6FBB;}.cyan{color:#4DD0E1;}.white{color:#ccc;}
+.chart-section{background:#111118;border:1px solid #1A1A25;border-radius:14px;padding:24px 20px 16px;margin-bottom:24px;}
+.chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.chart-title{font-size:14px;font-weight:600;color:#999;}
+.chart-wrap{position:relative;height:280px;}
+.insights-section{background:#111118;border:1px solid #1A1A25;border-radius:14px;padding:20px;margin-bottom:24px;}
+.insights-title{font-size:13px;font-weight:600;color:#C0392B;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.insight-row{padding:10px 0;border-bottom:1px solid #1A1A20;font-size:13px;line-height:1.6;color:#999;}
+.insight-row:last-child{border-bottom:none;}
+.ab-section{background:#111118;border:1px solid #1A1A25;border-radius:14px;padding:20px;margin-bottom:24px;}
+.ab-title{font-size:13px;font-weight:600;color:#2C6FBB;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.ab-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.ab-card{background:#0D0D14;border:1px solid #1A1A25;border-radius:10px;padding:16px;text-align:center;}
+.ab-card-title{font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.ab-card-title.winner{color:#2ECC71;}
+.ab-card-title.loser{color:#E74C3C;}
+.ab-stat{font-size:20px;font-weight:700;margin-bottom:2px;}
+.ab-stat-label{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.ab-verdict{font-size:11px;padding:6px 12px;border-radius:16px;display:inline-block;font-weight:600;}
+.ab-verdict.win{background:rgba(46,204,113,0.1);color:#2ECC71;border:1px solid rgba(46,204,113,0.2);}
+.ab-verdict.kill{background:rgba(231,76,60,0.1);color:#E74C3C;border:1px solid rgba(231,76,60,0.2);}
+.retarget-bars{display:flex;gap:6px;align-items:flex-end;height:80px;margin:16px 0 8px;}
+.retarget-bar{flex:1;border-radius:4px 4px 0 0;transition:all 0.3s;position:relative;cursor:pointer;min-height:4px;}
+.retarget-bar:hover{opacity:0.8;}
+.retarget-bar-label{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:9px;color:#666;white-space:nowrap;}
+.retarget-bar-value{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:10px;color:#999;font-weight:600;}
+.kpi-footer{text-align:center;margin-top:20px;}
+.kpi-footer a{color:#555;font-size:11px;text-decoration:none;letter-spacing:2px;transition:color 0.3s;}
+.kpi-footer a:hover{color:#C0392B;}
+</style>
+
+<div id="kpi-container-la2">
+<div class="kpi-header">
+  <div class="kpi-brand">Arc Garde KPI Engine</div>
+  <img src="https://americanataxplanning.com/wp-content/uploads/2020/03/americana-tax-planning-logo.png" alt="Americana Tax Planning" style="max-width:260px;margin:0 auto 12px;display:block;">
+  <div class="kpi-subtitle">Lead Generation Campaign | LA County | Testing Phase</div>
+  <div class="kpi-period">February 14 - 19, 2026 | Meta Ads | LA County | Days 1-5</div>
+  <div class="kpi-divider"></div>
+</div>
+<div class="campaign-toggle">
+  <button class="campaign-btn active prospecting" onclick="switchCampaignLA2('prospecting')">Prospecting</button>
+  <button class="campaign-btn retargeting" onclick="switchCampaignLA2('retargeting')">Retargeting</button>
+  <button class="campaign-btn overview" onclick="switchCampaignLA2('overview')">Overview</button>
+</div>
+<div class="kpi-cards" id="kpi-cards-la2"></div>
+<div class="chart-section">
+  <div class="chart-header">
+    <div class="chart-title" id="chart-title-la2">Daily Ad Spend - Prospecting</div>
+  </div>
+  <div class="chart-wrap"><canvas id="kpiChartLA2"></canvas></div>
+</div>
+<div class="ab-section" id="ab-section-la2">
+  <div class="ab-title">A/B Test Results</div>
+  <div class="ab-grid">
+    <div class="ab-card">
+      <div class="ab-card-title winner">Ad 1 - LA County</div>
+      <div class="ab-stat" style="color:#2ECC71;">$111.62</div>
+      <div class="ab-stat-label">Total Spend (99.8%)</div>
+      <div class="ab-stat" style="color:#E8E8F0;">1,465</div>
+      <div class="ab-stat-label">Impressions</div>
+      <div class="ab-stat" style="color:#2C6FBB;">13</div>
+      <div class="ab-stat-label">Page Visits</div>
+      <div style="margin-top:10px;"><span class="ab-verdict win">TEST WINNER</span></div>
+    </div>
+    <div class="ab-card">
+      <div class="ab-card-title loser">Ad 2 - LA County</div>
+      <div class="ab-stat" style="color:#E74C3C;">$0.18</div>
+      <div class="ab-stat-label">Total Spend (0.2%)</div>
+      <div class="ab-stat" style="color:#E8E8F0;">8</div>
+      <div class="ab-stat-label">Impressions</div>
+      <div class="ab-stat" style="color:#E74C3C;">0</div>
+      <div class="ab-stat-label">Page Visits</div>
+      <div style="margin-top:10px;"><span class="ab-verdict kill">TEST LOSER</span></div>
+    </div>
+  </div>
+</div>
+<div class="ab-section" id="retarget-section-la2" style="display:none;">
+  <div class="ab-title">Retargeting - Creative Distribution</div>
+  <div class="retarget-bars" id="retarget-bars-la2"></div>
+  <div style="margin-top:28px;">
+    <div class="insight-row">$3/day shared across 5 image ads. Static Image 2 continues to dominate, taking <span class="blue">78.3%</span> of total retargeting spend.</div>
+    <div class="insight-row">Total impressions: <span class="white">401</span> | Retargeting page visits: <span class="blue">2</span> | Warm audience pool expanding</div>
+  </div>
+</div>
+<div class="insights-section" id="insights-section-la2">
+  <div class="insights-title">Insights</div>
+  <div id="insights-content-la2"></div>
+</div>
+<div class="kpi-footer"><a href="https://www.arcgarde.com" target="_blank">Arc Garde</a></div>
+</div>
+<!-- END PART 1 -->
+<!-- AMERICANA TAX PLANNING KPI DASHBOARD (LA COUNTY W2) - PART 2 (JS) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+var prospectDays=['Feb 14','Feb 15','Feb 16','Feb 17','Feb 18','Feb 19'];
+var pData={
+  spend:[5.98,17.83,21.89,23.78,22.92,19.40],
+  ctr:[0,1.32,2.39,0,1.06,1.07],
+  lpViews:[0,2,5,0,3,3],
+  cpc:[0,4.46,3.65,0,7.64,6.47],
+  impressions:[113,303,251,242,283,281]
+};
+var rtDaily={
+  spend:[1.79,0.91,4.22,3.77,3.76,2.23],
+  impressions:[45,24,105,88,83,56]
+};
+var rtCreatives=[
+  {name:'Static 1',spent:0.92,impressions:19,color:'#C0392B'},
+  {name:'Static 2',spent:13.06,impressions:311,color:'#E74C3C'},
+  {name:'Static 3',spent:0.45,impressions:17,color:'#F39C9C'},
+  {name:'Static 4',spent:2.03,impressions:47,color:'#2C6FBB'},
+  {name:'Static 5',spent:0.22,impressions:7,color:'#7FBBDF'}
+];
+var curCampaign='prospecting';
+var curMetric='spend';
+var chartLA2;
+var cardDefs={
+  prospecting:[
+    {key:'spend',label:'Total Ad Spend',value:'$111.80',change:'5 days',changeClass:'white'},
+    {key:'ctr',label:'Click Rate',value:'1.09%',change:'2.39% peak Mon',changeClass:'blue'},
+    {key:'lpViews',label:'Page Visits (Meta)',value:'13',change:'36 unique (CRM)',changeClass:'blue'},
+    {key:'cpc',label:'Cost Per Click',value:'$6.99',change:'$3.65 best Mon',changeClass:'blue'}
+  ],
+  retargeting:[
+    {key:'spend',label:'Total Ad Spend',value:'$16.68',change:'$3/day budget',changeClass:'white'},
+    {key:'impressions',label:'Impressions',value:'401',change:'Across 5 images',changeClass:'white'},
+    {key:'lpViews',label:'Page Visits',value:'2',change:'Growing pool',changeClass:'blue'},
+    {key:'cpm',label:'Cost Per 1K Views',value:'$41.60',change:'Retarget avg',changeClass:'blue'}
+  ],
+  overview:[
+    {key:'totalSpend',label:'Total Ad Spend',value:'$128.48',change:'Prospecting + Retarget',changeClass:'white'},
+    {key:'leads',label:'Confirmed Leads',value:'1',change:'via EngageBay CRM',changeClass:'green'},
+    {key:'cpl',label:'Cost Per Lead',value:'$128.48',change:'Testing phase',changeClass:'blue'},
+    {key:'lpConv',label:'LP Conversion Rate',value:'2.8%',change:'1 of 36 unique',changeClass:'blue'}
+  ]
+};
+var chartDataLA2={
+  prospecting:{
+    spend:{data:pData.spend,label:'Daily Ad Spend ($)',prefix:'$'},
+    ctr:{data:pData.ctr,label:'Click Rate (%)',suffix:'%'},
+    lpViews:{data:pData.lpViews,label:'Page Visits',prefix:''},
+    cpc:{data:pData.cpc,label:'Cost Per Click ($)',prefix:'$'}
+  },
+  retargeting:{
+    spend:{data:rtDaily.spend,label:'Daily Ad Spend ($)',prefix:'$'},
+    impressions:{data:rtDaily.impressions,label:'Daily Impressions',prefix:''},
+    lpViews:{data:[0,0,0,1,0,1],label:'Page Visits',prefix:''},
+    cpm:{data:rtDaily.spend.map(function(s,i){return rtDaily.impressions[i]>0?((s/rtDaily.impressions[i])*1000).toFixed(2):0;}),label:'Cost Per 1K Views ($)',prefix:'$'}
+  },
+  overview:{
+    totalSpend:{data:pData.spend.map(function(s,i){return +(s+rtDaily.spend[i]).toFixed(2);}),label:'Total Daily Ad Spend ($)',prefix:'$'},
+    leads:{data:[0,0,0,0,0,1],label:'Cumulative Leads',prefix:''},
+    cpl:{data:[0,0,0,0,0,128.48],label:'Cost Per Lead ($)',prefix:'$'},
+    lpConv:{data:[0,0,0,0,0,2.8],label:'LP Conversion Rate (%)',suffix:'%'}
+  }
+};
+var insightTextLA2={
+  prospecting:[
+    'Ad 1 continued to capture <span class="blue">99.8%</span> of budget, confirming it as the stronger creative. The algorithm consistently prioritized Ad 1 across all 5 days of testing.',
+    'Monday (Feb 16) was the strongest day with <span class="green">5 page visits</span>, a <span class="green">2.39% click rate</span>, and the most efficient cost per click at <span class="green">$3.65</span>.',
+    'The campaign delivered <span class="blue">13 page visits</span> from Meta, while CRM captured <span class="green">36 unique visitors</span> to the landing page across all traffic sources during this period.',
+    'This testing phase continues to build valuable data on audience behavior in LA County. The campaign is still in its learning phase, with the algorithm gathering signals on which placements and times drive the best results.',
+    'Combined with previous testing periods, the campaign has now generated <span class="green">6 total leads</span> across all geo tests at a blended cost per lead of <span class="blue">$53.85</span>.'
+  ],
+  retargeting:[
+    'Static Image 2 continued to lead, capturing <span class="blue">78.3%</span> of total retargeting spend ($13.06 of $16.68) and <span class="blue">77.6%</span> of impressions (311 of 401).',
+    'Retargeting generated <span class="green">2 page visits</span> this week: 1 from Static 2 on Tuesday and 1 from Static 4 on Thursday. Static 4 posted a <span class="green">7.14% click rate</span> on Thursday.',
+    'The warm audience pool continues to grow as prospecting runs. With 401 impressions this period (up from 269 in LA Week 1), the retargeting reach is expanding.',
+    'Static 2 has established itself as the clear retargeting winner. As the audience pool grows, retargeting performance is expected to improve with more volume to optimize against.'
+  ],
+  overview:[
+    '<span class="green">1 confirmed lead</span> from EngageBay CRM this period. The landing page continues to capture traffic, with <span class="blue">36 unique visitors</span> recorded.',
+    'Total investment of <span class="blue">$128.48</span> across prospecting and retargeting. This is a testing phase investment, building audience data and pixel learning that compounds over time.',
+    'Across all three testing periods (LA Week 1, Orange County, LA Week 2), the campaign has produced <span class="green">6 total leads</span> from $323.13 in total spend, for a blended cost per lead of <span class="blue">$53.85</span>.',
+    'The retargeting audience pool is growing each week, CRM is capturing more unique visitors, and the algorithm continues to gather optimization data. These are building blocks for scaling.'
+  ]
+};
+function switchCampaignLA2(c){
+  curCampaign=c;
+  var keys=Object.keys(cardDefs[c]);
+  curMetric=keys[0];
+  document.querySelectorAll('.campaign-btn').forEach(function(b){b.classList.remove('active');});
+  document.querySelector('.campaign-btn.'+c).classList.add('active');
+  document.getElementById('ab-section-la2').style.display=c==='prospecting'?'block':'none';
+  document.getElementById('retarget-section-la2').style.display=c==='retargeting'?'block':'none';
+  renderCardsLA2();
+  updateChartLA2();
+  updateInsightsLA2();
+  if(c==='retargeting')renderRetargetBarsLA2();
+}
+function renderCardsLA2(){
+  var cards=cardDefs[curCampaign];
+  var html=cards.map(function(card){
+    var active=card.key===curMetric?'active':'';
+    return '<div class="kpi-card '+active+'" onclick="switchMetricLA2(\''+card.key+'\')"><div class="kpi-label">'+card.label+'</div><div class="kpi-value">'+card.value+'</div><div class="kpi-change '+card.changeClass+'">'+card.change+'</div></div>';
+  }).join('');
+  document.getElementById('kpi-cards-la2').innerHTML=html;
+}
+function switchMetricLA2(m){
+  curMetric=m;
+  renderCardsLA2();
+  updateChartLA2();
+}
+function updateChartLA2(){
+  var cd=chartDataLA2[curCampaign][curMetric];
+  if(!cd)return;
+  var ctx=document.getElementById('kpiChartLA2').getContext('2d');
+  var g=ctx.createLinearGradient(0,0,ctx.canvas.width,0);
+  g.addColorStop(0,'#C0392B');g.addColorStop(0.5,'#E8E8F0');g.addColorStop(1,'#2C6FBB');
+  var fillG=ctx.createLinearGradient(0,0,0,ctx.canvas.height);
+  fillG.addColorStop(0,'rgba(44,111,187,0.2)');fillG.addColorStop(1,'rgba(44,111,187,0)');
+  if(chartLA2)chartLA2.destroy();
+  chartLA2=new Chart(ctx,{
+    type:'line',
+    data:{labels:prospectDays,datasets:[{data:cd.data,label:cd.label,borderColor:g,borderWidth:3,
+      pointBackgroundColor:'#2C6FBB',pointBorderColor:'#0A0A0F',pointBorderWidth:2,pointRadius:6,
+      pointHoverRadius:9,fill:true,backgroundColor:fillG,tension:0.3}]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#1A1A25',titleColor:'#2C6FBB',
+        bodyColor:'#E8E8F0',borderColor:'#2C6FBB',borderWidth:1,padding:12,displayColors:false,
+        callbacks:{label:function(c){var p=cd.prefix||'';var s=cd.suffix||'';return cd.label+': '+p+c.raw+s;}}}},
+      scales:{x:{grid:{display:false},ticks:{color:'#555',font:{size:11}}},
+        y:{grid:{color:'rgba(44,111,187,0.06)',drawBorder:false},ticks:{color:'#555',font:{size:11},
+          callback:function(v){return(cd.prefix||'')+v+(cd.suffix||'');}}}}}
+  });
+  document.getElementById('chart-title-la2').textContent=cd.label+' - '+curCampaign.charAt(0).toUpperCase()+curCampaign.slice(1);
+}
+function updateInsightsLA2(){
+  var ins=insightTextLA2[curCampaign];
+  document.getElementById('insights-content-la2').innerHTML=ins.map(function(i){return '<div class="insight-row">'+i+'</div>';}).join('');
+}
+function renderRetargetBarsLA2(){
+  var maxImp=Math.max.apply(null,rtCreatives.map(function(r){return r.impressions;}));
+  var html=rtCreatives.map(function(r){
+    var h=maxImp>0?Math.max((r.impressions/maxImp)*100,5):5;
+    return '<div class="retarget-bar" style="height:'+h+'%;background:'+r.color+';" title="'+r.name+': '+r.impressions+' imp, $'+r.spent.toFixed(2)+'"><div class="retarget-bar-value">'+r.impressions+'</div><div class="retarget-bar-label">'+r.name.replace('Static ','S')+'</div></div>';
+  }).join('');
+  document.getElementById('retarget-bars-la2').innerHTML=html;
+}
+document.addEventListener('DOMContentLoaded',function(){renderCardsLA2();updateChartLA2();updateInsightsLA2();});
+</script>
+<!-- END PART 2 -->
+</body>
+</html>
