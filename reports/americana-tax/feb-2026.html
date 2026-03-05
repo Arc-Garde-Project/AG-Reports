@@ -503,69 +503,18 @@ body {
   <div class="section-card">
     <div class="section-header">
       <div class="section-title green">Top 4 Performers by LP Views</div>
-      <div class="section-desc">Ranked by landing page views, the closest proxy to lead intent. Cost per LP view shows how efficiently each ad drove qualified traffic to the landing page.</div>
+      <div class="section-desc">Ranked by landing page views. Cost per LP view shows how efficiently each ad drove qualified traffic.</div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">
-      <div class="compare-card" style="border-color:rgba(46,204,113,0.3);">
-        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:14px;">#1 Ad 6 <span class="geo-pill la" style="margin-left:6px;">LA</span></div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="color:var(--green);">18</div>
-          <div class="compare-stat-label">LP Views</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;">$84.21</div>
-          <div class="compare-stat-label">Spend</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;color:var(--green);">$4.68</div>
-          <div class="compare-stat-label">Cost / LP View</div>
-        </div>
-      </div>
-      <div class="compare-card">
-        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);font-weight:700;margin-bottom:14px;">#2 Ad 1 <span class="geo-pill la" style="margin-left:6px;">LA</span></div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="color:var(--cyan);">13</div>
-          <div class="compare-stat-label">LP Views</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;">$180.49</div>
-          <div class="compare-stat-label">Spend</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;">$13.88</div>
-          <div class="compare-stat-label">Cost / LP View</div>
-        </div>
-      </div>
-      <div class="compare-card">
-        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue-lt);font-weight:700;margin-bottom:14px;">#3 Ad 10 <span class="geo-pill oc" style="margin-left:6px;">OC</span></div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="color:var(--blue-lt);">6</div>
-          <div class="compare-stat-label">LP Views</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;">$84.82</div>
-          <div class="compare-stat-label">Spend</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;">$14.14</div>
-          <div class="compare-stat-label">Cost / LP View</div>
-        </div>
-      </div>
-      <div class="compare-card">
-        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:14px;">#4 Ad 2 <span class="geo-pill oc" style="margin-left:6px;">OC</span></div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">5</div>
-          <div class="compare-stat-label">LP Views</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;">$75.99</div>
-          <div class="compare-stat-label">Spend</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;">$15.20</div>
-          <div class="compare-stat-label">Cost / LP View</div>
-        </div>
-      </div>
+    <div style="overflow-x:auto;">
+    <table class="winner-table">
+      <thead><tr><th>#</th><th>Ad</th><th>Geo</th><th>LP Views</th><th>Spend</th><th>Cost / LP</th><th>CTR</th><th>CPC</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--green);font-weight:700;">1</td><td>Ad 6</td><td><span class="geo-pill la">LA</span></td><td style="color:var(--green);font-weight:700;">18</td><td>$84.21</td><td style="color:var(--green);">$4.68</td><td>3.86%</td><td>$1.48</td></tr>
+        <tr><td style="color:var(--cyan);font-weight:700;">2</td><td>Ad 1</td><td><span class="geo-pill la">LA</span></td><td style="font-weight:700;">13</td><td>$180.49</td><td>$13.88</td><td>2.20%</td><td>$2.65</td></tr>
+        <tr><td style="font-weight:700;">3</td><td>Ad 10</td><td><span class="geo-pill oc">OC</span></td><td style="font-weight:700;">6</td><td>$84.82</td><td>$14.14</td><td>2.42%</td><td>$3.39</td></tr>
+        <tr><td style="font-weight:700;">4</td><td>Ad 2</td><td><span class="geo-pill oc">OC</span></td><td style="font-weight:700;">5</td><td>$75.99</td><td>$15.20</td><td>1.78%</td><td>$4.22</td></tr>
+      </tbody>
+    </table>
     </div>
   </div>
 
@@ -573,53 +522,18 @@ body {
   <div class="section-card">
     <div class="section-header">
       <div class="section-title cyan">Most Watched Ads by ThruPlays</div>
-      <div class="section-desc">ThruPlays count when someone watches at least 15 seconds (or the full video if shorter). Higher ThruPlays = more people actually watching the content.</div>
+      <div class="section-desc">ThruPlays count when someone watches at least 15 seconds. Higher ThruPlays = more people actually watching the content.</div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">
-      <div class="compare-card" style="border-color:rgba(77,208,225,0.3);">
-        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);font-weight:700;margin-bottom:14px;">#1 Ad 1 <span class="geo-pill la" style="margin-left:6px;">LA</span></div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="color:var(--cyan);">259</div>
-          <div class="compare-stat-label">ThruPlays</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;color:var(--green);">$0.80</div>
-          <div class="compare-stat-label">Cost / ThruPlay</div>
-        </div>
-      </div>
-      <div class="compare-card">
-        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue-lt);font-weight:700;margin-bottom:14px;">#2 Ad 2 <span class="geo-pill oc" style="margin-left:6px;">OC</span></div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">84</div>
-          <div class="compare-stat-label">ThruPlays</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;">$1.15</div>
-          <div class="compare-stat-label">Cost / ThruPlay</div>
-        </div>
-      </div>
-      <div class="compare-card">
-        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:14px;">#3 Ad 6 <span class="geo-pill la" style="margin-left:6px;">LA</span></div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">77</div>
-          <div class="compare-stat-label">ThruPlays</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;color:var(--green);">$1.10</div>
-          <div class="compare-stat-label">Cost / ThruPlay</div>
-        </div>
-      </div>
-      <div class="compare-card">
-        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:14px;">#4 Ad 6 <span class="geo-pill oc" style="margin-left:6px;">OC</span></div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">47</div>
-          <div class="compare-stat-label">ThruPlays</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;">$1.91</div>
-          <div class="compare-stat-label">Cost / ThruPlay</div>
-        </div>
-      </div>
+    <div style="overflow-x:auto;">
+    <table class="winner-table">
+      <thead><tr><th>#</th><th>Ad</th><th>Geo</th><th>ThruPlays</th><th>Cost / ThruPlay</th><th>Spend</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--cyan);font-weight:700;">1</td><td>Ad 1</td><td><span class="geo-pill la">LA</span></td><td style="color:var(--cyan);font-weight:700;">259</td><td style="color:var(--green);">$0.80</td><td>$208.16</td></tr>
+        <tr><td style="font-weight:700;">2</td><td>Ad 2</td><td><span class="geo-pill oc">OC</span></td><td style="font-weight:700;">84</td><td>$1.15</td><td>$96.89</td></tr>
+        <tr><td style="font-weight:700;">3</td><td>Ad 6</td><td><span class="geo-pill la">LA</span></td><td style="font-weight:700;">77</td><td style="color:var(--green);">$1.10</td><td>$84.48</td></tr>
+        <tr><td style="font-weight:700;">4</td><td>Ad 6</td><td><span class="geo-pill oc">OC</span></td><td style="font-weight:700;">47</td><td>$1.91</td><td>$89.63</td></tr>
+      </tbody>
+    </table>
     </div>
   </div>
 
@@ -627,47 +541,16 @@ body {
   <div class="section-card">
     <div class="section-header">
       <div class="section-title red">Ad Set Battle: LA vs Orange County</div>
-      <div class="section-desc">Which geo delivered better results across 3 testing rounds each. OC converted at a higher rate and lower CPL despite fewer landing page views.</div>
+      <div class="section-desc">OC converted at a higher rate and lower CPL despite fewer landing page views.</div>
     </div>
-    <div class="compare-grid">
-      <div class="compare-card" style="border-color:rgba(44,111,187,0.2);">
-        <div class="compare-label la">LA County</div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">$303.56</div>
-          <div class="compare-stat-label">Total Spend</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">5</div>
-          <div class="compare-stat-label">CRM Leads</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">$60.71</div>
-          <div class="compare-stat-label">Cost Per Lead</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;">212 unique / 2.36%</div>
-          <div class="compare-stat-label">CRM Visitors / Conv Rate</div>
-        </div>
-      </div>
-      <div class="compare-card" style="border-color:rgba(192,57,43,0.2);">
-        <div class="compare-label oc">Orange County</div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">$306.57</div>
-          <div class="compare-stat-label">Total Spend</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="color:var(--green);">6</div>
-          <div class="compare-stat-label">CRM Leads</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="color:var(--green);">$51.10</div>
-          <div class="compare-stat-label">Cost Per Lead</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;color:var(--green);">142 unique / 4.23%</div>
-          <div class="compare-stat-label">CRM Visitors / Conv Rate</div>
-        </div>
-      </div>
+    <div style="overflow-x:auto;">
+    <table class="winner-table">
+      <thead><tr><th>Geo</th><th>Spend</th><th>CRM Leads</th><th>CPL</th><th>Unique Visitors</th><th>Conv Rate</th><th>Rounds</th></tr></thead>
+      <tbody>
+        <tr><td><span class="geo-pill la">LA</span></td><td>$303.56</td><td>5</td><td>$60.71</td><td>212</td><td>2.36%</td><td>3</td></tr>
+        <tr><td><span class="geo-pill oc">OC</span></td><td>$306.57</td><td style="color:var(--green);font-weight:700;">6</td><td style="color:var(--green);font-weight:700;">$51.10</td><td>142</td><td style="color:var(--green);font-weight:700;">4.23%</td><td>3</td></tr>
+      </tbody>
+    </table>
     </div>
   </div>
 
@@ -756,39 +639,48 @@ body {
       <div class="section-title blue">Video Engagement (Full Campaign)</div>
       <div class="section-desc">How well the video content performed across all 6 weeks of prospecting. Hook rate = first 25% watched. Hold rate = stayed past 75% of those hooked. Completion = watched the entire video.</div>
     </div>
-    <div class="metric-row">
-      <div class="metric-card">
-        <div class="metric-card-label">Avg Hook Rate</div>
-        <div class="metric-card-value low">6.03%</div>
-        <div class="metric-card-sub">522 of 8,660 viewers watched 25%+. Below the 30% benchmark.</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-card-label">Avg Hold Rate</div>
-        <div class="metric-card-value medium">38.5%</div>
-        <div class="metric-card-sub">201 of 522 hooked viewers stayed past 75%.</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-card-label">Avg Completion</div>
-        <div class="metric-card-value high">21.1%</div>
-        <div class="metric-card-sub">110 of 522 watched the full video. Above 20% is solid.</div>
-      </div>
-    </div>
-    <div class="metric-row">
-      <div class="metric-card">
-        <div class="metric-card-label">Total ThruPlays</div>
-        <div class="metric-card-value" style="color:var(--cyan);">534</div>
-        <div class="metric-card-sub">Across all 10 prospecting video ads</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-card-label">Avg Cost / ThruPlay</div>
-        <div class="metric-card-value" style="color:var(--green);">$1.00</div>
-        <div class="metric-card-sub">$531.31 spend / 534 thruPlays</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-card-label">Total LP Views</div>
-        <div class="metric-card-value" style="color:var(--blue-lt);">55</div>
-        <div class="metric-card-sub">45 from prospecting + 10 from retargeting</div>
-      </div>
+    <div style="overflow-x:auto;">
+    <table class="winner-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hook Rate (25%+)</td>
+          <td style="color:var(--red-lt);">6.03%</td>
+          <td>522 of 8,660 viewers. Below 30% benchmark.</td>
+        </tr>
+        <tr>
+          <td>Hold Rate (75%+)</td>
+          <td style="color:var(--amber);">38.5%</td>
+          <td>201 of 522 hooked viewers stayed past 75%</td>
+        </tr>
+        <tr>
+          <td>Completion Rate (100%)</td>
+          <td style="color:var(--green);">21.1%</td>
+          <td>110 of 522 watched full video. Above 20% is solid.</td>
+        </tr>
+        <tr>
+          <td>Total ThruPlays</td>
+          <td style="color:var(--cyan);">534</td>
+          <td>Across all 10 prospecting video ads</td>
+        </tr>
+        <tr>
+          <td>Avg Cost / ThruPlay</td>
+          <td style="color:var(--green);">$1.00</td>
+          <td>$531.31 spend / 534 thruPlays</td>
+        </tr>
+        <tr>
+          <td>Total LP Views</td>
+          <td style="color:var(--blue-lt);">55</td>
+          <td>45 from prospecting + 10 from retargeting</td>
+        </tr>
+      </tbody>
+    </table>
     </div>
   </div>
 
@@ -798,37 +690,49 @@ body {
       <div class="section-title amber">Retargeting Creative Breakdown</div>
       <div class="section-desc">5 static images ran across all 6 weeks at $3/day. The algorithm identified Static 2 as the top performer, giving it the majority of budget and impressions.</div>
     </div>
-    <div class="retarget-grid">
-      <div class="retarget-item">
-        <div class="retarget-bar-wrap"><div class="retarget-bar" style="height:4%;background:var(--red);border-radius:6px 6px 0 0;"></div></div>
-        <div class="retarget-name">Static 1</div>
-        <div class="retarget-spend">$2.02</div>
-        <div class="retarget-pct" style="color:#666;">2.6%</div>
-      </div>
-      <div class="retarget-item">
-        <div class="retarget-bar-wrap"><div class="retarget-bar" style="height:100%;background:var(--green);border-radius:6px 6px 0 0;"></div></div>
-        <div class="retarget-name">Static 2</div>
-        <div class="retarget-spend">$45.84</div>
-        <div class="retarget-pct" style="color:var(--green);">58.2%</div>
-      </div>
-      <div class="retarget-item">
-        <div class="retarget-bar-wrap"><div class="retarget-bar" style="height:11%;background:var(--blue-lt);border-radius:6px 6px 0 0;"></div></div>
-        <div class="retarget-name">Static 3</div>
-        <div class="retarget-spend">$5.07</div>
-        <div class="retarget-pct" style="color:#666;">6.4%</div>
-      </div>
-      <div class="retarget-item">
-        <div class="retarget-bar-wrap"><div class="retarget-bar" style="height:40%;background:var(--blue);border-radius:6px 6px 0 0;"></div></div>
-        <div class="retarget-name">Static 4</div>
-        <div class="retarget-spend">$18.26</div>
-        <div class="retarget-pct" style="color:var(--blue-lt);">23.2%</div>
-      </div>
-      <div class="retarget-item">
-        <div class="retarget-bar-wrap"><div class="retarget-bar" style="height:17%;background:var(--cyan);border-radius:6px 6px 0 0;"></div></div>
-        <div class="retarget-name">Static 5</div>
-        <div class="retarget-spend">$7.63</div>
-        <div class="retarget-pct" style="color:#666;">9.7%</div>
-      </div>
+    <div style="overflow-x:auto;">
+    <table class="winner-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Creative</th>
+          <th>Spend</th>
+          <th>% of Budget</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Static Image 2</td>
+          <td style="color:var(--green);">$45.84</td>
+          <td style="color:var(--green);">58.2%</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Static Image 4</td>
+          <td>$18.26</td>
+          <td style="color:var(--blue-lt);">23.2%</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Static Image 5</td>
+          <td>$7.63</td>
+          <td>9.7%</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Static Image 3</td>
+          <td>$5.07</td>
+          <td>6.4%</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Static Image 1</td>
+          <td>$2.02</td>
+          <td>2.6%</td>
+        </tr>
+      </tbody>
+    </table>
     </div>
   </div>
 
@@ -838,39 +742,48 @@ body {
       <div class="section-title green">EngageBay CRM Conversion Tracking</div>
       <div class="section-desc">Leads tracked via EngageBay CRM, not the Meta pixel (which failed to fire). The thank-you page recorded 13 views / 10 unique. 2 were test submissions, leaving 11 confirmed real leads.</div>
     </div>
-    <div class="metric-row">
-      <div class="metric-card">
-        <div class="metric-card-label">Total CRM Leads</div>
-        <div class="metric-card-value" style="color:var(--green);">11</div>
-        <div class="metric-card-sub">5 LA + 6 OC confirmed conversions</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-card-label">Blended CPL</div>
-        <div class="metric-card-value" style="color:var(--cyan);">$55.47</div>
-        <div class="metric-card-sub">$610.13 total spend / 11 leads</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-card-label">CRM Conversion Rate</div>
-        <div class="metric-card-value" style="color:var(--green);">3.11%</div>
-        <div class="metric-card-sub">11 leads from 354 unique visitors</div>
-      </div>
-    </div>
-    <div class="metric-row">
-      <div class="metric-card">
-        <div class="metric-card-label">Total Page Views</div>
-        <div class="metric-card-value">432</div>
-        <div class="metric-card-sub">260 LA + 172 OC</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-card-label">Unique Visitors</div>
-        <div class="metric-card-value">354</div>
-        <div class="metric-card-sub">212 LA + 142 OC</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-card-label">Thank You Page</div>
-        <div class="metric-card-value">13 / 10</div>
-        <div class="metric-card-sub">Views / unique (includes 2 tests)</div>
-      </div>
+    <div style="overflow-x:auto;">
+    <table class="winner-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Total CRM Leads</td>
+          <td style="color:var(--green);">11</td>
+          <td>5 LA + 6 OC confirmed conversions</td>
+        </tr>
+        <tr>
+          <td>Blended CPL</td>
+          <td style="color:var(--cyan);">$55.47</td>
+          <td>$610.13 total spend / 11 leads</td>
+        </tr>
+        <tr>
+          <td>CRM Conversion Rate</td>
+          <td style="color:var(--green);">3.11%</td>
+          <td>11 leads from 354 unique visitors</td>
+        </tr>
+        <tr>
+          <td>Total Page Views</td>
+          <td>432</td>
+          <td>260 LA + 172 OC</td>
+        </tr>
+        <tr>
+          <td>Unique Visitors</td>
+          <td>354</td>
+          <td>212 LA + 142 OC</td>
+        </tr>
+        <tr>
+          <td>Thank You Page</td>
+          <td>13 / 10</td>
+          <td>Views / unique (includes 2 tests)</td>
+        </tr>
+      </tbody>
+    </table>
     </div>
     <div style="overflow-x:auto;margin-top:16px;">
     <table class="winner-table">
