@@ -16,19 +16,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --void: #F7F3EE;
-  --void-warm: #F0EBE4;
-  --void-cool: #EEEAE5;
-  --accent: #7A5C38;
-  --accent-bright: #5C4229;
-  --accent-glow: rgba(92, 66, 41, 0.25);
-  --accent-subtle: rgba(92, 66, 41, 0.06);
-  --text-primary: #0A0A0A;
-  --text-secondary: rgba(10, 10, 10, 0.82);
-  --text-tertiary: rgba(10, 10, 10, 0.58);
-  --text-faint: rgba(10, 10, 10, 0.35);
-  --border-subtle: rgba(10, 9, 8, 0.1);
-  --border-faint: rgba(10, 9, 8, 0.05);
+  --void: #0C0B09;
+  --void-warm: #141210;
+  --void-cool: #111010;
+  --accent: #C9A76C;
+  --accent-bright: #E0C48A;
+  --accent-glow: rgba(201, 167, 108, 0.25);
+  --accent-subtle: rgba(201, 167, 108, 0.08);
+  --text-primary: #FAF6F1;
+  --text-secondary: rgba(250, 246, 241, 0.82);
+  --text-tertiary: rgba(250, 246, 241, 0.55);
+  --text-faint: rgba(250, 246, 241, 0.3);
+  --border-subtle: rgba(250, 246, 241, 0.1);
+  --border-faint: rgba(250, 246, 241, 0.06);
   --ease-arc: cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -84,8 +84,8 @@ body {
 }
 .hub-eyebrow-text {
   font-family: 'Cinzel', serif;
-  font-size: clamp(0.7rem, 1.2vw, 0.84rem);
-  font-weight: 500;
+  font-size: clamp(0.8rem, 1.3vw, 0.95rem);
+  font-weight: 600;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--accent);
@@ -97,8 +97,8 @@ body {
 
 .hub-title {
   font-family: 'Cinzel', serif;
-  font-size: clamp(2.25rem, 1.647rem + 2.57vw, 3.5rem);
-  font-weight: 400;
+  font-size: clamp(2.75rem, 2rem + 3.2vw, 4.25rem);
+  font-weight: 500;
   letter-spacing: 1px;
   margin-bottom: 14px;
   color: var(--text-primary);
@@ -109,9 +109,9 @@ body {
 
 .hub-subtitle {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.19rem, 2.4vw, 1.47rem);
+  font-size: clamp(1.35rem, 2.6vw, 1.65rem);
   font-style: italic;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--text-tertiary);
   opacity: 0;
   animation: fadeIn 0.7s var(--ease-arc) forwards 0.42s;
@@ -132,7 +132,7 @@ body {
   width: 100%;
   max-width: 560px;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(122, 92, 56, 0.25) 20%, rgba(122, 92, 56, 0.12) 50%, rgba(122, 92, 56, 0.25) 80%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(201, 167, 108, 0.25) 20%, rgba(201, 167, 108, 0.12) 50%, rgba(201, 167, 108, 0.25) 80%, transparent 100%);
 }
 
 /* ══════════════════════════════════════
@@ -175,8 +175,8 @@ body {
 
 .hub-section-label {
   font-family: 'Cinzel', serif;
-  font-size: clamp(0.7rem, 1vw, 0.8rem);
-  font-weight: 500;
+  font-size: clamp(0.8rem, 1.1vw, 0.9rem);
+  font-weight: 600;
   letter-spacing: 2.5px;
   text-transform: uppercase;
   color: var(--accent);
@@ -184,7 +184,7 @@ body {
 
 .hub-section-count {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 14px;
+  font-size: 16px;
   font-style: italic;
   color: var(--text-faint);
   margin-left: auto;
@@ -227,8 +227,8 @@ body {
 
 .hub-card-name {
   font-family: 'Cinzel', serif;
-  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.19rem);
-  font-weight: 500;
+  font-size: clamp(1.13rem, 1rem + 0.5vw, 1.35rem);
+  font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 7px;
   letter-spacing: 0.3px;
@@ -236,7 +236,8 @@ body {
 
 .hub-card-desc {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.13rem);
+  font-size: clamp(1.1rem, 1rem + 0.5vw, 1.25rem);
+  font-weight: 400;
   color: var(--text-tertiary);
   line-height: 1.7;
   margin-bottom: 14px;
@@ -251,8 +252,8 @@ body {
 
 .hub-card-tag {
   font-family: 'Cinzel', serif;
-  font-size: 10px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 600;
   padding: 4px 12px;
   border-radius: 3px;
   letter-spacing: 1px;
@@ -278,7 +279,7 @@ body {
 @media (hover: hover) {
   .hub-card:hover {
     background: var(--void-warm);
-    box-shadow: 0 14px 42px rgba(0,0,0,0.04);
+    box-shadow: 0 14px 42px rgba(0,0,0,0.3);
   }
   .hub-card:hover::before { opacity: 1; }
   .hub-card:hover .hub-card-arrow {
@@ -286,7 +287,7 @@ body {
     transform: translateY(-50%) translateX(3px);
   }
   .hub-card:hover .hub-card-name {
-    color: var(--accent-bright);
+    color: var(--accent);
   }
 }
 
@@ -310,12 +311,12 @@ body {
   width: 100%;
   max-width: 560px;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(122, 92, 56, 0.25) 20%, rgba(122, 92, 56, 0.12) 50%, rgba(122, 92, 56, 0.25) 80%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(201, 167, 108, 0.25) 20%, rgba(201, 167, 108, 0.12) 50%, rgba(201, 167, 108, 0.25) 80%, transparent 100%);
 }
 .hub-footer p {
   font-family: 'Cinzel', serif;
-  font-size: 11px;
-  font-weight: 400;
+  font-size: 12px;
+  font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--text-faint);
