@@ -948,6 +948,26 @@ body {
   background: rgba(var(--accent-rgb),0.03);
 }
 
+.budget-half--inactive {
+  opacity: 0.35;
+  position: relative;
+}
+
+.budget-half--inactive .budget-half-val { color: var(--text60); }
+
+.budget-inactive-badge {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text60);
+  border: 1px dashed var(--text60);
+  border-radius: 6px;
+  padding: 3px 8px;
+  margin-top: 12px;
+}
+
 .budget-half-label {
   font-family: var(--font-display);
   font-size: 9px;
@@ -1883,9 +1903,10 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
             <span class="budget-half-label">Current</span>
             <span class="budget-half-val budget-half-val--cur" data-counter="70" data-prefix="$">$0</span>
           </div>
-          <div class="budget-half">
+          <div class="budget-half budget-half--inactive">
             <span class="budget-half-label">+ Retargeting</span>
-            <span class="budget-half-val budget-half-val--rec" data-counter="3" data-prefix="$">$0</span>
+            <span class="budget-half-val budget-half-val--rec">$3</span>
+            <span class="budget-inactive-badge">Not Active</span>
           </div>
         </div>
         <p class="budget-why">Adding $3/day retargeting to re-engage LP visitors and video viewers. Minimal spend increase, high conversion potential.</p>
