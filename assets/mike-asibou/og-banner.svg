@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0A0A0A"/>
+  <rect x="0" y="0" width="1200" height="4" fill="#D72638"/>
+  <text x="600" y="260" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="800" font-size="72" fill="#F5F5F5" letter-spacing="-1">Hitch Academy</text>
+  <text x="600" y="340" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="400" font-size="28" fill="#999999">Ad Performance Report</text>
+  <text x="600" y="400" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="500" font-size="20" fill="#D72638">March 2026</text>
+  <line x1="480" y1="450" x2="720" y2="450" stroke="#D72638" stroke-width="2" opacity="0.4"/>
+  <text x="600" y="500" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="14" fill="#555555" letter-spacing="4">ARC GARDE</text>
+</svg>
