@@ -1159,7 +1159,6 @@ body {
   .kpi-toggle:hover {
     border-color: rgba(var(--accent-rgb),0.3);
     color: var(--cream70);
-    font-size: 10px;
   }
   .kpi-toggle:hover::before { opacity: 1; }
 }
@@ -1529,20 +1528,9 @@ body {
   opacity: 1;
 }
 
-.heatmap-tip::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 8px solid rgba(12, 12, 10, 0.92);
-}
-
 .heatmap-tip-date {
   font-family: var(--font-display);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--accent-bright);
@@ -1551,7 +1539,7 @@ body {
 
 .heatmap-tip-val {
   font-family: var(--font-body);
-  font-size: 17px;
+  font-size: 15px;
   color: var(--cream);
 }
 
