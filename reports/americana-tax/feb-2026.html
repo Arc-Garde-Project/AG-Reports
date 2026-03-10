@@ -184,8 +184,8 @@ body {
   font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
   margin-bottom: 16px; font-weight: 700;
 }
-.compare-label.la { color: var(--red-lt); }
-.compare-label.oc { color: var(--blue-lt); }
+.compare-label.la { color: var(--blue-lt); }
+.compare-label.oc { color: var(--red-lt); }
 .compare-label.static { color: var(--amber); }
 .compare-label.video { color: var(--cyan); }
 .compare-stat { margin-bottom: 14px; }
@@ -209,8 +209,8 @@ body {
   display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 1px;
   padding: 3px 10px; border-radius: 12px;
 }
-.geo-pill.la { background: rgba(192,57,43,0.12); color: var(--red-lt); }
-.geo-pill.oc { background: rgba(44,111,187,0.12); color: var(--blue-lt); }
+.geo-pill.la { background: rgba(44,111,187,0.12); color: var(--blue-lt); }
+.geo-pill.oc { background: rgba(192,57,43,0.12); color: var(--red-lt); }
 
 /* ── Retarget Bars ── */
 .retarget-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
@@ -303,17 +303,17 @@ body {
 <div class="reports-overlay" id="reportsOverlay" onclick="closeReportsNav()"></div>
 <nav class="reports-nav" id="reportsNav" role="navigation" aria-label="Reports navigation">
   <div class="reports-nav-group">Ad Testing</div>
-  <a href="/americana-tax/la-w1" class="reports-nav-link">LA County - Week 1<span>Feb 4-8</span></a>
-  <a href="/americana-tax/oc-w1" class="reports-nav-link">OC County - Week 1<span>Feb 9-13</span></a>
-  <a href="/americana-tax/la-w2" class="reports-nav-link">LA County - Week 2<span>Feb 14-19</span></a>
-  <a href="/americana-tax/oc-w2" class="reports-nav-link">OC County - Week 2<span>Feb 20-23</span></a>
-  <a href="/americana-tax/feb-24-28" class="reports-nav-link">LA + OC - Week 5<span>Feb 24-28</span></a>
-  <a href="/americana-tax/feb-28-mar-3" class="reports-nav-link">LA + OC - Week 6<span>Feb 28 - Mar 3</span></a>
+  <a href="/reports/americana-tax/la-w1" class="reports-nav-link">LA County - Week 1<span>Feb 4-8</span></a>
+  <a href="/reports/americana-tax/oc-w1" class="reports-nav-link">OC County - Week 1<span>Feb 9-13</span></a>
+  <a href="/reports/americana-tax/la-w2" class="reports-nav-link">LA County - Week 2<span>Feb 14-19</span></a>
+  <a href="/reports/americana-tax/oc-w2" class="reports-nav-link">OC County - Week 2<span>Feb 20-23</span></a>
+  <a href="/reports/americana-tax/feb-24-28" class="reports-nav-link">LA + OC - Week 5<span>Feb 24-28</span></a>
+  <a href="/reports/americana-tax/feb-28-mar-3" class="reports-nav-link">LA + OC - Week 6<span>Feb 28 - Mar 3</span></a>
   <div class="reports-nav-divider"></div>
   <div class="reports-nav-group">Monthly Reports</div>
-  <a href="/americana-tax/feb-2026" class="reports-nav-link active">February 2026<span>Monthly</span></a>
+  <a href="/reports/americana-tax/feb-2026" class="reports-nav-link active">February 2026<span>Monthly</span></a>
   <div class="reports-nav-divider"></div>
-  <a href="/americana-tax" class="reports-nav-link reports-nav-all">All Reports</a>
+  <a href="/reports/americana-tax" class="reports-nav-link reports-nav-all">All Reports</a>
 </nav>
 
 <div class="dashboard">
@@ -322,7 +322,7 @@ body {
   <div class="header">
     <a href="https://americanataxplanning.com/" target="_blank"><img src="https://americanataxplanning.com/wp-content/uploads/2020/03/americana-tax-planning-logo.png" alt="Americana Tax Planning" class="header-logo"></a>
     <div class="subtitle">Monthly Campaign Report</div>
-    <div class="date-range">February 4 - March 3, 2026 | Meta Ads | LA + Orange County</div>
+    <div class="date-range">February 5 - March 3, 2026 | Meta Ads | LA + Orange County</div>
     <span class="month-badge">6 Weeks of Testing</span>
     <div class="divider"></div>
   </div>
@@ -332,17 +332,17 @@ body {
     <div class="hero-card primary">
       <div class="hero-label">Total Ad Spend</div>
       <div class="hero-value">$610.13</div>
-      <div class="hero-sub">Prospecting $530.73 + Retargeting $78.82</div>
+      <div class="hero-sub">Prospecting $531.31 + Retargeting $78.82</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-label">LP Views</div>
+      <div class="hero-value" style="color:var(--blue-lt);">55</div>
+      <div class="hero-sub">Landing page visits from ads</div>
     </div>
     <div class="hero-card">
       <div class="hero-label">Confirmed Leads</div>
-      <div class="hero-value" style="color:var(--green);">12</div>
-      <div class="hero-sub">Via EngageBay CRM</div>
-    </div>
-    <div class="hero-card">
-      <div class="hero-label">Cost Per Lead</div>
-      <div class="hero-value" style="color:var(--blue-lt);">$50.84</div>
-      <div class="hero-sub">Blended average</div>
+      <div class="hero-value" style="color:var(--green);">11</div>
+      <div class="hero-sub">5 LA + 6 OC (via EngageBay CRM)</div>
     </div>
     <div class="hero-card">
       <div class="hero-label">Ads Tested</div>
@@ -351,14 +351,189 @@ body {
     </div>
   </div>
 
-  <!-- Weekly Spend + Leads Chart -->
+  <!-- Weekly Spend + LP Views Chart -->
   <div class="chart-section">
     <div class="section-header" style="margin-bottom:16px;">
       <div class="section-title blue">Weekly Performance</div>
-      <div class="section-desc">Total spend and confirmed leads per testing period. The campaign ran alternating LA and OC geo targets week over week.</div>
+      <div class="section-desc">Total spend and CRM leads per testing period. The campaign alternated LA and OC geo targets week over week. 11 confirmed leads via EngageBay (2 test submissions excluded).</div>
     </div>
     <div class="chart-container">
       <canvas id="weeklyChart"></canvas>
+    </div>
+  </div>
+
+  <!-- All Ads Performance -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title blue">All Prospecting Ads</div>
+      <div class="section-desc">Every video ad that ran during the 6-week testing period, ranked by total spend. All ads drove video views as prospecting with a $20/day budget per ad set.</div>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="winner-table">
+      <thead>
+        <tr>
+          <th>Ad</th>
+          <th>Geo</th>
+          <th>Spend</th>
+          <th>Impr</th>
+          <th>Clicks</th>
+          <th>CTR</th>
+          <th>CPC</th>
+          <th>LP Views</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ad 1</td>
+          <td><span class="geo-pill la">LA</span></td>
+          <td>$180.49</td>
+          <td>3,095</td>
+          <td>68</td>
+          <td>2.20%</td>
+          <td>$2.65</td>
+          <td style="color:var(--green);font-weight:700;">13</td>
+        </tr>
+        <tr>
+          <td>Ad 10</td>
+          <td><span class="geo-pill oc">OC</span></td>
+          <td>$84.82</td>
+          <td>1,034</td>
+          <td>25</td>
+          <td>2.42%</td>
+          <td>$3.39</td>
+          <td style="color:var(--green);font-weight:700;">6</td>
+        </tr>
+        <tr>
+          <td>Ad 6</td>
+          <td><span class="geo-pill la">LA</span></td>
+          <td>$84.21</td>
+          <td>1,475</td>
+          <td>57</td>
+          <td style="color:var(--green);">3.86%</td>
+          <td style="color:var(--green);">$1.48</td>
+          <td style="color:var(--green);font-weight:700;">18</td>
+        </tr>
+        <tr>
+          <td>Ad 6</td>
+          <td><span class="geo-pill oc">OC</span></td>
+          <td>$80.50</td>
+          <td>978</td>
+          <td>7</td>
+          <td style="color:var(--red-lt);">0.72%</td>
+          <td style="color:var(--red-lt);">$11.50</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>Ad 2</td>
+          <td><span class="geo-pill oc">OC</span></td>
+          <td>$75.99</td>
+          <td>1,013</td>
+          <td>18</td>
+          <td>1.78%</td>
+          <td>$4.22</td>
+          <td style="color:var(--green);font-weight:700;">5</td>
+        </tr>
+        <tr>
+          <td>Ad 1</td>
+          <td><span class="geo-pill oc">OC</span></td>
+          <td>$20.79</td>
+          <td>244</td>
+          <td>3</td>
+          <td>1.23%</td>
+          <td>$6.93</td>
+          <td>0</td>
+        </tr>
+        <tr style="color:#666;">
+          <td>Ad 8</td>
+          <td><span class="geo-pill la">LA</span></td>
+          <td>$1.63</td>
+          <td>33</td>
+          <td>5</td>
+          <td>15.15%</td>
+          <td>$0.33</td>
+          <td>2</td>
+        </tr>
+        <tr style="color:#666;">
+          <td>Ad 11</td>
+          <td><span class="geo-pill oc">OC</span></td>
+          <td>$1.52</td>
+          <td>22</td>
+          <td>3</td>
+          <td>13.64%</td>
+          <td>$0.51</td>
+          <td>1</td>
+        </tr>
+        <tr style="color:#555;">
+          <td>Ad 2</td>
+          <td><span class="geo-pill la">LA</span></td>
+          <td>$0.76</td>
+          <td>37</td>
+          <td>0</td>
+          <td>0%</td>
+          <td>-</td>
+          <td>0</td>
+        </tr>
+        <tr style="color:#555;">
+          <td>Ad 8</td>
+          <td><span class="geo-pill oc">OC</span></td>
+          <td>$0.60</td>
+          <td>19</td>
+          <td>0</td>
+          <td>0%</td>
+          <td>-</td>
+          <td>0</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr style="border-top:1px solid var(--border);font-weight:700;">
+          <td colspan="2">Total</td>
+          <td>$531.31</td>
+          <td>7,950</td>
+          <td>186</td>
+          <td>2.34%</td>
+          <td>$2.86</td>
+          <td>45</td>
+        </tr>
+      </tfoot>
+    </table>
+    </div>
+  </div>
+
+  <!-- Top 4 Performers -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title green">Top 4 Performers by LP Views</div>
+      <div class="section-desc">Ranked by landing page views. Cost per LP view shows how efficiently each ad drove qualified traffic.</div>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="winner-table">
+      <thead><tr><th>#</th><th>Ad</th><th>Geo</th><th>LP Views</th><th>Spend</th><th>Cost / LP</th><th>CTR</th><th>CPC</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--green);font-weight:700;">1</td><td>Ad 6</td><td><span class="geo-pill la">LA</span></td><td style="color:var(--green);font-weight:700;">18</td><td>$84.21</td><td style="color:var(--green);">$4.68</td><td>3.86%</td><td>$1.48</td></tr>
+        <tr><td style="color:var(--cyan);font-weight:700;">2</td><td>Ad 1</td><td><span class="geo-pill la">LA</span></td><td style="font-weight:700;">13</td><td>$180.49</td><td>$13.88</td><td>2.20%</td><td>$2.65</td></tr>
+        <tr><td style="font-weight:700;">3</td><td>Ad 10</td><td><span class="geo-pill oc">OC</span></td><td style="font-weight:700;">6</td><td>$84.82</td><td>$14.14</td><td>2.42%</td><td>$3.39</td></tr>
+        <tr><td style="font-weight:700;">4</td><td>Ad 2</td><td><span class="geo-pill oc">OC</span></td><td style="font-weight:700;">5</td><td>$75.99</td><td>$15.20</td><td>1.78%</td><td>$4.22</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- Most Watched -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title cyan">Most Watched Ads by ThruPlays</div>
+      <div class="section-desc">ThruPlays count when someone watches at least 15 seconds. Higher ThruPlays = more people actually watching the content.</div>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="winner-table">
+      <thead><tr><th>#</th><th>Ad</th><th>Geo</th><th>ThruPlays</th><th>Cost / ThruPlay</th><th>Spend</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--cyan);font-weight:700;">1</td><td>Ad 1</td><td><span class="geo-pill la">LA</span></td><td style="color:var(--cyan);font-weight:700;">259</td><td style="color:var(--green);">$0.70</td><td>$180.49</td></tr>
+        <tr><td style="font-weight:700;">2</td><td>Ad 2</td><td><span class="geo-pill oc">OC</span></td><td style="font-weight:700;">84</td><td>$0.90</td><td>$75.99</td></tr>
+        <tr><td style="font-weight:700;">3</td><td>Ad 6</td><td><span class="geo-pill la">LA</span></td><td style="font-weight:700;">77</td><td style="color:var(--green);">$1.09</td><td>$84.21</td></tr>
+        <tr><td style="font-weight:700;">4</td><td>Ad 6</td><td><span class="geo-pill oc">OC</span></td><td style="font-weight:700;">47</td><td>$1.71</td><td>$80.50</td></tr>
+      </tbody>
+    </table>
     </div>
   </div>
 
@@ -366,95 +541,16 @@ body {
   <div class="section-card">
     <div class="section-header">
       <div class="section-title red">Ad Set Battle: LA vs Orange County</div>
-      <div class="section-desc">Which geo delivered better results across 3 testing rounds each. Orange County produced more leads at a lower cost per lead.</div>
+      <div class="section-desc">OC converted at a higher rate and lower CPL despite fewer landing page views.</div>
     </div>
-    <div class="compare-grid">
-      <div class="compare-card">
-        <div class="compare-label la">LA County</div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">$303.56</div>
-          <div class="compare-stat-label">Total Spend</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">5</div>
-          <div class="compare-stat-label">Leads</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="color:var(--red-lt);">$60.71</div>
-          <div class="compare-stat-label">Cost Per Lead</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">3</div>
-          <div class="compare-stat-label">Rounds Tested</div>
-        </div>
-      </div>
-      <div class="compare-card" style="border-color:rgba(44,111,187,0.2);">
-        <div class="compare-label oc">Orange County</div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">$306.57</div>
-          <div class="compare-stat-label">Total Spend</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="color:var(--green);">7</div>
-          <div class="compare-stat-label">Leads</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="color:var(--green);">$43.80</div>
-          <div class="compare-stat-label">Cost Per Lead</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">3</div>
-          <div class="compare-stat-label">Rounds Tested</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Format Shift: Static vs Video -->
-  <div class="section-card">
-    <div class="section-header">
-      <div class="section-title cyan">Format Shift: Static Image vs Video Ads</div>
-      <div class="section-desc">The campaign switched from static image prospecting ads (weeks 1-4) to video ads (weeks 5-6). Video delivered significantly better click-through rates and lower cost per click.</div>
-    </div>
-    <div class="compare-grid">
-      <div class="compare-card">
-        <div class="compare-label static">Static Image Ads</div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">$358.55</div>
-          <div class="compare-stat-label">Prospecting Spend</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">8</div>
-          <div class="compare-stat-label">Leads (4 Weeks)</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">1.65%</div>
-          <div class="compare-stat-label">Avg CTR</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="color:var(--red-lt);">$6.29</div>
-          <div class="compare-stat-label">Avg CPC</div>
-        </div>
-      </div>
-      <div class="compare-card" style="border-color:rgba(77,208,225,0.2);">
-        <div class="compare-label video">Video Ads</div>
-        <div class="compare-stat">
-          <div class="compare-stat-value">$172.18</div>
-          <div class="compare-stat-label">Prospecting Spend</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="color:var(--green);">4</div>
-          <div class="compare-stat-label">Leads (2 Weeks)</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="color:var(--green);">3.38%</div>
-          <div class="compare-stat-label">Avg CTR</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="color:var(--green);">$1.91</div>
-          <div class="compare-stat-label">Avg CPC</div>
-        </div>
-      </div>
+    <div style="overflow-x:auto;">
+    <table class="winner-table">
+      <thead><tr><th>Geo</th><th>Spend</th><th>CRM Leads</th><th>CPL</th><th>Unique Visitors</th><th>Conv Rate</th><th>Rounds</th></tr></thead>
+      <tbody>
+        <tr><td><span class="geo-pill la">LA</span></td><td>$303.56</td><td>5</td><td>$60.71</td><td>212</td><td>2.36%</td><td>3</td></tr>
+        <tr><td><span class="geo-pill oc">OC</span></td><td>$306.57</td><td style="color:var(--green);font-weight:700;">6</td><td style="color:var(--green);font-weight:700;">$51.10</td><td>142</td><td style="color:var(--green);font-weight:700;">4.23%</td><td>3</td></tr>
+      </tbody>
+    </table>
     </div>
   </div>
 
@@ -462,7 +558,7 @@ body {
   <div class="section-card">
     <div class="section-header">
       <div class="section-title green">A/B Test Results</div>
-      <div class="section-desc">Every A/B test across 6 weeks. Meta's algorithm allocates spend to the stronger performer. Budget share shows which ad the algorithm favored, not a definitive result at this spend level.</div>
+      <div class="section-desc">Every A/B test across 6 weeks. Meta's algorithm allocates spend to the stronger performer. Budget share shows which ad the algorithm favored.</div>
     </div>
     <div style="overflow-x:auto;">
     <table class="winner-table">
@@ -473,17 +569,19 @@ body {
           <th>Top Performer</th>
           <th>Spend</th>
           <th>Share</th>
-          <th>Leads</th>
+          <th>CRM Leads</th>
+          <th>CPL</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>W1 (Feb 4-8)</td>
+          <td>W1 (Feb 5-8)</td>
           <td><span class="geo-pill la">LA</span></td>
           <td>Ad 1 <span class="winner-pill win">Favored</span></td>
           <td>$68.87</td>
           <td>99.2%</td>
-          <td>2</td>
+          <td>1</td>
+          <td>$79.87</td>
         </tr>
         <tr>
           <td>W2 (Feb 9-13)</td>
@@ -491,7 +589,8 @@ body {
           <td>Ad 2 <span class="winner-pill win">Favored</span></td>
           <td>$75.99</td>
           <td>78.5%</td>
-          <td>3</td>
+          <td>2</td>
+          <td>$57.39</td>
         </tr>
         <tr>
           <td>W3 (Feb 14-19)</td>
@@ -500,6 +599,7 @@ body {
           <td>$111.62</td>
           <td>99.8%</td>
           <td>1</td>
+          <td style="color:var(--red-lt);">$128.48</td>
         </tr>
         <tr>
           <td>W4 (Feb 20-23)</td>
@@ -508,82 +608,79 @@ body {
           <td>$80.50</td>
           <td>99.3%</td>
           <td>2</td>
+          <td>$46.80</td>
         </tr>
         <tr>
           <td>W5 (Feb 24-27)</td>
           <td><span class="geo-pill la">LA</span></td>
-          <td>Ad 6 Video <span class="winner-pill win">Favored</span></td>
+          <td>Ad 6 <span class="winner-pill win">Favored</span></td>
           <td>$84.21</td>
           <td>98.1%</td>
           <td>2</td>
+          <td>$47.61</td>
         </tr>
         <tr>
           <td>W6 (Feb 28-Mar 3)</td>
           <td><span class="geo-pill oc">OC</span></td>
-          <td>Ad 10 Video <span class="winner-pill win">Favored</span></td>
+          <td>Ad 10 <span class="winner-pill win">Favored</span></td>
           <td>$84.82</td>
           <td>98.2%</td>
-          <td>2</td>
+          <td style="color:var(--green);">3</td>
+          <td style="color:var(--green);">$32.73</td>
         </tr>
       </tbody>
     </table>
     </div>
   </div>
 
-  <!-- Video Performance (Weeks 5-6) -->
+  <!-- Video Engagement Metrics -->
   <div class="section-card">
     <div class="section-header">
-      <div class="section-title blue">Video Ad Performance (Weeks 5-6)</div>
-      <div class="section-desc">Hook rate measures if the first few seconds grab attention. Hold rate measures if people stay. Completion measures if they watch the whole thing.</div>
+      <div class="section-title blue">Video Engagement (Full Campaign)</div>
+      <div class="section-desc">How well the video content performed across all 6 weeks of prospecting. Hook rate = first 25% watched. Hold rate = stayed past 75% of those hooked. Completion = watched the entire video.</div>
     </div>
-    <div class="metric-row">
-      <div class="metric-card">
-        <div class="metric-card-label">Avg Hook Rate</div>
-        <div class="metric-card-value low">5.73%</div>
-        <div class="metric-card-sub">% who watched 25%+. Above 30% is strong. This needs work.</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-card-label">Avg Hold Rate</div>
-        <div class="metric-card-value medium">39.6%</div>
-        <div class="metric-card-sub">Of those hooked, how many stayed past 75%.</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-card-label">Avg Completion</div>
-        <div class="metric-card-value high">27.8%</div>
-        <div class="metric-card-sub">% who watched the full video. Above 20% is great.</div>
-      </div>
-    </div>
-    <div class="compare-grid" style="margin-top:16px;">
-      <div class="compare-card">
-        <div class="compare-label" style="color:var(--muted);">Week 5 (LA)</div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;">6.63%</div>
-          <div class="compare-stat-label">Hook Rate</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;">81</div>
-          <div class="compare-stat-label">ThruPlays</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;">$1.06</div>
-          <div class="compare-stat-label">Cost/ThruPlay</div>
-        </div>
-      </div>
-      <div class="compare-card">
-        <div class="compare-label" style="color:var(--muted);">Week 6 (OC)</div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;color:var(--amber);">4.83%</div>
-          <div class="compare-stat-label">Hook Rate</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;">44</div>
-          <div class="compare-stat-label">ThruPlays</div>
-        </div>
-        <div class="compare-stat">
-          <div class="compare-stat-value" style="font-size:22px;color:var(--amber);">$1.96</div>
-          <div class="compare-stat-label">Cost/ThruPlay</div>
-        </div>
-      </div>
+    <div style="overflow-x:auto;">
+    <table class="winner-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hook Rate (25%+)</td>
+          <td style="color:var(--red-lt);">6.03%</td>
+          <td>522 of 8,660 viewers. Below 30% benchmark.</td>
+        </tr>
+        <tr>
+          <td>Hold Rate (75%+)</td>
+          <td style="color:var(--amber);">38.5%</td>
+          <td>201 of 522 hooked viewers stayed past 75%</td>
+        </tr>
+        <tr>
+          <td>Completion Rate (100%)</td>
+          <td style="color:var(--green);">21.1%</td>
+          <td>110 of 522 watched full video. Above 20% is solid.</td>
+        </tr>
+        <tr>
+          <td>Total ThruPlays</td>
+          <td style="color:var(--cyan);">534</td>
+          <td>Across all 10 prospecting video ads</td>
+        </tr>
+        <tr>
+          <td>Avg Cost / ThruPlay</td>
+          <td style="color:var(--green);">$1.00</td>
+          <td>$531.31 spend / 534 thruPlays</td>
+        </tr>
+        <tr>
+          <td>Total LP Views</td>
+          <td style="color:var(--blue-lt);">55</td>
+          <td>45 from prospecting + 10 from retargeting</td>
+        </tr>
+      </tbody>
+    </table>
     </div>
   </div>
 
@@ -591,50 +688,157 @@ body {
   <div class="section-card">
     <div class="section-header">
       <div class="section-title amber">Retargeting Creative Breakdown</div>
-      <div class="section-desc">5 static images ran across all 6 weeks at $3/day. The algorithm quickly identified Static 2 as the top performer, giving it the majority of budget and impressions.</div>
+      <div class="section-desc">5 static images ran across all 6 weeks at $3/day. The algorithm identified Static 2 as the top performer, giving it the majority of budget and impressions.</div>
     </div>
-    <div class="retarget-grid">
-      <div class="retarget-item">
-        <div class="retarget-bar-wrap"><div class="retarget-bar" style="height:5%;background:var(--red);border-radius:6px 6px 0 0;"></div></div>
-        <div class="retarget-name">Static 1</div>
-        <div class="retarget-spend">$1.66</div>
-        <div class="retarget-pct" style="color:#666;">2.9%</div>
-      </div>
-      <div class="retarget-item">
-        <div class="retarget-bar-wrap"><div class="retarget-bar" style="height:100%;background:var(--green);border-radius:6px 6px 0 0;"></div></div>
-        <div class="retarget-name">Static 2</div>
-        <div class="retarget-spend">$33.29</div>
-        <div class="retarget-pct" style="color:var(--green);">57.8%</div>
-      </div>
-      <div class="retarget-item">
-        <div class="retarget-bar-wrap"><div class="retarget-bar" style="height:8%;background:var(--blue-lt);border-radius:6px 6px 0 0;"></div></div>
-        <div class="retarget-name">Static 3</div>
-        <div class="retarget-spend">$2.83</div>
-        <div class="retarget-pct" style="color:#666;">4.9%</div>
-      </div>
-      <div class="retarget-item">
-        <div class="retarget-bar-wrap"><div class="retarget-bar" style="height:42%;background:var(--blue);border-radius:6px 6px 0 0;"></div></div>
-        <div class="retarget-name">Static 4</div>
-        <div class="retarget-spend">$13.85</div>
-        <div class="retarget-pct" style="color:var(--blue-lt);">24.1%</div>
-      </div>
-      <div class="retarget-item">
-        <div class="retarget-bar-wrap"><div class="retarget-bar" style="height:18%;background:var(--cyan);border-radius:6px 6px 0 0;"></div></div>
-        <div class="retarget-name">Static 5</div>
-        <div class="retarget-spend">$5.96</div>
-        <div class="retarget-pct" style="color:#666;">10.3%</div>
-      </div>
+    <div style="overflow-x:auto;">
+    <table class="winner-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Creative</th>
+          <th>Spend</th>
+          <th>% of Budget</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Static Image 2</td>
+          <td style="color:var(--green);">$45.84</td>
+          <td style="color:var(--green);">58.2%</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Static Image 4</td>
+          <td>$18.26</td>
+          <td style="color:var(--blue-lt);">23.2%</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Static Image 5</td>
+          <td>$7.63</td>
+          <td>9.7%</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Static Image 3</td>
+          <td>$5.07</td>
+          <td>6.4%</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Static Image 1</td>
+          <td>$2.02</td>
+          <td>2.6%</td>
+        </tr>
+      </tbody>
+    </table>
     </div>
   </div>
 
-  <!-- CPL Trend Chart -->
+  <!-- CRM Conversion Tracking -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title green">EngageBay CRM Conversion Tracking</div>
+      <div class="section-desc">Leads tracked via EngageBay CRM, not the Meta pixel (which failed to fire). The thank-you page recorded 13 views / 10 unique. 2 were test submissions, leaving 11 confirmed real leads.</div>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="winner-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Total CRM Leads</td>
+          <td style="color:var(--green);">11</td>
+          <td>5 LA + 6 OC confirmed conversions</td>
+        </tr>
+        <tr>
+          <td>Blended CPL</td>
+          <td style="color:var(--cyan);">$55.47</td>
+          <td>$610.13 total spend / 11 leads</td>
+        </tr>
+        <tr>
+          <td>CRM Conversion Rate</td>
+          <td style="color:var(--green);">3.11%</td>
+          <td>11 leads from 354 unique visitors</td>
+        </tr>
+        <tr>
+          <td>Total Page Views</td>
+          <td>432</td>
+          <td>260 LA + 172 OC</td>
+        </tr>
+        <tr>
+          <td>Unique Visitors</td>
+          <td>354</td>
+          <td>212 LA + 142 OC</td>
+        </tr>
+        <tr>
+          <td>Thank You Page</td>
+          <td>13 / 10</td>
+          <td>Views / unique (includes 2 tests)</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="overflow-x:auto;margin-top:16px;">
+    <table class="winner-table">
+      <thead>
+        <tr>
+          <th>Milestone</th>
+          <th>LA Views</th>
+          <th>LA Unique</th>
+          <th>LA Leads</th>
+          <th>OC Views</th>
+          <th>OC Unique</th>
+          <th>OC Leads</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>~Feb 13 (End W2)</td>
+          <td>149</td>
+          <td>112</td>
+          <td>3</td>
+          <td>103</td>
+          <td>78</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>~Feb 23 (End W4)</td>
+          <td>188</td>
+          <td>148</td>
+          <td>4</td>
+          <td>141</td>
+          <td>113</td>
+          <td>6</td>
+        </tr>
+        <tr style="font-weight:700;">
+          <td>Mar 3 (Final)</td>
+          <td>260</td>
+          <td>212</td>
+          <td style="color:var(--blue-lt);">5*</td>
+          <td>172</td>
+          <td>142</td>
+          <td style="color:var(--red-lt);">6*</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- Leads by Week Chart -->
   <div class="chart-section">
     <div class="section-header" style="margin-bottom:16px;">
-      <div class="section-title green">Cost Per Lead Trend</div>
-      <div class="section-desc">How cost per lead evolved across each testing period. Lower is better. OC consistently delivered cheaper leads than LA.</div>
+      <div class="section-title green">Leads by Week (CRM)</div>
+      <div class="section-desc">Leads confirmed in EngageBay CRM per testing period (2 test submissions excluded). OC weeks produced more consistent lead flow despite fewer landing page visits.</div>
     </div>
     <div class="chart-container">
-      <canvas id="cplChart"></canvas>
+      <canvas id="lpChart"></canvas>
     </div>
   </div>
 
@@ -645,16 +849,16 @@ body {
     </div>
     <div class="insight-list">
       <div class="insight-item action">
-        <strong>Orange County outperformed LA County.</strong> OC delivered <span class="green highlight">7 leads at $43.80 CPL</span> vs LA's 5 leads at $60.71 CPL. With nearly identical spend ($306 vs $303), OC is the more efficient market. The audience responds faster and converts at a lower cost.
+        <strong>11 confirmed leads at $55.47 CPL.</strong> The campaign generated real business results. EngageBay CRM tracked <span class="green highlight">11 real form submissions</span> (2 test submissions excluded). At $610 total spend, that's a solid CPL for a local tax planning service where each client is worth significantly more.
       </div>
       <div class="insight-item action">
-        <strong>Video ads crushed static images on engagement.</strong> Video CTR averaged <span class="green highlight">3.38%</span> vs static's 1.65%. Video CPC was <span class="green highlight">$1.91</span> vs static's $6.29. People engage with video content far more than static images for this audience. The format shift was the right call.
+        <strong>Orange County converts better.</strong> OC produced <span class="green highlight">6 leads at $51.10 CPL</span> with a 4.23% conversion rate, vs LA's 5 leads at $60.71 CPL (2.36% conversion rate). Despite LA driving more raw traffic (212 vs 142 unique visitors), OC visitors were more qualified and converted at nearly double the rate.
       </div>
       <div class="insight-item action">
-        <strong>Static Image 2 dominated retargeting.</strong> It captured <span class="green highlight">57.8% of all retargeting spend</span> across 6 weeks. The algorithm consistently chose it over the other 4 images. Static 4 was a distant second at 24.1%. The retargeting front-runner is clear.
+        <strong>Ad 6 LA was the top traffic driver.</strong> It delivered <span class="green highlight">18 LP views at $4.68 per LP view</span> with the highest CTR of any high-spend ad (3.86%) and the lowest CPC ($1.48). This ad was 3x more cost-efficient at driving traffic than the next best performer.
       </div>
       <div class="insight-item action">
-        <strong>Landing page conversion improved over time.</strong> LP conversion rate climbed to <span class="green highlight">9.09% in weeks 5-6</span>, up from 2.8-5.7% in weeks 1-4. As the algorithm learned which audiences to target, the people landing on the page were more qualified and more likely to fill out the questionnaire.
+        <strong>Static Image 2 dominated retargeting.</strong> It captured <span class="green highlight">58.2% of all retargeting spend</span> across 6 weeks. The algorithm consistently chose it over the other 4 images. Static 4 was a distant second at 23.2%.
       </div>
     </div>
   </div>
@@ -665,13 +869,13 @@ body {
     </div>
     <div class="insight-list">
       <div class="insight-item warning">
-        <strong>Video hook rate is declining.</strong> Week 5 hook rate was <span class="amber highlight">6.63%</span>, week 6 dropped to <span class="amber highlight">4.83%</span>. Both are well below the 30% benchmark. The first 3 seconds of the video are not grabbing attention hard enough. The video creative needs a stronger opening hook.
+        <strong>Meta pixel is not tracking conversions.</strong> The pixel reported <span class="red highlight">0 leads</span> while EngageBay CRM confirmed 11. The "Lead" event is not firing on form submission or thank-you page load. This means Meta's algorithm cannot optimize for conversions, it is optimizing blind. Fixing the pixel will let the algorithm find more people like the 11 who already converted.
       </div>
       <div class="insight-item warning">
-        <strong>CPC is trending up in week 6.</strong> Video CPC went from <span class="green highlight">$1.38</span> in week 5 to <span class="amber highlight">$3.08</span> in week 6. ThruPlays dropped from 81 to 44, while cost per ThruPlay nearly doubled ($1.06 to $1.96). This signals early creative fatigue on the video ads.
+        <strong>Hook rate is well below benchmark.</strong> Only <span class="amber highlight">6.03% of viewers</span> watched past the first 25% of the video. The industry benchmark is 30%+. The first 3 seconds are not grabbing attention. Every video needs a stronger opening hook to stop the scroll.
       </div>
       <div class="insight-item warning">
-        <strong>LA County is underperforming on CPL.</strong> LA's $60.71 CPL is <span class="red highlight">39% more expensive</span> than OC's $43.80. Week 3 (LA W2) was the worst at $128.48 CPL with only 1 lead. LA needs either better targeting, different creative angles, or reduced budget allocation.
+        <strong>LA drives traffic but OC converts better.</strong> LA's cost per LP view ($8.43) is cheaper, but OC's conversion rate (<span class="green highlight">4.23%</span>) is nearly double LA's (2.36%). The budget split should factor in both traffic cost and conversion quality, not just volume.
       </div>
     </div>
   </div>
@@ -682,19 +886,34 @@ body {
     </div>
     <div class="insight-list">
       <div class="insight-item action">
-        <strong>1. New video creative with a stronger hook.</strong> The current videos hold well (39.6% hold rate) and complete well (27.8%), but the opening 3 seconds are the weak link. Test a new opening: lead with the pain point or a bold claim in the first frame. The audience will stay if you can get them past the first 3 seconds.
+        <strong>1. Fix the Meta pixel immediately.</strong> The #1 priority. 11 leads came through and Meta has no idea. The pixel needs to fire a "Lead" event on form submission or thank-you page load. Once fixed, Meta's algorithm can optimize for conversions instead of just link clicks, which should dramatically improve lead quality and lower CPL.
       </div>
       <div class="insight-item action">
-        <strong>2. Shift budget toward Orange County.</strong> OC delivers 39% cheaper leads than LA. Consider a 60/40 or 70/30 OC/LA budget split instead of the current 50/50. Let the more efficient market carry the campaign.
+        <strong>2. Increase budget on OC.</strong> OC converts at 4.23% vs LA's 2.36%, with a $51.10 CPL vs $60.71. Consider a 60/40 OC/LA budget split. OC visitors are more likely to fill out the form, even though LA drives more raw traffic.
       </div>
       <div class="insight-item action">
-        <strong>3. Kill underperforming retargeting creatives.</strong> Static 1, 3, and 5 combined only account for 18.1% of retargeting spend. Replace them with 3 new test images while keeping Static 2 (the top performer) and Static 4 (the secondary performer) running.
+        <strong>3. New video creative with a stronger hook.</strong> The videos hold well once people watch (38.5% hold, 21.1% completion), but only 6% get past the first few seconds. Lead with the pain point or a bold visual in the first frame. The audience will stay if the hook lands.
       </div>
       <div class="insight-item action">
-        <strong>4. Stick with video for prospecting.</strong> The data is clear: video drives 2x the CTR and 3x lower CPC than static images. Even with the hook rate issue, video is the right format. Fix the creative, not the format.
+        <strong>4. Kill underperforming retargeting creatives.</strong> Static 1, 3, and 5 combined account for only 18.7% of retargeting spend. Replace them with 3 new test images while keeping Static 2 (top performer) and Static 4 (second place) running.
       </div>
       <div class="insight-item action">
-        <strong>5. Move into scaling phase.</strong> After 6 weeks of testing, the winning formula is identified: video prospecting in Orange County with Static 2 retargeting. The next phase should increase daily budget from $20/day to $35-50/day on the winning combination and monitor CPL closely for the first 7 days.
+        <strong>5. Scale to $35-50/day after pixel fix.</strong> The campaign proved it can generate leads at ~$55 CPL. Once the pixel is firing and Meta can optimize for conversions, increase daily budget from $20 to $35-50 on the winning combinations. Monitor CPL for the first 7 days of scaling.
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Verdict -->
+  <div class="section-card" style="border-color:rgba(46,204,113,0.2);background:linear-gradient(135deg,rgba(46,204,113,0.06),rgba(44,111,187,0.04));">
+    <div class="section-header">
+      <div class="section-title green">Final Verdict</div>
+    </div>
+    <div class="insight-list">
+      <div class="insight-item" style="border-left-color:var(--green);font-size:15px;line-height:1.9;">
+        <strong>The campaign is working. The tracking is not.</strong><br><br>
+        After 6 weeks and $610.13 in spend, the campaign delivered <span class="green highlight">11 confirmed leads at $55.47 CPL</span>, 534 ThruPlays at $1.00 each, and 354 unique landing page visitors with a 3.11% conversion rate. The algorithm found winning ads (Ad 6 LA for traffic, Ad 2 OC for conversions) and a winning retargeting creative (Static 2).<br><br>
+        The critical issue is the <span class="amber highlight">broken Meta pixel</span>. With 0 of 11 leads tracked, Meta's algorithm is running blind. It cannot optimize for the people most likely to convert. Fixing the pixel is the single highest-leverage move. Once Meta can see conversions, CPL should drop significantly as the algorithm targets people similar to the 11 who already converted.<br><br>
+        <strong>Bottom line:</strong> Fix the pixel, lean into OC (higher conversion rate), refresh the video hooks, and scale to $35-50/day. The foundation is solid.
       </div>
     </div>
   </div>
@@ -702,7 +921,7 @@ body {
   <!-- Footer -->
   <div class="footer">
     <a href="https://www.arcgarde.com" target="_blank">Arc Garde</a>
-    <div class="generated">Generated 2026-03-04 | Monthly Campaign Report</div>
+    <div class="generated">Generated 2026-03-05 | Monthly Campaign Report</div>
   </div>
 
 </div>
@@ -726,11 +945,7 @@ function hexToRgba(hex, alpha) {
   var ctx = document.getElementById('weeklyChart').getContext('2d');
   var weeks = ['W1\nLA', 'W2\nOC', 'W3\nLA', 'W4\nOC', 'W5\nLA', 'W6\nOC'];
   var spend = [79.87, 114.78, 128.48, 93.59, 95.21, 98.20];
-  var leads = [2, 3, 1, 2, 2, 2];
-
-  var spendGrad = ctx.createLinearGradient(0, 0, 0, 280);
-  spendGrad.addColorStop(0, hexToRgba(COLORS.blue, 0.25));
-  spendGrad.addColorStop(1, 'rgba(0,0,0,0)');
+  var leads = [1, 2, 1, 2, 2, 3];
 
   new Chart(ctx, {
     type: 'bar',
@@ -741,10 +956,10 @@ function hexToRgba(hex, alpha) {
           label: 'Total Spend ($)',
           data: spend,
           backgroundColor: spend.map(function(s, i) {
-            return i % 2 === 0 ? hexToRgba(COLORS.red, 0.6) : hexToRgba(COLORS.blue, 0.6);
+            return i % 2 === 0 ? hexToRgba(COLORS.blue, 0.6) : hexToRgba(COLORS.red, 0.6);
           }),
           borderColor: spend.map(function(s, i) {
-            return i % 2 === 0 ? COLORS.red : COLORS.blue;
+            return i % 2 === 0 ? COLORS.blue : COLORS.red;
           }),
           borderWidth: 1,
           borderRadius: 8,
@@ -752,7 +967,7 @@ function hexToRgba(hex, alpha) {
           order: 2
         },
         {
-          label: 'Leads',
+          label: 'CRM Leads',
           data: leads,
           type: 'line',
           borderColor: COLORS.green,
@@ -791,7 +1006,7 @@ function hexToRgba(hex, alpha) {
           type: 'linear', position: 'right',
           grid: { display: false },
           ticks: { color: COLORS.green, font: { size: 11 }, stepSize: 1 },
-          title: { display: true, text: 'Leads', color: COLORS.green, font: { size: 11 } },
+          title: { display: true, text: 'CRM Leads', color: COLORS.green, font: { size: 11 } },
           min: 0, max: 5
         }
       }
@@ -799,32 +1014,27 @@ function hexToRgba(hex, alpha) {
   });
 })();
 
-/* CPL Trend Chart */
+/* Leads by Week Chart */
 (function(){
-  var ctx = document.getElementById('cplChart').getContext('2d');
+  var ctx = document.getElementById('lpChart').getContext('2d');
   var weeks = ['W1 (LA)', 'W2 (OC)', 'W3 (LA)', 'W4 (OC)', 'W5 (LA)', 'W6 (OC)'];
-  var cpl = [39.94, 38.26, 128.48, 46.79, 47.60, 49.10];
-
-  var grad = ctx.createLinearGradient(0, 0, 0, 280);
-  grad.addColorStop(0, hexToRgba(COLORS.green, 0.2));
-  grad.addColorStop(1, 'rgba(0,0,0,0)');
+  var leads = [1, 2, 1, 2, 2, 3];
 
   new Chart(ctx, {
-    type: 'line',
+    type: 'bar',
     data: {
       labels: weeks,
       datasets: [{
-        data: cpl,
-        borderColor: COLORS.green,
-        backgroundColor: grad,
-        fill: true,
-        tension: 0.35,
-        pointBackgroundColor: cpl.map(function(v) { return v > 100 ? COLORS.redLt : v > 50 ? COLORS.amber : COLORS.green; }),
-        pointBorderColor: COLORS.bg,
-        pointBorderWidth: 2,
-        pointRadius: 6,
-        pointHoverRadius: 9,
-        borderWidth: 3
+        label: 'CRM Leads',
+        data: leads,
+        backgroundColor: leads.map(function(l, i) {
+          return i % 2 === 0 ? hexToRgba(COLORS.blue, 0.7) : hexToRgba(COLORS.red, 0.7);
+        }),
+        borderColor: leads.map(function(l, i) {
+          return i % 2 === 0 ? COLORS.blue : COLORS.red;
+        }),
+        borderWidth: 1,
+        borderRadius: 8
       }]
     },
     options: {
@@ -836,14 +1046,15 @@ function hexToRgba(hex, alpha) {
           backgroundColor: '#1a1a25', titleColor: COLORS.green, bodyColor: COLORS.text,
           borderColor: COLORS.green, borderWidth: 1, padding: 14, cornerRadius: 10,
           displayColors: false,
-          callbacks: { label: function(c) { return 'CPL: $' + c.parsed.y.toFixed(2); } }
+          callbacks: { label: function(c) { return c.parsed.y + ' Leads'; } }
         }
       },
       scales: {
         x: { grid: { display: false }, ticks: { color: '#555', font: { size: 11 } } },
         y: {
           grid: { color: 'rgba(44,111,187,0.06)', drawBorder: false },
-          ticks: { color: '#555', font: { size: 11 }, callback: function(v) { return '$' + v; } }
+          ticks: { color: '#555', font: { size: 11 }, stepSize: 1 },
+          min: 0, max: 5
         }
       }
     }

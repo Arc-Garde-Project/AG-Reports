@@ -2,39 +2,455 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AG Reports</title>
-<meta name="description" content="Arc Garde campaign reports hub. Client dashboards and performance tracking.">
-<meta property="og:title" content="AG Reports">
-<meta property="og:description" content="Arc Garde campaign reports hub. Client dashboards and performance tracking.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AG Hub — Arc Garde</title>
+<meta name="description" content="Arc Garde hub. Client presentations, campaign reports, and performance dashboards.">
+<meta property="og:title" content="AG Hub — Arc Garde">
+<meta property="og:description" content="Arc Garde hub. Client presentations, campaign reports, and performance dashboards.">
 <meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#000;font-family:'Segoe UI',system-ui,sans-serif;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center}
-.wrap{text-align:center;padding:40px}
-h1{font-size:28px;font-weight:700;margin-bottom:8px;letter-spacing:-0.5px}
-p{font-size:14px;color:#555;margin-bottom:32px}
-.clients{display:flex;flex-direction:column;gap:12px;align-items:center}
-a{display:inline-block;padding:14px 32px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);
-  background:rgba(255,255,255,0.03);color:#999;font-size:15px;font-weight:500;text-decoration:none;
-  transition:all 0.3s ease;min-width:260px}
-a:hover{border-color:rgba(255,255,255,0.15);color:#fff;background:rgba(255,255,255,0.06)}
-.badge{font-size:11px;color:#444;display:block;margin-top:4px}
+:root {
+  --void: #0C0B09;
+  --void-warm: #141210;
+  --void-cool: #111010;
+  --accent: #C9A76C;
+  --accent-bright: #E0C48A;
+  --accent-glow: rgba(201, 167, 108, 0.25);
+  --accent-subtle: rgba(201, 167, 108, 0.08);
+  --text-primary: #FAF6F1;
+  --text-secondary: rgba(250, 246, 241, 0.82);
+  --text-tertiary: rgba(250, 246, 241, 0.55);
+  --text-faint: rgba(250, 246, 241, 0.3);
+  --border-subtle: rgba(250, 246, 241, 0.1);
+  --border-faint: rgba(250, 246, 241, 0.06);
+  --ease-arc: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
+p, li { text-wrap: pretty; }
+body {
+  background: var(--void);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: var(--text-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ══════════════════════════════════════
+   LAYOUT
+   ══════════════════════════════════════ */
+
+.hub {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: clamp(4rem, 3.333rem + 2.667vw, 6rem) clamp(1.5rem, 1.333rem + 0.667vw, 2rem) clamp(4rem, 3.333rem + 2.667vw, 6rem);
+}
+
+/* ══════════════════════════════════════
+   HEADER
+   ══════════════════════════════════════ */
+
+.hub-header {
+  text-align: center;
+  margin-bottom: clamp(4rem, 3.333rem + 2.667vw, 6rem);
+  position: relative;
+}
+
+.hub-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.hub-eyebrow-line {
+  width: 42px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent));
+  transform: scaleX(0);
+  animation: lineExtend 0.7s var(--ease-arc) forwards 0.3s;
+}
+.hub-eyebrow-line:last-child {
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+.hub-eyebrow-text {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.8rem, 1.3vw, 0.95rem);
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+@keyframes lineExtend {
+  to { transform: scaleX(1); }
+}
+
+.hub-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.75rem, 2rem + 3.2vw, 4.25rem);
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+  color: var(--text-primary);
+  opacity: 0;
+  transform: translateY(14px);
+  animation: fadeUp 0.7s var(--ease-entrance) forwards 0.21s;
+}
+
+.hub-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.35rem, 2.6vw, 1.65rem);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text-tertiary);
+  opacity: 0;
+  animation: fadeIn 0.7s var(--ease-arc) forwards 0.42s;
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* Gold divider line under header */
+.hub-header::after {
+  content: '';
+  display: block;
+  margin: clamp(2rem, 1.667rem + 1.333vw, 3rem) auto 0;
+  width: 100%;
+  max-width: 560px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(201, 167, 108, 0.25) 20%, rgba(201, 167, 108, 0.12) 50%, rgba(201, 167, 108, 0.25) 80%, transparent 100%);
+}
+
+/* ══════════════════════════════════════
+   SECTIONS
+   ══════════════════════════════════════ */
+
+.hub-section {
+  margin-bottom: clamp(3rem, 2.667rem + 1.333vw, 4rem);
+  opacity: 0;
+  transform: translateY(14px);
+  animation: fadeUp 0.7s var(--ease-entrance) forwards;
+}
+.hub-section:nth-child(2) { animation-delay: 0.42s; }
+.hub-section:nth-child(3) { animation-delay: 0.63s; }
+
+.hub-section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: clamp(1rem, 0.833rem + 0.667vw, 1.5rem);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-faint);
+}
+
+.hub-section-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--accent-subtle);
+  color: var(--accent);
+}
+.hub-section-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.hub-section-label {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.8rem, 1.1vw, 0.9rem);
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hub-section-count {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--text-faint);
+  margin-left: auto;
+}
+
+/* ══════════════════════════════════════
+   CARDS
+   ══════════════════════════════════════ */
+
+.hub-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+  gap: 1px;
+  background: var(--border-faint);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-faint);
+}
+
+.hub-card {
+  display: block;
+  padding: clamp(1.5rem, 1.333rem + 0.667vw, 2rem) clamp(1.5rem, 1.333rem + 0.667vw, 2rem);
+  background: var(--void);
+  text-decoration: none;
+  transition: background 0.3s var(--ease-arc), box-shadow 0.3s var(--ease-arc);
+  position: relative;
+}
+
+.hub-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-arc);
+}
+
+.hub-card-name {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.13rem, 1rem + 0.5vw, 1.35rem);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 7px;
+  letter-spacing: 0.3px;
+}
+
+.hub-card-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.1rem, 1rem + 0.5vw, 1.25rem);
+  font-weight: 400;
+  color: var(--text-tertiary);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.hub-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hub-card-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.hub-card-tag--type {
+  background: var(--accent-subtle);
+  color: var(--accent);
+}
+.hub-card-tag--date {
+  color: var(--text-faint);
+}
+
+.hub-card-arrow {
+  position: absolute;
+  right: clamp(1.5rem, 1.333rem + 0.667vw, 2rem);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--border-subtle);
+  transition: all 0.3s var(--ease-arc);
+}
+
+@media (hover: hover) {
+  .hub-card:hover {
+    background: var(--void-warm);
+    box-shadow: 0 14px 42px rgba(0,0,0,0.3);
+  }
+  .hub-card:hover::before { opacity: 1; }
+  .hub-card:hover .hub-card-arrow {
+    color: var(--accent);
+    transform: translateY(-50%) translateX(3px);
+  }
+  .hub-card:hover .hub-card-name {
+    color: var(--accent);
+  }
+}
+
+/* ══════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════ */
+
+.hub-footer {
+  text-align: center;
+  margin-top: clamp(3rem, 2.667rem + 1.333vw, 4rem);
+  padding-top: 28px;
+  position: relative;
+}
+.hub-footer::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 560px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(201, 167, 108, 0.25) 20%, rgba(201, 167, 108, 0.12) 50%, rgba(201, 167, 108, 0.25) 80%, transparent 100%);
+}
+.hub-footer p {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* ══════════════════════════════════════
+   REDUCED MOTION
+   ══════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .hub-title, .hub-subtitle, .hub-section {
+    opacity: 1;
+    transform: none;
+  }
+  .hub-eyebrow-line { transform: scaleX(1); }
+}
+
+/* ══════════════════════════════════════
+   MOBILE
+   ══════════════════════════════════════ */
+
+@media (max-width: 630px) {
+  .hub-card { padding: 20px; }
+  .hub-card-arrow { display: none; }
+  .hub-eyebrow-line { width: 28px; }
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>AG Reports</h1>
-  <p>Arc Garde Client Reports</p>
-  <div class="clients">
-    <a href="/dr-bob">Dr. Bob Beare + Deep Waters Recovery<span class="badge">Nov 2025 - Feb 2026</span></a>
-    <a href="/americana-tax">Americana Tax Planning<span class="badge">Ad Testing - Feb 2026</span></a>
-    <a href="/robopromo">RoboPromo AI<span class="badge">Organic Content - Feb 2026</span></a>
-    <a href="/mike-asibou">Hitch Academy (Mike Asibou)<span class="badge">Ad Testing - Mar 2026</span></a>
-  </div>
+
+<div class="hub">
+  <header class="hub-header">
+    <div class="hub-eyebrow">
+      <span class="hub-eyebrow-line"></span>
+      <span class="hub-eyebrow-text">Arc Garde</span>
+      <span class="hub-eyebrow-line"></span>
+    </div>
+    <h1 class="hub-title">Client Hub</h1>
+    <p class="hub-subtitle">Presentations, reports, and dashboards</p>
+  </header>
+
+  <!-- PRESENTATIONS -->
+  <section class="hub-section">
+    <div class="hub-section-header">
+      <div class="hub-section-icon">
+        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5"/>
+        </svg>
+      </div>
+      <p class="hub-section-label">Presentations</p>
+      <span class="hub-section-count">1</span>
+    </div>
+    <div class="hub-cards">
+      <a href="/presentations/spine-doctor" class="hub-card">
+        <p class="hub-card-name">Dr. Kushagra Verma</p>
+        <p class="hub-card-desc">Standard Paid Ads Package for Advanced Spine Care. Google and Meta advertising across Los Angeles and Orange County.</p>
+        <div class="hub-card-meta">
+          <span class="hub-card-tag hub-card-tag--type">Paid Ads</span>
+          <span class="hub-card-tag hub-card-tag--date">March 2026</span>
+        </div>
+        <span class="hub-card-arrow">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <!-- REPORTS -->
+  <section class="hub-section">
+    <div class="hub-section-header">
+      <div class="hub-section-icon">
+        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+        </svg>
+      </div>
+      <p class="hub-section-label">Reports</p>
+      <span class="hub-section-count">4</span>
+    </div>
+    <div class="hub-cards">
+      <a href="/reports/dr-bob" class="hub-card">
+        <p class="hub-card-name">Dr. Bob Beare + Deep Waters Recovery</p>
+        <p class="hub-card-desc">Campaign performance dashboard and KPI tracking.</p>
+        <div class="hub-card-meta">
+          <span class="hub-card-tag hub-card-tag--type">Campaign Dashboard</span>
+          <span class="hub-card-tag hub-card-tag--date">Nov 2025 - Feb 2026</span>
+        </div>
+        <span class="hub-card-arrow">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+        </span>
+      </a>
+      <a href="/reports/americana-tax" class="hub-card">
+        <p class="hub-card-name">Americana Tax Planning</p>
+        <p class="hub-card-desc">Ad testing results and performance metrics.</p>
+        <div class="hub-card-meta">
+          <span class="hub-card-tag hub-card-tag--type">Ad Testing</span>
+          <span class="hub-card-tag hub-card-tag--date">Feb 2026</span>
+        </div>
+        <span class="hub-card-arrow">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+        </span>
+      </a>
+      <a href="/reports/robopromo" class="hub-card">
+        <p class="hub-card-name">RoboPromo AI</p>
+        <p class="hub-card-desc">Organic content strategy and performance tracking.</p>
+        <div class="hub-card-meta">
+          <span class="hub-card-tag hub-card-tag--type">Organic Content</span>
+          <span class="hub-card-tag hub-card-tag--date">Feb 2026</span>
+        </div>
+        <span class="hub-card-arrow">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+        </span>
+      </a>
+      <a href="/mike-asibou" class="hub-card">
+        <p class="hub-card-name">Hitch Academy (Mike Asibou)</p>
+        <p class="hub-card-desc">Ad testing and launch week performance dashboard.</p>
+        <div class="hub-card-meta">
+          <span class="hub-card-tag hub-card-tag--type">Ad Testing</span>
+          <span class="hub-card-tag hub-card-tag--date">Mar 2026</span>
+        </div>
+        <span class="hub-card-arrow">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <footer class="hub-footer">
+    <p>Arc Garde 2026</p>
+  </footer>
 </div>
+
 </body>
 </html>
