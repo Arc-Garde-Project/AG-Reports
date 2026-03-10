@@ -2834,14 +2834,15 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
       valSpan.textContent = day.val;
       cell.appendChild(valSpan);
 
-      /* Tooltip — positioned relative to heatmap-wrap */
+      /* Tooltip — positioned via offset (immune to GSAP transforms) */
       cell.addEventListener('mouseenter', function(e) {
         document.getElementById('heatmap-tip-date').textContent = day.date;
         document.getElementById('heatmap-tip-val').textContent = day.val + (day.val === 1 ? ' lead' : ' leads');
-        var wrapRect = document.getElementById('heatmap-wrap').getBoundingClientRect();
-        var cellRect = cell.getBoundingClientRect();
-        heatmapTip.style.left = (cellRect.left - wrapRect.left + cellRect.width / 2) + 'px';
-        heatmapTip.style.top = (cellRect.top - wrapRect.top - 8) + 'px';
+        var grid = document.getElementById('heatmap-grid');
+        var tipX = grid.offsetLeft + cell.offsetLeft + cell.offsetWidth / 2;
+        var tipY = grid.offsetTop + cell.offsetTop - 8;
+        heatmapTip.style.left = tipX + 'px';
+        heatmapTip.style.top = tipY + 'px';
         heatmapTip.style.transform = 'translate(-50%, -100%)';
         heatmapTip.classList.add('is-active');
       });
