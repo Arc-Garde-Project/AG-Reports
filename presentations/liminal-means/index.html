@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brian Maierhofer - Multi-Platform Content System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Brian Maierhofer | Liminal Means - Full Growth System</title>
+<meta name="description" content="Custom website, paid ads, and multi-platform organic content system built for Brian Maierhofer and Liminal Means. Three engines. One growth machine.">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
@@ -14,6 +15,9 @@
   --primary-glow: rgba(74, 155, 140, 0.4);
   --accent: #C4A574;
   --bg-dark: #0A0F0E;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-card-hover: rgba(255, 255, 255, 0.06);
+  --border-subtle: rgba(255, 255, 255, 0.06);
   --text-primary: #ffffff;
   --text-muted: rgba(255, 255, 255, 0.5);
   --text-subtle: rgba(255, 255, 255, 0.3);
@@ -93,7 +97,7 @@ body {
   border-radius: 50%;
   filter: blur(120px);
   opacity: 0.12;
-  animation: arcAuroraFloat 25s ease-in-out infinite;
+  animation: arcAuroraFloat 21s ease-in-out infinite;
 }
 
 .arc-aurora-blob:nth-child(1) {
@@ -110,7 +114,7 @@ body {
   background: linear-gradient(135deg, var(--primary-dark), transparent);
   top: -150px;
   left: -150px;
-  animation-delay: -8s;
+  animation-delay: -7s;
 }
 
 .arc-aurora-blob:nth-child(3) {
@@ -120,7 +124,7 @@ body {
   top: 50%;
   left: 30%;
   opacity: 0.08;
-  animation-delay: -16s;
+  animation-delay: -14s;
 }
 
 @keyframes arcAuroraFloat {
@@ -151,7 +155,7 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: arcGradFlow 5s ease infinite;
+  animation: arcGradFlow 6s ease infinite;
 }
 
 @keyframes arcGradFlow {
@@ -163,7 +167,7 @@ body {
 .arc-reveal {
   opacity: 0;
   transform: translateY(50px);
-  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .arc-reveal.active {
@@ -171,10 +175,10 @@ body {
   transform: translateY(0);
 }
 
-.arc-reveal-d1 { transition-delay: 0.15s; }
-.arc-reveal-d2 { transition-delay: 0.3s; }
-.arc-reveal-d3 { transition-delay: 0.45s; }
-.arc-reveal-d4 { transition-delay: 0.6s; }
+.arc-reveal-d1 { transition-delay: 0.3s; }
+.arc-reveal-d2 { transition-delay: 0.6s; }
+.arc-reveal-d3 { transition-delay: 0.9s; }
+.arc-reveal-d4 { transition-delay: 2.1s; }
 
 /* ========================================
    HERO SECTION
@@ -312,9 +316,10 @@ body {
   letter-spacing: 1px;
   color: #000;
   text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
+  width: fit-content;
 }
 
 .arc-hero-cta::before {
@@ -323,7 +328,7 @@ body {
   inset: 0;
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
   opacity: 0;
-  transition: opacity 0.4s;
+  transition: opacity 0.3s;
 }
 
 .arc-hero-cta:hover {
@@ -386,7 +391,7 @@ body {
   right: 0;
   height: 20px;
   background: linear-gradient(to bottom, var(--primary), transparent);
-  animation: arcScrollLine 1.8s ease-in-out infinite;
+  animation: arcScrollLine 2.1s ease-in-out infinite;
 }
 
 @keyframes arcScrollLine {
@@ -404,8 +409,8 @@ body {
   width: 100% !important;
   overflow: hidden;
   padding: 50px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
   position: relative;
   z-index: 10;
 }
@@ -413,7 +418,7 @@ body {
 .arc-marquee-track {
   display: flex;
   width: fit-content;
-  animation: arcMarqueeScroll 35s linear infinite;
+  animation: arcMarqueeScroll 21s linear infinite;
 }
 
 @keyframes arcMarqueeScroll {
@@ -436,6 +441,618 @@ body {
 }
 
 /* ========================================
+   SHARED SECTION STYLES
+======================================== */
+.arc-section {
+  position: relative;
+  z-index: 10;
+  padding: clamp(80px, 10vw, 140px) clamp(20px, 5vw, 80px);
+}
+
+.arc-section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Section Eyebrow */
+.arc-section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.arc-section-eyebrow-line {
+  width: 40px;
+  height: 1px;
+  background: var(--primary);
+}
+
+.arc-section-eyebrow-text {
+  font-size: 11px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+/* Section Title */
+.arc-section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 7vw, 72px);
+  line-height: 0.95;
+  letter-spacing: -0.5px;
+  margin-bottom: 24px;
+}
+
+/* Section Description */
+.arc-section-desc {
+  font-size: clamp(15px, 1.8vw, 17px);
+  line-height: 1.9;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin-bottom: 56px;
+}
+
+.arc-section-desc strong {
+  color: var(--text-primary);
+}
+
+/* Divider */
+.arc-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border-subtle);
+  position: relative;
+  z-index: 10;
+}
+
+/* ========================================
+   ENGINE CARDS (shared)
+======================================== */
+.arc-engine-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: clamp(28px, 4vw, 44px);
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.arc-engine-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(74, 155, 140, 0.15);
+}
+
+.arc-engine-card-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+.arc-engine-card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(18px, 2.5vw, 22px);
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.arc-engine-card-text {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+
+/* ========================================
+   ENGINE 1: WEBSITE BUILD
+======================================== */
+.arc-website-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 20px;
+  margin-bottom: 48px;
+}
+
+.arc-website-price {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 48px;
+}
+
+.arc-website-price-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(42px, 6vw, 56px);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.arc-website-price-label {
+  font-size: 14px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Problem callout */
+.arc-problem-callout {
+  background: rgba(255, 80, 80, 0.06);
+  border: 1px solid rgba(255, 80, 80, 0.12);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 40px;
+}
+
+.arc-problem-callout-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #ff6b6b;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.arc-problem-callout-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Solution callout */
+.arc-solution-callout {
+  background: rgba(74, 155, 140, 0.06);
+  border: 1px solid rgba(74, 155, 140, 0.15);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 40px;
+}
+
+.arc-solution-callout-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.arc-solution-callout-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.arc-solution-callout-text strong {
+  color: var(--text-primary);
+}
+
+/* ========================================
+   ENGINE 2: PAID ADS
+======================================== */
+.arc-ads-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 20px;
+  margin-top: 40px;
+  margin-bottom: 48px;
+}
+
+.arc-ads-metric {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 28px 24px;
+  text-align: center;
+}
+
+.arc-ads-metric-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 700;
+  color: var(--primary-light);
+  margin-bottom: 6px;
+}
+
+.arc-ads-metric-lbl {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.arc-ads-price {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 48px;
+}
+
+.arc-ads-price-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(42px, 6vw, 56px);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.arc-ads-price-label {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.arc-ads-scope-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.arc-ads-scope-list li {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  padding-left: 24px;
+  position: relative;
+}
+
+.arc-ads-scope-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0.6;
+}
+
+/* ========================================
+   ENGINE 3: ORGANIC CONTENT (TIERS)
+======================================== */
+.arc-content-tiers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.arc-tier-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: clamp(28px, 4vw, 40px);
+  position: relative;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+}
+
+.arc-tier-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(74, 155, 140, 0.15);
+  transform: translateY(-4px);
+}
+
+.arc-tier-card--featured {
+  border-color: rgba(74, 155, 140, 0.3);
+  background: rgba(74, 155, 140, 0.04);
+}
+
+.arc-tier-badge {
+  position: absolute;
+  top: -12px;
+  right: 24px;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: #000;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 50px;
+}
+
+.arc-tier-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.arc-tier-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+}
+
+.arc-tier-price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.arc-tier-price-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(32px, 5vw, 42px);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.arc-tier-price-period {
+  font-size: 14px;
+  color: var(--text-subtle);
+}
+
+.arc-tier-details {
+  list-style: none;
+}
+
+.arc-tier-details li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  padding: 8px 0;
+  padding-left: 24px;
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.arc-tier-details li:last-child {
+  border-bottom: none;
+}
+
+.arc-tier-details li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 15px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0.5;
+}
+
+.arc-tier-details li strong {
+  color: var(--text-primary);
+}
+
+/* ========================================
+   BUNDLE PRICING
+======================================== */
+.arc-bundle {
+  position: relative;
+  z-index: 10;
+  padding: clamp(80px, 10vw, 140px) clamp(20px, 5vw, 80px);
+  background: linear-gradient(180deg, transparent, rgba(74, 155, 140, 0.03), transparent);
+}
+
+.arc-bundle-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.arc-bundle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.arc-bundle-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: clamp(32px, 5vw, 48px);
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+}
+
+.arc-bundle-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(74, 155, 140, 0.2);
+  transform: translateY(-4px);
+}
+
+.arc-bundle-card--hero {
+  border-color: rgba(74, 155, 140, 0.4);
+  background: rgba(74, 155, 140, 0.05);
+  position: relative;
+}
+
+.arc-bundle-card-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.arc-bundle-card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.arc-bundle-card-desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+.arc-bundle-card-price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.arc-bundle-card-price-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(36px, 5vw, 48px);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.arc-bundle-card-price-period {
+  font-size: 14px;
+  color: var(--text-subtle);
+}
+
+.arc-bundle-card-note {
+  font-size: 13px;
+  color: var(--text-subtle);
+  margin-bottom: 28px;
+}
+
+.arc-bundle-includes {
+  list-style: none;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 24px;
+}
+
+.arc-bundle-includes li {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  padding: 6px 0;
+  padding-left: 20px;
+  position: relative;
+}
+
+.arc-bundle-includes li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0.5;
+}
+
+.arc-bundle-savings {
+  display: inline-block;
+  background: rgba(74, 155, 140, 0.15);
+  color: var(--primary-light);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 6px 14px;
+  border-radius: 50px;
+  margin-top: 16px;
+}
+
+/* ========================================
+   CTA SECTION
+======================================== */
+.arc-cta-section {
+  position: relative;
+  z-index: 10;
+  padding: clamp(80px, 10vw, 140px) clamp(20px, 5vw, 80px);
+  text-align: center;
+}
+
+.arc-cta-inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.arc-cta-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 7vw, 72px);
+  line-height: 0.95;
+  margin-bottom: 24px;
+}
+
+.arc-cta-desc {
+  font-size: clamp(15px, 1.8vw, 17px);
+  line-height: 1.9;
+  color: var(--text-muted);
+  margin-bottom: 48px;
+  max-width: 540px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.arc-cta-desc strong {
+  color: var(--text-primary);
+}
+
+.arc-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 48px;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #000;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.arc-cta-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.arc-cta-btn:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 25px 70px var(--primary-glow);
+}
+
+.arc-cta-btn:hover::before {
+  opacity: 1;
+}
+
+.arc-cta-btn span,
+.arc-cta-btn svg {
+  position: relative;
+  z-index: 1;
+}
+
+.arc-cta-btn svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s;
+}
+
+.arc-cta-btn:hover svg {
+  transform: translateX(4px);
+}
+
+.arc-cta-footer-note {
+  margin-top: 32px;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+/* ========================================
    RESPONSIVE
 ======================================== */
 @media (max-width: 700px) {
@@ -443,23 +1060,46 @@ body {
     flex-direction: column;
     gap: 36px;
   }
-  
+
   .arc-hero-eyebrow-line {
     width: 30px;
   }
-  
+
   .arc-hero-sub {
     font-size: 15px;
     padding: 0 12px;
   }
-  
+
   .arc-marquee-text {
     font-size: clamp(40px, 8vw, 70px);
     -webkit-text-stroke-width: 1px;
   }
-  
+
   .arc-marquee-text span {
     -webkit-text-stroke-width: 1px;
+  }
+
+  .arc-content-tiers {
+    grid-template-columns: 1fr;
+  }
+
+  .arc-bundle-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .arc-ads-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .arc-problem-callout,
+  .arc-solution-callout {
+    padding: 20px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .arc-ads-metrics {
+    grid-template-columns: 1fr;
   }
 }
 </style>
@@ -482,129 +1122,514 @@ body {
   <!-- PARTICLES -->
   <div class="arc-particles" id="arcParticles"></div>
 
-  <!-- HERO SECTION -->
-  <section class="arc-hero">
+  <!-- ============================================
+       HERO SECTION
+  ============================================ -->
+  <section class="arc-hero" id="page-hero">
     <div class="arc-hero-inner">
-    
+
     <!-- Eyebrow -->
     <div class="arc-hero-eyebrow arc-reveal">
       <span class="arc-hero-eyebrow-line"></span>
-      <span class="arc-hero-eyebrow-text">Multi-Platform Content System</span>
+      <span class="arc-hero-eyebrow-text">Full Growth System</span>
       <span class="arc-hero-eyebrow-line"></span>
     </div>
-    
+
     <!-- Title -->
     <h1 class="arc-hero-title arc-reveal arc-reveal-d1">
       <span>YOUR EXPERTISE HEALS.</span>
       <span class="arc-grad">LET THE WORLD FIND IT.</span>
     </h1>
-    
+
     <!-- Subtitle -->
     <p class="arc-hero-sub arc-reveal arc-reveal-d2">
       Most therapists stay invisible online while people who need them <em>search endlessly</em>.<br><br>
-      We turn your knowledge into a <strong>7-platform content engine</strong> that builds trust, attracts ideal clients, and establishes you as the authority in your&nbsp;space.
+      We build the <strong>website, ads, and content engine</strong> that turns your practice into a client-generating machine across <strong>every platform that matters</strong>.
     </p>
-    
+
     <!-- Stats -->
     <div class="arc-hero-stats arc-reveal arc-reveal-d3">
+      <div class="arc-hero-stat">
+        <div class="arc-hero-stat-val">3</div>
+        <div class="arc-hero-stat-lbl">Engines</div>
+      </div>
       <div class="arc-hero-stat">
         <div class="arc-hero-stat-val">7</div>
         <div class="arc-hero-stat-lbl">Platforms</div>
       </div>
       <div class="arc-hero-stat">
-        <div class="arc-hero-stat-val">14</div>
-        <div class="arc-hero-stat-lbl">Daily Videos</div>
-      </div>
-      <div class="arc-hero-stat">
-        <div class="arc-hero-stat-val">84K</div>
-        <div class="arc-hero-stat-lbl">Monthly Views</div>
+        <div class="arc-hero-stat-val">1</div>
+        <div class="arc-hero-stat-lbl">Growth System</div>
       </div>
     </div>
-    
+
     <!-- CTA -->
-    <a href="#scope" class="arc-hero-cta arc-reveal arc-reveal-d4" target="_parent">
+    <a href="#engine-website" class="arc-hero-cta arc-reveal arc-reveal-d4" target="_parent">
       <span>See The Full System</span>
       <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
       </svg>
     </a>
-    
+
     </div><!-- end arc-hero-inner -->
-    
+
     <!-- Scroll Indicator -->
     <div class="arc-scroll-cta">
       <span class="arc-scroll-cta-text">Scroll</span>
       <div class="arc-scroll-cta-line"></div>
     </div>
-    
+
   </section>
 
-  <!-- MARQUEE SECTION -->
+  <!-- ============================================
+       MARQUEE SECTION
+  ============================================ -->
   <div class="arc-marquee">
     <div class="arc-marquee-track">
       <span class="arc-marquee-text">BRIAN <span>MAIERHOFER</span></span>
-      <span class="arc-marquee-text">MENTAL <span>HEALTH</span></span>
-      <span class="arc-marquee-text">CONTENT <span>SYSTEM</span></span>
+      <span class="arc-marquee-text">LIMINAL <span>MEANS</span></span>
+      <span class="arc-marquee-text">GROWTH <span>SYSTEM</span></span>
       <span class="arc-marquee-text">BRIAN <span>MAIERHOFER</span></span>
-      <span class="arc-marquee-text">MENTAL <span>HEALTH</span></span>
-      <span class="arc-marquee-text">CONTENT <span>SYSTEM</span></span>
+      <span class="arc-marquee-text">LIMINAL <span>MEANS</span></span>
+      <span class="arc-marquee-text">GROWTH <span>SYSTEM</span></span>
     </div>
   </div>
+
+  <!-- ============================================
+       ENGINE 1: WEBSITE BUILD
+  ============================================ -->
+  <section class="arc-section" id="engine-website">
+    <div class="arc-section-inner">
+
+      <!-- Eyebrow -->
+      <div class="arc-section-eyebrow arc-reveal">
+        <span class="arc-section-eyebrow-line"></span>
+        <span class="arc-section-eyebrow-text">Engine 1</span>
+      </div>
+
+      <!-- Title -->
+      <h2 class="arc-section-title arc-reveal arc-reveal-d1">
+        <span class="arc-grad">WEBSITE BUILD</span>
+      </h2>
+
+      <!-- Problem -->
+      <div class="arc-problem-callout arc-reveal arc-reveal-d2">
+        <div class="arc-problem-callout-label">The Problem</div>
+        <p class="arc-problem-callout-text">
+          Your online presence does not reflect your expertise. Potential clients land on your page, see something that feels dated or generic, and leave before they ever reach out. The website is not converting visitors into booked sessions.
+        </p>
+      </div>
+
+      <!-- Solution -->
+      <div class="arc-solution-callout arc-reveal arc-reveal-d2">
+        <div class="arc-solution-callout-label">The Solution</div>
+        <p class="arc-solution-callout-text">
+          A <strong>custom-designed, conversion-focused website</strong> built specifically for your practice. Not a template. Not a DIY drag-and-drop page. A professional online presence that communicates authority, builds trust on first impression, and drives visitors to book.
+        </p>
+      </div>
+
+      <!-- Deliverables Grid -->
+      <div class="arc-website-grid">
+        <div class="arc-engine-card arc-reveal">
+          <div class="arc-engine-card-label">Design</div>
+          <div class="arc-engine-card-title">Custom Visual Identity</div>
+          <p class="arc-engine-card-text">Designed from scratch to match your brand, your voice, and the trust signals your audience responds to. No templates.</p>
+        </div>
+        <div class="arc-engine-card arc-reveal arc-reveal-d1">
+          <div class="arc-engine-card-label">Responsive</div>
+          <div class="arc-engine-card-title">Mobile-First Build</div>
+          <p class="arc-engine-card-text">Over 60% of therapy searches happen on phones. Your site will look and perform flawlessly on every device, every screen size.</p>
+        </div>
+        <div class="arc-engine-card arc-reveal arc-reveal-d2">
+          <div class="arc-engine-card-label">Visibility</div>
+          <div class="arc-engine-card-title">SEO Foundation</div>
+          <p class="arc-engine-card-text">Structured for Google from day one. Proper meta tags, page speed, schema markup, and local SEO so the right clients find you.</p>
+        </div>
+        <div class="arc-engine-card arc-reveal arc-reveal-d3">
+          <div class="arc-engine-card-label">Conversion</div>
+          <div class="arc-engine-card-title">Booking Integration</div>
+          <p class="arc-engine-card-text">Seamless contact forms and booking system integration so visitors become sessions without friction or extra steps.</p>
+        </div>
+      </div>
+
+      <!-- Price -->
+      <div class="arc-website-price arc-reveal">
+        <span class="arc-website-price-val">$2,500</span>
+        <span class="arc-website-price-label">One-Time Build</span>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="arc-divider"></div>
+
+  <!-- ============================================
+       ENGINE 2: PAID ADS
+  ============================================ -->
+  <section class="arc-section" id="engine-ads">
+    <div class="arc-section-inner">
+
+      <!-- Eyebrow -->
+      <div class="arc-section-eyebrow arc-reveal">
+        <span class="arc-section-eyebrow-line"></span>
+        <span class="arc-section-eyebrow-text">Engine 2</span>
+      </div>
+
+      <!-- Title -->
+      <h2 class="arc-section-title arc-reveal arc-reveal-d1">
+        <span class="arc-grad">PAID ADS</span>
+      </h2>
+
+      <!-- Problem -->
+      <div class="arc-problem-callout arc-reveal arc-reveal-d2">
+        <div class="arc-problem-callout-label">The Problem</div>
+        <p class="arc-problem-callout-text">
+          Relying on organic reach alone limits how fast you can grow. People who need therapy right now are searching Google and scrolling Meta every day. Without paid ads, you are invisible to the most motivated potential clients.
+        </p>
+      </div>
+
+      <!-- Solution -->
+      <div class="arc-solution-callout arc-reveal arc-reveal-d2">
+        <div class="arc-solution-callout-label">The Solution</div>
+        <p class="arc-solution-callout-text">
+          <strong>Targeted Meta and Google ad campaigns</strong> built to put your practice in front of people actively seeking help. We handle everything: strategy, creative production, audience targeting, and ongoing optimization.
+        </p>
+      </div>
+
+      <!-- Scope -->
+      <ul class="arc-ads-scope-list arc-reveal arc-reveal-d2">
+        <li>Full campaign strategy and architecture</li>
+        <li>Ad creative production (video + static)</li>
+        <li>Custom audience building and targeting</li>
+        <li>Meta (Facebook + Instagram) campaigns</li>
+        <li>Google Search and Display campaigns</li>
+        <li>Monthly reporting and optimization</li>
+      </ul>
+
+      <!-- Projected Metrics -->
+      <div class="arc-ads-metrics arc-reveal arc-reveal-d3">
+        <div class="arc-ads-metric">
+          <div class="arc-ads-metric-val">50K+</div>
+          <div class="arc-ads-metric-lbl">Monthly Impressions</div>
+        </div>
+        <div class="arc-ads-metric">
+          <div class="arc-ads-metric-val">3-5x</div>
+          <div class="arc-ads-metric-lbl">ROAS Target</div>
+        </div>
+        <div class="arc-ads-metric">
+          <div class="arc-ads-metric-val">$15-30</div>
+          <div class="arc-ads-metric-lbl">Cost Per Lead</div>
+        </div>
+        <div class="arc-ads-metric">
+          <div class="arc-ads-metric-val">30-Day</div>
+          <div class="arc-ads-metric-lbl">Optimization Cycles</div>
+        </div>
+      </div>
+
+      <!-- Price -->
+      <div class="arc-ads-price arc-reveal">
+        <span class="arc-ads-price-val">$1,500</span>
+        <span class="arc-ads-price-label">/ month (ad spend separate)</span>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="arc-divider"></div>
+
+  <!-- ============================================
+       ENGINE 3: ORGANIC CONTENT
+  ============================================ -->
+  <section class="arc-section" id="engine-content">
+    <div class="arc-section-inner">
+
+      <!-- Eyebrow -->
+      <div class="arc-section-eyebrow arc-reveal">
+        <span class="arc-section-eyebrow-line"></span>
+        <span class="arc-section-eyebrow-text">Engine 3</span>
+      </div>
+
+      <!-- Title -->
+      <h2 class="arc-section-title arc-reveal arc-reveal-d1">
+        <span class="arc-grad">ORGANIC CONTENT</span>
+      </h2>
+
+      <!-- Description -->
+      <p class="arc-section-desc arc-reveal arc-reveal-d2">
+        Your knowledge, repurposed and distributed across <strong>7 platforms simultaneously</strong>. Every piece of content builds trust, attracts ideal clients, and positions you as the authority in your space.
+      </p>
+
+      <!-- Problem -->
+      <div class="arc-problem-callout arc-reveal arc-reveal-d2">
+        <div class="arc-problem-callout-label">The Problem</div>
+        <p class="arc-problem-callout-text">
+          You have the expertise, but creating content consistently across multiple platforms is a full-time job you do not have time for. Posting once a week to one platform means the algorithm buries you.
+        </p>
+      </div>
+
+      <!-- Solution -->
+      <div class="arc-solution-callout arc-reveal arc-reveal-d2">
+        <div class="arc-solution-callout-label">The Solution</div>
+        <p class="arc-solution-callout-text">
+          A <strong>multi-platform content engine</strong> that takes your expertise and turns it into daily content across YouTube, Instagram, TikTok, Facebook, X, LinkedIn, and Pinterest. You record. We handle everything else.
+        </p>
+      </div>
+
+      <!-- Tier Cards -->
+      <div class="arc-content-tiers">
+
+        <!-- Tier 1 -->
+        <div class="arc-tier-card arc-reveal">
+          <div class="arc-tier-label">Tier 1</div>
+          <div class="arc-tier-name">1x / Day</div>
+          <div class="arc-tier-price">
+            <span class="arc-tier-price-val">$1,800</span>
+            <span class="arc-tier-price-period">/ month</span>
+          </div>
+          <ul class="arc-tier-details">
+            <li><strong>7 posts per day</strong> (1 per platform)</li>
+            <li><strong>49 posts per week</strong></li>
+            <li>7 platforms: YouTube, Instagram, TikTok, Facebook, X, LinkedIn, Pinterest</li>
+            <li>Professional editing and formatting</li>
+            <li>Platform-optimized captions and hashtags</li>
+            <li>Monthly content calendar</li>
+          </ul>
+        </div>
+
+        <!-- Tier 2 (Featured) -->
+        <div class="arc-tier-card arc-tier-card--featured arc-reveal arc-reveal-d1">
+          <div class="arc-tier-badge">Most Popular</div>
+          <div class="arc-tier-label">Tier 2</div>
+          <div class="arc-tier-name">2x / Day</div>
+          <div class="arc-tier-price">
+            <span class="arc-tier-price-val">$2,400</span>
+            <span class="arc-tier-price-period">/ month</span>
+          </div>
+          <ul class="arc-tier-details">
+            <li><strong>14 posts per day</strong> (2 per platform)</li>
+            <li><strong>98 posts per week</strong></li>
+            <li>7 platforms: YouTube, Instagram, TikTok, Facebook, X, LinkedIn, Pinterest</li>
+            <li>Professional editing and formatting</li>
+            <li>Platform-optimized captions and hashtags</li>
+            <li>Monthly content calendar</li>
+            <li>Performance reporting</li>
+          </ul>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="arc-tier-card arc-reveal arc-reveal-d2">
+          <div class="arc-tier-label">Tier 3</div>
+          <div class="arc-tier-name">3x / Day</div>
+          <div class="arc-tier-price">
+            <span class="arc-tier-price-val">$3,000</span>
+            <span class="arc-tier-price-period">/ month</span>
+          </div>
+          <ul class="arc-tier-details">
+            <li><strong>21 posts per day</strong> (3 per platform)</li>
+            <li><strong>147 posts per week</strong></li>
+            <li>7 platforms: YouTube, Instagram, TikTok, Facebook, X, LinkedIn, Pinterest</li>
+            <li>Professional editing and formatting</li>
+            <li>Platform-optimized captions and hashtags</li>
+            <li>Monthly content calendar</li>
+            <li>Performance reporting</li>
+            <li>Priority support and strategy calls</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <div class="arc-divider"></div>
+
+  <!-- ============================================
+       BUNDLE PRICING
+  ============================================ -->
+  <section class="arc-bundle" id="bundle">
+    <div class="arc-bundle-inner">
+
+      <!-- Eyebrow -->
+      <div class="arc-section-eyebrow arc-reveal">
+        <span class="arc-section-eyebrow-line"></span>
+        <span class="arc-section-eyebrow-text">Bundle Pricing</span>
+      </div>
+
+      <!-- Title -->
+      <h2 class="arc-section-title arc-reveal arc-reveal-d1">
+        ALL THREE ENGINES.<br>
+        <span class="arc-grad">ONE SYSTEM PRICE.</span>
+      </h2>
+
+      <p class="arc-section-desc arc-reveal arc-reveal-d2">
+        Combine the website, paid ads, and organic content into a <strong>single growth system</strong>. Every engine amplifies the others. Bundle and save.
+      </p>
+
+      <!-- Bundle Cards -->
+      <div class="arc-bundle-grid">
+
+        <!-- Bundle: Starter -->
+        <div class="arc-bundle-card arc-reveal">
+          <div class="arc-bundle-card-label">Starter Bundle</div>
+          <div class="arc-bundle-card-title">Website + Content (1x/day)</div>
+          <p class="arc-bundle-card-desc">Launch your online presence and start building organic reach from day one.</p>
+          <div class="arc-bundle-card-price">
+            <span class="arc-bundle-card-price-val">$3,900</span>
+            <span class="arc-bundle-card-price-period">first month</span>
+          </div>
+          <div class="arc-bundle-card-note">Then $1,800/mo (content only). Website is a one-time $2,500 build, reduced to $2,100 in this bundle.</div>
+          <ul class="arc-bundle-includes">
+            <li>Custom website build (one-time)</li>
+            <li>1x/day organic content (7 platforms)</li>
+            <li>49 posts per week</li>
+            <li>Monthly content calendar</li>
+          </ul>
+          <div class="arc-bundle-savings">Save $400 on website</div>
+        </div>
+
+        <!-- Bundle: Growth (Featured) -->
+        <div class="arc-bundle-card arc-bundle-card--hero arc-reveal arc-reveal-d1">
+          <div class="arc-tier-badge">Best Value</div>
+          <div class="arc-bundle-card-label">Growth Bundle</div>
+          <div class="arc-bundle-card-title">All 3 Engines (2x/day content)</div>
+          <p class="arc-bundle-card-desc">The full growth machine. Website, paid ads, and high-volume organic content working together.</p>
+          <div class="arc-bundle-card-price">
+            <span class="arc-bundle-card-price-val">$5,800</span>
+            <span class="arc-bundle-card-price-period">first month</span>
+          </div>
+          <div class="arc-bundle-card-note">Then $3,500/mo (ads + content). Website is a one-time $2,500 build, reduced to $1,900 in this bundle. Monthly saves $400/mo vs separate.</div>
+          <ul class="arc-bundle-includes">
+            <li>Custom website build (one-time)</li>
+            <li>Paid ads: Meta + Google ($1,500/mo value)</li>
+            <li>2x/day organic content ($2,400/mo value)</li>
+            <li>98 posts per week</li>
+            <li>Performance reporting across all channels</li>
+          </ul>
+          <div class="arc-bundle-savings">Save $600 on website + $400/mo ongoing</div>
+        </div>
+
+        <!-- Bundle: Scale -->
+        <div class="arc-bundle-card arc-reveal arc-reveal-d2">
+          <div class="arc-bundle-card-label">Scale Bundle</div>
+          <div class="arc-bundle-card-title">All 3 Engines (3x/day content)</div>
+          <p class="arc-bundle-card-desc">Maximum output. Maximum reach. For practices ready to dominate their market.</p>
+          <div class="arc-bundle-card-price">
+            <span class="arc-bundle-card-price-val">$6,300</span>
+            <span class="arc-bundle-card-price-period">first month</span>
+          </div>
+          <div class="arc-bundle-card-note">Then $4,000/mo (ads + content). Website is a one-time $2,500 build, reduced to $1,800 in this bundle. Monthly saves $500/mo vs separate.</div>
+          <ul class="arc-bundle-includes">
+            <li>Custom website build (one-time)</li>
+            <li>Paid ads: Meta + Google ($1,500/mo value)</li>
+            <li>3x/day organic content ($3,000/mo value)</li>
+            <li>147 posts per week</li>
+            <li>Performance reporting across all channels</li>
+            <li>Priority support and strategy calls</li>
+          </ul>
+          <div class="arc-bundle-savings">Save $700 on website + $500/mo ongoing</div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <div class="arc-divider"></div>
+
+  <!-- ============================================
+       CTA SECTION
+  ============================================ -->
+  <section class="arc-cta-section" id="cta">
+    <div class="arc-cta-inner">
+
+      <!-- Eyebrow -->
+      <div class="arc-section-eyebrow arc-reveal" style="justify-content: center;">
+        <span class="arc-section-eyebrow-line"></span>
+        <span class="arc-section-eyebrow-text">Next Step</span>
+        <span class="arc-section-eyebrow-line" style="background: linear-gradient(90deg, var(--primary), transparent);"></span>
+      </div>
+
+      <h2 class="arc-cta-title arc-reveal arc-reveal-d1">
+        READY TO BUILD<br>
+        <span class="arc-grad">THE FULL SYSTEM?</span>
+      </h2>
+
+      <p class="arc-cta-desc arc-reveal arc-reveal-d2">
+        Three engines. One growth system. Website, paid ads, and organic content working together to turn your expertise into a <strong>client-generating machine</strong>.
+      </p>
+
+      <a href="mailto:quinten@arcgarde.com" class="arc-cta-btn arc-reveal arc-reveal-d3">
+        <span>Start The Conversation</span>
+        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+        </svg>
+      </a>
+
+      <p class="arc-cta-footer-note arc-reveal arc-reveal-d4">Arc Garde / Liminal Means</p>
+
+    </div>
+  </section>
 
 </div><!-- END WRAPPER -->
 
 <script>
 (function() {
   // PARTICLES
-  const particlesContainer = document.getElementById('arcParticles');
+  var particlesContainer = document.getElementById('arcParticles');
   if (particlesContainer) {
-    for (let i = 0; i < 30; i++) {
-      const p = document.createElement('div');
+    for (var i = 0; i < 30; i++) {
+      var p = document.createElement('div');
       p.className = 'arc-particle';
       p.style.left = Math.random() * 100 + '%';
       p.style.top = Math.random() * 100 + '%';
       p.style.opacity = Math.random() * 0.25 + 0.05;
-      const size = Math.random() * 4 + 2;
+      var size = Math.random() * 4 + 2;
       p.style.width = size + 'px';
       p.style.height = size + 'px';
       particlesContainer.appendChild(p);
-      
-      let x = parseFloat(p.style.left);
-      let y = parseFloat(p.style.top);
-      let speedX = (Math.random() - 0.5) * 0.012;
-      let speedY = (Math.random() - 0.5) * 0.012;
-      
-      function move() {
-        x += speedX;
-        y += speedY;
-        if (x < 0 || x > 100) speedX *= -1;
-        if (y < 0 || y > 100) speedY *= -1;
-        p.style.left = x + '%';
-        p.style.top = y + '%';
-        requestAnimationFrame(move);
-      }
-      move();
+
+      (function(particle) {
+        var x = parseFloat(particle.style.left);
+        var y = parseFloat(particle.style.top);
+        var speedX = (Math.random() - 0.5) * 0.012;
+        var speedY = (Math.random() - 0.5) * 0.012;
+
+        function move() {
+          x += speedX;
+          y += speedY;
+          if (x < 0 || x > 100) speedX *= -1;
+          if (y < 0 || y > 100) speedY *= -1;
+          particle.style.left = x + '%';
+          particle.style.top = y + '%';
+          requestAnimationFrame(move);
+        }
+        move();
+      })(p);
     }
   }
-  
-  // REVEAL ON SCROLL / LOAD
-  const reveals = document.querySelectorAll('.arc-reveal');
-  
-  // Trigger reveals on page load
-  setTimeout(() => {
-    reveals.forEach(el => el.classList.add('active'));
-  }, 100);
-  
-  // Intersection Observer for scroll reveals
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+
+  // REVEAL ON SCROLL
+  var reveals = document.querySelectorAll('.arc-reveal');
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('active');
       }
     });
   }, { threshold: 0.1 });
-  
-  reveals.forEach(el => observer.observe(el));
+
+  reveals.forEach(function(el) {
+    observer.observe(el);
+  });
+
+  // Trigger hero reveals on load
+  setTimeout(function() {
+    var heroReveals = document.querySelectorAll('.arc-hero .arc-reveal');
+    heroReveals.forEach(function(el) {
+      el.classList.add('active');
+    });
+  }, 100);
 })();
 </script>
 
