@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swedlund Construction | Paid Ads + OCS + Website Build - Arc Garde</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --gold: #C9A227;
+  --gold-light: #E8D48B;
+  --gold-dark: #8B7119;
+  --charcoal: #0A0A0A;
+  --text-primary: #FFFFFF;
+  --text-muted: rgba(255, 255, 255, 0.5);
+  --text-dim: rgba(255, 255, 255, 0.35);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+::selection { background: var(--gold); color: #000; }
+
+.arc-web-hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  background: #000000;
+  overflow: hidden;
+}
+
+.arc-web-hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 84px 21px 42px;
+  position: relative;
+  z-index: 10;
+}
+
+.arc-web-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+  opacity: 0;
+  transform: translateY(21px);
+  animation: arcWebReveal 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.1s forwards;
+}
+
+.arc-web-eyebrow__line {
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+  animation: arcWebLineExpand 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.5s forwards;
+}
+
+.arc-web-eyebrow__line--right {
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+.arc-web-eyebrow__text {
+  font-size: 12px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+@keyframes arcWebLineExpand {
+  to { width: 42px; }
+}
+
+.arc-web-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(49px, 11vw, 126px);
+  line-height: 0.9;
+  letter-spacing: -2px;
+  margin-bottom: 28px;
+  opacity: 0;
+  transform: translateY(28px);
+  animation: arcWebReveal 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.2s forwards;
+}
+
+.arc-web-title span { display: block; }
+
+.arc-web-title__gold {
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.arc-web-subtitle {
+  font-size: 15px;
+  line-height: 2.1;
+  color: var(--text-muted);
+  max-width: 490px;
+  margin: 0 auto 42px;
+  opacity: 0;
+  transform: translateY(21px);
+  animation: arcWebReveal 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.35s forwards;
+}
+
+.arc-web-subtitle strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.arc-web-stats {
+  display: flex;
+  gap: 56px;
+  margin-bottom: 42px;
+  flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(21px);
+  animation: arcWebReveal 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.5s forwards;
+}
+
+.arc-web-stat { text-align: center; }
+
+.arc-web-stat__value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(42px, 7vw, 56px);
+  font-weight: 700;
+  color: var(--text-primary);
+  position: relative;
+  display: inline-block;
+}
+
+.arc-web-stat__value::after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+  border-radius: 3px;
+  transform: scaleX(0);
+  animation: arcWebUnderline 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) 0.8s forwards;
+}
+
+.arc-web-stat:nth-child(2) .arc-web-stat__value::after { animation-delay: 0.9s; }
+.arc-web-stat:nth-child(3) .arc-web-stat__value::after { animation-delay: 1s; }
+
+@keyframes arcWebUnderline {
+  to { transform: scaleX(1); }
+}
+
+.arc-web-stat__label {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 14px;
+}
+
+.arc-web-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 18px 35px;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  border-radius: 49px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #000;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(21px);
+  animation: arcWebReveal 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.65s forwards;
+  transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.arc-web-cta:hover { transform: translateY(-3px); }
+
+.arc-web-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.arc-web-cta:hover::before { left: 100%; }
+
+.arc-web-cta svg { width: 18px; height: 18px; }
+
+.arc-web-marquee {
+  width: 100%;
+  overflow: hidden;
+  padding: 49px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  z-index: 10;
+}
+
+.arc-web-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: arcWebMarquee 20s linear infinite;
+}
+
+@keyframes arcWebMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.arc-web-marquee__item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(63px, 10vw, 98px);
+  letter-spacing: 7px;
+  white-space: nowrap;
+  padding: 0 42px;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+}
+
+.arc-web-marquee__item span {
+  -webkit-text-stroke: 1px var(--gold);
+}
+
+@keyframes arcWebReveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arc-web-eyebrow, .arc-web-title, .arc-web-subtitle, .arc-web-stats, .arc-web-cta {
+    opacity: 1; transform: none; animation: none;
+  }
+  .arc-web-eyebrow__line { width: 42px; animation: none; }
+  .arc-web-stat__value::after { transform: scaleX(1); animation: none; }
+  .arc-web-marquee__track { animation: none; }
+}
+
+@media (max-width: 600px) {
+  .arc-web-hero { padding: 63px 18px 35px; }
+  .arc-web-stats { flex-direction: column; gap: 28px; }
+  .arc-web-eyebrow__line { display: none; }
+  .arc-web-subtitle { font-size: 14px; line-height: 2; }
+  .arc-web-marquee__item { padding: 0 21px; }
+}
+</style>
+
+<section class="arc-web-hero-section">
+  <div class="arc-web-hero">
+    <div class="arc-web-eyebrow">
+      <span class="arc-web-eyebrow__line"></span>
+      <span class="arc-web-eyebrow__text">For Swedlund Construction</span>
+      <span class="arc-web-eyebrow__line arc-web-eyebrow__line--right"></span>
+    </div>
+    
+    <h1 class="arc-web-title">
+      <span>YOUR CRAFTSMANSHIP DESERVES</span>
+      <span class="arc-web-title__gold">A FOUNDATION ONLINE.</span>
+    </h1>
+    
+    <p class="arc-web-subtitle">
+      You don't cut corners on a build. <br> Neither do we.<br><br>
+      A website that reflects the <strong>quality, trust, and reputation</strong> you've spent years building in St. Louis.
+    </p>
+    
+    <div class="arc-web-stats">
+      <div class="arc-web-stat">
+        <div class="arc-web-stat__value">&lt;2s</div>
+        <div class="arc-web-stat__label">Load Time</div>
+      </div>
+      <div class="arc-web-stat">
+        <div class="arc-web-stat__value">100</div>
+        <div class="arc-web-stat__label">Performance Score</div>
+      </div>
+      <div class="arc-web-stat">
+        <div class="arc-web-stat__value">24/7</div>
+        <div class="arc-web-stat__label">Lead Generation</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="arc-web-marquee">
+    <div class="arc-web-marquee__track">
+      <span class="arc-web-marquee__item">SWEDLUND <span>CONSTRUCTION</span></span>
+      <span class="arc-web-marquee__item">ST. LOUIS <span>BUILT</span></span>
+      <span class="arc-web-marquee__item">HOMES BUILT <span>RIGHT</span></span>
+      <span class="arc-web-marquee__item">SWEDLUND <span>CONSTRUCTION</span></span>
+      <span class="arc-web-marquee__item">ST. LOUIS <span>BUILT</span></span>
+      <span class="arc-web-marquee__item">HOMES BUILT <span>RIGHT</span></span>
+    </div>
+  </div>
+</section>
+</body>
+</html>

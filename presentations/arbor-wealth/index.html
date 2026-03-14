@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbor Wealth Strategies | Ads + Organic Growth - Arc Garde</title>
+<meta name="robots" content="noindex, nofollow">
+<!--
+  ARC GARDE GROWTH SYSTEM - Arbor Wealth Strategies
+  Premium Design with Lively Effects
+-->
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   BRAND TOKENS
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  --gold: #C9A227;
+  --gold-light: #E8D48B;
+  --gold-dark: #8B7119;
+  --gold-glow: rgba(201, 162, 39, 0.5);
+  --navy: #1A2744;
+  --navy-light: #2A3B5C;
+  --navy-dark: #0D1522;
+  --bg-dark: #131d2e;
+  --bg-void: #131d2e;
+  --bg-card: #0A0E18;
+  --text-primary: #FFFFFF;
+  --text-muted: rgba(255, 255, 255, 0.65);
+  --text-dim: rgba(255, 255, 255, 0.45);
+  --text-subtle: rgba(255, 255, 255, 0.25);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --error: #FF6B6B;
+  --error-glow: rgba(255, 107, 107, 0.4);
+  --success: #22C55E;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+::selection { background: var(--gold); color: #000; }
+a { text-decoration: none; color: inherit; }
+
+/* Main wrapper */
+.page-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  background: var(--bg-void);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   AMBIENT EFFECTS
+   ═══════════════════════════════════════════════════════════ */
+.ambient-glow {
+  display: none;
+}
+
+.ambient-glow--gold {
+  background: none;
+}
+
+.ambient-glow--navy {
+  background: none;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Noise texture overlay - disabled */
+.noise-overlay {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTIONS
+   ═══════════════════════════════════════════════════════════ */
+.arc-section {
+  display: block !important;
+  width: 100% !important;
+  padding: 120px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.arc-section__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TYPOGRAPHY - PREMIUM SERIF + SANS
+   ═══════════════════════════════════════════════════════════ */
+.arc-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  text-align: center;
+  position: relative;
+}
+
+.arc-label::before,
+.arc-label::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+
+.arc-label::before { right: calc(50% + 120px); }
+.arc-label::after { left: calc(50% + 120px); background: linear-gradient(90deg, var(--gold), transparent); }
+
+/* Main titles - Playfair Display for elegance */
+.arc-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(40px, 7vw, 68px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.arc-title--gold {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 40%, var(--gold-light) 60%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Impact headlines - Bebas for punch */
+.arc-impact {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 10vw, 100px);
+  letter-spacing: 4px;
+  line-height: 0.9;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════════════════ */
+.hero-company {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.hero-company__name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: 6px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.hero-company__tagline {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STATS ROW
+   ═══════════════════════════════════════════════════════════ */
+.stats-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  gap: 100px !important;
+  flex-wrap: wrap !important;
+  margin-top: 72px;
+}
+
+.arc-stat {
+  text-align: center;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.arc-stat__value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 72px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  position: relative;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.arc-stat__value::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+  border-radius: 2px;
+}
+
+.arc-stat__label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 12px;
+  display: block;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MARQUEE
+   ═══════════════════════════════════════════════════════════ */
+.arc-marquee {
+  display: block !important;
+  width: 100% !important;
+  overflow: hidden;
+  padding: 64px 0;
+  border-top: 1px solid rgba(201, 162, 39, 0.15);
+  border-bottom: 1px solid rgba(201, 162, 39, 0.15);
+  background: var(--bg-void);
+  position: relative;
+}
+
+.arc-marquee::before,
+.arc-marquee::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 150px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.arc-marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--bg-void), transparent);
+}
+
+.arc-marquee::after {
+  right: 0;
+  background: linear-gradient(90deg, transparent, var(--bg-void));
+}
+
+.arc-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: arcMarquee 30s linear infinite;
+}
+
+@keyframes arcMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.arc-marquee__item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(80px, 14vw, 140px);
+  letter-spacing: 10px;
+  white-space: nowrap;
+  padding: 0 56px;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+}
+
+.arc-marquee__item span {
+  -webkit-text-stroke: 1px rgba(201, 162, 39, 0.6);
+  text-shadow: 0 0 40px rgba(201, 162, 39, 0.25);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   COMPARE SECTION
+   ═══════════════════════════════════════════════════════════ */
+.compare-grid {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  gap: 32px !important;
+  flex-wrap: wrap !important;
+}
+
+.compare-box {
+  flex: 1 1 340px !important;
+  max-width: 400px !important;
+  background: var(--bg-card);
+  border-radius: 24px;
+  padding: 40px 36px;
+  position: relative;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.compare-box:hover {
+  transform: translateY(-8px);
+}
+
+.compare-box--bad {
+  border: 2px solid var(--error);
+}
+
+.compare-box--bad:hover {
+  transform: translateY(-8px);
+}
+
+.compare-box--good {
+  border: 2px solid var(--gold);
+}
+
+.compare-box--good:hover {
+  transform: translateY(-8px);
+}
+
+.compare-box__title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 28px;
+  font-weight: 600;
+}
+
+.compare-box__title--bad { color: var(--error); }
+.compare-box__title--good { color: var(--gold); }
+
+.compare-vs {
+  flex: 0 0 70px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 28px;
+  font-style: italic;
+  color: rgba(255,255,255,0.2);
+}
+
+.arc-list { list-style: none; }
+
+.arc-list li {
+  padding: 14px 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.arc-list li:hover {
+  color: var(--text-primary);
+  padding-left: 8px;
+}
+
+.arc-list li:last-child { border-bottom: none; }
+
+.arc-list__icon {
+  font-weight: 700;
+  margin-right: 14px;
+  font-size: 15px;
+}
+
+.arc-list__icon--bad { color: var(--error); }
+.arc-list__icon--good { color: var(--gold); }
+
+/* ═══════════════════════════════════════════════════════════
+   CARDS
+   ═══════════════════════════════════════════════════════════ */
+.cards-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  gap: 24px !important;
+  flex-wrap: wrap !important;
+}
+
+.arc-card {
+  flex: 1 1 280px !important;
+  max-width: 340px !important;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 40px 36px;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.arc-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,162,39,0.3), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.arc-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(201, 162, 39, 0.25);
+}
+
+.arc-card:hover::before {
+  opacity: 1;
+}
+
+.icon-box {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  transition: transform 0.3s ease;
+}
+
+.arc-card:hover .icon-box {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.icon-box svg {
+  width: 24px;
+  height: 24px;
+  stroke: #000;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.card-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.card-list { list-style: none; }
+
+.card-list li {
+  padding: 10px 0;
+  font-size: 13px;
+  color: var(--text-dim);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: color 0.3s ease;
+}
+
+.card-list li:last-child { border-bottom: none; }
+.arc-card:hover .card-list li { color: var(--text-muted); }
+
+/* ═══════════════════════════════════════════════════════════
+   ENGINE CARDS
+   ═══════════════════════════════════════════════════════════ */
+.engine-card {
+  flex: 1 1 300px !important;
+  max-width: 340px !important;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 40px 36px;
+  position: relative;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.engine-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.engine-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(201, 162, 39, 0.2);
+}
+
+.engine-card:hover::after {
+  opacity: 1;
+}
+
+.engine-card--featured {
+  background: var(--bg-card);
+  border: 2px solid rgba(201, 162, 39, 0.4);
+}
+
+.engine-number {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.engine-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.engine-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 26px;
+  font-weight: 400;
+  margin: 8px 0 18px;
+}
+
+.engine-job {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+
+.engine-outcome {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 20px;
+}
+
+.engine-outcome__label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.engine-outcome__text {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PRICING CARDS
+   ═══════════════════════════════════════════════════════════ */
+.pricing-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  gap: 32px !important;
+  flex-wrap: wrap !important;
+}
+
+.pricing-card {
+  flex: 1 1 380px !important;
+  max-width: 460px !important;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 28px;
+  padding: 52px 44px;
+  text-align: center;
+  position: relative;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-12px);
+}
+
+.pricing-card--featured {
+  background: var(--bg-card);
+  border: 2px solid rgba(201, 162, 39, 0.5);
+}
+
+.pricing-card--featured::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+  border-radius: 28px 28px 0 0;
+}
+
+.pricing-tier {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.pricing-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 32px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.pricing-desc {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+.pricing-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  margin: 28px 0;
+}
+
+.pricing-section-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.pricing-item {
+  text-align: left;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.pricing-item:last-child { border-bottom: none; }
+
+.pricing-item__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.pricing-item__title--gold { color: var(--gold); }
+
+.pricing-item__detail {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+.pricing-item__highlight {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.arc-price {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pricing-card--featured .arc-price {
+  font-size: 72px;
+}
+
+.pricing-period {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-top: 6px;
+}
+
+.pricing-note {
+  font-size: 12px;
+  color: var(--text-subtle);
+  margin-top: 14px;
+}
+
+.recommended-badge {
+  display: inline-block;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+  color: #000;
+  border-radius: 100px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.value-badge {
+  display: inline-block;
+  padding: 10px 20px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  border-radius: 100px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--success);
+  margin-bottom: 16px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SPECIALTY CARDS
+   ═══════════════════════════════════════════════════════════ */
+.specialty-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  gap: 20px !important;
+  flex-wrap: wrap !important;
+}
+
+.specialty-card {
+  flex: 1 1 200px !important;
+  max-width: 240px !important;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 36px 28px;
+  text-align: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.specialty-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(201, 162, 39, 0.3);
+}
+
+.specialty-icon {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, rgba(201,162,39,0.2), rgba(201,162,39,0.05));
+  border: 1px solid rgba(201,162,39,0.35);
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.specialty-card:hover .specialty-icon {
+  transform: scale(1.1);
+}
+
+.specialty-icon svg {
+  width: 26px;
+  height: 26px;
+  stroke: var(--gold);
+  fill: none;
+  stroke-width: 1.5;
+}
+
+.specialty-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.specialty-desc {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INFO BOX
+   ═══════════════════════════════════════════════════════════ */
+.info-box {
+  max-width: 700px;
+  margin: 56px auto 0;
+  padding: 40px 48px;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  text-align: center;
+  position: relative;
+}
+
+.info-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.5;
+}
+
+.info-box__label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.info-box__text {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.9;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BILINGUAL BADGE
+   ═══════════════════════════════════════════════════════════ */
+.bilingual-badge {
+  display: inline-block;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, rgba(201,162,39,0.15), rgba(201,162,39,0.05));
+  border: 1px solid rgba(201, 162, 39, 0.4);
+  border-radius: 100px;
+  font-size: 15px;
+  color: var(--gold);
+  margin-top: 48px;
+  transition: transform 0.3s ease;
+}
+
+.bilingual-badge:hover {
+  transform: translateY(-4px);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════════════════ */
+.btn-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  gap: 24px !important;
+  flex-wrap: wrap !important;
+}
+
+.btn-primary {
+  padding: 22px 48px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none;
+  border-radius: 16px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #000;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-6px);
+}
+
+.btn-secondary {
+  padding: 22px 48px;
+  background: rgba(26,39,68,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-6px);
+  border-color: rgba(201, 162, 39, 0.4);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════ */
+.arc-footer {
+  display: block !important;
+  width: 100% !important;
+  padding: 56px 24px;
+  border-top: 1px solid rgba(201, 162, 39, 0.15);
+  text-align: center;
+  background: var(--bg-void);
+}
+
+.arc-footer__text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REVEAL ANIMATION
+   ═══════════════════════════════════════════════════════════ */
+.arc-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.arc-reveal.active { opacity: 1; transform: translateY(0); }
+.arc-reveal--d1 { transition-delay: 0.15s; }
+.arc-reveal--d2 { transition-delay: 0.3s; }
+.arc-reveal--d3 { transition-delay: 0.45s; }
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════ */
+
+/* Prevent orphans globally */
+p, li, h1, h2, h3, h4, span {
+  text-wrap: balance;
+  word-spacing: -0.02em;
+}
+
+@media (max-width: 900px) {
+  .compare-grid, .cards-row, .pricing-row, .specialty-row {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .compare-box, .arc-card, .engine-card, .pricing-card, .specialty-card {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .arc-card {
+    padding: 36px 28px !important;
+  }
+  .arc-card .card-list {
+    padding-bottom: 0 !important;
+  }
+  .compare-vs { padding: 20px 0; }
+  .stats-row { gap: 48px !important; }
+  .arc-label::before, .arc-label::after { display: none; }
+}
+
+@media (max-width: 600px) {
+  .arc-section {
+    padding: 80px 20px;
+  }
+  
+  .arc-title {
+    font-size: clamp(32px, 8vw, 48px) !important;
+  }
+  
+  .hero-company__name {
+    font-size: 22px;
+    letter-spacing: 4px;
+  }
+  
+  .stats-row {
+    flex-direction: column !important;
+    gap: 40px !important;
+    align-items: center !important;
+  }
+  
+  .arc-stat {
+    text-align: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .arc-stat__value {
+    font-size: 56px;
+  }
+  
+  .arc-stat__label {
+    text-align: center;
+  }
+  
+  .arc-marquee__item {
+    font-size: 48px !important;
+    letter-spacing: 4px;
+    padding: 0 24px;
+  }
+  
+  .compare-box {
+    padding: 36px 28px;
+  }
+  
+  .arc-card {
+    padding: 36px 28px !important;
+  }
+  
+  .arc-card .card-list {
+    padding-bottom: 0 !important;
+  }
+  
+  .engine-card, .specialty-card {
+    padding: 36px 28px;
+  }
+  
+  .pricing-card {
+    padding: 44px 28px;
+  }
+  
+  .info-box {
+    padding: 32px 24px;
+  }
+  
+  .arc-price {
+    font-size: 48px !important;
+  }
+  
+  .pricing-card--featured .arc-price {
+    font-size: 56px !important;
+  }
+  
+  .bilingual-badge {
+    padding: 14px 20px;
+    font-size: 13px;
+  }
+  
+  .specialty-row {
+    gap: 16px !important;
+  }
+  
+  .specialty-card {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arc-reveal { opacity: 1; transform: none; transition: none; }
+  .arc-marquee__track { animation: none; }
+  .arc-title--gold, .recommended-badge { animation: none; }
+  .ambient-glow { animation: none; }
+}
+</style>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ═══════════════════════════════════════════════════════════
+     HTML STRUCTURE
+     ═══════════════════════════════════════════════════════════ -->
+
+<div class="page-wrapper">
+<div class="noise-overlay"></div>
+
+<!-- HERO SECTION -->
+<section class="arc-section" style="min-height: 100vh; text-align: center; padding-top: 140px;">
+  <!-- Ambient effects -->
+  <div class="ambient-glow ambient-glow--gold" style="width: 500px; height: 500px; top: -100px; left: -150px;"></div>
+  <div class="ambient-glow ambient-glow--navy" style="width: 600px; height: 600px; bottom: -200px; right: -200px; animation-delay: -4s;"></div>
+  
+  <div class="arc-section__inner">
+    <div class="hero-company arc-reveal">
+      <p class="hero-company__name">ARBOR WEALTH STRATEGIES</p>
+      <p class="hero-company__tagline">Growth Partnership Proposal</p>
+    </div>
+    
+    <h1 class="arc-title arc-reveal arc-reveal--d1" style="font-size: clamp(48px, 9vw, 88px); margin-bottom: 32px;">
+      Your Legacy Deserves<br>
+      <span class="arc-title--gold">a Foundation Online.</span>
+    </h1>
+    
+    <p class="arc-reveal arc-reveal--d2" style="font-size: 17px; line-height: 2; color: var(--text-muted); max-width: 580px; margin: 0 auto;">
+      You help families build generational wealth. We'll help you become the
+      <strong style="color: var(--text-primary);">go-to authority</strong> for holistic financial planning in the Greater&nbsp;Los&nbsp;Angeles&nbsp;area.
+    </p>
+    
+    <div class="stats-row arc-reveal arc-reveal--d3">
+      <div class="arc-stat">
+        <span class="arc-stat__value">30+</span>
+        <span class="arc-stat__label">Years Experience</span>
+      </div>
+      <div class="arc-stat">
+        <span class="arc-stat__value">4</span>
+        <span class="arc-stat__label">Specialty Markets</span>
+      </div>
+      <div class="arc-stat">
+        <span class="arc-stat__value">2</span>
+        <span class="arc-stat__label">Languages Served</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- MARQUEE -->
+<div class="arc-marquee">
+  <div class="arc-marquee__track">
+    <span class="arc-marquee__item">ARBOR WEALTH <span>STRATEGIES</span></span>
+    <span class="arc-marquee__item">GENERATIONAL <span>WEALTH</span></span>
+    <span class="arc-marquee__item">HOLISTIC <span>PLANNING</span></span>
+    <span class="arc-marquee__item">ARBOR WEALTH <span>STRATEGIES</span></span>
+    <span class="arc-marquee__item">GENERATIONAL <span>WEALTH</span></span>
+    <span class="arc-marquee__item">HOLISTIC <span>PLANNING</span></span>
+  </div>
+</div>
+
+
+<!-- THE REALITY SECTION -->
+<section class="arc-section" style="text-align: center;">
+  <div class="ambient-glow ambient-glow--navy" style="width: 400px; height: 400px; top: 50%; left: -100px; animation-delay: -2s;"></div>
+  
+  <div class="arc-section__inner">
+    <p class="arc-label arc-reveal">The Reality</p>
+    <h2 class="arc-title arc-reveal arc-reveal--d1">
+      High-Net-Worth Clients Research<br>
+      <span class="arc-title--gold">Before They Ever Call.</span>
+    </h2>
+    
+    <div class="compare-grid arc-reveal arc-reveal--d2">
+      <div class="compare-box compare-box--bad">
+        <p class="compare-box__title compare-box__title--bad">What They See Elsewhere</p>
+        <ul class="arc-list">
+          <li><span class="arc-list__icon arc-list__icon--bad">✗</span>Outdated advisor websites with&nbsp;stock&nbsp;photos</li>
+          <li><span class="arc-list__icon arc-list__icon--bad">✗</span>No Spanish-language option for&nbsp;bilingual&nbsp;families</li>
+          <li><span class="arc-list__icon arc-list__icon--bad">✗</span>Generic content with no&nbsp;clear&nbsp;specialization</li>
+          <li><span class="arc-list__icon arc-list__icon--bad">✗</span>Invisible on social media where&nbsp;clients&nbsp;spend&nbsp;time</li>
+          <li><span class="arc-list__icon arc-list__icon--bad">✗</span>No clear path from curiosity&nbsp;to&nbsp;consultation</li>
+        </ul>
+      </div>
+      
+      <div class="compare-vs">vs</div>
+      
+      <div class="compare-box compare-box--good">
+        <p class="compare-box__title compare-box__title--good">What We Will Build for You</p>
+        <ul class="arc-list">
+          <li><span class="arc-list__icon arc-list__icon--good">✓</span>Premium website reflecting&nbsp;your&nbsp;expertise</li>
+          <li><span class="arc-list__icon arc-list__icon--good">✓</span>Fully bilingual site (English&nbsp;+&nbsp;Spanish)</li>
+          <li><span class="arc-list__icon arc-list__icon--good">✓</span>Clear specialty positioning for&nbsp;each&nbsp;market</li>
+          <li><span class="arc-list__icon arc-list__icon--good">✓</span>Consistent social presence that&nbsp;builds&nbsp;trust</li>
+          <li><span class="arc-list__icon arc-list__icon--good">✓</span>Conversion-optimized lead&nbsp;generation</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="arc-reveal arc-reveal--d3" style="margin-top: 64px;">
+      <p style="font-size: 18px; color: var(--text-muted); line-height: 2;">
+        When a business owner, physician, or professional athlete is choosing their&nbsp;financial&nbsp;partner,
+        your digital presence is often the&nbsp;deciding&nbsp;factor.
+      </p>
+      <p style="font-family: 'Playfair Display', Georgia, serif; font-size: 36px; font-style: italic; margin-top: 28px; background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Make it&nbsp;count.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOUNDATION SECTION -->
+<section class="arc-section" style="border-top: 1px solid rgba(201, 162, 39, 0.1);">
+  <div class="ambient-glow ambient-glow--gold" style="width: 350px; height: 350px; top: 20%; right: -100px; animation-delay: -3s;"></div>
+  
+  <div class="arc-section__inner">
+    <p class="arc-label arc-reveal">Foundation</p>
+    <h2 class="arc-title arc-reveal arc-reveal--d1">
+      Included In <span class="arc-title--gold">Both Tiers</span>
+    </h2>
+    <p class="arc-reveal arc-reveal--d2" style="font-size: 16px; line-height: 2; color: var(--text-muted); max-width: 620px; margin: -24px auto 64px; text-align: center;">
+      A complete foundation to establish Arbor Wealth as the authority in holistic&nbsp;financial&nbsp;planning.
+    </p>
+    
+    <div class="cards-row arc-reveal arc-reveal--d3">
+      <div class="arc-card">
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        </div>
+        <h3 class="card-title">Website Revamp</h3>
+        <ul class="card-list">
+          <li>Complete design&nbsp;overhaul</li>
+          <li>Spanish translated&nbsp;site</li>
+          <li>Mobile-first&nbsp;optimization</li>
+          <li>Specialty landing&nbsp;pages</li>
+          <li>Lead capture&nbsp;integration</li>
+        </ul>
+      </div>
+      
+      <div class="arc-card">
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+        </div>
+        <h3 class="card-title">Brand Design</h3>
+        <ul class="card-list">
+          <li>Brand design&nbsp;mockups</li>
+          <li>Print vendor&nbsp;sourcing</li>
+          <li>Collateral design&nbsp;&&nbsp;copy</li>
+          <li>Consistent brand&nbsp;identity</li>
+          <li>Professional&nbsp;materials</li>
+        </ul>
+      </div>
+      
+      <div class="arc-card">
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3 class="card-title">Content + Events</h3>
+        <ul class="card-list">
+          <li>Compliant monthly&nbsp;blog</li>
+          <li>1x/month event&nbsp;coverage</li>
+          <li>Up to 4 hours&nbsp;per&nbsp;event</li>
+          <li>Professional&nbsp;editing</li>
+          <li>Distribution&nbsp;ready</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- GROWTH ENGINE SECTION -->
+<section class="arc-section" style="text-align: center;">
+  <div class="arc-section__inner">
+    <p class="arc-label arc-reveal">The System</p>
+    <h2 class="arc-title arc-reveal arc-reveal--d1">
+      The <span class="arc-title--gold">Growth Engine</span>
+    </h2>
+    <p class="arc-reveal arc-reveal--d2" style="font-size: 16px; line-height: 2; color: var(--text-muted); max-width: 580px; margin: -24px auto 64px;">
+      Three interconnected engines working together to position Arbor Wealth as the authority in holistic&nbsp;financial&nbsp;planning.
+    </p>
+    
+    <div class="cards-row arc-reveal arc-reveal--d3">
+      <div class="engine-card">
+        <p class="engine-number">01</p>
+        <p class="engine-label">Engine</p>
+        <h3 class="engine-title">Website</h3>
+        <p class="engine-job"><strong style="color: var(--text-primary);">Job:</strong> Convert attention into booked&nbsp;consultations.</p>
+        <div class="engine-outcome">
+          <p class="engine-outcome__label">Outcome</p>
+          <p class="engine-outcome__text">Every visitor has a clear path to becoming a client. Bilingual reach expands&nbsp;your&nbsp;market.</p>
+        </div>
+      </div>
+      
+      <div class="engine-card engine-card--featured">
+        <p class="engine-number">02</p>
+        <p class="engine-label">Engine</p>
+        <h3 class="engine-title">Paid Ads</h3>
+        <p class="engine-job"><strong style="color: var(--text-primary);">Job:</strong> Capture existing demand&nbsp;predictably.</p>
+        <div class="engine-outcome">
+          <p class="engine-outcome__label">Outcome</p>
+          <p class="engine-outcome__text">Consistent flow of qualified prospects actively seeking financial&nbsp;guidance.</p>
+        </div>
+      </div>
+      
+      <div class="engine-card">
+        <p class="engine-number">03</p>
+        <p class="engine-label">Engine</p>
+        <h3 class="engine-title">Organic</h3>
+        <p class="engine-job"><strong style="color: var(--text-primary);">Job:</strong> Manufacture trust and familiarity&nbsp;at&nbsp;scale.</p>
+        <div class="engine-outcome">
+          <p class="engine-outcome__label">Outcome</p>
+          <p class="engine-outcome__text">Long-term authority positioning. When they're ready, they already&nbsp;know&nbsp;you.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PRICING SECTION -->
+<section class="arc-section" style="border-top: 1px solid rgba(201, 162, 39, 0.1); text-align: center;">
+  <div class="ambient-glow ambient-glow--gold" style="width: 500px; height: 500px; top: 30%; left: 50%; transform: translateX(-50%); animation-delay: -1s;"></div>
+  
+  <div class="arc-section__inner">
+    <p class="arc-label arc-reveal">Investment</p>
+    <h2 class="arc-title arc-reveal arc-reveal--d1">
+      Choose Your <span class="arc-title--gold">Growth Level</span>
+    </h2>
+    <p class="arc-reveal arc-reveal--d2" style="font-size: 15px; color: var(--text-dim); margin-top: -24px; margin-bottom: 64px; font-style: italic;">Monthly investment. Compounding&nbsp;results.</p>
+    
+    <div class="pricing-row arc-reveal arc-reveal--d3">
+      
+      <!-- TIER 1: $2,000 -->
+      <div class="pricing-card">
+        <p class="pricing-tier">Foundation</p>
+        <h3 class="pricing-name">Growth Starter</h3>
+        <p class="pricing-desc">Establish your digital authority<br>with consistent presence.</p>
+        
+        <div class="pricing-divider"></div>
+        <p class="pricing-section-label">What's Included</p>
+        
+        <div class="pricing-item">
+          <p class="pricing-item__title">Organic Content</p>
+          <p class="pricing-item__detail">2x/day OCS (standard clipping style)<br>Bi-weekly compliant content deployment</p>
+        </div>
+        
+        <div class="pricing-item">
+          <p class="pricing-item__title">Paid Advertising</p>
+          <p class="pricing-item__detail">Meta standard paid ads<br>28 creatives A/B tested per 28-day cycle<br>Full media buying management</p>
+        </div>
+        
+        <div class="pricing-item">
+          <p class="pricing-item__title">Foundation Package</p>
+          <p class="pricing-item__detail">+ Website revamp & Spanish site<br>+ Brand design & print sourcing<br>+ Monthly event coverage (4hrs) & blog</p>
+        </div>
+        
+        <div class="pricing-divider"></div>
+        
+        <p class="arc-price">$2,000</p>
+        <p class="pricing-period">per month</p>
+        <p class="pricing-note">+ ad spend (not included)</p>
+      </div>
+      
+      <!-- TIER 2: $3,500 -->
+      <div class="pricing-card pricing-card--featured">
+        <span class="recommended-badge">Recommended</span>
+        <h3 class="pricing-name">Growth Accelerator</h3>
+        <p class="pricing-desc">Maximum reach with premium content<br>and dual-platform advertising.</p>
+        
+        <div class="pricing-divider"></div>
+        <p class="pricing-section-label">Everything in Starter, Plus</p>
+        
+        <div class="pricing-item">
+          <p class="pricing-item__title pricing-item__title--gold">Enhanced Organic Content</p>
+          <p class="pricing-item__detail">2x/day OCS standard clipping<br><span class="pricing-item__highlight">+ 3x/week higher quality edits</span><br>Bi-weekly compliant deployment</p>
+        </div>
+        
+        <div class="pricing-item">
+          <p class="pricing-item__title pricing-item__title--gold">Dual-Platform Advertising</p>
+          <p class="pricing-item__detail"><span class="pricing-item__highlight">Google + Meta</span> standard paid ads<br>28 creatives A/B tested per 28-day cycle<br>Full media buying management</p>
+        </div>
+        
+        <div class="pricing-item">
+          <p class="pricing-item__title">Foundation Package</p>
+          <p class="pricing-item__detail">+ Website revamp & Spanish site<br>+ Brand design & print sourcing<br>+ Monthly event coverage (4hrs) & blog</p>
+        </div>
+        
+        <div class="pricing-divider"></div>
+        
+        <span class="value-badge">Best Value for Growth</span>
+        <p class="arc-price">$3,500</p>
+        <p class="pricing-period">per month</p>
+        <p class="pricing-note">+ ad spend (not included)</p>
+      </div>
+    </div>
+    
+    <div class="info-box arc-reveal">
+      <p class="info-box__label">Important Note</p>
+      <p class="info-box__text">
+        <strong style="color: var(--text-primary);">Ad spend is separate from&nbsp;service&nbsp;fees.</strong><br>
+        We manage your campaigns; you control your budget directly with&nbsp;the&nbsp;platforms.<br>
+        Typical recommended ad spend for financial services:&nbsp;$1,500&nbsp;–&nbsp;$5,000/month.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- SPECIALTY MARKETS SECTION -->
+<section class="arc-section" style="text-align: center;">
+  <div class="arc-section__inner">
+    <p class="arc-label arc-reveal">Your Market</p>
+    <h2 class="arc-title arc-reveal arc-reveal--d1">
+      Built For Your <span class="arc-title--gold">Specialties</span>
+    </h2>
+    <p class="arc-reveal arc-reveal--d2" style="font-size: 16px; line-height: 2; color: var(--text-muted); max-width: 540px; margin: -24px auto 64px;">
+      Our strategy will position Arbor Wealth as the authority for each of your&nbsp;specialty&nbsp;markets.
+    </p>
+    
+    <div class="specialty-row arc-reveal arc-reveal--d3">
+      <div class="specialty-card">
+        <div class="specialty-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h4 class="specialty-name">Business Owners</h4>
+        <p class="specialty-desc">Succession planning &&nbsp;wealth&nbsp;protection</p>
+      </div>
+      
+      <div class="specialty-card">
+        <div class="specialty-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h4 class="specialty-name">Medical Professionals</h4>
+        <p class="specialty-desc">Tailored strategies for&nbsp;physicians</p>
+      </div>
+      
+      <div class="specialty-card">
+        <div class="specialty-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <h4 class="specialty-name">Professional Athletes</h4>
+        <p class="specialty-desc">Career wealth&nbsp;optimization</p>
+      </div>
+      
+      <div class="specialty-card">
+        <div class="specialty-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h4 class="specialty-name">Families</h4>
+        <p class="specialty-desc">Generational wealth&nbsp;building</p>
+      </div>
+    </div>
+    
+    <div class="arc-reveal" style="margin-top: 56px;">
+      <span class="bilingual-badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 12px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Se habla español — Full bilingual digital&nbsp;presence&nbsp;included
+      </span>
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA SECTION -->
+<section class="arc-section" style="text-align: center; border-top: 1px solid rgba(201, 162, 39, 0.1);">
+  <div class="ambient-glow ambient-glow--gold" style="width: 600px; height: 600px; top: -100px; left: 50%; transform: translateX(-50%); opacity: 0.25;"></div>
+  
+  <div class="arc-section__inner">
+    <p class="arc-label arc-reveal">Ready?</p>
+    <h2 class="arc-title arc-reveal arc-reveal--d1" style="font-size: clamp(44px, 8vw, 80px); margin-bottom: 64px;">
+      Let's Build Your<br>
+      <span class="arc-title--gold">Legacy Together.</span>
+    </h2>
+    
+    <div class="arc-reveal arc-reveal--d2" style="padding-top: 56px; border-top: 1px solid rgba(255,255,255,0.06);">
+      <p style="font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 18px;">Prepared For</p>
+      <p style="font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 400; margin-bottom: 10px;">Arbor Wealth&nbsp;Strategies</p>
+      <p style="font-size: 14px; color: var(--text-dim);">11027 Downey Ave, Downey,&nbsp;CA&nbsp;90241</p>
+      <p style="font-family: 'Playfair Display', Georgia, serif; font-size: 15px; font-style: italic; color: var(--gold); margin-top: 12px;">A Holistic Financial&nbsp;Planning&nbsp;Firm</p>
+    </div>
+  </div>
+</section>
+
+
+</div>
+
+<!-- Scripts -->
+<script>
+(function() {
+  var reveals = document.querySelectorAll('.arc-reveal');
+  function revealOnScroll() {
+    reveals.forEach(function(el) {
+      var rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 60) {
+        el.classList.add('active');
+      }
+    });
+  }
+  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('load', revealOnScroll);
+  revealOnScroll();
+})();
+</script>
+</body>
+</html>

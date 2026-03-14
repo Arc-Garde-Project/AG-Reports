@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Krazy Trompos | Paid Ads Proposal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+<style>
+/* ═══════════════════════════════════════════════════════════
+   DESIGN TOKENS (DVAR)
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* Color Tokens */
+  --primary: #E63946;
+  --primary-dark: #B82E3A;
+  --primary-light: #FF4D5A;
+  --primary-glow: rgba(230, 57, 70, 0.35);
+  --accent-yellow: #F4A127;
+  --bg-dark: #0A0A0A;
+  --text-primary: #FFFFFF;
+  --text-muted: rgba(255, 255, 255, 0.6);
+  --text-subtle: rgba(255, 255, 255, 0.4);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  
+  /* Motion Tokens (R-04: 3s or 7s only) */
+  --duration-fast: 0.3s;
+  --duration-standard: 0.7s;
+  --duration-slow: 3s;
+  --duration-ambient: 7s;
+  --ease-smooth: cubic-bezier(0.22, 0.61, 0.36, 1);
+  
+  /* Spacing Tokens (R-02, R-05) */
+  --space-section-x: clamp(16px, 4vw, 21px);
+  --space-section-y: clamp(28px, 5vw, 36px);
+  --space-card: clamp(18px, 3vw, 21px);
+  --space-element: 14px;
+  --space-tight: 8px;
+  
+  /* Radius Tokens (R-05) */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 21px;
+  --radius-pill: 100px;
+  
+  /* Gradient Tokens (R-05) */
+  --gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  --gradient-card-accent: linear-gradient(135deg, rgba(230, 57, 70, 0.08), rgba(230, 57, 70, 0.02));
+  --gradient-primary: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--primary-light));
+  --gradient-primary-bar: linear-gradient(90deg, var(--primary-dark), var(--primary), var(--primary-light));
+  
+  /* Typography Tokens (R-09) */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'Space Grotesk', sans-serif;
+  --text-hero: clamp(32px, 8vw, 72px);
+  --text-section: clamp(24px, 4.5vw, 42px);
+  --text-card-title: 18px;
+  --text-body: 14px;
+  --text-small: 12px;
+  --text-micro: 10px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+::selection { background: var(--primary); color: #fff; }
+html { 
+  scroll-behavior: smooth; 
+  overflow-x: hidden;
+  max-width: 100%;
+}
+body { 
+  font-family: var(--font-body); 
+  background: var(--bg-dark); 
+  color: var(--text-primary); 
+  line-height: 1.6;
+  overflow-x: hidden;
+  max-width: 100%;
+  display: block;
+}
+
+/* Structural containment (R-01) */
+section, .hero, .problem-section, .scope-section, .pricing-section, .disclaimer-section, .cta-section, footer {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HERO SECTION
+   ═══════════════════════════════════════════════════════════ */
+.hero {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-section-y) var(--space-section-x) 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* R-08: Reduced gradient size, optimized */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -25%;
+  left: -25%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle at 30% 30%, rgba(230, 57, 70, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 70% 70%, rgba(244, 161, 39, 0.05) 0%, transparent 50%);
+  animation: heroGlow var(--duration-ambient) ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes heroGlow {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(-3%, -3%) rotate(3deg); }
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(18px);
+  animation: reveal var(--duration-standard) var(--ease-smooth) 0.1s forwards;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-eyebrow__line {
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary));
+  animation: lineExpand 0.7s var(--ease-smooth) 0.5s forwards;
+}
+
+.hero-eyebrow__line--right {
+  background: linear-gradient(90deg, var(--primary), transparent);
+}
+
+@keyframes lineExpand { to { width: 36px; } }
+
+.hero-eyebrow__text {
+  font-size: var(--text-micro);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.hero-logo {
+  width: 150px;
+  max-width: 70%;
+  margin-bottom: 21px;
+  opacity: 0;
+  transform: translateY(21px) scale(0.95);
+  animation: revealLogo 1s var(--ease-smooth) 0.2s forwards;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 12px 24px rgba(230, 57, 70, 0.3));
+}
+
+@keyframes revealLogo {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  line-height: 0.95;
+  letter-spacing: -1px;
+  margin-bottom: var(--space-element);
+  opacity: 0;
+  transform: translateY(21px);
+  animation: reveal 0.7s var(--ease-smooth) 0.3s forwards;
+  position: relative;
+  z-index: 2;
+}
+
+/* R-03: Orphan prevention */
+.hero-title span { 
+  display: block;
+  white-space: nowrap;
+}
+
+.hero-title__accent {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: var(--text-body);
+  line-height: 1.8;
+  color: var(--text-muted);
+  max-width: 440px;
+  margin: 0 auto 21px;
+  opacity: 0;
+  transform: translateY(18px);
+  animation: reveal var(--duration-standard) var(--ease-smooth) 0.45s forwards;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-sub strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(18px);
+  animation: reveal var(--duration-standard) var(--ease-smooth) 0.6s forwards;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 21px;
+}
+
+.hero-stat { text-align: center; }
+
+.hero-stat__value {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.hero-stat__label {
+  font-size: var(--text-micro);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+@keyframes reveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Marquee - R-01 structural fix, R-04 timing fix */
+.hero-marquee {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  background: var(--gradient-primary-bar);
+  padding: 18px 0;
+}
+
+.hero-marquee__track {
+  display: flex;
+  width: fit-content;
+  will-change: transform;
+  animation: marquee 14s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.hero-marquee__item {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 4px;
+  color: #000;
+  padding: 0 48px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.hero-marquee__item span {
+  opacity: 0.5;
+  margin-left: 14px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PROBLEM/SOLUTION SECTION
+   ═══════════════════════════════════════════════════════════ */
+.problem-section {
+  width: 100%;
+  padding: var(--space-section-y) var(--space-section-x);
+  position: relative;
+  overflow: hidden;
+}
+
+.problem-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: var(--text-micro);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+}
+
+.section-label::before,
+.section-label::after {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--primary);
+}
+
+/* R-09: Unified section title sizing */
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-section);
+  line-height: 1.05;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* R-03: Orphan prevention */
+.section-title span {
+  white-space: nowrap;
+}
+
+.section-title__accent { color: var(--primary); }
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 42px 1fr;
+  gap: var(--space-element);
+  align-items: start;
+  margin-bottom: 21px;
+}
+
+.problem-box {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-card);
+  text-align: left;
+}
+
+.problem-box--bad { border-color: rgba(255, 107, 107, 0.4); }
+
+.problem-box--good {
+  border-color: rgba(230, 57, 70, 0.3);
+  background: var(--gradient-card-accent);
+}
+
+.problem-box__label {
+  font-size: var(--text-micro);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.problem-box--bad .problem-box__label { color: #FF6B6B; }
+.problem-box--good .problem-box__label { color: var(--primary); }
+
+.problem-list { list-style: none; }
+
+.problem-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-tight);
+  padding: var(--space-tight) 0;
+  font-size: var(--text-small);
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  line-height: 1.5;
+}
+
+.problem-list li:last-child { border-bottom: none; }
+
+.problem-list__icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: var(--text-small);
+}
+
+.problem-box--bad .problem-list__icon { color: #FF6B6B; }
+.problem-box--good .problem-list__icon { color: var(--primary); }
+
+/* R-06: VS element with mobile handling */
+.problem-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--primary);
+  text-shadow: 0 0 24px var(--primary-glow);
+  padding-top: 70px;
+}
+
+.problem-cta {
+  text-align: center;
+  font-size: var(--text-body);
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.problem-cta strong {
+  color: var(--text-primary);
+  font-size: 18px;
+  display: block;
+  margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCOPE SECTION
+   ═══════════════════════════════════════════════════════════ */
+.scope-section {
+  width: 100%;
+  padding: 32px var(--space-section-x) var(--space-section-y);
+  position: relative;
+  overflow: hidden;
+}
+
+.scope-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.scope-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  margin-bottom: 28px;
+  align-items: end;
+}
+
+.scope-label {
+  font-size: var(--text-micro);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.scope-label::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--primary);
+}
+
+/* R-09: Unified section title sizing */
+.scope-title {
+  font-family: var(--font-display);
+  font-size: var(--text-section);
+  line-height: 1.05;
+  letter-spacing: 1px;
+}
+
+.scope-title__accent { color: var(--primary); }
+
+.scope-desc {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+
+.scope-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-element);
+}
+
+.scope-card {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-card) 18px;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--duration-fast) var(--ease-smooth), 
+              border-color var(--duration-fast) ease;
+}
+
+.scope-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(230, 57, 70, 0.28);
+}
+
+.scope-card__glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  opacity: 0;
+  transition: opacity var(--duration-fast) ease;
+}
+
+.scope-card:hover .scope-card__glow { opacity: 1; }
+
+.scope-card__icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, rgba(230, 57, 70, 0.2), rgba(230, 57, 70, 0.05));
+  border: 1px solid rgba(230, 57, 70, 0.3);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-element);
+}
+
+.scope-card__icon svg {
+  width: 21px;
+  height: 21px;
+  color: var(--primary);
+}
+
+.scope-card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-card-title);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.scope-card__list { list-style: none; }
+
+.scope-card__list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-tight);
+  padding: 6px 0;
+  font-size: var(--text-small);
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: color var(--duration-fast) ease;
+  line-height: 1.4;
+}
+
+.scope-card__list li:last-child { border-bottom: none; }
+
+.scope-card:hover .scope-card__list li { color: rgba(255, 255, 255, 0.7); }
+
+.scope-card__list li::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background: var(--primary);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PRICING SECTION
+   ═══════════════════════════════════════════════════════════ */
+.pricing-section {
+  width: 100%;
+  padding: var(--space-section-y) var(--space-section-x);
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.pricing-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.pricing-sub {
+  font-size: var(--text-body);
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-top: 12px;
+}
+
+/* Value Props */
+.value-props {
+  background: linear-gradient(135deg, rgba(230, 57, 70, 0.06), rgba(230, 57, 70, 0.02));
+  border: 1px solid rgba(230, 57, 70, 0.15);
+  border-radius: var(--radius-md);
+  padding: var(--space-card);
+  margin-bottom: 21px;
+}
+
+.value-props__title {
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  letter-spacing: 2px;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.value-props__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.value-prop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--text-small);
+  color: var(--text-muted);
+}
+
+.value-prop svg {
+  width: 16px;
+  height: 16px;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* Pricing Card */
+.pricing-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(230, 57, 70, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary-bar);
+}
+
+.pricing-badge {
+  display: inline-block;
+  background: var(--gradient-primary);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 12px;
+}
+
+.pricing-card__name {
+  font-family: var(--font-display);
+  font-size: 32px;
+  letter-spacing: 2px;
+  margin-bottom: var(--space-tight);
+}
+
+.pricing-card__desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.pricing-card__stats {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 18px;
+}
+
+.pricing-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-tight) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pricing-stat-row:last-child { border-bottom: none; }
+
+.pricing-stat-lbl {
+  font-size: var(--text-small);
+  color: var(--text-muted);
+}
+
+.pricing-stat-val {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.pricing-price {
+  font-family: var(--font-mono);
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.pricing-period {
+  font-size: var(--text-small);
+  color: var(--text-subtle);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* Ad Spend Note */
+.ad-spend-note {
+  background: linear-gradient(135deg, rgba(244, 161, 39, 0.08), rgba(244, 161, 39, 0.02));
+  border: 1px solid rgba(244, 161, 39, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-top: 21px;
+  text-align: center;
+}
+
+.ad-spend-note__title {
+  font-family: var(--font-display);
+  font-size: var(--text-small);
+  letter-spacing: 2px;
+  color: var(--accent-yellow);
+  margin-bottom: var(--space-tight);
+}
+
+.ad-spend-note__text {
+  font-size: var(--text-small);
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.ad-spend-note__text strong {
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DISCLAIMER SECTION
+   ═══════════════════════════════════════════════════════════ */
+.disclaimer-section {
+  width: 100%;
+  padding: 32px var(--space-section-x) var(--space-section-y);
+  position: relative;
+  overflow: hidden;
+}
+
+.disclaimer-inner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.disclaimer-box {
+  background: var(--gradient-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: var(--space-card);
+  text-align: center;
+}
+
+.disclaimer-box__icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-element);
+}
+
+.disclaimer-box__icon svg {
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+}
+
+.disclaimer-box__title {
+  font-family: var(--font-display);
+  font-size: var(--text-card-title);
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.disclaimer-box__text {
+  font-size: var(--text-small);
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.disclaimer-box__text strong {
+  color: var(--text-primary);
+}
+
+.disclaimer-list {
+  list-style: none;
+  margin-top: 16px;
+  text-align: left;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.disclaimer-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-tight);
+  padding: 6px 0;
+  font-size: 11px;
+  color: var(--text-subtle);
+  line-height: 1.4;
+}
+
+.disclaimer-list li::before {
+  content: '•';
+  color: var(--text-subtle);
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CTA SECTION
+   ═══════════════════════════════════════════════════════════ */
+.cta-section {
+  width: 100%;
+  padding: var(--space-section-y) var(--space-section-x);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, rgba(230, 57, 70, 0.1) 0%, transparent 70%);
+}
+
+.cta-inner {
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* R-09: Unified with section titles */
+.cta-title {
+  font-family: var(--font-display);
+  font-size: var(--text-section);
+  line-height: 1.1;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.cta-title__accent { color: var(--primary); }
+
+.cta-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 21px;
+}
+
+.cta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-tight);
+  background: linear-gradient(135deg, rgba(230, 57, 70, 0.15), rgba(230, 57, 70, 0.05));
+  border: 1px solid rgba(230, 57, 70, 0.3);
+  border-radius: var(--radius-pill);
+  padding: 10px 21px;
+  font-size: var(--text-small);
+  color: var(--text-muted);
+}
+
+.cta-badge strong {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════ */
+.footer {
+  width: 100%;
+  padding: var(--space-card);
+  border-top: 1px solid var(--border-subtle);
+  text-align: center;
+  overflow: hidden;
+}
+
+.footer-text {
+  font-size: var(--text-micro);
+  color: var(--text-subtle);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.footer-text span { color: var(--primary); }
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE - R-02, R-06
+   ═══════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .problem-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-element);
+  }
+  
+  /* R-06: VS becomes horizontal divider on mobile */
+  .problem-vs {
+    padding: 16px 0;
+    font-size: 24px;
+    position: relative;
+  }
+  
+  .problem-vs::before,
+  .problem-vs::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary));
+  }
+  
+  .problem-vs::before {
+    right: calc(50% + 30px);
+    background: linear-gradient(90deg, transparent, var(--primary));
+  }
+  
+  .problem-vs::after {
+    left: calc(50% + 30px);
+    background: linear-gradient(90deg, var(--primary), transparent);
+  }
+  
+  .scope-header {
+    grid-template-columns: 1fr;
+    gap: var(--space-element);
+    text-align: center;
+  }
+  
+  .scope-label {
+    justify-content: center;
+  }
+  
+  .scope-label::before { display: none; }
+  
+  .scope-cards {
+    grid-template-columns: 1fr;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+  
+  .value-props__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 630px) {
+  .hero-logo { width: 129px; }
+  .hero-stats { gap: 24px; }
+  .pricing-price { font-size: 36px; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLL ANIMATIONS - R-04 timing, R-07 (OPTIC) IntersectionObserver
+   ═══════════════════════════════════════════════════════════ */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--duration-standard) var(--ease-smooth),
+              transform var(--duration-standard) var(--ease-smooth);
+}
+
+.reveal-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- HERO - R-07: aria-labelledby added -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-eyebrow" aria-hidden="true">
+    <span class="hero-eyebrow__line"></span>
+    <span class="hero-eyebrow__text">Paid Ads Proposal</span>
+    <span class="hero-eyebrow__line hero-eyebrow__line--right"></span>
+  </div>
+  
+  <img src="https://framerusercontent.com/images/cRqOrQ7zgIbTIGsf8vpIfgVMhsM.png?width=704&height=466" alt="Krazy Trompos logo" class="hero-logo">
+  
+  <h1 id="hero-title" class="hero-title">
+    <span>HUNGRY CUSTOMERS</span>
+    <span class="hero-title__accent">ARE SEARCHING.</span>
+  </h1>
+  
+  <p class="hero-sub">
+    Every day, people in your area search for tacos, al pastor, and Mexican food.<br>
+    <strong>Targeted ads</strong> put Krazy Trompos in front of them<br>
+    at the exact moment they're ready to order.
+  </p>
+  
+  <!-- R-07: aria-hidden on decorative marquee -->
+  <div class="hero-marquee" aria-hidden="true">
+    <div class="hero-marquee__track">
+      <!-- First set -->
+      <span class="hero-marquee__item">KRAZY TROMPOS <span>★</span></span>
+      <span class="hero-marquee__item">AUTHENTIC AL PASTOR <span>★</span></span>
+      <span class="hero-marquee__item">KRAZY FLAVOR <span>★</span></span>
+      <span class="hero-marquee__item">TAQUERÍA <span>★</span></span>
+      <!-- Duplicate set for seamless loop -->
+      <span class="hero-marquee__item">KRAZY TROMPOS <span>★</span></span>
+      <span class="hero-marquee__item">AUTHENTIC AL PASTOR <span>★</span></span>
+      <span class="hero-marquee__item">KRAZY FLAVOR <span>★</span></span>
+      <span class="hero-marquee__item">TAQUERÍA <span>★</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM/SOLUTION - R-07: aria-labelledby -->
+<section class="problem-section" aria-labelledby="problem-title">
+  <div class="problem-inner reveal-on-scroll">
+    
+    <p class="section-label" aria-hidden="true">The Reality</p>
+    
+    <h2 id="problem-title" class="section-title">
+      <span>MOST RESTAURANTS WASTE AD SPEND.</span><br>
+      <span class="section-title__accent">HERE'S A BETTER APPROACH.</span>
+    </h2>
+    
+    <div class="problem-grid">
+      
+      <div class="problem-box problem-box--bad">
+        <p class="problem-box__label">What They Do</p>
+        <ul class="problem-list" role="list">
+          <li><span class="problem-list__icon" aria-hidden="true">✗</span> Boosting posts without a strategy</li>
+          <li><span class="problem-list__icon" aria-hidden="true">✗</span> No clue if ads generate real orders</li>
+          <li><span class="problem-list__icon" aria-hidden="true">✗</span> Paying to reach people outside your area</li>
+          <li><span class="problem-list__icon" aria-hidden="true">✗</span> Same tired food photos customers scroll past</li>
+          <li><span class="problem-list__icon" aria-hidden="true">✗</span> No way to measure actual return</li>
+        </ul>
+      </div>
+      
+      <div class="problem-vs" aria-hidden="true">VS</div>
+      
+      <div class="problem-box problem-box--good">
+        <p class="problem-box__label">What We Build</p>
+        <ul class="problem-list" role="list">
+          <li><span class="problem-list__icon" aria-hidden="true">✓</span> Campaigns targeting hungry customers ready to order</li>
+          <li><span class="problem-list__icon" aria-hidden="true">✓</span> Track every lead back to its source</li>
+          <li><span class="problem-list__icon" aria-hidden="true">✓</span> Reach local customers in your service delivery radius</li>
+          <li><span class="problem-list__icon" aria-hidden="true">✓</span> Showcase your authentic al pastor with professional creative</li>
+          <li><span class="problem-list__icon" aria-hidden="true">✓</span> Scale what works, cut what doesn't</li>
+        </ul>
+      </div>
+      
+    </div>
+    
+    <div class="problem-cta">
+      Your tacos speak for themselves.<br>
+      <strong>Let the right people taste them.</strong>
+    </div>
+    
+  </div>
+</section>
+
+<!-- SCOPE - R-07: aria-labelledby -->
+<section class="scope-section" aria-labelledby="scope-title">
+  <div class="scope-inner">
+    
+    <div class="scope-header reveal-on-scroll">
+      <div>
+        <p class="scope-label" aria-hidden="true">The System</p>
+        <h2 id="scope-title" class="scope-title">
+          TARGETED REACH.<br>
+          <span class="scope-title__accent">HUNGRY CUSTOMERS.</span>
+        </h2>
+      </div>
+      <p class="scope-desc">
+        Full-service ad management that puts Krazy Trompos in front of local customers actively craving authentic Mexican street food.
+      </p>
+    </div>
+    
+    <div class="scope-cards">
+      
+      <div class="scope-card reveal-on-scroll">
+        <div class="scope-card__glow" aria-hidden="true"></div>
+        <!-- R-07: aria-hidden on decorative icon -->
+        <div class="scope-card__icon" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/>
+          </svg>
+        </div>
+        <h3 class="scope-card__title">Creative Production</h3>
+        <ul class="scope-card__list" role="list">
+          <li>Showcase your trompo in action</li>
+          <li>Compelling ad copy</li>
+          <li>A/B test variations</li>
+          <li>Fresh creative monthly</li>
+        </ul>
+      </div>
+      
+      <div class="scope-card reveal-on-scroll">
+        <div class="scope-card__glow" aria-hidden="true"></div>
+        <div class="scope-card__icon" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+          </svg>
+        </div>
+        <h3 class="scope-card__title">Local Targeting</h3>
+        <ul class="scope-card__list" role="list">
+          <li>Your service delivery radius focus</li>
+          <li>Customer demographics</li>
+          <li>Food enthusiast audiences</li>
+          <li>Interest-based targeting</li>
+          <li>Retargeting site visitors</li>
+        </ul>
+      </div>
+      
+      <div class="scope-card reveal-on-scroll">
+        <div class="scope-card__glow" aria-hidden="true"></div>
+        <div class="scope-card__icon" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+          </svg>
+        </div>
+        <h3 class="scope-card__title">Lead Tracking</h3>
+        <ul class="scope-card__list" role="list">
+          <li>Daily performance monitoring</li>
+          <li>Cost-per-lead reporting</li>
+          <li>Lead source attribution</li>
+          <li>Weekly optimization</li>
+          <li>Monthly strategy reviews</li>
+        </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+</section>
+
+<!-- PRICING - R-07: aria-labelledby -->
+<section class="pricing-section" aria-labelledby="pricing-title">
+  <div class="pricing-inner">
+    
+    <div class="pricing-header reveal-on-scroll">
+      <p class="section-label" aria-hidden="true">Investment</p>
+      <h2 id="pricing-title" class="section-title">
+        STANDARD <span class="section-title__accent">PAID ADS</span>
+      </h2>
+      <p class="pricing-sub">
+        Get your ads in front of hungry local customers<br>
+        with professional campaign management.
+      </p>
+    </div>
+    
+    <div class="value-props reveal-on-scroll">
+      <p class="value-props__title">WHY THIS MATTERS FOR KRAZY TROMPOS</p>
+      <div class="value-props__grid">
+        <div class="value-prop">
+          <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+          </svg>
+          <span>Target your local zip codes</span>
+        </div>
+        <div class="value-prop">
+          <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.87c1.355 0 2.697.055 4.024.165C17.155 8.51 18 9.473 18 10.608v2.513m-3-4.87v-1.5m-6 1.5v-1.5m12 9.75l-1.5.75a3.354 3.354 0 01-3 0 3.354 3.354 0 00-3 0 3.354 3.354 0 01-3 0 3.354 3.354 0 00-3 0 3.354 3.354 0 01-3 0L3 16.5m15-3.38a48.474 48.474 0 00-6-.37c-2.032 0-4.034.125-6 .37m12 0c.39.049.777.102 1.163.16 1.07.16 1.837 1.094 1.837 2.175v5.17c0 .62-.504 1.124-1.125 1.124H4.125A1.125 1.125 0 013 20.625v-5.17c0-1.08.768-2.014 1.837-2.174A47.78 47.78 0 016 13.12M12.265 3.11a.375.375 0 11-.53 0L12 2.845l.265.265zm-3 0a.375.375 0 11-.53 0L9 2.845l.265.265zm6 0a.375.375 0 11-.53 0L15 2.845l.265.265z"/>
+          </svg>
+          <span>Reach hungry customers ready to eat</span>
+        </div>
+        <div class="value-prop">
+          <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/>
+          </svg>
+          <span>Track cost per customer</span>
+        </div>
+        <div class="value-prop">
+          <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+          </svg>
+          <span>Scale what works</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="pricing-card reveal-on-scroll">
+      <p class="pricing-badge">Standard Package</p>
+      <h3 class="pricing-card__name">FOUNDATION</h3>
+      <p class="pricing-card__desc">
+        Perfect for getting started with<br>
+        targeted local advertising.
+      </p>
+      
+      <div class="pricing-card__stats">
+        <div class="pricing-stat-row">
+          <span class="pricing-stat-lbl">Ads managed</span>
+          <span class="pricing-stat-val">14 ads</span>
+        </div>
+        <div class="pricing-stat-row">
+          <span class="pricing-stat-lbl">Creative refresh</span>
+          <span class="pricing-stat-val">Monthly</span>
+        </div>
+        <div class="pricing-stat-row">
+          <span class="pricing-stat-lbl">Reporting</span>
+          <span class="pricing-stat-val">Weekly</span>
+        </div>
+        <div class="pricing-stat-row">
+          <span class="pricing-stat-lbl">Optimization</span>
+          <span class="pricing-stat-val">Ongoing</span>
+        </div>
+      </div>
+      
+      <p class="pricing-price">$2,800</p>
+      <p class="pricing-period">per month</p>
+    </div>
+    
+    <div class="ad-spend-note reveal-on-scroll">
+      <p class="ad-spend-note__title">AD SPEND REQUIREMENT</p>
+      <p class="ad-spend-note__text">
+        Minimum <strong>$30 per day per ad set</strong> recommended.<br>
+        That's approximately $90/day total ($2,700/month) for optimal performance.<br>
+        Ad spend is paid directly to platforms - not included in management fee.
+      </p>
+    </div>
+    
+  </div>
+</section>
+
+<!-- DISCLAIMER - R-07: aria-labelledby -->
+<section class="disclaimer-section" aria-labelledby="disclaimer-title">
+  <div class="disclaimer-inner">
+    
+    <div class="disclaimer-box reveal-on-scroll">
+      <div class="disclaimer-box__icon" aria-hidden="true">
+        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
+        </svg>
+      </div>
+      
+      <h3 id="disclaimer-title" class="disclaimer-box__title">IMPORTANT INFORMATION</h3>
+      
+      <p class="disclaimer-box__text">
+        <strong>Results are not guaranteed.</strong> Advertising performance varies based on many factors including market conditions, competition, offer quality, and ad budget. While we work to optimize campaigns for the best possible results, we cannot guarantee specific returns on investment.
+      </p>
+      
+      <ul class="disclaimer-list" role="list">
+        <li>Management fees are separate from ad spend paid to platforms</li>
+        <li>Results vary based on industry, market, and budget allocation</li>
+        <li>Past performance does not guarantee future results</li>
+        <li>Minimum 3-month commitment required for best results</li>
+        <li>Campaign performance depends on many external factors</li>
+      </ul>
+    </div>
+    
+  </div>
+</section>
+
+<!-- CTA - R-07: aria-labelledby -->
+<section class="cta-section" aria-labelledby="cta-title">
+  <div class="cta-inner reveal-on-scroll">
+    
+    <h2 id="cta-title" class="cta-title">
+      READY TO GET<br>
+      <span class="cta-title__accent">KRAZY?</span>
+    </h2>
+    
+    <p class="cta-text">
+      Let's put Krazy Trompos in front of hungry customers.
+    </p>
+    
+    <div class="cta-badge">
+      <strong>$2,800/month</strong>
+      <span>+ ad spend</span>
+    </div>
+    
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p class="footer-text">Prepared by <span>Arc Garde</span></p>
+</footer>
+
+<!-- R-07 (OPTIC): IntersectionObserver replaces scroll listener -->
+<script>
+(function() {
+  'use strict';
+  
+  const revealElements = document.querySelectorAll('.reveal-on-scroll');
+  
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -60px 0px'
+    });
+    
+    revealElements.forEach(function(el) {
+      revealObserver.observe(el);
+    });
+  } else {
+    // Fallback for older browsers
+    revealElements.forEach(function(el) {
+      el.classList.add('visible');
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

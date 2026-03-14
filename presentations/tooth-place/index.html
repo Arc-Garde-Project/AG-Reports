@@ -1,0 +1,1512 @@
+<!--
+  ╔═══════════════════════════════════════════════════════════════════════════════╗
+  ║              THE TOOTH PLACE — PAID ADVERTISING SYSTEM                       ║
+  ║              Arc Garde Growth System | Lynwood, CA                            ║
+  ║              Theme: White + Black                                             ║
+  ╚═══════════════════════════════════════════════════════════════════════════════╝
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Tooth Place | Dentist in Lynwood CA | Bright Healthy Smiles for All</title>
+  <meta name="description" content="The Tooth Place is Lynwood's trusted dental practice offering cleanings, fillings, and full smile makeovers. 5.0 stars from 45 Google reviews. Book your visit today.">
+  <meta name="keywords" content="dentist Lynwood CA, dental practice Lynwood, teeth cleaning near me, family dentist Lynwood, The Tooth Place, dentist near me">
+  <meta property="og:title" content="The Tooth Place | Dentist in Lynwood CA">
+  <meta property="og:description" content="Lynwood's trusted dental practice. 5.0 stars from 45 Google reviews. Bright, healthy smiles for all.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="The Tooth Place | Dentist in Lynwood CA">
+  <meta name="twitter:description" content="Lynwood's trusted dental practice. 5.0 stars from 45 Google reviews. Bright, healthy smiles for all.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   THE TOOTH PLACE — WHITE + BLACK THEME
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --accent: #000000;
+  --accent-light: #333333;
+  --accent-glow: rgba(0, 0, 0, 0.12);
+  --bg: #FFFFFF;
+  --bg-alt: #F7F7F7;
+  --text-primary: #000000;
+  --text-muted: rgba(0, 0, 0, 0.6);
+  --text-subtle: rgba(0, 0, 0, 0.4);
+  --border-subtle: rgba(0, 0, 0, 0.09);
+  --border-medium: rgba(0, 0, 0, 0.16);
+  --success: #059669;
+  --error: #B91C1C;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+::selection { background: var(--accent); color: #fff; }
+html { scroll-behavior: smooth; overflow-x: clip; max-width: 100%; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.6; overflow-x: clip; max-width: 100%; width: 100%; display: flex; flex-direction: column; min-height: 100vh; }
+body > * { width: 100%; flex-shrink: 0; }
+
+/* SECTION DIVIDERS */
+.arc-section-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--border-subtle), transparent); }
+.arc-section-divider--accent { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.3), transparent); }
+
+
+/* ═══════ LOGO HEADER + STARS ═══════ */
+.arc-logo-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 21px 0;
+  text-align: center;
+  background: var(--bg);
+}
+
+.arc-logo-header img {
+  height: 115px;
+  width: auto;
+  opacity: 0;
+  animation: arcFadeIn 1s ease forwards 0.2s;
+}
+
+@keyframes arcFadeIn { to { opacity: 1; } }
+
+.arc-logo-stars {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 21px;
+  opacity: 0;
+  animation: arcFadeIn 0.8s ease forwards 0.6s;
+}
+
+.arc-logo-stars-row {
+  display: flex;
+  gap: 4px;
+}
+
+.arc-logo-stars-row svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--accent);
+  animation: arcStarPulse 2s ease-in-out infinite;
+}
+
+.arc-logo-stars-row svg:nth-child(2) { animation-delay: 0.15s; }
+.arc-logo-stars-row svg:nth-child(3) { animation-delay: 0.3s; }
+.arc-logo-stars-row svg:nth-child(4) { animation-delay: 0.45s; }
+.arc-logo-stars-row svg:nth-child(5) { animation-delay: 0.6s; }
+
+@keyframes arcStarPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.8; }
+}
+
+.arc-logo-stars-text {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  font-weight: 500;
+}
+
+
+/* ═══════ 04 PAID HERO ═══════ */
+.arc-paid1-wrapper {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.arc-paid1-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 42px 42px 70px;
+  min-height: 640px;
+  position: relative;
+  z-index: 2;
+}
+
+.arc-paid1-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 21px;
+  justify-content: center;
+}
+
+.arc-paid1-eyebrow-line {
+  width: 42px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent));
+  transform: scaleX(0);
+  animation: arcLineExtend 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.3s;
+}
+
+.arc-paid1-eyebrow-line:last-child {
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+@keyframes arcLineExtend { to { transform: scaleX(1); } }
+
+.arc-paid1-eyebrow-text {
+  font-size: 12px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.arc-paid1-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 11vw, 126px);
+  line-height: 1.05;
+  letter-spacing: 4px;
+  margin-bottom: 21px;
+  text-align: center;
+}
+
+.arc-paid1-title-line { display: block; }
+.arc-paid1-title-line--accent { color: var(--accent); opacity: 0.5; }
+
+.arc-paid1-sub {
+  font-size: 18px;
+  line-height: 1.9;
+  color: var(--text-muted);
+  max-width: 630px;
+  margin: 0 auto 35px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.arc-paid1-sub strong { color: var(--text-primary); font-weight: 600; }
+
+.arc-paid1-stats {
+  display: flex;
+  gap: 56px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.arc-paid1-stat { text-align: center; }
+
+.arc-paid1-stat-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(42px, 7vw, 56px);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  position: relative;
+  display: inline-block;
+  animation: arcFloat 3s ease-in-out infinite;
+}
+
+.arc-paid1-stat:nth-child(2) .arc-paid1-stat-val { animation-delay: 0.5s; }
+
+@keyframes arcFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.arc-paid1-stat-val::after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  transform: scaleX(0);
+  animation: arcLineGrow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.8s;
+}
+
+@keyframes arcLineGrow { to { transform: scaleX(1); } }
+
+.arc-paid1-stat-lbl {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-top: 18px;
+  display: block;
+}
+
+/* Marquee */
+.arc-paid1-marquee {
+  width: 100%;
+  overflow: hidden;
+  padding: 32px 0;
+  margin-top: 28px;
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.arc-paid1-marquee::before,
+.arc-paid1-marquee::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.arc-paid1-marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--bg), transparent);
+}
+
+.arc-paid1-marquee::after {
+  right: 0;
+  background: linear-gradient(90deg, transparent, var(--bg));
+}
+
+.arc-paid1-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: arcMarquee 25s linear infinite;
+}
+
+@keyframes arcMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+.arc-paid1-marquee-item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(84px, 14vw, 168px);
+  letter-spacing: 7px;
+  white-space: nowrap;
+  padding: 0 42px;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.18);
+  text-stroke: 1.5px rgba(0, 0, 0, 0.18);
+  line-height: 1;
+}
+
+.arc-paid1-marquee-item span {
+  -webkit-text-stroke: 2px rgba(0, 0, 0, 0.5);
+  text-stroke: 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Reveals */
+.arc-paid1-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.arc-paid1-reveal.active { opacity: 1; transform: translateY(0); }
+.arc-paid1-reveal-d1 { transition-delay: 0.12s; }
+.arc-paid1-reveal-d2 { transition-delay: 0.24s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .arc-paid1-reveal { opacity: 1; transform: none; transition: none; }
+  .arc-paid1-stat-val::after { transform: scaleX(1); animation: none; }
+  .arc-paid1-stat-val { animation: none; }
+  .arc-paid1-marquee-track, .arc-paid1-eyebrow-line { animation: none; }
+  .arc-paid1-eyebrow-line { transform: scaleX(1); }
+  .arc-logo-stars-row svg { animation: none; }
+}
+
+@media (max-width: 630px) {
+  .arc-paid1-hero { padding: 35px 21px 42px; min-height: 480px; }
+  .arc-paid1-stats { flex-direction: column; gap: 28px; }
+  .arc-paid1-eyebrow-line { width: 28px; }
+  .arc-paid1-sub { font-size: 15px; margin-bottom: 28px; }
+  .arc-paid1-marquee-item { -webkit-text-stroke: 1px rgba(0, 0, 0, 0.12); }
+  .arc-paid1-marquee-item span { -webkit-text-stroke: 1px rgba(0, 0, 0, 0.35); }
+}
+
+
+/* ═══════ 05 PAID SCOPE ═══════ */
+.arc-paid2-wrapper {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.arc-paid2-section { padding: 56px 21px; }
+
+.arc-paid2-inner {
+  max-width: 1050px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.arc-paid2-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 18px;
+  justify-content: center;
+}
+
+.arc-paid2-label::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent));
+}
+
+.arc-paid2-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(35px, 6vw, 56px);
+  line-height: 1.1;
+  letter-spacing: 3px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.arc-paid2-title-accent { opacity: 0.55; }
+
+/* Problem Grid */
+.arc-paid2-problem-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  align-items: stretch;
+  margin-top: 35px;
+}
+
+.arc-paid2-box {
+  padding: 28px;
+  border-radius: 14px;
+  text-align: left;
+}
+
+.arc-paid2-box--bad {
+  background: rgba(185, 28, 28, 0.06);
+  border: 1.5px solid rgba(185, 28, 28, 0.25);
+}
+
+.arc-paid2-box--good {
+  background: rgba(5, 150, 105, 0.06);
+  border: 1.5px solid rgba(5, 150, 105, 0.25);
+}
+
+.arc-paid2-box-label {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 21px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.arc-paid2-box--bad .arc-paid2-box-label { color: var(--error); }
+.arc-paid2-box--good .arc-paid2-box-label { color: var(--success); }
+
+.arc-paid2-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.arc-paid2-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.arc-paid2-list-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; font-weight: 700; }
+.arc-paid2-box--bad .arc-paid2-list-icon { color: var(--error); }
+.arc-paid2-box--good .arc-paid2-list-icon { color: var(--success); }
+
+.arc-paid2-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 4px;
+  color: var(--accent);
+  padding: 0 21px;
+}
+
+.arc-paid2-problem-cta {
+  text-align: center;
+  margin-top: 42px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.arc-paid2-problem-cta strong { color: var(--accent); }
+
+/* Scope Cards */
+.arc-paid2-scope-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 42px;
+  text-align: center;
+}
+
+.arc-paid2-scope-desc {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-muted);
+  max-width: 560px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.arc-paid2-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 21px;
+}
+
+.arc-paid2-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  transition: all 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.arc-paid2-card:hover {
+  border-color: var(--border-medium);
+  transform: translateY(-6px);
+  box-shadow: 0 21px 42px rgba(0, 0, 0, 0.08);
+}
+
+.arc-paid2-card-glow {
+  position: absolute;
+  top: -1px;
+  left: -100%;
+  width: 200%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 25%, var(--accent) 50%, transparent 75%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: arcSweep 2s linear infinite paused;
+}
+
+.arc-paid2-card:hover .arc-paid2-card-glow {
+  opacity: 0.4;
+  animation-play-state: running;
+}
+
+@keyframes arcSweep {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+
+.arc-paid2-card-icon {
+  width: 42px;
+  height: 42px;
+  margin: 0 auto 21px;
+  color: var(--accent);
+  transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.arc-paid2-card:hover .arc-paid2-card-icon {
+  transform: scale(1.12) rotate(-3deg);
+}
+
+.arc-paid2-card-icon svg { width: 100%; height: 100%; }
+
+.arc-paid2-card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.arc-paid2-card-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.arc-paid2-card-list li {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Reveals */
+.arc-paid2-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: all 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.arc-paid2-reveal.active { opacity: 1; transform: translateY(0); }
+.arc-paid2-reveal-d1 { transition-delay: 0.1s; }
+.arc-paid2-reveal-d2 { transition-delay: 0.2s; }
+.arc-paid2-reveal-d3 { transition-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .arc-paid2-reveal { opacity: 1; transform: none; transition: none; }
+}
+
+@media (max-width: 840px) {
+  .arc-paid2-problem-grid { grid-template-columns: 1fr; gap: 14px; }
+  .arc-paid2-vs { padding: 7px 0; font-size: 21px; }
+  .arc-paid2-cards { grid-template-columns: 1fr; }
+}
+
+
+/* ═══════ 06 PAID PRICING ═══════ */
+.arc-paid3-wrapper {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.arc-paid3-section { padding: 56px 21px; }
+
+.arc-paid3-inner {
+  max-width: 1050px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.arc-paid3-results-head {
+  margin-bottom: 35px;
+  text-align: center;
+}
+
+.arc-paid3-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 18px;
+  justify-content: center;
+}
+
+.arc-paid3-label::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent));
+}
+
+.arc-paid3-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(35px, 6vw, 56px);
+  line-height: 1.1;
+  letter-spacing: 3px;
+  text-align: center;
+}
+
+.arc-paid3-title-accent { opacity: 0.55; }
+
+/* Dashboard */
+.arc-paid3-dashboard {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 28px;
+  overflow: hidden;
+}
+
+.arc-paid3-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.arc-paid3-dashboard-period {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 4px;
+  text-align: left;
+}
+
+.arc-paid3-dashboard-client {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 21px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.arc-paid3-tabs {
+  display: flex;
+  gap: 3px;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.arc-paid3-tab {
+  background: none;
+  border: none;
+  color: var(--text-subtle);
+  font-size: 12px;
+  letter-spacing: 2px;
+  padding: 7px 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.arc-paid3-tab.active { background: var(--accent); color: #fff; }
+.arc-paid3-tab:hover:not(.active) { color: var(--text-muted); }
+
+.arc-paid3-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.arc-paid3-metric {
+  padding: 10px 8px;
+  background: var(--bg);
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  text-align: center;
+}
+
+.arc-paid3-metric--accent {
+  border-color: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.arc-paid3-metric-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 4px;
+}
+
+.arc-paid3-metric-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 3px;
+}
+
+.arc-paid3-metric-change {
+  font-size: 11px;
+  color: var(--success);
+  font-weight: 600;
+}
+
+.arc-paid3-chart-wrap { margin-top: 7px; }
+
+.arc-paid3-chart-title {
+  font-size: 13px;
+  color: var(--text-subtle);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.arc-paid3-chart-canvas { height: 210px; position: relative; }
+
+.arc-paid3-chart-legend {
+  display: flex;
+  gap: 21px;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.arc-paid3-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--text-subtle);
+}
+
+.arc-paid3-legend-line { width: 21px; height: 3px; border-radius: 2px; }
+.arc-paid3-legend-line--current { background: var(--accent); }
+.arc-paid3-legend-line--baseline { background: rgba(0, 0, 0, 0.12); }
+
+/* Pricing */
+.arc-paid3-pricing-head {
+  margin-bottom: 35px;
+  text-align: center;
+}
+
+.arc-paid3-pricing-sub {
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-top: 14px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.arc-paid3-value {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 28px;
+  margin-bottom: 35px;
+  text-align: left;
+}
+
+.arc-paid3-value-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  letter-spacing: 3px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 21px;
+}
+
+.arc-paid3-value-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.arc-paid3-value-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.arc-paid3-value-icon {
+  width: 21px;
+  height: 21px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.arc-paid3-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 21px;
+  margin-bottom: 28px;
+}
+
+.arc-paid3-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 35px 28px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  transition: all 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.arc-paid3-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.07);
+}
+
+.arc-paid3-card--featured {
+  border-color: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.arc-paid3-card--featured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.arc-paid3-badge {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.arc-paid3-card-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 3px;
+  margin-bottom: 7px;
+}
+
+.arc-paid3-card-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 28px;
+  font-weight: 300;
+}
+
+.arc-paid3-card-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.arc-paid3-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arc-paid3-stat-row .arc-paid3-stat-lbl {
+  font-size: 13px;
+  color: var(--text-subtle);
+}
+
+.arc-paid3-stat-row .arc-paid3-stat-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.arc-paid3-price {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  background: linear-gradient(90deg, #000 0%, #555 50%, #000 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: arcPriceShimmer 3s ease-in-out infinite;
+}
+
+@keyframes arcPriceShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.arc-paid3-period {
+  font-size: 13px;
+  color: var(--text-subtle);
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+.arc-paid3-note {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--border-medium);
+  border-radius: 12px;
+  padding: 21px 28px;
+  margin-bottom: 21px;
+  text-align: center;
+}
+
+.arc-paid3-note-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 7px;
+}
+
+.arc-paid3-note-text {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.arc-paid3-fine {
+  font-size: 12px;
+  color: var(--text-subtle);
+  text-align: center;
+  line-height: 1.8;
+}
+
+/* Reveals */
+.arc-paid3-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: all 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.arc-paid3-reveal.active { opacity: 1; transform: translateY(0); }
+.arc-paid3-reveal-d1 { transition-delay: 0.1s; }
+.arc-paid3-reveal-d2 { transition-delay: 0.2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .arc-paid3-reveal { opacity: 1; transform: none; transition: none; }
+}
+
+@media (max-width: 840px) {
+  .arc-paid3-pricing-grid { grid-template-columns: 1fr; }
+  .arc-paid3-value-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 630px) {
+  .arc-paid3-section { padding: 35px 14px; }
+  .arc-paid3-dashboard { padding: 21px 14px; }
+  .arc-paid3-card { padding: 28px 21px; }
+  .arc-paid3-dashboard-header { justify-content: center; text-align: center; }
+  .arc-paid3-dashboard-period { text-align: center; }
+  .arc-paid3-dashboard-client { text-align: center; }
+  .arc-paid3-metrics { gap: 6px; }
+  .arc-paid3-metric { padding: 8px 6px; border-radius: 8px; }
+  .arc-paid3-metric-label { font-size: 9px; letter-spacing: 1.5px; margin-bottom: 3px; }
+  .arc-paid3-metric-value { font-size: 18px; }
+  .arc-paid3-metric-change { font-size: 10px; }
+}
+
+
+/* ═══════ PRESENTATION FOOTER ═══════ */
+.arc-pres-footer {
+  width: 100%;
+  padding: 56px 21px;
+  text-align: center;
+  background: var(--bg);
+  position: relative;
+}
+
+.arc-pres-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.3;
+}
+
+.arc-pres-footer-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(35px, 6vw, 56px);
+  letter-spacing: 3px;
+  line-height: 1.1;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.arc-pres-footer-title span { opacity: 0.55; }
+
+.arc-pres-footer-sub {
+  font-size: 16px;
+  color: var(--text-muted);
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.arc-pres-footer-powered {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGO + 5-STAR REVIEWS ═══ -->
+<div class="arc-logo-header">
+  <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20The%20Tooth%20Place/The%20Tooth%20Place%20Logo%20Transparent.png" alt="The Tooth Place">
+  <div class="arc-logo-stars">
+    <div class="arc-logo-stars-row">
+      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    </div>
+    <span class="arc-logo-stars-text">5.0 Stars · 45 Reviews</span>
+  </div>
+</div>
+
+<!-- ═══ 04-PAID-HERO ═══ -->
+<div class="arc-paid1-wrapper">
+  
+  <section class="arc-paid1-hero">
+    
+    <div class="arc-paid1-eyebrow arc-paid1-reveal">
+      <span class="arc-paid1-eyebrow-line"></span>
+      <span class="arc-paid1-eyebrow-text">Paid Advertising</span>
+      <span class="arc-paid1-eyebrow-line"></span>
+    </div>
+    
+    <h1 class="arc-paid1-title">
+      <span class="arc-paid1-title-line">YOUR FUTURE PATIENTS&nbsp;ARE</span>
+      <span class="arc-paid1-title-line arc-paid1-title-line--accent">ALREADY ON THEIR&nbsp;PHONES</span>
+    </h1>
+    
+    <p class="arc-paid1-sub arc-paid1-reveal arc-paid1-reveal-d1">
+      They just haven't seen you&nbsp;yet.<br>
+      <strong>We change that</strong> with ads built to stop the scroll and fill your&nbsp;chair.
+    </p>
+    
+    <div class="arc-paid1-stats arc-paid1-reveal arc-paid1-reveal-d2">
+      <div class="arc-paid1-stat">
+        <span class="arc-paid1-stat-val">75</span>
+        <span class="arc-paid1-stat-lbl">Ads Managed</span>
+      </div>
+      <div class="arc-paid1-stat">
+        <span class="arc-paid1-stat-val">24/7</span>
+        <span class="arc-paid1-stat-lbl">Optimization</span>
+      </div>
+    </div>
+    
+  </section>
+  
+  <div class="arc-paid1-marquee">
+    <div class="arc-paid1-marquee-track" aria-hidden="true">
+      <span class="arc-paid1-marquee-item">BRIGHT SMILES <span>FOR ALL</span></span>
+      <span class="arc-paid1-marquee-item">TOOTH PLACE <span>LYNWOOD</span></span>
+      <span class="arc-paid1-marquee-item">BOOK YOUR <span>VISIT TODAY</span></span>
+      <span class="arc-paid1-marquee-item">YOUR LOCAL <span>DENTIST</span></span>
+      <span class="arc-paid1-marquee-item">BRIGHT SMILES <span>FOR ALL</span></span>
+      <span class="arc-paid1-marquee-item">TOOTH PLACE <span>LYNWOOD</span></span>
+      <span class="arc-paid1-marquee-item">BOOK YOUR <span>VISIT TODAY</span></span>
+      <span class="arc-paid1-marquee-item">YOUR LOCAL <span>DENTIST</span></span>
+    </div>
+  </div>
+  
+</div>
+
+<div class="arc-section-divider--accent"></div>
+
+<!-- ═══ 05-PAID-SCOPE ═══ -->
+<div class="arc-paid2-wrapper">
+  
+  <section class="arc-paid2-section arc-paid2-problem">
+    <div class="arc-paid2-inner">
+      
+      <p class="arc-paid2-label arc-paid2-reveal">The Approach</p>
+      
+      <h2 class="arc-paid2-title arc-paid2-reveal arc-paid2-reveal-d1">
+        HERES WHAT WE'D BUILD<br>
+        <span class="arc-paid2-title-accent">FOR THE TOOTH PLACE</span>
+      </h2>
+      
+      <div class="arc-paid2-problem-grid arc-paid2-reveal arc-paid2-reveal-d2" style="display: block; max-width: 520px; margin: 0 auto;">
+        
+        <div class="arc-paid2-box arc-paid2-box--good" style="border-color: var(--border-medium);">
+          <ul class="arc-paid2-list">
+            <li><span class="arc-paid2-list-icon">✓</span> Campaigns targeting patients ready to&nbsp;book&nbsp;today</li>
+            <li><span class="arc-paid2-list-icon">✓</span> Every click tracked from ad to&nbsp;appointment</li>
+            <li><span class="arc-paid2-list-icon">✓</span> Geo-targeted to Lynwood and surrounding&nbsp;zip&nbsp;codes</li>
+            <li><span class="arc-paid2-list-icon">✓</span> Fresh creative that earns&nbsp;attention</li>
+            <li><span class="arc-paid2-list-icon">✓</span> Scale what works, cut what&nbsp;doesnt</li>
+          </ul>
+        </div>
+        
+      </div>
+      
+    </div>
+  </section>
+  
+  
+  <section class="arc-paid2-section">
+    <div class="arc-paid2-inner">
+      
+      <div class="arc-paid2-scope-head">
+        <div>
+          <p class="arc-paid2-label arc-paid2-reveal">The System</p>
+          <h2 class="arc-paid2-title arc-paid2-reveal arc-paid2-reveal-d1">
+            YOUR AD ENGINE<br>
+            <span class="arc-paid2-title-accent">BUILT TO FILL YOUR SCHEDULE</span>
+          </h2>
+        </div>
+        <p class="arc-paid2-scope-desc arc-paid2-reveal arc-paid2-reveal-d2">
+          A full-service Meta Ads system that puts The Tooth Place in the feed of every Lynwood local who needs dental&nbsp;care.
+        </p>
+      </div>
+      
+      <div class="arc-paid2-cards">
+        
+        <div class="arc-paid2-card arc-paid2-reveal arc-paid2-reveal-d1">
+          <div class="arc-paid2-card-glow"></div>
+          <div class="arc-paid2-card-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/>
+            </svg>
+          </div>
+          <h3 class="arc-paid2-card-title">Creative Production</h3>
+          <ul class="arc-paid2-card-list">
+            <li>Real patient results front and center</li>
+            <li>Before and after transformations</li>
+            <li>Ad copy that drives action</li>
+            <li>A/B tested for what actually converts</li>
+            <li>Fresh visuals every single month</li>
+          </ul>
+        </div>
+        
+        <div class="arc-paid2-card arc-paid2-reveal arc-paid2-reveal-d2">
+          <div class="arc-paid2-card-glow"></div>
+          <div class="arc-paid2-card-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+            </svg>
+          </div>
+          <h3 class="arc-paid2-card-title">Local Targeting</h3>
+          <ul class="arc-paid2-card-list">
+            <li>Focused on your neighborhood</li>
+            <li>Families, workers, and locals nearby</li>
+            <li>Income and insurance-qualified audiences</li>
+            <li>People interested in health and&nbsp;dental&nbsp;care</li>
+            <li>Retargeting past site visitors</li>
+          </ul>
+        </div>
+        
+        <div class="arc-paid2-card arc-paid2-reveal arc-paid2-reveal-d3">
+          <div class="arc-paid2-card-glow"></div>
+          <div class="arc-paid2-card-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+            </svg>
+          </div>
+          <h3 class="arc-paid2-card-title">Performance Tracking</h3>
+          <ul class="arc-paid2-card-list">
+            <li>Daily performance monitoring</li>
+            <li>Clear cost-per-patient reporting</li>
+            <li>Full lead source attribution</li>
+            <li>Weekly optimization adjustments</li>
+            <li>Monthly strategy reviews</li>
+          </ul>
+        </div>
+        
+      </div>
+      
+    </div>
+  </section>
+  
+</div>
+
+<div class="arc-section-divider--accent"></div>
+
+<!-- ═══ 06-PAID-PRICING ═══ -->
+<div class="arc-paid3-wrapper">
+  
+  <section class="arc-paid3-section">
+    <div class="arc-paid3-inner">
+      
+      <div class="arc-paid3-results-head">
+        <p class="arc-paid3-label arc-paid3-reveal">Real Results</p>
+        <h2 class="arc-paid3-title arc-paid3-reveal arc-paid3-reveal-d1">
+          THIS IS WHAT <span class="arc-paid3-title-accent">SMART ADS</span> LOOK LIKE
+        </h2>
+      </div>
+      
+      <div class="arc-paid3-dashboard arc-paid3-reveal arc-paid3-reveal-d2">
+        
+        <div class="arc-paid3-dashboard-header">
+          <div>
+            <p class="arc-paid3-dashboard-period">28-Day Performance</p>
+            <p class="arc-paid3-dashboard-client">Campaign Dashboard</p>
+          </div>
+          <div class="arc-paid3-tabs">
+            <button class="arc-paid3-tab active" data-metric="roas">ROAS</button>
+            <button class="arc-paid3-tab" data-metric="cpl">CPL</button>
+            <button class="arc-paid3-tab" data-metric="leads">Leads</button>
+          </div>
+        </div>
+        
+        <div class="arc-paid3-metrics">
+          <div class="arc-paid3-metric">
+            <p class="arc-paid3-metric-label">Current</p>
+            <p class="arc-paid3-metric-value" id="arcPaid3MetricCur">3.2x</p>
+            <p class="arc-paid3-metric-change" id="arcPaid3MetricChg">+0.8x improvement</p>
+          </div>
+          <div class="arc-paid3-metric">
+            <p class="arc-paid3-metric-label">Starting</p>
+            <p class="arc-paid3-metric-value" id="arcPaid3MetricStart" style="color: var(--text-primary);">2.4x</p>
+            <p class="arc-paid3-metric-change" style="color: var(--text-subtle);">baseline</p>
+          </div>
+          <div class="arc-paid3-metric arc-paid3-metric--accent">
+            <p class="arc-paid3-metric-label">Improvement</p>
+            <p class="arc-paid3-metric-value" id="arcPaid3MetricGrow">+33%</p>
+            <p class="arc-paid3-metric-change">28 days</p>
+          </div>
+        </div>
+        
+        <div class="arc-paid3-chart-wrap">
+          <p class="arc-paid3-chart-title" id="arcPaid3ChartTitle">Return on Ad Spend</p>
+          <div class="arc-paid3-chart-canvas">
+            <canvas id="arcPaid3Chart"></canvas>
+          </div>
+          <div class="arc-paid3-chart-legend">
+            <div class="arc-paid3-legend-item">
+              <div class="arc-paid3-legend-line arc-paid3-legend-line--current"></div>
+              <span>With Arc Garde</span>
+            </div>
+            <div class="arc-paid3-legend-item">
+              <div class="arc-paid3-legend-line arc-paid3-legend-line--baseline"></div>
+              <span>Industry Average</span>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </section>
+  
+  
+  <section class="arc-paid3-section">
+    <div class="arc-paid3-inner">
+      
+      <div class="arc-paid3-pricing-head">
+        <p class="arc-paid3-label arc-paid3-reveal">Investment</p>
+        <h2 class="arc-paid3-title arc-paid3-reveal arc-paid3-reveal-d1">
+          CHOOSE YOUR <span class="arc-paid3-title-accent">AD TIER</span>
+        </h2>
+        <p class="arc-paid3-pricing-sub arc-paid3-reveal arc-paid3-reveal-d2">
+          Two tiers, same system. Choose the intensity that fits your goals.
+        </p>
+      </div>
+      
+      <div class="arc-paid3-value arc-paid3-reveal">
+        <p class="arc-paid3-value-title">WHY THIS MATTERS FOR YOU</p>
+        <div class="arc-paid3-value-grid">
+          <div class="arc-paid3-value-item">
+            <svg class="arc-paid3-value-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+            </svg>
+            <span>Ads only reach your local area</span>
+          </div>
+          <div class="arc-paid3-value-item">
+            <svg class="arc-paid3-value-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
+            </svg>
+            <span>Convert clicks into booked appointments</span>
+          </div>
+          <div class="arc-paid3-value-item">
+            <svg class="arc-paid3-value-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/>
+            </svg>
+            <span>Clear cost-per-patient reporting</span>
+          </div>
+          <div class="arc-paid3-value-item">
+            <svg class="arc-paid3-value-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+            </svg>
+            <span>Scale what performs, cut what doesnt</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="arc-paid3-pricing-grid">
+        
+        <div class="arc-paid3-card arc-paid3-reveal arc-paid3-reveal-d1">
+          <p class="arc-paid3-badge">Foundation</p>
+          <h3 class="arc-paid3-card-name">FOUNDATION</h3>
+          <p class="arc-paid3-card-desc">Targeted local ads to start<br>driving consistent patient flow.</p>
+          <div class="arc-paid3-card-stats">
+            <div class="arc-paid3-stat-row">
+              <span class="arc-paid3-stat-lbl">Ads tested</span>
+              <span class="arc-paid3-stat-val">14 ads</span>
+            </div>
+            <div class="arc-paid3-stat-row">
+              <span class="arc-paid3-stat-lbl">Creative refresh</span>
+              <span class="arc-paid3-stat-val">Monthly</span>
+            </div>
+            <div class="arc-paid3-stat-row">
+              <span class="arc-paid3-stat-lbl">Reporting</span>
+              <span class="arc-paid3-stat-val">Weekly</span>
+            </div>
+          </div>
+          <p class="arc-paid3-price"><s style="color: rgba(0,0,0,0.35); text-decoration-color: rgba(0,0,0,0.5);">$2,800</s>*</p>
+          <p class="arc-paid3-period">per month</p>
+        </div>
+        
+        <div class="arc-paid3-card arc-paid3-card--featured arc-paid3-reveal arc-paid3-reveal-d2">
+          <p class="arc-paid3-badge">Recommended</p>
+          <h3 class="arc-paid3-card-name">ANDROMEDA PREMIUM</h3>
+          <p class="arc-paid3-card-desc">Full-scale ad management<br>for maximum patient volume.</p>
+          <div class="arc-paid3-card-stats">
+            <div class="arc-paid3-stat-row">
+              <span class="arc-paid3-stat-lbl">Ads tested</span>
+              <span class="arc-paid3-stat-val">75 ads</span>
+            </div>
+            <div class="arc-paid3-stat-row">
+              <span class="arc-paid3-stat-lbl">Creative refresh</span>
+              <span class="arc-paid3-stat-val">Bi-weekly</span>
+            </div>
+            <div class="arc-paid3-stat-row">
+              <span class="arc-paid3-stat-lbl">Reporting</span>
+              <span class="arc-paid3-stat-val">Daily monitoring</span>
+            </div>
+          </div>
+          <p class="arc-paid3-price"><s style="color: rgba(0,0,0,0.35); text-decoration-color: rgba(0,0,0,0.5);">$3,927</s>*</p>
+          <p class="arc-paid3-period">per month</p>
+        </div>
+        
+      </div>
+      
+      <div class="arc-paid3-note arc-paid3-reveal">
+        <p class="arc-paid3-note-title">AD SPEND REQUIREMENT</p>
+        <p class="arc-paid3-note-text">
+          Minimum $30 per day per ad&nbsp;set&nbsp;recommended.<br>
+          Thats approximately $90/day total ($2,700/month) for optimal performance.
+        </p>
+      </div>
+      
+      <div class="arc-paid3-note arc-paid3-reveal" style="margin-top: 18px;">
+        <p class="arc-paid3-note-title">CRM REQUIREMENT</p>
+        <p class="arc-paid3-note-text">
+          A CRM is required to run this system properly.<br>
+          The CRM subscription is the client's responsibility and is not included in our&nbsp;fees.<br>
+          We recommend GoHighLevel, but we can work with any properly established&nbsp;CRM.
+        </p>
+      </div>
+      
+      <p class="arc-paid3-fine arc-paid3-reveal" style="margin-bottom: 14px;">
+        *Pricing TBD via conversation with&nbsp;Frank.
+      </p>
+      
+      <p class="arc-paid3-fine arc-paid3-reveal">
+        Management fees are separate from ad spend. Results vary based on industry, offer, and ad budget.<br>Minimum 3-month commitment.
+      </p>
+      
+    </div>
+  </section>
+  
+</div>
+
+<div class="arc-section-divider--accent"></div>
+
+<!-- ═══ PRESENTATION FOOTER ═══ -->
+<div class="arc-pres-footer">
+  <h2 class="arc-pres-footer-title">
+    READY TO GROW<br>
+    <span>YOUR PRACTICE</span>
+  </h2>
+  <p class="arc-pres-footer-sub">Lets put The Tooth Place in the feed of every patient scrolling in Lynwood.</p>
+  <p class="arc-pres-footer-powered">Powered by Arc Garde</p>
+</div>
+
+
+<script>
+// Hero reveals
+(function(){
+  const reveals = document.querySelectorAll('.arc-paid1-reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+  reveals.forEach(el => observer.observe(el));
+})();
+
+// Scope reveals
+(function(){
+  const reveals = document.querySelectorAll('.arc-paid2-reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+  reveals.forEach(el => observer.observe(el));
+})();
+
+// Pricing reveals + Chart
+(function(){
+  const reveals = document.querySelectorAll('.arc-paid3-reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+  reveals.forEach(el => observer.observe(el));
+  
+  const chartData = {
+    roas: { label: 'Return on Ad Spend', current: [2.4, 2.6, 2.8, 3.0, 3.2], baseline: [2.4, 2.45, 2.5, 2.55, 2.6], curVal: '3.2x', startVal: '2.4x', chg: '+0.8x improvement', grow: '+33%' },
+    cpl: { label: 'Cost Per Lead', current: [185, 165, 142, 128, 112], baseline: [185, 180, 175, 170, 165], curVal: '$112', startVal: '$185', chg: '-$73 reduction', grow: '-39%' },
+    leads: { label: 'Qualified Leads', current: [8, 12, 18, 26, 34], baseline: [8, 9, 10, 11, 12], curVal: '34', startVal: '8', chg: '+26 leads', grow: '+325%' }
+  };
+  
+  const labels = ['Day 0', 'Day 7', 'Day 14', 'Day 21', 'Day 28'];
+  const ctx = document.getElementById('arcPaid3Chart').getContext('2d');
+  
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        { data: chartData.roas.current, borderColor: '#000', borderWidth: 3, pointBackgroundColor: '#000', pointBorderColor: '#fff', pointBorderWidth: 2, pointRadius: 5, pointHoverRadius: 7, fill: true, backgroundColor: 'rgba(0, 0, 0, 0.05)', tension: 0.4 },
+        { data: chartData.roas.baseline, borderColor: 'rgba(0, 0, 0, 0.15)', borderWidth: 2, borderDash: [6, 4], pointRadius: 0, fill: false, tension: 0.4 }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { intersect: false, mode: 'index' },
+      plugins: { legend: { display: false }, tooltip: { backgroundColor: '#000', titleColor: '#fff', bodyColor: '#ccc', padding: 12, cornerRadius: 8, displayColors: false } },
+      scales: { x: { grid: { display: false }, ticks: { color: 'rgba(0, 0, 0, 0.35)', font: { size: 11, family: 'DM Sans' } } }, y: { grid: { color: 'rgba(0, 0, 0, 0.04)' }, ticks: { color: 'rgba(0, 0, 0, 0.35)', font: { size: 11, family: 'DM Sans' } } } }
+    }
+  });
+  
+  const tabs = document.querySelectorAll('.arc-paid3-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      tabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      const metric = this.dataset.metric;
+      const d = chartData[metric];
+      chart.data.datasets[0].data = d.current;
+      chart.data.datasets[1].data = d.baseline;
+      chart.update();
+      document.getElementById('arcPaid3MetricCur').textContent = d.curVal;
+      document.getElementById('arcPaid3MetricStart').textContent = d.startVal;
+      document.getElementById('arcPaid3MetricChg').textContent = d.chg;
+      document.getElementById('arcPaid3MetricGrow').textContent = d.grow;
+      document.getElementById('arcPaid3ChartTitle').textContent = d.label;
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
