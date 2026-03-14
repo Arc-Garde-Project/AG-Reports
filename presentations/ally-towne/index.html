@@ -1,1112 +1,1460 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="robots" content="noindex, nofollow">
-<title>Arc Garde - The Wedding Mentor | Paid Ads Proposal</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Wedding Mentor | Paid Ads Proposal - Arc Garde</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
 <style>
+/* ═══════════════════════════════════════════════════════════════════
+   ARC GARDE - THE WEDDING MENTOR - PAID ADS PROPOSAL
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* GLOBAL VARIABLES */
 :root {
-  --black: #1a1a1a;
-  --black-deep: #0d0d0d;
-  --white: #ffffff;
-  --cream: #faf8f5;
-  --cream-warm: #f7f6f4;
-  --rose: #b8848a;
-  --rose-light: #d4a9ae;
-  --rose-dark: #96666b;
-  --rose-muted: rgba(184, 132, 138, 0.12);
-  --rose-glow: rgba(212, 169, 174, 0.25);
-  --rose-gradient: linear-gradient(135deg, #d4a9ae 0%, #c49398 50%, #b8848a 100%);
-  --text-dark: #1a1a1a;
-  --text-body: #4a4a4a;
-  --text-muted: #7a7a7a;
-  --text-subtle: #a0a0a0;
-  --border-light: rgba(26, 26, 26, 0.06);
-  --border-medium: rgba(26, 26, 26, 0.10);
-  --card-bg: #ffffff;
-  --success: #6b8e6b;
+  /* Spacing */
+  --s-3: 3px; --s-6: 6px; --s-7: 7px; --s-9: 9px; --s-12: 12px; --s-14: 14px;
+  --s-15: 15px; --s-18: 18px; --s-21: 21px; --s-24: 24px; --s-28: 28px;
+  --s-33: 33px; --s-35: 35px; --s-36: 36px; --s-42: 42px; --s-49: 49px;
+  --s-56: 56px; --s-63: 63px; --s-70: 70px; --s-77: 77px; --s-84: 84px;
+  --s-126: 126px; --s-168: 168px;
 
-  --text-hero: clamp(2.25rem, 1.647rem + 2.57vw, 3.938rem);
-  --text-h1: clamp(1.875rem, 1.357rem + 2.21vw, 3rem);
-  --text-h2: clamp(1.5rem, 1.155rem + 1.47vw, 2.25rem);
-  --text-h3: clamp(1.313rem, 1.054rem + 1.1vw, 1.875rem);
-  --text-h4: clamp(1.125rem, 0.952rem + 0.74vw, 1.5rem);
-  --text-lg: clamp(1rem, 0.943rem + 0.24vw, 1.125rem);
-  --text-base: clamp(0.938rem, 0.909rem + 0.12vw, 1rem);
-  --space-section: clamp(3rem, 1.619rem + 5.89vw, 6rem);
-  --space-container: clamp(1.125rem, 0.262rem + 3.68vw, 3rem);
+  /* Typography */
+  --text-10: 10px; --text-11: 11px; --text-12: 12px; --text-13: 13px;
+  --text-14: 14px; --text-15: 15px; --text-18: 18px; --text-21: 21px;
+  --text-24: 24px; --text-28: 28px; --text-33: 33px; --text-35: 35px;
+  --text-42: 42px; --text-49: 49px; --text-56: 56px; --text-63: 63px;
+  --text-70: 70px; --text-84: 84px; --text-126: 126px; --text-168: 168px;
+
+  /* Widths */
+  --w-380: 380px; --w-420: 420px; --w-480: 480px; --w-560: 560px;
+  --w-630: 630px; --w-700: 700px; --w-840: 840px; --w-1050: 1050px;
+  --w-1200: 1200px;
+
+  /* Radius */
+  --r-3: 3px; --r-7: 7px; --r-8: 8px; --r-14: 14px; --r-18: 18px;
+  --r-21: 21px; --r-28: 28px; --r-42: 42px;
+
+  /* Colors - Rose Gold */
+  --gold: #b8848a;
+  --gold-light: #d4a9ae;
+  --gold-dark: #96666b;
+  --gold-glow: rgba(184, 132, 138, 0.35);
+  --bg-dark: #000000;
+  --charcoal: #0A0A0A;
+  --text-primary: #FFFFFF;
+  --text-muted: rgba(255, 255, 255, 0.5);
+  --text-subtle: rgba(255, 255, 255, 0.3);
+  --text-dim: rgba(255, 255, 255, 0.35);
+  --text-faint: rgba(255, 255, 255, 0.2);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --success: #4ADE80;
+  --green-save: #22C55E;
+  --error: #FF6B6B;
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* RESET */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+::selection { background: var(--gold); color: #000; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg-dark); color: var(--text-primary); line-height: 1.6; }
+
+/* SECTION DIVIDERS */
+.arc-section-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--border-subtle), transparent); }
+.arc-section-divider--gold { background: linear-gradient(90deg, transparent, rgba(184, 132, 138, 0.3), transparent); }
+
+
+/* === 04 Paid Hero === */
+.arc-paid1-wrapper {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-dark);
 }
 
-html {
-  overflow-x: hidden;
-  scroll-behavior: smooth;
+.arc-paid1-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 42px 42px 28px;
+  height: 630px;
+  position: relative;
+  z-index: 2;
 }
 
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--cream);
-  color: var(--text-dark);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: 1.7;
-  min-height: 100vh;
+.arc-paid1-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 21px;
 }
 
-h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
-p, li, blockquote, figcaption { text-wrap: pretty; }
+.arc-paid1-eyebrow-line {
+  width: 42px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+  transform: scaleX(0);
+  animation: arcPaid1LineExtend 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.3s;
+}
 
-img, video, svg { max-width: 100%; display: block; }
+.arc-paid1-eyebrow-line:last-child {
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
 
-a { color: inherit; text-decoration: none; }
+@keyframes arcPaid1LineExtend {
+  to { transform: scaleX(1); }
+}
 
-/* ══════════════════════════════════════════════════
-   SCROLL REVEAL
-   ══════════════════════════════════════════════════ */
+.arc-paid1-eyebrow-text {
+  font-size: 12px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+}
 
-.reveal {
+.arc-paid1-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 11vw, 126px);
+  line-height: 1.05;
+  letter-spacing: 4px;
+  margin-bottom: 21px;
+  text-align: center;
+}
+
+.arc-paid1-title-line {
+  display: block;
+}
+
+.arc-paid1-title-line--gold {
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.arc-paid1-sub {
+  font-size: 18px;
+  line-height: 1.9;
+  color: var(--text-muted);
+  max-width: 630px;
+  margin: 0 auto 35px;
+  font-weight: 300;
+}
+
+.arc-paid1-sub strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.arc-paid1-stats {
+  display: flex;
+  gap: 56px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.arc-paid1-stat {
+  text-align: center;
+}
+
+.arc-paid1-stat-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(42px, 7vw, 56px);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  position: relative;
+  display: inline-block;
+}
+
+.arc-paid1-stat-val::after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+  border-radius: 2px;
+  transform: scaleX(0);
+  animation: arcPaid1LineGrow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.8s;
+}
+
+@keyframes arcPaid1LineGrow {
+  to { transform: scaleX(1); }
+}
+
+.arc-paid1-stat-lbl {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-top: 18px;
+  display: block;
+}
+
+.arc-paid1-marquee {
+  width: 100%;
+  overflow: hidden;
+  padding: 21px 0;
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.arc-paid1-marquee-track {
+  display: flex;
+  width: fit-content;
+  animation: arcPaid1Marquee 20s linear infinite;
+}
+
+@keyframes arcPaid1Marquee {
+  to { transform: translateX(-50%); }
+}
+
+.arc-paid1-marquee-item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(84px, 14vw, 168px);
+  letter-spacing: 7px;
+  white-space: nowrap;
+  padding: 0 42px;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(184, 132, 138, 0.3);
+  text-stroke: 1.5px rgba(184, 132, 138, 0.3);
+  line-height: 1;
+}
+
+.arc-paid1-marquee-item span {
+  -webkit-text-stroke: 1.5px var(--gold);
+  text-stroke: 1.5px var(--gold);
+}
+
+.arc-paid1-reveal {
   opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(28px);
+  transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-.reveal.visible {
+.arc-paid1-reveal.active {
   opacity: 1;
   transform: translateY(0);
 }
 
-.reveal-delay-1 { transition-delay: 0.3s; }
-.reveal-delay-2 { transition-delay: 0.6s; }
-.reveal-delay-3 { transition-delay: 0.9s; }
+.arc-paid1-reveal-d1 { transition-delay: 0.12s; }
+.arc-paid1-reveal-d2 { transition-delay: 0.24s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
+  .arc-paid1-reveal { opacity: 1; transform: none; transition: none; }
+  .arc-paid1-stat-val::after { transform: scaleX(1); animation: none; }
+  .arc-paid1-marquee-track, .arc-paid1-eyebrow-line { animation: none; }
+  .arc-paid1-eyebrow-line { transform: scaleX(1); }
 }
 
-/* ══════════════════════════════════════════════════
-   SHARED
-   ══════════════════════════════════════════════════ */
+@media (max-width: 630px) {
+  .arc-paid1-hero { padding: 35px 21px 21px; height: 525px; }
+  .arc-paid1-stats { flex-direction: column; gap: 28px; }
+  .arc-paid1-eyebrow-line { width: 28px; }
+  .arc-paid1-sub { font-size: 15px; margin-bottom: 28px; }
+  .arc-paid1-marquee-item { -webkit-text-stroke: 1px rgba(184, 132, 138, 0.3); }
+  .arc-paid1-marquee-item span { -webkit-text-stroke: 1px var(--gold); }
+}
 
-.section-wrap {
+/* === 05 Paid Scope === */
+.arc-paid2-wrapper {
   width: 100%;
-  padding: var(--space-section) var(--space-container);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  position: relative;
+  background: var(--bg-dark);
 }
 
-.section-inner {
-  max-width: 1100px;
+.arc-paid2-section {
+  width: 100%;
+  padding: 49px 21px;
+  position: relative;
+}
+
+.arc-paid2-inner {
+  max-width: 1050px;
   margin: 0 auto;
 }
 
-.section-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 16px;
-}
-
-.section-eyebrow-line {
-  width: 40px;
-  height: 1px;
-  background: var(--rose);
-}
-
-.section-eyebrow-text {
-  font-family: 'Inter', sans-serif;
+.arc-paid2-label {
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 3px;
+  letter-spacing: 6px;
   text-transform: uppercase;
-  color: var(--rose);
-}
-
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: var(--text-h1);
-  font-weight: 600;
-  line-height: 1.15;
-  color: var(--text-dark);
-  margin-bottom: 16px;
-}
-
-.section-subtitle {
-  font-size: var(--text-lg);
-  color: var(--text-body);
-  max-width: 640px;
-  line-height: 1.7;
-}
-
-.rose-accent {
-  color: var(--rose);
-}
-
-.rose-gradient-text {
-  background: var(--rose-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ══════════════════════════════════════════════════
-   HERO
-   ══════════════════════════════════════════════════ */
-
-.hero-wrap {
-  width: 100%;
-  background: var(--white);
-  padding: clamp(3rem, 2rem + 5vw, 7rem) var(--space-container);
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-wrap::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, var(--rose-glow) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.hero-wrap::after {
-  content: '';
-  position: absolute;
-  bottom: -30%;
-  left: -10%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(212, 169, 174, 0.10) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.hero-inner {
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-}
-
-.hero-badge {
+  color: var(--gold);
+  margin-bottom: 18px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 20px;
-  background: var(--rose-muted);
-  border: 1px solid rgba(184, 132, 138, 0.2);
-  border-radius: 100px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--rose-dark);
-  margin-bottom: 32px;
+  gap: 14px;
 }
 
-.hero-badge-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--rose);
+.arc-paid2-label::before {
+  content: '';
+  width: 42px;
+  height: 1px;
+  background: var(--gold);
 }
 
-.hero-title {
-  font-family: 'Playfair Display', serif;
-  font-size: var(--text-hero);
-  font-weight: 700;
-  line-height: 1.08;
-  color: var(--text-dark);
-  margin-bottom: 12px;
-  letter-spacing: -0.5px;
-}
-
-.hero-title-rose {
-  display: block;
-  background: var(--rose-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-sub-name {
-  font-family: 'Playfair Display', serif;
-  font-size: var(--text-h3);
-  font-weight: 400;
-  font-style: italic;
-  color: var(--rose);
-  margin-bottom: 24px;
-}
-
-.hero-desc {
-  font-size: var(--text-lg);
-  color: var(--text-body);
-  max-width: 580px;
-  margin: 0 auto 40px;
-  line-height: 1.8;
-}
-
-.hero-stats {
-  display: flex;
-  gap: clamp(24px, 5vw, 60px);
-  justify-content: center;
-  flex-wrap: wrap;
-  padding-top: 32px;
-  border-top: 1px solid var(--border-light);
-}
-
-.hero-stat {
-  text-align: center;
-}
-
-.hero-stat-val {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(28px, 5vw, 42px);
-  font-weight: 700;
-  color: var(--rose);
-  display: block;
-  line-height: 1.1;
-}
-
-.hero-stat-lbl {
-  font-size: 11px;
-  font-weight: 600;
+.arc-paid2-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(33px, 6vw, 56px);
+  line-height: 1.05;
   letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-top: 4px;
+  margin-bottom: 42px;
 }
 
-/* ══════════════════════════════════════════════════
-   ENGINE SECTIONS
-   ══════════════════════════════════════════════════ */
-
-.engine-number {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(64px, 10vw, 120px);
-  font-weight: 700;
-  line-height: 1;
-  background: linear-gradient(180deg, rgba(184, 132, 138, 0.15) 0%, transparent 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  position: absolute;
-  top: -10px;
-  right: 0;
-  pointer-events: none;
-  user-select: none;
+.arc-paid2-title-gold {
+  color: var(--gold);
 }
 
-.engine-header {
-  position: relative;
-  margin-bottom: 40px;
-}
-
-/* Problem / Solution */
-
-.ps-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-bottom: 40px;
-}
-
-@media (max-width: 768px) {
-  .ps-grid { grid-template-columns: 1fr; }
-}
-
-.ps-card {
-  padding: clamp(24px, 3vw, 36px);
-  border-radius: 16px;
-  border: 1px solid var(--border-light);
-}
-
-.ps-card--problem {
-  background: var(--cream-warm);
-}
-
-.ps-card--solution {
-  background: var(--white);
-  border-color: rgba(184, 132, 138, 0.2);
-}
-
-.ps-card-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-
-.ps-card--problem .ps-card-label { color: var(--text-muted); }
-.ps-card--solution .ps-card-label { color: var(--rose); }
-
-.ps-card-text {
-  font-size: var(--text-base);
-  color: var(--text-body);
-  line-height: 1.7;
-}
-
-/* Deliverables */
-
-.deliverables-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-  gap: 16px;
-}
-
-.deliverable-card {
-  padding: 24px;
-  background: var(--white);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.deliverable-card:hover {
-  border-color: rgba(184, 132, 138, 0.3);
-  box-shadow: 0 8px 32px rgba(184, 132, 138, 0.08);
-}
-
-.deliverable-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: var(--rose-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 14px;
-  font-size: 18px;
-  color: var(--rose);
-}
-
-.deliverable-title {
-  font-family: 'Playfair Display', serif;
-  font-size: var(--text-h4);
-  font-weight: 600;
-  color: var(--text-dark);
-  margin-bottom: 6px;
-}
-
-.deliverable-desc {
-  font-size: 14px;
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-
-/* ══════════════════════════════════════════════════
-   ADS METRICS
-   ══════════════════════════════════════════════════ */
-
-.metrics-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
-  gap: 16px;
-  margin-top: 32px;
-}
-
-.metric-card {
-  padding: 24px;
-  background: var(--white);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
+.arc-paid2-problem {
   text-align: center;
 }
 
-.metric-val {
-  font-family: 'Playfair Display', serif;
-  font-size: var(--text-h2);
-  font-weight: 700;
-  color: var(--rose);
-  display: block;
-}
-
-.metric-label {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-top: 4px;
-  font-weight: 500;
-}
-
-/* Scope List */
-
-.scope-list {
-  list-style: none;
+.arc-paid2-problem-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: 12px;
-  margin-top: 24px;
+  grid-template-columns: 1fr 56px 1fr;
+  gap: 21px;
+  align-items: start;
+  margin-bottom: 42px;
 }
 
-.scope-list li {
+.arc-paid2-box {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  border: 1px solid var(--border-subtle);
+  border-radius: 21px;
+  padding: 33px;
+  text-align: left;
+}
+
+.arc-paid2-box--bad {
+  border-color: rgba(255, 107, 107, 0.4);
+}
+
+.arc-paid2-box--good {
+  border-color: rgba(184, 132, 138, 0.3);
+  background: linear-gradient(135deg, rgba(184, 132, 138, 0.08), rgba(184, 132, 138, 0.02));
+}
+
+.arc-paid2-box-label {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 21px;
+  text-align: center;
+}
+
+.arc-paid2-box--bad .arc-paid2-box-label {
+  color: #FF6B6B;
+}
+
+.arc-paid2-box--good .arc-paid2-box-label {
+  color: var(--gold);
+}
+
+.arc-paid2-list {
+  list-style: none;
+}
+
+.arc-paid2-list li {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  font-size: var(--text-base);
-  color: var(--text-body);
-  line-height: 1.6;
-}
-
-.scope-check {
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--rose-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 3px;
-}
-
-.scope-check::after {
-  content: '';
-  width: 8px;
-  height: 5px;
-  border-left: 2px solid var(--rose);
-  border-bottom: 2px solid var(--rose);
-  transform: rotate(-45deg);
-  margin-top: -2px;
-}
-
-/* ══════════════════════════════════════════════════
-   OCS PRICING TABLE
-   ══════════════════════════════════════════════════ */
-
-.ocs-tiers {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: 20px;
-  margin-top: 32px;
-}
-
-.ocs-tier {
-  padding: clamp(28px, 3vw, 40px);
-  background: var(--white);
-  border: 1px solid var(--border-light);
-  border-radius: 16px;
-  position: relative;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.ocs-tier:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 48px rgba(184, 132, 138, 0.12);
-}
-
-.ocs-tier--featured {
-  border-color: var(--rose-light);
-  box-shadow: 0 8px 32px rgba(184, 132, 138, 0.10);
-}
-
-.ocs-tier--featured::before {
-  content: 'Most Popular';
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--rose-gradient);
-  color: var(--white);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  padding: 5px 18px;
-  border-radius: 100px;
-  white-space: nowrap;
-}
-
-.ocs-tier-name {
-  font-family: 'Playfair Display', serif;
-  font-size: var(--text-h3);
-  font-weight: 600;
-  color: var(--text-dark);
-  margin-bottom: 4px;
-}
-
-.ocs-tier-freq {
-  font-size: 13px;
+  gap: 14px;
+  padding: 14px 0;
+  font-size: 14px;
   color: var(--text-muted);
-  margin-bottom: 20px;
-  font-weight: 500;
-}
-
-.ocs-tier-price {
-  font-family: 'Playfair Display', serif;
-  font-size: var(--text-h2);
-  font-weight: 700;
-  color: var(--rose);
-  margin-bottom: 4px;
-}
-
-.ocs-tier-period {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-bottom: 24px;
-}
-
-.ocs-tier-divider {
-  width: 100%;
-  height: 1px;
-  background: var(--border-light);
-  margin-bottom: 20px;
-}
-
-.ocs-tier-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.ocs-stat {
-  text-align: center;
-  padding: 12px;
-  background: var(--cream);
-  border-radius: 8px;
-}
-
-.ocs-stat-num {
-  font-family: 'Playfair Display', serif;
-  font-size: var(--text-h4);
-  font-weight: 700;
-  color: var(--text-dark);
-  display: block;
-}
-
-.ocs-stat-label {
-  font-size: 11px;
-  color: var(--text-muted);
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.ocs-tier-platforms {
-  font-size: 13px;
-  color: var(--text-body);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   line-height: 1.7;
 }
 
-.ocs-tier-platforms strong {
-  color: var(--text-dark);
-  font-weight: 600;
+.arc-paid2-list li:last-child {
+  border-bottom: none;
 }
 
-/* ══════════════════════════════════════════════════
-   BUNDLE PRICING
-   ══════════════════════════════════════════════════ */
-
-.bundle-wrap {
-  background: var(--white);
+.arc-paid2-list-icon {
+  flex-shrink: 0;
+  width: 21px;
+  height: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
 }
 
-.bundle-card {
-  max-width: 900px;
-  margin: 0 auto;
-  background: linear-gradient(135deg, var(--cream) 0%, var(--white) 100%);
-  border: 2px solid rgba(184, 132, 138, 0.2);
-  border-radius: 24px;
-  padding: clamp(32px, 5vw, 56px);
+.arc-paid2-box--bad .arc-paid2-list-icon {
+  color: #FF6B6B;
+}
+
+.arc-paid2-box--good .arc-paid2-list-icon {
+  color: var(--gold);
+}
+
+.arc-paid2-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  color: var(--gold);
+  text-shadow: 0 0 30px rgba(184, 132, 138, 0.3);
+}
+
+.arc-paid2-problem-cta {
+  font-size: 18px;
+  color: var(--text-muted);
+  line-height: 2;
+}
+
+.arc-paid2-problem-cta strong {
+  color: var(--text-primary);
+  font-size: 24px;
+  display: block;
+  margin-top: 9px;
+}
+
+.arc-paid2-scope-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 63px;
+  margin-bottom: 49px;
+  align-items: end;
+}
+
+.arc-paid2-scope-desc {
+  font-size: 15px;
+  line-height: 2;
+  color: var(--text-muted);
+}
+
+.arc-paid2-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 21px;
+}
+
+.arc-paid2-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  border: 1px solid var(--border-subtle);
+  border-radius: 21px;
+  padding: 42px 33px;
   position: relative;
   overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.4s ease;
 }
 
-.bundle-card::before {
-  content: '';
+.arc-paid2-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(184, 132, 138, 0.28);
+}
+
+.arc-paid2-card-glow {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: var(--rose-gradient);
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
-.bundle-header {
-  text-align: center;
-  margin-bottom: 40px;
+.arc-paid2-card:hover .arc-paid2-card-glow {
+  opacity: 1;
 }
 
-.bundle-title {
-  font-family: 'Playfair Display', serif;
-  font-size: var(--text-h1);
-  font-weight: 700;
-  color: var(--text-dark);
-  margin-bottom: 8px;
-}
-
-.bundle-subtitle {
-  font-size: var(--text-lg);
-  color: var(--text-body);
-}
-
-.bundle-engines {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-  gap: 16px;
-  margin-bottom: 32px;
-}
-
-.bundle-engine {
-  padding: 20px 24px;
-  background: var(--white);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.bundle-engine-name {
-  font-weight: 600;
-  color: var(--text-dark);
-  font-size: var(--text-base);
-}
-
-.bundle-engine-price {
-  font-family: 'Playfair Display', serif;
-  font-weight: 600;
-  color: var(--text-muted);
-  font-size: var(--text-base);
-}
-
-.bundle-engine-price--strike {
-  text-decoration: line-through;
-  opacity: 0.6;
-}
-
-.bundle-total {
-  text-align: center;
-  padding-top: 32px;
-  border-top: 1px solid var(--border-light);
-}
-
-.bundle-total-label {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 8px;
-}
-
-.bundle-total-prices {
+.arc-paid2-card-icon {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, rgba(184, 132, 138, 0.2), rgba(184, 132, 138, 0.05));
+  border: 1px solid rgba(184, 132, 138, 0.3);
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
+  margin-bottom: 24px;
 }
 
-.bundle-original {
-  font-family: 'Playfair Display', serif;
-  font-size: var(--text-h3);
-  color: var(--text-subtle);
-  text-decoration: line-through;
+.arc-paid2-card-icon svg {
+  width: 28px;
+  height: 28px;
+  color: var(--gold);
 }
 
-.bundle-final {
-  font-family: 'Playfair Display', serif;
-  font-size: var(--text-h1);
-  font-weight: 700;
-  background: var(--rose-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.arc-paid2-card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 1px;
+  margin-bottom: 21px;
 }
 
-.bundle-savings {
+.arc-paid2-card-list {
+  list-style: none;
+}
+
+.arc-paid2-card-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  font-size: 14px;
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: color 0.3s ease;
+  line-height: 1.6;
+}
+
+.arc-paid2-card-list li:last-child {
+  border-bottom: none;
+}
+
+.arc-paid2-card:hover .arc-paid2-card-list li {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.arc-paid2-card-list li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.arc-paid2-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.arc-paid2-reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.arc-paid2-reveal-d1 { transition-delay: 0.12s; }
+.arc-paid2-reveal-d2 { transition-delay: 0.24s; }
+.arc-paid2-reveal-d3 { transition-delay: 0.36s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .arc-paid2-reveal { opacity: 1; transform: none; transition: none; }
+  .arc-paid2-card:hover, .arc-paid2-platform:hover { transform: none; }
+}
+
+@media (max-width: 900px) {
+  .arc-paid2-scope-head {
+    grid-template-columns: 1fr;
+    gap: 21px;
+    text-align: center;
+  }
+
+  .arc-paid2-label { justify-content: center; }
+  .arc-paid2-label::before { display: none; }
+
+  .arc-paid2-cards {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .arc-paid2-problem-grid {
+    grid-template-columns: 1fr;
+    gap: 21px;
+  }
+
+  .arc-paid2-vs { padding: 18px 0; font-size: 36px; }
+}
+
+@media (max-width: 630px) {
+  .arc-paid2-section { padding: 35px 18px; }
+  .arc-paid2-box { padding: 28px; }
+  .arc-paid2-card { padding: 33px 28px; }
+}
+
+/* === 06 Paid Pricing === */
+.arc-paid3-wrapper {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  position: relative;
+  background: var(--bg-dark);
+}
+
+.arc-paid3-section {
+  width: 100%;
+  padding: 63px 21px 84px;
+  position: relative;
+}
+
+.arc-paid3-inner { max-width: 1050px; margin: 0 auto; }
+
+.arc-paid3-label {
+  font-size: 12px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 16px;
-  background: rgba(107, 142, 107, 0.1);
-  border-radius: 100px;
-  color: var(--success);
-  font-size: 13px;
-  font-weight: 600;
-  margin-top: 12px;
+  gap: 14px;
+  justify-content: center;
 }
 
-.bundle-note {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-top: 12px;
+.arc-paid3-label::before,
+.arc-paid3-label::after {
+  content: '';
+  width: 42px;
+  height: 1px;
+  background: var(--gold);
 }
 
-/* ══════════════════════════════════════════════════
-   CTA
-   ══════════════════════════════════════════════════ */
+.arc-paid3-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(33px, 6vw, 56px);
+  line-height: 1.05;
+  letter-spacing: 2px;
+  margin-bottom: 42px;
+}
 
-.cta-wrap {
-  background: var(--black);
+.arc-paid3-title-gold { color: var(--gold); }
+
+.arc-paid3-results-head { text-align: center; margin-bottom: 42px; }
+
+.arc-paid3-dashboard {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(21px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+  padding: 42px;
   position: relative;
   overflow: hidden;
 }
 
-.cta-wrap::before {
+.arc-paid3-dashboard::before {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(184, 132, 138, 0.12) 0%, transparent 70%);
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(184, 132, 138, 0.08), transparent 50%);
   pointer-events: none;
 }
 
-.cta-inner {
-  text-align: center;
-  position: relative;
-  z-index: 1;
-}
-
-.cta-title {
-  font-family: 'Playfair Display', serif;
-  font-size: var(--text-h1);
-  font-weight: 700;
-  color: var(--white);
-  margin-bottom: 16px;
-}
-
-.cta-desc {
-  font-size: var(--text-lg);
-  color: rgba(255, 255, 255, 0.65);
-  max-width: 520px;
-  margin: 0 auto 36px;
-  line-height: 1.8;
-}
-
-.cta-btn {
-  display: inline-flex;
+.arc-paid3-dashboard-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  padding: 16px 40px;
-  background: var(--rose-gradient);
-  color: var(--white);
-  font-family: 'Inter', sans-serif;
-  font-size: 15px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 21px;
+}
+
+.arc-paid3-dashboard-period {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 6px;
+}
+
+.arc-paid3-dashboard-client {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 21px;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  border-radius: 100px;
+}
+
+.arc-paid3-tabs {
+  display: flex;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 14px;
+  padding: 6px;
+}
+
+.arc-paid3-tab {
+  padding: 12px 21px;
+  background: transparent;
   border: none;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  width: fit-content;
-}
-
-.cta-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 36px rgba(184, 132, 138, 0.3);
-}
-
-.cta-btn-arrow {
-  transition: transform 0.3s ease;
-}
-
-.cta-btn:hover .cta-btn-arrow {
-  transform: translateX(4px);
-}
-
-.cta-contact {
-  margin-top: 24px;
+  border-radius: 7px;
+  color: var(--text-muted);
+  font-family: 'DM Sans', sans-serif;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.cta-contact a {
-  color: var(--rose-light);
-  transition: color 0.3s ease;
+.arc-paid3-tab:hover { color: rgba(255, 255, 255, 0.8); }
+
+.arc-paid3-tab.active {
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  color: #000;
+  font-weight: 600;
 }
 
-.cta-contact a:hover {
-  color: var(--white);
+.arc-paid3-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 21px;
+  margin-bottom: 28px;
 }
 
-/* ══════════════════════════════════════════════════
-   FOOTER
-   ══════════════════════════════════════════════════ */
+.arc-paid3-metric {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-subtle);
+  border-radius: 21px;
+  padding: 24px;
+  position: relative;
+}
 
-.pres-footer {
-  background: var(--black-deep);
-  padding: 32px var(--space-container);
+.arc-paid3-metric::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--gold), var(--gold-dark));
+  border-radius: 3px 0 0 3px;
+}
+
+.arc-paid3-metric--gold {
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+  border: none;
+}
+
+.arc-paid3-metric--gold::before { display: none; }
+.arc-paid3-metric--gold * { color: #000 !important; }
+
+.arc-paid3-metric-label {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 12px;
+}
+
+.arc-paid3-metric-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.arc-paid3-metric-change {
+  font-size: 14px;
+  color: var(--success);
+  margin-top: 9px;
+  font-weight: 500;
+}
+
+.arc-paid3-chart-wrap {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 21px;
+  padding: 28px;
+}
+
+.arc-paid3-chart-title {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 21px;
+}
+
+.arc-paid3-chart-canvas { height: 210px; }
+
+.arc-paid3-chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 42px;
+  margin-top: 21px;
+}
+
+.arc-paid3-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.arc-paid3-legend-line {
+  width: 28px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.arc-paid3-legend-line--current {
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+}
+
+.arc-paid3-legend-line--baseline {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.arc-paid3-pricing-head { text-align: center; margin-bottom: 42px; }
+
+.arc-paid3-pricing-sub {
+  font-size: 15px;
+  color: var(--text-subtle);
+  margin-top: 14px;
+}
+
+.arc-paid3-value {
+  max-width: 840px;
+  margin: 0 auto 56px;
+  background: linear-gradient(135deg, rgba(184, 132, 138, 0.08), rgba(184, 132, 138, 0.02));
+  border: 1px solid rgba(184, 132, 138, 0.15);
+  border-radius: 21px;
+  padding: 33px;
+}
+
+.arc-paid3-value-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 21px;
+  color: var(--gold);
+  margin-bottom: 21px;
+  letter-spacing: 1px;
   text-align: center;
 }
 
-.pres-footer-text {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.3);
-  letter-spacing: 1px;
+.arc-paid3-value-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 28px;
 }
 
-.pres-footer-brand {
-  color: var(--rose-light);
-  font-weight: 600;
+.arc-paid3-value-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--text-muted);
 }
 
-/* ══════════════════════════════════════════════════
-   SECTION DIVIDER
-   ══════════════════════════════════════════════════ */
+.arc-paid3-value-icon {
+  width: 21px;
+  height: 21px;
+  color: var(--gold);
+  flex-shrink: 0;
+}
 
-.section-divider {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border-medium), transparent);
-  max-width: 1100px;
+.arc-paid3-pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 28px;
+  align-items: center;
+  max-width: 840px;
   margin: 0 auto;
 }
 
-/* ══════════════════════════════════════════════════
-   PLATFORM LIST
-   ══════════════════════════════════════════════════ */
-
-.platform-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
+.arc-paid3-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  border: 1px solid var(--border-subtle);
+  border-radius: 28px;
+  padding: 42px 36px;
+  text-align: center;
+  position: relative;
+  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-.platform-tag {
-  padding: 6px 14px;
-  background: var(--rose-muted);
-  border-radius: 100px;
+.arc-paid3-card:hover { transform: translateY(-7px); }
+
+.arc-paid3-card--featured {
+  background: linear-gradient(135deg, rgba(184, 132, 138, 0.1), rgba(184, 132, 138, 0.03));
+  border: 2px solid rgba(184, 132, 138, 0.28);
+  padding: 56px 42px;
+}
+
+.arc-paid3-card--featured::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: -2px; right: -2px;
+  height: 6px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+  border-radius: 28px 28px 0 0;
+}
+
+.arc-paid3-badge {
   font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 14px;
+}
+
+.arc-paid3-card--featured .arc-paid3-badge {
+  display: inline-block;
+  padding: 9px 21px;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  color: #000;
+  border-radius: 21px;
   font-weight: 600;
-  color: var(--rose-dark);
-  letter-spacing: 0.5px;
 }
 
-/* ══════════════════════════════════════════════════
-   RESPONSIVE
-   ══════════════════════════════════════════════════ */
-
-@media (max-width: 768px) {
-  .hero-stats {
-    gap: 24px;
-  }
-
-  .engine-number {
-    font-size: 48px;
-    top: -4px;
-  }
-
-  .bundle-engines {
-    grid-template-columns: 1fr;
-  }
-
-  .bundle-total-prices {
-    flex-direction: column;
-    gap: 8px;
-  }
+.arc-paid3-card-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 1px;
+  margin-bottom: 9px;
 }
 
-@media (max-width: 480px) {
-  .hero-badge {
-    font-size: 10px;
-    padding: 6px 14px;
-  }
+.arc-paid3-card--featured .arc-paid3-card-name { font-size: 33px; }
 
-  .ocs-tier-stats {
-    grid-template-columns: 1fr;
-  }
+.arc-paid3-card-desc {
+  font-size: 14px;
+  color: var(--text-subtle);
+  margin-bottom: 28px;
+  line-height: 1.8;
+}
+
+.arc-paid3-card-stats { margin-bottom: 28px; }
+
+.arc-paid3-stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 14px;
+}
+
+.arc-paid3-stat-row:last-child { border-bottom: none; }
+.arc-paid3-stat-lbl { color: var(--text-subtle); }
+.arc-paid3-stat-val { color: var(--text-primary); font-weight: 600; }
+.arc-paid3-card--featured .arc-paid3-stat-val { color: var(--gold); }
+
+.arc-paid3-price {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 49px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 6px;
+  color: var(--gold);
+}
+
+.arc-paid3-card--featured .arc-paid3-price { font-size: 63px; }
+
+.arc-paid3-period {
+  font-size: 14px;
+  color: var(--text-subtle);
+}
+
+.arc-paid3-note {
+  max-width: 840px;
+  margin: 42px auto 0;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 21px;
+  padding: 28px 33px;
+  text-align: center;
+}
+
+.arc-paid3-note-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.arc-paid3-note-text {
+  font-size: 14px;
+  color: var(--text-subtle);
+  line-height: 2;
+}
+
+.arc-paid3-fine {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-faint);
+  max-width: 630px;
+  margin: 42px auto 0;
+  line-height: 2.2;
+}
+
+.arc-paid3-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.arc-paid3-reveal.active { opacity: 1; transform: translateY(0); }
+.arc-paid3-reveal-d1 { transition-delay: 0.12s; }
+.arc-paid3-reveal-d2 { transition-delay: 0.24s; }
+.arc-paid3-reveal-d3 { transition-delay: 0.36s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .arc-paid3-reveal { opacity: 1; transform: none; transition: none; }
+  .arc-paid3-card:hover { transform: none; }
+}
+
+@media (max-width: 900px) {
+  .arc-paid3-pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
+  .arc-paid3-card--featured { order: -1; }
+  .arc-paid3-metrics { grid-template-columns: 1fr; }
+  .arc-paid3-dashboard-header { flex-direction: column; align-items: flex-start; }
+  .arc-paid3-value-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 630px) {
+  .arc-paid3-section { padding: 35px 18px; }
+  .arc-paid3-dashboard { padding: 28px; }
+  .arc-paid3-card { padding: 33px 28px; }
+  .arc-paid3-label::before, .arc-paid3-label::after { display: none; }
 }
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════════════════════════
-     HERO
-     ════════════════════════════════════════════════════════════════ -->
+<!-- 04-PAID-HERO -->
+<div class="arc-paid1-wrapper">
 
-<section class="hero-wrap" id="page-hero">
-  <div class="hero-inner">
-    <div class="hero-badge reveal">
-      <span class="hero-badge-dot"></span>
-      Growth Proposal
+  <section class="arc-paid1-hero">
+
+    <div class="arc-paid1-eyebrow arc-paid1-reveal">
+      <span class="arc-paid1-eyebrow-line"></span>
+      <span class="arc-paid1-eyebrow-text">Paid Advertising</span>
+      <span class="arc-paid1-eyebrow-line"></span>
     </div>
 
-    <h1 class="hero-title reveal reveal-delay-1">
-      The Wedding Mentor
-      <span class="hero-title-rose">Growth System</span>
+    <h1 class="arc-paid1-title">
+      <span class="arc-paid1-title-line">NEWLY ENGAGED COUPLES ARE&nbsp;SEARCHING.</span>
+      <span class="arc-paid1-title-line arc-paid1-title-line--gold">LET THEM FIND&nbsp;YOU.</span>
     </h1>
 
-    <p class="hero-sub-name reveal reveal-delay-1">by Ally Towne</p>
-
-    <p class="hero-desc reveal reveal-delay-2">
-      A targeted paid advertising strategy designed to put your 12-module wedding planning
-      course in front of newly engaged couples the moment they start searching for help.
+    <p class="arc-paid1-sub arc-paid1-reveal arc-paid1-reveal-d1">
+      Every day, people Nationwide (Online) search for wedding planning courses. <strong><br>Targeted ads</strong> put The Wedding Mentor in front of&nbsp;them at&nbsp;the exact moment they're ready to&nbsp;talk.
     </p>
 
-    <div class="hero-stats reveal reveal-delay-3">
-      <div class="hero-stat">
-        <span class="hero-stat-val">26</span>
-        <span class="hero-stat-lbl">Years Expertise</span>
+    <div class="arc-paid1-stats arc-paid1-reveal arc-paid1-reveal-d2">
+      <div class="arc-paid1-stat">
+        <span class="arc-paid1-stat-val">75</span>
+        <span class="arc-paid1-stat-lbl">Ads Managed</span>
       </div>
-      <div class="hero-stat">
-        <span class="hero-stat-val">50K+</span>
-        <span class="hero-stat-lbl">Monthly Impressions</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-val">12</span>
-        <span class="hero-stat-lbl">Course Modules</span>
+      <div class="arc-paid1-stat">
+        <span class="arc-paid1-stat-val">24/7</span>
+        <span class="arc-paid1-stat-lbl">Optimization</span>
       </div>
     </div>
+
+  </section>
+
+  <div class="arc-paid1-marquee">
+    <div class="arc-paid1-marquee-track">
+      <span class="arc-paid1-marquee-item">WEDDING MENTOR <span>WEDDING PLANNING</span></span>
+      <span class="arc-paid1-marquee-item">Nationwide (Online) <span>FROM ENGAGEMENT TO ALTAR</span></span>
+      <span class="arc-paid1-marquee-item">EXPERT GUIDANCE <span>WEDDING PLANNING</span></span>
+      <span class="arc-paid1-marquee-item">WEDDING MENTOR <span>WEDDING PLANNING</span></span>
+      <span class="arc-paid1-marquee-item">Nationwide (Online) <span>FROM ENGAGEMENT TO ALTAR</span></span>
+      <span class="arc-paid1-marquee-item">EXPERT GUIDANCE <span>WEDDING PLANNING</span></span>
+    </div>
   </div>
-</section>
 
-<!-- ════════════════════════════════════════════════════════════════
-     PAID ADVERTISING
-     ════════════════════════════════════════════════════════════════ -->
+</div>
 
-<section class="section-wrap" style="background: var(--cream);">
-  <div class="section-inner">
-    <div class="engine-header reveal">
-      <div class="section-eyebrow">
-        <span class="section-eyebrow-line"></span>
-        <span class="section-eyebrow-text">The System</span>
+<!-- 05-PAID-SCOPE -->
+<div class="arc-paid2-wrapper">
+
+
+  <section class="arc-paid2-section arc-paid2-problem">
+    <div class="arc-paid2-inner">
+
+      <p class="arc-paid2-label arc-paid2-reveal" style="justify-content: center;">The Reality</p>
+
+      <h2 class="arc-paid2-title arc-paid2-reveal arc-paid2-reveal-d1" style="text-align: center;">
+        MOST BUSINESSES WASTE AD&nbsp;SPEND.<br>
+        <span class="arc-paid2-title-gold">HERE'S A BETTER&nbsp;APPROACH.</span>
+      </h2>
+
+      <div class="arc-paid2-problem-grid arc-paid2-reveal arc-paid2-reveal-d2">
+
+        <div class="arc-paid2-box arc-paid2-box--bad">
+          <p class="arc-paid2-box-label">What&nbsp;they Do</p>
+          <ul class="arc-paid2-list">
+            <li><span class="arc-paid2-list-icon">&#10007;</span> Boosting posts without a&nbsp;strategy</li>
+            <li><span class="arc-paid2-list-icon">&#10007;</span> No clue if ads generate real&nbsp;leads</li>
+            <li><span class="arc-paid2-list-icon">&#10007;</span> Paying to reach people outside your&nbsp;area</li>
+            <li><span class="arc-paid2-list-icon">&#10007;</span> Same tired ads customers scroll&nbsp;past</li>
+            <li><span class="arc-paid2-list-icon">&#10007;</span> No way to measure actual&nbsp;return</li>
+          </ul>
+        </div>
+
+        <div class="arc-paid2-vs">VS</div>
+
+        <div class="arc-paid2-box arc-paid2-box--good">
+          <p class="arc-paid2-box-label">What We Build</p>
+          <ul class="arc-paid2-list">
+            <li><span class="arc-paid2-list-icon">&#10003;</span> Campaigns targeting newly engaged couples ready to&nbsp;enroll</li>
+            <li><span class="arc-paid2-list-icon">&#10003;</span> Track every lead back to its&nbsp;source</li>
+            <li><span class="arc-paid2-list-icon">&#10003;</span> Reach Nationwide (Online) newly engaged couples in ideal zip&nbsp;codes</li>
+            <li><span class="arc-paid2-list-icon">&#10003;</span> Showcase your work with professional&nbsp;creative</li>
+            <li><span class="arc-paid2-list-icon">&#10003;</span> Scale what works, cut what&nbsp;doesn't</li>
+          </ul>
+        </div>
+
       </div>
-      <h2 class="section-title">Paid Advertising</h2>
-      <p class="section-subtitle">
-        Reach newly engaged couples the moment they start planning, with
-        targeted campaigns that put your course in front of the right audience.
+
+      <div class="arc-paid2-problem-cta arc-paid2-reveal arc-paid2-reveal-d3">
+        Your work speaks for&nbsp;itself.<br>
+        <strong>Let the right people see&nbsp;it.</strong>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="arc-paid2-section">
+    <div class="arc-paid2-inner">
+
+      <div class="arc-paid2-scope-head">
+        <div>
+          <p class="arc-paid2-label arc-paid2-reveal">The System</p>
+          <h2 class="arc-paid2-title arc-paid2-reveal arc-paid2-reveal-d1">
+            TARGETED&nbsp;REACH.<br>
+            <span class="arc-paid2-title-gold">QUALIFIED&nbsp;LEADS.</span>
+          </h2>
+        </div>
+        <p class="arc-paid2-scope-desc arc-paid2-reveal arc-paid2-reveal-d2">
+          Full-service ad management that puts The Wedding Mentor in front of Nationwide (Online) newly engaged couples actively searching for wedding planning courses.
+        </p>
+      </div>
+
+      <div class="arc-paid2-cards">
+
+        <div class="arc-paid2-card arc-paid2-reveal arc-paid2-reveal-d1">
+          <div class="arc-paid2-card-glow"></div>
+          <div class="arc-paid2-card-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/>
+            </svg>
+          </div>
+          <h3 class="arc-paid2-card-title">Creative Production</h3>
+          <ul class="arc-paid2-card-list">
+            <li>Showcase your best&nbsp;work</li>
+            <li>Before/after&nbsp;transformations</li>
+            <li>Compelling ad&nbsp;copy</li>
+            <li>A/B test&nbsp;variations</li>
+            <li>Fresh creative&nbsp;monthly</li>
+          </ul>
+        </div>
+
+        <div class="arc-paid2-card arc-paid2-reveal arc-paid2-reveal-d2">
+          <div class="arc-paid2-card-glow"></div>
+          <div class="arc-paid2-card-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+            </svg>
+          </div>
+          <h3 class="arc-paid2-card-title">Local Targeting</h3>
+          <ul class="arc-paid2-card-list">
+            <li>Nationwide (Online) metro&nbsp;focus</li>
+            <li>Customer&nbsp;demographics</li>
+            <li>Income-qualified&nbsp;audiences</li>
+            <li>Interest-based&nbsp;targeting</li>
+            <li>Retargeting site&nbsp;visitors</li>
+          </ul>
+        </div>
+
+        <div class="arc-paid2-card arc-paid2-reveal arc-paid2-reveal-d3">
+          <div class="arc-paid2-card-glow"></div>
+          <div class="arc-paid2-card-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+            </svg>
+          </div>
+          <h3 class="arc-paid2-card-title">Lead Tracking</h3>
+          <ul class="arc-paid2-card-list">
+            <li>Daily performance&nbsp;monitoring</li>
+            <li>Cost-per-lead&nbsp;reporting</li>
+            <li>Lead source&nbsp;attribution</li>
+            <li>Weekly&nbsp;optimization</li>
+            <li>Monthly strategy&nbsp;reviews</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<!-- 06-PAID-PRICING -->
+<div class="arc-paid3-wrapper">
+
+
+  <section class="arc-paid3-section">
+    <div class="arc-paid3-inner">
+
+      <div class="arc-paid3-results-head">
+        <p class="arc-paid3-label arc-paid3-reveal">Real&nbsp;Results</p>
+        <h2 class="arc-paid3-title arc-paid3-reveal arc-paid3-reveal-d1">
+          THIS IS WHAT <span class="arc-paid3-title-gold">PROFITABLE ADS</span> LOOK&nbsp;LIKE
+        </h2>
+      </div>
+
+      <div class="arc-paid3-dashboard arc-paid3-reveal arc-paid3-reveal-d2">
+
+        <div class="arc-paid3-dashboard-header">
+          <div>
+            <p class="arc-paid3-dashboard-period">28-Day Performance</p>
+            <p class="arc-paid3-dashboard-client">Campaign&nbsp;Dashboard</p>
+          </div>
+          <div class="arc-paid3-tabs">
+            <button class="arc-paid3-tab active" data-metric="roas">ROAS</button>
+            <button class="arc-paid3-tab" data-metric="cpl">CPL</button>
+            <button class="arc-paid3-tab" data-metric="leads">Leads</button>
+          </div>
+        </div>
+
+        <div class="arc-paid3-metrics">
+          <div class="arc-paid3-metric">
+            <p class="arc-paid3-metric-label">Current</p>
+            <p class="arc-paid3-metric-value" id="arcPaid3MetricCur">3.2x</p>
+            <p class="arc-paid3-metric-change" id="arcPaid3MetricChg">+0.8x&nbsp;improvement</p>
+          </div>
+          <div class="arc-paid3-metric">
+            <p class="arc-paid3-metric-label">Starting</p>
+            <p class="arc-paid3-metric-value" id="arcPaid3MetricStart" style="color: var(--text-primary);">2.4x</p>
+            <p class="arc-paid3-metric-change" style="color: var(--text-subtle);">baseline</p>
+          </div>
+          <div class="arc-paid3-metric arc-paid3-metric--gold">
+            <p class="arc-paid3-metric-label">Improvement</p>
+            <p class="arc-paid3-metric-value" id="arcPaid3MetricGrow">+33%</p>
+            <p class="arc-paid3-metric-change">28&nbsp;days</p>
+          </div>
+        </div>
+
+        <div class="arc-paid3-chart-wrap">
+          <p class="arc-paid3-chart-title" id="arcPaid3ChartTitle">Return on Ad&nbsp;Spend</p>
+          <div class="arc-paid3-chart-canvas">
+            <canvas id="arcPaid3Chart"></canvas>
+          </div>
+          <div class="arc-paid3-chart-legend">
+            <div class="arc-paid3-legend-item">
+              <div class="arc-paid3-legend-line arc-paid3-legend-line--current"></div>
+              <span>With Arc&nbsp;Garde</span>
+            </div>
+            <div class="arc-paid3-legend-item">
+              <div class="arc-paid3-legend-line arc-paid3-legend-line--baseline"></div>
+              <span>Industry&nbsp;Average</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="arc-paid3-section">
+    <div class="arc-paid3-inner">
+
+      <div class="arc-paid3-pricing-head">
+        <p class="arc-paid3-label arc-paid3-reveal">Investment</p>
+        <h2 class="arc-paid3-title arc-paid3-reveal arc-paid3-reveal-d1">
+          CHOOSE YOUR <span class="arc-paid3-title-gold">AD&nbsp;TIER</span>
+        </h2>
+        <p class="arc-paid3-pricing-sub arc-paid3-reveal arc-paid3-reveal-d2">
+          From initial visibility to full Nationwide (Online) market&nbsp;presence.
+        </p>
+      </div>
+
+      <div class="arc-paid3-value arc-paid3-reveal">
+        <p class="arc-paid3-value-title">WHY THIS MATTERS FOR&nbsp;YOU</p>
+        <div class="arc-paid3-value-grid">
+          <div class="arc-paid3-value-item">
+            <svg class="arc-paid3-value-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+            </svg>
+            <span>Target Nationwide (Online) zip&nbsp;codes</span>
+          </div>
+          <div class="arc-paid3-value-item">
+            <svg class="arc-paid3-value-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
+            </svg>
+            <span>Reach newly engaged couples ready to&nbsp;enroll</span>
+          </div>
+          <div class="arc-paid3-value-item">
+            <svg class="arc-paid3-value-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/>
+            </svg>
+            <span>Track cost per&nbsp;lead</span>
+          </div>
+          <div class="arc-paid3-value-item">
+            <svg class="arc-paid3-value-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+            </svg>
+            <span>Scale what&nbsp;works</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="arc-paid3-pricing-grid">
+
+        <div class="arc-paid3-card arc-paid3-reveal arc-paid3-reveal-d1">
+          <p class="arc-paid3-badge">Foundation</p>
+          <h3 class="arc-paid3-card-name">FOUNDATION</h3>
+          <p class="arc-paid3-card-desc">Perfect for testing the waters<br>with targeted local&nbsp;ads.</p>
+          <div class="arc-paid3-card-stats">
+            <div class="arc-paid3-stat-row">
+              <span class="arc-paid3-stat-lbl">Ads&nbsp;managed</span>
+              <span class="arc-paid3-stat-val">14&nbsp;ads</span>
+            </div>
+            <div class="arc-paid3-stat-row">
+              <span class="arc-paid3-stat-lbl">Creative&nbsp;refresh</span>
+              <span class="arc-paid3-stat-val">Monthly</span>
+            </div>
+            <div class="arc-paid3-stat-row">
+              <span class="arc-paid3-stat-lbl">Reporting</span>
+              <span class="arc-paid3-stat-val">Weekly</span>
+            </div>
+          </div>
+          <p class="arc-paid3-price">$2,100</p>
+          <p class="arc-paid3-period">per&nbsp;month</p>
+        </div>
+
+        <div class="arc-paid3-card arc-paid3-card--featured arc-paid3-reveal arc-paid3-reveal-d2">
+          <p class="arc-paid3-badge">Recommended</p>
+          <h3 class="arc-paid3-card-name">ANDROMEDA PREMIUM</h3>
+          <p class="arc-paid3-card-desc">Full-scale ad management<br>for serious lead&nbsp;generation.</p>
+          <div class="arc-paid3-card-stats">
+            <div class="arc-paid3-stat-row">
+              <span class="arc-paid3-stat-lbl">Ads&nbsp;managed</span>
+              <span class="arc-paid3-stat-val">75&nbsp;ads</span>
+            </div>
+            <div class="arc-paid3-stat-row">
+              <span class="arc-paid3-stat-lbl">Creative&nbsp;refresh</span>
+              <span class="arc-paid3-stat-val">Bi-weekly</span>
+            </div>
+            <div class="arc-paid3-stat-row">
+              <span class="arc-paid3-stat-lbl">Reporting</span>
+              <span class="arc-paid3-stat-val">Daily&nbsp;monitoring</span>
+            </div>
+          </div>
+          <p class="arc-paid3-price">$3,927</p>
+          <p class="arc-paid3-period">per&nbsp;month</p>
+        </div>
+
+      </div>
+
+      <div class="arc-paid3-note arc-paid3-reveal">
+        <p class="arc-paid3-note-title">AD&nbsp;SPEND REQUIREMENT</p>
+        <p class="arc-paid3-note-text">
+          Minimum $30 per&nbsp;day per ad set&nbsp;recommended.<br>
+          That's approximately $90/day total ($2,700/month) for optimal&nbsp;performance.
+        </p>
+      </div>
+
+      <p class="arc-paid3-fine arc-paid3-reveal">
+        Management fees are separate from ad&nbsp;spend. Results vary based on industry, offer, and&nbsp;ad&nbsp;budget. <br> Minimum 3-month&nbsp;commitment.
       </p>
+
     </div>
+  </section>
 
-    <div class="ps-grid reveal">
-      <div class="ps-card ps-card--problem">
-        <span class="ps-card-label">The Problem</span>
-        <p class="ps-card-text">
-          Thousands of couples get engaged every day. They immediately turn to Google
-          and social media for wedding planning help. Right now, they are finding
-          your competitors, generic blogs, and overpriced planners instead of your
-          proven 12-module course.
-        </p>
-      </div>
-      <div class="ps-card ps-card--solution">
-        <span class="ps-card-label">The Solution</span>
-        <p class="ps-card-text">
-          Targeted Meta and Google ad campaigns reaching newly engaged women actively
-          searching for wedding planning guidance. We build the audiences, produce
-          the creative, and optimize weekly to drive enrollment at the lowest
-          cost per acquisition.
-        </p>
-      </div>
-    </div>
-
-    <h3 class="section-title reveal" style="font-size: var(--text-h3); margin-bottom: 16px;">Campaign Scope</h3>
-
-    <ul class="scope-list reveal">
-      <li><span class="scope-check"></span>Full Meta and Google campaign architecture</li>
-      <li><span class="scope-check"></span>Ad creative production (static + video)</li>
-      <li><span class="scope-check"></span>Audience targeting: newly engaged, wedding planning interests, bridal</li>
-      <li><span class="scope-check"></span>Retargeting site visitors and partial enrollments</li>
-      <li><span class="scope-check"></span>Weekly optimization and reporting</li>
-      <li><span class="scope-check"></span>A/B creative testing with structured rotation</li>
-    </ul>
-
-    <div class="metrics-row reveal">
-      <div class="metric-card">
-        <span class="metric-val">50K+</span>
-        <span class="metric-label">Monthly Impressions</span>
-      </div>
-      <div class="metric-card">
-        <span class="metric-val">3-5%</span>
-        <span class="metric-label">Click-Through Rate</span>
-      </div>
-      <div class="metric-card">
-        <span class="metric-val">2-4%</span>
-        <span class="metric-label">Conversion Rate</span>
-      </div>
-      <div class="metric-card">
-        <span class="metric-val">4-6x</span>
-        <span class="metric-label">Projected ROAS</span>
-      </div>
-    </div>
-
-    <div style="text-align: center; margin-top: 40px;" class="reveal">
-      <div style="display: inline-flex; align-items: center; gap: 12px; padding: 16px 32px; background: var(--white); border: 1px solid var(--border-medium); border-radius: 12px;">
-        <span style="font-size: 13px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px;">Investment</span>
-        <span style="font-family: 'Playfair Display', serif; font-size: var(--text-h3); font-weight: 700; color: var(--rose);">$1,500</span>
-        <span style="font-size: 13px; color: var(--text-muted);">/month + ad spend</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════════════
-     CTA
-     ════════════════════════════════════════════════════════════════ -->
-
-<section class="section-wrap cta-wrap">
-  <div class="section-inner cta-inner">
-    <h2 class="cta-title reveal">
-      Ready to Fill Your Course<br>
-      <span style="background: var(--rose-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">With Engaged Couples?</span>
-    </h2>
-    <p class="cta-desc reveal reveal-delay-1">
-      Your 26 years of expertise deserve targeted advertising that reaches the right audience.
-      Let us put your course in front of the couples who need it most.
-    </p>
-    <div style="display: flex; justify-content: center;" class="reveal reveal-delay-2">
-      <a href="mailto:hello@arcgarde.com" class="cta-btn">
-        Start the Conversation
-        <span class="cta-btn-arrow">&rarr;</span>
-      </a>
-    </div>
-    <p class="cta-contact reveal reveal-delay-3">
-      Or reach out directly at <a href="mailto:hello@arcgarde.com">hello@arcgarde.com</a>
-    </p>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════════════
-     FOOTER
-     ════════════════════════════════════════════════════════════════ -->
-
-<footer class="pres-footer">
-  <p class="pres-footer-text">
-    Prepared exclusively for The Wedding Mentor by <span class="pres-footer-brand">Arc Garde</span>
-  </p>
-</footer>
+</div>
 
 <script>
-(function() {
-  'use strict';
+// Paid Ads scroll reveal and interaction scripts
 
-  /* Scroll Reveal via IntersectionObserver */
+(function(){
+  var reveals = document.querySelectorAll('.arc-paid1-reveal');
   var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -40px 0px'
+    entries.forEach(function(entry) { if (entry.isIntersecting) entry.target.classList.add('active'); });
+  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+  reveals.forEach(function(el) { observer.observe(el); });
+})();
+
+
+(function(){
+  var reveals = document.querySelectorAll('.arc-paid2-reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) { if (entry.isIntersecting) entry.target.classList.add('active'); });
+  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+  reveals.forEach(function(el) { observer.observe(el); });
+})();
+
+
+(function(){
+  var reveals = document.querySelectorAll('.arc-paid3-reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) { if (entry.isIntersecting) entry.target.classList.add('active'); });
+  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+  reveals.forEach(function(el) { observer.observe(el); });
+
+  var chartData = {
+    roas: { label: 'Return on Ad Spend', current: [2.4, 2.6, 2.8, 3.0, 3.2], baseline: [2.4, 2.45, 2.5, 2.55, 2.6], curVal: '3.2x', startVal: '2.4x', chg: '+0.8x improvement', grow: '+33%' },
+    cpl: { label: 'Cost Per Lead', current: [185, 165, 142, 128, 112], baseline: [185, 180, 175, 170, 165], curVal: '$112', startVal: '$185', chg: '-$73 reduction', grow: '-39%' },
+    leads: { label: 'Qualified Leads', current: [8, 12, 18, 26, 34], baseline: [8, 9, 10, 11, 12], curVal: '34', startVal: '8', chg: '+26 leads', grow: '+325%' }
+  };
+
+  var labels = ['Day 0', 'Day 7', 'Day 14', 'Day 21', 'Day 28'];
+  var ctx = document.getElementById('arcPaid3Chart').getContext('2d');
+
+  var gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0);
+  gradient.addColorStop(0, '#96666b');
+  gradient.addColorStop(0.5, '#b8848a');
+  gradient.addColorStop(1, '#d4a9ae');
+
+  var fill = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
+  fill.addColorStop(0, 'rgba(184, 132, 138, 0.2)');
+  fill.addColorStop(1, 'rgba(184, 132, 138, 0)');
+
+  var chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        { data: chartData.roas.current, borderColor: gradient, borderWidth: 3, pointBackgroundColor: '#b8848a', pointBorderColor: '#000', pointBorderWidth: 2, pointRadius: 5, pointHoverRadius: 7, fill: true, backgroundColor: fill, tension: 0.4 },
+        { data: chartData.roas.baseline, borderColor: 'rgba(255, 255, 255, 0.15)', borderWidth: 2, borderDash: [6, 4], pointRadius: 0, fill: false, tension: 0.4 }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { intersect: false, mode: 'index' },
+      plugins: { legend: { display: false }, tooltip: { backgroundColor: '#fff', titleColor: '#000', bodyColor: '#333', padding: 12, cornerRadius: 8, displayColors: false } },
+      scales: { x: { grid: { display: false }, ticks: { color: 'rgba(255, 255, 255, 0.3)', font: { size: 11, family: 'DM Sans' } } }, y: { grid: { color: 'rgba(255, 255, 255, 0.04)' }, ticks: { color: 'rgba(255, 255, 255, 0.3)', font: { size: 11, family: 'DM Sans' } } } }
+    }
   });
 
-  document.querySelectorAll('.reveal').forEach(function(el) {
-    observer.observe(el);
+  var tabs = document.querySelectorAll('.arc-paid3-tab');
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      this.classList.add('active');
+      var metric = this.dataset.metric;
+      var d = chartData[metric];
+      chart.data.datasets[0].data = d.current;
+      chart.data.datasets[1].data = d.baseline;
+      chart.update();
+      document.getElementById('arcPaid3MetricCur').textContent = d.curVal;
+      document.getElementById('arcPaid3MetricStart').textContent = d.startVal;
+      document.getElementById('arcPaid3MetricChg').textContent = d.chg;
+      document.getElementById('arcPaid3MetricGrow').textContent = d.grow;
+      document.getElementById('arcPaid3ChartTitle').textContent = d.label;
+    });
   });
 })();
 </script>
+
 </body>
 </html>
