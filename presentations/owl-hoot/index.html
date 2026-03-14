@@ -1,0 +1,2072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arc Garde – Owls Hoot Barn Proposal</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Owls Hoot Barn - Heritage Rustic Theme */
+  --forest: #1A2A24;
+  --forest-deep: #0D1512;
+  --forest-bottom: #080D0B;
+  --accent: #A67C52;
+  --accent-light: #C9A87C;
+  --accent-dark: #8B6642;
+  --accent-glow: rgba(166, 124, 82, 0.35);
+  --rust: #8B6914;
+  --text-primary: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.55);
+  --text-subtle: rgba(255, 255, 255, 0.35);
+  --text-faint: rgba(255, 255, 255, 0.2);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --error: #E57373;
+  --success: #4ADE80;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--forest-deep);
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--forest-bottom);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.arc-wrapper {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION WRAPPER
+   ═══════════════════════════════════════════════════════════════ */
+.arc-section {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--forest-bottom) 0%, var(--forest-deep) 15%, var(--forest-deep) 85%, var(--forest-bottom) 100%);
+}
+
+.arc-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(166, 124, 82, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(166, 124, 82, 0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.arc-inner {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 0 21px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO SECTION
+   ═══════════════════════════════════════════════════════════════ */
+.arc-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 56px 42px 35px;
+  min-height: 680px;
+  position: relative;
+  z-index: 2;
+}
+
+/* BRAND LOGO */
+.arc-brand {
+  margin-bottom: 28px;
+}
+
+.arc-brand-logo {
+  max-width: 180px;
+  height: auto;
+  opacity: 0.85;
+  filter: brightness(1.1);
+}
+
+/* EYEBROW */
+.arc-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 21px;
+}
+
+.arc-eyebrow-line {
+  width: 42px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent));
+  transform: scaleX(0);
+  animation: lineExtend 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.3s;
+}
+
+.arc-eyebrow-line:last-child {
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+@keyframes lineExtend {
+  to { transform: scaleX(1); }
+}
+
+.arc-eyebrow-text {
+  font-size: 12px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* HERO TITLE */
+.arc-hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(49px, 10vw, 112px);
+  line-height: 1.05;
+  letter-spacing: 4px;
+  margin-bottom: 21px;
+  text-align: center;
+}
+
+.arc-hero-title-line {
+  display: block;
+}
+
+.arc-hero-title-line--accent {
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent), var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 80px rgba(166, 124, 82, 0.3);
+}
+
+/* SUBTITLE */
+.arc-hero-sub {
+  font-size: 18px;
+  line-height: 1.9;
+  color: var(--text-muted);
+  max-width: 630px;
+  margin: 0 auto 35px;
+  font-weight: 300;
+}
+
+.arc-hero-sub strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* STATS ROW */
+.arc-stats {
+  display: flex;
+  gap: 56px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.arc-stat {
+  text-align: center;
+}
+
+.arc-stat-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(42px, 7vw, 56px);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  position: relative;
+  display: inline-block;
+}
+
+.arc-stat-val::after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-light));
+  border-radius: 2px;
+  transform: scaleX(0);
+  animation: lineGrow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.8s;
+}
+
+@keyframes lineGrow {
+  to { transform: scaleX(1); }
+}
+
+.arc-stat-lbl {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-top: 18px;
+  display: block;
+}
+
+/* MARQUEE */
+.arc-marquee {
+  width: 100%;
+  overflow: hidden;
+  padding: 21px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.arc-marquee-track {
+  display: flex;
+  width: fit-content;
+  animation: marqueeScroll 25s linear infinite;
+}
+
+@keyframes marqueeScroll {
+  to { transform: translateX(-50%); }
+}
+
+.arc-marquee-item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(70px, 12vw, 140px);
+  letter-spacing: 7px;
+  white-space: nowrap;
+  padding: 0 42px;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(166, 124, 82, 0.4);
+  text-stroke: 2px rgba(166, 124, 82, 0.4);
+  line-height: 1;
+}
+
+.arc-marquee-item span {
+  color: var(--accent);
+  -webkit-text-stroke: 0;
+  text-stroke: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PROBLEM SECTION
+   ═══════════════════════════════════════════════════════════════ */
+.arc-problem {
+  text-align: center;
+  padding: 63px 21px;
+}
+
+.arc-label {
+  font-size: 12px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.arc-label::before {
+  content: '';
+  width: 42px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.arc-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(30px, 5.5vw, 49px);
+  line-height: 1.1;
+  letter-spacing: 2px;
+  margin-bottom: 42px;
+}
+
+.arc-title-accent {
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent), var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* VS GRID */
+.arc-vs-grid {
+  display: grid;
+  grid-template-columns: 1fr 56px 1fr;
+  gap: 21px;
+  align-items: start;
+  margin-bottom: 42px;
+}
+
+.arc-box {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  border: 1px solid var(--border-subtle);
+  border-radius: 21px;
+  padding: 33px;
+  text-align: left;
+}
+
+.arc-box--bad {
+  border-color: rgba(229, 115, 115, 0.4);
+}
+
+.arc-box--good {
+  border-color: rgba(166, 124, 82, 0.3);
+  background: linear-gradient(135deg, rgba(166, 124, 82, 0.08), rgba(166, 124, 82, 0.02));
+}
+
+.arc-box-label {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 21px;
+  text-align: center;
+}
+
+.arc-box--bad .arc-box-label {
+  color: var(--error);
+}
+
+.arc-box--good .arc-box-label {
+  color: var(--accent);
+}
+
+.arc-list {
+  list-style: none;
+}
+
+.arc-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+  font-size: 14px;
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  line-height: 1.7;
+}
+
+.arc-list li:last-child {
+  border-bottom: none;
+}
+
+.arc-list-icon {
+  flex-shrink: 0;
+  width: 21px;
+  height: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.arc-box--bad .arc-list-icon {
+  color: var(--error);
+}
+
+.arc-box--good .arc-list-icon {
+  color: var(--accent);
+}
+
+.arc-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  color: var(--accent);
+  text-shadow: 0 0 30px rgba(166, 124, 82, 0.3);
+}
+
+.arc-problem-cta {
+  font-size: 18px;
+  color: var(--text-muted);
+  line-height: 2;
+}
+
+.arc-problem-cta strong {
+  color: var(--text-primary);
+  font-size: 24px;
+  display: block;
+  margin-top: 9px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCOPE SECTION
+   ═══════════════════════════════════════════════════════════════ */
+.arc-scope {
+  padding: 49px 21px 63px;
+}
+
+.arc-scope-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 63px;
+  margin-bottom: 49px;
+  align-items: end;
+}
+
+.arc-scope-desc {
+  font-size: 15px;
+  line-height: 2;
+  color: var(--text-muted);
+}
+
+.arc-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 21px;
+}
+
+.arc-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  border: 1px solid var(--border-subtle);
+  border-radius: 21px;
+  padding: 42px 33px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.4s ease;
+}
+
+.arc-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(166, 124, 82, 0.28);
+}
+
+.arc-card-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.arc-card:hover .arc-card-glow {
+  opacity: 1;
+}
+
+.arc-card-icon {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, rgba(166, 124, 82, 0.2), rgba(166, 124, 82, 0.05));
+  border: 1px solid rgba(166, 124, 82, 0.3);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.arc-card-icon svg {
+  width: 28px;
+  height: 28px;
+  color: var(--accent);
+}
+
+.arc-card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 1px;
+  margin-bottom: 21px;
+}
+
+.arc-card-list {
+  list-style: none;
+}
+
+.arc-card-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  font-size: 14px;
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: color 0.3s ease;
+  line-height: 1.6;
+}
+
+.arc-card-list li:last-child {
+  border-bottom: none;
+}
+
+.arc-card:hover .arc-card-list li {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.arc-card-list li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESULTS DASHBOARD
+   ═══════════════════════════════════════════════════════════════ */
+.arc-results {
+  padding: 63px 21px;
+}
+
+.arc-results-head {
+  text-align: center;
+  margin-bottom: 42px;
+}
+
+.arc-dashboard {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(21px);
+  -webkit-backdrop-filter: blur(21px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+  padding: 42px;
+  position: relative;
+  overflow: hidden;
+}
+
+.arc-dashboard::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(166, 124, 82, 0.08), transparent 50%);
+  pointer-events: none;
+}
+
+.arc-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 21px;
+}
+
+.arc-dashboard-period {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 6px;
+}
+
+.arc-dashboard-client {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 21px;
+  font-weight: 600;
+}
+
+/* TABS */
+.arc-tabs {
+  display: flex;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 14px;
+  padding: 6px;
+}
+
+.arc-tab {
+  padding: 12px 21px;
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  color: var(--text-muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.arc-tab:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.arc-tab.active {
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+  color: var(--forest-deep);
+  font-weight: 600;
+}
+
+/* METRICS ROW */
+.arc-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 21px;
+  margin-bottom: 28px;
+}
+
+.arc-metric {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-subtle);
+  border-radius: 21px;
+  padding: 24px;
+  position: relative;
+}
+
+.arc-metric::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--accent), var(--accent-dark));
+  border-radius: 3px 0 0 3px;
+}
+
+.arc-metric--accent {
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent), var(--accent-light));
+  border: none;
+  animation: accentPulse 3s ease-in-out infinite;
+}
+
+@keyframes accentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(166, 124, 82, 0); }
+  50% { box-shadow: 0 0 30px 5px rgba(166, 124, 82, 0.25); }
+}
+
+.arc-metric--accent::before {
+  display: none;
+}
+
+.arc-metric--accent * {
+  color: var(--forest-deep) !important;
+}
+
+.arc-metric-label {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 12px;
+}
+
+.arc-metric-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.arc-metric:hover .arc-metric-value {
+  transform: scale(1.05);
+}
+
+.arc-metric-change {
+  font-size: 14px;
+  color: var(--success);
+  margin-top: 9px;
+  font-weight: 500;
+}
+
+/* CHART */
+.arc-chart-wrap {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 21px;
+  padding: 28px;
+}
+
+.arc-chart-title {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 21px;
+}
+
+.arc-chart-canvas {
+  height: 210px;
+}
+
+.arc-chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 42px;
+  margin-top: 21px;
+}
+
+.arc-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.arc-legend-line {
+  width: 28px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.arc-legend-line--current {
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-light));
+}
+
+.arc-legend-line--baseline {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PRICING SECTION
+   ═══════════════════════════════════════════════════════════════ */
+.arc-pricing {
+  padding: 63px 21px 120px;
+}
+
+.arc-pricing-head {
+  text-align: center;
+  margin-bottom: 42px;
+}
+
+.arc-pricing-sub {
+  font-size: 15px;
+  color: var(--text-subtle);
+  margin-top: 14px;
+}
+
+/* VALUE BOX */
+.arc-value {
+  max-width: 840px;
+  margin: 0 auto 56px;
+  background: linear-gradient(135deg, rgba(166, 124, 82, 0.08), rgba(166, 124, 82, 0.02));
+  border: 1px solid rgba(166, 124, 82, 0.15);
+  border-radius: 21px;
+  padding: 33px;
+}
+
+.arc-value-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 21px;
+  color: var(--accent);
+  margin-bottom: 21px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.arc-value-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 28px;
+}
+
+.arc-value-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.arc-value-icon {
+  width: 21px;
+  height: 21px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* PRICING CARD - CENTERED SINGLE */
+.arc-pricing-single {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.arc-price-card {
+  background: linear-gradient(135deg, rgba(166, 124, 82, 0.1), rgba(166, 124, 82, 0.03));
+  border: 2px solid rgba(166, 124, 82, 0.28);
+  border-radius: 28px;
+  padding: 56px 42px;
+  text-align: center;
+  position: relative;
+  animation: featuredPulse 4s ease-in-out infinite;
+}
+
+@keyframes featuredPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(166, 124, 82, 0); }
+  50% { box-shadow: 0 0 40px 0 rgba(166, 124, 82, 0.15); }
+}
+
+.arc-price-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-light));
+  border-radius: 28px 28px 0 0;
+  background-size: 200% 100%;
+  animation: barShimmer 3s linear infinite;
+}
+
+@keyframes barShimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.arc-price-card::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, var(--accent), transparent, var(--accent-light));
+  z-index: -1;
+  opacity: 0.15;
+  filter: blur(21px);
+}
+
+.arc-badge {
+  display: inline-block;
+  padding: 9px 21px;
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+  color: var(--forest-deep);
+  border-radius: 21px;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.arc-price-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 33px;
+  letter-spacing: 1px;
+  margin-bottom: 9px;
+}
+
+.arc-price-desc {
+  font-size: 14px;
+  color: var(--text-subtle);
+  margin-bottom: 28px;
+  line-height: 1.8;
+}
+
+/* PRICE STATS */
+.arc-price-stats {
+  margin-bottom: 28px;
+}
+
+.arc-price-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 14px;
+}
+
+.arc-price-row:last-child {
+  border-bottom: none;
+}
+
+.arc-price-lbl {
+  color: var(--text-subtle);
+}
+
+.arc-price-val {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* PRICE DISPLAY */
+.arc-price-main {
+  margin-bottom: 14px;
+}
+
+.arc-price-amount {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent), var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.arc-price-period {
+  font-size: 14px;
+  color: var(--text-subtle);
+  margin-bottom: 21px;
+}
+
+/* SETUP FEE */
+.arc-setup {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 14px;
+  padding: 18px 24px;
+  margin-top: 21px;
+}
+
+.arc-setup-label {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 6px;
+}
+
+.arc-setup-amount {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.arc-setup-note {
+  font-size: 12px;
+  color: var(--text-faint);
+  margin-top: 6px;
+}
+
+/* NOTE BOX */
+.arc-note {
+  max-width: 840px;
+  margin: 42px auto 0;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 21px;
+  padding: 28px 33px;
+  text-align: center;
+}
+
+.arc-note-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  color: var(--accent);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.arc-note-text {
+  font-size: 14px;
+  color: var(--text-subtle);
+  line-height: 2;
+}
+
+/* FINE PRINT */
+.arc-fine {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-faint);
+  max-width: 630px;
+  margin: 42px auto 0;
+  line-height: 2.2;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REVEAL ANIMATIONS
+   ═══════════════════════════════════════════════════════════════ */
+.arc-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.arc-reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.arc-reveal-d1 { transition-delay: 0.12s; }
+.arc-reveal-d2 { transition-delay: 0.24s; }
+.arc-reveal-d3 { transition-delay: 0.36s; }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .arc-reveal { opacity: 1; transform: none; transition: none; }
+  .arc-marquee-track, .arc-eyebrow-line, .arc-stat-val::after { animation: none; }
+  .arc-eyebrow-line, .arc-stat-val::after { transform: scaleX(1); }
+  .arc-card:hover, .arc-metric:hover .arc-metric-value { transform: none; }
+  .arc-metric--accent, .arc-price-card, .arc-price-card::before { animation: none; }
+}
+
+/* TABLET */
+@media (max-width: 900px) {
+  .arc-scope-head {
+    grid-template-columns: 1fr;
+    gap: 21px;
+    text-align: center;
+  }
+  
+  .arc-label { justify-content: center; }
+  .arc-label::before { display: none; }
+  
+  .arc-cards {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  
+  .arc-vs-grid {
+    grid-template-columns: 1fr;
+    gap: 21px;
+  }
+  
+  .arc-vs { padding: 18px 0; font-size: 36px; }
+  .arc-metrics { grid-template-columns: 1fr; }
+  
+  .arc-dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .arc-value-grid { grid-template-columns: 1fr; }
+  
+  .arc-title {
+    font-size: clamp(26px, 5vw, 42px);
+  }
+}
+
+/* MOBILE */
+@media (max-width: 630px) {
+  .arc-inner {
+    padding: 0 16px;
+  }
+  
+  .arc-hero { 
+    padding: 32px 16px 18px; 
+    min-height: 480px; 
+  }
+  
+  .arc-brand {
+    margin-bottom: 18px;
+  }
+  
+  .arc-brand-logo {
+    max-width: 140px;
+  }
+  
+  .arc-hero-title {
+    font-size: clamp(32px, 10vw, 48px);
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+  }
+  
+  .arc-stats { 
+    flex-direction: column; 
+    gap: 20px; 
+  }
+  
+  .arc-stat-val {
+    font-size: 38px;
+  }
+  
+  .arc-stat-lbl {
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-top: 12px;
+  }
+  
+  .arc-eyebrow {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  
+  .arc-eyebrow-line { width: 20px; }
+  .arc-eyebrow-text { font-size: 9px; letter-spacing: 3px; }
+  
+  .arc-hero-sub { 
+    font-size: 13px; 
+    margin-bottom: 24px; 
+    line-height: 1.7;
+    padding: 0 4px;
+  }
+  
+  .arc-hero-sub br {
+    display: none;
+  }
+  
+  .arc-marquee {
+    padding: 14px 0;
+  }
+  
+  .arc-marquee-item { 
+    font-size: clamp(36px, 9vw, 56px);
+    -webkit-text-stroke: 1.5px rgba(166, 124, 82, 0.45); 
+    padding: 0 14px;
+    letter-spacing: 3px;
+  }
+  .arc-marquee-item span { 
+    color: var(--accent);
+    -webkit-text-stroke: 0; 
+  }
+  
+  .arc-problem, .arc-scope, .arc-results, .arc-pricing { 
+    padding: 35px 16px; 
+  }
+  
+  .arc-title {
+    font-size: clamp(24px, 6vw, 36px);
+    margin-bottom: 28px;
+  }
+  
+  .arc-box { 
+    padding: 24px 20px; 
+    border-radius: 16px;
+  }
+  
+  .arc-box-label {
+    font-size: 11px;
+    margin-bottom: 16px;
+  }
+  
+  .arc-list li {
+    font-size: 13px;
+    padding: 12px 0;
+    gap: 12px;
+  }
+  
+  .arc-list-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+  }
+  
+  .arc-vs {
+    font-size: 28px;
+    padding: 14px 0;
+  }
+  
+  .arc-problem-cta {
+    font-size: 15px;
+  }
+  
+  .arc-problem-cta strong {
+    font-size: 20px;
+  }
+  
+  .arc-card { 
+    padding: 28px 24px; 
+    border-radius: 18px;
+  }
+  
+  .arc-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+  }
+  
+  .arc-card-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .arc-card-title {
+    font-size: 21px;
+    margin-bottom: 16px;
+  }
+  
+  .arc-card-list li {
+    font-size: 13px;
+    padding: 10px 0;
+  }
+  
+  .arc-dashboard { 
+    padding: 24px 18px; 
+    border-radius: 21px;
+  }
+  
+  .arc-dashboard-client {
+    font-size: 18px;
+  }
+  
+  .arc-tabs {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .arc-tab {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+  
+  .arc-metric {
+    padding: 20px;
+    border-radius: 16px;
+  }
+  
+  .arc-metric-label {
+    font-size: 11px;
+  }
+  
+  .arc-metric-value {
+    font-size: 32px;
+  }
+  
+  .arc-metric-change {
+    font-size: 12px;
+  }
+  
+  .arc-chart-wrap {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+  
+  .arc-chart-canvas {
+    height: 180px;
+  }
+  
+  .arc-chart-legend {
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  
+  .arc-legend-item {
+    font-size: 11px;
+  }
+  
+  .arc-pricing-head {
+    margin-bottom: 28px;
+  }
+  
+  .arc-pricing-sub {
+    font-size: 14px;
+  }
+  
+  .arc-value {
+    padding: 24px 20px;
+    border-radius: 16px;
+    margin-bottom: 35px;
+  }
+  
+  .arc-value-title {
+    font-size: 18px;
+    margin-bottom: 18px;
+  }
+  
+  .arc-value-item {
+    font-size: 13px;
+    gap: 10px;
+  }
+  
+  .arc-value-icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .arc-pricing-single {
+    max-width: 100%;
+  }
+  
+  .arc-price-card { 
+    padding: 35px 24px; 
+    border-radius: 21px;
+  }
+  
+  .arc-badge {
+    font-size: 10px;
+    padding: 8px 16px;
+    letter-spacing: 2px;
+  }
+  
+  .arc-price-name {
+    font-size: 26px;
+  }
+  
+  .arc-price-desc {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+  
+  .arc-price-row {
+    font-size: 13px;
+    padding: 10px 0;
+  }
+  
+  .arc-price-amount {
+    font-size: 42px;
+  }
+  
+  .arc-price-period {
+    font-size: 13px;
+  }
+  
+  .arc-setup {
+    padding: 16px 20px;
+    border-radius: 12px;
+  }
+  
+  .arc-setup-label {
+    font-size: 11px;
+  }
+  
+  .arc-setup-amount {
+    font-size: 24px;
+  }
+  
+  .arc-setup-note {
+    font-size: 11px;
+  }
+  
+  .arc-note {
+    padding: 24px 20px;
+    border-radius: 16px;
+    margin-top: 28px;
+  }
+  
+  .arc-note-title {
+    font-size: 16px;
+  }
+  
+  .arc-note-text {
+    font-size: 13px;
+  }
+  
+  .arc-fine {
+    font-size: 11px;
+    margin-top: 28px;
+    padding: 0 12px;
+  }
+  
+  .arc-pricing {
+    padding-bottom: 80px;
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 380px) {
+  .arc-inner {
+    padding: 0 12px;
+  }
+  
+  .arc-hero {
+    padding: 24px 12px 14px;
+    min-height: 420px;
+  }
+  
+  .arc-brand {
+    margin-bottom: 14px;
+  }
+  
+  .arc-brand-logo {
+    max-width: 110px;
+  }
+  
+  .arc-hero-title {
+    font-size: 28px;
+    letter-spacing: 1px;
+  }
+  
+  .arc-hero-sub {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  
+  .arc-eyebrow {
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  
+  .arc-eyebrow-line { width: 16px; }
+  .arc-eyebrow-text { font-size: 8px; letter-spacing: 2px; }
+  
+  .arc-stat-val {
+    font-size: 32px;
+  }
+  
+  .arc-stat-lbl {
+    font-size: 9px;
+  }
+  
+  .arc-marquee {
+    padding: 10px 0;
+  }
+  
+  .arc-marquee-item {
+    font-size: 28px;
+    padding: 0 10px;
+    letter-spacing: 2px;
+  }
+  
+  .arc-problem, .arc-scope, .arc-results, .arc-pricing {
+    padding: 24px 12px;
+  }
+  
+  .arc-title {
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+  
+  .arc-box, .arc-card {
+    padding: 18px 14px;
+    border-radius: 14px;
+  }
+  
+  .arc-box-label {
+    font-size: 10px;
+  }
+  
+  .arc-list li {
+    font-size: 12px;
+    padding: 10px 0;
+  }
+  
+  .arc-list-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+  }
+  
+  .arc-vs {
+    font-size: 24px;
+  }
+  
+  .arc-card-title {
+    font-size: 18px;
+  }
+  
+  .arc-card-list li {
+    font-size: 12px;
+  }
+  
+  .arc-dashboard {
+    padding: 18px 12px;
+    border-radius: 16px;
+  }
+  
+  .arc-dashboard-client {
+    font-size: 16px;
+  }
+  
+  .arc-tabs {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  
+  .arc-tab {
+    padding: 6px 10px;
+    font-size: 10px;
+  }
+  
+  .arc-metric {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  
+  .arc-metric-label {
+    font-size: 9px;
+  }
+  
+  .arc-metric-value {
+    font-size: 24px;
+  }
+  
+  .arc-metric-change {
+    font-size: 10px;
+  }
+  
+  .arc-chart-wrap {
+    padding: 16px 12px;
+    border-radius: 12px;
+  }
+  
+  .arc-chart-canvas {
+    height: 150px;
+  }
+  
+  .arc-legend-item {
+    font-size: 10px;
+  }
+  
+  .arc-value {
+    padding: 18px 14px;
+    border-radius: 14px;
+  }
+  
+  .arc-value-title {
+    font-size: 16px;
+  }
+  
+  .arc-value-item {
+    font-size: 12px;
+  }
+  
+  .arc-price-card {
+    padding: 24px 16px;
+    border-radius: 18px;
+  }
+  
+  .arc-badge {
+    font-size: 9px;
+    padding: 6px 12px;
+  }
+  
+  .arc-price-name {
+    font-size: 22px;
+  }
+  
+  .arc-price-desc {
+    font-size: 12px;
+  }
+  
+  .arc-price-row {
+    font-size: 12px;
+    padding: 8px 0;
+  }
+  
+  .arc-price-amount {
+    font-size: 32px;
+  }
+  
+  .arc-price-period {
+    font-size: 12px;
+  }
+  
+  .arc-setup {
+    padding: 14px 16px;
+    border-radius: 10px;
+  }
+  
+  .arc-setup-label {
+    font-size: 10px;
+  }
+  
+  .arc-setup-amount {
+    font-size: 20px;
+  }
+  
+  .arc-note {
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+  
+  .arc-note-title {
+    font-size: 14px;
+  }
+  
+  .arc-note-text {
+    font-size: 12px;
+  }
+  
+  .arc-fine {
+    font-size: 10px;
+    padding: 0 8px;
+  }
+}
+</style>
+
+<div class="arc-wrapper">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       HERO SECTION
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="arc-section">
+    <div class="arc-hero">
+      
+      <div class="arc-brand arc-reveal">
+        <img src="https://framerusercontent.com/images/uAG5oHvugOskLsxeHa8xKMdZzg.png" alt="Owls Hoot Barn" class="arc-brand-logo">
+      </div>
+      
+      <div class="arc-eyebrow arc-reveal arc-reveal-d1">
+        <span class="arc-eyebrow-line"></span>
+        <span class="arc-eyebrow-text">Paid Advertising</span>
+        <span class="arc-eyebrow-line"></span>
+      </div>
+      
+      <h1 class="arc-hero-title">
+        <span class="arc-hero-title-line arc-hero-title-line--accent">BOOK MORE&nbsp;WEDDINGS.</span>
+      </h1>
+      
+      <p class="arc-hero-sub arc-reveal arc-reveal-d2">
+        Every day, engaged couples search for Hudson Valley wedding&nbsp;venues.<br>
+        <strong>Targeted ads</strong> put Owls Hoot Barn at the top of their feed - exactly when they're ready to&nbsp;tour.
+      </p>
+      
+      <div class="arc-stats arc-reveal arc-reveal-d3">
+        <div class="arc-stat">
+          <span class="arc-stat-val">3x</span>
+          <span class="arc-stat-lbl">Weekly Management</span>
+        </div>
+        <div class="arc-stat">
+          <span class="arc-stat-val">24/7</span>
+          <span class="arc-stat-lbl">Optimization</span>
+        </div>
+      </div>
+      
+    </div>
+    
+    <div class="arc-marquee">
+      <div class="arc-marquee-track">
+        <span class="arc-marquee-item">OWLS HOOT <span>BARN</span></span>
+        <span class="arc-marquee-item">HUDSON <span>VALLEY</span></span>
+        <span class="arc-marquee-item">DREAM <span>WEDDINGS</span></span>
+        <span class="arc-marquee-item">OWLS HOOT <span>BARN</span></span>
+        <span class="arc-marquee-item">HUDSON <span>VALLEY</span></span>
+        <span class="arc-marquee-item">DREAM <span>WEDDINGS</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       PROBLEM SECTION
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="arc-section arc-problem">
+    <div class="arc-inner">
+      
+      <p class="arc-label arc-reveal" style="justify-content: center;">The Reality</p>
+      
+      <h2 class="arc-title arc-reveal arc-reveal-d1" style="text-align: center;">
+        MOST VENUES WASTE AD&nbsp;SPEND.<br>
+        <span class="arc-title-accent">HERE'S A BETTER&nbsp;APPROACH.</span>
+      </h2>
+      
+      <div class="arc-vs-grid arc-reveal arc-reveal-d2">
+        
+        <div class="arc-box arc-box--bad">
+          <p class="arc-box-label">What They Do</p>
+          <ul class="arc-list">
+            <li><span class="arc-list-icon">✗</span> Boosting posts without a&nbsp;strategy</li>
+            <li><span class="arc-list-icon">✗</span> No clue if ads generate real&nbsp;inquiries</li>
+            <li><span class="arc-list-icon">✗</span> Paying to reach people outside your&nbsp;region</li>
+            <li><span class="arc-list-icon">✗</span> Same tired photos couples scroll&nbsp;past</li>
+            <li><span class="arc-list-icon">✗</span> No way to measure actual&nbsp;return</li>
+          </ul>
+        </div>
+        
+        <div class="arc-vs">VS</div>
+        
+        <div class="arc-box arc-box--good">
+          <p class="arc-box-label">What We Build</p>
+          <ul class="arc-list">
+            <li><span class="arc-list-icon">✓</span> Campaigns targeting couples ready to&nbsp;book</li>
+            <li><span class="arc-list-icon">✓</span> Track every inquiry back to its&nbsp;source</li>
+            <li><span class="arc-list-icon">✓</span> Reach NYC & Hudson Valley engaged&nbsp;couples</li>
+            <li><span class="arc-list-icon">✓</span> Showcase your heritage with stunning&nbsp;creative</li>
+            <li><span class="arc-list-icon">✓</span> Scale what works, cut what&nbsp;doesn't</li>
+          </ul>
+        </div>
+        
+      </div>
+      
+      <div class="arc-problem-cta arc-reveal arc-reveal-d3">
+        Your venue speaks for&nbsp;itself.<br>
+        <strong>Let the right couples see&nbsp;it.</strong>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SCOPE SECTION
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="arc-section arc-scope">
+    <div class="arc-inner">
+      
+      <div class="arc-scope-head">
+        <div>
+          <p class="arc-label arc-reveal">The System</p>
+          <h2 class="arc-title arc-reveal arc-reveal-d1">
+            TARGETED&nbsp;REACH.<br>
+            <span class="arc-title-accent">QUALIFIED&nbsp;INQUIRIES.</span>
+          </h2>
+        </div>
+        <p class="arc-scope-desc arc-reveal arc-reveal-d2">
+          Full-service ad management that puts Owls Hoot Barn in front of engaged couples actively searching for Hudson Valley wedding&nbsp;venues.
+        </p>
+      </div>
+      
+      <div class="arc-cards">
+        
+        <div class="arc-card arc-reveal arc-reveal-d1">
+          <div class="arc-card-glow"></div>
+          <div class="arc-card-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/>
+            </svg>
+          </div>
+          <h3 class="arc-card-title">Creative Production</h3>
+          <ul class="arc-card-list">
+            <li>Showcase your heritage&nbsp;venue</li>
+            <li>Willow tree ceremony&nbsp;shots</li>
+            <li>Compelling ad&nbsp;copy</li>
+            <li>A/B test&nbsp;variations</li>
+            <li>Fresh creative&nbsp;monthly</li>
+          </ul>
+        </div>
+        
+        <div class="arc-card arc-reveal arc-reveal-d2">
+          <div class="arc-card-glow"></div>
+          <div class="arc-card-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+            </svg>
+          </div>
+          <h3 class="arc-card-title">Local Targeting</h3>
+          <ul class="arc-card-list">
+            <li>NYC & Tri-State&nbsp;focus</li>
+            <li>Engaged couple&nbsp;demographics</li>
+            <li>Income-qualified&nbsp;audiences</li>
+            <li>Interest-based&nbsp;targeting</li>
+            <li>Retargeting site&nbsp;visitors</li>
+          </ul>
+        </div>
+        
+        <div class="arc-card arc-reveal arc-reveal-d3">
+          <div class="arc-card-glow"></div>
+          <div class="arc-card-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+            </svg>
+          </div>
+          <h3 class="arc-card-title">Inquiry Tracking</h3>
+          <ul class="arc-card-list">
+            <li>Daily performance&nbsp;monitoring</li>
+            <li>Cost-per-inquiry&nbsp;reporting</li>
+            <li>Lead source&nbsp;attribution</li>
+            <li>Weekly&nbsp;optimization</li>
+            <li>Monthly strategy&nbsp;reviews</li>
+          </ul>
+        </div>
+        
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       RESULTS DASHBOARD
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="arc-section arc-results">
+    <div class="arc-inner">
+      
+      <div class="arc-results-head">
+        <p class="arc-label arc-reveal" style="justify-content: center;">Real&nbsp;Results</p>
+        <h2 class="arc-title arc-reveal arc-reveal-d1" style="text-align: center;">
+          THIS IS WHAT <span class="arc-title-accent">PROFITABLE ADS</span> LOOK&nbsp;LIKE
+        </h2>
+      </div>
+      
+      <div class="arc-dashboard arc-reveal arc-reveal-d2">
+        
+        <div class="arc-dashboard-header">
+          <div>
+            <p class="arc-dashboard-period">28-Day Performance</p>
+            <p class="arc-dashboard-client">Wedding Venue Campaign&nbsp;Dashboard</p>
+          </div>
+          <div class="arc-tabs">
+            <button class="arc-tab active" data-metric="roas">ROAS</button>
+            <button class="arc-tab" data-metric="cpi">CPI</button>
+            <button class="arc-tab" data-metric="inquiries">Inquiries</button>
+          </div>
+        </div>
+        
+        <div class="arc-metrics">
+          <div class="arc-metric">
+            <p class="arc-metric-label">Current</p>
+            <p class="arc-metric-value" id="metricCur">4.2x</p>
+            <p class="arc-metric-change" id="metricChg">+1.4x&nbsp;improvement</p>
+          </div>
+          <div class="arc-metric">
+            <p class="arc-metric-label">Starting</p>
+            <p class="arc-metric-value" id="metricStart" style="color: var(--text-primary);">2.8x</p>
+            <p class="arc-metric-change" style="color: var(--text-subtle);">baseline</p>
+          </div>
+          <div class="arc-metric arc-metric--accent">
+            <p class="arc-metric-label">Improvement</p>
+            <p class="arc-metric-value" id="metricGrow">+50%</p>
+            <p class="arc-metric-change">28&nbsp;days</p>
+          </div>
+        </div>
+        
+        <div class="arc-chart-wrap">
+          <p class="arc-chart-title" id="chartTitle">Return on Ad&nbsp;Spend</p>
+          <div class="arc-chart-canvas">
+            <canvas id="resultsChart"></canvas>
+          </div>
+          <div class="arc-chart-legend">
+            <div class="arc-legend-item">
+              <div class="arc-legend-line arc-legend-line--current"></div>
+              <span>With Arc&nbsp;Garde</span>
+            </div>
+            <div class="arc-legend-item">
+              <div class="arc-legend-line arc-legend-line--baseline"></div>
+              <span>Industry&nbsp;Average</span>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       PRICING SECTION
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="arc-section arc-pricing">
+    <div class="arc-inner">
+      
+      <div class="arc-pricing-head">
+        <p class="arc-label arc-reveal" style="justify-content: center;">Investment</p>
+        <h2 class="arc-title arc-reveal arc-reveal-d1" style="text-align: center;">
+          YOUR <span class="arc-title-accent">AD&nbsp;SYSTEM</span>
+        </h2>
+        <p class="arc-pricing-sub arc-reveal arc-reveal-d2">
+          Everything you need to reach couples searching for Hudson Valley&nbsp;venues.
+        </p>
+      </div>
+      
+      <!-- VALUE BOX -->
+      <div class="arc-value arc-reveal">
+        <p class="arc-value-title">WHY THIS MATTERS FOR OWLS HOOT&nbsp;BARN</p>
+        <div class="arc-value-grid">
+          <div class="arc-value-item">
+            <svg class="arc-value-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+            </svg>
+            <span>Target NYC & Hudson Valley&nbsp;couples</span>
+          </div>
+          <div class="arc-value-item">
+            <svg class="arc-value-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+            </svg>
+            <span>Reach engaged couples ready to&nbsp;book</span>
+          </div>
+          <div class="arc-value-item">
+            <svg class="arc-value-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/>
+            </svg>
+            <span>Track cost per venue&nbsp;inquiry</span>
+          </div>
+          <div class="arc-value-item">
+            <svg class="arc-value-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+            </svg>
+            <span>Scale what works, cut what&nbsp;doesn't</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- SINGLE PRICING CARD -->
+      <div class="arc-pricing-single arc-reveal arc-reveal-d1">
+        <div class="arc-price-card">
+          <p class="arc-badge">Standard Ads</p>
+          <h3 class="arc-price-name">PAID AD&nbsp;MANAGEMENT</h3>
+          <p class="arc-price-desc">Full-service ad management<br>for consistent venue&nbsp;inquiries.</p>
+          
+          <div class="arc-price-stats">
+            <div class="arc-price-row">
+              <span class="arc-price-lbl">Management</span>
+              <span class="arc-price-val">3x&nbsp;weekly</span>
+            </div>
+            <div class="arc-price-row">
+              <span class="arc-price-lbl">Creative&nbsp;refresh</span>
+              <span class="arc-price-val">Monthly</span>
+            </div>
+            <div class="arc-price-row">
+              <span class="arc-price-lbl">Reporting</span>
+              <span class="arc-price-val">Weekly</span>
+            </div>
+            <div class="arc-price-row">
+              <span class="arc-price-lbl">Optimization</span>
+              <span class="arc-price-val">24/7</span>
+            </div>
+          </div>
+          
+          <div class="arc-price-main">
+            <p class="arc-price-amount">$525</p>
+            <p class="arc-price-period">per&nbsp;week</p>
+          </div>
+          
+          <div class="arc-setup">
+            <p class="arc-setup-label">One-Time Setup Fee</p>
+            <p class="arc-setup-amount">$2,800</p>
+            <p class="arc-setup-note">Campaign build, tracking setup, creative&nbsp;production</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="arc-note arc-reveal">
+        <p class="arc-note-title">AD SPEND REQUIREMENT</p>
+        <p class="arc-note-text">
+          Minimum $30 per day in ad spend&nbsp;recommended.<br>
+          That's approximately $900/month paid directly to&nbsp;platforms.
+        </p>
+      </div>
+      
+      <p class="arc-fine arc-reveal">
+        Management fees are separate from ad&nbsp;spend.<br>
+        Results vary based on seasonality and ad&nbsp;budget.<br>
+        Minimum 3-month&nbsp;commitment.
+      </p>
+      
+    </div>
+  </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+(function(){
+  // Reveal animations
+  const reveals = document.querySelectorAll('.arc-reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+  
+  reveals.forEach(el => observer.observe(el));
+  
+  // Chart Data
+  const chartData = {
+    roas: {
+      label: 'Return on Ad Spend',
+      current: [2.8, 3.2, 3.6, 3.9, 4.2],
+      baseline: [2.8, 2.9, 3.0, 3.1, 3.2],
+      curVal: '4.2x',
+      startVal: '2.8x',
+      chg: '+1.4x improvement',
+      grow: '+50%'
+    },
+    cpi: {
+      label: 'Cost Per Inquiry',
+      current: [145, 125, 105, 88, 72],
+      baseline: [145, 140, 135, 130, 125],
+      curVal: '$72',
+      startVal: '$145',
+      chg: '-$73 reduction',
+      grow: '-50%'
+    },
+    inquiries: {
+      label: 'Venue Inquiries',
+      current: [6, 10, 16, 24, 32],
+      baseline: [6, 7, 8, 9, 10],
+      curVal: '32',
+      startVal: '6',
+      chg: '+26 inquiries',
+      grow: '+433%'
+    }
+  };
+  
+  const labels = ['Day 0', 'Day 7', 'Day 14', 'Day 21', 'Day 28'];
+  
+  // Init Chart
+  const ctx = document.getElementById('resultsChart').getContext('2d');
+  
+  const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0);
+  gradient.addColorStop(0, '#8B6642');
+  gradient.addColorStop(0.5, '#A67C52');
+  gradient.addColorStop(1, '#C9A87C');
+  
+  const fill = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
+  fill.addColorStop(0, 'rgba(166, 124, 82, 0.2)');
+  fill.addColorStop(1, 'rgba(166, 124, 82, 0)');
+  
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          data: chartData.roas.current,
+          borderColor: gradient,
+          borderWidth: 3,
+          pointBackgroundColor: '#A67C52',
+          pointBorderColor: '#0F1A17',
+          pointBorderWidth: 2,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          fill: true,
+          backgroundColor: fill,
+          tension: 0.4
+        },
+        {
+          data: chartData.roas.baseline,
+          borderColor: 'rgba(255, 255, 255, 0.15)',
+          borderWidth: 2,
+          borderDash: [6, 4],
+          pointRadius: 0,
+          fill: false,
+          tension: 0.4
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { intersect: false, mode: 'index' },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#fff',
+          titleColor: '#000',
+          bodyColor: '#333',
+          padding: 12,
+          cornerRadius: 8,
+          displayColors: false
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { color: 'rgba(255, 255, 255, 0.3)', font: { size: 11, family: 'DM Sans' } }
+        },
+        y: {
+          grid: { color: 'rgba(255, 255, 255, 0.04)' },
+          ticks: { color: 'rgba(255, 255, 255, 0.3)', font: { size: 11, family: 'DM Sans' } }
+        }
+      }
+    }
+  });
+  
+  // Tab Switching
+  const tabs = document.querySelectorAll('.arc-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      tabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      
+      const metric = this.dataset.metric;
+      const d = chartData[metric];
+      
+      chart.data.datasets[0].data = d.current;
+      chart.data.datasets[1].data = d.baseline;
+      chart.update();
+      
+      document.getElementById('metricCur').textContent = d.curVal;
+      document.getElementById('metricStart').textContent = d.startVal;
+      document.getElementById('metricChg').textContent = d.chg;
+      document.getElementById('metricGrow').textContent = d.grow;
+      document.getElementById('chartTitle').textContent = d.label;
+    });
+  });
+})();
+</script>
+
+</html>

@@ -1,0 +1,2688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arc Garde - Americana Tax Planning Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root {
+  --white: #FFFFFF;
+  --cream: #FFFFFF;
+  --blue: #2563EB;
+  --blue-light: #60A5FA;
+  --blue-dark: #1D4ED8;
+  --blue-glow: rgba(37, 99, 235, 0.35);
+  --red: #B91C1C;
+  --red-light: #DC2626;
+  --red-dark: #7F1D1D;
+  --text-dark: #1A1A1A;
+  --text-body: #374151;
+  --text-muted: #6B7280;
+  --text-subtle: #9CA3AF;
+  --border-light: rgba(0, 0, 0, 0.08);
+  --border-medium: rgba(0, 0, 0, 0.12);
+  --success: #059669;
+  --card-bg: #FFFFFF;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body > div,
+body > section,
+body > footer {
+  display: block;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PAID SECTION 1: HERO
+   ══════════════════════════════════════════════════════════════ */
+
+.arc-paid1-wrapper {
+  width: 100%;
+  background: var(--white);
+  padding: 60px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.arc-paid1-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.arc-paid1-hero {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.arc-paid1-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.arc-paid1-eyebrow-line {
+  width: 50px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.3), transparent);
+}
+
+.arc-paid1-eyebrow-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.arc-paid1-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 12vw, 96px);
+  line-height: 1.05;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+  color: var(--red);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.arc-paid1-title-line {
+  display: block;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.arc-paid1-title-line--blue {
+  color: var(--blue);
+  text-shadow: none;
+}
+
+.arc-paid1-sub {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-body);
+  max-width: 600px;
+  margin: 0 auto 32px;
+}
+
+.arc-paid1-sub strong {
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.arc-paid1-stats {
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.arc-paid1-stat {
+  text-align: center;
+}
+
+.arc-paid1-stat-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(36px, 6vw, 48px);
+  font-weight: 700;
+  color: var(--blue);
+  display: block;
+}
+
+.arc-paid1-stat-lbl {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.arc-paid1-marquee {
+  margin-top: 40px;
+  overflow: hidden;
+  padding: 16px 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  position: relative;
+}
+
+.arc-paid1-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 10s linear infinite;
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-25%); }
+}
+
+.arc-paid1-marquee-item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 8vw, 80px);
+  letter-spacing: 6px;
+  color: rgba(0,0,0,0.25);
+  padding: 0 50px;
+  flex-shrink: 0;
+}
+
+.arc-paid1-marquee-item span {
+  color: var(--blue);
+  opacity: 0.7;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PAID SECTION 2: PROBLEM & SCOPE
+   ══════════════════════════════════════════════════════════════ */
+
+.arc-paid2-wrapper {
+  width: 100%;
+  background: var(--cream);
+  padding: 60px 24px;
+  position: relative;
+}
+
+.arc-paid2-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.arc-paid2-label {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.arc-paid2-label::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--blue);
+}
+
+.arc-paid2-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 7vw, 64px);
+  line-height: 1.1;
+  letter-spacing: 1px;
+  color: var(--red);
+  margin-bottom: 32px;
+}
+
+.arc-paid2-title-blue {
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue), var(--blue-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.arc-paid2-problem {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.arc-paid2-problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  gap: 24px;
+  align-items: start;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.arc-paid2-box {
+  padding: 32px;
+  border-radius: 16px;
+  text-align: left;
+}
+
+.arc-paid2-box--bad {
+  background: linear-gradient(135deg, rgba(185, 28, 28, 0.08), rgba(185, 28, 28, 0.03));
+  border: 1px solid rgba(185, 28, 28, 0.2);
+}
+
+.arc-paid2-box--good {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(37, 99, 235, 0.03));
+  border: 1px solid rgba(37, 99, 235, 0.2);
+}
+
+.arc-paid2-box-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.arc-paid2-box--bad .arc-paid2-box-label {
+  color: var(--red);
+}
+
+.arc-paid2-box--good .arc-paid2-box-label {
+  color: var(--blue);
+}
+
+.arc-paid2-list {
+  list-style: none;
+}
+
+.arc-paid2-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 14px;
+  color: var(--text-body);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.arc-paid2-list li:last-child {
+  border-bottom: none;
+}
+
+.arc-paid2-list-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.arc-paid2-box--bad .arc-paid2-list-icon {
+  color: var(--red);
+}
+
+.arc-paid2-box--good .arc-paid2-list-icon {
+  color: var(--blue);
+}
+
+.arc-paid2-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  color: var(--text-muted);
+}
+
+.arc-paid2-problem-cta {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-top: 24px;
+}
+
+.arc-paid2-problem-cta strong {
+  color: var(--text-dark);
+}
+
+.arc-paid2-scope-head {
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.arc-paid2-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.arc-paid2-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 32px 24px;
+  border: 1px solid var(--border-light);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.arc-paid2-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  border-color: var(--blue);
+}
+
+.arc-paid2-card-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue-dark), var(--blue), var(--blue-light));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.arc-paid2-card:hover .arc-paid2-card-glow {
+  opacity: 1;
+}
+
+.arc-paid2-card-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(37, 99, 235, 0.05));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.arc-paid2-card-icon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--blue);
+}
+
+.arc-paid2-card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+
+.arc-paid2-card-list {
+  list-style: none;
+}
+
+.arc-paid2-card-list li {
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.arc-paid2-card-list li:last-child {
+  border-bottom: none;
+}
+
+.arc-paid2-card-list li::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background: var(--blue);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PAID SECTION 3: RESULTS & PRICING
+   ══════════════════════════════════════════════════════════════ */
+
+.arc-paid3-wrapper {
+  width: 100%;
+  background: var(--white);
+  padding: 60px 24px;
+  position: relative;
+}
+
+.arc-paid3-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.arc-paid3-label {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.arc-paid3-label::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--blue);
+}
+
+.arc-paid3-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 7vw, 64px);
+  line-height: 1.1;
+  letter-spacing: 1px;
+  color: var(--red);
+  margin-bottom: 32px;
+}
+
+.arc-paid3-title-blue {
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue), var(--blue-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.arc-paid3-dashboard {
+  background: linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 40px;
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.arc-paid3-dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.arc-paid3-dash-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 1px;
+}
+
+.arc-paid3-dash-tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.arc-paid3-tab {
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.arc-paid3-tab:hover {
+  color: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.08);
+}
+
+.arc-paid3-tab.active {
+  color: #FFFFFF;
+  background: var(--blue);
+  border-color: var(--blue);
+}
+
+.arc-paid3-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.arc-paid3-metric {
+  text-align: center;
+}
+
+.arc-paid3-metric-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+}
+
+.arc-paid3-metric-lbl {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+.arc-paid3-metric-chg {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.arc-paid3-metric-chg.up {
+  color: #4ADE80;
+}
+
+.arc-paid3-metric-chg.down {
+  color: #F87171;
+}
+
+.arc-paid3-chart-wrap {
+  height: 200px;
+  position: relative;
+}
+
+.arc-paid3-chart-title {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 16px;
+}
+
+.arc-paid3-pricing-head {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.arc-paid3-pricing-head h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 1px;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.arc-paid3-pricing-head p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.arc-paid3-pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.arc-paid3-price-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px solid var(--border-light);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.arc-paid3-price-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+
+.arc-paid3-price-card--featured {
+  border-color: var(--blue);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.03), rgba(37, 99, 235, 0.01));
+}
+
+.arc-paid3-price-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--blue);
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 20px;
+}
+
+.arc-paid3-price-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 1px;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.arc-paid3-price-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.arc-paid3-price-amount {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.arc-paid3-price-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.arc-paid3-price-card--featured .arc-paid3-price-val {
+  color: var(--blue);
+}
+
+.arc-paid3-price-per {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.arc-paid3-price-includes {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.arc-paid3-price-list {
+  list-style: none;
+}
+
+.arc-paid3-price-list li {
+  font-size: 13px;
+  color: var(--text-body);
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.arc-paid3-price-list li:last-child {
+  border-bottom: none;
+}
+
+.arc-paid3-price-list li::before {
+  content: '✓';
+  color: var(--blue);
+  font-weight: 600;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ORGANIC SECTION 1: HERO
+   ══════════════════════════════════════════════════════════════ */
+
+.arc-org1-wrapper {
+  width: 100%;
+  background: var(--white);
+  padding: 60px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.arc-org1-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.arc-org1-hero {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.arc-org1-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.arc-org1-eyebrow-line {
+  width: 50px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.3), transparent);
+}
+
+.arc-org1-eyebrow-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.arc-org1-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 12vw, 96px);
+  line-height: 1.05;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+  color: var(--red);
+}
+
+.arc-org1-title-line {
+  display: block;
+}
+
+.arc-org1-title-line--blue {
+  color: var(--blue);
+  text-shadow: none;
+}
+
+.arc-org1-sub {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-body);
+  max-width: 600px;
+  margin: 0 auto 32px;
+}
+
+.arc-org1-sub strong {
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.arc-org1-stats {
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.arc-org1-stat {
+  text-align: center;
+}
+
+.arc-org1-stat-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(36px, 6vw, 48px);
+  font-weight: 700;
+  color: var(--blue);
+  display: block;
+}
+
+.arc-org1-stat-lbl {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.arc-org1-platforms {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.arc-org1-platforms-label {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  text-align: center;
+  width: 100%;
+}
+
+.arc-org1-platform {
+  width: 48px;
+  height: 48px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.arc-org1-platform svg {
+  width: 24px;
+  height: 24px;
+  color: var(--text-body);
+  transition: color 0.3s ease;
+}
+
+/* Platform-specific hover colors */
+.arc-org1-platform--facebook:hover {
+  transform: translateY(-4px);
+  border-color: #1877F2;
+  box-shadow: 0 8px 24px rgba(24, 119, 242, 0.25);
+}
+.arc-org1-platform--facebook:hover svg {
+  color: #1877F2;
+}
+
+.arc-org1-platform--instagram:hover {
+  transform: translateY(-4px);
+  border-color: #E4405F;
+  box-shadow: 0 8px 24px rgba(228, 64, 95, 0.25);
+}
+.arc-org1-platform--instagram:hover svg {
+  color: #E4405F;
+}
+
+.arc-org1-platform--tiktok:hover {
+  transform: translateY(-4px);
+  border-color: #00F2EA;
+  box-shadow: 0 8px 24px rgba(0, 242, 234, 0.25);
+}
+.arc-org1-platform--tiktok:hover svg {
+  color: #000000;
+}
+
+.arc-org1-platform--linkedin:hover {
+  transform: translateY(-4px);
+  border-color: #0A66C2;
+  box-shadow: 0 8px 24px rgba(10, 102, 194, 0.25);
+}
+.arc-org1-platform--linkedin:hover svg {
+  color: #0A66C2;
+}
+
+.arc-org1-platform--youtube:hover {
+  transform: translateY(-4px);
+  border-color: #FF0000;
+  box-shadow: 0 8px 24px rgba(255, 0, 0, 0.25);
+}
+.arc-org1-platform--youtube:hover svg {
+  color: #FF0000;
+}
+
+.arc-org1-platform--twitter:hover {
+  transform: translateY(-4px);
+  border-color: #000000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+.arc-org1-platform--twitter:hover svg {
+  color: #000000;
+}
+
+.arc-org1-platform--threads:hover {
+  transform: translateY(-4px);
+  border-color: #000000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+.arc-org1-platform--threads:hover svg {
+  color: #000000;
+}
+
+.arc-org1-marquee {
+  margin-top: 40px;
+  overflow: hidden;
+  padding: 16px 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  position: relative;
+}
+
+.arc-org1-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 10s linear infinite;
+}
+
+.arc-org1-marquee-item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 8vw, 80px);
+  letter-spacing: 6px;
+  color: rgba(0,0,0,0.25);
+  padding: 0 50px;
+  flex-shrink: 0;
+}
+
+.arc-org1-marquee-item span {
+  color: var(--blue);
+  opacity: 0.7;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ORGANIC SECTION 3: PRICING
+   ══════════════════════════════════════════════════════════════ */
+
+.arc-org3-wrapper {
+  width: 100%;
+  background: var(--cream);
+  padding: 60px 24px;
+  position: relative;
+}
+
+.arc-org3-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.arc-org3-label {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.arc-org3-label::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--blue);
+}
+
+.arc-org3-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 7vw, 64px);
+  line-height: 1.1;
+  letter-spacing: 1px;
+  color: var(--red);
+  margin-bottom: 16px;
+}
+
+.arc-org3-title-blue {
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue), var(--blue-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.arc-org3-subtitle {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  max-width: 600px;
+}
+
+.arc-org3-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.arc-org3-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 32px 24px;
+  border: 1px solid var(--border-light);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.arc-org3-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+
+.arc-org3-card--featured {
+  border-color: var(--blue);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.03), rgba(37, 99, 235, 0.01));
+}
+
+.arc-org3-card-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--blue);
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 20px;
+}
+
+.arc-org3-card-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 1px;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.arc-org3-card-tagline {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.arc-org3-card-price {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.arc-org3-card-price-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.arc-org3-card--featured .arc-org3-card-price-val {
+  color: var(--blue);
+}
+
+.arc-org3-card-price-per {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.arc-org3-card-includes {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.arc-org3-card-list {
+  list-style: none;
+  margin-bottom: 16px;
+}
+
+.arc-org3-card-list li {
+  font-size: 13px;
+  color: var(--text-body);
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.arc-org3-card-list li:last-child {
+  border-bottom: none;
+}
+
+.arc-org3-card-list li::before {
+  content: '✓';
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.arc-org3-card-note {
+  font-size: 12px;
+  color: var(--text-subtle);
+  text-align: center;
+  font-style: italic;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ORGANIC SECTION 2: PROBLEM & SCOPE
+   ══════════════════════════════════════════════════════════════ */
+
+.arc-org2-wrapper {
+  width: 100%;
+  background: var(--white);
+  padding: 60px 24px;
+  position: relative;
+}
+
+.arc-org2-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.arc-org2-label {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.arc-org2-label::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--blue);
+}
+
+.arc-org2-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 7vw, 64px);
+  line-height: 1.1;
+  letter-spacing: 1px;
+  color: var(--red);
+  margin-bottom: 32px;
+}
+
+.arc-org2-title-blue {
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue), var(--blue-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.arc-org2-problem {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.arc-org2-problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  gap: 24px;
+  align-items: start;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.arc-org2-box {
+  padding: 32px;
+  border-radius: 16px;
+  text-align: left;
+}
+
+.arc-org2-box--bad {
+  background: linear-gradient(135deg, rgba(185, 28, 28, 0.08), rgba(185, 28, 28, 0.03));
+  border: 1px solid rgba(185, 28, 28, 0.2);
+}
+
+.arc-org2-box--good {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(37, 99, 235, 0.03));
+  border: 1px solid rgba(37, 99, 235, 0.2);
+}
+
+.arc-org2-box-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.arc-org2-box--bad .arc-org2-box-label {
+  color: var(--red);
+}
+
+.arc-org2-box--good .arc-org2-box-label {
+  color: var(--blue);
+}
+
+.arc-org2-list {
+  list-style: none;
+}
+
+.arc-org2-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 14px;
+  color: var(--text-body);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.arc-org2-list li:last-child {
+  border-bottom: none;
+}
+
+.arc-org2-list-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.arc-org2-box--bad .arc-org2-list-icon {
+  color: var(--red);
+}
+
+.arc-org2-box--good .arc-org2-list-icon {
+  color: var(--blue);
+}
+
+.arc-org2-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  color: var(--text-muted);
+}
+
+.arc-org2-problem-cta {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-top: 24px;
+}
+
+.arc-org2-problem-cta strong {
+  color: var(--text-dark);
+}
+
+.arc-org2-scope-head {
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.arc-org2-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.arc-org2-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 32px 24px;
+  border: 1px solid var(--border-light);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.arc-org2-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  border-color: var(--blue);
+}
+
+.arc-org2-card-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue-dark), var(--blue), var(--blue-light));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.arc-org2-card:hover .arc-org2-card-glow {
+  opacity: 1;
+}
+
+.arc-org2-card-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(37, 99, 235, 0.05));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.arc-org2-card-icon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--blue);
+}
+
+.arc-org2-card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+
+.arc-org2-card-list {
+  list-style: none;
+}
+
+.arc-org2-card-list li {
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.arc-org2-card-list li:last-child {
+  border-bottom: none;
+}
+
+.arc-org2-card-list li::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background: var(--blue);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ORGANIC DASHBOARD SECTION
+   ══════════════════════════════════════════════════════════════ */
+
+.arc-org-dash-wrapper {
+  width: 100%;
+  background: var(--white);
+  padding: 60px 24px;
+  position: relative;
+}
+
+.arc-org-dash-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.arc-org-dash-label {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.arc-org-dash-label::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--blue);
+}
+
+.arc-org-dash-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 7vw, 64px);
+  line-height: 1.1;
+  letter-spacing: 1px;
+  color: var(--red);
+  margin-bottom: 32px;
+}
+
+.arc-org-dash-title-blue {
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue), var(--blue-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.arc-org-dashboard {
+  background: linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 40px;
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.arc-org-dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.arc-org-dash-head-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 1px;
+}
+
+.arc-org-dash-tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.arc-org-tab {
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.arc-org-tab:hover {
+  color: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.08);
+}
+
+.arc-org-tab.active {
+  color: #FFFFFF;
+  background: var(--blue);
+  border-color: var(--blue);
+}
+
+.arc-org-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.arc-org-metric {
+  text-align: center;
+}
+
+.arc-org-metric-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+}
+
+.arc-org-metric-lbl {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+.arc-org-metric-chg {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.arc-org-metric-chg.up {
+  color: #4ADE80;
+}
+
+.arc-org-chart-wrap {
+  height: 200px;
+  position: relative;
+}
+
+.arc-org-chart-title {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 16px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BUNDLE SECTION
+   ══════════════════════════════════════════════════════════════ */
+
+.arc-bundle-section {
+  width: 100%;
+  background: var(--white);
+  padding: 60px 24px;
+  position: relative;
+}
+
+.arc-bundle-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.arc-bundle__label {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.arc-bundle__label::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--blue);
+}
+
+.arc-bundle__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.1;
+  letter-spacing: 1px;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+}
+
+.arc-bundle__title-blue {
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue), var(--blue-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.arc-bundle__subtitle {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-bottom: 48px;
+  max-width: 600px;
+}
+
+.arc-bundle__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.arc-bundle__card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 32px 24px;
+  border: 1px solid var(--border-light);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.arc-bundle__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+
+.arc-bundle__card--featured {
+  border-color: var(--blue);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.03), rgba(37, 99, 235, 0.01));
+}
+
+.arc-bundle__badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--blue);
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 20px;
+}
+
+.arc-bundle__name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 1px;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.arc-bundle__tagline {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.arc-bundle__breakdown {
+  background: rgba(0,0,0,0.02);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.arc-bundle__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 6px 0;
+  color: var(--text-body);
+}
+
+.arc-bundle__row--total {
+  border-top: 1px dashed var(--border-medium);
+  margin-top: 8px;
+  padding-top: 12px;
+  font-weight: 600;
+}
+
+.arc-bundle__row--savings {
+  color: var(--success);
+  font-weight: 600;
+}
+
+.arc-bundle__price {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.arc-bundle__price-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.arc-bundle__card--featured .arc-bundle__price-val {
+  color: var(--blue);
+}
+
+.arc-bundle__price-per {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.arc-bundle__includes {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.arc-bundle__list {
+  list-style: none;
+}
+
+.arc-bundle__list li {
+  font-size: 13px;
+  color: var(--text-body);
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.arc-bundle__list li:last-child {
+  border-bottom: none;
+}
+
+.arc-bundle__list li::before {
+  content: '✓';
+  color: var(--blue);
+  font-weight: 600;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CTA SECTION
+   ══════════════════════════════════════════════════════════════ */
+
+.arc-cta-section {
+  width: 100%;
+  background: linear-gradient(180deg, var(--red-dark) 0%, var(--red) 50%, var(--red-dark) 100%);
+  padding: 60px 24px;
+  text-align: center;
+  position: relative;
+}
+
+.arc-cta-inner {
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.arc-cta-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(32px, 6vw, 52px);
+  line-height: 1.1;
+  letter-spacing: 2px;
+  color: #FFFFFF;
+  margin-bottom: 16px;
+}
+
+.arc-cta-title-blue {
+  color: var(--blue-light);
+  text-shadow: 0 0 40px var(--blue-glow);
+}
+
+.arc-cta-text {
+  font-size: 16px;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  line-height: 1.7;
+}
+
+.arc-cta-text:last-of-type {
+  margin-bottom: 32px;
+}
+
+.arc-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  background: var(--blue);
+  color: #FFFFFF;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.arc-cta-btn:hover {
+  background: var(--blue-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+}
+
+.arc-cta-note {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 16px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════════════ */
+
+.arc-footer {
+  background: var(--cream);
+  padding: 40px 24px;
+  text-align: center;
+  border-top: 1px solid var(--border-light);
+}
+
+.arc-footer-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 3px;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.arc-footer-tagline {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  .arc-paid2-problem-grid,
+  .arc-org2-problem-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .arc-paid2-vs,
+  .arc-org2-vs {
+    display: none;
+  }
+  .arc-paid2-cards,
+  .arc-org2-cards,
+  .arc-org3-cards,
+  .arc-bundle__grid {
+    grid-template-columns: 1fr;
+  }
+  .arc-paid3-pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  .arc-paid3-metrics,
+  .arc-org-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .arc-paid1-stats,
+  .arc-org1-stats {
+    gap: 40px;
+  }
+  .arc-paid3-metrics,
+  .arc-org-metrics {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .arc-paid3-metric-val,
+  .arc-org-metric-val {
+    font-size: 22px;
+  }
+  
+  /* Fix hero titles on mobile */
+  .arc-paid1-title,
+  .arc-org1-title {
+    font-size: clamp(32px, 10vw, 48px);
+    letter-spacing: 1px;
+  }
+  
+  /* Fix section titles on mobile */
+  .arc-paid2-title,
+  .arc-paid3-title,
+  .arc-org2-title,
+  .arc-org3-title,
+  .arc-org-dash-title {
+    font-size: clamp(28px, 8vw, 40px);
+  }
+  
+  /* Reduce marquee size on mobile */
+  .arc-paid1-marquee-item,
+  .arc-org1-marquee-item {
+    font-size: clamp(28px, 6vw, 40px);
+    padding: 0 20px;
+  }
+  
+  /* Reduce platform icons gap */
+  .arc-org1-platforms {
+    gap: 12px;
+  }
+  
+  .arc-org1-platform {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .arc-org1-platform svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .arc-paid1-wrapper,
+  .arc-org1-wrapper {
+    padding: 40px 16px;
+  }
+  
+  .arc-paid1-title,
+  .arc-org1-title {
+    font-size: 36px;
+    letter-spacing: 0.5px;
+  }
+  
+  .arc-paid2-title,
+  .arc-paid3-title,
+  .arc-org2-title,
+  .arc-org3-title,
+  .arc-org-dash-title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 400px) {
+  .arc-paid1-wrapper,
+  .arc-org1-wrapper {
+    padding: 32px 12px;
+  }
+  
+  .arc-paid1-title,
+  .arc-org1-title {
+    font-size: 32px;
+    letter-spacing: 0;
+  }
+  
+  .arc-paid2-title,
+  .arc-paid3-title,
+  .arc-org2-title,
+  .arc-org3-title,
+  .arc-org-dash-title {
+    font-size: 24px;
+  }
+  
+  .arc-paid1-marquee-item,
+  .arc-org1-marquee-item {
+    font-size: 24px;
+    padding: 0 12px;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ══════════════════════════════════════════════════════════════ */
+
+.arc-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.arc-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.arc-reveal-d1 { transition-delay: 0.1s; }
+.arc-reveal-d2 { transition-delay: 0.2s; }
+.arc-reveal-d3 { transition-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .arc-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .arc-paid1-marquee-track,
+  .arc-org1-marquee-track {
+    animation: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- PAID SECTION 1: HERO -->
+<div class="arc-paid1-wrapper">
+  <section class="arc-paid1-hero">
+    <div class="arc-paid1-eyebrow arc-reveal">
+      <span class="arc-paid1-eyebrow-line"></span>
+      <span class="arc-paid1-eyebrow-text">Paid Advertising</span>
+      <span class="arc-paid1-eyebrow-line"></span>
+    </div>
+    
+    <h1 class="arc-paid1-title">
+      <span class="arc-paid1-title-line">YOUR ADS.</span>
+      <span class="arc-paid1-title-line">YOUR CONTENT.</span>
+      <span class="arc-paid1-title-line arc-paid1-title-line--blue">CONSISTENT VISIBILITY.</span>
+    </h1>
+    
+    <p class="arc-paid1-sub arc-reveal arc-reveal-d1">
+      Skip the wait.<br>
+      <strong>Paid ads</strong> put Americana directly in front of Southern California business owners the moment they need tax&nbsp;help.
+    </p>
+    
+    <div class="arc-paid1-stats arc-reveal arc-reveal-d2">
+      <div class="arc-paid1-stat">
+        <span class="arc-paid1-stat-val">75</span>
+        <span class="arc-paid1-stat-lbl">Ads Managed</span>
+      </div>
+      <div class="arc-paid1-stat">
+        <span class="arc-paid1-stat-val">24/7</span>
+        <span class="arc-paid1-stat-lbl">Optimization</span>
+      </div>
+    </div>
+  </section>
+  
+  <div class="arc-paid1-marquee">
+    <div class="arc-paid1-marquee-track">
+      <span class="arc-paid1-marquee-item">AMERICANA <span>TAX PLANNING</span></span>
+      <span class="arc-paid1-marquee-item">LA HABRA <span>&</span> DOWNEY</span>
+      <span class="arc-paid1-marquee-item">EDUCATIONAL <span>TAX PLANNING</span></span>
+      <span class="arc-paid1-marquee-item">AMERICANA <span>TAX PLANNING</span></span>
+      <span class="arc-paid1-marquee-item">LA HABRA <span>&</span> DOWNEY</span>
+      <span class="arc-paid1-marquee-item">EDUCATIONAL <span>TAX PLANNING</span></span>
+      <span class="arc-paid1-marquee-item">AMERICANA <span>TAX PLANNING</span></span>
+      <span class="arc-paid1-marquee-item">LA HABRA <span>&</span> DOWNEY</span>
+      <span class="arc-paid1-marquee-item">EDUCATIONAL <span>TAX PLANNING</span></span>
+      <span class="arc-paid1-marquee-item">AMERICANA <span>TAX PLANNING</span></span>
+      <span class="arc-paid1-marquee-item">LA HABRA <span>&</span> DOWNEY</span>
+      <span class="arc-paid1-marquee-item">EDUCATIONAL <span>TAX PLANNING</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- PAID SECTION 2: PROBLEM & SCOPE -->
+<div class="arc-paid2-wrapper">
+  <div class="arc-paid2-inner">
+    <div class="arc-paid2-label">Problem & Scope</div>
+    <h2 class="arc-paid2-title">
+      THE CHALLENGE WITH<br>
+      <span class="arc-paid2-title-blue">DIGITAL&nbsp;ADVERTISING</span>
+    </h2>
+    
+    <div class="arc-paid2-problem">
+      <div class="arc-paid2-problem-grid">
+        <div class="arc-paid2-box arc-paid2-box--bad">
+          <div class="arc-paid2-box-label">Without Strategy</div>
+          <ul class="arc-paid2-list">
+            <li><span class="arc-paid2-list-icon">✗</span> Wasted ad spend on unqualified clicks</li>
+            <li><span class="arc-paid2-list-icon">✗</span> No tracking or performance data</li>
+            <li><span class="arc-paid2-list-icon">✗</span> Generic messaging that doesn't convert</li>
+            <li><span class="arc-paid2-list-icon">✗</span> Competitors outbid you consistently</li>
+          </ul>
+        </div>
+        
+        <div class="arc-paid2-vs">VS</div>
+        
+        <div class="arc-paid2-box arc-paid2-box--good">
+          <div class="arc-paid2-box-label">With Arc Garde</div>
+          <ul class="arc-paid2-list">
+            <li><span class="arc-paid2-list-icon">✓</span> Precision targeting in ideal zip codes</li>
+            <li><span class="arc-paid2-list-icon">✓</span> Real-time dashboard with all metrics</li>
+            <li><span class="arc-paid2-list-icon">✓</span> Tax-specific ad copy that converts</li>
+            <li><span class="arc-paid2-list-icon">✓</span> Continuous optimization beats competition</li>
+          </ul>
+        </div>
+      </div>
+      
+      <p class="arc-paid2-problem-cta">
+        <strong>Your expertise deserves visibility.</strong><br>
+        We make it happen.
+      </p>
+    </div>
+    
+    <div class="arc-paid2-scope-head">What's Included</div>
+    
+    <div class="arc-paid2-cards">
+      <div class="arc-paid2-card">
+        <div class="arc-paid2-card-glow"></div>
+        <div class="arc-paid2-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+        </div>
+        <h3 class="arc-paid2-card-title">GOOGLE ADS</h3>
+        <ul class="arc-paid2-card-list">
+          <li>Search campaign setup</li>
+          <li>Keyword research & targeting</li>
+          <li>Ad copywriting & testing</li>
+          <li>Conversion tracking</li>
+        </ul>
+      </div>
+      
+      <div class="arc-paid2-card">
+        <div class="arc-paid2-card-glow"></div>
+        <div class="arc-paid2-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/>
+          </svg>
+        </div>
+        <h3 class="arc-paid2-card-title">META ADS</h3>
+        <ul class="arc-paid2-card-list">
+          <li>Facebook & Instagram campaigns</li>
+          <li>Audience building & lookalikes</li>
+          <li>Creative development</li>
+          <li>Retargeting setup</li>
+        </ul>
+      </div>
+      
+      <div class="arc-paid2-card">
+        <div class="arc-paid2-card-glow"></div>
+        <div class="arc-paid2-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>
+          </svg>
+        </div>
+        <h3 class="arc-paid2-card-title">REPORTING</h3>
+        <ul class="arc-paid2-card-list">
+          <li>Live performance dashboard</li>
+          <li>Weekly optimization reports</li>
+          <li>Lead tracking & attribution</li>
+          <li>ROI analysis</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAID SECTION 3: RESULTS & PRICING -->
+<div class="arc-paid3-wrapper">
+  <div class="arc-paid3-inner">
+    <div class="arc-paid3-label">Results & Pricing</div>
+    <h2 class="arc-paid3-title">
+      REAL-TIME<br>
+      <span class="arc-paid3-title-blue">CAMPAIGN&nbsp;DASHBOARD</span>
+    </h2>
+    
+    <div class="arc-paid3-dashboard">
+      <div class="arc-paid3-dash-header">
+        <div class="arc-paid3-dash-title">Tax Professional Campaign Dashboard</div>
+        <div class="arc-paid3-dash-tabs">
+          <button class="arc-paid3-tab active" data-metric="roas">ROAS</button>
+          <button class="arc-paid3-tab" data-metric="cpl">CPL</button>
+          <button class="arc-paid3-tab" data-metric="leads">Leads</button>
+        </div>
+      </div>
+      
+      <div class="arc-paid3-metrics">
+        <div class="arc-paid3-metric">
+          <div class="arc-paid3-metric-val" id="arcPaid3MetricMain">4.2x</div>
+          <div class="arc-paid3-metric-lbl">Return on Ad Spend</div>
+          <div class="arc-paid3-metric-chg up" id="arcPaid3MetricChg">+0.8x improvement</div>
+        </div>
+        <div class="arc-paid3-metric">
+          <div class="arc-paid3-metric-val">$85</div>
+          <div class="arc-paid3-metric-lbl">Cost Per Lead</div>
+          <div class="arc-paid3-metric-chg up">-$73 reduction</div>
+        </div>
+        <div class="arc-paid3-metric">
+          <div class="arc-paid3-metric-val">185</div>
+          <div class="arc-paid3-metric-lbl">Qualified Leads</div>
+          <div class="arc-paid3-metric-chg up">+85% growth</div>
+        </div>
+        <div class="arc-paid3-metric">
+          <div class="arc-paid3-metric-val" id="arcPaid3MetricGrow">+33%</div>
+          <div class="arc-paid3-metric-lbl">Month over Month</div>
+        </div>
+      </div>
+      
+      <div class="arc-paid3-chart-title" id="arcPaid3ChartTitle">Return on Ad Spend - Last 30 Days</div>
+      <div class="arc-paid3-chart-wrap">
+        <canvas id="arcPaid3Chart"></canvas>
+      </div>
+    </div>
+    
+    <div class="arc-paid3-pricing-head">
+      <h3>PAID ADVERTISING</h3>
+      <p>Professional campaign management for tax&nbsp;professionals</p>
+    </div>
+    
+    <div class="arc-paid3-pricing-grid">
+      <div class="arc-paid3-price-card arc-paid3-price-card--featured">
+        <div class="arc-paid3-price-badge">Recommended</div>
+        <div class="arc-paid3-price-name">STANDARD ADS</div>
+        <div class="arc-paid3-price-desc">Full-service paid advertising management</div>
+        <div class="arc-paid3-price-amount">
+          <span class="arc-paid3-price-val">$2,800</span>
+          <span class="arc-paid3-price-per">/month</span>
+        </div>
+        <div class="arc-paid3-price-includes">Includes:</div>
+        <ul class="arc-paid3-price-list">
+          <li>Google Ads management</li>
+          <li>Meta Ads (Facebook & Instagram)</li>
+          <li>Keyword research & targeting</li>
+          <li>Ad copywriting & testing</li>
+          <li>Weekly optimization</li>
+          <li>Live dashboard access</li>
+          <li>Conversion tracking</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ORGANIC SECTION 1: HERO -->
+<div class="arc-org1-wrapper">
+  <section class="arc-org1-hero">
+    <div class="arc-org1-eyebrow arc-reveal">
+      <span class="arc-org1-eyebrow-line"></span>
+      <span class="arc-org1-eyebrow-text">Organic Content</span>
+      <span class="arc-org1-eyebrow-line"></span>
+    </div>
+    
+    <h1 class="arc-org1-title">
+      <span class="arc-org1-title-line">BE THE TAX&nbsp;PRO</span>
+      <span class="arc-org1-title-line arc-org1-title-line--blue">SOCAL SEES&nbsp;FIRST.</span>
+    </h1>
+    
+    <p class="arc-org1-sub arc-reveal arc-reveal-d1">
+      While other tax pros post sporadically, Rose shows up&nbsp;consistently.<br>
+      <strong>Daily content</strong> across multiple platforms builds unstoppable&nbsp;authority.
+    </p>
+    
+    <div class="arc-org1-stats arc-reveal arc-reveal-d2">
+      <div class="arc-org1-stat">
+        <span class="arc-org1-stat-val">30</span>
+        <span class="arc-org1-stat-lbl">Posts/Month</span>
+      </div>
+      <div class="arc-org1-stat">
+        <span class="arc-org1-stat-val">7</span>
+        <span class="arc-org1-stat-lbl">Platforms</span>
+      </div>
+    </div>
+    
+    <div class="arc-org1-platforms arc-reveal arc-reveal-d3">
+      <div class="arc-org1-platforms-label">Multi-Platform Distribution</div>
+      
+      <!-- Facebook -->
+      <div class="arc-org1-platform arc-org1-platform--facebook" title="Facebook">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      </div>
+      
+      <!-- Instagram -->
+      <div class="arc-org1-platform arc-org1-platform--instagram" title="Instagram">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+      </div>
+      
+      <!-- TikTok -->
+      <div class="arc-org1-platform arc-org1-platform--tiktok" title="TikTok">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+        </svg>
+      </div>
+      
+      <!-- LinkedIn -->
+      <div class="arc-org1-platform arc-org1-platform--linkedin" title="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+      </div>
+      
+      <!-- YouTube -->
+      <div class="arc-org1-platform arc-org1-platform--youtube" title="YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+      </div>
+      
+      <!-- X/Twitter -->
+      <div class="arc-org1-platform arc-org1-platform--twitter" title="X (Twitter)">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </div>
+      
+      <!-- Threads -->
+      <div class="arc-org1-platform arc-org1-platform--threads" title="Threads">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.96-.065-1.182.408-2.256 1.333-3.022.842-.697 2.023-1.11 3.428-1.19 1.159-.07 2.213.02 3.168.25-.01-.38-.035-.73-.09-1.05-.245-1.46-1.146-2.2-2.68-2.2h-.013c-.952.02-1.725.33-2.298.92l-1.42-1.43c.904-.9 2.121-1.39 3.701-1.41h.026c2.444 0 4.122 1.39 4.517 3.75.063.38.097.79.102 1.22 1.032.43 1.88 1.07 2.493 1.92.883 1.21 1.216 2.77.94 4.39-.36 2.12-1.444 3.87-3.136 5.05-1.534 1.07-3.508 1.67-5.7 1.72zm-1.866-8.04c1.048-.06 1.845-.4 2.37-1 .443-.5.687-1.2.754-2.13-.812-.22-1.702-.33-2.664-.27-1.552.09-2.487.74-2.487 1.71 0 .93.768 1.64 2.03 1.69z"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+  
+  <div class="arc-org1-marquee">
+    <div class="arc-org1-marquee-track">
+      <span class="arc-org1-marquee-item">AMERICANA <span>TAX PLANNING</span></span>
+      <span class="arc-org1-marquee-item">LA HABRA <span>&</span> DOWNEY</span>
+      <span class="arc-org1-marquee-item">EDUCATIONAL <span>TAX PLANNING</span></span>
+      <span class="arc-org1-marquee-item">AMERICANA <span>TAX PLANNING</span></span>
+      <span class="arc-org1-marquee-item">LA HABRA <span>&</span> DOWNEY</span>
+      <span class="arc-org1-marquee-item">EDUCATIONAL <span>TAX PLANNING</span></span>
+      <span class="arc-org1-marquee-item">AMERICANA <span>TAX PLANNING</span></span>
+      <span class="arc-org1-marquee-item">LA HABRA <span>&</span> DOWNEY</span>
+      <span class="arc-org1-marquee-item">EDUCATIONAL <span>TAX PLANNING</span></span>
+      <span class="arc-org1-marquee-item">AMERICANA <span>TAX PLANNING</span></span>
+      <span class="arc-org1-marquee-item">LA HABRA <span>&</span> DOWNEY</span>
+      <span class="arc-org1-marquee-item">EDUCATIONAL <span>TAX PLANNING</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ORGANIC SECTION 2: PROBLEM & SCOPE -->
+<div class="arc-org2-wrapper">
+  <div class="arc-org2-inner">
+    <div class="arc-org2-label">Problem & Scope</div>
+    <h2 class="arc-org2-title">
+      THE CHALLENGE WITH<br>
+      <span class="arc-org2-title-blue">SOCIAL&nbsp;MEDIA</span>
+    </h2>
+    
+    <div class="arc-org2-problem">
+      <div class="arc-org2-problem-grid">
+        <div class="arc-org2-box arc-org2-box--bad">
+          <div class="arc-org2-box-label">Without Consistency</div>
+          <ul class="arc-org2-list">
+            <li><span class="arc-org2-list-icon">✗</span> Random posting with no strategy</li>
+            <li><span class="arc-org2-list-icon">✗</span> Weeks go by without content</li>
+            <li><span class="arc-org2-list-icon">✗</span> No brand voice or visual identity</li>
+            <li><span class="arc-org2-list-icon">✗</span> Competitors dominate the feed</li>
+          </ul>
+        </div>
+        
+        <div class="arc-org2-vs">VS</div>
+        
+        <div class="arc-org2-box arc-org2-box--good">
+          <div class="arc-org2-box-label">With Arc Garde</div>
+          <ul class="arc-org2-list">
+            <li><span class="arc-org2-list-icon">✓</span> Daily content that builds authority</li>
+            <li><span class="arc-org2-list-icon">✓</span> Consistent brand presence</li>
+            <li><span class="arc-org2-list-icon">✓</span> Professional graphics & copy</li>
+            <li><span class="arc-org2-list-icon">✓</span> You become the go-to expert</li>
+          </ul>
+        </div>
+      </div>
+      
+      <p class="arc-org2-problem-cta">
+        <strong>Consistency wins.</strong><br>
+        We make it effortless.
+      </p>
+    </div>
+    
+    <div class="arc-org2-scope-head">What's Included</div>
+    
+    <div class="arc-org2-cards">
+      <div class="arc-org2-card">
+        <div class="arc-org2-card-glow"></div>
+        <div class="arc-org2-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+          </svg>
+        </div>
+        <h3 class="arc-org2-card-title">CONTENT CREATION</h3>
+        <ul class="arc-org2-card-list">
+          <li>Video editing</li>
+          <li>Static image graphics</li>
+          <li>Engaging copy (descriptions)</li>
+          <li>Hashtag research</li>
+        </ul>
+      </div>
+      
+      <div class="arc-org2-card">
+        <div class="arc-org2-card-glow"></div>
+        <div class="arc-org2-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+          </svg>
+        </div>
+        <h3 class="arc-org2-card-title">SCHEDULING</h3>
+        <ul class="arc-org2-card-list">
+          <li>Monthly content calendar</li>
+          <li>Optimal posting times</li>
+          <li>7-platform distribution</li>
+          <li>Consistent daily posting</li>
+        </ul>
+      </div>
+      
+      <div class="arc-org2-card">
+        <div class="arc-org2-card-glow"></div>
+        <div class="arc-org2-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>
+          </svg>
+        </div>
+        <h3 class="arc-org2-card-title">ANALYTICS</h3>
+        <ul class="arc-org2-card-list">
+          <li>Monthly performance reports</li>
+          <li>Engagement tracking</li>
+          <li>Growth metrics</li>
+          <li>Strategy adjustments</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ORGANIC DASHBOARD SECTION -->
+<div class="arc-org-dash-wrapper">
+  <div class="arc-org-dash-inner">
+    <div class="arc-org-dash-label">Results & Growth</div>
+    <h2 class="arc-org-dash-title">
+      REAL-TIME<br>
+      <span class="arc-org-dash-title-blue">CONTENT&nbsp;DASHBOARD</span>
+    </h2>
+    
+    <div class="arc-org-dashboard">
+      <div class="arc-org-dash-header">
+        <div class="arc-org-dash-head-title">Organic Content Performance Dashboard</div>
+        <div class="arc-org-dash-tabs">
+          <button class="arc-org-tab active" data-metric="followers">Followers</button>
+          <button class="arc-org-tab" data-metric="engagement">Engagement</button>
+          <button class="arc-org-tab" data-metric="reach">Reach</button>
+        </div>
+      </div>
+      
+      <div class="arc-org-metrics">
+        <div class="arc-org-metric">
+          <div class="arc-org-metric-val" id="arcOrgMetricMain">2,450</div>
+          <div class="arc-org-metric-lbl">Total Followers</div>
+          <div class="arc-org-metric-chg up" id="arcOrgMetricChg">+680 new followers</div>
+        </div>
+        <div class="arc-org-metric">
+          <div class="arc-org-metric-val">8.2%</div>
+          <div class="arc-org-metric-lbl">Engagement Rate</div>
+          <div class="arc-org-metric-chg up">+3.1% increase</div>
+        </div>
+        <div class="arc-org-metric">
+          <div class="arc-org-metric-val">12.5K</div>
+          <div class="arc-org-metric-lbl">Monthly Reach</div>
+          <div class="arc-org-metric-chg up">+156% growth</div>
+        </div>
+        <div class="arc-org-metric">
+          <div class="arc-org-metric-val" id="arcOrgMetricGrow">+38%</div>
+          <div class="arc-org-metric-lbl">Month over Month</div>
+        </div>
+      </div>
+      
+      <div class="arc-org-chart-title" id="arcOrgChartTitle">Follower Growth - Last 30 Days</div>
+      <div class="arc-org-chart-wrap">
+        <canvas id="arcOrgChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ORGANIC SECTION 4: PRICING -->
+<div class="arc-org3-wrapper">
+  <div class="arc-org3-inner">
+    <div class="arc-org3-label">Organic Packages</div>
+    <h2 class="arc-org3-title">
+      CONTENT THAT<br>
+      <span class="arc-org3-title-blue">BUILDS&nbsp;AUTHORITY</span>
+    </h2>
+    <p class="arc-org3-subtitle">Daily content that positions you as the go-to tax expert in Southern&nbsp;California.</p>
+    
+    <div class="arc-org3-cards">
+      <div class="arc-org3-card arc-org3-card--featured">
+        <div class="arc-org3-card-badge">Recommended</div>
+        <div class="arc-org3-card-name">DAILY AUTHORITY</div>
+        <div class="arc-org3-card-tagline">1 post per day across platforms</div>
+        <div class="arc-org3-card-price">
+          <span class="arc-org3-card-price-val">$2,300</span>
+          <span class="arc-org3-card-price-per">/month</span>
+        </div>
+        <div class="arc-org3-card-includes">Includes:</div>
+        <ul class="arc-org3-card-list">
+          <li>1 post per day (30/month)</li>
+          <li>7-platform distribution</li>
+          <li>Video editing, static image graphics, &amp; copy (descriptions)</li>
+          <li>Content calendar</li>
+          <li>Hashtag strategy</li>
+          <li>Monthly analytics report</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Scroll reveal animations
+(function() {
+  const reveals = document.querySelectorAll('.arc-reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+  
+  reveals.forEach(el => observer.observe(el));
+})();
+
+// Chart.js dashboard
+(function() {
+  const ctx = document.getElementById('arcPaid3Chart');
+  if (!ctx) return;
+  
+  const chartData = {
+    roas: { label: 'Return on Ad Spend', current: [100, 112, 128, 142, 165, 185], startVal: '4.2x', chg: '+0.8x improvement', grow: '+33%' },
+    cpl: { label: 'Cost Per Lead', current: [158, 135, 112, 105, 90, 85], startVal: '$85', chg: '-$73 reduction', grow: '-39%' },
+    leads: { label: 'Qualified Leads', current: [100, 110, 125, 145, 170, 185], startVal: '185', chg: '+85% growth', grow: '+85%' }
+  };
+  
+  const gradient = ctx.getContext('2d').createLinearGradient(0, 0, ctx.width, 0);
+  gradient.addColorStop(0, '#1D4ED8');
+  gradient.addColorStop(0.5, '#2563EB');
+  gradient.addColorStop(1, '#60A5FA');
+  
+  const fillGradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 200);
+  fillGradient.addColorStop(0, 'rgba(37, 99, 235, 0.3)');
+  fillGradient.addColorStop(1, 'rgba(37, 99, 235, 0)');
+  
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Day 0', 'Day 7', 'Day 14', 'Day 21', 'Day 28', 'Day 30'],
+      datasets: [{
+        data: chartData.roas.current,
+        borderColor: gradient,
+        backgroundColor: fillGradient,
+        borderWidth: 3,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 4,
+        pointBackgroundColor: '#2563EB',
+        pointBorderColor: '#1a1a2e',
+        pointBorderWidth: 2,
+        pointHoverRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: {
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          ticks: { color: 'rgba(255,255,255,0.4)', font: { size: 10 } }
+        },
+        y: {
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          ticks: { color: 'rgba(255,255,255,0.4)', font: { size: 10 } }
+        }
+      }
+    }
+  });
+  
+  // Tab switching
+  document.querySelectorAll('.arc-paid3-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.arc-paid3-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      
+      const metric = this.dataset.metric;
+      const d = chartData[metric];
+      
+      chart.data.datasets[0].data = d.current;
+      chart.update();
+      
+      document.getElementById('arcPaid3MetricMain').textContent = d.startVal;
+      document.getElementById('arcPaid3MetricChg').textContent = d.chg;
+      document.getElementById('arcPaid3MetricGrow').textContent = d.grow;
+      document.getElementById('arcPaid3ChartTitle').textContent = d.label + ' - Last 30 Days';
+    });
+  });
+})();
+
+// Organic Chart.js dashboard
+(function() {
+  const ctx = document.getElementById('arcOrgChart');
+  if (!ctx) return;
+  
+  const chartData = {
+    followers: { label: 'Follower Growth', current: [1770, 1850, 1950, 2100, 2280, 2450], startVal: '2,450', chg: '+680 new followers', grow: '+38%' },
+    engagement: { label: 'Engagement Rate', current: [5.1, 5.8, 6.4, 7.2, 7.8, 8.2], startVal: '8.2%', chg: '+3.1% increase', grow: '+61%' },
+    reach: { label: 'Monthly Reach', current: [4900, 6200, 7800, 9400, 11000, 12500], startVal: '12.5K', chg: '+156% growth', grow: '+156%' }
+  };
+  
+  const gradient = ctx.getContext('2d').createLinearGradient(0, 0, ctx.width, 0);
+  gradient.addColorStop(0, '#1D4ED8');
+  gradient.addColorStop(0.5, '#2563EB');
+  gradient.addColorStop(1, '#60A5FA');
+  
+  const fillGradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 200);
+  fillGradient.addColorStop(0, 'rgba(37, 99, 235, 0.3)');
+  fillGradient.addColorStop(1, 'rgba(37, 99, 235, 0)');
+  
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Day 0', 'Day 7', 'Day 14', 'Day 21', 'Day 28', 'Day 30'],
+      datasets: [{
+        data: chartData.followers.current,
+        borderColor: gradient,
+        backgroundColor: fillGradient,
+        borderWidth: 3,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 4,
+        pointBackgroundColor: '#2563EB',
+        pointBorderColor: '#1a1a2e',
+        pointBorderWidth: 2,
+        pointHoverRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: {
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          ticks: { color: 'rgba(255,255,255,0.4)', font: { size: 10 } }
+        },
+        y: {
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          ticks: { color: 'rgba(255,255,255,0.4)', font: { size: 10 } }
+        }
+      }
+    }
+  });
+  
+  // Tab switching
+  document.querySelectorAll('.arc-org-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.arc-org-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      
+      const metric = this.dataset.metric;
+      const d = chartData[metric];
+      
+      chart.data.datasets[0].data = d.current;
+      chart.update();
+      
+      document.getElementById('arcOrgMetricMain').textContent = d.startVal;
+      document.getElementById('arcOrgMetricChg').textContent = d.chg;
+      document.getElementById('arcOrgMetricGrow').textContent = d.grow;
+      document.getElementById('arcOrgChartTitle').textContent = d.label + ' - Last 30 Days';
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

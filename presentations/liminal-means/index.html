@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brian Maierhofer - Multi-Platform Content System</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #4A9B8C;
+  --primary-light: #7BC4B8;
+  --primary-dark: #2D6B5F;
+  --primary-glow: rgba(74, 155, 140, 0.4);
+  --accent: #C4A574;
+  --bg-dark: #0A0F0E;
+  --text-primary: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.5);
+  --text-subtle: rgba(255, 255, 255, 0.3);
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--primary);
+  color: #000;
+}
+
+/* FRAMER CRITICAL: Force full width and vertical stacking */
+:host {
+  display: block !important;
+  width: 100% !important;
+}
+
+html, body {
+  width: 100% !important;
+  min-width: 100% !important;
+  display: block !important;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+/* MAIN WRAPPER - Forces vertical layout in Framer */
+.arc-garde-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  position: relative;
+}
+
+/* All direct children must be full-width blocks */
+.arc-garde-wrapper > * {
+  display: block !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+}
+
+/* NOISE OVERLAY */
+.arc-noise {
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* AURORA BACKGROUND */
+.arc-aurora {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.arc-aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.12;
+  animation: arcAuroraFloat 25s ease-in-out infinite;
+}
+
+.arc-aurora-blob:nth-child(1) {
+  width: 700px;
+  height: 700px;
+  background: linear-gradient(135deg, var(--primary), transparent);
+  bottom: -250px;
+  right: -150px;
+}
+
+.arc-aurora-blob:nth-child(2) {
+  width: 500px;
+  height: 500px;
+  background: linear-gradient(135deg, var(--primary-dark), transparent);
+  top: -150px;
+  left: -150px;
+  animation-delay: -8s;
+}
+
+.arc-aurora-blob:nth-child(3) {
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(135deg, var(--accent), transparent);
+  top: 50%;
+  left: 30%;
+  opacity: 0.08;
+  animation-delay: -16s;
+}
+
+@keyframes arcAuroraFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(60px, -40px) scale(1.1); }
+  50% { transform: translate(-40px, 60px) scale(0.9); }
+  75% { transform: translate(-60px, -30px) scale(1.05); }
+}
+
+/* PARTICLES */
+.arc-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.arc-particle {
+  position: absolute;
+  background: var(--primary);
+  border-radius: 50%;
+}
+
+/* GRADIENT TEXT */
+.arc-grad {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--primary-light), var(--primary), var(--primary-dark));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: arcGradFlow 5s ease infinite;
+}
+
+@keyframes arcGradFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* REVEAL ANIMATIONS */
+.arc-reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.arc-reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.arc-reveal-d1 { transition-delay: 0.15s; }
+.arc-reveal-d2 { transition-delay: 0.3s; }
+.arc-reveal-d3 { transition-delay: 0.45s; }
+.arc-reveal-d4 { transition-delay: 0.6s; }
+
+/* ========================================
+   HERO SECTION
+======================================== */
+.arc-hero {
+  display: block !important;
+  width: 100% !important;
+  min-height: 100vh;
+  position: relative;
+  z-index: 10;
+}
+
+/* Inner container for centering */
+.arc-hero-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  text-align: center;
+  padding: 80px 24px;
+}
+
+/* Eyebrow */
+.arc-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.arc-hero-eyebrow-line {
+  width: 50px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary));
+}
+
+.arc-hero-eyebrow-line:last-child {
+  background: linear-gradient(90deg, var(--primary), transparent);
+}
+
+.arc-hero-eyebrow-text {
+  font-size: 11px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+/* Title */
+.arc-hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 11vw, 130px);
+  line-height: 0.9;
+  letter-spacing: -1px;
+  margin-bottom: 36px;
+}
+
+.arc-hero-title span {
+  display: block;
+}
+
+/* Subtitle */
+.arc-hero-sub {
+  font-size: 17px;
+  line-height: 2;
+  color: var(--text-muted);
+  max-width: 560px;
+  margin: 0 auto 52px;
+}
+
+.arc-hero-sub strong {
+  color: var(--text-primary);
+}
+
+.arc-hero-sub em {
+  color: var(--primary-light);
+  font-style: normal;
+}
+
+/* Stats */
+.arc-hero-stats {
+  display: flex;
+  gap: 64px;
+  margin-bottom: 56px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.arc-hero-stat {
+  text-align: center;
+}
+
+.arc-hero-stat-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(42px, 8vw, 60px);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  position: relative;
+  display: inline-block;
+}
+
+.arc-hero-stat-val::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-dark), var(--primary), var(--primary-light));
+  border-radius: 2px;
+}
+
+.arc-hero-stat-lbl {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-top: 20px;
+  display: block;
+}
+
+/* CTA Button */
+.arc-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 42px;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #000;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.arc-hero-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.arc-hero-cta:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 25px 70px rgba(74, 155, 140, 0.4);
+}
+
+.arc-hero-cta:hover::before {
+  opacity: 1;
+}
+
+.arc-hero-cta span {
+  position: relative;
+  z-index: 1;
+}
+
+.arc-hero-cta svg {
+  width: 18px;
+  height: 18px;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s;
+}
+
+.arc-hero-cta:hover svg {
+  transform: translateX(4px);
+}
+
+/* Scroll Indicator */
+.arc-scroll-cta {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.arc-scroll-cta-text {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.arc-scroll-cta-line {
+  width: 1px;
+  height: 50px;
+  position: relative;
+  overflow: hidden;
+}
+
+.arc-scroll-cta-line::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(to bottom, var(--primary), transparent);
+  animation: arcScrollLine 1.8s ease-in-out infinite;
+}
+
+@keyframes arcScrollLine {
+  0% { top: -20px; opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { top: 50px; opacity: 0; }
+}
+
+/* ========================================
+   MARQUEE SECTION
+======================================== */
+.arc-marquee {
+  display: block !important;
+  width: 100% !important;
+  overflow: hidden;
+  padding: 50px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  position: relative;
+  z-index: 10;
+}
+
+.arc-marquee-track {
+  display: flex;
+  width: fit-content;
+  animation: arcMarqueeScroll 35s linear infinite;
+}
+
+@keyframes arcMarqueeScroll {
+  to { transform: translateX(-50%); }
+}
+
+.arc-marquee-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(60px, 10vw, 110px);
+  letter-spacing: 8px;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
+  white-space: nowrap;
+  padding: 0 50px;
+  line-height: 1;
+}
+
+.arc-marquee-text span {
+  -webkit-text-stroke: 1.5px var(--primary);
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+@media (max-width: 700px) {
+  .arc-hero-stats {
+    flex-direction: column;
+    gap: 36px;
+  }
+  
+  .arc-hero-eyebrow-line {
+    width: 30px;
+  }
+  
+  .arc-hero-sub {
+    font-size: 15px;
+    padding: 0 12px;
+  }
+  
+  .arc-marquee-text {
+    font-size: clamp(40px, 8vw, 70px);
+    -webkit-text-stroke-width: 1px;
+  }
+  
+  .arc-marquee-text span {
+    -webkit-text-stroke-width: 1px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- MAIN WRAPPER - Critical for Framer -->
+<div class="arc-garde-wrapper">
+
+  <!-- NOISE OVERLAY -->
+  <div class="arc-noise"></div>
+
+  <!-- AURORA BACKGROUND -->
+  <div class="arc-aurora">
+    <div class="arc-aurora-blob"></div>
+    <div class="arc-aurora-blob"></div>
+    <div class="arc-aurora-blob"></div>
+  </div>
+
+  <!-- PARTICLES -->
+  <div class="arc-particles" id="arcParticles"></div>
+
+  <!-- HERO SECTION -->
+  <section class="arc-hero">
+    <div class="arc-hero-inner">
+    
+    <!-- Eyebrow -->
+    <div class="arc-hero-eyebrow arc-reveal">
+      <span class="arc-hero-eyebrow-line"></span>
+      <span class="arc-hero-eyebrow-text">Multi-Platform Content System</span>
+      <span class="arc-hero-eyebrow-line"></span>
+    </div>
+    
+    <!-- Title -->
+    <h1 class="arc-hero-title arc-reveal arc-reveal-d1">
+      <span>YOUR EXPERTISE HEALS.</span>
+      <span class="arc-grad">LET THE WORLD FIND IT.</span>
+    </h1>
+    
+    <!-- Subtitle -->
+    <p class="arc-hero-sub arc-reveal arc-reveal-d2">
+      Most therapists stay invisible online while people who need them <em>search endlessly</em>.<br><br>
+      We turn your knowledge into a <strong>7-platform content engine</strong> that builds trust, attracts ideal clients, and establishes you as the authority in your&nbsp;space.
+    </p>
+    
+    <!-- Stats -->
+    <div class="arc-hero-stats arc-reveal arc-reveal-d3">
+      <div class="arc-hero-stat">
+        <div class="arc-hero-stat-val">7</div>
+        <div class="arc-hero-stat-lbl">Platforms</div>
+      </div>
+      <div class="arc-hero-stat">
+        <div class="arc-hero-stat-val">14</div>
+        <div class="arc-hero-stat-lbl">Daily Videos</div>
+      </div>
+      <div class="arc-hero-stat">
+        <div class="arc-hero-stat-val">84K</div>
+        <div class="arc-hero-stat-lbl">Monthly Views</div>
+      </div>
+    </div>
+    
+    <!-- CTA -->
+    <a href="#scope" class="arc-hero-cta arc-reveal arc-reveal-d4" target="_parent">
+      <span>See The Full System</span>
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+      </svg>
+    </a>
+    
+    </div><!-- end arc-hero-inner -->
+    
+    <!-- Scroll Indicator -->
+    <div class="arc-scroll-cta">
+      <span class="arc-scroll-cta-text">Scroll</span>
+      <div class="arc-scroll-cta-line"></div>
+    </div>
+    
+  </section>
+
+  <!-- MARQUEE SECTION -->
+  <div class="arc-marquee">
+    <div class="arc-marquee-track">
+      <span class="arc-marquee-text">BRIAN <span>MAIERHOFER</span></span>
+      <span class="arc-marquee-text">MENTAL <span>HEALTH</span></span>
+      <span class="arc-marquee-text">CONTENT <span>SYSTEM</span></span>
+      <span class="arc-marquee-text">BRIAN <span>MAIERHOFER</span></span>
+      <span class="arc-marquee-text">MENTAL <span>HEALTH</span></span>
+      <span class="arc-marquee-text">CONTENT <span>SYSTEM</span></span>
+    </div>
+  </div>
+
+</div><!-- END WRAPPER -->
+
+<script>
+(function() {
+  // PARTICLES
+  const particlesContainer = document.getElementById('arcParticles');
+  if (particlesContainer) {
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.className = 'arc-particle';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.top = Math.random() * 100 + '%';
+      p.style.opacity = Math.random() * 0.25 + 0.05;
+      const size = Math.random() * 4 + 2;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      particlesContainer.appendChild(p);
+      
+      let x = parseFloat(p.style.left);
+      let y = parseFloat(p.style.top);
+      let speedX = (Math.random() - 0.5) * 0.012;
+      let speedY = (Math.random() - 0.5) * 0.012;
+      
+      function move() {
+        x += speedX;
+        y += speedY;
+        if (x < 0 || x > 100) speedX *= -1;
+        if (y < 0 || y > 100) speedY *= -1;
+        p.style.left = x + '%';
+        p.style.top = y + '%';
+        requestAnimationFrame(move);
+      }
+      move();
+    }
+  }
+  
+  // REVEAL ON SCROLL / LOAD
+  const reveals = document.querySelectorAll('.arc-reveal');
+  
+  // Trigger reveals on page load
+  setTimeout(() => {
+    reveals.forEach(el => el.classList.add('active'));
+  }, 100);
+  
+  // Intersection Observer for scroll reveals
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  reveals.forEach(el => observer.observe(el));
+})();
+</script>
+
+</body>
+</html>
