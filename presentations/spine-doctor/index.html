@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
   
 <style>
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -95,6 +95,13 @@ img { max-width: 100%; height: auto; }
   top: 0;
 }
 
+/* FOCUS VISIBLE */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
 
 /* === 01 Website Hero === */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -131,14 +138,14 @@ img { max-width: 100%; height: auto; }
   margin-bottom: 28px;
   opacity: 0;
   transform: translateY(21px);
-  animation: arcWebReveal 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.1s forwards;
+  animation: arcWebReveal 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.3s forwards;
 }
 
 .arc-web-eyebrow__line {
   width: 0;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--gold));
-  animation: arcWebLineExpand 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.5s forwards;
+  animation: arcWebLineExpand 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.6s forwards;
 }
 
 .arc-web-eyebrow__line--right {
@@ -165,7 +172,7 @@ img { max-width: 100%; height: auto; }
   margin-bottom: 28px;
   opacity: 0;
   transform: translateY(28px);
-  animation: arcWebReveal 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.2s forwards;
+  animation: arcWebReveal 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) 0.3s forwards;
 }
 
 .arc-web-title span { display: block; }
@@ -185,7 +192,7 @@ img { max-width: 100%; height: auto; }
   margin: 0 auto 42px;
   opacity: 0;
   transform: translateY(21px);
-  animation: arcWebReveal 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.35s forwards;
+  animation: arcWebReveal 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.3s forwards;
 }
 
 .arc-web-subtitle strong {
@@ -201,7 +208,7 @@ img { max-width: 100%; height: auto; }
   justify-content: center;
   opacity: 0;
   transform: translateY(21px);
-  animation: arcWebReveal 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.5s forwards;
+  animation: arcWebReveal 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.6s forwards;
 }
 
 .arc-web-stat { text-align: center; }
@@ -225,11 +232,11 @@ img { max-width: 100%; height: auto; }
   background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
   border-radius: 3px;
   transform: scaleX(0);
-  animation: arcWebUnderline 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) 0.8s forwards;
+  animation: arcWebUnderline 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.9s forwards;
 }
 
 .arc-web-stat:nth-child(2) .arc-web-stat__value::after { animation-delay: 0.9s; }
-.arc-web-stat:nth-child(3) .arc-web-stat__value::after { animation-delay: 1s; }
+.arc-web-stat:nth-child(3) .arc-web-stat__value::after { animation-delay: 0.9s; }
 
 @keyframes arcWebUnderline {
   to { transform: scaleX(1); }
@@ -259,7 +266,7 @@ img { max-width: 100%; height: auto; }
   overflow: hidden;
   opacity: 0;
   transform: translateY(21px);
-  animation: arcWebReveal 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.65s forwards;
+  animation: arcWebReveal 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.6s forwards;
   transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
@@ -275,7 +282,7 @@ img { max-width: 100%; height: auto; }
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  transition: left 0.5s ease;
+  transition: left 0.6s ease;
 }
 
 @media (hover: hover) {
@@ -297,7 +304,7 @@ img { max-width: 100%; height: auto; }
 .arc-web-marquee__track {
   display: flex;
   width: max-content;
-  animation: arcWebMarquee 20s linear infinite;
+  animation: arcWebMarquee 21s linear infinite;
 }
 
 @keyframes arcWebMarquee {
@@ -539,7 +546,7 @@ img { max-width: 100%; height: auto; }
   padding: 35px 28px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.4s ease;
+  transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.3s ease;
 }
 
 .arc-web-card:hover {
@@ -553,7 +560,7 @@ img { max-width: 100%; height: auto; }
   height: 3px;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
 }
 
 .arc-web-card:hover .arc-web-card__glow { opacity: 1; }
@@ -571,8 +578,8 @@ img { max-width: 100%; height: auto; }
   animation: arcWebBreathe 3s ease-in-out infinite;
 }
 
-.arc-web-card:nth-child(2) .arc-web-card__icon { animation-delay: 0.5s; }
-.arc-web-card:nth-child(3) .arc-web-card__icon { animation-delay: 1s; }
+.arc-web-card:nth-child(2) .arc-web-card__icon { animation-delay: 0.6s; }
+.arc-web-card:nth-child(3) .arc-web-card__icon { animation-delay: 0.9s; }
 
 @keyframes arcWebBreathe {
   0%, 100% { transform: scale(1); }
@@ -635,7 +642,7 @@ img { max-width: 100%; height: auto; }
   gap: 8px;
   position: relative;
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .arc-web-platform svg {
@@ -676,8 +683,8 @@ img { max-width: 100%; height: auto; }
 }
 
 .arc-web-reveal.active { opacity: 1; transform: translateY(0); }
-.arc-web-reveal--d1 { transition-delay: 0.1s; }
-.arc-web-reveal--d2 { transition-delay: 0.2s; }
+.arc-web-reveal--d1 { transition-delay: 0.3s; }
+.arc-web-reveal--d2 { transition-delay: 0.3s; }
 .arc-web-reveal--d3 { transition-delay: 0.3s; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -765,7 +772,7 @@ img { max-width: 100%; height: auto; }
   text-align: center;
   position: relative;
   overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.4s ease;
+  transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.3s ease;
 }
 
 .arc-web-metric:hover {
@@ -780,7 +787,7 @@ img { max-width: 100%; height: auto; }
   height: 3px;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
 }
 
 .arc-web-metric:hover::before { opacity: 1; }
@@ -938,7 +945,7 @@ img { max-width: 100%; height: auto; }
   text-align: center;
   position: relative;
   overflow: hidden;
-  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .arc-web-pricing-card:hover { transform: translateY(-9px); }
@@ -1068,10 +1075,10 @@ img { max-width: 100%; height: auto; }
 }
 
 .arc-web-reveal.active { opacity: 1; transform: translateY(0); }
-.arc-web-reveal--d1 { transition-delay: 0.1s; }
-.arc-web-reveal--d2 { transition-delay: 0.2s; }
+.arc-web-reveal--d1 { transition-delay: 0.3s; }
+.arc-web-reveal--d2 { transition-delay: 0.3s; }
 .arc-web-reveal--d3 { transition-delay: 0.3s; }
-.arc-web-reveal--d4 { transition-delay: 0.4s; }
+.arc-web-reveal--d4 { transition-delay: 0.3s; }
 
 @media (prefers-reduced-motion: reduce) {
   .arc-web-reveal { opacity: 1; transform: none; transition: none; }
@@ -1206,7 +1213,7 @@ img { max-width: 100%; height: auto; }
   background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
   border-radius: 2px;
   transform: scaleX(0);
-  animation: arcPaid1LineGrow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.8s;
+  animation: arcPaid1LineGrow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.9s;
 }
 
 @keyframes arcPaid1LineGrow {
@@ -1235,7 +1242,7 @@ img { max-width: 100%; height: auto; }
 .arc-paid1-marquee-track {
   display: flex;
   width: fit-content;
-  animation: arcPaid1Marquee 20s linear infinite;
+  animation: arcPaid1Marquee 21s linear infinite;
 }
 
 @keyframes arcPaid1Marquee {
@@ -1262,7 +1269,7 @@ img { max-width: 100%; height: auto; }
 .arc-paid1-reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: all 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .arc-paid1-reveal.active {
@@ -1270,8 +1277,8 @@ img { max-width: 100%; height: auto; }
   transform: translateY(0);
 }
 
-.arc-paid1-reveal-d1 { transition-delay: 0.12s; }
-.arc-paid1-reveal-d2 { transition-delay: 0.24s; }
+.arc-paid1-reveal-d1 { transition-delay: 0.3s; }
+.arc-paid1-reveal-d2 { transition-delay: 0.3s; }
 
 @media (prefers-reduced-motion: reduce) {
   .arc-paid1-reveal { opacity: 1; transform: none; transition: none; }
@@ -1475,7 +1482,7 @@ img { max-width: 100%; height: auto; }
   padding: 42px 33px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.4s ease;
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.3s ease;
 }
 
 .arc-paid2-card:hover {
@@ -1491,7 +1498,7 @@ img { max-width: 100%; height: auto; }
   height: 3px;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
 }
 
 .arc-paid2-card:hover .arc-paid2-card-glow {
@@ -1559,7 +1566,7 @@ img { max-width: 100%; height: auto; }
 .arc-paid2-reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: all 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .arc-paid2-reveal.active {
@@ -1567,9 +1574,9 @@ img { max-width: 100%; height: auto; }
   transform: translateY(0);
 }
 
-.arc-paid2-reveal-d1 { transition-delay: 0.12s; }
-.arc-paid2-reveal-d2 { transition-delay: 0.24s; }
-.arc-paid2-reveal-d3 { transition-delay: 0.36s; }
+.arc-paid2-reveal-d1 { transition-delay: 0.3s; }
+.arc-paid2-reveal-d2 { transition-delay: 0.3s; }
+.arc-paid2-reveal-d3 { transition-delay: 0.3s; }
 
 @media (prefers-reduced-motion: reduce) {
   .arc-paid2-reveal { opacity: 1; transform: none; transition: none; }
@@ -1893,7 +1900,7 @@ img { max-width: 100%; height: auto; }
   padding: 42px 36px;
   text-align: center;
   position: relative;
-  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .arc-paid3-card:hover { transform: translateY(-7px); }
@@ -2013,13 +2020,13 @@ img { max-width: 100%; height: auto; }
 .arc-paid3-reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: all 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .arc-paid3-reveal.active { opacity: 1; transform: translateY(0); }
-.arc-paid3-reveal-d1 { transition-delay: 0.12s; }
-.arc-paid3-reveal-d2 { transition-delay: 0.24s; }
-.arc-paid3-reveal-d3 { transition-delay: 0.36s; }
+.arc-paid3-reveal-d1 { transition-delay: 0.3s; }
+.arc-paid3-reveal-d2 { transition-delay: 0.3s; }
+.arc-paid3-reveal-d3 { transition-delay: 0.3s; }
 
 @media (prefers-reduced-motion: reduce) {
   .arc-paid3-reveal { opacity: 1; transform: none; transition: none; }
@@ -2146,7 +2153,7 @@ img { max-width: 100%; height: auto; }
   background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
   border-radius: 2px;
   transform: scaleX(0);
-  animation: arcOrgLineGrow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.8s;
+  animation: arcOrgLineGrow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.9s;
 }
 
 @keyframes arcOrgLineGrow { to { transform: scaleX(1); } }
@@ -2183,7 +2190,7 @@ img { max-width: 100%; height: auto; }
 .arc-org1-marquee-track {
   display: flex;
   width: fit-content;
-  animation: arcOrgMarquee 20s linear infinite;
+  animation: arcOrgMarquee 21s linear infinite;
 }
 
 @keyframes arcOrgMarquee { to { transform: translateX(-50%); } }
@@ -2206,12 +2213,12 @@ img { max-width: 100%; height: auto; }
 .arc-org1-reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: all 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .arc-org1-reveal.active { opacity: 1; transform: translateY(0); }
-.arc-org1-reveal-d1 { transition-delay: 0.12s; }
-.arc-org1-reveal-d2 { transition-delay: 0.24s; }
+.arc-org1-reveal-d1 { transition-delay: 0.3s; }
+.arc-org1-reveal-d2 { transition-delay: 0.3s; }
 
 @media (prefers-reduced-motion: reduce) {
   .arc-org1-reveal { opacity: 1; transform: none; transition: none; }
@@ -2296,7 +2303,7 @@ img { max-width: 100%; height: auto; }
   padding: 42px 33px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.4s ease;
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.3s ease;
 }
 
 .arc-org2-card:hover { transform: translateY(-7px); border-color: rgba(13, 124, 143, 0.28); }
@@ -2307,7 +2314,7 @@ img { max-width: 100%; height: auto; }
   height: 3px;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
 }
 
 .arc-org2-card:hover .arc-org2-card-glow { opacity: 1; }
@@ -2378,7 +2385,7 @@ img { max-width: 100%; height: auto; }
   justify-content: center;
   position: relative;
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
   cursor: default;
 }
 
@@ -2393,7 +2400,7 @@ img { max-width: 100%; height: auto; }
   background: var(--gold);
   border-radius: 3px;
   opacity: 0;
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
 }
 
 .arc-org2-platform:hover {
@@ -2408,7 +2415,7 @@ img { max-width: 100%; height: auto; }
   width: 33px;
   height: 33px;
   color: rgba(255, 255, 255, 0.5);
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
   position: relative;
   z-index: 1;
 }
@@ -2597,13 +2604,13 @@ img { max-width: 100%; height: auto; }
 .arc-org2-reveal {
   opacity: 0;
   transform: translateY(35px);
-  transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: all 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .arc-org2-reveal.active { opacity: 1; transform: translateY(0); }
-.arc-org2-reveal-d1 { transition-delay: 0.12s; }
-.arc-org2-reveal-d2 { transition-delay: 0.24s; }
-.arc-org2-reveal-d3 { transition-delay: 0.36s; }
+.arc-org2-reveal-d1 { transition-delay: 0.3s; }
+.arc-org2-reveal-d2 { transition-delay: 0.3s; }
+.arc-org2-reveal-d3 { transition-delay: 0.3s; }
 
 @media (prefers-reduced-motion: reduce) {
   .arc-org2-reveal { opacity: 1; transform: none; transition: none; }
@@ -2690,7 +2697,7 @@ img { max-width: 100%; height: auto; }
   padding: 49px;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.4s ease;
+  transition: border-color 0.3s ease;
 }
 
 .arc-org3-value:hover { border-color: rgba(13, 124, 143, 0.15); }
@@ -2726,7 +2733,7 @@ img { max-width: 100%; height: auto; }
   padding: 21px;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 14px;
-  transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .arc-org3-value-item:hover { background: rgba(13, 124, 143, 0.06); transform: translateX(7px); }
@@ -2759,7 +2766,7 @@ img { max-width: 100%; height: auto; }
   padding: 42px 36px;
   text-align: center;
   position: relative;
-  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .arc-org3-card:hover { transform: translateY(-7px); }
@@ -2874,13 +2881,13 @@ img { max-width: 100%; height: auto; }
 .arc-org3-reveal {
   opacity: 0;
   transform: translateY(35px);
-  transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: all 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .arc-org3-reveal.active { opacity: 1; transform: translateY(0); }
-.arc-org3-reveal-d1 { transition-delay: 0.12s; }
-.arc-org3-reveal-d2 { transition-delay: 0.24s; }
-.arc-org3-reveal-d3 { transition-delay: 0.36s; }
+.arc-org3-reveal-d1 { transition-delay: 0.3s; }
+.arc-org3-reveal-d2 { transition-delay: 0.3s; }
+.arc-org3-reveal-d3 { transition-delay: 0.3s; }
 
 @media (prefers-reduced-motion: reduce) {
   .arc-org3-reveal { opacity: 1; transform: none; transition: none; }
@@ -2977,7 +2984,7 @@ img { max-width: 100%; height: auto; }
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .arc-bundle__card:hover { transform: translateY(-9px); }
@@ -3190,8 +3197,8 @@ img { max-width: 100%; height: auto; }
 }
 
 .arc-bundle-reveal.active { opacity: 1; transform: translateY(0); }
-.arc-bundle-reveal--d1 { transition-delay: 0.1s; }
-.arc-bundle-reveal--d2 { transition-delay: 0.2s; }
+.arc-bundle-reveal--d1 { transition-delay: 0.3s; }
+.arc-bundle-reveal--d2 { transition-delay: 0.3s; }
 .arc-bundle-reveal--d3 { transition-delay: 0.3s; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3262,7 +3269,8 @@ p, h1, h2, h3, h4, h5, h6, li,
 
 
 <!-- â•â•â• 01-WEBSITE-HERO.HTML â•â•â• -->
-<section class="arc-web-hero-section" id="main-content">
+<main id="main-content">
+<section class="arc-web-hero-section">
   <div class="arc-web-hero">
     <div class="arc-web-eyebrow">
       <span class="arc-web-eyebrow__line"></span>
@@ -3831,10 +3839,10 @@ p, h1, h2, h3, h4, h5, h6, li,
             <p class="arc-paid3-dashboard-period">28-Day Performance</p>
             <p class="arc-paid3-dashboard-client">Campaign&nbsp;Dashboard</p>
           </div>
-          <div class="arc-paid3-tabs">
-            <button class="arc-paid3-tab active" data-metric="roas">ROAS</button>
-            <button class="arc-paid3-tab" data-metric="cpl">CPL</button>
-            <button class="arc-paid3-tab" data-metric="leads">Leads</button>
+          <div class="arc-paid3-tabs" role="tablist">
+            <button type="button" role="tab" class="arc-paid3-tab active" data-metric="roas">ROAS</button>
+            <button type="button" role="tab" class="arc-paid3-tab" data-metric="cpl">CPL</button>
+            <button type="button" role="tab" class="arc-paid3-tab" data-metric="leads">Leads</button>
           </div>
         </div>
         
@@ -4156,10 +4164,10 @@ p, h1, h2, h3, h4, h5, h6, li,
             <p class="arc-org2-dash-period">28-Day Performance</p>
             <p class="arc-org2-dash-client">Growth&nbsp;Dashboard</p>
           </div>
-          <div class="arc-org2-tabs">
-            <button class="arc-org2-tab active" data-metric="followers">Followers</button>
-            <button class="arc-org2-tab" data-metric="engagement">Engagements</button>
-            <button class="arc-org2-tab" data-metric="reach">Views</button>
+          <div class="arc-org2-tabs" role="tablist">
+            <button type="button" role="tab" class="arc-org2-tab active" data-metric="followers">Followers</button>
+            <button type="button" role="tab" class="arc-org2-tab" data-metric="engagement">Engagements</button>
+            <button type="button" role="tab" class="arc-org2-tab" data-metric="reach">Views</button>
           </div>
         </div>
         
@@ -4357,6 +4365,7 @@ p, h1, h2, h3, h4, h5, h6, li,
 
 </div>
 <!-- â•â•â• 10-BUNDLES.HTML â•â•â• -->
+<footer>
 <section class="arc-bundle-section">
   <div class="arc-bundle__inner">
     <div class="arc-bundle__header">
@@ -4525,6 +4534,8 @@ p, h1, h2, h3, h4, h5, h6, li,
   </div>
 </section>
 
+</footer>
+</main>
 <script>
 // Combined scroll reveal and interaction scripts
 

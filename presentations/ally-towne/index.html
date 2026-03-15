@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
 
 <style>
 /* ═══════════════════════════════════════════════════════════════════
@@ -91,6 +91,13 @@ img { max-width: 100%; height: auto; }
 }
 .skip-link:focus {
   top: 0;
+}
+
+/* FOCUS VISIBLE */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 3px;
 }
 
 
@@ -212,7 +219,7 @@ img { max-width: 100%; height: auto; }
   background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
   border-radius: 2px;
   transform: scaleX(0);
-  animation: arcPaid1LineGrow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.8s;
+  animation: arcPaid1LineGrow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.9s;
 }
 
 @keyframes arcPaid1LineGrow {
@@ -241,7 +248,7 @@ img { max-width: 100%; height: auto; }
 .arc-paid1-marquee-track {
   display: flex;
   width: fit-content;
-  animation: arcPaid1Marquee 20s linear infinite;
+  animation: arcPaid1Marquee 21s linear infinite;
 }
 
 @keyframes arcPaid1Marquee {
@@ -268,7 +275,7 @@ img { max-width: 100%; height: auto; }
 .arc-paid1-reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: all 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .arc-paid1-reveal.active {
@@ -276,8 +283,8 @@ img { max-width: 100%; height: auto; }
   transform: translateY(0);
 }
 
-.arc-paid1-reveal-d1 { transition-delay: 0.12s; }
-.arc-paid1-reveal-d2 { transition-delay: 0.24s; }
+.arc-paid1-reveal-d1 { transition-delay: 0.3s; }
+.arc-paid1-reveal-d2 { transition-delay: 0.3s; }
 
 @media (prefers-reduced-motion: reduce) {
   .arc-paid1-reveal { opacity: 1; transform: none; transition: none; }
@@ -479,7 +486,7 @@ img { max-width: 100%; height: auto; }
   padding: 42px 33px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.4s ease;
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.3s ease;
 }
 
 @media (hover: hover) {
@@ -497,7 +504,7 @@ img { max-width: 100%; height: auto; }
   height: 3px;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
 }
 
 @media (hover: hover) {
@@ -569,7 +576,7 @@ img { max-width: 100%; height: auto; }
 .arc-paid2-reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: all 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .arc-paid2-reveal.active {
@@ -577,9 +584,9 @@ img { max-width: 100%; height: auto; }
   transform: translateY(0);
 }
 
-.arc-paid2-reveal-d1 { transition-delay: 0.12s; }
-.arc-paid2-reveal-d2 { transition-delay: 0.24s; }
-.arc-paid2-reveal-d3 { transition-delay: 0.36s; }
+.arc-paid2-reveal-d1 { transition-delay: 0.3s; }
+.arc-paid2-reveal-d2 { transition-delay: 0.3s; }
+.arc-paid2-reveal-d3 { transition-delay: 0.3s; }
 
 @media (prefers-reduced-motion: reduce) {
   .arc-paid2-reveal { opacity: 1; transform: none; transition: none; }
@@ -903,7 +910,7 @@ img { max-width: 100%; height: auto; }
   padding: 42px 36px;
   text-align: center;
   position: relative;
-  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 @media (hover: hover) {
@@ -1025,13 +1032,13 @@ img { max-width: 100%; height: auto; }
 .arc-paid3-reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: all 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .arc-paid3-reveal.active { opacity: 1; transform: translateY(0); }
-.arc-paid3-reveal-d1 { transition-delay: 0.12s; }
-.arc-paid3-reveal-d2 { transition-delay: 0.24s; }
-.arc-paid3-reveal-d3 { transition-delay: 0.36s; }
+.arc-paid3-reveal-d1 { transition-delay: 0.3s; }
+.arc-paid3-reveal-d2 { transition-delay: 0.3s; }
+.arc-paid3-reveal-d3 { transition-delay: 0.3s; }
 
 @media (prefers-reduced-motion: reduce) {
   .arc-paid3-reveal { opacity: 1; transform: none; transition: none; }
@@ -1058,7 +1065,8 @@ img { max-width: 100%; height: auto; }
 <a href="#main-content" class="skip-link">Skip to content</a>
 
 <!-- 04-PAID-HERO -->
-<div class="arc-paid1-wrapper" id="main-content">
+<main id="main-content">
+<div class="arc-paid1-wrapper">
 
   <section class="arc-paid1-hero">
 
@@ -1231,6 +1239,7 @@ img { max-width: 100%; height: auto; }
 
 </div>
 
+<footer>
 <!-- 06-PAID-PRICING -->
 <div class="arc-paid3-wrapper">
 
@@ -1252,10 +1261,10 @@ img { max-width: 100%; height: auto; }
             <p class="arc-paid3-dashboard-period">28-Day Performance</p>
             <p class="arc-paid3-dashboard-client">Campaign&nbsp;Dashboard</p>
           </div>
-          <div class="arc-paid3-tabs">
-            <button class="arc-paid3-tab active" data-metric="roas">ROAS</button>
-            <button class="arc-paid3-tab" data-metric="cpl">CPL</button>
-            <button class="arc-paid3-tab" data-metric="leads">Leads</button>
+          <div class="arc-paid3-tabs" role="tablist">
+            <button type="button" role="tab" class="arc-paid3-tab active" data-metric="roas">ROAS</button>
+            <button type="button" role="tab" class="arc-paid3-tab" data-metric="cpl">CPL</button>
+            <button type="button" role="tab" class="arc-paid3-tab" data-metric="leads">Leads</button>
           </div>
         </div>
 
@@ -1408,7 +1417,9 @@ img { max-width: 100%; height: auto; }
   </section>
 
 </div>
+</footer>
 
+</main>
 <script>
 // Paid Ads scroll reveal and interaction scripts
 
