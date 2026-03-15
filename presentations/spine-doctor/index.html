@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
   <title>Dr. Kushagra Verma | Growth System - Arc Garde</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,9 +66,34 @@
 html { scroll-behavior: smooth; }
 body { font-family: 'DM Sans', sans-serif; background: var(--bg-dark); color: var(--text-primary); line-height: 1.6; }
 
+/* AG MOBILE DEFAULTS */
+html { overflow-x: hidden; }
+body { overflow-wrap: break-word; -webkit-tap-highlight-color: transparent; }
+h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
+p, li, blockquote, figcaption { text-wrap: pretty; }
+a, button, input, select, textarea { touch-action: manipulation; }
+img { max-width: 100%; height: auto; }
+
 /* SECTION DIVIDERS */
 .arc-section-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--border-subtle), transparent); }
 .arc-section-divider--gold { background: linear-gradient(90deg, transparent, rgba(13, 124, 143, 0.3), transparent); }
+
+/* SKIP LINK */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  padding: 12px 24px;
+  background: var(--gold);
+  color: #000;
+  font-weight: 600;
+  border-radius: 0 0 8px 8px;
+  z-index: 9999;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 0;
+}
 
 
 /* === 01 Website Hero === */
@@ -77,7 +103,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-dark); color: va
 .arc-web-hero-section {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   font-family: 'DM Sans', sans-serif;
@@ -237,7 +263,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-dark); color: va
   transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-.arc-web-cta:hover { transform: translateY(-3px); }
+@media (hover: hover) {
+  .arc-web-cta:hover { transform: translateY(-3px); }
+}
 
 .arc-web-cta::before {
   content: '';
@@ -250,7 +278,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg-dark); color: va
   transition: left 0.5s ease;
 }
 
-.arc-web-cta:hover::before { left: 100%; }
+@media (hover: hover) {
+  .arc-web-cta:hover::before { left: 100%; }
+}
 
 .arc-web-cta svg { width: 18px; height: 18px; }
 
@@ -3228,10 +3258,11 @@ p, h1, h2, h3, h4, h5, h6, li,
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to content</a>
 
 
 <!-- â•â•â• 01-WEBSITE-HERO.HTML â•â•â• -->
-<section class="arc-web-hero-section">
+<section class="arc-web-hero-section" id="main-content">
   <div class="arc-web-hero">
     <div class="arc-web-eyebrow">
       <span class="arc-web-eyebrow__line"></span>
