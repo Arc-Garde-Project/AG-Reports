@@ -1853,9 +1853,87 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     -webkit-print-color-adjust: exact;
   }
 }
+
+/* ── Reports Nav Modal ── */
+.reports-btn {
+  position: fixed; top: 20px; right: 20px; z-index: 1000;
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 20px; min-height: 48px;
+  border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(10,10,15,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  color: #888; font-size: 13px; font-family: inherit; font-weight: 600;
+  cursor: pointer; transition: all 0.3s; letter-spacing: 0.5px;
+  touch-action: manipulation;
+}
+.reports-btn:hover { border-color: rgba(255,255,255,0.2); color: #ccc; }
+.reports-btn:focus-visible { outline: 2px solid var(--blue-bright); outline-offset: 2px; }
+.reports-btn { animation: btnPulse 2.1s ease-in-out 3; animation-delay: 2.1s; }
+@keyframes btnPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(74,144,217,0); border-color: rgba(255,255,255,0.1); }
+  50% { box-shadow: 0 0 16px 4px rgba(74,144,217,0.25); border-color: rgba(74,144,217,0.5); }
+}
+.reports-overlay {
+  position: fixed; inset: 0; z-index: 998;
+  background: rgba(0,0,0,0.5); opacity: 0;
+  pointer-events: none; transition: opacity 0.3s;
+}
+.reports-overlay.open { opacity: 1; pointer-events: auto; }
+.reports-nav {
+  position: fixed; top: 76px; right: 20px; z-index: 999;
+  width: 280px; padding: 12px;
+  background: rgba(17,17,24,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  opacity: 0; transform: translateY(-10px);
+  pointer-events: none; transition: opacity 0.3s, transform 0.3s;
+}
+.reports-nav.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.reports-nav-group {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
+  color: #555; padding: 8px 12px 4px; font-weight: 700;
+}
+.reports-nav-link {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 12px; min-height: 48px;
+  border-radius: 10px; color: #999; font-size: 13px; font-weight: 500;
+  text-decoration: none; transition: all 0.3s;
+  touch-action: manipulation;
+}
+.reports-nav-link span { font-size: 11px; color: #555; }
+.reports-nav-link:hover { background: rgba(255,255,255,0.05); color: #fff; }
+.reports-nav-link.active { background: rgba(44,111,187,0.12); color: var(--blue-bright); }
+.reports-nav-link.active span { color: var(--blue); }
+.reports-nav-link:focus-visible { outline: 2px solid var(--blue-bright); outline-offset: -2px; }
+.reports-nav-all { justify-content: center; color: #666; font-size: 12px; }
+.reports-nav-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 6px 0; }
 </style>
 </head>
 <body>
+
+<!-- Reports Nav Modal -->
+<button class="reports-btn" onclick="toggleReportsNav()" aria-label="Open reports menu">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  Reports
+</button>
+<div class="reports-overlay" id="reportsOverlay" onclick="closeReportsNav()"></div>
+<nav class="reports-nav" id="reportsNav" role="navigation" aria-label="Reports navigation">
+  <div class="reports-nav-group">Ad Testing</div>
+  <a href="/reports/americana-tax/la-w1" class="reports-nav-link">LA County - Week 1<span>Feb 4-8</span></a>
+  <a href="/reports/americana-tax/oc-w1" class="reports-nav-link">OC County - Week 2<span>Feb 9-13</span></a>
+  <a href="/reports/americana-tax/la-w2" class="reports-nav-link">LA County - Week 3<span>Feb 14-19</span></a>
+  <a href="/reports/americana-tax/oc-w2" class="reports-nav-link">OC County - Week 4<span>Feb 20-23</span></a>
+  <a href="/reports/americana-tax/feb-24-28" class="reports-nav-link">LA County - Week 5<span>Feb 24-28</span></a>
+  <a href="/reports/americana-tax/feb-28-mar-3" class="reports-nav-link">Orange County - Week 6<span>Feb 28 - Mar 3</span></a>
+  <div class="reports-nav-divider"></div>
+  <div class="reports-nav-group">Winning Ad Runs</div>
+  <a href="/reports/americana-tax/la-w4" class="reports-nav-link">LA County - Week 7<span>Mar 4-10</span></a>
+  <a href="/reports/americana-tax/oc-w4" class="reports-nav-link active">OC County - Week 8<span>Mar 11-17</span></a>
+  <div class="reports-nav-divider"></div>
+  <div class="reports-nav-group">Monthly Reports</div>
+  <a href="/reports/americana-tax/feb-2026" class="reports-nav-link">February 2026<span>Monthly</span></a>
+  <div class="reports-nav-divider"></div>
+  <a href="/reports/americana-tax" class="reports-nav-link reports-nav-all">All Reports</a>
+</nav>
 
 <a class="skip-link" href="#what-worked">Skip to content</a>
 <div class="scroll-progress" id="scroll-progress"></div>
@@ -3163,6 +3241,16 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   }
 
 })();
+
+function toggleReportsNav(){
+  document.getElementById('reportsNav').classList.toggle('open');
+  document.getElementById('reportsOverlay').classList.toggle('open');
+}
+function closeReportsNav(){
+  document.getElementById('reportsNav').classList.remove('open');
+  document.getElementById('reportsOverlay').classList.remove('open');
+}
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeReportsNav(); });
 </script>
 </body>
 </html>
