@@ -438,14 +438,31 @@
     /* ========================================
        RESPONSIVE
     ======================================== */
+
+    /* Tablet */
     @media (max-width: 768px) {
-      .situation__stats { grid-template-columns: 1fr; }
-      .plan__grid { grid-template-columns: 1fr; }
+      .situation__stats { grid-template-columns: repeat(3, 1fr); }
+      .plan__grid { grid-template-columns: repeat(2, 1fr); }
+      .hero__title { font-size: clamp(1.75rem, 1.3rem + 2.5vw, 3rem); }
+      .marquee__item { font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem); }
+      .marquee__dot { font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem); }
+      .pricing__card { margin-left: var(--space-container); margin-right: var(--space-container); }
     }
 
+    /* Mobile */
     @media (max-width: 480px) {
       .hero__eyebrow-line { width: 24px; }
+      .situation__stats { grid-template-columns: 1fr; }
+      .plan__grid { grid-template-columns: 1fr; }
+      .hero__services { gap: 4px; flex-wrap: wrap; justify-content: center; }
+      .hero__service-sep { margin: 0 clamp(0.3rem, 0.2rem + 0.3vw, 0.5rem); }
+      .pricing__details-list li { padding-left: 16px; }
+      .hero__logo { max-height: 100px; }
     }
+
+    /* Touch targets */
+    .cta__btn { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; }
+    a, button { touch-action: manipulation; }
 
     @media (hover: hover) {
       .cta__btn:hover { background: var(--accent-light); transform: translateY(-1px); }
