@@ -226,45 +226,73 @@
     }
 
     /* ========================================
-       WHAT WE BUILD
+       THE PLAN
     ======================================== */
-    .build__grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: clamp(1.5rem, 1rem + 2vw, 3rem); align-items: start;
+
+    /* Flow steps */
+    .plan__flow {
+      display: flex; align-items: stretch; justify-content: center;
+      gap: clamp(0.5rem, 0.3rem + 0.5vw, 1rem);
+      margin-bottom: clamp(2.5rem, 2rem + 2vw, 4rem);
+      flex-wrap: wrap; counter-reset: flow;
     }
 
-    .build__left h3 {
+    .plan__flow-step {
+      flex: 1; min-width: 140px; max-width: 200px;
+      text-align: center; padding: clamp(1.25rem, 1rem + 0.5vw, 1.5rem) clamp(0.75rem, 0.5rem + 0.5vw, 1rem);
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+      position: relative; counter-increment: flow;
+    }
+
+    .plan__flow-num {
+      font-family: var(--font-data); font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+      font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 8px;
+    }
+
+    .plan__flow-text {
+      font-size: clamp(0.813rem, 0.77rem + 0.18vw, 0.875rem);
+      color: var(--text-muted); line-height: 1.4;
+    }
+
+    .plan__flow-arrow {
+      display: flex; align-items: center; flex-shrink: 0;
+      color: var(--accent); font-size: 1.25rem;
+    }
+
+    /* What's included grid */
+    .plan__section-title {
       font-family: var(--font-display); font-size: var(--text-h3);
-      letter-spacing: 0.01em; font-weight: 700;
-      margin-bottom: clamp(0.75rem, 0.5rem + 0.5vw, 1rem);
-      margin-top: clamp(1.5rem, 1rem + 1vw, 2rem);
-    }
-    .build__left h3:first-child { margin-top: 0; }
-
-    .build__list {
-      list-style: none; display: flex; flex-direction: column; gap: 10px;
-    }
-    .build__list li {
-      font-size: var(--text-base); color: var(--text-muted);
-      padding-left: 20px; position: relative; line-height: 1.5;
-    }
-    .build__list li::before {
-      content: ''; position: absolute; left: 0; top: 8px;
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--accent); opacity: 0.6;
+      letter-spacing: 0.01em; font-weight: 700; text-align: center;
+      margin-bottom: clamp(1.25rem, 1rem + 0.5vw, 1.75rem);
     }
 
-    .build__free-items {
-      display: flex; flex-direction: column; gap: 12px;
-      margin-top: clamp(1rem, 0.75rem + 0.5vw, 1.5rem);
+    .plan__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+      gap: clamp(1rem, 0.75rem + 0.5vw, 1.25rem);
+      margin-bottom: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
     }
-    .build__free-item {
-      display: flex; align-items: center; gap: 10px;
-      font-size: var(--text-base); color: var(--text-muted);
+
+    .plan__item {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+      padding: clamp(1.25rem, 1rem + 0.5vw, 1.5rem);
     }
-    .build__free-item svg {
-      width: 18px; height: 18px; color: var(--success); flex-shrink: 0;
+
+    .plan__item-title {
+      font-family: var(--font-data); font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.813rem);
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--accent); margin-bottom: 6px;
     }
+
+    .plan__item-desc {
+      font-size: var(--text-base); color: var(--text-muted); line-height: 1.5;
+    }
+
+    .plan__note {
+      text-align: center; font-size: var(--text-base); color: var(--text-muted);
+      font-style: italic;
+    }
+    .plan__note strong { color: var(--text); font-weight: 600; font-style: normal; }
 
     .badge {
       display: inline-block; font-family: var(--font-data);
@@ -273,37 +301,10 @@
     }
     .badge--success { background: rgba(5, 150, 105, 0.1); color: var(--success); }
 
-    .build__free-note {
-      font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.813rem);
-      color: var(--text-dim);
-      margin-top: clamp(0.75rem, 0.5rem + 0.5vw, 1rem); line-height: 1.5;
-    }
-
-    .build__card {
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
-      padding: clamp(1.5rem, 1.25rem + 1vw, 2rem);
-    }
-
-    .build__card h3 {
-      font-family: var(--font-display); font-size: var(--text-h3);
-      letter-spacing: 0.01em; font-weight: 700;
-      margin-bottom: clamp(0.75rem, 0.5rem + 0.5vw, 1rem);
-    }
-
-    .build__card-list { list-style: none; display: flex; flex-direction: column; gap: 14px; counter-reset: steps; }
-    .build__card-list li {
-      font-size: var(--text-base); color: var(--text-muted);
-      padding-left: 36px; position: relative; line-height: 1.6;
-      counter-increment: steps;
-    }
-    .build__card-list li::before {
-      content: counter(steps);
-      position: absolute; left: 0; top: 1px;
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--accent-bg); border: 1.5px solid var(--accent);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-data); font-size: 0.75rem; font-weight: 600;
-      color: var(--accent);
+    @media (max-width: 600px) {
+      .plan__flow { flex-direction: column; align-items: center; }
+      .plan__flow-step { max-width: 100%; min-width: 0; width: 100%; }
+      .plan__flow-arrow { transform: rotate(90deg); }
     }
 
     /* ========================================
@@ -432,7 +433,7 @@
     ======================================== */
     @media (max-width: 768px) {
       .situation__stats { grid-template-columns: 1fr; }
-      .build__grid { grid-template-columns: 1fr; }
+      .plan__grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 480px) {
@@ -555,66 +556,62 @@
           <span>ALL UNDER ONE ROOF.</span>
         </h2>
 
-        <div class="build__grid">
-          <div class="build__left reveal">
-            <h3>WHAT WE BUILD AND MANAGE</h3>
-            <ul class="build__list">
-              <li>Funnel: landing page, email capture, lead magnet PDF, email sequence, sales page</li>
-              <li>Paid ads: Meta campaigns targeting newly engaged couples nationwide, 4-day testing cycles, reports every 4 days</li>
-              <li>Website: full redesign matching your brand, your real content</li>
-              <li>Whop setup: course hosting, payment processing, community space</li>
-              <li>Community management: engage members, moderate, keep it active</li>
-              <li>Professional videography if needed</li>
-            </ul>
+        <!-- How it works: visual flow -->
+        <div class="plan__section-title reveal">HOW IT WORKS</div>
 
-            <h3>ALL INCLUDED</h3>
-            <div class="build__free-items">
-              <div class="build__free-item">
-                <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10.5L9 13.5L14.5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Funnel build</span>
-                <span class="badge badge--success">Included</span>
-              </div>
-              <div class="build__free-item">
-                <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10.5L9 13.5L14.5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Website build</span>
-                <span class="badge badge--success">Included</span>
-              </div>
-              <div class="build__free-item">
-                <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10.5L9 13.5L14.5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Whop setup and configuration</span>
-                <span class="badge badge--success">Included</span>
-              </div>
-              <div class="build__free-item">
-                <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10.5L9 13.5L14.5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Community management</span>
-                <span class="badge badge--success">Included</span>
-              </div>
-              <div class="build__free-item">
-                <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10.5L9 13.5L14.5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Professional videography (if needed)</span>
-                <span class="badge badge--success">Included</span>
-              </div>
-              <div class="build__free-item">
-                <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10.5L9 13.5L14.5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Ad creative production</span>
-                <span class="badge badge--success">Included</span>
-              </div>
-            </div>
-            <p class="build__free-note">Everything covered by the revenue share. No setup fees. No monthly fees.</p>
+        <div class="plan__flow reveal">
+          <div class="plan__flow-step">
+            <div class="plan__flow-num">1</div>
+            <div class="plan__flow-text">They see your ad on Facebook or Instagram</div>
           </div>
-
-          <div class="build__card reveal">
-            <h3>HOW IT WORKS</h3>
-            <ol class="build__card-list">
-              <li>Newly engaged couples see your ads on Facebook and Instagram</li>
-              <li>They land on a funnel page built to convert</li>
-              <li>They download your free PDF and enter your email sequence</li>
-              <li>The sequence warms them up and drives them to purchase the course</li>
-              <li>Course, payment, and community all live on Whop</li>
-              <li>You focus on creating content. We handle everything else.</li>
-            </ol>
+          <div class="plan__flow-arrow" aria-hidden="true">&rarr;</div>
+          <div class="plan__flow-step">
+            <div class="plan__flow-num">2</div>
+            <div class="plan__flow-text">They land on your funnel page and download the free PDF</div>
+          </div>
+          <div class="plan__flow-arrow" aria-hidden="true">&rarr;</div>
+          <div class="plan__flow-step">
+            <div class="plan__flow-num">3</div>
+            <div class="plan__flow-text">Email sequence warms them up and drives them to purchase</div>
+          </div>
+          <div class="plan__flow-arrow" aria-hidden="true">&rarr;</div>
+          <div class="plan__flow-step">
+            <div class="plan__flow-num">4</div>
+            <div class="plan__flow-text">Course, payment, and community all live on Whop</div>
           </div>
         </div>
+
+        <!-- What's included: grid -->
+        <div class="plan__section-title reveal">WHAT WE BUILD AND MANAGE</div>
+
+        <div class="plan__grid reveal">
+          <div class="plan__item">
+            <div class="plan__item-title">Funnel</div>
+            <div class="plan__item-desc">Landing page, email capture, lead magnet PDF, email sequence, sales page</div>
+          </div>
+          <div class="plan__item">
+            <div class="plan__item-title">Paid Ads</div>
+            <div class="plan__item-desc">Meta campaigns nationwide, 4-day testing cycles, reports every 4 days</div>
+          </div>
+          <div class="plan__item">
+            <div class="plan__item-title">Website</div>
+            <div class="plan__item-desc">Full redesign matching your brand with your real content</div>
+          </div>
+          <div class="plan__item">
+            <div class="plan__item-title">Whop Setup</div>
+            <div class="plan__item-desc">Course hosting, payment processing, community space configured</div>
+          </div>
+          <div class="plan__item">
+            <div class="plan__item-title">Community</div>
+            <div class="plan__item-desc">Member engagement, moderation, keeping the space active</div>
+          </div>
+          <div class="plan__item">
+            <div class="plan__item-title">Videography</div>
+            <div class="plan__item-desc">Professional filming and ad creative production if needed</div>
+          </div>
+        </div>
+
+        <p class="plan__note reveal"><strong>All included in the revenue share.</strong> No setup fees. No monthly fees. No build fees.</p>
       </div>
     </section>
 
