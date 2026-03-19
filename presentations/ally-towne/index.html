@@ -26,24 +26,24 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #000000;
-      --bg-alt: #0A0A0A;
-      --bg-card: rgba(184, 132, 138, 0.06);
+      --bg: #faf8f5;
+      --bg-alt: #f7f6f4;
+      --bg-card: #ffffff;
       --accent: #b8848a;
       --accent-light: #d4a9ae;
       --accent-dark: #96666b;
-      --accent-glow: rgba(184, 132, 138, 0.35);
-      --text: #FFFFFF;
-      --text-muted: rgba(255, 255, 255, 0.55);
-      --text-dim: rgba(255, 255, 255, 0.3);
-      --border: rgba(255, 255, 255, 0.08);
+      --accent-bg: #faf5f4;
+      --text: #1a1a1a;
+      --text-muted: #5a5a5a;
+      --text-dim: #9a9590;
+      --border: #e8e4df;
       --success: #059669;
 
-      --font-display: 'Bebas Neue', sans-serif;
-      --font-body: 'DM Sans', sans-serif;
+      --font-display: 'Playfair Display', serif;
+      --font-body: 'Inter', sans-serif;
       --font-data: 'Space Grotesk', sans-serif;
 
       --text-hero: clamp(2.25rem, 1.647rem + 2.57vw, 3.938rem);
@@ -61,36 +61,57 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-    body { font-family: var(--font-body); font-size: var(--text-base); color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    body {
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
     img, video, svg { max-width: 100%; height: auto; display: block; }
     a { color: inherit; text-decoration: none; }
     h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
     p, li, blockquote { text-wrap: pretty; }
-    ::selection { background: var(--accent); color: #000000; }
+    ::selection { background: var(--accent); color: var(--text); }
 
-    .skip-link { position: absolute; top: -100%; left: 16px; padding: 8px 16px; background: var(--accent); color: #000; font-weight: 600; z-index: 9999; border-radius: 0 0 6px 6px; }
+    .skip-link {
+      position: absolute; top: -100%; left: 16px;
+      padding: 8px 16px; background: var(--accent); color: #fff;
+      font-weight: 600; z-index: 9999; border-radius: 0 0 6px 6px;
+    }
     .skip-link:focus { top: 0; }
 
-    .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: var(--accent); z-index: 9999; }
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; width: 0%; height: 3px;
+      background: var(--accent); z-index: 9999;
+    }
 
     .container { width: 100%; max-width: 900px; margin: 0 auto; padding: 0 var(--space-container); }
     .section { padding: var(--space-section) 0; }
     .section--alt { background: var(--bg-alt); }
 
     .section-label {
-      font-family: var(--font-body); font-size: clamp(0.688rem, 0.63rem + 0.24vw, 0.813rem);
+      font-family: var(--font-body);
+      font-size: clamp(0.688rem, 0.63rem + 0.24vw, 0.813rem);
       font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em;
       color: var(--accent); margin-bottom: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
     }
 
     .section-title {
-      font-family: var(--font-display); font-size: var(--text-hero);
-      line-height: 1.05; letter-spacing: 0.02em; color: var(--text);
+      font-family: var(--font-display);
+      font-size: var(--text-hero);
+      line-height: 1.1; letter-spacing: 0.01em; color: var(--text);
       margin-bottom: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+      font-weight: 700;
     }
     .section-title span { color: var(--accent); }
 
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    }
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
     /* ========================================
@@ -98,25 +119,72 @@
     ======================================== */
     .hero { padding: clamp(4rem, 3rem + 4vw, 7rem) 0 0; text-align: center; }
 
-    .hero__eyebrow { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: clamp(1rem, 0.7rem + 1.2vw, 1.75rem); }
+    .hero__eyebrow {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; margin-bottom: clamp(1rem, 0.7rem + 1.2vw, 1.75rem);
+    }
     .hero__eyebrow-line { width: 40px; height: 1px; background: var(--border); }
-    .hero__eyebrow-text { font-family: var(--font-body); font-size: clamp(0.688rem, 0.63rem + 0.24vw, 0.813rem); font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; color: var(--text-muted); }
+    .hero__eyebrow-text {
+      font-family: var(--font-body);
+      font-size: clamp(0.688rem, 0.63rem + 0.24vw, 0.813rem);
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
 
-    .hero__title { font-family: var(--font-display); font-size: clamp(2.25rem, 1.5rem + 3.2vw, 4.25rem); line-height: 1.05; letter-spacing: 0.02em; color: var(--text); margin-bottom: clamp(1rem, 0.6rem + 1.5vw, 2rem); max-width: 700px; margin-left: auto; margin-right: auto; }
+    .hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(2.25rem, 1.5rem + 3.2vw, 4.25rem);
+      line-height: 1.1; letter-spacing: 0.01em; color: var(--text);
+      margin-bottom: clamp(1rem, 0.6rem + 1.5vw, 2rem);
+      max-width: 700px; margin-left: auto; margin-right: auto;
+      font-weight: 700;
+    }
     .hero__title span { color: var(--accent); }
 
-    .hero__subtitle { font-size: var(--text-lg); color: var(--text-muted); max-width: 560px; margin: 0 auto clamp(2rem, 1.5rem + 2vw, 3rem); line-height: 1.7; }
+    .hero__subtitle {
+      font-size: var(--text-lg); color: var(--text-muted);
+      max-width: 560px; margin: 0 auto clamp(2rem, 1.5rem + 2vw, 3rem);
+      line-height: 1.7;
+    }
 
-    .hero__services { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: clamp(2rem, 1.5rem + 2vw, 3rem); }
-    .hero__service-tag { display: inline-block; padding: 6px 18px; border: 1.5px solid var(--border); border-radius: 999px; font-family: var(--font-data); font-size: 13px; font-weight: 500; letter-spacing: 0.5px; color: var(--text-muted); text-transform: uppercase; background: transparent; transition: border-color 0.3s var(--ease), color 0.3s var(--ease); }
+    .hero__services {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 10px; margin-bottom: clamp(2rem, 1.5rem + 2vw, 3rem);
+    }
+    .hero__service-tag {
+      display: inline-block; padding: 6px 18px;
+      border: 1.5px solid var(--accent); border-radius: 999px;
+      font-family: var(--font-data); font-size: 13px; font-weight: 500;
+      letter-spacing: 0.5px; color: var(--accent); text-transform: uppercase;
+      background: transparent;
+      transition: background 0.3s var(--ease), color 0.3s var(--ease);
+    }
 
     .hero__divider { width: 100%; height: 1px; background: var(--border); }
 
-    .marquee { overflow: hidden; padding: clamp(1.25rem, 1rem + 1vw, 2rem) 0; border-bottom: 1px solid var(--border); }
-    .marquee__track { display: flex; gap: clamp(1.5rem, 1rem + 2vw, 3rem); animation: marquee-scroll 21s linear infinite; width: max-content; }
-    .marquee__item { font-family: var(--font-display); font-size: clamp(2rem, 1.5rem + 2vw, 3.5rem); letter-spacing: 0.04em; white-space: nowrap; color: transparent; -webkit-text-stroke: 1.5px var(--text-dim); }
+    .marquee {
+      overflow: hidden;
+      padding: clamp(1.25rem, 1rem + 1vw, 2rem) 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .marquee__track {
+      display: flex; gap: clamp(1.5rem, 1rem + 2vw, 3rem);
+      animation: marquee-scroll 21s linear infinite; width: max-content;
+    }
+    .marquee__item {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+      letter-spacing: 0.04em; white-space: nowrap;
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.06);
+      font-weight: 700;
+    }
     .marquee__item--accent { -webkit-text-stroke-color: var(--accent); }
-    .marquee__dot { font-family: var(--font-display); font-size: clamp(2rem, 1.5rem + 2vw, 3.5rem); color: var(--text-dim); white-space: nowrap; }
+    .marquee__dot {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+      color: var(--border); white-space: nowrap;
+    }
     @keyframes marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
     /* ========================================
@@ -140,7 +208,8 @@
     }
 
     .situation__stat-value {
-      font-family: var(--font-data); font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+      font-family: var(--font-data);
+      font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
       font-weight: 700; color: var(--accent); line-height: 1.1;
     }
 
@@ -159,23 +228,49 @@
 
     .build__left h3 {
       font-family: var(--font-display); font-size: var(--text-h3);
-      letter-spacing: 0.03em; margin-bottom: clamp(0.75rem, 0.5rem + 0.5vw, 1rem);
+      letter-spacing: 0.01em; font-weight: 700;
+      margin-bottom: clamp(0.75rem, 0.5rem + 0.5vw, 1rem);
       margin-top: clamp(1.5rem, 1rem + 1vw, 2rem);
     }
     .build__left h3:first-child { margin-top: 0; }
 
-    .build__list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .build__list li { font-size: var(--text-base); color: var(--text-muted); padding-left: 20px; position: relative; line-height: 1.5; }
-    .build__list li::before { content: ''; position: absolute; left: 0; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0.5; }
+    .build__list {
+      list-style: none; display: flex; flex-direction: column; gap: 10px;
+    }
+    .build__list li {
+      font-size: var(--text-base); color: var(--text-muted);
+      padding-left: 20px; position: relative; line-height: 1.5;
+    }
+    .build__list li::before {
+      content: ''; position: absolute; left: 0; top: 8px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); opacity: 0.6;
+    }
 
-    .build__free-items { display: flex; flex-direction: column; gap: 12px; margin-top: clamp(1rem, 0.75rem + 0.5vw, 1.5rem); }
-    .build__free-item { display: flex; align-items: center; gap: 10px; font-size: var(--text-base); color: var(--text-muted); }
-    .build__free-item svg { width: 18px; height: 18px; color: var(--success); flex-shrink: 0; }
+    .build__free-items {
+      display: flex; flex-direction: column; gap: 12px;
+      margin-top: clamp(1rem, 0.75rem + 0.5vw, 1.5rem);
+    }
+    .build__free-item {
+      display: flex; align-items: center; gap: 10px;
+      font-size: var(--text-base); color: var(--text-muted);
+    }
+    .build__free-item svg {
+      width: 18px; height: 18px; color: var(--success); flex-shrink: 0;
+    }
 
-    .badge { display: inline-block; font-family: var(--font-data); font-size: 0.688rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 10px; border-radius: 100px; }
-    .badge--success { background: rgba(5, 150, 105, 0.15); color: var(--success); }
+    .badge {
+      display: inline-block; font-family: var(--font-data);
+      font-size: 0.688rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; padding: 3px 10px; border-radius: 100px;
+    }
+    .badge--success { background: rgba(5, 150, 105, 0.1); color: var(--success); }
 
-    .build__free-note { font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.813rem); color: var(--text-dim); margin-top: clamp(0.75rem, 0.5rem + 0.5vw, 1rem); line-height: 1.5; }
+    .build__free-note {
+      font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.813rem);
+      color: var(--text-dim);
+      margin-top: clamp(0.75rem, 0.5rem + 0.5vw, 1rem); line-height: 1.5;
+    }
 
     .build__card {
       background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
@@ -184,12 +279,25 @@
 
     .build__card h3 {
       font-family: var(--font-display); font-size: var(--text-h3);
-      letter-spacing: 0.03em; margin-bottom: clamp(0.75rem, 0.5rem + 0.5vw, 1rem);
+      letter-spacing: 0.01em; font-weight: 700;
+      margin-bottom: clamp(0.75rem, 0.5rem + 0.5vw, 1rem);
     }
 
-    .build__card-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-    .build__card-list li { font-size: var(--text-base); color: var(--text-muted); padding-left: 28px; position: relative; line-height: 1.6; }
-    .build__card-list li::before { content: ''; position: absolute; left: 0; top: 6px; width: 16px; height: 16px; border-radius: 50%; background: rgba(184, 132, 138, 0.12); border: 2px solid var(--accent); }
+    .build__card-list { list-style: none; display: flex; flex-direction: column; gap: 14px; counter-reset: steps; }
+    .build__card-list li {
+      font-size: var(--text-base); color: var(--text-muted);
+      padding-left: 36px; position: relative; line-height: 1.6;
+      counter-increment: steps;
+    }
+    .build__card-list li::before {
+      content: counter(steps);
+      position: absolute; left: 0; top: 1px;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--accent-bg); border: 1.5px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-data); font-size: 0.75rem; font-weight: 600;
+      color: var(--accent);
+    }
 
     /* ========================================
        PRICING
@@ -197,60 +305,120 @@
     .pricing__card {
       max-width: 560px; margin: 0 auto clamp(2rem, 1.5rem + 2vw, 3rem);
       background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 12px; box-shadow: 0 4px 24px rgba(184, 132, 138, 0.06); overflow: hidden;
+      border-radius: 12px; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04); overflow: hidden;
     }
 
     .pricing__card-header {
-      background: rgba(184, 132, 138, 0.08); padding: clamp(1rem, 0.75rem + 0.5vw, 1.25rem) clamp(1.5rem, 1rem + 1vw, 2rem);
+      background: var(--accent-bg);
+      padding: clamp(1rem, 0.75rem + 0.5vw, 1.25rem) clamp(1.5rem, 1rem + 1vw, 2rem);
       border-bottom: 1px solid var(--border);
     }
-    .pricing__card-title { font-family: var(--font-display); font-size: var(--text-h4); letter-spacing: 0.06em; color: var(--accent); text-align: center; }
+    .pricing__card-title {
+      font-family: var(--font-display); font-size: var(--text-h4);
+      letter-spacing: 0.02em; color: var(--accent-dark); text-align: center;
+      font-weight: 700;
+    }
 
-    .pricing__card-body { padding: clamp(1.5rem, 1.25rem + 1vw, 2.5rem); text-align: center; }
+    .pricing__card-body {
+      padding: clamp(1.5rem, 1.25rem + 1vw, 2.5rem); text-align: center;
+    }
 
     .pricing__big-number {
-      font-family: var(--font-data); font-size: clamp(3rem, 2.5rem + 2vw, 5rem);
+      font-family: var(--font-data);
+      font-size: clamp(3rem, 2.5rem + 2vw, 5rem);
       font-weight: 700; color: var(--accent); line-height: 1;
     }
     .pricing__big-label {
-      font-family: var(--font-body); font-size: var(--text-lg); color: var(--text-muted);
-      margin-top: 8px; margin-bottom: clamp(1.25rem, 1rem + 0.5vw, 1.75rem);
+      font-family: var(--font-body); font-size: var(--text-lg);
+      color: var(--text-muted); margin-top: 8px;
+      margin-bottom: clamp(1.25rem, 1rem + 0.5vw, 1.75rem);
     }
 
-    .pricing__separator { width: 100%; height: 1px; background: var(--border); margin-bottom: clamp(1.25rem, 1rem + 0.5vw, 1.75rem); }
+    .pricing__separator {
+      width: 100%; height: 1px; background: var(--border);
+      margin-bottom: clamp(1.25rem, 1rem + 0.5vw, 1.75rem);
+    }
 
     .pricing__details-title {
-      font-family: var(--font-data); font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
-      font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);
+      font-family: var(--font-data);
+      font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--text-muted);
       margin-bottom: clamp(0.75rem, 0.5rem + 0.5vw, 1rem); text-align: left;
     }
 
-    .pricing__details-list { list-style: none; display: flex; flex-direction: column; gap: 10px; text-align: left; }
-    .pricing__details-list li { font-size: var(--text-base); color: var(--text-muted); padding-left: 20px; position: relative; line-height: 1.5; }
-    .pricing__details-list li::before { content: ''; position: absolute; left: 0; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0.5; }
+    .pricing__details-list {
+      list-style: none; display: flex; flex-direction: column;
+      gap: 10px; text-align: left;
+    }
+    .pricing__details-list li {
+      font-size: var(--text-base); color: var(--text-muted);
+      padding-left: 20px; position: relative; line-height: 1.5;
+    }
+    .pricing__details-list li::before {
+      content: ''; position: absolute; left: 0; top: 8px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); opacity: 0.5;
+    }
 
     .pricing__note {
       max-width: 560px; margin: 0 auto clamp(1.5rem, 1rem + 1.5vw, 2rem);
-      background: var(--bg-card); border-left: 3px solid var(--accent);
+      background: var(--accent-bg); border-left: 3px solid var(--accent);
       border-radius: 8px; padding: clamp(1rem, 0.75rem + 0.5vw, 1.5rem);
     }
-    .pricing__note-title { font-family: var(--font-data); font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 6px; }
-    .pricing__note-text { font-size: var(--text-base); color: var(--text-muted); line-height: 1.6; }
+    .pricing__note-title {
+      font-family: var(--font-data);
+      font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--accent-dark); margin-bottom: 6px;
+    }
+    .pricing__note-text {
+      font-size: var(--text-base); color: var(--text-muted); line-height: 1.6;
+    }
 
-    .pricing__fine { text-align: center; font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.813rem); color: var(--text-dim); max-width: 560px; margin: 0 auto; line-height: 1.5; }
+    .pricing__fine {
+      text-align: center;
+      font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.813rem);
+      color: var(--text-dim); max-width: 560px; margin: 0 auto; line-height: 1.5;
+    }
 
     /* ========================================
        CTA
     ======================================== */
     .cta { text-align: center; padding: var(--space-section) 0; }
-    .cta__title { font-family: var(--font-display); font-size: var(--text-hero); line-height: 1.05; letter-spacing: 0.02em; margin-bottom: clamp(0.75rem, 0.5rem + 1vw, 1.25rem); }
+    .cta__title {
+      font-family: var(--font-display); font-size: var(--text-hero);
+      line-height: 1.1; letter-spacing: 0.01em; font-weight: 700;
+      margin-bottom: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
+    }
     .cta__title span { color: var(--accent); }
-    .cta__subtitle { font-size: var(--text-lg); color: var(--text-muted); max-width: 520px; margin: 0 auto clamp(1.5rem, 1rem + 2vw, 2.5rem); line-height: 1.7; }
-    .cta__btn { display: inline-block; width: fit-content; font-family: var(--font-body); font-size: var(--text-base); font-weight: 600; color: #000000; background: var(--accent); padding: 14px 40px; border-radius: 100px; letter-spacing: 0.04em; transition: background 0.3s var(--ease), transform 0.3s var(--ease); touch-action: manipulation; }
-    .cta__consult { margin-top: 14px; font-size: clamp(0.813rem, 0.77rem + 0.18vw, 0.875rem); color: var(--text-dim); }
+    .cta__subtitle {
+      font-size: var(--text-lg); color: var(--text-muted);
+      max-width: 520px; margin: 0 auto clamp(1.5rem, 1rem + 2vw, 2.5rem);
+      line-height: 1.7;
+    }
+    .cta__btn {
+      display: inline-block; width: fit-content;
+      font-family: var(--font-body); font-size: var(--text-base);
+      font-weight: 600; color: #ffffff; background: var(--accent);
+      padding: 14px 40px; border-radius: 100px; letter-spacing: 0.04em;
+      transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+      touch-action: manipulation;
+    }
+    .cta__consult {
+      margin-top: 14px;
+      font-size: clamp(0.813rem, 0.77rem + 0.18vw, 0.875rem);
+      color: var(--text-dim);
+    }
 
-    .footer { border-top: 1px solid var(--border); padding: clamp(1.5rem, 1rem + 1.5vw, 2.5rem) 0; text-align: center; }
-    .footer__text { font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.813rem); color: var(--text-dim); letter-spacing: 0.04em; }
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: clamp(1.5rem, 1rem + 1.5vw, 2.5rem) 0; text-align: center;
+    }
+    .footer__text {
+      font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.813rem);
+      color: var(--text-dim); letter-spacing: 0.04em;
+    }
 
     /* ========================================
        RESPONSIVE
@@ -266,11 +434,15 @@
 
     @media (hover: hover) {
       .cta__btn:hover { background: var(--accent-light); transform: translateY(-1px); }
-      .hero__service-tag:hover { border-color: var(--accent); color: var(--accent); }
+      .hero__service-tag:hover { background: var(--accent); color: #ffffff; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
       html { scroll-behavior: auto; }
       .reveal { opacity: 1; transform: none; }
       .marquee__track { animation: none; }
@@ -294,8 +466,8 @@
         </div>
 
         <h1 class="hero__title reveal">
-          NEWLY ENGAGED COUPLES ARE SEARCHING.<br>
-          <span>LET THEM FIND YOU.</span>
+          NEWLY ENGAGED COUPLES<br>
+          <span>ARE SEARCHING.</span>
         </h1>
 
         <p class="hero__subtitle reveal">
@@ -308,7 +480,7 @@
           <span class="hero__service-tag">Paid Ads</span>
           <span class="hero__service-tag">Website</span>
           <span class="hero__service-tag">Whop Setup</span>
-          <span class="hero__service-tag">Community Management</span>
+          <span class="hero__service-tag">Community</span>
         </div>
 
         <div class="hero__divider"></div>
@@ -320,7 +492,7 @@
           <span class="marquee__dot">&bull;</span>
           <span class="marquee__item marquee__item--accent">COURSE LAUNCH</span>
           <span class="marquee__dot">&bull;</span>
-          <span class="marquee__item">FROM ENGAGEMENT TO ALTAR</span>
+          <span class="marquee__item">ENGAGEMENT TO ALTAR</span>
           <span class="marquee__dot">&bull;</span>
           <span class="marquee__item marquee__item--accent">ATOWNEVENT</span>
           <span class="marquee__dot">&bull;</span>
@@ -328,7 +500,7 @@
           <span class="marquee__dot">&bull;</span>
           <span class="marquee__item marquee__item--accent">COURSE LAUNCH</span>
           <span class="marquee__dot">&bull;</span>
-          <span class="marquee__item">FROM ENGAGEMENT TO ALTAR</span>
+          <span class="marquee__item">ENGAGEMENT TO ALTAR</span>
           <span class="marquee__dot">&bull;</span>
           <span class="marquee__item marquee__item--accent">ATOWNEVENT</span>
           <span class="marquee__dot">&bull;</span>
@@ -346,7 +518,7 @@
         </h2>
 
         <p class="situation__text reveal">
-          You're re-recording <strong>52 videos</strong>. You have a beta tester lined up for a testimonial. Catering companies are already sending you leads. But there's no funnel to capture them, no ads driving traffic, no website converting visitors, and no platform set up to deliver the course and build a community around it. <strong>That's what we build.</strong>
+          You're re-recording <strong>52 videos</strong>. You have a beta tester lined up for a testimonial. Catering companies are already sending you leads. But there's no funnel to capture them, no ads driving traffic, no website converting visitors, and no platform set up to deliver the course and build a community. <strong>That's what we build.</strong>
         </p>
 
         <div class="situation__stats reveal">
@@ -367,9 +539,9 @@
     </section>
 
     <!-- WHAT WE BUILD + WHAT HAPPENS -->
-    <section class="section" id="system">
+    <section class="section" id="plan">
       <div class="container">
-        <div class="section-label reveal">The System</div>
+        <div class="section-label reveal">The Plan</div>
         <h2 class="section-title reveal">
           EVERYTHING YOU NEED.<br>
           <span>ALL UNDER ONE ROOF.</span>
@@ -379,15 +551,15 @@
           <div class="build__left reveal">
             <h3>WHAT WE BUILD AND MANAGE</h3>
             <ul class="build__list">
-              <li>Funnel build: landing page, email capture, lead magnet (free PDF), email sequence, sales page</li>
+              <li>Funnel: landing page, email capture, lead magnet PDF, email sequence, sales page</li>
               <li>Paid ads: Meta campaigns targeting newly engaged couples nationwide, 4-day testing cycles, reports every 4 days</li>
-              <li>Website: full redesign, black and white with rose accent, your real content</li>
-              <li>Whop setup: course hosting, payment processing, community space, all configured</li>
-              <li>Community management: engage members, moderate, keep the space active</li>
-              <li>Professional videography: on-site filming if needed</li>
+              <li>Website: full redesign matching your brand, your real content</li>
+              <li>Whop setup: course hosting, payment processing, community space</li>
+              <li>Community management: engage members, moderate, keep it active</li>
+              <li>Professional videography if needed</li>
             </ul>
 
-            <h3>INCLUDED AT NO COST</h3>
+            <h3>ALL INCLUDED</h3>
             <div class="build__free-items">
               <div class="build__free-item">
                 <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10.5L9 13.5L14.5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -420,25 +592,25 @@
                 <span class="badge badge--success">Included</span>
               </div>
             </div>
-            <p class="build__free-note">All of this is covered by the revenue share. No setup fees. No monthly fees.</p>
+            <p class="build__free-note">Everything covered by the revenue share. No setup fees. No monthly fees.</p>
           </div>
 
           <div class="build__card reveal">
-            <h3>WHAT HAPPENS</h3>
-            <ul class="build__card-list">
+            <h3>HOW IT WORKS</h3>
+            <ol class="build__card-list">
               <li>Newly engaged couples see your ads on Facebook and Instagram</li>
-              <li>They land on a funnel page built to convert, not just inform</li>
-              <li>They download your free PDF (lead magnet) and enter your email sequence</li>
-              <li>The sequence warms them up and drives them to purchase the $249 course</li>
+              <li>They land on a funnel page built to convert</li>
+              <li>They download your free PDF and enter your email sequence</li>
+              <li>The sequence warms them up and drives them to purchase the course</li>
               <li>Course, payment, and community all live on Whop</li>
               <li>You focus on creating content. We handle everything else.</li>
-            </ul>
+            </ol>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- THE PARTNERSHIP -->
+    <!-- THE PAYMENT -->
     <section class="section section--alt" id="deal">
       <div class="container">
         <div class="section-label reveal">The Deal</div>
@@ -457,12 +629,12 @@
             <div class="pricing__separator"></div>
             <div class="pricing__details-title">What that means</div>
             <ul class="pricing__details-list">
-              <li>AG receives 14% of all course sales, community subscriptions, and any revenue generated through the systems we build</li>
+              <li>AG receives 14% of all course sales, subscriptions, and revenue from the systems we build</li>
               <li>No monthly management fees</li>
               <li>No setup fees</li>
               <li>No website fees</li>
               <li>No funnel fees</li>
-              <li>Ad spend is paid directly to Meta by you (separate from the rev share)</li>
+              <li>Ad spend paid directly to Meta by you (separate)</li>
             </ul>
           </div>
         </div>
@@ -470,12 +642,12 @@
         <div class="pricing__note reveal">
           <div class="pricing__note-title">Why Revenue Share</div>
           <p class="pricing__note-text">
-            We only make money when you make money. Our incentive is to make every system we build perform at its best. If it doesn't work, we don't get paid. That's the deal.
+            We only make money when you make money. Our incentive is to make every system perform. If it doesn't work, we don't get paid.
           </p>
         </div>
 
         <p class="pricing__fine reveal">
-          Ad spend is paid directly to Meta and is not included in the revenue share calculation. Revenue share applies to gross revenue from course sales and community subscriptions processed through Whop.
+          Ad spend is paid directly to Meta and is not included in the revenue share. Revenue share applies to gross revenue from course sales and community subscriptions on Whop.
         </p>
       </div>
     </section>
@@ -488,12 +660,12 @@
           <span>THE SYSTEM IS OURS.</span>
         </h2>
         <p class="cta__subtitle reveal">
-          You bring the expertise. We bring the infrastructure. 14% partnership. No fees. Let's build.
+          You bring the expertise. We bring the infrastructure. 14% partnership. No fees.
         </p>
         <div class="reveal">
           <a href="#" class="cta__btn">LET'S BUILD THIS</a>
         </div>
-        <p class="cta__consult reveal">Consultation rate $99/hour</p>
+        <p class="cta__consult reveal">Consultation rate: $99/hour</p>
       </div>
     </section>
 
