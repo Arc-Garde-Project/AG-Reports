@@ -153,6 +153,13 @@
       max-height: 70px; margin: 0 auto clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
     }
 
+    .hero__wordmark {
+      font-family: var(--font-display); font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+      font-weight: 700; letter-spacing: 0.06em; color: var(--accent);
+      margin-bottom: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+      text-transform: uppercase;
+    }
+
     .hero__services {
       display: flex; flex-wrap: wrap; justify-content: center;
       align-items: center;
@@ -466,8 +473,7 @@
     <section class="hero section" id="hero">
       <div class="container">
 
-        <!-- Replace src with actual logo -->
-        <!-- <img src="logo.png" alt="The Wedding Mentor" class="hero__logo reveal"> -->
+        <div class="hero__wordmark reveal">The Wedding Mentor</div>
 
         <h1 class="hero__title reveal">
           YOU HAVE THE EXPERTISE.<br>
