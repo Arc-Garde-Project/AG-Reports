@@ -1906,6 +1906,43 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
 .reports-nav-link:focus-visible { outline: 2px solid var(--blue-bright); outline-offset: -2px; }
 .reports-nav-all { justify-content: center; color: #666; font-size: 12px; }
 .reports-nav-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 6px 0; }
+
+/* ── Menu Tooltip ── */
+.menu-tooltip {
+  position: fixed; top: 22px; right: 160px; z-index: 1001;
+  padding: 12px 18px;
+  background: rgba(42,82,152,0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(74,144,217,0.4); border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  color: #E8E8F0; font-size: 13px; font-weight: 500; line-height: 1.5;
+  white-space: nowrap;
+  opacity: 0; transform: translateX(10px);
+  pointer-events: none;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.menu-tooltip.is-visible {
+  opacity: 1; transform: translateX(0); pointer-events: auto;
+}
+.menu-tooltip::after {
+  content: ''; position: absolute; top: 50%; right: -6px;
+  transform: translateY(-50%) rotate(45deg);
+  width: 10px; height: 10px;
+  background: rgba(42,82,152,0.95);
+  border-right: 1px solid rgba(74,144,217,0.4);
+  border-top: 1px solid rgba(74,144,217,0.4);
+}
+.menu-tooltip-dismiss {
+  display: inline-block; margin-left: 12px;
+  color: rgba(255,255,255,0.5); font-size: 11px; font-weight: 600;
+  cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+  transition: color 0.3s;
+  touch-action: manipulation;
+}
+.menu-tooltip-dismiss:hover { color: #fff; }
+@media (max-width: 480px) {
+  .menu-tooltip { right: auto; left: 16px; top: 76px; white-space: normal; max-width: 260px; }
+  .menu-tooltip::after { display: none; }
+}
 </style>
 </head>
 <body>
@@ -1915,6 +1952,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   Reports
 </button>
+<div class="menu-tooltip" id="menuTooltip">View all weekly reports <span class="menu-tooltip-dismiss" onclick="dismissTooltip()">Got it</span></div>
 <div class="reports-overlay" id="reportsOverlay" onclick="closeReportsNav()"></div>
 <nav class="reports-nav" id="reportsNav" role="navigation" aria-label="Reports navigation">
   <div class="reports-nav-group">Ad Testing</div>
@@ -3245,12 +3283,26 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
 function toggleReportsNav(){
   document.getElementById('reportsNav').classList.toggle('open');
   document.getElementById('reportsOverlay').classList.toggle('open');
+  dismissTooltip();
 }
 function closeReportsNav(){
   document.getElementById('reportsNav').classList.remove('open');
   document.getElementById('reportsOverlay').classList.remove('open');
 }
-document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeReportsNav(); });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeReportsNav(); dismissTooltip(); } });
+
+/* ── Menu Tooltip ── */
+var tooltipTimer;
+function dismissTooltip(){
+  var tip = document.getElementById('menuTooltip');
+  if(tip) tip.classList.remove('is-visible');
+  if(tooltipTimer) clearTimeout(tooltipTimer);
+}
+setTimeout(function(){
+  var tip = document.getElementById('menuTooltip');
+  if(tip) tip.classList.add('is-visible');
+  tooltipTimer = setTimeout(dismissTooltip, 7000);
+}, 2100);
 </script>
 </body>
 </html>
