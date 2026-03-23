@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<title>Dr. Verma | Paid Ads — Arc Garde</title>
-<meta name="description" content="Standard Paid Ads Package for Dr. Kushagra Verma, MD at Advanced Spine Care. Brand awareness via Facebook and Instagram ads across Los Angeles and Orange County.">
+<title>Dr. Verma | Paid Ads + Organic Content — Arc Garde</title>
+<meta name="description" content="Paid Ads and Organic Content System for Dr. Kushagra Verma, MD at Advanced Spine Care. Brand awareness and authority building across Los Angeles and Orange County.">
 <meta name="theme-color" content="#ffffff">
 <meta name="robots" content="noindex, nofollow">
-<meta property="og:title" content="Dr. Verma | Paid Ads — Arc Garde">
-<meta property="og:description" content="Brand awareness via Meta ads for Advanced Spine Care across LA and Orange County.">
+<meta property="og:title" content="Dr. Verma | Paid Ads + Organic Content — Arc Garde">
+<meta property="og:description" content="Paid Ads and Organic Content for Advanced Spine Care across LA and Orange County.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ag-reports.vercel.app/presentations/spine-doctor/">
 <meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Dr. Verma | Paid Ads — Arc Garde">
+<meta name="twitter:title" content="Dr. Verma | Paid Ads + Organic Content — Arc Garde">
 <meta name="twitter:description" content="Brand awareness via Meta ads for Advanced Spine Care across LA and Orange County.">
 <meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
 <link rel="canonical" href="https://ag-reports.vercel.app/presentations/spine-doctor/">
@@ -112,6 +112,117 @@ body {
   width: 100%;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+/* TRUST STRIP */
+.trust-strip {
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  flex-wrap: wrap;
+  padding: 18px 24px;
+  background: var(--bg-off);
+  border-bottom: 1px solid var(--border);
+}
+
+.trust-strip__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.trust-strip__icon {
+  width: 18px;
+  height: 18px;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+/* GOLD ACCENT UNDERLINE */
+.title::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), rgba(184, 148, 62, 0.2));
+  margin: 16px auto 0;
+}
+
+.title--no-line::after { display: none; }
+
+/* PREMIUM CARD TREATMENTS */
+.card, .segment, .ocs-feature {
+  box-shadow: 0 1px 2px rgba(10, 22, 40, 0.03), 0 2px 4px rgba(10, 22, 40, 0.02), 0 4px 8px rgba(10, 22, 40, 0.02);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* CREDENTIAL BADGE */
+.credential-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(184, 148, 62, 0.06);
+  border: 1px solid rgba(184, 148, 62, 0.15);
+  border-radius: 99px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.credential-badge__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: credentialPulse 2.1s ease-in-out infinite;
+}
+
+@keyframes credentialPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* GLASS STAT BAR */
+.glass-stats {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px 36px;
+  background: rgba(10, 22, 40, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(10, 22, 40, 0.06);
+  border-radius: 14px;
+  margin-top: 32px;
+}
+
+.glass-stats__item {
+  text-align: center;
+}
+
+.glass-stats__val {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1;
+}
+
+.glass-stats__lbl {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 8px;
 }
 
 /* REVEAL */
@@ -701,6 +812,225 @@ body {
 .legend-line--baseline { background: var(--text-faint); }
 
 /* ═══════════════════════════════════════
+   S5B: OCS (Organic Content System)
+   ═══════════════════════════════════════ */
+.ocs-platforms {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 36px;
+  justify-items: center;
+}
+
+.ocs-platform {
+  text-align: center;
+  padding: 12px 8px;
+}
+
+.ocs-platform__icon {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 10px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.ocs-platform__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ocs-platform__name {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--navy-light);
+  font-weight: 600;
+}
+
+@media (hover: hover) {
+  .ocs-platform:hover .ocs-platform__icon {
+    opacity: 1;
+    transform: scale(1.1) translateY(-2px);
+  }
+}
+
+.ocs-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 20px;
+  margin-top: 36px;
+}
+
+.ocs-feature {
+  padding: 28px 24px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  text-align: left;
+  overflow: hidden;
+  position: relative;
+}
+
+.ocs-feature::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--navy);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 14px 14px 0 0;
+}
+
+@media (hover: hover) {
+  .ocs-feature:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(10, 22, 40, 0.08);
+  }
+  .ocs-feature:hover::before { opacity: 1; }
+}
+
+.ocs-feature h4 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(0.938rem, 0.9rem + 0.15vw, 1rem);
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.ocs-feature p {
+  font-size: clamp(0.813rem, 0.78rem + 0.12vw, 0.875rem);
+  color: var(--text-mid);
+  line-height: 1.7;
+}
+
+.ocs-stats {
+  display: flex;
+  gap: 48px;
+  justify-content: center;
+  margin-top: 36px;
+  flex-wrap: wrap;
+}
+
+.ocs-stat { text-align: center; }
+
+.ocs-stat__val {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.75rem, 1.3rem + 1.5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1;
+}
+
+.ocs-stat__lbl {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 10px;
+}
+
+/* OCS GROWTH GRAPH */
+.ocs-graph {
+  margin-top: 36px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(10,22,40,0.03), 0 2px 4px rgba(10,22,40,0.02);
+}
+
+.ocs-graph__title {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.ocs-graph svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.ocs-graph-line {
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  transition: stroke-dashoffset 2.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ocs-graph-line.active { stroke-dashoffset: 0; }
+
+.ocs-graph-fill {
+  opacity: 0;
+  transition: opacity 0.9s ease 0.6s;
+}
+
+.ocs-graph-fill.active { opacity: 1; }
+
+.ocs-graph-dot {
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ocs-graph-dot.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (max-width: 480px) {
+  .ocs-graph { padding: 16px 10px; }
+  .ocs-graph svg text { font-size: 8px; }
+}
+
+@media (max-width: 768px) {
+  .ocs-platforms {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .ocs-platform__icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .ocs-features {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ocs-feature { text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .ocs-platforms {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .ocs-platform__icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .ocs-platform__name {
+    font-size: 8px;
+    letter-spacing: 2px;
+  }
+
+  .ocs-stats {
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+/* ═══════════════════════════════════════
    S6: PROCESS
    ═══════════════════════════════════════ */
 .process {
@@ -877,6 +1207,24 @@ body {
     gap: 10px;
   }
 
+  .trust-strip {
+    gap: 16px;
+    padding: 16px 18px;
+  }
+
+  .trust-strip__item {
+    font-size: 10px;
+  }
+
+  .glass-stats {
+    gap: 24px;
+    padding: 16px 24px;
+  }
+
+  .credential-badge {
+    font-size: 10px;
+  }
+
   .process {
     padding-left: 36px;
     text-align: left;
@@ -900,9 +1248,16 @@ body {
 }
 
 @media (max-width: 480px) {
-  .hero__stats {
+  .glass-stats {
     flex-direction: column;
-    gap: 28px;
+    gap: 16px;
+    padding: 16px 20px;
+  }
+
+  .trust-strip {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
   }
 
   .hero__title {
@@ -958,10 +1313,9 @@ body {
 
 <!-- S1: HERO -->
 <section class="hero">
-  <div class="hero__eyebrow reveal">
-    <span class="hero__eyebrow-line"></span>
-    <span class="hero__eyebrow-text">Paid Advertising</span>
-    <span class="hero__eyebrow-line"></span>
+  <div class="credential-badge reveal">
+    <span class="credential-badge__dot"></span>
+    Board Certified Orthopedic Spine Surgeon
   </div>
 
   <h1 class="hero__title reveal reveal-d1">
@@ -975,18 +1329,22 @@ body {
     <div class="hero__meta-item"><strong>4 Locations, LA + OC</strong></div>
   </div>
 
-  <div class="hero__stats reveal reveal-d2">
-    <div class="hero__stat">
-      <span class="hero__stat-val">4</span>
-      <span class="hero__stat-lbl">Locations</span>
+  <div class="glass-stats reveal reveal-d2">
+    <div class="glass-stats__item">
+      <div class="glass-stats__val">4</div>
+      <div class="glass-stats__lbl">Locations</div>
     </div>
-    <div class="hero__stat">
-      <span class="hero__stat-val">300+</span>
-      <span class="hero__stat-lbl">5-Star Reviews</span>
+    <div class="glass-stats__item">
+      <div class="glass-stats__val">300+</div>
+      <div class="glass-stats__lbl">5-Star Reviews</div>
     </div>
-    <div class="hero__stat">
-      <span class="hero__stat-val">150+</span>
-      <span class="hero__stat-lbl">Publications</span>
+    <div class="glass-stats__item">
+      <div class="glass-stats__val">150+</div>
+      <div class="glass-stats__lbl">Publications</div>
+    </div>
+    <div class="glass-stats__item">
+      <div class="glass-stats__val">UCSF</div>
+      <div class="glass-stats__lbl">Fellowship</div>
     </div>
   </div>
 </section>
@@ -999,6 +1357,29 @@ body {
     <span class="marquee__text">ADVANCED <span>SPINE CARE</span></span>
     <span class="marquee__text">DR. <span>VERMA</span></span>
     <span class="marquee__text">LOS ANGELES <span>+ OC</span></span>
+  </div>
+</div>
+
+<div class="trust-strip">
+  <div class="trust-strip__item">
+    <svg class="trust-strip__icon" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+    FAAOS Board Certified
+  </div>
+  <div class="trust-strip__item">
+    <svg class="trust-strip__icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    300+ Five-Star Reviews
+  </div>
+  <div class="trust-strip__item">
+    <svg class="trust-strip__icon" fill="currentColor" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+    UCSF Fellowship Trained
+  </div>
+  <div class="trust-strip__item">
+    <svg class="trust-strip__icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+    4 SoCal Locations
+  </div>
+  <div class="trust-strip__item">
+    <svg class="trust-strip__icon" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+    150+ Publications
   </div>
 </div>
 
@@ -1200,6 +1581,134 @@ body {
 
 <div class="divider"></div>
 
+<!-- S5B: ORGANIC CONTENT SYSTEM -->
+<section class="section">
+  <div class="inner">
+    <div class="label reveal"><span class="label__line"></span> Organic Content System <span class="label__line"></span></div>
+
+    <h2 class="title reveal reveal-d1">
+      Ads Get You Seen&nbsp;Today.<br>
+      <span class="title--gold">Content Makes You Unforgettable.</span>
+    </h2>
+
+    <p class="subtitle reveal reveal-d1" style="margin-bottom: 36px;">
+      Patients research for weeks before they call. Your expertise, your voice, your credentials, distributed across 7 platforms so you're the authority they find at every&nbsp;stage.
+    </p>
+
+    <div class="ocs-platforms reveal reveal-d2">
+      <div class="ocs-platform">
+        <div class="ocs-platform__icon"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20Youtube%20Icon%20Official.png" alt="YouTube"></div>
+        <div class="ocs-platform__name">YouTube</div>
+      </div>
+      <div class="ocs-platform">
+        <div class="ocs-platform__icon"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20Instagram%20Icon%20Official.png" alt="Instagram"></div>
+        <div class="ocs-platform__name">Instagram</div>
+      </div>
+      <div class="ocs-platform">
+        <div class="ocs-platform__icon"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20TikTok%20Icon%20Official.png" alt="TikTok"></div>
+        <div class="ocs-platform__name">TikTok</div>
+      </div>
+      <div class="ocs-platform">
+        <div class="ocs-platform__icon"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20FaceBook%20Icon%20Official.png" alt="Facebook"></div>
+        <div class="ocs-platform__name">Facebook</div>
+      </div>
+      <div class="ocs-platform">
+        <div class="ocs-platform__icon"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20LinkedIn%20Icon%20Official.png" alt="LinkedIn"></div>
+        <div class="ocs-platform__name">LinkedIn</div>
+      </div>
+      <div class="ocs-platform">
+        <div class="ocs-platform__icon"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20Twitter%20Icon%20Official.png" alt="X"></div>
+        <div class="ocs-platform__name">X</div>
+      </div>
+      <div class="ocs-platform">
+        <div class="ocs-platform__icon"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20Threads%20Icon%20Official.png" alt="Threads"></div>
+        <div class="ocs-platform__name">Threads</div>
+      </div>
+    </div>
+
+    <div class="ocs-stats reveal reveal-d2">
+      <div class="ocs-stat">
+        <div class="ocs-stat__val">1,400</div>
+        <div class="ocs-stat__lbl">Daily Views Floor</div>
+      </div>
+      <div class="ocs-stat">
+        <div class="ocs-stat__val">39.2K</div>
+        <div class="ocs-stat__lbl">Month 1 Minimum</div>
+      </div>
+      <div class="ocs-stat">
+        <div class="ocs-stat__val">200K+</div>
+        <div class="ocs-stat__lbl">Month 6 Projected</div>
+      </div>
+    </div>
+
+    <div class="ocs-graph reveal" id="ocsGraph">
+      <div class="ocs-graph__title">Projected Monthly Views (200-View Floor x 7 Platforms)</div>
+      <svg viewBox="0 0 600 220" preserveAspectRatio="xMidYMid meet">
+        <line x1="60" y1="20" x2="60" y2="180" stroke="rgba(10,22,40,0.06)" stroke-width="1"/>
+        <line x1="60" y1="180" x2="570" y2="180" stroke="rgba(10,22,40,0.1)" stroke-width="1"/>
+        <line x1="60" y1="140" x2="570" y2="140" stroke="rgba(10,22,40,0.04)" stroke-width="1" stroke-dasharray="4"/>
+        <line x1="60" y1="100" x2="570" y2="100" stroke="rgba(10,22,40,0.04)" stroke-width="1" stroke-dasharray="4"/>
+        <line x1="60" y1="60" x2="570" y2="60" stroke="rgba(10,22,40,0.04)" stroke-width="1" stroke-dasharray="4"/>
+        <line x1="60" y1="20" x2="570" y2="20" stroke="rgba(10,22,40,0.04)" stroke-width="1" stroke-dasharray="4"/>
+        <text x="50" y="184" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="#94a3b8">0</text>
+        <text x="50" y="144" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="#94a3b8">50K</text>
+        <text x="50" y="104" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="#94a3b8">100K</text>
+        <text x="50" y="64" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="#94a3b8">150K</text>
+        <text x="50" y="24" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="#94a3b8">200K</text>
+        <text x="102" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#64748b">M1</text>
+        <text x="187" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#64748b">M2</text>
+        <text x="272" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#64748b">M3</text>
+        <text x="357" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#64748b">M4</text>
+        <text x="442" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#64748b">M5</text>
+        <text x="527" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#64748b">M6</text>
+        <defs>
+          <linearGradient id="ocsGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0A1628" stop-opacity="0.12"/>
+            <stop offset="100%" stop-color="#0A1628" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="ocsLineGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#0A1628"/>
+            <stop offset="70%" stop-color="#132240"/>
+            <stop offset="100%" stop-color="#b8943e"/>
+          </linearGradient>
+        </defs>
+        <!-- M1:39.2K=y152 M2:59K=y136 M3:83K=y113 M4:115K=y88 M5:155K=y56 M6:200K=y20 -->
+        <path class="ocs-graph-fill" d="M102,152 L187,136 L272,113 L357,88 L442,56 L527,20 L527,180 L102,180 Z" fill="url(#ocsGrad)" opacity="0.3"/>
+        <polyline class="ocs-graph-line" points="102,152 187,136 272,113 357,88 442,56 527,20" fill="none" stroke="url(#ocsLineGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle class="ocs-graph-dot" cx="102" cy="152" r="5" fill="#0A1628" style="transition-delay:0.3s"/>
+        <text class="ocs-graph-dot" x="102" y="142" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#64748b" style="transition-delay:0.3s">39.2K</text>
+        <circle class="ocs-graph-dot" cx="187" cy="136" r="5" fill="#0A1628" style="transition-delay:0.6s"/>
+        <text class="ocs-graph-dot" x="187" y="126" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#64748b" style="transition-delay:0.6s">59K</text>
+        <circle class="ocs-graph-dot" cx="272" cy="113" r="5" fill="#0A1628" style="transition-delay:0.9s"/>
+        <text class="ocs-graph-dot" x="272" y="103" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#64748b" style="transition-delay:0.9s">83K</text>
+        <circle class="ocs-graph-dot" cx="357" cy="88" r="5" fill="#132240" style="transition-delay:1.2s"/>
+        <text class="ocs-graph-dot" x="357" y="78" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#64748b" style="transition-delay:1.2s">115K</text>
+        <circle class="ocs-graph-dot" cx="442" cy="56" r="5" fill="#132240" style="transition-delay:1.5s"/>
+        <text class="ocs-graph-dot" x="442" y="46" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#64748b" style="transition-delay:1.5s">155K</text>
+        <circle class="ocs-graph-dot" cx="527" cy="20" r="6" fill="#b8943e" style="transition-delay:1.8s"/>
+        <text class="ocs-graph-dot" x="527" y="12" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="13" font-weight="700" fill="#b8943e" style="transition-delay:2.1s">200K</text>
+      </svg>
+    </div>
+
+    <div class="ocs-features reveal reveal-d2">
+      <div class="ocs-feature">
+        <h4>Condition-Led Content</h4>
+        <p>Educational videos on spinal stenosis, herniated discs, scoliosis, and failed back surgery. Patients searching these terms find you, not your&nbsp;competitors.</p>
+      </div>
+      <div class="ocs-feature">
+        <h4>Authority Building</h4>
+        <p>Your 150+ publications and UCSF fellowship turned into content that positions you as the specialist other surgeons refer&nbsp;to.</p>
+      </div>
+      <div class="ocs-feature">
+        <h4>Spouse-Ready Content</h4>
+        <p>81% of patients involve their spouse. Short-form content that answers the questions spouses Google at midnight: recovery time, risks, and what to&nbsp;expect.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- S6: PROCESS -->
 <section class="section">
   <div class="inner">
@@ -1242,13 +1751,13 @@ body {
     </h2>
 
     <p class="cta__sub reveal reveal-d1">
-      UCSF fellowship. 150+ publications. 300+ five-star reviews. 4 locations across LA and Orange County. The reputation is built. Now we put it in front of the people who need it&nbsp;most.
+      Paid ads build your name recognition today. Organic content builds the authority that compounds for years. Together, they cover every stage of the patient journey, from the first scroll to the&nbsp;booked&nbsp;consultation.
     </p>
 
     <div class="cta__row reveal reveal-d2">
-      <div class="cta__item"><strong>3-month</strong> test period</div>
-      <div class="cta__item"><strong>Honest</strong> assessment at 90 days</div>
-      <div class="cta__item"><strong>Pivot</strong> if the data says so</div>
+      <div class="cta__item"><strong>Paid Ads</strong> for immediate reach</div>
+      <div class="cta__item"><strong>Organic Content</strong> for lasting authority</div>
+      <div class="cta__item"><strong>Both</strong> working together</div>
     </div>
   </div>
 </section>
@@ -1281,6 +1790,24 @@ body {
       });
     }, { threshold: 0.15 });
     tObs.observe(timeline);
+  }
+
+  /* OCS Graph animation */
+  var ocsGraph = document.getElementById('ocsGraph');
+  if (ocsGraph) {
+    var gObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          ocsGraph.querySelectorAll('.ocs-graph-line').forEach(function(l) { l.classList.add('active'); });
+          setTimeout(function() {
+            ocsGraph.querySelectorAll('.ocs-graph-fill').forEach(function(f) { f.classList.add('active'); });
+          }, 300);
+          ocsGraph.querySelectorAll('.ocs-graph-dot').forEach(function(d) { d.classList.add('active'); });
+          gObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    gObs.observe(ocsGraph);
   }
 
   /* Chart */
