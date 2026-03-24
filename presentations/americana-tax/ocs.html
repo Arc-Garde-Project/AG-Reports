@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Americana Tax Planning | Organic Content System — Arc Garde</title>
+<meta name="description" content="Organic Content System for Americana Tax Planning. 7-platform daily authority building for Rose Drieslein and Richard Vasquez across LA and Orange County.">
+<meta name="theme-color" content="#ffffff">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Americana Tax Planning | Organic Content System — Arc Garde">
+<meta property="og:description" content="Daily authority content across 7 platforms for Americana Tax Planning in SoCal.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Americana Tax Planning | Organic Content System — Arc Garde">
+<meta name="twitter:description" content="Daily authority content across 7 platforms for Americana Tax Planning in SoCal.">
+<meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #2563EB;
+  --blue-light: #60A5FA;
+  --blue-dark: #1D4ED8;
+  --red: #B91C1C;
+  --text: #1A1A1A;
+  --text-mid: #374151;
+  --text-muted: #6B7280;
+  --text-faint: #9CA3AF;
+  --bg: #ffffff;
+  --bg-off: #f8f9fb;
+  --border: rgba(26, 26, 26, 0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { overflow: hidden; height: 100%; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+h1,h2,h3,h4,h5,h6 { text-wrap: balance; }
+p,li,blockquote,figcaption { text-wrap: pretty; }
+a,button { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+::selection { background: var(--blue); color: #fff; }
+
+/* SHARED */
+.section { width: 100%; padding: clamp(48px,6vw,84px) clamp(18px,4vw,48px); }
+.inner { max-width: 1060px; margin: 0 auto; text-align: center; }
+
+.label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--blue);
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.label__line { width: 36px; height: 1px; background: var(--blue); opacity: 0.25; }
+
+.title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.75rem, 1.2rem + 2.5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: 2px;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.title::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue), rgba(37, 99, 235, 0.15));
+  margin: 14px auto 0;
+}
+
+.title--blue { color: var(--blue); }
+
+.subtitle {
+  font-size: clamp(0.875rem, 0.85rem + 0.1vw, 1rem);
+  color: var(--text-mid);
+  line-height: 1.8;
+  max-width: 580px;
+  margin: 0 auto;
+  font-weight: 300;
+}
+
+.divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.15s; }
+.reveal-d2 { transition-delay: 0.3s; }
+
+.reveal-stagger { opacity: 0; transform: translateY(20px); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+.reveal-stagger.active { opacity: 1; transform: translateY(0); }
+
+/* HERO */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: clamp(48px,8vw,96px) clamp(18px,4vw,48px) 28px;
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.hero__eyebrow-line { width: 42px; height: 1px; background: var(--blue); opacity: 0.2; }
+
+.hero__eyebrow-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.hero__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.625rem, 1rem + 2.8vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: 2px;
+  color: var(--text);
+  max-width: 780px;
+  margin-bottom: 20px;
+}
+
+.hero__title em { font-style: normal; color: var(--blue); }
+
+.hero__meta {
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.hero__meta-item { font-size: 12px; color: var(--text-faint); letter-spacing: 1px; }
+.hero__meta-item strong { color: var(--text); font-weight: 600; }
+
+.hero__stats {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px 36px;
+  background: var(--bg-off);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.hero__stat { text-align: center; }
+
+.hero__stat-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+  color: var(--text);
+  line-height: 1;
+}
+
+.hero__stat-lbl {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 8px;
+}
+
+/* MARQUEE */
+.marquee { overflow: hidden; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.marquee__track { display: flex; width: fit-content; animation: marquee 21s linear infinite; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+.marquee__text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 2rem + 6vw, 7rem);
+  letter-spacing: 6px;
+  white-space: nowrap;
+  padding: 0 36px;
+  color: rgba(37, 99, 235, 0.02);
+  line-height: 1;
+}
+
+.marquee__text span { color: var(--blue); opacity: 0.15; }
+
+/* PROBLEM */
+.problem__grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 28px;
+  text-align: left;
+  margin-top: 36px;
+}
+
+.problem__box {
+  padding: 36px 32px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+}
+
+.problem__box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 14px 14px 0 0;
+}
+
+.problem__box--bad { border-color: rgba(185, 28, 28, 0.15); }
+.problem__box--bad::before { background: var(--red); opacity: 0.4; }
+.problem__box--good { border-color: rgba(37, 99, 235, 0.15); background: rgba(37, 99, 235, 0.02); }
+.problem__box--good::before { background: var(--blue); opacity: 0.6; }
+
+.problem__box-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.problem__box--bad .problem__box-label { color: var(--red); }
+.problem__box--good .problem__box-label { color: var(--blue); }
+
+.problem__list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+
+.problem__list li {
+  font-size: clamp(0.813rem, 0.78rem + 0.12vw, 0.875rem);
+  color: var(--text-mid);
+  line-height: 1.7;
+  padding-left: 20px;
+  position: relative;
+}
+
+.problem__list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 9px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+}
+
+.problem__box--bad .problem__list li::before { background: var(--red); opacity: 0.35; }
+.problem__box--good .problem__list li::before { background: var(--blue); opacity: 0.4; }
+
+.problem__vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  color: var(--text-faint);
+  writing-mode: vertical-lr;
+  letter-spacing: 4px;
+}
+
+/* PLATFORMS */
+.platforms {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 36px;
+  justify-items: center;
+}
+
+.platform { text-align: center; padding: 12px 8px; }
+
+.platform__icon {
+  width: 44px; height: 44px;
+  margin: 0 auto 10px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.platform__icon img { width: 100%; height: 100%; object-fit: contain; }
+
+.platform__name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--blue);
+  font-weight: 600;
+}
+
+@media (hover: hover) {
+  .platform:hover .platform__icon { opacity: 1; transform: scale(1.1) translateY(-2px); }
+}
+
+/* FEATURES */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 20px;
+  margin-top: 36px;
+}
+
+.feature {
+  padding: 28px 24px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  text-align: left;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02), 0 2px 4px rgba(0,0,0,0.02);
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+}
+
+.feature::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--blue);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 14px 14px 0 0;
+}
+
+@media (hover: hover) {
+  .feature:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+  .feature:hover::before { opacity: 1; }
+}
+
+.feature__icon {
+  width: 44px; height: 44px;
+  background: var(--blue);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.feature__icon svg { width: 22px; height: 22px; color: #fff; }
+
+.feature h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  letter-spacing: 1px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.feature p {
+  font-size: clamp(0.813rem, 0.78rem + 0.12vw, 0.875rem);
+  color: var(--text-mid);
+  line-height: 1.7;
+}
+
+/* GRAPH */
+.graph {
+  margin-top: 36px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.graph__title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.graph svg { width: 100%; height: auto; display: block; }
+
+.graph-line { stroke-dasharray: 800; stroke-dashoffset: 800; transition: stroke-dashoffset 2.1s cubic-bezier(0.16,1,0.3,1); }
+.graph-line.active { stroke-dashoffset: 0; }
+.graph-fill { opacity: 0; transition: opacity 0.9s ease 0.6s; }
+.graph-fill.active { opacity: 1; }
+.graph-dot { opacity: 0; transform: scale(0); transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+.graph-dot.active { opacity: 1; transform: scale(1); }
+
+/* STATS */
+.stats {
+  display: flex;
+  gap: 48px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 36px;
+}
+
+.stat { text-align: center; }
+
+.stat__val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.75rem, 1.3rem + 1.5vw, 2.5rem);
+  color: var(--text);
+  line-height: 1;
+}
+
+.stat__lbl {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 8px;
+}
+
+/* PROCESS */
+.process {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 42px;
+  text-align: left;
+  margin-top: 36px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.process::before {
+  content: '';
+  position: absolute;
+  left: 14px; top: 8px; bottom: 8px;
+  width: 1px;
+  background: var(--blue);
+  opacity: 0.15;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 2.1s cubic-bezier(0.16,1,0.3,1);
+}
+
+.process.timeline-active::before { transform: scaleY(1); }
+
+.step {
+  position: relative;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--border);
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+
+.step.active { opacity: 1; transform: translateX(0); }
+.step:last-child { border-bottom: none; }
+
+.step::before {
+  content: attr(data-num);
+  position: absolute;
+  left: -36px; top: 34px;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text-faint);
+  border: 1.5px solid var(--border);
+  transition: all 0.6s ease;
+}
+
+.step.active::before {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.step h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  letter-spacing: 1px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.step p {
+  font-size: clamp(0.813rem, 0.78rem + 0.12vw, 0.875rem);
+  color: var(--text-mid);
+  line-height: 1.75;
+  max-width: 520px;
+}
+
+/* INVESTMENT */
+.invest {
+  max-width: 500px;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 48px 40px;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.invest::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue-dark), var(--blue), var(--blue-light));
+  border-radius: 14px 14px 0 0;
+}
+
+.invest__eyebrow {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--blue);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.invest__price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.invest__subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+
+.invest__list { list-style: none; display: flex; flex-direction: column; gap: 12px; text-align: left; max-width: 340px; margin: 0 auto 28px; }
+
+.invest__list li {
+  font-size: clamp(0.813rem, 0.78rem + 0.12vw, 0.875rem);
+  color: var(--text-mid);
+  line-height: 1.65;
+  padding-left: 20px;
+  position: relative;
+}
+
+.invest__list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 10px;
+  width: 8px; height: 1px;
+  background: var(--blue);
+  opacity: 0.4;
+}
+
+.invest__note { font-size: 13px; color: var(--text-faint); font-style: italic; }
+
+/* CTA */
+.cta__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 1.4rem + 2.5vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: 2px;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.cta__title em { font-style: normal; color: var(--blue); }
+
+.cta__sub {
+  font-size: clamp(0.875rem, 0.85rem + 0.1vw, 0.938rem);
+  color: var(--text-muted);
+  line-height: 1.8;
+  max-width: 540px;
+  margin: 0 auto;
+  font-weight: 300;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .inner { text-align: center; }
+  .label { justify-content: center; }
+  .problem__grid { grid-template-columns: 1fr; gap: 16px; }
+  .problem__vs { writing-mode: horizontal-tb; font-size: 1.5rem; padding: 4px 0; letter-spacing: 6px; }
+  .problem__box { text-align: center; }
+  .problem__list { display: inline-block; text-align: left; }
+  .features { max-width: 400px; margin-left: auto; margin-right: auto; }
+  .feature { text-align: center; }
+  .feature__icon { margin-left: auto; margin-right: auto; }
+  .hero__meta { flex-direction: column; gap: 10px; }
+  .process { padding-left: 36px; text-align: left; }
+  .step p { max-width: 100%; }
+  .invest { padding: 36px 28px; }
+}
+
+@media (max-width: 480px) {
+  .hero__stats { flex-direction: column; gap: 20px; padding: 16px 24px; }
+  .hero__title { font-size: clamp(1.375rem, 0.9rem + 2vw, 1.75rem); }
+  .title { font-size: clamp(1.375rem, 1rem + 1.5vw, 1.75rem); }
+  .marquee__text { font-size: clamp(2.5rem, 1.5rem + 5vw, 4rem); }
+  .cta__title { font-size: clamp(1.625rem, 1rem + 2.5vw, 2.25rem); }
+  .platforms { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .platform__icon { width: 36px; height: 36px; }
+  .platform__name { font-size: 8px; letter-spacing: 2px; }
+  .graph { padding: 16px 10px; }
+  .graph svg text { font-size: 8px; }
+  .stats { flex-direction: column; gap: 20px; }
+  .process { padding-left: 30px; }
+  .step::before { left: -28px; width: 24px; height: 24px; font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .step, .reveal-stagger { opacity: 1; transform: none; transition: none; }
+  .process::before { transform: scaleY(1); }
+  .graph-line { stroke-dashoffset: 0; }
+  .graph-fill { opacity: 1; }
+  .graph-dot { opacity: 1; transform: scale(1); }
+}
+</style>
+</head>
+<body>
+<main>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__eyebrow reveal">
+    <span class="hero__eyebrow-line"></span>
+    <span class="hero__eyebrow-text">Organic Content System</span>
+    <span class="hero__eyebrow-line"></span>
+  </div>
+
+  <h1 class="hero__title reveal reveal-d1">
+    Tax Season Is 3 Months. Your Reputation<br>
+    <em>Is Built the Other&nbsp;9.</em>
+  </h1>
+
+  <div class="hero__meta reveal reveal-d1">
+    <div class="hero__meta-item">Prepared for <strong>Rose Drieslein + Richard Vasquez</strong></div>
+    <div class="hero__meta-item"><strong>Americana Tax Planning</strong></div>
+    <div class="hero__meta-item"><strong>LA + Orange County</strong></div>
+  </div>
+
+  <div class="hero__stats reveal reveal-d2">
+    <div class="hero__stat">
+      <div class="hero__stat-val">7</div>
+      <div class="hero__stat-lbl">Platforms</div>
+    </div>
+    <div class="hero__stat">
+      <div class="hero__stat-val">1,400</div>
+      <div class="hero__stat-lbl">Daily Views Floor</div>
+    </div>
+    <div class="hero__stat">
+      <div class="hero__stat-val">30</div>
+      <div class="hero__stat-lbl">Posts Per Month</div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="marquee__track">
+    <span class="marquee__text">AMERICANA <span>TAX PLANNING</span></span>
+    <span class="marquee__text">LA HABRA <span>+ DOWNEY</span></span>
+    <span class="marquee__text">DAILY <span>AUTHORITY</span></span>
+    <span class="marquee__text">AMERICANA <span>TAX PLANNING</span></span>
+    <span class="marquee__text">LA HABRA <span>+ DOWNEY</span></span>
+    <span class="marquee__text">DAILY <span>AUTHORITY</span></span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- THE PROBLEM -->
+<section class="section">
+  <div class="inner">
+    <div class="label reveal"><span class="label__line"></span> The Reality <span class="label__line"></span></div>
+
+    <h2 class="title reveal reveal-d1">
+      Every Tax Pro in SoCal Runs Ads in&nbsp;January.<br>
+      <span class="title--blue">The Ones Who Win Post Year&nbsp;Round.</span>
+    </h2>
+
+    <div class="problem__grid reveal reveal-d2">
+      <div class="problem__box problem__box--bad">
+        <div class="problem__box-label">Without Content</div>
+        <ul class="problem__list">
+          <li>Invisible 9 months of the year. Clients forget you exist until they need to&nbsp;file</li>
+          <li>Every January you compete with every other CPA buying the same&nbsp;keywords</li>
+          <li>No trust built before the first call. Prospects compare you on price&nbsp;alone</li>
+          <li>Your expertise sits in your head, not where business owners are&nbsp;searching</li>
+          <li>Referrals dry up because there's nothing to share or&nbsp;remember</li>
+        </ul>
+      </div>
+
+      <div class="problem__vs">vs</div>
+
+      <div class="problem__box problem__box--good">
+        <div class="problem__box-label">With Daily Content</div>
+        <ul class="problem__list">
+          <li>Business owners see your name 30 times a month. When tax season hits, you're the obvious&nbsp;choice</li>
+          <li>Educational content builds trust before the first meeting. They already know your&nbsp;approach</li>
+          <li>Your OC campaign is already proving SoCal responds. Content amplifies&nbsp;that</li>
+          <li>Clients share your posts with their business owner friends. Organic referral&nbsp;engine</li>
+          <li>Authority compounds. Every month of content makes the next month&nbsp;stronger</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- THE SYSTEM -->
+<section class="section" style="background: var(--bg-off);">
+  <div class="inner">
+    <div class="label reveal"><span class="label__line"></span> 7 Platforms <span class="label__line"></span></div>
+
+    <h2 class="title reveal reveal-d1">
+      One Voice. Every Platform<br>
+      <span class="title--blue">Where Business Owners&nbsp;Live.</span>
+    </h2>
+
+    <div class="platforms reveal reveal-d1">
+      <div class="platform reveal-stagger">
+        <div class="platform__icon"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20Youtube%20Icon%20Official.png" alt="YouTube"></div>
+        <div class="platform__name">YouTube</div>
+      </div>
+      <div class="platform reveal-stagger">
+        <div class="platform__icon"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20Instagram%20Icon%20Official.png" alt="Instagram"></div>
+        <div class="platform__name">Instagram</div>
+      </div>
+      <div class="platform reveal-stagger">
+        <div class="platform__icon"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20TikTok%20Icon%20Official.png" alt="TikTok"></div>
+        <div class="platform__name">TikTok</div>
+      </div>
+      <div class="platform reveal-stagger">
+        <div class="platform__icon"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20FaceBook%20Icon%20Official.png" alt="Facebook"></div>
+        <div class="platform__name">Facebook</div>
+      </div>
+      <div class="platform reveal-stagger">
+        <div class="platform__icon"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20LinkedIn%20Icon%20Official.png" alt="LinkedIn"></div>
+        <div class="platform__name">LinkedIn</div>
+      </div>
+      <div class="platform reveal-stagger">
+        <div class="platform__icon"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20Twitter%20Icon%20Official.png" alt="X"></div>
+        <div class="platform__name">X</div>
+      </div>
+      <div class="platform reveal-stagger">
+        <div class="platform__icon"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20Threads%20Icon%20Official.png" alt="Threads"></div>
+        <div class="platform__name">Threads</div>
+      </div>
+    </div>
+
+    <div class="stats reveal reveal-d2">
+      <div class="stat">
+        <div class="stat__val">1,400</div>
+        <div class="stat__lbl">Daily Views Floor</div>
+      </div>
+      <div class="stat">
+        <div class="stat__val">39.2K</div>
+        <div class="stat__lbl">Month 1 Minimum</div>
+      </div>
+      <div class="stat">
+        <div class="stat__val">200K+</div>
+        <div class="stat__lbl">Month 6 Projected</div>
+      </div>
+    </div>
+
+    <!-- GROWTH GRAPH -->
+    <div class="graph reveal" id="ocsGraph">
+      <div class="graph__title">Projected Monthly Views (200-View Floor x 7&nbsp;Platforms)</div>
+      <svg viewBox="0 0 600 220" preserveAspectRatio="xMidYMid meet">
+        <line x1="60" y1="20" x2="60" y2="180" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>
+        <line x1="60" y1="180" x2="570" y2="180" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+        <line x1="60" y1="140" x2="570" y2="140" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="4"/>
+        <line x1="60" y1="100" x2="570" y2="100" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="4"/>
+        <line x1="60" y1="60" x2="570" y2="60" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="4"/>
+        <line x1="60" y1="20" x2="570" y2="20" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="4"/>
+        <text x="50" y="184" text-anchor="end" font-family="'Space Grotesk',sans-serif" font-size="10" fill="#9CA3AF">0</text>
+        <text x="50" y="144" text-anchor="end" font-family="'Space Grotesk',sans-serif" font-size="10" fill="#9CA3AF">50K</text>
+        <text x="50" y="104" text-anchor="end" font-family="'Space Grotesk',sans-serif" font-size="10" fill="#9CA3AF">100K</text>
+        <text x="50" y="64" text-anchor="end" font-family="'Space Grotesk',sans-serif" font-size="10" fill="#9CA3AF">150K</text>
+        <text x="50" y="24" text-anchor="end" font-family="'Space Grotesk',sans-serif" font-size="10" fill="#9CA3AF">200K</text>
+        <text x="102" y="200" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="10" fill="#6B7280">M1</text>
+        <text x="187" y="200" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="10" fill="#6B7280">M2</text>
+        <text x="272" y="200" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="10" fill="#6B7280">M3</text>
+        <text x="357" y="200" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="10" fill="#6B7280">M4</text>
+        <text x="442" y="200" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="10" fill="#6B7280">M5</text>
+        <text x="527" y="200" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="10" fill="#6B7280">M6</text>
+        <defs>
+          <linearGradient id="gFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2563EB" stop-opacity="0.12"/><stop offset="100%" stop-color="#2563EB" stop-opacity="0"/></linearGradient>
+          <linearGradient id="gLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#2563EB"/><stop offset="100%" stop-color="#60A5FA"/></linearGradient>
+        </defs>
+        <path class="graph-fill" d="M102,152 L187,136 L272,113 L357,88 L442,56 L527,20 L527,180 L102,180 Z" fill="url(#gFill)" opacity="0.3"/>
+        <polyline class="graph-line" points="102,152 187,136 272,113 357,88 442,56 527,20" fill="none" stroke="url(#gLine)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle class="graph-dot" cx="102" cy="152" r="5" fill="#2563EB" style="transition-delay:0.3s"/>
+        <text class="graph-dot" x="102" y="142" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="9" font-weight="600" fill="#6B7280" style="transition-delay:0.3s">39.2K</text>
+        <circle class="graph-dot" cx="187" cy="136" r="5" fill="#2563EB" style="transition-delay:0.6s"/>
+        <text class="graph-dot" x="187" y="126" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="9" font-weight="600" fill="#6B7280" style="transition-delay:0.6s">59K</text>
+        <circle class="graph-dot" cx="272" cy="113" r="5" fill="#2563EB" style="transition-delay:0.9s"/>
+        <text class="graph-dot" x="272" y="103" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="9" font-weight="600" fill="#6B7280" style="transition-delay:0.9s">83K</text>
+        <circle class="graph-dot" cx="357" cy="88" r="5" fill="#1D4ED8" style="transition-delay:1.2s"/>
+        <text class="graph-dot" x="357" y="78" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="9" font-weight="600" fill="#6B7280" style="transition-delay:1.2s">115K</text>
+        <circle class="graph-dot" cx="442" cy="56" r="5" fill="#1D4ED8" style="transition-delay:1.5s"/>
+        <text class="graph-dot" x="442" y="46" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="9" font-weight="600" fill="#6B7280" style="transition-delay:1.5s">155K</text>
+        <circle class="graph-dot" cx="527" cy="20" r="6" fill="#2563EB" style="transition-delay:1.8s"/>
+        <text class="graph-dot" x="527" y="12" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="14" fill="#2563EB" style="transition-delay:2.1s">200K</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHAT YOU GET -->
+<section class="section">
+  <div class="inner">
+    <div class="label reveal"><span class="label__line"></span> What You Get <span class="label__line"></span></div>
+
+    <h2 class="title reveal reveal-d1">
+      Daily Content. Zero Effort<br>
+      <span class="title--blue">From&nbsp;You.</span>
+    </h2>
+
+    <div class="features">
+      <div class="feature reveal-stagger">
+        <div class="feature__icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+        </div>
+        <h4>30 Posts Per Month</h4>
+        <p>One post every day across all 7 platforms. Video edits, static graphics, captions, hashtags, and scheduling. You never touch&nbsp;it.</p>
+      </div>
+      <div class="feature reveal-stagger">
+        <div class="feature__icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342"/></svg>
+        </div>
+        <h4>Tax Education Content</h4>
+        <p>S-Corp strategies, quarterly deadlines, write-off breakdowns, year-end planning tips. Content that positions Rose as the expert, not just another&nbsp;CPA.</p>
+      </div>
+      <div class="feature reveal-stagger">
+        <div class="feature__icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+        </div>
+        <h4>Monthly Analytics</h4>
+        <p>What's working, what's getting shared, which topics drive engagement. Strategy refinement every month based on real&nbsp;data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROCESS -->
+<section class="section" style="background: var(--bg-off);">
+  <div class="inner">
+    <div class="label reveal"><span class="label__line"></span> How It Works <span class="label__line"></span></div>
+
+    <h2 class="title reveal reveal-d1">
+      You Run the Business.<br>
+      We Run the&nbsp;Content.
+    </h2>
+
+    <div class="process" id="timeline">
+      <div class="step" data-num="1">
+        <h4>Onboard</h4>
+        <p>We learn your voice, your expertise, and the topics your ideal clients care about. Content calendar built around tax season cycles and SoCal business owner&nbsp;pain&nbsp;points.</p>
+      </div>
+      <div class="step" data-num="2">
+        <h4>Create</h4>
+        <p>Video edits, graphics, copy, and captions produced weekly. Everything formatted natively for each platform. Your approval before anything goes&nbsp;live.</p>
+      </div>
+      <div class="step" data-num="3">
+        <h4>Distribute</h4>
+        <p>30 posts per month across all 7 platforms. Scheduled, optimized, consistent. Rose's name shows up in feeds across LA and Orange County every single&nbsp;day.</p>
+      </div>
+      <div class="step" data-num="4">
+        <h4>Refine</h4>
+        <p>Monthly analytics review. Which topics drive engagement, which formats get shared, where your audience is growing fastest. We adjust and&nbsp;compound.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- INVESTMENT -->
+<section class="section">
+  <div class="inner">
+    <div class="label reveal"><span class="label__line"></span> The Investment <span class="label__line"></span></div>
+
+    <div class="invest reveal reveal-d1">
+      <div class="invest__eyebrow">Daily Authority Package</div>
+      <div class="invest__price">$2,300/mo</div>
+      <div class="invest__subtitle">Full-Service Content Engine</div>
+
+      <ul class="invest__list">
+        <li>30 posts per month (1 per day)</li>
+        <li>7-platform distribution</li>
+        <li>Video editing + static graphics</li>
+        <li>Copy, captions, and hashtag strategy</li>
+        <li>Content calendar planning</li>
+        <li>Monthly analytics report</li>
+        <li>Dedicated content strategist</li>
+      </ul>
+
+      <div class="invest__note">3-month minimum. Authority compounds over&nbsp;time.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section class="section">
+  <div class="inner">
+    <h2 class="cta__title reveal">
+      Your Ads Bring Them&nbsp;In.<br>
+      <em>Your Content Makes Them&nbsp;Stay.</em>
+    </h2>
+
+    <p class="cta__sub reveal reveal-d1">
+      Orange County is already responding to your ads. Now let's build the authority layer that turns one-time leads into long-term clients who refer their entire&nbsp;network.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var reveals = document.querySelectorAll('.reveal');
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('active'); });
+  }, { threshold: 0.12 });
+  reveals.forEach(function(el) { obs.observe(el); });
+
+  var staggerCards = document.querySelectorAll('.reveal-stagger');
+  var sObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        var siblings = Array.from(e.target.parentElement.children).filter(function(c) { return c.classList.contains('reveal-stagger'); });
+        var idx = siblings.indexOf(e.target);
+        setTimeout(function() { e.target.classList.add('active'); }, idx * 90);
+        sObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  staggerCards.forEach(function(el) { sObs.observe(el); });
+
+  var graph = document.getElementById('ocsGraph');
+  if (graph) {
+    var gObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          graph.querySelectorAll('.graph-line').forEach(function(l) { l.classList.add('active'); });
+          setTimeout(function() { graph.querySelectorAll('.graph-fill').forEach(function(f) { f.classList.add('active'); }); }, 300);
+          graph.querySelectorAll('.graph-dot').forEach(function(d) { d.classList.add('active'); });
+          gObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    gObs.observe(graph);
+  }
+
+  var timeline = document.getElementById('timeline');
+  if (timeline) {
+    var steps = timeline.querySelectorAll('.step');
+    var tObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('timeline-active');
+          steps.forEach(function(s, i) { setTimeout(function() { s.classList.add('active'); }, 300 + i * 210); });
+          tObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    tObs.observe(timeline);
+  }
+})();
+</script>
+</body>
+</html>
