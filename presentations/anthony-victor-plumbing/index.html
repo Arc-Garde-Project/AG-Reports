@@ -97,9 +97,14 @@
       --space-container: clamp(1.125rem, 0.262rem + 3.68vw, 3rem);
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html, body { overflow-x: clip; max-width: 100%; }
     html { scroll-behavior: smooth; }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    .av-skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); background: var(--copper); color: var(--text-white); padding: 12px 24px; border-radius: 0 0 8px 8px; font-size: 14px; font-weight: 600; z-index: 1000; text-decoration: none; }
+    .av-skip-link:focus { top: 0; }
 
     body {
       font-family: var(--font-body);
@@ -344,7 +349,8 @@
   </style>
 </head>
 <body>
-  <div class="av-wrapper">
+  <a href="#av-content" class="av-skip-link">Skip to content</a>
+  <div class="av-wrapper" id="av-content">
     <div class="av-noise"></div>
     <div class="av-glow av-glow--1"></div>
     <div class="av-glow av-glow--2"></div>
@@ -352,6 +358,8 @@
     <!-- ═════════════════════════════════════════════════════════════════
          MARQUEE
          ═════════════════════════════════════════════════════════════════ -->
+    <h1 class="sr-only">Anthony Plumbing Loyalty and Rewards Platform</h1>
+
     <div class="av-marquee">
       <div class="av-marquee-track">
         <div class="av-marquee-item">
@@ -389,17 +397,17 @@
         </div>
         <div class="av-problem-grid">
           <div class="av-problem-card av-reveal">
-            <div class="av-problem-icon"><span class="material-icons-outlined">person_off</span></div>
+            <div class="av-problem-icon"><span class="material-icons-outlined" aria-hidden="true">person_off</span></div>
             <div class="av-problem-card-title">NO REPEAT SYSTEM</div>
             <p class="av-problem-card-text">Customer calls, you fix the problem, they pay. Then nothing. No follow-up. No reason to call you again until something else breaks -- which could be months or years.</p>
           </div>
           <div class="av-problem-card av-reveal">
-            <div class="av-problem-icon"><span class="material-icons-outlined">group_remove</span></div>
+            <div class="av-problem-icon"><span class="material-icons-outlined" aria-hidden="true">group_remove</span></div>
             <div class="av-problem-card-title">REFERRALS ARE INVISIBLE</div>
             <p class="av-problem-card-text">Your best customers refer their neighbors, friends, coworkers. But you have no idea who referred who. No way to track it. No way to reward it. No way to encourage more of it.</p>
           </div>
           <div class="av-problem-card av-reveal">
-            <div class="av-problem-icon"><span class="material-icons-outlined">star_outline</span></div>
+            <div class="av-problem-icon"><span class="material-icons-outlined" aria-hidden="true">star_outline</span></div>
             <div class="av-problem-card-title">REVIEWS DON'T HAPPEN</div>
             <p class="av-problem-card-text">Happy customers forget to leave reviews. You are too busy running jobs to chase them. Meanwhile, competitors with more reviews win the Google search.</p>
           </div>
@@ -525,17 +533,17 @@
         </div>
         <div class="av-operator-grid">
           <div class="av-operator-card av-reveal">
-            <div class="av-operator-icon"><span class="material-icons-outlined">touch_app</span></div>
+            <div class="av-operator-icon"><span class="material-icons-outlined" aria-hidden="true">touch_app</span></div>
             <div class="av-operator-card-title">ONE-TAP ACTIONS</div>
             <p class="av-operator-card-text">Points, referrals, and rewards run automatically on invoice payment. Cash jobs? One tap from any phone to log it. That is the only manual step in the entire system.</p>
           </div>
           <div class="av-operator-card av-reveal">
-            <div class="av-operator-icon"><span class="material-icons-outlined">phone_iphone</span></div>
+            <div class="av-operator-icon"><span class="material-icons-outlined" aria-hidden="true">phone_iphone</span></div>
             <div class="av-operator-card-title">NO APP DOWNLOADS</div>
             <p class="av-operator-card-text">Your customers interact through text messages and a simple web link. No app store, no login, no password resets. Works on every phone immediately.</p>
           </div>
           <div class="av-operator-card av-reveal">
-            <div class="av-operator-icon"><span class="material-icons-outlined">auto_mode</span></div>
+            <div class="av-operator-icon"><span class="material-icons-outlined" aria-hidden="true">auto_mode</span></div>
             <div class="av-operator-card-title">RUNS ITSELF</div>
             <p class="av-operator-card-text">Points, review requests, referral links, and reminders are all automated. You check the dashboard when you want to see results. The system does the work.</p>
           </div>
@@ -595,22 +603,22 @@
         </div>
         <div class="av-ownership-grid">
           <div class="av-own-card av-reveal">
-            <div class="av-own-icon"><span class="material-icons-outlined">verified</span></div>
+            <div class="av-own-icon"><span class="material-icons-outlined" aria-hidden="true">verified</span></div>
             <div class="av-own-card-title">100% IP OWNERSHIP</div>
             <p class="av-own-card-text">Every line of code belongs to you. No licensing fees, no platform dependency. This is your intellectual property and adds directly to your business valuation.</p>
           </div>
           <div class="av-own-card av-reveal">
-            <div class="av-own-icon"><span class="material-icons-outlined">trending_up</span></div>
+            <div class="av-own-icon"><span class="material-icons-outlined" aria-hidden="true">trending_up</span></div>
             <div class="av-own-card-title">SCALES WITH YOU</div>
             <p class="av-own-card-text">Add locations. Change the point structure. Launch a maintenance plan tier. Every feature is built to your spec and evolves with your business -- not locked to someone else's roadmap.</p>
           </div>
           <div class="av-own-card av-reveal">
-            <div class="av-own-icon"><span class="material-icons-outlined">shield</span></div>
+            <div class="av-own-icon"><span class="material-icons-outlined" aria-hidden="true">shield</span></div>
             <div class="av-own-card-title">ZERO PLATFORM RISK</div>
             <p class="av-own-card-text">Off-the-shelf loyalty apps can change pricing, sunset features, or shut down entirely. Your custom platform runs on infrastructure you control. No surprises.</p>
           </div>
           <div class="av-own-card av-reveal">
-            <div class="av-own-icon"><span class="material-icons-outlined">hub</span></div>
+            <div class="av-own-icon"><span class="material-icons-outlined" aria-hidden="true">hub</span></div>
             <div class="av-own-card-title">A REAL BUSINESS ASSET</div>
             <p class="av-own-card-text">This platform is not an expense -- it is an asset on your books. Customer data, referral networks, service history, and lifetime value metrics. If you ever sell or bring in investors, this is proprietary technology with measurable ROI.</p>
           </div>
