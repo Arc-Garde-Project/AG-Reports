@@ -106,6 +106,19 @@
     .av-skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); background: var(--copper); color: var(--text-white); padding: 12px 24px; border-radius: 0 0 8px 8px; font-size: 14px; font-weight: 600; z-index: 1000; text-decoration: none; }
     .av-skip-link:focus { top: 0; }
 
+    /* CTA Button */
+    .av-cta-btn { display: inline-flex; align-items: center; gap: 10px; padding: 18px 40px; background: linear-gradient(135deg, var(--copper), var(--copper-bright)); color: var(--bg-void); font-family: var(--font-display); font-size: 22px; letter-spacing: 2px; border: none; border-radius: 100px; cursor: pointer; margin-top: 40px; transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth); text-decoration: none; width: fit-content; touch-action: manipulation; }
+    .av-cta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 40px var(--copper-glow); }
+    .av-cta-btn:active { transform: translateY(0); }
+
+    /* Modal */
+    .av-modal-overlay { position: fixed; inset: 0; background: rgba(6, 10, 16, 0.85); z-index: 1001; display: none; align-items: center; justify-content: center; padding: 24px; }
+    .av-modal-overlay.is-open { display: flex; }
+    .av-modal { background: var(--bg-navy); border: 1px solid var(--border-copper); border-radius: 20px; width: 100%; max-width: 700px; height: 85vh; max-height: 700px; position: relative; overflow: hidden; }
+    .av-modal-close { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-silver); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; transition: background 0.3s var(--ease-smooth); touch-action: manipulation; }
+    .av-modal-close:hover { background: var(--bg-card-hover); }
+    .av-modal iframe { width: 100%; height: 100%; border: none; border-radius: 20px; }
+
     body {
       font-family: var(--font-body);
       font-size: 16px;
@@ -742,12 +755,23 @@
             We start building
           </div>
         </div>
+        <button class="av-cta-btn av-reveal" id="av-schedule-btn">SCHEDULE A CALL</button>
       </div>
     </section>
 
     <!-- ═════════════════════════════════════════════════════════════════
          FOOTER
          ═════════════════════════════════════════════════════════════════ -->
+    <!-- ═════════════════════════════════════════════════════════════════
+         CALENDLY MODAL
+         ═════════════════════════════════════════════════════════════════ -->
+    <div class="av-modal-overlay" id="av-modal">
+      <div class="av-modal">
+        <button class="av-modal-close" id="av-modal-close" aria-label="Close">&times;</button>
+        <iframe src="https://calendly.com/contactarcgarde/30min?month=2026-03" title="Schedule a call with Arc Garde"></iframe>
+      </div>
+    </div>
+
     <footer class="av-footer">
       <p class="av-footer-text">Built by <span class="av-footer-brand">Arc Garde</span></p>
       <p class="av-footer-legal">This rewards system is designed to comply with FTC guidelines. No lottery mechanics, no randomness. All points are earned through verifiable customer actions.</p>
@@ -770,6 +794,38 @@
         });
       }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
       reveals.forEach(function(el) { observer.observe(el); });
+    })();
+
+    /* Calendly Modal */
+    (function() {
+      var btn = document.getElementById('av-schedule-btn');
+      var modal = document.getElementById('av-modal');
+      var closeBtn = document.getElementById('av-modal-close');
+      if (!btn || !modal) return;
+
+      btn.addEventListener('click', function() {
+        modal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      });
+
+      closeBtn.addEventListener('click', function() {
+        modal.classList.remove('is-open');
+        document.body.style.overflow = '';
+      });
+
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.classList.remove('is-open');
+          document.body.style.overflow = '';
+        }
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+          modal.classList.remove('is-open');
+          document.body.style.overflow = '';
+        }
+      });
     })();
   </script>
 </body>
