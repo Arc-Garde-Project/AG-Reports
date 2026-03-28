@@ -1,12 +1,13 @@
 <!--
   ╔══════════════════════════════════════════════════════════════════════════╗
-  ║              ANTHONY & VICTOR PLUMBING - SALES PRESENTATION            ║
+  ║              ANTHONY PLUMBING - SALES PRESENTATION V2                  ║
   ║                     Arc Garde - Loyalty Platform                        ║
   ║                                                                        ║
   ║  AESTHETIC: Dark Navy + Copper/Amber + Clean White                     ║
-  ║  CLIENT: Anthony Vodnik (Anthony & Victor Plumbing)                    ║
+  ║  CLIENT: Anthony Vodnik (Anthony Plumbing)                             ║
   ║  SERVICE: Custom Loyalty & Rewards Web App                             ║
-  ║  PRICING: TBD                                                          ║
+  ║  VERSION: 2 - Rebuilt from 30-finding cross-reference audit            ║
+  ║  DATE: 2026-03-28                                                      ║
   ╚══════════════════════════════════════════════════════════════════════════╝
 -->
 <!DOCTYPE html>
@@ -14,8 +15,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Anthony & Victor Plumbing | Loyalty Platform - Arc Garde</title>
-  <meta name="description" content="Custom loyalty and retention platform for Anthony & Victor Plumbing. More repeat customers, automated referrals, Google reviews on autopilot. Built by Arc Garde.">
+  <title>Anthony Plumbing | Loyalty Platform - Arc Garde</title>
+  <meta name="description" content="Custom loyalty and retention platform for Anthony Plumbing. More repeat customers, automated referrals, Google reviews on autopilot. Built by Arc Garde.">
   <meta name="author" content="Arc Garde">
   <meta name="robots" content="noindex, nofollow">
 
@@ -24,15 +25,15 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Anthony & Victor Plumbing | Loyalty Platform">
-  <meta property="og:description" content="A custom loyalty and retention platform built for trades. More repeat customers, automated referrals, Google reviews on autopilot.">
+  <meta property="og:title" content="Anthony Plumbing | Loyalty Platform">
+  <meta property="og:description" content="A custom loyalty and retention platform built for trades. More repeat customers, automated referrals, rewards that drive revenue. Built by Arc Garde.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="/assets/og-banner.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Anthony & Victor Plumbing | Loyalty Platform">
-  <meta name="twitter:description" content="A custom loyalty and retention platform built for trades. More repeat customers, automated referrals, Google reviews on autopilot.">
+  <meta name="twitter:title" content="Anthony Plumbing | Loyalty Platform">
+  <meta name="twitter:description" content="A custom loyalty and retention platform built for trades. More repeat customers, automated referrals, rewards that drive revenue. Built by Arc Garde.">
   <meta name="twitter:image" content="/assets/og-banner.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -76,6 +77,8 @@
       --green-surface: rgba(52, 168, 83, 0.1);
       --red: #EA4335;
       --red-surface: rgba(234, 67, 53, 0.1);
+      --purple: #9B72CF;
+      --purple-surface: rgba(155, 114, 207, 0.1);
 
       --font-display: 'Bebas Neue', sans-serif;
       --font-body: 'Inter', sans-serif;
@@ -94,17 +97,8 @@
       --space-container: clamp(1.125rem, 0.262rem + 3.68vw, 3rem);
     }
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html, body {
-      overflow-x: clip;
-      max-width: 100%;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow-x: clip; max-width: 100%; }
     html { scroll-behavior: smooth; }
 
     body {
@@ -119,10 +113,7 @@
     h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
     p, li, blockquote, figcaption { text-wrap: pretty; }
 
-    ::selection {
-      background: var(--copper);
-      color: var(--text-white);
-    }
+    ::selection { background: var(--copper); color: var(--text-white); }
 
     /* ═══════════════════════════════════════════════════════════════════════
        AMBIENT LAYERS
@@ -130,979 +121,230 @@
     .av-wrapper { position: relative; width: 100%; }
 
     .av-noise {
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-      opacity: 0.018;
-      pointer-events: none;
-      z-index: 999;
+      opacity: 0.018; pointer-events: none; z-index: 999;
     }
 
-    .av-glow {
-      position: fixed;
-      border-radius: 50%;
-      pointer-events: none;
-      filter: blur(150px);
-      z-index: 0;
-    }
+    .av-glow { position: fixed; border-radius: 50%; pointer-events: none; filter: blur(150px); z-index: 0; }
+    .av-glow--1 { width: 600px; height: 600px; top: -250px; left: -150px; background: radial-gradient(circle, rgba(200, 117, 51, 0.15) 0%, transparent 70%); animation: glowFloat1 21s ease-in-out infinite; }
+    .av-glow--2 { width: 500px; height: 500px; bottom: -200px; right: -100px; background: radial-gradient(circle, rgba(42, 92, 138, 0.12) 0%, transparent 70%); animation: glowFloat2 14s ease-in-out infinite; }
 
-    .av-glow--1 {
-      width: 600px;
-      height: 600px;
-      top: -250px;
-      left: -150px;
-      background: radial-gradient(circle, rgba(200, 117, 51, 0.15) 0%, transparent 70%);
-      animation: glowFloat1 21s ease-in-out infinite;
-    }
+    @keyframes glowFloat1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(40px, 25px) scale(1.08); } }
+    @keyframes glowFloat2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-30px, -20px); } }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.7); opacity: 0.5; } }
 
-    .av-glow--2 {
-      width: 500px;
-      height: 500px;
-      bottom: -200px;
-      right: -100px;
-      background: radial-gradient(circle, rgba(42, 92, 138, 0.12) 0%, transparent 70%);
-      animation: glowFloat2 14s ease-in-out infinite;
-    }
-
-    @keyframes glowFloat1 {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(40px, 25px) scale(1.08); }
-    }
-
-    @keyframes glowFloat2 {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(-30px, -20px); }
-    }
-
-    .av-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 var(--space-container);
-      position: relative;
-      z-index: 1;
-    }
+    .av-container { max-width: 1100px; margin: 0 auto; padding: 0 var(--space-container); position: relative; z-index: 1; }
 
     /* ═══════════════════════════════════════════════════════════════════════
        HERO
        ═══════════════════════════════════════════════════════════════════════ */
-    .av-hero {
-      min-height: 100vh;
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 60px 24px;
-      position: relative;
-      z-index: 1;
-    }
+    .av-hero { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px 24px; position: relative; z-index: 1; }
 
-    .av-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 28px;
-      background: linear-gradient(135deg, var(--copper-muted), transparent);
-      border: 1px solid var(--border-copper);
-      border-radius: 100px;
-      margin-bottom: 40px;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 0.9s var(--ease-out) 0.3s forwards;
-    }
+    .av-badge { display: inline-flex; align-items: center; gap: 12px; padding: 10px 28px; background: linear-gradient(135deg, var(--copper-muted), transparent); border: 1px solid var(--border-copper); border-radius: 100px; margin-bottom: 40px; opacity: 0; transform: translateY(30px); animation: fadeUp 0.9s var(--ease-out) 0.3s forwards; }
+    .av-badge-dot { width: 8px; height: 8px; background: var(--copper-bright); border-radius: 50%; box-shadow: 0 0 15px var(--copper-glow); animation: pulse 2.1s ease-in-out infinite; }
+    .av-badge-text { font-family: var(--font-mono); font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--copper-light); }
 
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .av-hero-pre { font-family: var(--font-mono); font-size: 12px; letter-spacing: 6px; text-transform: uppercase; color: var(--text-faint); margin-bottom: 24px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.9s var(--ease-out) 0.3s forwards; }
 
-    .av-badge-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--copper-bright);
-      border-radius: 50%;
-      box-shadow: 0 0 15px var(--copper-glow);
-      animation: pulse 2.1s ease-in-out infinite;
-    }
+    .av-hero-title { font-family: var(--font-display); font-size: clamp(52px, 10vw, 110px); font-weight: 400; line-height: 0.95; letter-spacing: 3px; color: var(--text-white); margin-bottom: 24px; opacity: 0; transform: translateY(40px); animation: fadeUp 0.9s var(--ease-out) 0.6s forwards; }
+    .av-title-accent { background: linear-gradient(135deg, var(--copper-light), var(--copper), var(--copper-bright)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(0.7); opacity: 0.5; }
-    }
+    .av-hero-sub { font-size: var(--text-h4); font-weight: 300; color: var(--text-muted); max-width: 600px; margin: 0 auto 48px; opacity: 0; animation: fadeUp 0.9s var(--ease-out) 0.9s forwards; }
 
-    .av-badge-text {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--copper-light);
-    }
-
-    .av-hero-pre {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: var(--text-faint);
-      margin-bottom: 24px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.9s var(--ease-out) 0.3s forwards;
-    }
-
-    .av-hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(52px, 10vw, 110px);
-      font-weight: 400;
-      line-height: 0.95;
-      letter-spacing: 3px;
-      color: var(--text-white);
-      margin-bottom: 24px;
-      opacity: 0;
-      transform: translateY(40px);
-      animation: fadeUp 0.9s var(--ease-out) 0.6s forwards;
-    }
-
-    .av-title-accent {
-      background: linear-gradient(135deg, var(--copper-light), var(--copper), var(--copper-bright));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .av-hero-sub {
-      font-size: var(--text-h4);
-      font-weight: 300;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto 48px;
-      opacity: 0;
-      animation: fadeUp 0.9s var(--ease-out) 0.9s forwards;
-    }
-
-    .av-hero-stats {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 0.9s var(--ease-out) 0.9s forwards;
-    }
-
-    .av-hero-stat {
-      text-align: center;
-      padding: 0 clamp(16px, 4vw, 40px);
-    }
-
-    .av-hero-stat-value {
-      font-family: var(--font-display);
-      font-size: clamp(36px, 7vw, 60px);
-      letter-spacing: 2px;
-      line-height: 1;
-      background: linear-gradient(180deg, var(--text-white) 0%, var(--text-silver) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 8px;
-    }
-
-    .av-hero-stat-label {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--text-faint);
-    }
-
-    .av-hero-stat-divider {
-      width: 1px;
-      height: 48px;
-      background: linear-gradient(180deg, transparent, var(--copper), transparent);
-      flex-shrink: 0;
-    }
+    .av-hero-stats { display: flex; align-items: center; justify-content: center; gap: 0; opacity: 0; transform: translateY(30px); animation: fadeUp 0.9s var(--ease-out) 0.9s forwards; }
+    .av-hero-stat { text-align: center; padding: 0 clamp(16px, 4vw, 40px); }
+    .av-hero-stat-value { font-family: var(--font-display); font-size: clamp(36px, 7vw, 60px); letter-spacing: 2px; line-height: 1; background: linear-gradient(180deg, var(--text-white) 0%, var(--text-silver) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
+    .av-hero-stat-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-faint); }
+    .av-hero-stat-divider { width: 1px; height: 48px; background: linear-gradient(180deg, transparent, var(--copper), transparent); flex-shrink: 0; }
 
     /* ═══════════════════════════════════════════════════════════════════════
        MARQUEE
        ═══════════════════════════════════════════════════════════════════════ */
-    .av-marquee {
-      width: 100%;
-      overflow: hidden;
-      padding: 32px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: linear-gradient(180deg, var(--bg-deep), var(--bg-void));
-      position: relative;
-      z-index: 1;
-    }
-
-    .av-marquee-track {
-      display: flex;
-      width: fit-content;
-      animation: marquee 21s linear infinite;
-    }
-
-    @keyframes marquee {
-      to { transform: translateX(-50%); }
-    }
-
-    .av-marquee-item {
-      font-family: var(--font-display);
-      font-size: clamp(60px, 10vw, 100px);
-      white-space: nowrap;
-      padding: 0 36px;
-      display: flex;
-      align-items: center;
-      gap: 36px;
-      letter-spacing: 3px;
-    }
-
-    .av-marquee-muted {
-      color: transparent;
-      -webkit-text-stroke: 1px var(--text-ghost);
-    }
-
-    .av-marquee-lit {
-      color: transparent;
-      -webkit-text-stroke: 1.5px var(--copper);
-      filter: drop-shadow(0 0 20px var(--copper-glow));
-    }
-
-    .av-marquee-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--copper);
-      border-radius: 50%;
-      box-shadow: 0 0 20px var(--copper-glow);
-      flex-shrink: 0;
-    }
+    .av-marquee { width: 100%; overflow: hidden; padding: 32px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: linear-gradient(180deg, var(--bg-deep), var(--bg-void)); position: relative; z-index: 1; }
+    .av-marquee-track { display: flex; width: fit-content; animation: marquee 21s linear infinite; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    .av-marquee-item { font-family: var(--font-display); font-size: clamp(60px, 10vw, 100px); white-space: nowrap; padding: 0 36px; display: flex; align-items: center; gap: 36px; letter-spacing: 3px; }
+    .av-marquee-muted { color: transparent; -webkit-text-stroke: 1px var(--text-ghost); }
+    .av-marquee-lit { color: transparent; -webkit-text-stroke: 1.5px var(--copper); filter: drop-shadow(0 0 20px var(--copper-glow)); }
+    .av-marquee-dot { width: 8px; height: 8px; background: var(--copper); border-radius: 50%; box-shadow: 0 0 20px var(--copper-glow); flex-shrink: 0; }
 
     /* ═══════════════════════════════════════════════════════════════════════
        SECTIONS
        ═══════════════════════════════════════════════════════════════════════ */
-    .av-section {
-      padding: var(--space-section) 0;
-      position: relative;
-      z-index: 1;
-    }
+    .av-section { padding: var(--space-section) 0; position: relative; z-index: 1; }
+    .av-section-header { text-align: center; margin-bottom: 48px; }
+    .av-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 6px; text-transform: uppercase; color: var(--copper-light); display: inline-flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .av-eyebrow::before, .av-eyebrow::after { content: ''; width: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--copper)); }
+    .av-eyebrow::after { background: linear-gradient(90deg, var(--copper), transparent); }
+    .av-section-title { font-family: var(--font-display); font-size: clamp(40px, 6vw, 64px); font-weight: 400; letter-spacing: 2px; line-height: 1.05; color: var(--text-white); }
+    .av-section-subtitle { font-size: var(--text-base); color: var(--text-muted); max-width: 600px; margin: 16px auto 0; }
 
-    .av-section-header {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-
-    .av-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: var(--copper-light);
-      display: inline-flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-
-    .av-eyebrow::before,
-    .av-eyebrow::after {
-      content: '';
-      width: 40px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--copper));
-    }
-
-    .av-eyebrow::after {
-      background: linear-gradient(90deg, var(--copper), transparent);
-    }
-
-    .av-section-title {
-      font-family: var(--font-display);
-      font-size: clamp(40px, 6vw, 64px);
-      font-weight: 400;
-      letter-spacing: 2px;
-      line-height: 1.05;
-      color: var(--text-white);
-    }
-
-    .av-section-subtitle {
-      font-size: var(--text-base);
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 16px auto 0;
-    }
+    .av-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border-copper), transparent); margin: 0 auto; max-width: 800px; }
 
     /* ═══════════════════════════════════════════════════════════════════════
-       THE PROBLEM SECTION
+       PROBLEM CARDS
        ═══════════════════════════════════════════════════════════════════════ */
-    .av-problem-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-      gap: 20px;
-      margin-top: 48px;
-    }
-
-    .av-problem-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px;
-      transition: border-color 0.3s var(--ease-smooth), background 0.3s var(--ease-smooth);
-    }
-
-    .av-problem-card:hover {
-      border-color: var(--border-copper);
-      background: var(--bg-card-hover);
-    }
-
-    .av-problem-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      background: var(--red-surface);
-      color: var(--red);
-    }
-
-    .av-problem-card-title {
-      font-family: var(--font-display);
-      font-size: 24px;
-      letter-spacing: 1px;
-      color: var(--text-white);
-      margin-bottom: 12px;
-    }
-
-    .av-problem-card-text {
-      font-size: var(--text-base);
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .av-problem-stat {
-      font-family: var(--font-display);
-      font-size: 42px;
-      color: var(--red);
-      letter-spacing: 1px;
-      margin-top: 16px;
-    }
-
-    .av-problem-stat-label {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--text-faint);
-      margin-top: 4px;
-    }
+    .av-problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 20px; margin-top: 48px; }
+    .av-problem-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: border-color 0.3s var(--ease-smooth), background 0.3s var(--ease-smooth); }
+    .av-problem-card:hover { border-color: var(--border-copper); background: var(--bg-card-hover); }
+    .av-problem-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; background: var(--red-surface); color: var(--red); }
+    .av-problem-card-title { font-family: var(--font-display); font-size: 24px; letter-spacing: 1px; color: var(--text-white); margin-bottom: 12px; }
+    .av-problem-card-text { font-size: var(--text-base); color: var(--text-muted); line-height: 1.6; }
 
     /* ═══════════════════════════════════════════════════════════════════════
-       THE SOLUTION - 5 ENGINES
+       ENGINE LIST
        ═══════════════════════════════════════════════════════════════════════ */
-    .av-engine-list {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      margin-top: 48px;
-    }
+    .av-engine-list { display: flex; flex-direction: column; gap: 24px; margin-top: 48px; }
+    .av-engine { display: grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: start; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: border-color 0.3s var(--ease-smooth), background 0.3s var(--ease-smooth); }
+    .av-engine:hover { border-color: var(--border-copper); background: var(--bg-card-hover); }
+    .av-engine-number { font-family: var(--font-display); font-size: 56px; line-height: 1; letter-spacing: 2px; background: linear-gradient(180deg, var(--copper-light) 0%, var(--copper) 80%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .av-engine-title { font-family: var(--font-display); font-size: 28px; letter-spacing: 1px; color: var(--text-white); margin-bottom: 8px; }
+    .av-engine-text { font-size: var(--text-base); color: var(--text-muted); line-height: 1.7; }
+    .av-engine-highlight { color: var(--copper-light); font-weight: 500; }
 
-    .av-engine {
-      display: grid;
-      grid-template-columns: 80px 1fr;
-      gap: 24px;
-      align-items: start;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px;
-      transition: border-color 0.3s var(--ease-smooth), background 0.3s var(--ease-smooth);
-    }
-
-    .av-engine:hover {
-      border-color: var(--border-copper);
-      background: var(--bg-card-hover);
-    }
-
-    .av-engine-number {
-      font-family: var(--font-display);
-      font-size: 56px;
-      line-height: 1;
-      letter-spacing: 2px;
-      background: linear-gradient(180deg, var(--copper-light) 0%, var(--copper) 80%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .av-engine-title {
-      font-family: var(--font-display);
-      font-size: 28px;
-      letter-spacing: 1px;
-      color: var(--text-white);
-      margin-bottom: 8px;
-    }
-
-    .av-engine-text {
-      font-size: var(--text-base);
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
-
-    .av-engine-highlight {
-      color: var(--copper-light);
-      font-weight: 500;
-    }
-
-    @media (max-width: 600px) {
-      .av-engine {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-      .av-engine-number {
-        font-size: 36px;
-      }
-    }
+    @media (max-width: 600px) { .av-engine { grid-template-columns: 1fr; gap: 12px; } .av-engine-number { font-size: 36px; } }
 
     /* ═══════════════════════════════════════════════════════════════════════
-       HOW IT WORKS - CUSTOMER JOURNEY
+       CUSTOMER JOURNEY
        ═══════════════════════════════════════════════════════════════════════ */
-    .av-journey {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      margin-top: 48px;
-      position: relative;
-    }
+    .av-journey { display: flex; flex-direction: column; gap: 0; margin-top: 48px; position: relative; }
+    .av-journey::before { content: ''; position: absolute; left: 39px; top: 40px; bottom: 40px; width: 2px; background: linear-gradient(180deg, var(--copper), var(--copper-muted), var(--copper)); }
+    .av-journey-step { display: grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: start; padding: 24px 0; }
+    .av-journey-dot-wrap { display: flex; justify-content: center; padding-top: 4px; }
+    .av-journey-dot { width: 20px; height: 20px; border-radius: 50%; background: var(--bg-void); border: 2px solid var(--copper); box-shadow: 0 0 15px var(--copper-glow); position: relative; z-index: 2; }
+    .av-journey-dot--active { background: var(--copper); }
+    .av-journey-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--copper-light); margin-bottom: 6px; }
+    .av-journey-title { font-family: var(--font-display); font-size: 26px; letter-spacing: 1px; color: var(--text-white); margin-bottom: 8px; }
+    .av-journey-text { font-size: var(--text-base); color: var(--text-muted); line-height: 1.6; }
 
-    .av-journey::before {
-      content: '';
-      position: absolute;
-      left: 39px;
-      top: 40px;
-      bottom: 40px;
-      width: 2px;
-      background: linear-gradient(180deg, var(--copper), var(--copper-muted), var(--copper));
-    }
-
-    .av-journey-step {
-      display: grid;
-      grid-template-columns: 80px 1fr;
-      gap: 24px;
-      align-items: start;
-      padding: 24px 0;
-    }
-
-    .av-journey-dot-wrap {
-      display: flex;
-      justify-content: center;
-      padding-top: 4px;
-    }
-
-    .av-journey-dot {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--bg-void);
-      border: 2px solid var(--copper);
-      box-shadow: 0 0 15px var(--copper-glow);
-      position: relative;
-      z-index: 2;
-    }
-
-    .av-journey-dot--active {
-      background: var(--copper);
-    }
-
-    .av-journey-label {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--copper-light);
-      margin-bottom: 6px;
-    }
-
-    .av-journey-title {
-      font-family: var(--font-display);
-      font-size: 26px;
-      letter-spacing: 1px;
-      color: var(--text-white);
-      margin-bottom: 8px;
-    }
-
-    .av-journey-text {
-      font-size: var(--text-base);
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    @media (max-width: 600px) {
-      .av-journey::before { left: 19px; }
-      .av-journey-step { grid-template-columns: 40px 1fr; gap: 16px; }
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════════
-       COMPARISON TABLE
-       ═══════════════════════════════════════════════════════════════════════ */
-    .av-compare {
-      margin-top: 48px;
-      overflow-x: auto;
-    }
-
-    .av-compare-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: var(--text-base);
-    }
-
-    .av-compare-table thead th {
-      font-family: var(--font-display);
-      font-size: 20px;
-      letter-spacing: 1px;
-      color: var(--text-white);
-      text-align: left;
-      padding: 16px 20px;
-      border-bottom: 2px solid var(--border-copper);
-    }
-
-    .av-compare-table thead th:first-child {
-      color: var(--text-muted);
-    }
-
-    .av-compare-table thead th:last-child {
-      color: var(--copper-light);
-    }
-
-    .av-compare-table tbody td {
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--border);
-      color: var(--text-silver);
-      vertical-align: top;
-    }
-
-    .av-compare-table tbody td:first-child {
-      font-weight: 500;
-      color: var(--text-muted);
-      font-size: 13px;
-      letter-spacing: 0.5px;
-    }
-
-    .av-compare-table tbody td:last-child {
-      color: var(--text-white);
-    }
-
-    .av-compare-table tbody tr:hover td {
-      background: var(--bg-card);
-    }
-
-    .av-check {
-      color: var(--green);
-      font-size: 18px;
-      vertical-align: middle;
-    }
-
-    .av-cross {
-      color: var(--red);
-      font-size: 18px;
-      vertical-align: middle;
-    }
+    @media (max-width: 600px) { .av-journey::before { left: 19px; } .av-journey-step { grid-template-columns: 40px 1fr; gap: 16px; } }
 
     /* ═══════════════════════════════════════════════════════════════════════
        DASHBOARD PREVIEW
        ═══════════════════════════════════════════════════════════════════════ */
-    .av-dash-preview {
-      margin-top: 48px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 32px;
-      overflow: hidden;
-    }
-
-    .av-dash-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 28px;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-
-    .av-dash-title {
-      font-family: var(--font-display);
-      font-size: 24px;
-      letter-spacing: 1px;
-      color: var(--text-white);
-    }
-
-    .av-dash-period {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-faint);
-      padding: 6px 16px;
-      border: 1px solid var(--border);
-      border-radius: 100px;
-    }
-
-    .av-dash-metrics {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
-      gap: 16px;
-      margin-bottom: 28px;
-    }
-
-    .av-dash-metric {
-      background: var(--bg-navy);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-    }
-
-    .av-dash-metric-label {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-faint);
-      margin-bottom: 8px;
-    }
-
-    .av-dash-metric-value {
-      font-family: var(--font-display);
-      font-size: 36px;
-      letter-spacing: 1px;
-      color: var(--text-white);
-      line-height: 1;
-    }
-
-    .av-dash-metric-change {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      margin-top: 6px;
-    }
-
+    .av-dash-preview { margin-top: 48px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 32px; overflow: hidden; }
+    .av-dash-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 16px; }
+    .av-dash-title { font-family: var(--font-display); font-size: 24px; letter-spacing: 1px; color: var(--text-white); }
+    .av-dash-period { font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-faint); padding: 6px 16px; border: 1px solid var(--border); border-radius: 100px; }
+    .av-dash-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 16px; margin-bottom: 28px; }
+    .av-dash-metric { background: var(--bg-navy); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .av-dash-metric-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-faint); margin-bottom: 8px; }
+    .av-dash-metric-value { font-family: var(--font-display); font-size: 36px; letter-spacing: 1px; color: var(--text-white); line-height: 1; }
+    .av-dash-metric-change { font-family: var(--font-mono); font-size: 11px; margin-top: 6px; }
     .av-dash-metric-change--up { color: var(--green); }
-    .av-dash-metric-change--down { color: var(--red); }
-
-    .av-dash-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .av-dash-table thead th {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-faint);
-      text-align: left;
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .av-dash-table tbody td {
-      padding: 12px;
-      border-bottom: 1px solid var(--border);
-      font-size: 14px;
-      color: var(--text-silver);
-    }
-
+    .av-dash-table { width: 100%; border-collapse: collapse; }
+    .av-dash-table thead th { font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-faint); text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+    .av-dash-table tbody td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text-silver); }
     .av-dash-table tbody td:first-child { color: var(--text-white); font-weight: 500; }
-
-    .av-dash-tag {
-      display: inline-block;
-      padding: 2px 10px;
-      border-radius: 100px;
-      font-size: 11px;
-      font-weight: 500;
-    }
-
-    .av-dash-tag--active {
-      background: var(--green-surface);
-      color: var(--green);
-    }
-
-    .av-dash-tag--referrer {
-      background: var(--copper-surface);
-      color: var(--copper-bright);
-    }
+    .av-dash-tag { display: inline-block; padding: 2px 10px; border-radius: 100px; font-size: 11px; font-weight: 500; }
+    .av-dash-tag--active { background: var(--green-surface); color: var(--green); }
+    .av-dash-tag--referrer { background: var(--copper-surface); color: var(--copper-bright); }
 
     /* ═══════════════════════════════════════════════════════════════════════
-       PRICING SECTION
+       OPERATOR SECTION
        ═══════════════════════════════════════════════════════════════════════ */
-    .av-pricing-card {
-      max-width: 560px;
-      margin: 48px auto 0;
-      background: linear-gradient(135deg, var(--bg-card), var(--bg-slate));
-      border: 1px solid var(--border-copper);
-      border-radius: 20px;
-      padding: 48px 40px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .av-pricing-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--copper), transparent);
-    }
-
-    .av-pricing-tbd {
-      font-family: var(--font-display);
-      font-size: 72px;
-      letter-spacing: 3px;
-      color: var(--copper-light);
-      margin-bottom: 16px;
-    }
-
-    .av-pricing-note {
-      font-size: var(--text-base);
-      color: var(--text-muted);
-      max-width: 400px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
+    .av-operator-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 20px; margin-top: 48px; }
+    .av-operator-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; text-align: center; transition: border-color 0.3s var(--ease-smooth); }
+    .av-operator-card:hover { border-color: var(--border-copper); }
+    .av-operator-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; background: var(--copper-surface); color: var(--copper-bright); font-size: 28px; }
+    .av-operator-card-title { font-family: var(--font-display); font-size: 22px; letter-spacing: 1px; color: var(--text-white); margin-bottom: 10px; }
+    .av-operator-card-text { font-size: var(--text-base); color: var(--text-muted); line-height: 1.6; }
 
     /* ═══════════════════════════════════════════════════════════════════════
-       QUESTIONS SECTION
+       ROADMAP
        ═══════════════════════════════════════════════════════════════════════ */
-    .av-questions-list {
-      margin-top: 48px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+    .av-roadmap { display: flex; flex-direction: column; gap: 24px; margin-top: 48px; }
+    .av-phase { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; display: grid; grid-template-columns: 100px 1fr; gap: 24px; align-items: start; transition: border-color 0.3s var(--ease-smooth); }
+    .av-phase:hover { border-color: var(--border-copper); }
+    .av-phase-label { font-family: var(--font-display); font-size: 48px; line-height: 1; letter-spacing: 2px; background: linear-gradient(180deg, var(--copper-light) 0%, var(--copper) 80%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .av-phase-title { font-family: var(--font-display); font-size: 26px; letter-spacing: 1px; color: var(--text-white); margin-bottom: 8px; }
+    .av-phase-text { font-size: var(--text-base); color: var(--text-muted); line-height: 1.7; }
 
-    .av-question {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px 28px;
-      display: grid;
-      grid-template-columns: 40px 1fr;
-      gap: 16px;
-      align-items: start;
-      transition: border-color 0.3s var(--ease-smooth);
-    }
-
-    .av-question:hover {
-      border-color: var(--border-copper);
-    }
-
-    .av-question-num {
-      font-family: var(--font-display);
-      font-size: 28px;
-      color: var(--copper);
-      line-height: 1;
-    }
-
-    .av-question-text {
-      font-size: var(--text-base);
-      color: var(--text-white);
-      font-weight: 500;
-      margin-bottom: 4px;
-    }
-
-    .av-question-why {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
+    @media (max-width: 600px) { .av-phase { grid-template-columns: 1fr; gap: 12px; } }
 
     /* ═══════════════════════════════════════════════════════════════════════
-       OWNERSHIP / WHY CUSTOM
+       OWNERSHIP GRID
        ═══════════════════════════════════════════════════════════════════════ */
-    .av-ownership-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-      gap: 20px;
-      margin-top: 48px;
-    }
-
-    .av-own-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px;
-      transition: border-color 0.3s var(--ease-smooth);
-    }
-
-    .av-own-card:hover {
-      border-color: var(--border-copper);
-    }
-
-    .av-own-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      background: var(--copper-surface);
-      color: var(--copper-bright);
-    }
-
-    .av-own-card-title {
-      font-family: var(--font-display);
-      font-size: 22px;
-      letter-spacing: 1px;
-      color: var(--text-white);
-      margin-bottom: 10px;
-    }
-
-    .av-own-card-text {
-      font-size: var(--text-base);
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
+    .av-ownership-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 20px; margin-top: 48px; }
+    .av-own-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: border-color 0.3s var(--ease-smooth), background 0.3s var(--ease-smooth); }
+    .av-own-card:hover { border-color: var(--border-copper); background: var(--bg-card-hover); }
+    .av-own-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; background: var(--copper-surface); color: var(--copper-bright); }
+    .av-own-card-title { font-family: var(--font-display); font-size: 22px; letter-spacing: 1px; color: var(--text-white); margin-bottom: 10px; }
+    .av-own-card-text { font-size: var(--text-base); color: var(--text-muted); line-height: 1.6; }
 
     /* ═══════════════════════════════════════════════════════════════════════
-       NEXT STEPS / CTA
+       COMPARISON TABLE
        ═══════════════════════════════════════════════════════════════════════ */
-    .av-cta-section {
-      padding: var(--space-section) 0;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
+    .av-compare { margin-top: 48px; overflow-x: auto; }
+    .av-compare-table { width: 100%; border-collapse: collapse; font-size: var(--text-base); }
+    .av-compare-table thead th { font-family: var(--font-display); font-size: 20px; letter-spacing: 1px; color: var(--text-white); text-align: left; padding: 16px 20px; border-bottom: 2px solid var(--border-copper); }
+    .av-compare-table thead th:first-child { color: var(--text-muted); }
+    .av-compare-table thead th:last-child { color: var(--copper-light); }
+    .av-compare-table tbody td { padding: 14px 20px; border-bottom: 1px solid var(--border); color: var(--text-silver); vertical-align: top; }
+    .av-compare-table tbody td:first-child { font-weight: 500; color: var(--text-muted); font-size: 13px; letter-spacing: 0.5px; }
+    .av-compare-table tbody td:last-child { color: var(--text-white); }
+    .av-compare-table tbody tr:hover td { background: var(--bg-card); }
+    .av-check { color: var(--green); font-size: 18px; vertical-align: middle; }
+    .av-cross { color: var(--red); font-size: 18px; vertical-align: middle; }
 
-    .av-cta-title {
-      font-family: var(--font-display);
-      font-size: clamp(48px, 8vw, 80px);
-      letter-spacing: 2px;
-      color: var(--text-white);
-      margin-bottom: 24px;
-    }
+    /* ═══════════════════════════════════════════════════════════════════════
+       BONUS SECTION
+       ═══════════════════════════════════════════════════════════════════════ */
+    .av-bonus-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 24px; margin-top: 48px; }
+    .av-bonus-card { background: linear-gradient(135deg, var(--bg-card), var(--bg-slate)); border: 1px solid var(--border-copper); border-radius: 20px; padding: 36px; position: relative; overflow: hidden; transition: transform 0.3s var(--ease-smooth); }
+    .av-bonus-card:hover { transform: translateY(-4px); }
+    .av-bonus-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--copper), transparent); }
+    .av-bonus-badge { display: inline-block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--green); background: var(--green-surface); padding: 4px 14px; border-radius: 100px; margin-bottom: 20px; }
+    .av-bonus-title { font-family: var(--font-display); font-size: 28px; letter-spacing: 1px; color: var(--text-white); margin-bottom: 12px; }
+    .av-bonus-text { font-size: var(--text-base); color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; }
+    .av-bonus-value { font-family: var(--font-display); font-size: 20px; letter-spacing: 1px; }
+    .av-bonus-value-amount { color: var(--text-faint); text-decoration: line-through; margin-right: 12px; }
+    .av-bonus-value-free { color: var(--green); }
 
-    .av-cta-title .av-title-accent {
-      display: block;
-    }
+    /* ═══════════════════════════════════════════════════════════════════════
+       PRICING
+       ═══════════════════════════════════════════════════════════════════════ */
+    .av-pricing-card { max-width: 560px; margin: 48px auto 0; background: linear-gradient(135deg, var(--bg-card), var(--bg-slate)); border: 1px solid var(--border-copper); border-radius: 20px; padding: 48px 40px; text-align: center; position: relative; overflow: hidden; }
+    .av-pricing-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--copper), transparent); }
+    .av-pricing-model { font-family: var(--font-display); font-size: 42px; letter-spacing: 2px; color: var(--copper-light); margin-bottom: 16px; }
+    .av-pricing-note { font-size: var(--text-base); color: var(--text-muted); max-width: 400px; margin: 0 auto; line-height: 1.7; }
 
-    .av-cta-text {
-      font-size: var(--text-h4);
-      font-weight: 300;
-      color: var(--text-muted);
-      max-width: 550px;
-      margin: 0 auto 40px;
-    }
+    @media (max-width: 600px) { .av-pricing-card { padding: 36px 24px; } }
 
-    .av-cta-steps {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .av-cta-step {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 28px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-silver);
-    }
-
-    .av-cta-step-num {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: var(--copper-surface);
-      color: var(--copper-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 13px;
-    }
+    /* ═══════════════════════════════════════════════════════════════════════
+       CTA
+       ═══════════════════════════════════════════════════════════════════════ */
+    .av-cta-section { padding: var(--space-section) 0; text-align: center; position: relative; z-index: 1; }
+    .av-cta-title { font-family: var(--font-display); font-size: clamp(48px, 8vw, 80px); font-weight: 400; letter-spacing: 3px; line-height: 1; color: var(--text-white); margin-bottom: 24px; }
+    .av-cta-text { font-size: var(--text-h4); font-weight: 300; color: var(--text-muted); margin-bottom: 48px; }
+    .av-cta-steps { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+    .av-cta-step { display: flex; align-items: center; gap: 16px; font-size: var(--text-base); color: var(--text-silver); }
+    .av-cta-step-num { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--copper); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 20px; color: var(--copper-light); flex-shrink: 0; }
 
     /* ═══════════════════════════════════════════════════════════════════════
        FOOTER
        ═══════════════════════════════════════════════════════════════════════ */
-    .av-footer {
-      padding: 48px 0;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      position: relative;
-      z-index: 1;
-    }
-
-    .av-footer-text {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--text-faint);
-    }
-
-    .av-footer-brand {
-      color: var(--copper);
-    }
+    .av-footer { padding: 48px 24px; text-align: center; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+    .av-footer-text { font-family: var(--font-mono); font-size: 12px; letter-spacing: 2px; color: var(--text-faint); }
+    .av-footer-brand { color: var(--copper-light); }
+    .av-footer-legal { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; color: var(--text-ghost); margin-top: 12px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6; }
 
     /* ═══════════════════════════════════════════════════════════════════════
-       DIVIDERS
+       SCROLL REVEAL
        ═══════════════════════════════════════════════════════════════════════ */
-    .av-divider {
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border-copper), transparent);
-      margin: 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════════
-       SCROLL ANIMATIONS
-       ═══════════════════════════════════════════════════════════════════════ */
-    .av-reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
-    }
-
-    .av-reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════════
-       RESPONSIVE
-       ═══════════════════════════════════════════════════════════════════════ */
-    @media (max-width: 768px) {
-      .av-hero-stats { flex-direction: column; gap: 24px; }
-      .av-hero-stat-divider { width: 40px; height: 1px; }
-      .av-cta-steps { flex-direction: column; }
-      .av-pricing-card { padding: 36px 24px; }
-      .av-dash-preview { padding: 20px; }
-    }
+    .av-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
+    .av-reveal.is-visible { opacity: 1; transform: translateY(0); }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
-      .av-marquee-track { animation: none; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .av-reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
   <div class="av-wrapper">
-    <!-- Ambient -->
     <div class="av-noise"></div>
     <div class="av-glow av-glow--1"></div>
     <div class="av-glow av-glow--2"></div>
@@ -1115,13 +357,13 @@
         <div class="av-badge-dot"></div>
         <span class="av-badge-text">Presented by Arc Garde</span>
       </div>
-      <div class="av-hero-pre">Anthony & Victor Plumbing</div>
+      <div class="av-hero-pre">Anthony Plumbing</div>
       <h1 class="av-hero-title">
         <span>YOUR CUSTOMERS</span><br>
         <span class="av-title-accent">COME BACK</span>
       </h1>
       <p class="av-hero-sub">
-        A loyalty and retention platform built for your plumbing business. More repeat customers. More referrals. More Google reviews. Automatically.
+        A loyalty and retention platform built for your plumbing business. More repeat customers. More referrals. More revenue. Automatically.
       </p>
       <div class="av-hero-stats">
         <div class="av-hero-stat">
@@ -1153,9 +395,7 @@
           <div class="av-marquee-dot"></div>
           <span class="av-marquee-muted">REFERRALS</span>
           <div class="av-marquee-dot"></div>
-          <span class="av-marquee-lit">REVIEWS</span>
-          <div class="av-marquee-dot"></div>
-          <span class="av-marquee-muted">RETENTION</span>
+          <span class="av-marquee-lit">RETENTION</span>
           <div class="av-marquee-dot"></div>
         </div>
         <div class="av-marquee-item" aria-hidden="true">
@@ -1165,9 +405,7 @@
           <div class="av-marquee-dot"></div>
           <span class="av-marquee-muted">REFERRALS</span>
           <div class="av-marquee-dot"></div>
-          <span class="av-marquee-lit">REVIEWS</span>
-          <div class="av-marquee-dot"></div>
-          <span class="av-marquee-muted">RETENTION</span>
+          <span class="av-marquee-lit">RETENTION</span>
           <div class="av-marquee-dot"></div>
         </div>
       </div>
@@ -1185,23 +423,17 @@
         </div>
         <div class="av-problem-grid">
           <div class="av-problem-card av-reveal">
-            <div class="av-problem-icon">
-              <span class="material-icons-outlined">person_off</span>
-            </div>
+            <div class="av-problem-icon"><span class="material-icons-outlined">person_off</span></div>
             <div class="av-problem-card-title">NO REPEAT SYSTEM</div>
             <p class="av-problem-card-text">Customer calls, you fix the problem, they pay. Then nothing. No follow-up. No reason to call you again until something else breaks -- which could be months or years.</p>
           </div>
           <div class="av-problem-card av-reveal">
-            <div class="av-problem-icon">
-              <span class="material-icons-outlined">group_remove</span>
-            </div>
+            <div class="av-problem-icon"><span class="material-icons-outlined">group_remove</span></div>
             <div class="av-problem-card-title">REFERRALS ARE INVISIBLE</div>
             <p class="av-problem-card-text">Your best customers refer their neighbors, friends, coworkers. But you have no idea who referred who. No way to track it. No way to reward it. No way to encourage more of it.</p>
           </div>
           <div class="av-problem-card av-reveal">
-            <div class="av-problem-icon">
-              <span class="material-icons-outlined">star_outline</span>
-            </div>
+            <div class="av-problem-icon"><span class="material-icons-outlined">star_outline</span></div>
             <div class="av-problem-card-title">REVIEWS DON'T HAPPEN</div>
             <p class="av-problem-card-text">Happy customers forget to leave reviews. You are too busy running jobs to chase them. Meanwhile, competitors with more reviews win the Google search.</p>
           </div>
@@ -1212,49 +444,35 @@
     <div class="av-divider"></div>
 
     <!-- ═════════════════════════════════════════════════════════════════
-         THE SOLUTION - 5 ENGINES
+         THE SOLUTION - 3 CORE ENGINES
          ═════════════════════════════════════════════════════════════════ -->
     <section class="av-section">
       <div class="av-container">
         <div class="av-section-header av-reveal">
           <div class="av-eyebrow">The Solution</div>
-          <h2 class="av-section-title">FIVE ENGINES. ONE PLATFORM.</h2>
-          <p class="av-section-subtitle">A custom-built web app that turns every completed job into repeat business, referrals, and reviews -- without you lifting a finger.</p>
+          <h2 class="av-section-title">THREE ENGINES. ONE PLATFORM.</h2>
+          <p class="av-section-subtitle">A custom-built web app that turns every completed job into repeat business, referrals, and rewards -- without you lifting a finger.</p>
         </div>
         <div class="av-engine-list">
           <div class="av-engine av-reveal">
             <div class="av-engine-number">01</div>
             <div>
               <div class="av-engine-title">REPEAT BUSINESS ENGINE</div>
-              <p class="av-engine-text">Every dollar a customer spends earns them points toward future discounts. But unlike a coffee shop punch card, this system knows <span class="av-engine-highlight">what was serviced and when</span>. 11 months after a water heater install? Automatic reminder: "Your annual flush is due -- and you have $35 in rewards waiting." This turns one-time callers into <span class="av-engine-highlight">2-3x per year customers</span>.</p>
+              <p class="av-engine-text">Every dollar a customer spends earns them <span class="av-engine-highlight">1 point automatically</span>. A $400 water heater flush earns 400 points -- worth $20 toward their next service. The system knows what was serviced and when. 11 months later? Automatic reminder: <span class="av-engine-highlight">"Your annual flush is due -- and you have rewards waiting."</span> One-time callers become 2-3x per year customers.</p>
             </div>
           </div>
           <div class="av-engine av-reveal">
             <div class="av-engine-number">02</div>
             <div>
               <div class="av-engine-title">REFERRAL TRACKING ENGINE</div>
-              <p class="av-engine-text">After every job, your customer gets a personal referral link via text. No app download needed. They forward it to a neighbor, the neighbor books, <span class="av-engine-highlight">both get credit automatically</span>. You see exactly who your top referrers are, how much business each one has generated, and the full referral chain -- every handshake tracked.</p>
+              <p class="av-engine-text">After every job, your customer gets a <span class="av-engine-highlight">personal referral link via text</span>. No app download needed. They forward it to a neighbor. When that neighbor books and <span class="av-engine-highlight">completes their first paid job</span>, the referrer earns 500 bonus points ($25 value) and the new customer gets 200 points ($10 off). You see exactly who your top referrers are, how much revenue each one has generated, and the full referral chain.</p>
             </div>
           </div>
           <div class="av-engine av-reveal">
             <div class="av-engine-number">03</div>
             <div>
-              <div class="av-engine-title">GOOGLE REVIEW ENGINE</div>
-              <p class="av-engine-text">Two hours after a job is paid, your customer gets a text: <span class="av-engine-highlight">"Thanks for choosing A&V Plumbing! Leave a quick review and earn 80 points."</span> One tap takes them straight to your Google review page. No app, no login, no friction. Points credited automatically when they confirm. Strike while satisfaction is highest.</p>
-            </div>
-          </div>
-          <div class="av-engine av-reveal">
-            <div class="av-engine-number">04</div>
-            <div>
-              <div class="av-engine-title">SMART OFFERS ENGINE</div>
-              <p class="av-engine-text">Automated, targeted offers based on service history -- not generic blasts. <span class="av-engine-highlight">Seasonal reminders</span> (winterize pipes, summer irrigation check). <span class="av-engine-highlight">Equipment lifecycle alerts</span> (your garbage disposal is 8 years old -- time for a checkup). <span class="av-engine-highlight">Inactivity re-engagement</span> (haven't called in 12 months? Here is a $25 credit). Each one drives a booking without you thinking about it.</p>
-            </div>
-          </div>
-          <div class="av-engine av-reveal">
-            <div class="av-engine-number">05</div>
-            <div>
-              <div class="av-engine-title">BUSINESS INTELLIGENCE DASHBOARD</div>
-              <p class="av-engine-text">See everything in one place. <span class="av-engine-highlight">Revenue per customer</span>, <span class="av-engine-highlight">referral attribution</span>, <span class="av-engine-highlight">Google review velocity</span>, <span class="av-engine-highlight">maintenance plan conversion rate</span>, seasonal demand patterns. Not just a loyalty tracker -- a full picture of your customer base and what it is worth.</p>
+              <div class="av-engine-title">REWARDS REDEMPTION ENGINE</div>
+              <p class="av-engine-text">Points redeem for <span class="av-engine-highlight">credits on future services, gift cards, or discounts through partner businesses</span>. Your customers choose how they want to use their rewards. 400 points gets them $20 off their next job. Or they can save up for bigger rewards. Every redemption is tracked, and every dollar back drives the next booking.</p>
             </div>
           </div>
         </div>
@@ -1264,7 +482,7 @@
     <div class="av-divider"></div>
 
     <!-- ═════════════════════════════════════════════════════════════════
-         HOW IT WORKS
+         HOW IT WORKS - CUSTOMER JOURNEY
          ═════════════════════════════════════════════════════════════════ -->
     <section class="av-section">
       <div class="av-container">
@@ -1287,7 +505,7 @@
             <div>
               <div class="av-journey-label">Step 2</div>
               <div class="av-journey-title">INVOICE IS PAID</div>
-              <p class="av-journey-text">When the customer pays their invoice (Stripe, Square, or manual entry for cash/check), the system detects the payment automatically. Points are calculated and credited instantly. No scanning, no check-ins, no extra steps.</p>
+              <p class="av-journey-text">When the customer pays (digital or manual entry for cash/check), the system detects the payment automatically. Points are calculated and credited instantly. No scanning, no check-ins, no extra steps.</p>
             </div>
           </div>
           <div class="av-journey-step av-reveal">
@@ -1295,7 +513,7 @@
             <div>
               <div class="av-journey-label">Step 3</div>
               <div class="av-journey-title">CUSTOMER GETS A TEXT</div>
-              <p class="av-journey-text">"You just earned 450 points with A&V Plumbing! You're $50 away from a $25 reward. See your balance: [link]." Plus a Google review request with bonus points. All automatic, timed for 2 hours after payment when satisfaction is highest.</p>
+              <p class="av-journey-text">"You just earned 400 points with Anthony Plumbing! That's $20 toward your next service. See your balance: [link]." Sent automatically 2 hours after payment -- when satisfaction is highest.</p>
             </div>
           </div>
           <div class="av-journey-step av-reveal">
@@ -1303,15 +521,15 @@
             <div>
               <div class="av-journey-label">Step 4</div>
               <div class="av-journey-title">REFERRAL LINK DELIVERED</div>
-              <p class="av-journey-text">Along with their points notification, the customer gets their unique referral link. "Know someone who needs a plumber? They get $50 off, you get $50 credit." They can forward the text anytime -- no app download required for either party.</p>
+              <p class="av-journey-text">Along with their points notification, the customer gets their unique referral link. "Know someone who needs a plumber? When they book and pay, they get $10 off and you earn $25 in rewards." They forward the text -- no app needed for either party.</p>
             </div>
           </div>
           <div class="av-journey-step av-reveal">
             <div class="av-journey-dot-wrap"><div class="av-journey-dot av-journey-dot--active"></div></div>
             <div>
               <div class="av-journey-label">Step 5</div>
-              <div class="av-journey-title">SMART REMINDERS KICK IN</div>
-              <p class="av-journey-text">Based on what was serviced, the system schedules follow-ups automatically. Water heater flush in 11 months. Drain cleaning in 6. Winterization before October. Each reminder includes their reward balance -- a reason to book now instead of later.</p>
+              <div class="av-journey-title">THE CYCLE REPEATS</div>
+              <p class="av-journey-text">The referred neighbor books a $350 drain cleaning, gets $10 off, and earns 350 points of their own. Now they get a referral link too. Your original customer has 900 points -- $45 toward their next service. One job became three.</p>
             </div>
           </div>
           <div class="av-journey-step av-reveal">
@@ -1319,7 +537,7 @@
             <div>
               <div class="av-journey-label">Result</div>
               <div class="av-journey-title">A CUSTOMER FOR LIFE</div>
-              <p class="av-journey-text">One emergency call becomes a maintenance customer. That customer refers two neighbors. Those neighbors leave Google reviews. Your business grows without a single ad dollar spent.</p>
+              <p class="av-journey-text">One emergency call becomes a maintenance customer. That customer refers two neighbors. Your business grows without a single ad dollar spent.</p>
             </div>
           </div>
         </div>
@@ -1340,7 +558,7 @@
         </div>
         <div class="av-dash-preview av-reveal">
           <div class="av-dash-header">
-            <div class="av-dash-title">A&V PLUMBING DASHBOARD</div>
+            <div class="av-dash-title">ANTHONY PLUMBING DASHBOARD</div>
             <div class="av-dash-period">Last 90 Days</div>
           </div>
           <div class="av-dash-metrics">
@@ -1355,9 +573,9 @@
               <div class="av-dash-metric-change av-dash-metric-change--up">+8 new this month</div>
             </div>
             <div class="av-dash-metric">
-              <div class="av-dash-metric-label">Google Reviews</div>
-              <div class="av-dash-metric-value">34</div>
-              <div class="av-dash-metric-change av-dash-metric-change--up">4.9 avg rating</div>
+              <div class="av-dash-metric-label">Repeat Customer Rate</div>
+              <div class="av-dash-metric-value">64%</div>
+              <div class="av-dash-metric-change av-dash-metric-change--up">+18% since launch</div>
             </div>
             <div class="av-dash-metric">
               <div class="av-dash-metric-label">Avg Customer LTV</div>
@@ -1406,6 +624,76 @@
     <div class="av-divider"></div>
 
     <!-- ═════════════════════════════════════════════════════════════════
+         BUILT FOR OPERATORS
+         ═════════════════════════════════════════════════════════════════ -->
+    <section class="av-section">
+      <div class="av-container">
+        <div class="av-section-header av-reveal">
+          <div class="av-eyebrow">Simplicity</div>
+          <h2 class="av-section-title">BUILT FOR OPERATORS</h2>
+          <p class="av-section-subtitle">Every action is one or two taps. No manual data entry required. If your team can send a text, they can run this platform.</p>
+        </div>
+        <div class="av-operator-grid">
+          <div class="av-operator-card av-reveal">
+            <div class="av-operator-icon"><span class="material-icons-outlined">touch_app</span></div>
+            <div class="av-operator-card-title">ONE-TAP ACTIONS</div>
+            <p class="av-operator-card-text">Points, referrals, and rewards run automatically on invoice payment. Cash jobs? One tap from any phone to log it. That is the only manual step in the entire system.</p>
+          </div>
+          <div class="av-operator-card av-reveal">
+            <div class="av-operator-icon"><span class="material-icons-outlined">phone_iphone</span></div>
+            <div class="av-operator-card-title">NO APP DOWNLOADS</div>
+            <p class="av-operator-card-text">Your customers interact through text messages and a simple web link. No app store, no login, no password resets. Works on every phone immediately.</p>
+          </div>
+          <div class="av-operator-card av-reveal">
+            <div class="av-operator-icon"><span class="material-icons-outlined">auto_mode</span></div>
+            <div class="av-operator-card-title">RUNS ITSELF</div>
+            <p class="av-operator-card-text">Points, review requests, referral links, and reminders are all automated. You check the dashboard when you want to see results. The system does the work.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="av-divider"></div>
+
+    <!-- ═════════════════════════════════════════════════════════════════
+         ROADMAP
+         ═════════════════════════════════════════════════════════════════ -->
+    <section class="av-section">
+      <div class="av-container">
+        <div class="av-section-header av-reveal">
+          <div class="av-eyebrow">Roadmap</div>
+          <h2 class="av-section-title">HOW WE BUILD IT</h2>
+          <p class="av-section-subtitle">Three phases. Each one delivers a working product. You see progress at every stage.</p>
+        </div>
+        <div class="av-roadmap">
+          <div class="av-phase av-reveal">
+            <div class="av-phase-label">01</div>
+            <div>
+              <div class="av-phase-title">MVP PILOT</div>
+              <p class="av-phase-text">Build the core platform: customer loyalty points, referral tracking via text links, rewards redemption, third-party reward options, business dashboard. Your plumbing business is the pilot. Everything runs, everything is live.</p>
+            </div>
+          </div>
+          <div class="av-phase av-reveal">
+            <div class="av-phase-label">02</div>
+            <div>
+              <div class="av-phase-title">FULL PLATFORM</div>
+              <p class="av-phase-text">Advanced features: before/after job photos with digital sign-off, smart service reminders based on equipment lifecycle, campaign tools for targeted offers, expanded dashboard analytics.</p>
+            </div>
+          </div>
+          <div class="av-phase av-reveal">
+            <div class="av-phase-label">03</div>
+            <div>
+              <div class="av-phase-title">SAAS SCALING</div>
+              <p class="av-phase-text">License the platform to other plumbing and trade businesses as a subscription service. White-label branding per business. Subscription billing. A second revenue stream you own entirely.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="av-divider"></div>
+
+    <!-- ═════════════════════════════════════════════════════════════════
          WHY CUSTOM / OWNERSHIP
          ═════════════════════════════════════════════════════════════════ -->
     <section class="av-section">
@@ -1417,32 +705,24 @@
         </div>
         <div class="av-ownership-grid">
           <div class="av-own-card av-reveal">
-            <div class="av-own-icon">
-              <span class="material-icons-outlined">verified</span>
-            </div>
+            <div class="av-own-icon"><span class="material-icons-outlined">verified</span></div>
             <div class="av-own-card-title">100% IP OWNERSHIP</div>
             <p class="av-own-card-text">Every line of code belongs to you. No licensing fees, no platform dependency. This is your intellectual property -- it survives due diligence and adds directly to business valuation.</p>
           </div>
           <div class="av-own-card av-reveal">
-            <div class="av-own-icon">
-              <span class="material-icons-outlined">trending_up</span>
-            </div>
+            <div class="av-own-icon"><span class="material-icons-outlined">trending_up</span></div>
             <div class="av-own-card-title">SCALES WITH YOU</div>
             <p class="av-own-card-text">Add locations. Change the point structure. Launch a maintenance plan tier. Every feature is built to your spec and evolves with your business -- not locked to someone else's roadmap.</p>
           </div>
           <div class="av-own-card av-reveal">
-            <div class="av-own-icon">
-              <span class="material-icons-outlined">shield</span>
-            </div>
+            <div class="av-own-icon"><span class="material-icons-outlined">shield</span></div>
             <div class="av-own-card-title">ZERO PLATFORM RISK</div>
             <p class="av-own-card-text">Off-the-shelf loyalty apps can change pricing, sunset features, or shut down entirely. Your custom platform runs on infrastructure you control. No surprises.</p>
           </div>
           <div class="av-own-card av-reveal">
-            <div class="av-own-icon">
-              <span class="material-icons-outlined">hub</span>
-            </div>
+            <div class="av-own-icon"><span class="material-icons-outlined">hub</span></div>
             <div class="av-own-card-title">SAAS READY</div>
-            <p class="av-own-card-text">Built from day one to support multiple businesses. Once proven with your plumbing company, this same platform can be offered to other trade businesses as a subscription service -- a second revenue stream you own entirely.</p>
+            <p class="av-own-card-text">The field service management software market is worth $5.7 billion and growing 16% annually. ServiceTitan went public at a $9 billion valuation. No one has built a loyalty platform specifically for trades. You would be first to market.</p>
           </div>
         </div>
       </div>
@@ -1451,7 +731,7 @@
     <div class="av-divider"></div>
 
     <!-- ═════════════════════════════════════════════════════════════════
-         COMPARISON
+         COMPARISON TABLE
          ═════════════════════════════════════════════════════════════════ -->
     <section class="av-section">
       <div class="av-container">
@@ -1477,7 +757,7 @@
               <tr>
                 <td>Built for Trades</td>
                 <td><span class="av-cross">&#x2715;</span> Designed for retail / med spas</td>
-                <td><span class="av-check">&#x2713;</span> Built for how plumbing works</td>
+                <td><span class="av-check">&#x2713;</span> Built for how trades work</td>
               </tr>
               <tr>
                 <td>Equipment Tracking</td>
@@ -1486,13 +766,18 @@
               </tr>
               <tr>
                 <td>Auto Points on Invoice</td>
-                <td><span class="av-cross">&#x2715;</span> Requires POS or QR scan</td>
+                <td><span class="av-cross">&#x2715;</span> Requires POS integration or manual entry</td>
                 <td><span class="av-check">&#x2713;</span> Triggers on payment automatically</td>
               </tr>
               <tr>
                 <td>Referrals Without App</td>
                 <td><span class="av-cross">&#x2715;</span> Both parties must download app</td>
                 <td><span class="av-check">&#x2713;</span> Text-based, zero friction</td>
+              </tr>
+              <tr>
+                <td>Third-Party Rewards</td>
+                <td><span class="av-cross">&#x2715;</span> Limited to in-store credits only</td>
+                <td><span class="av-check">&#x2713;</span> Credits, gift cards, partner discounts</td>
               </tr>
               <tr>
                 <td>SaaS Potential</td>
@@ -1518,6 +803,41 @@
     <div class="av-divider"></div>
 
     <!-- ═════════════════════════════════════════════════════════════════
+         BONUSES
+         ═════════════════════════════════════════════════════════════════ -->
+    <section class="av-section">
+      <div class="av-container">
+        <div class="av-section-header av-reveal">
+          <div class="av-eyebrow">Included Bonuses</div>
+          <h2 class="av-section-title">MORE VALUE. NO EXTRA COST.</h2>
+          <p class="av-section-subtitle">These features are built into your platform at no additional charge. We are recommending them because they drive measurable results.</p>
+        </div>
+        <div class="av-bonus-grid">
+          <div class="av-bonus-card av-reveal">
+            <div class="av-bonus-badge">Included Free</div>
+            <div class="av-bonus-title">GOOGLE REVIEW ENGINE</div>
+            <p class="av-bonus-text">Two hours after a job is paid, your customer gets a text with a one-tap link to leave a Google review. They earn 100 bonus points (example -- exact amount set during onboarding). No app, no login. Reviews drive your Google ranking automatically. Strike while satisfaction is highest.</p>
+            <div class="av-bonus-value">
+              <span class="av-bonus-value-amount">$10,000 VALUE</span>
+              <span class="av-bonus-value-free">INCLUDED</span>
+            </div>
+          </div>
+          <div class="av-bonus-card av-reveal">
+            <div class="av-bonus-badge">Included Free</div>
+            <div class="av-bonus-title">SMART OFFERS ENGINE</div>
+            <p class="av-bonus-text">Automated, targeted offers based on service history. Seasonal reminders (winterize pipes, summer irrigation check). Equipment lifecycle alerts (your garbage disposal is 8 years old -- time for a checkup). Inactivity re-engagement (have not called in 12 months? Here is a credit). Each one drives a booking without you thinking about it.</p>
+            <div class="av-bonus-value">
+              <span class="av-bonus-value-amount">$15,000 VALUE</span>
+              <span class="av-bonus-value-free">INCLUDED</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="av-divider"></div>
+
+    <!-- ═════════════════════════════════════════════════════════════════
          PRICING
          ═════════════════════════════════════════════════════════════════ -->
     <section class="av-section">
@@ -1528,84 +848,11 @@
         </div>
         <div class="av-pricing-card av-reveal">
           <!-- ════════════════════════════════════════════
-               QUINTEN + GARY: Replace this section with
-               final pricing before the call
+               QUINTEN + GARY: Fill in rev-share terms
+               before this goes to Anthony
                ════════════════════════════════════════════ -->
-          <div class="av-pricing-tbd">TBD</div>
-          <p class="av-pricing-note">Pricing to be discussed on call. Includes full platform build, deployment, and ongoing maintenance. Revenue share terms negotiable.</p>
-        </div>
-      </div>
-    </section>
-
-    <div class="av-divider"></div>
-
-    <!-- ═════════════════════════════════════════════════════════════════
-         QUESTIONS FOR ANTHONY
-         ═════════════════════════════════════════════════════════════════ -->
-    <section class="av-section">
-      <div class="av-container">
-        <div class="av-section-header av-reveal">
-          <div class="av-eyebrow">Before We Build</div>
-          <h2 class="av-section-title">QUESTIONS FOR YOU</h2>
-          <p class="av-section-subtitle">To build this right, we need to understand a few things about your business.</p>
-        </div>
-        <div class="av-questions-list">
-          <div class="av-question av-reveal">
-            <div class="av-question-num">1</div>
-            <div>
-              <div class="av-question-text">Residential, commercial, or both?</div>
-              <p class="av-question-why">Residential customers use the loyalty system directly. Commercial contracts (property managers, building owners) need a different approach -- maintenance agreements and vendor portals rather than points and referrals. This changes what we build first.</p>
-            </div>
-          </div>
-          <div class="av-question av-reveal">
-            <div class="av-question-num">2</div>
-            <div>
-              <div class="av-question-text">How do you currently collect payment?</div>
-              <p class="av-question-why">Stripe, Square, QuickBooks, cash, check -- each one determines how points get triggered automatically. The more digital your payments, the less manual work.</p>
-            </div>
-          </div>
-          <div class="av-question av-reveal">
-            <div class="av-question-num">3</div>
-            <div>
-              <div class="av-question-text">How many active customers do you have?</div>
-              <p class="av-question-why">This tells us the starting database size, expected transaction volume, and how quickly the referral engine can compound. 200 is different from 2,000.</p>
-            </div>
-          </div>
-          <div class="av-question av-reveal">
-            <div class="av-question-num">4</div>
-            <div>
-              <div class="av-question-text">What services make up most of your revenue?</div>
-              <p class="av-question-why">We want to weight the loyalty system toward your highest-margin services. If drain cleaning is your bread and butter, that is where maintenance reminders should focus. If big installs drive revenue, referral bonuses should reflect that ticket size.</p>
-            </div>
-          </div>
-          <div class="av-question av-reveal">
-            <div class="av-question-num">5</div>
-            <div>
-              <div class="av-question-text">Do you currently have maintenance plans?</div>
-              <p class="av-question-why">If yes, the loyalty system wraps around them and boosts conversion. If no, this platform is the vehicle to launch them -- built-in from day one.</p>
-            </div>
-          </div>
-          <div class="av-question av-reveal">
-            <div class="av-question-num">6</div>
-            <div>
-              <div class="av-question-text">How many trucks / technicians?</div>
-              <p class="av-question-why">Determines how many staff accounts we need, whether field techs need a mobile view for manual point entry on cash jobs, and the scale of daily transactions the system needs to handle.</p>
-            </div>
-          </div>
-          <div class="av-question av-reveal">
-            <div class="av-question-num">7</div>
-            <div>
-              <div class="av-question-text">Multiple locations now or planned?</div>
-              <p class="av-question-why">Multi-location support needs to be designed into the system from the start -- shared customer points, per-location reporting, staff permissions. Better to plan for it now than rebuild later.</p>
-            </div>
-          </div>
-          <div class="av-question av-reveal">
-            <div class="av-question-num">8</div>
-            <div>
-              <div class="av-question-text">What does "success" look like to you in year one?</div>
-              <p class="av-question-why">More repeat customers? More Google reviews? A specific revenue number from referrals? We build the dashboard and the point structure around the metric that matters most to you.</p>
-            </div>
-          </div>
+          <div class="av-pricing-model">REVENUE SHARE</div>
+          <p class="av-pricing-note">Custom platform build with ongoing revenue share model. Full platform ownership from day one. Specific terms to be discussed on our call. Includes complete build, deployment, and ongoing support.</p>
         </div>
       </div>
     </section>
@@ -1644,6 +891,7 @@
          ═════════════════════════════════════════════════════════════════ -->
     <footer class="av-footer">
       <p class="av-footer-text">Built by <span class="av-footer-brand">Arc Garde</span></p>
+      <p class="av-footer-legal">This rewards system is designed to comply with FTC guidelines. No lottery mechanics, no randomness. All points are earned through verifiable customer actions.</p>
     </footer>
   </div>
 
@@ -1654,7 +902,6 @@
     (function() {
       var reveals = document.querySelectorAll('.av-reveal');
       if (!reveals.length) return;
-
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (entry.isIntersecting) {
@@ -1663,7 +910,6 @@
           }
         });
       }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
       reveals.forEach(function(el) { observer.observe(el); });
     })();
   </script>
