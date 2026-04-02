@@ -304,6 +304,24 @@
     .pricing__row--total .pricing__row-value { font-size: clamp(1.25rem, 1rem + 0.8vw, 1.625rem); font-weight: 700; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .pricing__terms { max-width: 580px; margin: clamp(1.25rem, 1rem + 0.7vw, 1.75rem) auto 0; font-size: clamp(0.75rem, 0.7rem + 0.18vw, 0.813rem); color: var(--text-muted); line-height: 1.65; }
 
+    /* GAP */
+    .gap { text-align: center; }
+    .gap .slide__inner { max-width: 800px; }
+    .gap__title {
+      font-family: var(--font-display); font-size: clamp(2.25rem, 1.6rem + 3vw, 4.5rem);
+      line-height: 0.9; color: var(--text-bright); letter-spacing: 0.015em;
+      margin-bottom: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+    }
+    .gap__title span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .gap__body { font-size: clamp(1rem, 0.9rem + 0.4vw, 1.125rem); color: var(--text-secondary); max-width: 640px; margin: 0 auto; line-height: 1.85; }
+
+    /* OBJECTION */
+    .objection { text-align: center; }
+    .objection .slide__inner { max-width: 720px; }
+    .objection__title { font-family: var(--font-display); font-size: clamp(2.25rem, 1.7rem + 2.5vw, 4.5rem); line-height: 0.9; letter-spacing: 0.015em; color: var(--text-bright); margin-bottom: clamp(1.5rem, 1rem + 1.5vw, 2.5rem); }
+    .objection__body { font-size: clamp(1rem, 0.9rem + 0.4vw, 1.125rem); color: var(--text-secondary); line-height: 1.9; max-width: 580px; margin: 0 auto; }
+    .objection__body strong { color: var(--accent); font-weight: 700; }
+
     /* CLOSER */
     .closer { text-align: center; }
     .closer .slide__inner { max-width: 860px; }
@@ -408,8 +426,30 @@
       </div>
     </section>
 
-    <!-- SLIDE 3: WHAT CHANGES -->
-    <section class="slide" data-slide="2">
+    <!-- SLIDE 3: THE GAP -->
+    <section class="slide gap" data-slide="2">
+      <div class="slide__inner">
+        <div class="eyebrow reveal">The Gap</div>
+        <h2 class="gap__title reveal reveal-d1">
+          YOUR SHOP FILLS UP ON REPUTATION.<br><span>YOUR TRAILERS&nbsp;CAN'T.</span>
+        </h2>
+        <div class="gap__body spaced-copy reveal reveal-d2">
+          <span class="s">Your shop has decades of word-of-mouth behind it.</span>
+          <span class="s">Someone's truck pulls to the right, they ask around, they hear your name.</span>
+          <span class="s">That works for the shop because everybody drives.</span>
+          <span class="s">Not everybody buys a trailer.</span>
+          <span class="s">The buyer pool is smaller, the purchases are less frequent, and nobody's asking their neighbor who sells a good gooseneck.</span>
+          <span class="s">Those buyers are searching online. Facebook, Google, YouTube.</span>
+          <span class="s">Right now, when they search, you're not there.</span>
+          <span class="s">Your competitors who are there get the call instead.</span>
+          <span class="s">The shop earned its reputation over years.</span>
+          <span class="s">The trailer lot doesn't have years. It has inventory sitting on the lot right now that the right buyer hasn't seen&nbsp;yet.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: WHAT CHANGES -->
+    <section class="slide" data-slide="3">
       <div class="slide__inner">
         <div class="eyebrow reveal">What Changes</div>
         <div class="compare__grid">
@@ -434,25 +474,6 @@
               <li>Website rebuilt to showcase your full trailer lineup and convert inquiries</li>
             </ul>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 4: THE MATH -->
-    <section class="slide roi" data-slide="3">
-      <div class="slide__inner">
-        <div class="eyebrow reveal">The Math</div>
-        <h2 class="roi__title reveal reveal-d1">
-          <span>HERE'S THE COST.</span><br>YOU KNOW YOUR&nbsp;MARGINS.
-        </h2>
-        <div class="roi__explain spaced-copy reveal reveal-d2">
-          <span class="s">Right now, your trailer lot has zero marketing behind it.</span>
-          <span class="s">No ads, no system, no tracking.</span>
-          <span class="s">You know what a trailer sale is worth to your business.</span>
-          <span class="s">You know how many sit on the lot.</span>
-          <span class="s">The question is whether putting them in front of every buyer within a 2-hour drive is worth the spend.</span>
-          <span class="s">You're closer to the numbers than we are.</span>
-          <span class="s">We just want to make sure the trailers are getting&nbsp;seen.</span>
         </div>
       </div>
     </section>
@@ -541,7 +562,10 @@
     <section class="slide pricing" data-slide="6">
       <div class="slide__inner">
         <div class="eyebrow reveal">Investment</div>
-        <div class="pricing__table reveal reveal-d1">
+        <h2 class="roi__title reveal reveal-d1">
+          <span>HERE'S THE COST.</span><br>YOU KNOW YOUR&nbsp;MARGINS.
+        </h2>
+        <div class="pricing__table reveal reveal-d2">
           <div class="pricing__table-header">
             <div class="pricing__table-header-text">TR SPRING GROWTH PACKAGE</div>
           </div>
@@ -566,7 +590,16 @@
             </div>
           </div>
         </div>
-        <div class="pricing__terms spaced-copy reveal reveal-d2">
+        <div class="roi__explain spaced-copy reveal reveal-d3" style="margin-top: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);">
+          <span class="s">Right now, your trailer lot has zero marketing behind it.</span>
+          <span class="s">No ads, no system, no tracking.</span>
+          <span class="s">You know what a trailer sale is worth to your business.</span>
+          <span class="s">You know how many sit on the lot.</span>
+          <span class="s">The question is whether putting them in front of every buyer within a 2-hour drive is worth the spend.</span>
+          <span class="s">You're closer to the numbers than we are.</span>
+          <span class="s">We just want to make sure the trailers are getting&nbsp;seen.</span>
+        </div>
+        <div class="pricing__terms spaced-copy reveal reveal-d4">
           <span class="s">All pricing in CAD (~$5,900 USD total).</span>
           <span class="s">90-day initial commitment. Month-to-month after that.</span>
           <span class="s">Cancel anytime with 30 days notice.</span>
@@ -577,8 +610,24 @@
       </div>
     </section>
 
-    <!-- SLIDE 8: CLOSER -->
-    <section class="slide closer" data-slide="7">
+    <!-- SLIDE 8: WHAT IF IT DOESN'T WORK -->
+    <section class="slide objection" data-slide="7">
+      <div class="slide__inner">
+        <div class="eyebrow reveal">Fair Question</div>
+        <h2 class="objection__title reveal reveal-d1">WHAT IF IT DOESN'T&nbsp;WORK?</h2>
+        <div class="objection__body spaced-copy reveal reveal-d2">
+          <span class="s">You'll know within 90 days.</span>
+          <span class="s">Because we're <strong>reporting every 4 days</strong>.</span>
+          <span class="s">You'll see the leads, the ad performance, and the traffic.</span>
+          <span class="s">If the numbers don't justify the spend, you walk.</span>
+          <span class="s">No long-term lock-in, no penalty.</span>
+          <span class="s">We keep the account because we perform, not because you're stuck in a&nbsp;contract.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: CTA -->
+    <section class="slide closer" data-slide="8">
       <div class="slide__inner">
         <h2 class="closer__title reveal">
           YOU BUILT THE REPUTATION.<br>
@@ -599,7 +648,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
       <div class="bottom-bar__counter">
-        <span class="bottom-bar__counter-current" id="counter-current">1</span> / <span id="counter-total">8</span>
+        <span class="bottom-bar__counter-current" id="counter-current">1</span> / <span id="counter-total">9</span>
       </div>
       <button class="bottom-bar__arrow" id="next" aria-label="Next slide">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
