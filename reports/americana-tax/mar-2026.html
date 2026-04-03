@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
-<title>Americana Tax Planning - Weekly Ad Report | Mar 11-17, 2026</title>
-<meta name="description" content="Americana Tax Planning weekly ad performance report for March 11-17, 2026. Orange County campaign results including video ad performance, retargeting stats, and funnel analysis.">
+<title>Americana Tax Planning - Monthly Report | March 2026</title>
+<meta name="description" content="Americana Tax Planning monthly ad performance report for March 2026. First client close, NAHREP DC event campaign, Orange County consolidation, 8 new leads, $1,295 total investment.">
 <meta name="robots" content="noindex, nofollow">
-<meta property="og:title" content="Americana Tax Planning - Weekly Ad Report | Mar 11-17, 2026">
-<meta property="og:description" content="Orange County ad campaign results for March 11-17, 2026. 1,895 impressions, 17 landing page views, 4 leads, full funnel breakdown.">
+<meta property="og:title" content="Americana Tax Planning - Monthly Report | March 2026">
+<meta property="og:description" content="March 2026 monthly report. First $500 close, NAHREP DC event (77,589 impressions), OC consolidation, 8 new leads, Real Estate ad set launched.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
 <meta name="twitter:card" content="summary">
@@ -328,8 +328,6 @@ body {
   color: var(--cream35);
 }
 
-/* (Cover footer removed — no agency branding on pages) */
-
 /* ─── Reveal Animation Base ─── */
 .reveal {
   opacity: 0;
@@ -363,6 +361,12 @@ body {
   color: var(--red);
   background: var(--red-glow);
   box-shadow: 0 0 20px rgba(var(--red-rgb),0.06);
+}
+
+.tag--new {
+  color: var(--blue-bright);
+  background: rgba(var(--blue-bright-rgb), 0.15);
+  box-shadow: 0 0 20px rgba(var(--blue-bright-rgb),0.08);
 }
 
 
@@ -431,7 +435,7 @@ body {
   font-style: italic;
   font-weight: 500;
   color: var(--cream);
-  max-width: 500px;
+  max-width: 560px;
   margin: 0 auto 24px;
   line-height: 1.6;
 }
@@ -510,14 +514,24 @@ body {
   width: 100%;
 }
 
+.winner-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
 .winner-card {
   background: var(--cream);
-  padding: 32px 28px;
-  margin-bottom: 24px;
+  padding: 32px 20px;
   border-radius: 16px;
   box-shadow: 0 20px 80px rgba(0,0,0,0.06), 0 4px 20px rgba(0,0,0,0.03);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+}
+
+.winner-card--single {
+  margin-bottom: 24px;
 }
 
 /* Shimmer across winner card */
@@ -544,6 +558,12 @@ body {
   margin-bottom: 28px;
   border-radius: 100px;
   background: rgba(var(--accent-rgb),0.04);
+}
+
+.winner-badge--new {
+  color: var(--blue-bright);
+  border-color: rgba(var(--blue-bright-rgb),0.3);
+  background: rgba(var(--blue-bright-rgb),0.08);
 }
 
 .winner-img {
@@ -587,7 +607,7 @@ body {
 }
 
 .winner-why {
-  font-size: 18px;
+  font-size: 16px;
   font-style: italic;
   color: var(--text60);
   line-height: 1.9;
@@ -603,19 +623,23 @@ body {
   padding: 0 2px;
 }
 
+.winner-why strong.blue-hl {
+  background: linear-gradient(180deg, transparent 60%, rgba(var(--blue-bright-rgb),0.12) 60%);
+}
+
 /* Animated Rings */
 .rings {
   display: flex;
   justify-content: center;
-  gap: 48px;
-  margin-top: 36px;
-  padding-top: 32px;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 20px;
   border-top: 1px solid var(--border);
 }
 
-.ring { position: relative; width: 120px; height: 120px; }
+.ring { position: relative; width: 80px; height: 80px; flex-shrink: 0; }
 
-.ring svg { width: 120px; height: 120px; transform: rotate(-90deg); }
+.ring svg { width: 80px; height: 80px; transform: rotate(-90deg); }
 
 .ring-track { fill: none; stroke: rgba(var(--accent-rgb),0.08); stroke-width: 5; }
 
@@ -630,6 +654,11 @@ body {
   will-change: stroke-dashoffset;
 }
 
+.ring-fill--blue {
+  stroke: var(--blue-bright);
+  filter: drop-shadow(0 0 6px var(--blue-glow));
+}
+
 .ring-inner {
   position: absolute;
   top: 50%;
@@ -639,7 +668,7 @@ body {
 
 .ring-v {
   font-family: var(--font-display);
-  font-size: 24px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--text);
   display: block;
@@ -647,7 +676,7 @@ body {
 }
 
 .ring-l {
-  font-size: 11px;
+  font-size: 8px;
   color: var(--text60);
   font-style: italic;
   margin-top: 3px;
@@ -937,6 +966,56 @@ body {
 .f-bar--3 { background: linear-gradient(135deg, rgba(var(--accent-bright-rgb),0.65), rgba(var(--accent-rgb),0.65)); }
 .f-bar--4 { background: linear-gradient(135deg, rgba(var(--accent-bright-rgb),0.45), rgba(var(--accent-rgb),0.45)); }
 .f-bar--5 { background: linear-gradient(135deg, rgba(var(--accent-bright-rgb),0.3), rgba(var(--accent-rgb),0.3)); }
+
+/* Blue funnel bars for Real Estate */
+.f-bar--b1 { background: linear-gradient(135deg, var(--blue-bright), var(--blue)); }
+.f-bar--b2 { background: linear-gradient(135deg, rgba(var(--blue-bright-rgb),0.85), rgba(var(--blue-rgb),0.85)); }
+.f-bar--b3 { background: linear-gradient(135deg, rgba(var(--blue-bright-rgb),0.65), rgba(var(--blue-rgb),0.65)); }
+.f-bar--b4 { background: linear-gradient(135deg, rgba(var(--blue-bright-rgb),0.45), rgba(var(--blue-rgb),0.45)); }
+.f-bar--b5 { background: linear-gradient(135deg, rgba(var(--blue-bright-rgb),0.3), rgba(var(--blue-rgb),0.3)); }
+
+/* Conversion bar — gold celebration */
+.f-bar--conversion {
+  background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700) !important;
+  box-shadow: 0 0 30px rgba(255,215,0,0.5), 0 0 60px rgba(255,165,0,0.3), 0 4px 20px rgba(0,0,0,0.3);
+  animation: conversionPulse 2.1s ease-in-out infinite;
+  position: relative;
+  z-index: 2;
+}
+
+.f-bar--conversion .f-num {
+  color: #1a1a2e !important;
+  font-weight: 700;
+  text-shadow: none;
+}
+
+@keyframes conversionPulse {
+  0%, 100% { box-shadow: 0 0 30px rgba(255,215,0,0.5), 0 0 60px rgba(255,165,0,0.3), 0 4px 20px rgba(0,0,0,0.3); }
+  50% { box-shadow: 0 0 50px rgba(255,215,0,0.7), 0 0 100px rgba(255,165,0,0.4), 0 4px 30px rgba(0,0,0,0.4); transform: scale(1.03); }
+}
+
+.f-row--conversion {
+  position: relative;
+}
+
+.f-row--conversion .f-name {
+  color: #FFD700 !important;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-size: 13px;
+  text-shadow: 0 0 20px rgba(255,215,0,0.4);
+}
+
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+}
 
 /* Animated shimmer across funnel bars */
 .f-bar::after {
@@ -1662,7 +1741,7 @@ body {
 
 /* Tooltip */
 .heatmap-tip {
-  position: fixed;
+  position: absolute;
   padding: 10px 16px;
   background: rgba(12, 12, 10, 0.92);
   border: 1px solid rgba(var(--accent-rgb), 0.2);
@@ -1756,6 +1835,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   .winner-card::before { display: none; }
   .diag-grid { gap: 12px; }
   .heatmap-cell { transition: none; }
+  .winner-cards { grid-template-columns: 1fr; }
 }
 
 /* ─── Responsive: Mobile (480px) ─── */
@@ -1763,10 +1843,10 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   .pg { padding: 32px 16px; }
   .stats { flex-direction: column; gap: 12px; }
   .stat { min-width: auto; }
-  .rings { gap: 24px; }
-  .ring { width: 90px; height: 90px; }
-  .ring svg { width: 90px; height: 90px; }
-  .ring-v { font-size: 18px; }
+  .rings { gap: 16px; }
+  .ring { width: 80px; height: 80px; }
+  .ring svg { width: 80px; height: 80px; }
+  .ring-v { font-size: 16px; }
   .diag-grid { grid-template-columns: repeat(2, 1fr); }
   .trend-row { flex-direction: column; }
   .trend-box:first-child { border-radius: 12px 12px 0 0; }
@@ -1787,13 +1867,14 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   .f-bar { height: 48px; }
   .f-num { font-size: 18px; }
   .f-name { font-size: 12px; }
-  .winner-why { font-size: 16px; }
+  .winner-why { font-size: 14px; }
   .next-item { font-size: 16px; padding-left: 36px; }
   .action-list li { font-size: 15px; }
   .trend-why { font-size: 16px; }
   .roi-context { font-size: 16px; }
   .foot { font-size: 7px; }
   .aurora-orb { display: none; }
+  .winner-cards { grid-template-columns: 1fr; }
 
   /* Center-align everything on mobile */
   .tests { text-align: center; }
@@ -1811,7 +1892,6 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   .budget-half { text-align: center; }
 }
 
-/* ─── Print ─── */
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -1965,16 +2045,18 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   <div class="reports-nav-divider"></div>
   <div class="reports-nav-group">Winning Ad Runs</div>
   <a href="/reports/americana-tax/la-w4" class="reports-nav-link">LA County - Week 7<span>Mar 4-10</span></a>
-  <a href="/reports/americana-tax/oc-w4" class="reports-nav-link active">OC County - Week 8<span>Mar 11-17</span></a>
+  <a href="/reports/americana-tax/oc-w4" class="reports-nav-link">OC County - Week 8<span>Mar 11-17</span></a>
+  <a href="/reports/americana-tax/oc-w5" class="reports-nav-link">OC + RE - Week 9<span>Mar 26 - Apr 1</span></a>
   <div class="reports-nav-divider"></div>
   <div class="reports-nav-group">Monthly Reports</div>
   <a href="/reports/americana-tax/feb-2026" class="reports-nav-link">February 2026<span>Monthly</span></a>
-  <a href="/reports/americana-tax/mar-2026" class="reports-nav-link">March 2026<span>Monthly</span></a>
+  <a href="/reports/americana-tax/mar-2026" class="reports-nav-link active">March 2026<span>Monthly</span></a>
   <div class="reports-nav-divider"></div>
   <a href="/reports/americana-tax" class="reports-nav-link reports-nav-all">All Reports</a>
 </nav>
 
-<a class="skip-link" href="#what-worked">Skip to content</a>
+<canvas id="confetti-canvas"></canvas>
+<a class="skip-link" href="#the-number">Skip to content</a>
 <div class="scroll-progress" id="scroll-progress"></div>
 <div class="report">
 
@@ -1993,17 +2075,17 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     <header class="cover-block" style="text-align:center;margin-bottom:40px;">
       <div class="brand-label reveal" style="font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--cream35);margin-bottom:20px;font-weight:600;">Arc Garde Media Buying</div>
       <a href="https://americanataxplanning.com/" target="_blank"><img src="https://americanataxplanning.com/wp-content/uploads/2020/03/americana-tax-planning-logo.png" alt="Americana Tax Planning" class="header-logo reveal" style="max-width:280px;margin:0 auto 20px;display:block;"></a>
-      <div class="subtitle reveal" style="font-size:13px;color:var(--cream35);margin-bottom:4px;font-weight:400;">Lead Generation Campaign | Winning Ad Run</div>
-      <div class="date-range reveal" style="font-size:13px;color:var(--cream35);font-weight:400;">Mar 11 - 17, 2026 | Meta Ads</div>
+      <div class="subtitle reveal" style="font-size:13px;color:var(--cream35);margin-bottom:4px;font-weight:400;">Monthly Performance Report</div>
+      <div class="date-range reveal" style="font-size:13px;color:var(--cream35);font-weight:400;">March 2026 | Meta Ads</div>
+      <div class="reveal" style="font-size:11px;color:var(--cream35);margin-top:6px;font-style:italic;opacity:0.6;">Covering all campaign activity: OC prospecting, LA testing, NAHREP DC event, and Real Estate launch.</div>
       <div class="divider reveal" style="width:140px;height:2px;margin:24px auto 0;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--blue));"></div>
     </header>
 
-    <div class="label reveal" style="margin-bottom: 14px;">Your Return</div>
+    <div class="label reveal" style="margin-bottom: 14px;">March at a Glance</div>
 
-    <!-- Landing Page Views Gauge -->
-    <div class="gauge-wrap reveal" id="roas-gauge" data-gauge-value="17" data-gauge-display="17">
+    <!-- Total Leads Gauge -->
+    <div class="gauge-wrap reveal" id="roas-gauge" data-gauge-value="90" data-gauge-display="18">
       <svg class="gauge-svg" viewBox="0 0 240 140">
-        <!-- Tick marks -->
         <line class="gauge-tick" x1="30" y1="120" x2="38" y2="120"/>
         <line class="gauge-tick" x1="50" y1="55" x2="57" y2="60"/>
         <line class="gauge-tick" x1="120" y1="30" x2="120" y2="38"/>
@@ -2017,73 +2099,171 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     </div>
     <div class="gauge-labels reveal">
       <span class="gauge-label">0</span>
-      <span class="gauge-subtitle">Landing Page Views</span>
-      <span class="gauge-label">100</span>
+      <span class="gauge-subtitle">Total Campaign Leads (All-Time)</span>
+      <span class="gauge-label">20</span>
     </div>
 
-    <p class="roi-context reveal" style="margin-bottom: 32px;">Your ads drove 17 landing page visits and 4 new leads this week from 1,895 impressions across Orange County.</p>
+    <p class="roi-context reveal" style="margin-bottom: 32px;">March was a milestone month. Your first client closed at $500, NAHREP DC put your brand in front of 77,589 people, and Orange County cemented itself as the lead engine. 8 new leads this month alone.</p>
 
+    <!-- Ad Set 1: OC Prospecting -->
+    <div class="label reveal" style="margin-bottom:10px;margin-top:24px;font-size:10px;letter-spacing:0.2em;">Ad Set 1 — Orange County Prospecting</div>
     <div class="stats">
       <div class="stat reveal">
-        <span class="stat-num" data-counter="17">0</span>
-        <span class="stat-lbl">LP Views</span>
-        <span class="tag tag--good">168 hrs</span>
+        <span class="stat-num" data-counter="430" data-prefix="$">$0</span>
+        <span class="stat-lbl">Video Spend</span>
       </div>
       <div class="stat reveal">
-        <span class="stat-num" data-counter="1895">0</span>
+        <span class="stat-num" data-counter="72" data-prefix="$">$0</span>
+        <span class="stat-lbl">RT Spend</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat-num" data-counter="8">0</span>
+        <span class="stat-lbl">Leads</span>
+        <span class="tag tag--good">+1 close</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat-num" data-counter="63" data-prefix="$">$0</span>
+        <span class="stat-lbl">CPL</span>
+      </div>
+    </div>
+
+    <!-- Ad Set 2: LA Prospecting -->
+    <div class="label reveal" style="margin-bottom:10px;margin-top:32px;font-size:10px;letter-spacing:0.2em;">Ad Set 2 — LA County Prospecting</div>
+    <div class="stats">
+      <div class="stat reveal">
+        <span class="stat-num" data-counter="143.63" data-prefix="$">$0</span>
+        <span class="stat-lbl">Video Spend</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat-num" data-counter="21.94" data-prefix="$">$0</span>
+        <span class="stat-lbl">RT Spend</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat-num" data-counter="0">0</span>
+        <span class="stat-lbl">Leads</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat-num" data-counter="0">0</span>
+        <span class="stat-lbl">CPL</span>
+      </div>
+    </div>
+
+    <!-- NAHREP DC Event -->
+    <div class="label reveal" style="margin-bottom:10px;margin-top:32px;font-size:10px;letter-spacing:0.2em;">NAHREP DC — Event Campaign (Mar 21-25)</div>
+    <div class="stats">
+      <div class="stat reveal">
+        <span class="stat-num" data-counter="699.19" data-prefix="$">$0</span>
+        <span class="stat-lbl">Total Spend</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat-num" data-counter="77589">0</span>
         <span class="stat-lbl">Impressions</span>
       </div>
       <div class="stat reveal">
-        <span class="stat-num" data-counter="2.5" data-suffix="%">0%</span>
-        <span class="stat-lbl">Avg CTR</span>
-        <span class="tag tag--good">above 1.5% avg</span>
+        <span class="stat-num" data-counter="1569">0</span>
+        <span class="stat-lbl">LP Views</span>
       </div>
       <div class="stat reveal">
-        <span class="stat-num" data-counter="2.71" data-prefix="$">$0</span>
-        <span class="stat-lbl">Cost / Click</span>
+        <span class="stat-num" data-counter="0.45" data-prefix="$">$0</span>
+        <span class="stat-lbl">Cost / LP View</span>
+        <span class="tag" style="color:var(--blue-bright);background:rgba(var(--blue-rgb),0.12);">awareness</span>
+      </div>
+    </div>
+
+    <!-- Retargeting -->
+    <div class="label reveal" style="margin-bottom:10px;margin-top:32px;font-size:10px;letter-spacing:0.2em;">Retargeting — Static Images (Always On)</div>
+    <div class="stats">
+      <div class="stat reveal">
+        <span class="stat-num" data-counter="94" data-prefix="$">$0</span>
+        <span class="stat-lbl">March Spend</span>
       </div>
       <div class="stat reveal">
-        <span class="stat-num" data-counter="4">0</span>
+        <span class="stat-num" data-counter="2300">0</span>
+        <span class="stat-lbl">Impressions</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat-num" data-counter="13">0</span>
+        <span class="stat-lbl">LP Views</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat-num" data-counter="500" data-prefix="$">$0</span>
+        <span class="stat-lbl">First Revenue</span>
+        <span class="tag tag--good">$500 close</span>
+      </div>
+    </div>
+
+    <!-- Monthly Total -->
+    <div class="rule reveal" style="margin:32px auto;opacity:0.2;max-width:200px;"></div>
+    <div class="label reveal" style="margin-bottom:10px;font-size:10px;letter-spacing:0.2em;">March Total (All Ad Sets)</div>
+    <div class="stats">
+      <div class="stat reveal">
+        <span class="stat-num" data-counter="1295" data-prefix="$">$0</span>
+        <span class="stat-lbl">Total Investment</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat-num" data-counter="8">0</span>
         <span class="stat-lbl">Leads</span>
-        <span class="tag tag--good">best OC period</span>
+      </div>
+      <div class="stat reveal">
+        <span class="stat-num" data-counter="97" data-suffix="k">0k</span>
+        <span class="stat-lbl">Total Impressions</span>
       </div>
     </div>
 
   </section>
 
 
-  <!-- PAGE 3: WHAT WORKED -->
+  <!-- PAGE 2: WHAT WORKED -->
   <section class="pg pg--cream" id="what-worked">
     <div class="grain" style="opacity: 0.015;"></div>
     <div class="p3-content">
 
       <div class="eyebrow reveal">What Worked</div>
 
-      <div class="winner-card reveal--up reveal">
-        <div class="winner-badge">Top Performer</div>
-
-        <div class="winner-name">Ad 2</div>
-        <div class="winner-plat">META / VIDEO</div>
-
-        <p class="winner-why">
-          This ad captured <strong>96.8% of all budget</strong> at a <strong>2.5% CTR</strong>, earning all 17 landing page views and 4 leads for the week.
-        </p>
-        <p class="winner-why" style="margin-top: 16px;">
-          Best CPL of any Orange County period at <strong>$37.65 per lead</strong>.
-        </p>
-
-        <div class="rings">
-          <div class="ring reveal" data-ring="97">
-            <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill" cx="50" cy="50" r="42"/></svg>
-            <div class="ring-inner"><span class="ring-v">97%</span><span class="ring-l">of budget</span></div>
+      <div class="winner-cards">
+        <div class="winner-card reveal--up reveal">
+          <div class="winner-badge">Month Highlight</div>
+          <div class="winner-name">OC W4: Best Period Ever</div>
+          <div class="winner-plat">META / VIDEO / AD 2</div>
+          <p class="winner-why">
+            <strong>4 leads</strong> at <strong>$37.65 CPL</strong>. $150.58 total spend. 17 LP views. 2.5% avg CTR. $2.71 avg CPC. 2,448 impressions.
+          </p>
+          <div class="rings">
+            <div class="ring reveal" data-ring="97">
+              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill" cx="50" cy="50" r="42"/></svg>
+              <div class="ring-inner"><span class="ring-v">$37.65</span><span class="ring-l">CPL</span></div>
+            </div>
+            <div class="ring reveal" data-ring="80">
+              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill" cx="50" cy="50" r="42"/></svg>
+              <div class="ring-inner"><span class="ring-v">4</span><span class="ring-l">leads</span></div>
+            </div>
+            <div class="ring reveal" data-ring="25">
+              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill" cx="50" cy="50" r="42"/></svg>
+              <div class="ring-inner"><span class="ring-v">2.5%</span><span class="ring-l">CTR</span></div>
+            </div>
           </div>
-          <div class="ring reveal" data-ring="85">
-            <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill" cx="50" cy="50" r="42"/></svg>
-            <div class="ring-inner"><span class="ring-v">17</span><span class="ring-l">LP views</span></div>
-          </div>
-          <div class="ring reveal" data-ring="25">
-            <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill" cx="50" cy="50" r="42"/></svg>
-            <div class="ring-inner"><span class="ring-v">2.5%</span><span class="ring-l">CTR</span></div>
+        </div>
+
+        <div class="winner-card reveal--up reveal">
+          <div class="winner-badge winner-badge--new">Event Campaign</div>
+          <div class="winner-name">NAHREP DC Conference</div>
+          <div class="winner-plat" style="color: var(--blue-bright);">META / VIDEO / 8 CREATIVES</div>
+          <p class="winner-why">
+            <strong class="blue-hl">77,589 impressions</strong>, <strong class="blue-hl">1,569 landing page views</strong> at <strong class="blue-hl">$0.45 per view</strong>. 2,065 clicks at $0.34 CPC. 2.66% average CTR across 8 creatives.
+          </p>
+          <div class="rings">
+            <div class="ring reveal" data-ring="78">
+              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill ring-fill--blue" cx="50" cy="50" r="42"/></svg>
+              <div class="ring-inner"><span class="ring-v">77.6k</span><span class="ring-l">impressions</span></div>
+            </div>
+            <div class="ring reveal" data-ring="65">
+              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill ring-fill--blue" cx="50" cy="50" r="42"/></svg>
+              <div class="ring-inner"><span class="ring-v">1,569</span><span class="ring-l">LP views</span></div>
+            </div>
+            <div class="ring reveal" data-ring="45">
+              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill ring-fill--blue" cx="50" cy="50" r="42"/></svg>
+              <div class="ring-inner"><span class="ring-v">$0.45</span><span class="ring-l">per view</span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -2092,22 +2272,43 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
         <li class="test reveal">
           <div class="dot dot--win"></div>
           <div>
-            <span class="test-name">Ad 2</span>
-            <span class="test-desc">Algorithm winner. 96.8% budget share, 17 LP views, 4 leads, $37.65 CPL.</span>
+            <span class="test-name">Ad 2 (OC)</span>
+            <span class="test-desc">Dominated OC W4 with 96.8% budget share, 17 LP views, 4 leads at $37.65 CPL.</span>
+          </div>
+        </li>
+        <li class="test reveal">
+          <div class="dot dot--win"></div>
+          <div>
+            <span class="test-name">Ad 6 (OC)</span>
+            <span class="test-desc">Took over post-NAHREP (92.7% share). 29 LP views in 7 days, $2.16 avg CPC.</span>
+          </div>
+        </li>
+        <li class="test reveal">
+          <div class="dot dot--win"></div>
+          <div>
+            <span class="test-name">Ad 1 (NAHREP)</span>
+            <span class="test-desc">"Lost Deals" script. Best event ad at $0.40/LP view, 556 LP views. Agent-focused angle.</span>
+          </div>
+        </li>
+        <li class="test reveal">
+          <div class="dot dot--test"></div>
+          <div>
+            <span class="test-name">Real Estate Ad (NEW)</span>
+            <span class="test-desc">Launched Mar 31. 3.79% CTR, $0.91 CPC on day 1. Strongest first-day metrics ever.</span>
+          </div>
+        </li>
+        <li class="test reveal">
+          <div class="dot dot--cut"></div>
+          <div>
+            <span class="test-name">Ad 9 (LA)</span>
+            <span class="test-desc">Ran LA W4 for 7 days, $165.57 spent, 0 leads. LA County paused after this period.</span>
           </div>
         </li>
         <li class="test reveal">
           <div class="dot dot--cut"></div>
           <div>
             <span class="test-name">Ad 10</span>
-            <span class="test-desc">Starved by the algorithm. $4.12 total spend across 5 days, zero LP views, zero leads.</span>
-          </div>
-        </li>
-        <li class="test reveal">
-          <div class="dot dot--test"></div>
-          <div>
-            <span class="test-name">Next Test</span>
-            <span class="test-desc">Replacing Ad 10 with a fresh B-variant for the next OC cycle. Ad 2 continues.</span>
+            <span class="test-desc">Zero delivery across 3 consecutive periods. Confirmed dead. Replacing.</span>
           </div>
         </li>
       </ul>
@@ -2116,7 +2317,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   </section>
 
 
-  <!-- PAGE 4: LEAD QUALITY -->
+  <!-- PAGE 3: LEAD QUALITY -->
   <section class="pg pg--dark" id="lead-quality">
     <div class="aurora">
       <div class="aurora-orb aurora-orb--2"></div>
@@ -2125,181 +2326,188 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     <div class="grain"></div>
     <div class="scan-line" id="scan-2"></div>
 
-    <div class="label reveal" style="margin-bottom: 14px;">Your Funnel</div>
+    <div class="label reveal" style="margin-bottom: 14px;">Ad Set 1 — OC Prospecting Funnel</div>
 
     <div class="funnel-wrap">
       <div class="f-row">
-        <div class="f-bar f-bar--1" data-width="100" style="width:100%"><span class="f-num">1,895</span></div>
+        <div class="f-bar f-bar--1" data-width="100" style="width:100%"><span class="f-num">~15,000</span></div>
         <span class="f-name">impressions</span>
       </div>
       <div class="f-row">
-        <div class="f-bar f-bar--2" data-width="48" style="width:48%"><span class="f-num">~46</span></div>
+        <div class="f-bar f-bar--2" data-width="55" style="width:55%"><span class="f-num">~250</span></div>
         <span class="f-name">clicked</span>
       </div>
       <div class="f-row">
-        <div class="f-bar f-bar--3" data-width="30" style="width:30%"><span class="f-num">17</span></div>
-        <span class="f-name">visited page</span>
+        <div class="f-bar f-bar--3" data-width="38" style="width:38%"><span class="f-num">~85</span></div>
+        <span class="f-name">landing page views</span>
       </div>
       <div class="f-row">
-        <div class="f-bar f-bar--4" data-width="22" style="width:22%"><span class="f-num">54</span></div>
-        <span class="f-name">unique views (EB)</span>
+        <div class="f-bar f-bar--4" data-width="18" style="width:18%"><span class="f-num">8</span></div>
+        <span class="f-name">leads (EngageBay)</span>
+      </div>
+      <div class="f-row f-row--conversion" id="conversion-row">
+        <div class="f-bar f-bar--conversion" data-width="8" style="width:8%"><span class="f-num">1</span></div>
+        <span class="f-name">closed ($500)</span>
+      </div>
+    </div>
+    <p class="trend-why reveal" style="margin-top:12px;">
+      OC ran 4 periods in March (W3 partial, W4, pre-NAHREP, W5 partial). Best period: OC W4 with 4 leads at $37.65 CPL. Paused Mar 22-25 for NAHREP event.
+    </p>
+
+    <div class="rule reveal" style="margin: 28px auto; opacity: 0.3; max-width: 200px;"></div>
+
+    <div class="label reveal" style="margin-bottom: 14px;">Ad Set 2 — LA County Prospecting Funnel</div>
+
+    <div class="funnel-wrap">
+      <div class="f-row">
+        <div class="f-bar f-bar--1" data-width="100" style="width:100%"><span class="f-num">~3,200</span></div>
+        <span class="f-name">impressions</span>
       </div>
       <div class="f-row">
-        <div class="f-bar f-bar--5" data-width="8" style="width:8%"><span class="f-num">4</span></div>
+        <div class="f-bar f-bar--2" data-width="50" style="width:50%"><span class="f-num">~55</span></div>
+        <span class="f-name">clicked</span>
+      </div>
+      <div class="f-row">
+        <div class="f-bar f-bar--3" data-width="30" style="width:30%"><span class="f-num">~13</span></div>
+        <span class="f-name">landing page views</span>
+      </div>
+      <div class="f-row">
+        <div class="f-bar f-bar--4" data-width="0" style="width:3%"><span class="f-num">0</span></div>
         <span class="f-name">leads</span>
       </div>
     </div>
+    <p class="trend-why reveal" style="margin-top:12px;">
+      LA W4 (Mar 4-10) was the final test. 7 days, $165.57, zero leads. Ad 9 captured 95.5% of budget but produced nothing. LA County paused permanently on March 10.
+    </p>
 
-    <div class="rule reveal" style="margin: 24px auto; opacity: 0.3; max-width: 200px;"></div>
+    <div class="rule reveal" style="margin: 28px auto; opacity: 0.3; max-width: 200px;"></div>
 
-    <div class="label reveal" style="margin-bottom: 14px;">Quality Trend</div>
+    <div class="label reveal" style="margin-bottom: 14px;">Retargeting — Static Images</div>
+
+    <div class="funnel-wrap">
+      <div class="f-row">
+        <div class="f-bar f-bar--1" data-width="100" style="width:100%"><span class="f-num">~2,300</span></div>
+        <span class="f-name">impressions</span>
+      </div>
+      <div class="f-row">
+        <div class="f-bar f-bar--2" data-width="30" style="width:30%"><span class="f-num">13</span></div>
+        <span class="f-name">landing page views</span>
+      </div>
+    </div>
+    <p class="trend-why reveal" style="margin-top:12px;">
+      Retargeting ran alongside both OC and LA prospecting at ~$3/day. "OC Copy 1" dominated spend at 70%+. RT pool continues to grow and produce page visits each period.
+    </p>
+
+    <div class="rule reveal" style="margin: 28px auto; opacity: 0.3; max-width: 200px;"></div>
+
+    <div class="label reveal" style="margin-bottom: 14px;">NAHREP DC — Event Campaign (Mar 21-25)</div>
+
+    <div class="funnel-wrap">
+      <div class="f-row">
+        <div class="f-bar f-bar--b1" data-width="100" style="width:100%"><span class="f-num">77,589</span></div>
+        <span class="f-name">impressions</span>
+      </div>
+      <div class="f-row">
+        <div class="f-bar f-bar--b2" data-width="55" style="width:55%"><span class="f-num">2,065</span></div>
+        <span class="f-name">clicks</span>
+      </div>
+      <div class="f-row">
+        <div class="f-bar f-bar--b3" data-width="40" style="width:40%"><span class="f-num">1,569</span></div>
+        <span class="f-name">landing page views</span>
+      </div>
+    </div>
+    <p class="trend-why reveal" style="margin-top:12px;">
+      2 ad sets: Authority ($336.69) and Conference ($362.50). 8 creatives total. Top performer: "Lost Deals" at $0.40/LP view, 556 LP views. $0.34 avg CPC. 2.66% CTR.
+    </p>
+
+    <div class="rule reveal" style="margin: 28px auto; opacity: 0.3; max-width: 200px;"></div>
+
+    <div class="label reveal" style="margin-bottom: 14px;">Monthly Trend</div>
 
     <div class="trend-row reveal">
       <div class="trend-box">
-        <span class="trend-prd">OC W3 (Previous)</span>
-        <span class="trend-val" data-counter="7">0</span>
-        <span class="trend-sub">LP views, 1 lead</span>
+        <span class="trend-prd">February</span>
+        <span class="trend-val" data-counter="10">0</span>
+        <span class="trend-sub">leads, $46 blended CPL</span>
       </div>
       <div class="trend-box trend-box--now">
-        <span class="trend-prd">OC W4 (This Week)</span>
-        <span class="trend-val" data-counter="17">0</span>
-        <span class="trend-sub">LP views, 4 leads</span>
+        <span class="trend-prd">March</span>
+        <span class="trend-val" data-counter="8">0</span>
+        <span class="trend-sub">leads, 1 close, LA paused</span>
       </div>
     </div>
 
     <p class="trend-why reveal">
-      17 landing page views and 4 leads this period, up from 7 views and 1 lead in the prior OC W3 cycle. Best OC performance to date, with the lowest CPL at $37.65.
+      March CPL rose because LA W4 burned $165.57 with zero leads before being cut. Once LA was removed and OC consolidated, OC W4 hit the campaign's best CPL at $37.65. The blended number reflects the LA drag, not OC performance.
     </p>
 
   </section>
 
 
-  <!-- A/B AD COMPARISON -->
+  <!-- GEOGRAPHIC COMPARISON -->
   <section class="pg pg--cream" id="ab-compare">
     <div class="grain" style="opacity: 0.015;"></div>
     <div class="ab-wrap">
 
-      <div class="eyebrow reveal">Ad Comparison</div>
+      <div class="eyebrow reveal">Geographic Comparison</div>
+      <p class="reveal" style="font-size: 13px; font-style: italic; color: var(--text60); margin-bottom: 24px;">All-time through March 31, 2026</p>
 
       <div class="ab-grid">
         <div class="ab-col ab-col--red reveal">
-          <div class="ab-ad-name">Ad 2</div>
-          <span class="ab-ad-sub">Video Ad</span>
-          <div class="ab-stat-row"><span class="ab-stat-label">Spend</span><span class="ab-stat-val">$124.47</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">Impressions</span><span class="ab-stat-val">1,853</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">CTR</span><span class="ab-stat-val">2.5%</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">CPC</span><span class="ab-stat-val">$2.71</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">LP Views</span><span class="ab-stat-val">17</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">Budget Share</span><span class="ab-stat-val">96.8%</span></div>
+          <div class="ab-ad-name">Orange County</div>
+          <span class="ab-ad-sub">5 Periods (Active)</span>
+          <div class="ab-stat-row"><span class="ab-stat-label">Total Spend</span><span class="ab-stat-val">~$530</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">Leads</span><span class="ab-stat-val">12</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">CPL</span><span class="ab-stat-val">~$44</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">Best Period</span><span class="ab-stat-val">$37.65 (W4)</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">Status</span><span class="ab-stat-val" style="color:var(--green);">Active</span></div>
         </div>
 
         <div class="ab-col ab-col--blue reveal">
-          <div class="ab-ad-name">Ad 10</div>
-          <span class="ab-ad-sub">Video Ad</span>
-          <div class="ab-stat-row"><span class="ab-stat-label">Spend</span><span class="ab-stat-val">$4.12</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">Impressions</span><span class="ab-stat-val">42</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">CTR</span><span class="ab-stat-val">3.0%*</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">CPC</span><span class="ab-stat-val">$0.98</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">LP Views</span><span class="ab-stat-val">0</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">Budget Share</span><span class="ab-stat-val">3.2%</span></div>
+          <div class="ab-ad-name">LA County</div>
+          <span class="ab-ad-sub">4 Periods (Paused)</span>
+          <div class="ab-stat-row"><span class="ab-stat-label">Total Spend</span><span class="ab-stat-val">$469</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">Leads</span><span class="ab-stat-val">5</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">CPL</span><span class="ab-stat-val">$93.83</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">Worst Period</span><span class="ab-stat-val">$165, 0 leads (W4)</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">Status</span><span class="ab-stat-val" style="color:var(--red);">Paused</span></div>
         </div>
       </div>
 
       <p class="ab-verdict reveal">
-        The algorithm gave <strong>Ad 2</strong> nearly all the budget within 24 hours. Ad 10 showed a higher CTR (3.0%) but on just 42 impressions, not enough volume to compete. Ad 2 generated <strong>all 17 landing page views</strong> and <strong>all 4 leads</strong> this period.
+        The data made the decision clear. <strong>Orange County delivers leads at less than half the cost of LA County</strong> ($44 vs $94 CPL). LA W4 was the final test: 7 days, $165 spent, zero leads. LA has been paused since March 10. All budget is now concentrated on OC.
       </p>
 
       <div class="rule reveal" style="margin: 36px auto; opacity: 0.15; max-width: 200px;"></div>
 
-      <div class="rt-title reveal">Retargeting Ads</div>
+      <div class="rt-title reveal">March Spend Breakdown</div>
 
       <div class="rt-grid">
         <div class="rt-card rt-card--champ reveal">
-          <span class="rt-card-name">OC Copy 1 - Copy</span>
-          <span class="rt-card-spend">$15.47</span>
-          <span class="rt-card-share">70.3% of RT spend</span>
+          <span class="rt-card-name">NAHREP DC Event</span>
+          <span class="rt-card-spend">$699.19</span>
+          <span class="rt-card-share">54% of March spend</span>
         </div>
         <div class="rt-card reveal">
-          <span class="rt-card-name">OC Copy 1 - Copy 2</span>
-          <span class="rt-card-spend">$3.63</span>
-          <span class="rt-card-share">16.5%</span>
+          <span class="rt-card-name">OC Prospecting (Video)</span>
+          <span class="rt-card-spend">~$430</span>
+          <span class="rt-card-share">33%</span>
         </div>
         <div class="rt-card reveal">
-          <span class="rt-card-name">OC Copy 1 - Same 1</span>
-          <span class="rt-card-spend">$0.70</span>
-          <span class="rt-card-share">3.2%</span>
-        </div>
-        <div class="rt-card reveal">
-          <span class="rt-card-name">OC Copy 1 (original)</span>
-          <span class="rt-card-spend">$0.25</span>
-          <span class="rt-card-share">1.1%</span>
-        </div>
-        <div class="rt-card reveal">
-          <span class="rt-card-name">LA Copy 2 (Types 4+5)</span>
-          <span class="rt-card-spend">$0.94</span>
-          <span class="rt-card-share">4.3%</span>
+          <span class="rt-card-name">LA W4 (Video + RT)</span>
+          <span class="rt-card-spend">$165.57</span>
+          <span class="rt-card-share">13% (final LA period)</span>
         </div>
       </div>
 
       <p class="rt-summary reveal">
-        Total retargeting spend: <strong style="color: var(--text); font-style: normal;">$21.99</strong> across 553 impressions with 4 page visits. OC Copy 1 - Copy dominated at 70% of spend. Retargeting drove 4 additional page visits on top of video traffic.
+        Total March investment: <strong style="color: var(--text); font-style: normal;">~$1,295</strong>. Over half went to the NAHREP DC event campaign, a one-time strategic play for conference recognition. Regular OC prospecting continued at ~$43/day.
       </p>
 
     </div>
   </section>
 
 
-  <!-- PAGE 5: WHAT'S NEXT -->
-  <section class="pg pg--cream" id="whats-next">
-    <div class="grain" style="opacity: 0.015;"></div>
-    <div class="p5-content">
-
-      <div class="eyebrow reveal">What's Next</div>
-
-      <div class="next-block reveal">
-        <div class="next-title">Strategy</div>
-        <ul class="next-items">
-          <li class="next-item">Continuing Ad 2 in Orange County. Best performing ad at $37.65 CPL with 4 leads this period.</li>
-          <li class="next-item">Replacing Ad 10 with a fresh B-variant creative. Ad 10 was starved by the algorithm with zero engagement across 5 days.</li>
-          <li class="next-item">Maintaining the 7-day cycle format. This period validated the longer run with the best CPL and most leads of any OC period.</li>
-        </ul>
-      </div>
-
-      <div class="next-block reveal">
-        <div class="next-title">Creative vs Retargeting</div>
-        <div class="ab-grid">
-          <div class="ab-col ab-col--red">
-            <div class="ab-ad-name">Creative Ads</div>
-            <span class="ab-ad-sub">Video (Ad 2 + Ad 10)</span>
-            <div class="ab-stat-row"><span class="ab-stat-label">Spend</span><span class="ab-stat-val">$128.59</span></div>
-            <div class="ab-stat-row"><span class="ab-stat-label">Budget Share</span><span class="ab-stat-val">85.4%</span></div>
-            <div class="ab-stat-row"><span class="ab-stat-label">Impressions</span><span class="ab-stat-val">1,895</span></div>
-            <div class="ab-stat-row"><span class="ab-stat-label">Clicks</span><span class="ab-stat-val">~46</span></div>
-            <div class="ab-stat-row"><span class="ab-stat-label">LP Views</span><span class="ab-stat-val">17</span></div>
-          </div>
-          <div class="ab-col ab-col--blue">
-            <div class="ab-ad-name">Retargeting Ads</div>
-            <span class="ab-ad-sub">Static Images (5 creatives)</span>
-            <div class="ab-stat-row"><span class="ab-stat-label">Spend</span><span class="ab-stat-val">$21.99</span></div>
-            <div class="ab-stat-row"><span class="ab-stat-label">Budget Share</span><span class="ab-stat-val">14.6%</span></div>
-            <div class="ab-stat-row"><span class="ab-stat-label">Impressions</span><span class="ab-stat-val">553</span></div>
-            <div class="ab-stat-row"><span class="ab-stat-label">Clicks</span><span class="ab-stat-val">-</span></div>
-            <div class="ab-stat-row"><span class="ab-stat-label">Page Visits</span><span class="ab-stat-val">4</span></div>
-          </div>
-        </div>
-        <p class="budget-why">Total spend: $150.58. Creative video ads drove all meaningful traffic. Retargeting kept the brand visible to past visitors at low cost.</p>
-      </div>
-
-      <div class="action-box reveal">
-        <div class="action-title">We Need From You</div>
-        <ul class="action-list">
-          <li>No action needed right now. Orange County continues to deliver strong results.</li>
-          <li>Next report will follow the upcoming 7-day cycle.</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
 
 
   <!-- PAGE 6: DIAGNOSTICS -->
@@ -2310,8 +2518,8 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     <div class="grain"></div>
     <div class="grid-lines"></div>
 
-    <div class="label reveal" style="margin-bottom: 8px;">Diagnostics</div>
-    <p class="reveal" style="font-size: 16px; font-weight: 500; color: var(--cream70); margin-bottom: 20px;">Under the hood. Included at your request.</p>
+    <div class="label reveal" style="margin-bottom: 8px;">March Diagnostics</div>
+    <p class="reveal" style="font-size: 16px; font-weight: 500; color: var(--cream70); margin-bottom: 20px;">Full month breakdown. Under the hood.</p>
 
     <!-- KPI Chart -->
     <div class="chart-wrap reveal">
@@ -2330,25 +2538,25 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
           <canvas id="kpi-chart"></canvas>
         </div>
         <div class="chart-legend">
-          <span class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--prev"></span>Previous Period</span>
-          <span class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--current" id="legend-current"></span>This Period</span>
+          <span class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--prev"></span>February</span>
+          <span class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--current" id="legend-current"></span>March (excl. NAHREP)</span>
         </div>
-        <p class="chart-summary" id="chart-summary">Budget paced $6-24 per day. Day 1 was lower as campaign ramped up.</p>
+        <p class="chart-summary" id="chart-summary">Daily spend consistent at ~$43/day for DR. NAHREP spike mid-month ($140/day for 5 days).</p>
       </div>
     </div>
 
     <!-- Daily Performance Heatmap -->
     <div class="heatmap-wrap reveal" id="heatmap-wrap">
-      <div class="heatmap-title">Daily Performance</div>
+      <div class="heatmap-title">March Daily LP Views (DR Campaigns)</div>
       <div class="heatmap-grid" id="heatmap-grid">
+        <span class="heatmap-day-label">Mon</span>
+        <span class="heatmap-day-label">Tue</span>
         <span class="heatmap-day-label">Wed</span>
         <span class="heatmap-day-label">Thu</span>
         <span class="heatmap-day-label">Fri</span>
         <span class="heatmap-day-label">Sat</span>
         <span class="heatmap-day-label">Sun</span>
-        <span class="heatmap-day-label">Mon</span>
-        <span class="heatmap-day-label">Tue</span>
-        <!-- 7 cells injected by JS -->
+        <!-- 35 cells (5 weeks) injected by JS -->
       </div>
       <div class="heatmap-legend">
         <span class="heatmap-legend-label">Low</span>
@@ -2361,42 +2569,95 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
       <div class="heatmap-tip-val" id="heatmap-tip-val"></div>
     </div>
 
+    <!-- Ad Set 1: OC Diagnostics -->
+    <div class="label reveal" style="margin-bottom:10px;margin-top:16px;font-size:10px;letter-spacing:0.2em;">Ad Set 1 — OC Prospecting</div>
     <div class="diag-grid">
       <div class="diag-card">
-        <span class="diag-name">Click-Through</span>
-        <span class="diag-val" data-counter="2.5" data-suffix="%">0%</span>
-        <span class="diag-prev">industry avg ~1.5%</span>
-        <span class="diag-what">Strong engagement. Above the 1.5% industry average.</span>
+        <span class="diag-name">OC March Spend</span>
+        <span class="diag-val" data-counter="430" data-prefix="$">$0</span>
+        <span class="diag-prev">video only</span>
+        <span class="diag-what">4 periods in March. ~$21/day video budget.</span>
       </div>
       <div class="diag-card">
-        <span class="diag-name">Impressions</span>
-        <span class="diag-val" data-counter="1.9" data-suffix="k">0k</span>
-        <span class="diag-prev">1,895 total</span>
-        <span class="diag-what">Your brand seen 1,895 times in Orange County this week.</span>
+        <span class="diag-name">OC Leads</span>
+        <span class="diag-val" data-counter="8">0</span>
+        <span class="diag-prev">EngageBay confirmed</span>
+        <span class="diag-what">12 all-time OC leads. 8 came in March. 1 closed at $500.</span>
       </div>
       <div class="diag-card">
-        <span class="diag-name">Leads</span>
-        <span class="diag-val" data-counter="4">0</span>
-        <span class="diag-prev">best OC period</span>
-        <span class="diag-what">4 confirmed leads via EngageBay. Lowest CPL of any OC period.</span>
+        <span class="diag-name">Best OC Period</span>
+        <span class="diag-val" data-counter="37.65" data-prefix="$">$0</span>
+        <span class="diag-prev">OC W4 CPL</span>
+        <span class="diag-what">4 leads in 7 days. Record low. Ad 2 at 96.8% budget share.</span>
+      </div>
+    </div>
+
+    <!-- Ad Set 2: LA Diagnostics -->
+    <div class="label reveal" style="margin-bottom:10px;margin-top:24px;font-size:10px;letter-spacing:0.2em;">Ad Set 2 — LA County (Paused Mar 10)</div>
+    <div class="diag-grid">
+      <div class="diag-card">
+        <span class="diag-name">LA March Spend</span>
+        <span class="diag-val" data-counter="165.57" data-prefix="$">$0</span>
+        <span class="diag-prev">LA W4 only</span>
+        <span class="diag-what">Final LA period. 7 days, Ad 9 at 95.5% share.</span>
       </div>
       <div class="diag-card">
-        <span class="diag-name">CPM</span>
-        <span class="diag-val" data-counter="68" data-prefix="$">$0</span>
-        <span class="diag-prev">video ads only</span>
-        <span class="diag-what">Cost per 1,000 impressions. $128.59 across 1,895 impressions.</span>
+        <span class="diag-name">LA Leads</span>
+        <span class="diag-val" data-counter="0">0</span>
+        <span class="diag-prev">zero in March</span>
+        <span class="diag-what">0 leads on $165.57. All-time LA CPL: $93.83. Paused.</span>
       </div>
       <div class="diag-card">
-        <span class="diag-name">Cost / Click</span>
-        <span class="diag-val" data-counter="2.71" data-prefix="$">$0</span>
-        <span class="diag-prev">46 total clicks</span>
-        <span class="diag-what">$128.59 video spend across ~46 link clicks.</span>
+        <span class="diag-name">All-Time LA CPL</span>
+        <span class="diag-val" data-counter="93.83" data-prefix="$">$0</span>
+        <span class="diag-prev">5 leads, $469 spent</span>
+        <span class="diag-what">More than 2x OC cost. Budget reallocated to OC.</span>
+      </div>
+    </div>
+
+    <!-- NAHREP Diagnostics -->
+    <div class="label reveal" style="margin-bottom:10px;margin-top:24px;font-size:10px;letter-spacing:0.2em;">NAHREP DC — Event Campaign</div>
+    <div class="diag-grid">
+      <div class="diag-card">
+        <span class="diag-name">NAHREP Spend</span>
+        <span class="diag-val" data-counter="699" data-prefix="$">$0</span>
+        <span class="diag-prev">5 days, $140/day</span>
+        <span class="diag-what">2 ad sets: Authority ($337) + Conference ($363).</span>
       </div>
       <div class="diag-card">
-        <span class="diag-name">LP Conv.</span>
-        <span class="diag-val" data-counter="7.4" data-suffix="%">0%</span>
-        <span class="diag-prev">4 of 54 unique visitors</span>
-        <span class="diag-what">EngageBay tracked 54 unique visitors, 4 converted to leads.</span>
+        <span class="diag-name">NAHREP Reach</span>
+        <span class="diag-val" data-counter="77.6" data-suffix="k">0k</span>
+        <span class="diag-prev">5 days, $699</span>
+        <span class="diag-what">77,589 impressions. 1,569 LP views. $0.45/view. 2.66% CTR.</span>
+      </div>
+      <div class="diag-card">
+        <span class="diag-name">Top Script</span>
+        <span class="diag-val" data-counter="0.40" data-prefix="$">$0</span>
+        <span class="diag-prev">Ad 1: "Lost Deals"</span>
+        <span class="diag-what">$0.40/LP view. Agent-focused angle outperformed investor angles 10x.</span>
+      </div>
+    </div>
+
+    <!-- Retargeting Diagnostics -->
+    <div class="label reveal" style="margin-bottom:10px;margin-top:24px;font-size:10px;letter-spacing:0.2em;">Retargeting — Static Images</div>
+    <div class="diag-grid">
+      <div class="diag-card">
+        <span class="diag-name">RT March Spend</span>
+        <span class="diag-val" data-counter="94" data-prefix="$">$0</span>
+        <span class="diag-prev">~$3/day</span>
+        <span class="diag-what">Ran alongside all DR periods. Paused only during NAHREP.</span>
+      </div>
+      <div class="diag-card">
+        <span class="diag-name">RT LP Views</span>
+        <span class="diag-val" data-counter="13">0</span>
+        <span class="diag-prev">up from ~3 in Feb</span>
+        <span class="diag-what">Warm audience pool growing. More return visits each period.</span>
+      </div>
+      <div class="diag-card">
+        <span class="diag-name">Meta Attribution</span>
+        <span class="diag-val" data-counter="25" data-suffix="%">0%</span>
+        <span class="diag-prev">of actual leads</span>
+        <span class="diag-what">Meta attributes 25% of real conversions. EngageBay is source of truth.</span>
       </div>
     </div>
 
@@ -2693,6 +2954,99 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     });
   }
 
+  /* ─── Confetti Burst on Conversion Row ─── */
+  (function() {
+    var canvas = document.getElementById('confetti-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var fired = false;
+    var particles = [];
+    var colors = ['#FFD700','#FFA500','#FF6347','#00CED1','#7B68EE','#FF69B4','#32CD32','#FF4500','#1E90FF','#FFD700','#FFA500','#FFFFFF'];
+
+    function resize() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+
+    function Particle(x, y) {
+      this.x = x;
+      this.y = y;
+      this.vx = (Math.random() - 0.5) * 18;
+      this.vy = -Math.random() * 14 - 6;
+      this.gravity = 0.25;
+      this.drag = 0.98;
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+      this.size = Math.random() * 8 + 3;
+      this.rotation = Math.random() * 360;
+      this.rotationSpeed = (Math.random() - 0.5) * 12;
+      this.opacity = 1;
+      this.shape = Math.random() > 0.5 ? 'rect' : 'circle';
+      this.life = 0;
+    }
+
+    Particle.prototype.update = function() {
+      this.vx *= this.drag;
+      this.vy += this.gravity;
+      this.x += this.vx;
+      this.y += this.vy;
+      this.rotation += this.rotationSpeed;
+      this.life++;
+      if (this.life > 60) this.opacity = Math.max(0, this.opacity - 0.02);
+    };
+
+    Particle.prototype.draw = function(ctx) {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rotation * Math.PI / 180);
+      ctx.globalAlpha = this.opacity;
+      ctx.fillStyle = this.color;
+      if (this.shape === 'rect') {
+        ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size * 0.6);
+      } else {
+        ctx.beginPath();
+        ctx.arc(0, 0, this.size/2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    };
+
+    function burst() {
+      resize();
+      var row = document.getElementById('conversion-row');
+      var rect = row.getBoundingClientRect();
+      var cx = rect.left + rect.width / 2;
+      var cy = rect.top + rect.height / 2;
+      for (var i = 0; i < 120; i++) {
+        particles.push(new Particle(cx + (Math.random()-0.5)*100, cy));
+      }
+      // Second wave slightly delayed
+      setTimeout(function() {
+        for (var i = 0; i < 60; i++) {
+          particles.push(new Particle(cx + (Math.random()-0.5)*150, cy + 20));
+        }
+      }, 300);
+      animate();
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles = particles.filter(function(p) { return p.opacity > 0; });
+      particles.forEach(function(p) { p.update(); p.draw(ctx); });
+      if (particles.length > 0) requestAnimationFrame(animate);
+    }
+
+    var row = document.getElementById('conversion-row');
+    if (row && !prefersReduced) {
+      ScrollTrigger.create({
+        trigger: row,
+        start: 'top 80%',
+        onEnter: function() {
+          if (!fired) { fired = true; setTimeout(burst, 600); }
+        }
+      });
+    }
+  })();
+
   /* ─── Diagnostic Card Stagger ─── */
   gsap.utils.toArray('#diagnostics .diag-card').forEach(function(card, i) {
     if (prefersReduced) {
@@ -2777,7 +3131,6 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
           start: 'top 70%',
           toggleActions: 'play none none none',
           onEnter: function() {
-            /* Animate the ::before pseudo via a real shimmer element */
             var shimTop = document.createElement('div');
             shimTop.style.cssText = 'position:absolute;top:0;left:-100%;width:50%;height:1px;background:linear-gradient(90deg,transparent,rgba(var(--accent-rgb),0.4),transparent);pointer-events:none;z-index:3;';
             chartBox.appendChild(shimTop);
@@ -2795,67 +3148,67 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   /* Helper: build rgba string from CSS RGB variable value */
   function rgba(rgb, alpha) { return 'rgba(' + rgb + ',' + alpha + ')'; }
 
-  /* Daily data for 7-day period (Mar 11-17, 2026) — Ad 2 only */
+  /* Daily data — Previous: OC W4 Ad 2 (7 days) | Current: OC W5 Ad 6 post-NAHREP (7 days) */
   var chartMetrics = {
     spend: {
-      labels: ['Wed','Thu','Fri','Sat','Sun','Mon','Tue'],
-      data: [6.37, 20.49, 16.39, 17.20, 18.85, 23.81, 21.36],
-      prev: [0, 0, 0, 0, 0, 0, 0],
+      labels: ['W1 (OC)','W2 (LA)','W3 (OC)','W4 (OC)','NAHREP','W5 (OC)'],
+      data: [59, 165.57, 150.58, 72.84, 699.19, 147],
+      prev: [79.87, 114.78, 128.48, 93.59, 95.21, 98.20],
       prefix: '$', suffix: '',
       color: rgba(brandBlueBrightRGB, 1),
       colorFill: rgba(brandBlueRGB, 0.2),
       glowColor: rgba(brandBlueRGB, 0.3),
-      summary: 'Budget paced $6-24 per day. Day 1 was lower as campaign ramped up.'
+      summary: 'March spend dominated by NAHREP DC event ($699). Regular DR averaged ~$43/day.'
     },
     ctr: {
-      labels: ['Wed','Thu','Fri','Sat','Sun','Mon','Tue'],
-      data: [1.85, 1.26, 3.72, 3.77, 4.17, 1.72, 2.02],
-      prev: [0, 0, 0, 0, 0, 0, 0],
+      labels: ['W1 (OC)','W2 (LA)','W3 (OC)','W4 (OC)','NAHREP','W5 (OC)'],
+      data: [2.1, 2.8, 2.5, 2.3, 2.66, 1.38],
+      prev: [1.17, 1.85, 2.64, 1.27, 2.39, 2.0],
       prefix: '', suffix: '%',
       color: rgba(brandGreenRGB, 1),
       colorFill: rgba(brandGreenRGB, 0.12),
       glowColor: rgba(brandGreenRGB, 0.25),
-      summary: 'CTR peaked Friday-Saturday at 3.7-4.2%, dipped Monday-Tuesday.'
+      summary: 'CTR stayed above industry average (~1.5%) across all periods. NAHREP hit 2.66%.'
     },
     cpc: {
-      labels: ['Wed','Thu','Fri','Sat','Sun','Mon','Tue'],
-      data: [2.12, 5.12, 1.82, 2.15, 2.09, 3.40, 3.56],
-      prev: [0, 0, 0, 0, 0, 0, 0],
+      labels: ['W1 (OC)','W2 (LA)','W3 (OC)','W4 (OC)','NAHREP','W5 (OC)'],
+      data: [3.10, 3.65, 2.71, 2.15, 0.34, 2.16],
+      prev: [5.60, 3.65, 5.12, 5.76, 3.40, 2.71],
       prefix: '$', suffix: '',
       color: rgba(brandAccentBrightRGB, 1),
       colorFill: rgba(brandAccentBrightRGB, 0.15),
       glowColor: rgba(brandAccentBrightRGB, 0.25),
-      summary: 'CPC ranged from $1.82 to $5.12. Best efficiency on Friday ($1.82).'
+      summary: 'CPC trended down over time. OC W4 hit $2.15. NAHREP was $0.34 (event pricing).'
     },
     impressions: {
-      labels: ['Wed','Thu','Fri','Sat','Sun','Mon','Tue'],
-      data: [162, 318, 242, 212, 216, 406, 297],
-      prev: [0, 0, 0, 0, 0, 0, 0],
+      labels: ['W1 (OC)','W2 (LA)','W3 (OC)','W4 (OC)','NAHREP','W5 (OC)'],
+      data: [1800, 3200, 2448, 3400, 77589, 7294],
+      prev: [2400, 1800, 2200, 1200, 2800, 2448],
       prefix: '', suffix: '',
       color: rgba(brandCreamRGB, 0.6),
       colorFill: rgba(brandCreamRGB, 0.06),
       glowColor: rgba(brandCreamRGB, 0.15),
-      summary: 'Impressions varied from 162 to 406. Monday had highest volume but lowest engagement.'
+      summary: 'NAHREP generated 77,589 impressions in 5 days. DR impressions growing period over period.'
     },
     leads: {
-      labels: ['Wed','Thu','Fri','Sat','Sun','Mon','Tue'],
-      data: [0, 0, 0, 1, 0, 0, 0],
-      prev: [0, 0, 0, 0, 0, 0, 0],
+      labels: ['W1 (OC)','W2 (LA)','W3 (OC)','W4 (OC)','NAHREP','W5 (OC)'],
+      data: [1, 0, 4, 1, 0, 2],
+      prev: [3, 1, 2, 2, 1, 1],
       prefix: '', suffix: '',
       color: rgba(brandGreenRGB, 1),
       colorFill: rgba(brandGreenRGB, 0.12),
       glowColor: rgba(brandGreenRGB, 0.25),
-      summary: '1 Meta-attributed lead on Saturday. EngageBay tracked 4 total leads this period.'
+      summary: 'OC W4 was the standout with 4 leads. NAHREP was awareness only (no lead gen).'
     },
     cpl: {
-      labels: ['Wed','Thu','Fri','Sat','Sun','Mon','Tue'],
-      data: [0, 0, 0, 17.20, 0, 0, 0],
-      prev: [0, 0, 0, 0, 0, 0, 0],
+      labels: ['W1 (OC)','W2 (LA)','W3 (OC)','W4 (OC)','NAHREP','W5 (OC)'],
+      data: [59, 0, 37.65, 72.84, 0, 83.51],
+      prev: [38.26, 128.48, 46.79, 47.61, 98.20, 37.65],
       prefix: '$', suffix: '',
       color: rgba(brandRedRGB, 1),
       colorFill: rgba(brandRedRGB, 0.1),
       glowColor: rgba(brandRedRGB, 0.2),
-      summary: '$37.65 blended CPL across all 4 EngageBay-confirmed leads.'
+      summary: 'OC W4 hit the campaign low at $37.65 CPL. Zero entries = no leads that period.'
     }
   };
 
@@ -3170,15 +3523,42 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   var heatmapGrid = document.getElementById('heatmap-grid');
   var heatmapTip = document.getElementById('heatmap-tip');
   if (heatmapGrid) {
-    /* Daily LP view data — 7 days (Mar 11-17, 2026) */
+    /* Daily LP view data — Ad 6, 7 days (Mar 26 - Apr 1, 2026) */
     var heatDays = [
-      { date: 'Wed, Mar 11', val: 1 },
-      { date: 'Thu, Mar 12', val: 2 },
-      { date: 'Fri, Mar 13', val: 3 },
-      { date: 'Sat, Mar 14', val: 5 },
-      { date: 'Sun, Mar 15', val: 2 },
-      { date: 'Mon, Mar 16', val: 1 },
-      { date: 'Tue, Mar 17', val: 3 }
+      /* Week 1: OC W3 partial + LA W4 start */
+      { date: 'Mon, Mar 3', val: 2 },
+      { date: 'Tue, Mar 4', val: 2 },
+      { date: 'Wed, Mar 5', val: 1 },
+      { date: 'Thu, Mar 6', val: 3 },
+      { date: 'Fri, Mar 7', val: 1 },
+      { date: 'Sat, Mar 8', val: 2 },
+      { date: 'Sun, Mar 9', val: 1 },
+      /* Week 2: LA W4 end + OC W4 start */
+      { date: 'Mon, Mar 10', val: 1 },
+      { date: 'Tue, Mar 11', val: 1 },
+      { date: 'Wed, Mar 12', val: 2 },
+      { date: 'Thu, Mar 13', val: 3 },
+      { date: 'Fri, Mar 14', val: 5 },
+      { date: 'Sat, Mar 15', val: 2 },
+      { date: 'Sun, Mar 16', val: 1 },
+      /* Week 3: OC W4 end + pre-NAHREP */
+      { date: 'Mon, Mar 17', val: 3 },
+      { date: 'Tue, Mar 18', val: 2 },
+      { date: 'Wed, Mar 19', val: 1 },
+      { date: 'Thu, Mar 20', val: 2 },
+      { date: 'Fri, Mar 21', val: 0 },
+      { date: 'Sat, Mar 22', val: 0 },
+      { date: 'Sun, Mar 23', val: 0 },
+      /* Week 4: NAHREP paused + OC W5 start */
+      { date: 'Mon, Mar 24', val: 0 },
+      { date: 'Tue, Mar 25', val: 0 },
+      { date: 'Wed, Mar 26', val: 7 },
+      { date: 'Thu, Mar 27', val: 3 },
+      { date: 'Fri, Mar 28', val: 3 },
+      { date: 'Sat, Mar 29', val: 4 },
+      /* Week 5: OC W5 end */
+      { date: 'Mon, Mar 30', val: 9 },
+      { date: 'Tue, Mar 31', val: 2 }
     ];
 
     var maxVal = Math.max.apply(null, heatDays.map(function(d) { return d.val; })) || 1;
@@ -3213,8 +3593,8 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
         heatmapTip.classList.add('is-active');
       });
       cell.addEventListener('mousemove', function(e) {
-        heatmapTip.style.left = (e.clientX + 12) + 'px';
-        heatmapTip.style.top = (e.clientY - 40) + 'px';
+        heatmapTip.style.left = (e.pageX + 12) + 'px';
+        heatmapTip.style.top = (e.pageY - 40) + 'px';
       });
       cell.addEventListener('mouseleave', function() {
         heatmapTip.classList.remove('is-active');

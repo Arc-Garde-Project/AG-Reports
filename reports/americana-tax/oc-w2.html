@@ -334,6 +334,7 @@ body {
   <div class="reports-nav-divider"></div>
   <div class="reports-nav-group">Monthly Reports</div>
   <a href="/reports/americana-tax/feb-2026" class="reports-nav-link">February 2026<span>Monthly</span></a>
+  <a href="/reports/americana-tax/mar-2026" class="reports-nav-link">March 2026<span>Monthly</span></a>
   <div class="reports-nav-divider"></div>
   <a href="/reports/americana-tax" class="reports-nav-link reports-nav-all">All Reports</a>
 </nav>
@@ -565,12 +566,26 @@ function renderRetargetBarsOC2(){
 function toggleReportsNav(){
   document.getElementById('reportsNav').classList.toggle('open');
   document.getElementById('reportsOverlay').classList.toggle('open');
+  dismissTooltip();
 }
 function closeReportsNav(){
   document.getElementById('reportsNav').classList.remove('open');
   document.getElementById('reportsOverlay').classList.remove('open');
 }
-document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeReportsNav(); });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeReportsNav(); dismissTooltip(); } });
+
+/* ── Menu Tooltip ── */
+var tooltipTimer;
+function dismissTooltip(){
+  var tip = document.getElementById('menuTooltip');
+  if(tip) tip.classList.remove('is-visible');
+  if(tooltipTimer) clearTimeout(tooltipTimer);
+}
+setTimeout(function(){
+  var tip = document.getElementById('menuTooltip');
+  if(tip) tip.classList.add('is-visible');
+  tooltipTimer = setTimeout(dismissTooltip, 7000);
+}, 2100);
 
 document.addEventListener('DOMContentLoaded',function(){renderCardsOC2();updateChartOC2();updateInsightsOC2();});
 </script>
