@@ -313,8 +313,8 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 <hr class="ag-divider db" id="divider-1">
 
 <div class="ag-chart-wrap db" id="trend-wrap">
-  <h2 class="ag-chart-title">4-Month Trend</h2>
-  <p class="ag-chart-desc" id="trend-desc">Monthly views &mdash; Nov through Feb</p>
+  <h2 class="ag-chart-title">2-Month Trend</h2>
+  <p class="ag-chart-desc" id="trend-desc">Monthly views &mdash; Start through Dec</p>
   <div class="ag-chart-canvas"><canvas id="trendChart"></canvas></div>
 </div>
 
@@ -354,8 +354,8 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const MONTH_INDEX=1;
-const allMonths=['Nov','Dec','Jan','Feb'];
+const MONTH_INDEX=2;
+const allMonths=['Start','Nov','Dec'];
 const platNames=['Instagram','TikTok','YouTube','Facebook','Threads'];
 const platColorsRGBA=['rgba(225,48,108,0.85)','rgba(130,130,130,0.85)','rgba(255,50,50,0.85)','rgba(24,119,242,0.85)','rgba(90,90,90,0.85)'];
 const platDotColors={Instagram:'#E1306C',TikTok:'#888',YouTube:'#FF0000',Facebook:'#1877F2',Threads:'#666'};
@@ -367,7 +367,7 @@ const D={
     views:{Instagram:16106,TikTok:20000,YouTube:22593,Facebook:8300,Threads:610},eng:{Instagram:1084,TikTok:1072,YouTube:419,Facebook:497,Threads:115},fol:{Instagram:-238,TikTok:22,YouTube:21,Facebook:4,Threads:6},
     totalViews:67609,totalEng:3187,folNet:-185,
     topPlat:'YouTube',topPlatVal:'22,593 views',
-    trendViews:[59700, 67609, 64498, 50261],
+    trendViews:[0, 59700, 67609],
     insights:['Best month for views at <span class="g">67,609</span> &mdash; up 13.2% from November','Instagram engagement peaked at <span class="g">1,084 interactions</span> &mdash; the highest single-platform month','YouTube held steady at <span class="g">22,593 views</span>','Instagram lost <span class="r">238 followers</span> &mdash; early warning sign'],
     alert:'Instagram lost <strong>238 followers</strong> this month while engagement peaked at 1,084. High engagement but declining audience &mdash; content may be polarizing.'
   },
@@ -377,7 +377,7 @@ const D={
     views:{Instagram:5226,TikTok:5887,YouTube:5654,Facebook:990,Threads:61},eng:{Instagram:96,TikTok:130,YouTube:59,Facebook:24,Threads:4},fol:{Instagram:7,TikTok:4,YouTube:5,Facebook:2,Threads:1},
     totalViews:17818,totalEng:313,folNet:19,
     topPlat:'TikTok',topPlatVal:'5,887 views',
-    trendViews:[29583, 17818, 37048, 27544],
+    trendViews:[0, 29583, 17818],
     insights:['Slower month at <span class="r">17,818 views</span> &mdash; down 39.8% from November','YouTube dropped from 14,300 to <span class="r">5,654 views</span> &mdash; likely no viral content this month','TikTok led views at <span class="g">5,887</span> with strongest engagement at 130','All platforms still gaining followers &mdash; <span class="g">+19 net</span>'],
     alert:null
   },
@@ -387,7 +387,7 @@ const D={
     views:{Instagram:21332,TikTok:25887,YouTube:28247,Facebook:9290,Threads:671},eng:{Instagram:1180,TikTok:1202,YouTube:478,Facebook:521,Threads:119},fol:{Instagram:-231,TikTok:26,YouTube:26,Facebook:6,Threads:7},
     totalViews:85427,totalEng:3500,folNet:-166,
     topPlat:'YouTube',topPlatVal:'28,247 views',
-    trendViews:[89283, 85427, 101546, 77805],
+    trendViews:[0, 89283, 85427],
     insights:['<span class="g">85,427 combined views</span> with engagement up 14.5% to 3,500','YouTube led combined views at <span class="g">28,247</span> with TikTok close behind at 25,887','Instagram engagement hit <span class="g">1,180</span> &mdash; best combined engagement month','Follower count dropped <span class="r">-166</span> driven by Dr. Bob Instagram losses'],
     alert:'Combined follower count dropped <strong>-166</strong> this month. Dr. Bob Instagram lost 238 followers while Deepwaters views fell 39.8%.'
   }

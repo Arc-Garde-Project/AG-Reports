@@ -313,8 +313,8 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 <hr class="ag-divider db" id="divider-1">
 
 <div class="ag-chart-wrap db" id="trend-wrap">
-  <h2 class="ag-chart-title">4-Month Trend</h2>
-  <p class="ag-chart-desc" id="trend-desc">Monthly views &mdash; Nov through Mar</p>
+  <h2 class="ag-chart-title">5-Month Trend</h2>
+  <p class="ag-chart-desc" id="trend-desc">Monthly views &mdash; Start through Mar</p>
   <div class="ag-chart-canvas"><canvas id="trendChart"></canvas></div>
 </div>
 
@@ -354,8 +354,8 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const MONTH_INDEX=4;
-const allMonths=['Nov','Dec','Jan','Feb','Mar'];
+const MONTH_INDEX=5;
+const allMonths=['Start','Nov','Dec','Jan','Feb','Mar'];
 const platNames=['Instagram','TikTok','YouTube','Facebook','Threads'];
 const platColorsRGBA=['rgba(225,48,108,0.85)','rgba(130,130,130,0.85)','rgba(255,50,50,0.85)','rgba(24,119,242,0.85)','rgba(90,90,90,0.85)'];
 const platDotColors={Instagram:'#E1306C',TikTok:'#888',YouTube:'#FF0000',Facebook:'#1877F2',Threads:'#666'};
@@ -367,7 +367,7 @@ const D={
     views:{Instagram:8475,TikTok:14000,YouTube:16580,Facebook:7294,Threads:169},eng:{Instagram:180,TikTok:310,YouTube:121,Facebook:85,Threads:49},fol:{Instagram:-7,TikTok:9,YouTube:17,Facebook:13,Threads:0},
     totalViews:46518,totalEng:745,folNet:32,
     topPlat:'YouTube',topPlatVal:'16,580 views',
-    trendViews:[59700, 67609, 64498, 50261, 46518],
+    trendViews:[0, 59700, 67609, 64498, 50261, 46518],
     insights:['Views at <span class="r">46,518</span> &mdash; down 7.4% from February','YouTube remains #1 platform at <span class="g">16,580 views</span> with 62.9 watch hours','Instagram follower loss nearly stopped at <span class="g">-7</span> &mdash; down from -56 in Feb and -729 in Jan','Net follower growth improved to <span class="g">+32</span> &mdash; best month since tracking began','Engagement dropped <span class="r">43%</span> from February &mdash; TikTok and Facebook engagement down significantly'],
     alert:'Engagement dropped <strong>43%</strong> from February (1,316 to 745). TikTok engagement halved (425 to 310) and Facebook collapsed from 494 to 85. Views are holding but interactions are declining &mdash; content may need refreshing.'
   },
@@ -377,7 +377,7 @@ const D={
     views:{Instagram:4291,TikTok:14000,YouTube:5625,Facebook:1040,Threads:70},eng:{Instagram:70,TikTok:374,YouTube:61,Facebook:25,Threads:1},fol:{Instagram:-4,TikTok:7,YouTube:7,Facebook:0,Threads:0},
     totalViews:25026,totalEng:531,folNet:10,
     topPlat:'TikTok',topPlatVal:'14,000 views',
-    trendViews:[29583, 17818, 37048, 27544, 25026],
+    trendViews:[0, 29583, 17818, 37048, 27544, 25026],
     insights:['TikTok held strong at <span class="g">14,000 views</span> &mdash; consistent third month in a row','TikTok engagement steady at <span class="g">374</span> &mdash; still the engagement engine','YouTube dipped to <span class="r">5,625 views</span> (down 28% from Feb)','Instagram views held at <span class="g">4,291</span> (up from Feb) but follower count still declining at <span class="r">-4</span>','Net follower growth positive at <span class="g">+10</span> for the fourth straight month'],
     alert:null
   },
@@ -387,7 +387,7 @@ const D={
     views:{Instagram:12766,TikTok:28000,YouTube:22205,Facebook:8334,Threads:239},eng:{Instagram:250,TikTok:684,YouTube:182,Facebook:110,Threads:50},fol:{Instagram:-11,TikTok:16,YouTube:24,Facebook:13,Threads:0},
     totalViews:71544,totalEng:1276,folNet:42,
     topPlat:'TikTok',topPlatVal:'28,000 views',
-    trendViews:[89283, 85427, 101546, 77805, 71544],
+    trendViews:[0, 89283, 85427, 101546, 77805, 71544],
     insights:['Combined views at <span class="r">71,544</span> &mdash; down 8% from February','TikTok dominates at <span class="g">28,000 views</span> and <span class="g">684 engagement</span> (54% of all engagement)','Follower growth at <span class="g">+42</span> &mdash; second positive month in a row','Combined engagement dropped <span class="r">36%</span> from February (2,001 to 1,276)','Instagram follower hemorrhage nearly stopped: <span class="g">-11 combined</span> vs -50 in Feb and -779 in Jan'],
     alert:'Combined engagement dropped <strong>36%</strong> from February. Views only declined 8% but interactions fell significantly. The audience is watching but engaging less.'
   }

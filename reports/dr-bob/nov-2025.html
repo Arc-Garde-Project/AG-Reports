@@ -313,8 +313,8 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 <hr class="ag-divider db" id="divider-1">
 
 <div class="ag-chart-wrap db" id="trend-wrap">
-  <h2 class="ag-chart-title">4-Month Trend</h2>
-  <p class="ag-chart-desc" id="trend-desc">Monthly views &mdash; Nov through Mar</p>
+  <h2 class="ag-chart-title">1-Month Trend</h2>
+  <p class="ag-chart-desc" id="trend-desc">Monthly views &mdash; Start through Nov</p>
   <div class="ag-chart-canvas"><canvas id="trendChart"></canvas></div>
 </div>
 
@@ -354,8 +354,8 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const MONTH_INDEX=0;
-const allMonths=['Nov','Dec','Jan','Feb','Mar'];
+const MONTH_INDEX=1;
+const allMonths=['Start','Nov'];
 const platNames=['Instagram','TikTok','YouTube','Facebook','Threads'];
 const platColorsRGBA=['rgba(225,48,108,0.85)','rgba(130,130,130,0.85)','rgba(255,50,50,0.85)','rgba(24,119,242,0.85)','rgba(90,90,90,0.85)'];
 const platDotColors={Instagram:'#E1306C',TikTok:'#888',YouTube:'#FF0000',Facebook:'#1877F2',Threads:'#666'};
@@ -367,7 +367,7 @@ const D={
     views:{Instagram:10315,TikTok:18000,YouTube:22062,Facebook:9070,Threads:253},eng:{Instagram:401,TikTok:908,YouTube:562,Facebook:569,Threads:65},fol:{Instagram:-39,TikTok:100,YouTube:100,Facebook:5,Threads:0},
     totalViews:59700,totalEng:2505,folNet:166,
     topPlat:'YouTube',topPlatVal:'22,062 views',
-    trendViews:[59700, 67609, 64498, 50261, 46518],
+    trendViews:[0, 59700],
     insights:['Strong opening month at <span class="g">59,700 views</span> across 5 platforms','YouTube led all platforms at <span class="g">22,062 views</span> &mdash; 37% of total traffic','TikTok and YouTube each gained <span class="g">100 followers</span> &mdash; strong early momentum','Facebook engagement was the second highest at <span class="g">569 interactions</span>','Instagram lost <span class="r">39 followers</span> &mdash; early signal of the decline to come'],
     alert:null
   },
@@ -377,7 +377,7 @@ const D={
     views:{Instagram:7545,TikTok:6016,YouTube:14300,Facebook:1664,Threads:58},eng:{Instagram:157,TikTok:205,YouTube:89,Facebook:101,Threads:0},fol:{Instagram:3,TikTok:4,YouTube:7,Facebook:3,Threads:140},
     totalViews:29583,totalEng:552,folNet:157,
     topPlat:'YouTube',topPlatVal:'14,300 views',
-    trendViews:[29583, 17818, 37048, 27544, 25026],
+    trendViews:[0, 29583],
     insights:['Launched with <span class="g">29,583 views</span> across brand new accounts','YouTube dominated at <span class="g">14,300 views</span> &mdash; 48% of all traffic in month one','Threads gained <span class="g">140 followers</span> in launch month &mdash; strongest single-platform follower gain','Instagram led engagement at <span class="g">157 interactions</span> with TikTok close behind at 205','Every platform gained followers &mdash; <span class="g">+157 net</span> in the first month'],
     alert:null
   },
@@ -387,7 +387,7 @@ const D={
     views:{Instagram:17860,TikTok:24016,YouTube:36362,Facebook:10734,Threads:311},eng:{Instagram:558,TikTok:1113,YouTube:651,Facebook:670,Threads:65},fol:{Instagram:-36,TikTok:104,YouTube:107,Facebook:8,Threads:140},
     totalViews:89283,totalEng:3057,folNet:323,
     topPlat:'YouTube',topPlatVal:'36,362 views',
-    trendViews:[89283, 85427, 101546, 77805, 71544],
+    trendViews:[0, 89283],
     insights:['<span class="g">89,283 combined views</span> in the opening month across both brands','YouTube led at <span class="g">36,362 views</span> &mdash; 41% of combined traffic','TikTok led engagement at <span class="g">1,113 interactions</span> &mdash; already the engagement engine from day one','Net follower growth at <span class="g">+323</span> &mdash; the strongest month across the entire reporting period','Facebook quietly delivered <span class="g">670 engagements</span> &mdash; second highest engagement platform'],
     alert:null
   }
