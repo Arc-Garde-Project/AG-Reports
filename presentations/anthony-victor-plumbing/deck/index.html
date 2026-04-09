@@ -140,7 +140,7 @@
     color: var(--navy); margin-bottom: 18px; letter-spacing: -2.5px;
   }
   .cover h1 em { font-style: normal; color: var(--blue); }
-  .cover .sub { color: var(--slate); margin-bottom: 56px; max-width: 560px; font-weight: 400; margin-left: auto; margin-right: auto; }
+  .cover .sub { color: var(--slate); margin-bottom: 36px; max-width: 560px; font-weight: 400; margin-left: auto; margin-right: auto; }
   .cover-meta {
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;
     padding-top: 32px; border-top: 1px solid var(--lighter);
@@ -399,17 +399,19 @@
 
   <!-- ===== 1. COVER ===== -->
   <section class="slide s-white active">
-    <div class="slide__inner">
-      <div class="cover-badge reveal">Platform Walkthrough + Proposal</div>
-      <h1 class="reveal r1">Loyalty & Rewards<br><em>Platform</em></h1>
-      <p class="sub reveal r2">A custom website that tracks loyalty, rewards referrals, and grows repeat business. No app downloads. Runs in any browser.</p>
-      <p class="reveal r2" style="font-size:14px; color:var(--light); margin-bottom:40px;">All visuals in this deck are conceptual mockups, not the final product. The finished platform will be designed and approved with you before development begins.</p>
-      <dl class="cover-meta reveal r3">
-        <div><dt>Prepared For</dt><dd>Anthony Vodnik</dd></div>
-        <div><dt>Prepared By</dt><dd>Arc Garde</dd></div>
-        <div><dt>Platform Type</dt><dd>Custom Website</dd></div>
-        <div><dt>Date</dt><dd>April 2026</dd></div>
-      </dl>
+    <div class="slide__inner" style="display:flex; flex-direction:column; justify-content:center; min-height:100%;">
+      <div style="flex:1; display:flex; flex-direction:column; justify-content:center; text-align:center;">
+        <div class="cover-badge reveal">Platform Walkthrough + Proposal</div>
+        <h1 class="reveal r1">Loyalty & Rewards<br><em>Platform</em></h1>
+        <p class="sub reveal r2">A custom website that tracks loyalty, rewards referrals, and grows repeat business. No app downloads. Runs in any browser.</p>
+        <dl class="cover-meta reveal r3">
+          <div><dt>Prepared For</dt><dd>Anthony Vodnik</dd></div>
+          <div><dt>Prepared By</dt><dd>Arc Garde</dd></div>
+          <div><dt>Platform Type</dt><dd>Custom Website</dd></div>
+          <div><dt>Date</dt><dd>April 2026</dd></div>
+        </dl>
+      </div>
+      <p class="reveal r4" style="font-size:13px; color:var(--light); text-align:center; padding-top:20px;">All visuals in this deck are conceptual mockups. The finished platform will be designed and approved with you before development begins.</p>
     </div>
   </section>
 
@@ -469,18 +471,18 @@
               <div class="phone-nav-item">History</div>
             </div>
           </div>
-          <p style="font-size:12px; color:var(--slate); margin-top:14px; text-align:center;">Conceptual mockup. Not the final design.</p>
         </div>
       </div>
+      <p style="font-size:13px; color:var(--light); margin-top:20px; text-align:center;">Conceptual mockup. Not the final design.</p>
     </div>
   </section>
 
   <!-- ===== 4. YOUR DASHBOARD ===== -->
   <section class="slide s-ghost">
-    <div class="slide__inner">
+    <div class="slide__inner" style="text-align:center;">
       <div class="eyebrow reveal">Your Dashboard</div>
       <h2 class="reveal r1">Everything You Need.<br><span>One Screen.</span></h2>
-      <p class="sub reveal r2">Search any customer, log a payment, check your numbers. Works on your phone or any computer.</p>
+      <p class="sub reveal r2" style="margin-left:auto; margin-right:auto;">Search any customer, log a payment, check your numbers. Works on your phone or any computer.</p>
       <div class="dash reveal r3">
         <div class="dash-bar"><div class="dash-dot r"></div><div class="dash-dot y"></div><div class="dash-dot g"></div></div>
         <div class="dash-body">
