@@ -101,10 +101,11 @@
   .slide.active .r6 { transition-delay: .7s; }
 
   /* ===== BACKGROUNDS ===== */
-  .s-dark { background: var(--navy); color: var(--white); }
-  .s-ghost { background: var(--ghost); }
-  .s-white { background: var(--white); }
-  .s-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); color: var(--white); }
+  .slide.s-dark { background: var(--navy); color: var(--white); }
+  .slide.s-ghost { background: var(--ghost); }
+  .slide.s-white { background: var(--white); }
+  .slide.s-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); color: var(--white); }
+  .slide.cover { background: var(--navy); }
 
   /* ===== EYEBROW ===== */
   .eyebrow {
@@ -128,7 +129,7 @@
   .s-dark .sub, .s-gradient .sub { color: var(--light); }
 
   /* ===== COVER ===== */
-  .cover { background: var(--navy); position: relative; }
+  .cover { background: var(--navy); position: relative; overflow: hidden; }
   .cover::before {
     content: ''; position: absolute; top: 50%; right: 0; width: 800px; height: 800px; border-radius: 50%;
     transform: translate(30%, -60%);
@@ -320,16 +321,77 @@
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
-    .cover-meta { grid-template-columns: 1fr 1fr; }
-    .combo { grid-template-columns: 1fr; }
-    .phone { display: none; }
-    .icon-grid { grid-template-columns: 1fr; }
-    .stat-big { grid-template-columns: 1fr; }
-    .support-grid { grid-template-columns: 1fr; }
-    .steps-row { grid-template-columns: 1fr 1fr; }
-    .vflow { flex-direction: column; }
-    .vflow-arrow { transform: rotate(90deg); }
-    .dash-metrics { grid-template-columns: 1fr 1fr; }
+    .slide { padding: clamp(1rem, 0.75rem + 1vw, 1.5rem) clamp(1rem, 0.75rem + 1vw, 1.5rem); }
+    .slide h2 { font-size: 1.5rem; letter-spacing: -0.5px; margin-bottom: 6px; }
+    .sub { font-size: 0.813rem; margin-bottom: 20px; }
+    .eyebrow { font-size: 10px; margin-bottom: 10px; }
+
+    .cover h1 { font-size: 2rem; letter-spacing: -1px; }
+    .cover .sub { font-size: 0.875rem; margin-bottom: 32px; }
+    .cover-badge { font-size: 10px; padding: 6px 16px; margin-bottom: 24px; }
+    .cover-meta { grid-template-columns: 1fr 1fr; gap: 16px; padding-top: 24px; }
+    .cover-meta dd { font-size: 12px; }
+
+    .combo { grid-template-columns: 1fr; gap: 24px; }
+    .phone { width: 220px; margin: 0 auto; }
+    .icon-grid { grid-template-columns: 1fr; gap: 10px; }
+    .icon-card { padding: 18px 16px; }
+    .icon-card-emoji { font-size: 24px; margin-bottom: 8px; }
+    .icon-card h4 { font-size: 13px; }
+    .icon-card p { font-size: 11.5px; }
+    .stat-big { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .stat-big-card { padding: 16px 8px; }
+    .stat-big-val { font-size: 1.25rem; }
+    .stat-big-label { font-size: 10px; }
+    .support-grid { grid-template-columns: 1fr; gap: 12px; }
+    .support-card { padding: 20px; }
+    .steps-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .step-card { padding: 14px 8px; }
+    .step-num { width: 36px; height: 36px; font-size: 16px; }
+    .step-card h4 { font-size: 13px; }
+    .step-card p { font-size: 11px; }
+    .vflow { flex-direction: column; gap: 6px; }
+    .vflow-step { min-width: auto; max-width: none; padding: 12px 16px; }
+    .vflow-num { width: 26px; height: 26px; font-size: 12px; margin-bottom: 6px; }
+    .vflow-label { font-size: 11px; }
+    .vflow-arrow { transform: rotate(90deg); font-size: 14px; }
+    .dash { display: none; }
+    .dash-mobile { display: block; }
+    .dash-metrics { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .dash-metric { padding: 12px; }
+    .dash-metric-val { font-size: 16px; }
+    .dash-metric-label { font-size: 9px; }
+    .feature-grid { grid-template-columns: 1fr; gap: 10px; }
+    .feature-card { padding: 16px; }
+    .feature-icon { width: 32px; height: 32px; font-size: 14px; margin-bottom: 8px; }
+    .feature-card h4 { font-size: 13px; }
+    .feature-card p { font-size: 11.5px; }
+    .price-hero { padding: 28px 20px; }
+    .price-hero-val { font-size: 2.25rem; }
+    .price-list li { font-size: 12px; padding: 7px 0 7px 22px; }
+    .callout { padding: 12px 14px; font-size: 12px; margin: 12px 0; }
+    .own-grid { grid-template-columns: 1fr; gap: 10px; }
+    .own-card { padding: 18px 16px; }
+    .own-card h4 { font-size: 13px; }
+    .own-card p { font-size: 11.5px; }
+    table { font-size: 11.5px; }
+    thead th { padding: 8px 10px; font-size: 10px; }
+    tbody td { padding: 8px 10px; }
+    .phone-balance { font-size: 32px; }
+    .phone-content { padding: 14px 14px 18px; }
+  }
+
+  @media (max-width: 480px) {
+    .cover-meta { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .stat-big { grid-template-columns: 1fr; gap: 6px; }
+    .stat-big-card { padding: 12px; display: flex; align-items: center; justify-content: space-between; }
+    .stat-big-val { font-size: 1.125rem; }
+    .stat-big-label { font-size: 10px; margin-top: 0; }
+    .steps-row { grid-template-columns: 1fr; gap: 6px; }
+    .step-card { display: flex; align-items: center; gap: 12px; text-align: left; padding: 10px; }
+    .step-num { margin: 0; flex-shrink: 0; width: 32px; height: 32px; font-size: 14px; }
+    .step-card h4 { margin-bottom: 2px; }
+    .phone { width: 200px; }
   }
 </style>
 </head>
@@ -589,19 +651,19 @@
       <div class="reveal r3">
         <div class="price-hero">
           <div class="price-hero-val">$12,760</div>
-          <div class="price-hero-sub">Phase 1 &mdash; Complete Platform Build</div>
+          <div class="price-hero-sub">Phase 1 |Complete Platform Build</div>
           <ul class="price-list">
-            <li><strong>Customer Rewards Website</strong> &mdash; points, referrals, rewards, history, profile</li>
-            <li><strong>Business Dashboard</strong> &mdash; customer management, metrics, payments, referral tree</li>
-            <li><strong>Points & Rewards Engine</strong> &mdash; auto-calculation, redemption, audit trail</li>
-            <li><strong>Referral System</strong> &mdash; unique links, sharing, tracking, anti-fraud</li>
-            <li><strong>Payment Integration</strong> &mdash; Stripe auto-trigger + manual entry with guardrails</li>
-            <li><strong>SMS System</strong> &mdash; Twilio, A2P registration, login codes, notifications</li>
-            <li><strong>Email Newsletters</strong> &mdash; audience filtering, templates, scheduling</li>
-            <li><strong>Auth & Security</strong> &mdash; dual login, staff access, Cloudflare, encryption</li>
-            <li><strong>Legal Pages</strong> &mdash; ToS, Privacy, Cookie, SMS Terms, Rewards Terms</li>
-            <li><strong>Data Import</strong> &mdash; existing customers from any format</li>
-            <li><strong>Testing & Launch</strong> &mdash; QA, device testing, go-live support</li>
+            <li><strong>Customer Rewards Website</strong> |points, referrals, rewards, history, profile</li>
+            <li><strong>Business Dashboard</strong> |customer management, metrics, payments, referral tree</li>
+            <li><strong>Points & Rewards Engine</strong> |auto-calculation, redemption, audit trail</li>
+            <li><strong>Referral System</strong> |unique links, sharing, tracking, anti-fraud</li>
+            <li><strong>Payment Integration</strong> |Stripe auto-trigger + manual entry with guardrails</li>
+            <li><strong>SMS System</strong> |Twilio, A2P registration, login codes, notifications</li>
+            <li><strong>Email Newsletters</strong> |audience filtering, templates, scheduling</li>
+            <li><strong>Auth & Security</strong> |dual login, staff access, Cloudflare, encryption</li>
+            <li><strong>Legal Pages</strong> |ToS, Privacy, Cookie, SMS Terms, Rewards Terms</li>
+            <li><strong>Data Import</strong> |existing customers from any format</li>
+            <li><strong>Testing & Launch</strong> |QA, device testing, go-live support</li>
           </ul>
         </div>
       </div>
