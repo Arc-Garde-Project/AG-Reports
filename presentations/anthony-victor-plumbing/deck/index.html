@@ -100,6 +100,13 @@
   .slide.active .r5 { transition-delay: .6s; }
   .slide.active .r6 { transition-delay: .7s; }
 
+  /* Cover intro stagger (longer delays for dramatic entrance) */
+  .slide.active .cover-r1 { transition-delay: 0.3s; }
+  .slide.active .cover-r2 { transition-delay: 0.6s; transition-duration: 0.9s; }
+  .slide.active .cover-r3 { transition-delay: 0.9s; }
+  .slide.active .cover-r4 { transition-delay: 1.2s; }
+  .slide.active .cover-r5 { transition-delay: 1.5s; }
+
   /* ===== BACKGROUNDS ===== */
   .slide.s-dark { background: var(--white); color: var(--dark); }
   .slide.s-ghost { background: var(--white); }
@@ -397,18 +404,18 @@
 <main class="deck">
 
   <!-- ===== 1. COVER ===== -->
-  <section class="slide s-white cover active">
+  <section class="slide s-white cover" id="cover-slide">
     <div class="slide__inner" style="text-align:center;">
-      <div class="cover-badge reveal">Platform Walkthrough + Proposal</div>
-      <h1 class="reveal r1">Loyalty & Rewards<br><span style="color:var(--blue);">Platform</span></h1>
-      <p class="sub reveal r2">A custom website that tracks loyalty, rewards referrals, and grows repeat business. No app downloads. Runs in any browser.</p>
-      <dl class="cover-meta reveal r3">
+      <div class="cover-badge reveal cover-r1">Platform Walkthrough + Proposal</div>
+      <h1 class="reveal cover-r2">Loyalty & Rewards<br><span style="color:var(--blue);">Platform</span></h1>
+      <p class="sub reveal cover-r3">A custom website that tracks loyalty, rewards referrals, and grows repeat business. No app downloads. Runs in any browser.</p>
+      <dl class="cover-meta reveal cover-r4">
         <div><dt>Prepared For</dt><dd>Anthony Vodnik</dd></div>
         <div><dt>Prepared By</dt><dd>Arc Garde</dd></div>
         <div><dt>Platform Type</dt><dd>Custom Website</dd></div>
         <div><dt>Date</dt><dd>April 2026</dd></div>
       </dl>
-      <p class="reveal r4" style="font-size:13px; color:var(--light); margin-top:32px;">All visuals in this deck are conceptual mockups. The finished platform will be designed and approved with you before development begins.</p>
+      <p class="reveal cover-r5" style="font-size:13px; color:var(--light); margin-top:32px;">All visuals in this deck are conceptual mockups. The finished platform will be designed and approved with you during development.</p>
     </div>
   </section>
 
@@ -875,6 +882,13 @@
       if (e.deltaY > 0 || e.deltaX > 0) goTo(current + 1); else goTo(current - 1);
     }, { passive: false });
     updateUI();
+    // Cover intro: add active class after brief delay so reveals animate in
+    setTimeout(function() {
+      document.getElementById('cover-slide').classList.add('active');
+      document.getElementById('cover-slide').style.visibility = 'visible';
+      document.getElementById('cover-slide').style.opacity = '1';
+      document.getElementById('cover-slide').style.transform = 'translateY(0) scale(1)';
+    }, 100);
   })();
 </script>
 </body>
