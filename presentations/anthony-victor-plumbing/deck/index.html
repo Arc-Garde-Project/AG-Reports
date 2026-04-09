@@ -129,18 +129,8 @@
   .s-dark .sub, .s-gradient .sub { color: var(--light); }
 
   /* ===== COVER ===== */
-  .cover { background: var(--navy); position: relative; overflow: hidden; }
-  .cover::before {
-    content: ''; position: absolute; top: 50%; right: 0; width: 800px; height: 800px; border-radius: 50%;
-    transform: translate(30%, -60%);
-    background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 65%); pointer-events: none;
-  }
-  .cover::after {
-    content: ''; position: absolute; top: 50%; left: 0; width: 600px; height: 600px; border-radius: 50%;
-    transform: translate(-25%, -10%);
-    background: radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 65%); pointer-events: none;
-  }
-  .cover .slide__inner { position: relative; z-index: 1; text-align: center; max-width: 800px; }
+  .cover { background: var(--navy); }
+  .cover .slide__inner { text-align: center; max-width: 800px; }
   .cover-badge {
     display: inline-block; padding: 8px 22px; background: rgba(59,130,246,0.12);
     border: 1px solid rgba(59,130,246,0.2); border-radius: 100px;
