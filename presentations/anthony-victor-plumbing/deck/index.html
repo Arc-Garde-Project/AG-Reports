@@ -101,53 +101,52 @@
   .slide.active .r6 { transition-delay: .7s; }
 
   /* ===== BACKGROUNDS ===== */
-  .slide.s-dark { background: var(--navy); color: var(--white); }
-  .slide.s-ghost { background: var(--ghost); }
+  .slide.s-dark { background: var(--white); color: var(--dark); }
+  .slide.s-ghost { background: var(--white); }
   .slide.s-white { background: var(--white); }
-  .slide.s-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); color: var(--white); }
+  .slide.s-gradient { background: var(--white); color: var(--dark); }
   .slide.cover { background: var(--navy); }
 
   /* ===== EYEBROW ===== */
   .eyebrow {
-    font-family: var(--font-data); font-size: 11px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 2.5px; color: var(--blue);
-    margin-bottom: 14px; display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-data); font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px; color: var(--blue-dark);
+    margin-bottom: 16px; display: inline-block;
+    background: var(--blue-light); padding: 6px 16px; border-radius: 100px;
   }
-  .eyebrow::before { content: ''; width: 24px; height: 2px; background: linear-gradient(90deg, var(--blue), var(--green)); border-radius: 1px; }
-  .s-dark .eyebrow, .s-gradient .eyebrow { color: #60a5fa; }
 
   /* ===== HEADINGS ===== */
   .slide h2 {
     font-size: clamp(1.75rem, 1.3rem + 2vw, 2.75rem); font-weight: 900;
     color: var(--navy); margin-bottom: 10px; letter-spacing: -1.5px; line-height: 1.08;
   }
-  .s-dark h2, .s-gradient h2 { color: var(--white); }
+  .s-dark h2, .s-gradient h2 { color: var(--navy); }
   .slide h2 span { color: var(--blue); }
-  .s-dark h2 span, .s-gradient h2 span { color: #60a5fa; }
+  .s-dark h2 span, .s-gradient h2 span { color: var(--blue); }
 
-  .sub { font-size: clamp(.875rem, .8rem + .35vw, 1.063rem); color: var(--slate); max-width: 600px; line-height: 1.65; margin-bottom: 40px; }
-  .s-dark .sub, .s-gradient .sub { color: var(--light); }
+  .sub { font-size: clamp(0.938rem, .85rem + .4vw, 1.125rem); color: var(--slate); max-width: 600px; line-height: 1.65; margin-bottom: 40px; }
+  .s-dark .sub, .s-gradient .sub { color: var(--slate); }
 
   /* ===== COVER ===== */
   .cover { background: var(--navy); }
   .cover .slide__inner { text-align: center; max-width: 800px; }
   .cover-badge {
-    display: inline-block; padding: 8px 22px; background: rgba(59,130,246,0.12);
+    display: inline-block; padding: 8px 22px; background: var(--blue-light);
     border: 1px solid rgba(59,130,246,0.2); border-radius: 100px;
-    font-size: 11px; font-weight: 700; color: #93c5fd; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 36px;
+    font-size: 11px; font-weight: 700; color: var(--blue-dark); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 36px;
   }
   .cover h1 {
     font-size: clamp(2.75rem, 2rem + 3vw, 4rem); font-weight: 900; line-height: 1.02;
-    color: var(--white); margin-bottom: 18px; letter-spacing: -2.5px;
+    color: var(--navy); margin-bottom: 18px; letter-spacing: -2.5px;
   }
-  .cover h1 em { font-style: normal; color: #60a5fa; }
-  .cover .sub { color: var(--light); margin-bottom: 56px; max-width: 560px; font-weight: 300; margin-left: auto; margin-right: auto; }
+  .cover h1 em { font-style: normal; color: var(--blue); }
+  .cover .sub { color: var(--slate); margin-bottom: 56px; max-width: 560px; font-weight: 400; margin-left: auto; margin-right: auto; }
   .cover-meta {
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;
-    padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 32px; border-top: 1px solid var(--lighter);
   }
   .cover-meta dt { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--slate); margin-bottom: 3px; }
-  .cover-meta dd { font-size: 14px; font-weight: 600; color: var(--lighter); }
+  .cover-meta dd { font-size: 14px; font-weight: 600; color: var(--navy); }
 
   /* ===== PHONE MOCKUP ===== */
   .phone {
@@ -211,7 +210,7 @@
     padding: 20px 24px; text-align: center; flex: 1; min-width: 140px; max-width: 200px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
-  .s-dark .vflow-step { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); }
+  .s-dark .vflow-step { background: var(--ghost); border-color: var(--lighter); }
   .vflow-step.highlight { background: var(--blue); border-color: var(--blue); box-shadow: 0 4px 20px rgba(59,130,246,0.3); }
   .vflow-num {
     width: 32px; height: 32px; border-radius: 50%; background: var(--blue-light); color: var(--blue-dark);
@@ -222,7 +221,7 @@
   .vflow-label { font-size: 12px; font-weight: 600; color: var(--navy); line-height: 1.4; }
   .vflow-step.highlight .vflow-label { color: var(--white); }
   .vflow-arrow { color: var(--lighter); font-size: 20px; flex-shrink: 0; }
-  .s-dark .vflow-arrow { color: rgba(255,255,255,0.15); }
+  .s-dark .vflow-arrow { color: var(--lighter); }
 
   /* ===== ICON CARDS ===== */
   .icon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 28px 0; }
@@ -230,12 +229,12 @@
     background: var(--white); border: 1px solid var(--lighter); border-radius: 16px;
     padding: 28px 24px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
   }
-  .s-dark .icon-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+  .s-dark .icon-card { background: var(--ghost); border-color: var(--lighter); }
   .icon-card-emoji { font-size: 32px; margin-bottom: 14px; line-height: 1; }
   .icon-card h4 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
-  .s-dark .icon-card h4 { color: var(--white); }
+  .s-dark .icon-card h4 { color: var(--navy); }
   .icon-card p { font-size: 12.5px; color: var(--slate); line-height: 1.5; margin: 0; }
-  .s-dark .icon-card p { color: var(--light); }
+  .s-dark .icon-card p { color: var(--slate); }
 
   /* ===== STAT BIG ===== */
   .stat-big { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 28px 0; }
@@ -243,11 +242,11 @@
     text-align: center; padding: 28px 16px; border-radius: 16px;
     background: var(--white); border: 1px solid var(--lighter);
   }
-  .s-dark .stat-big-card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); }
+  .s-dark .stat-big-card { background: var(--ghost); border-color: var(--lighter); }
   .stat-big-val { font-size: clamp(2rem, 1.5rem + 2vw, 3rem); font-weight: 900; color: var(--navy); letter-spacing: -1.5px; line-height: 1; }
-  .s-dark .stat-big-val { color: var(--white); }
+  .s-dark .stat-big-val { color: var(--navy); }
   .stat-big-label { font-size: 12px; color: var(--slate); margin-top: 6px; font-weight: 500; }
-  .s-dark .stat-big-label { color: var(--light); }
+  .s-dark .stat-big-label { color: var(--slate); }
 
   /* ===== PRICING ===== */
   .price-hero {
@@ -275,6 +274,13 @@
   .support-tag { display: inline-block; font-size: 11px; font-weight: 700; color: var(--blue); background: var(--blue-light); padding: 3px 10px; border-radius: 6px; margin-bottom: 14px; }
   .support-card p { font-size: 13px; color: var(--slate); line-height: 1.6; margin: 0; }
 
+  /* ===== OWNERSHIP CARDS ===== */
+  .own-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 28px 0; }
+  .own-card { background: var(--ghost); border: 1px solid var(--lighter); border-radius: 14px; padding: 24px; text-align: center; }
+  .own-icon { font-size: 28px; margin-bottom: 12px; line-height: 1; }
+  .own-card h4 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .own-card p { font-size: 12.5px; color: var(--slate); margin: 0; line-height: 1.55; }
+
   /* ===== STEPS ROW ===== */
   .steps-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 40px 0; }
   .step-card { text-align: center; padding: 20px 12px; }
@@ -288,18 +294,18 @@
   /* ===== COMBO LAYOUT ===== */
   .combo { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
   .combo-text h3 { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 12px; }
-  .s-dark .combo-text h3 { color: var(--white); }
+  .s-dark .combo-text h3 { color: var(--navy); }
   .combo-text p { font-size: 13.5px; color: var(--slate); line-height: 1.65; margin-bottom: 12px; }
-  .s-dark .combo-text p { color: var(--light); }
+  .s-dark .combo-text p { color: var(--slate); }
 
   /* ===== CALLOUT ===== */
   .callout { padding: 16px 20px; border-radius: 10px; margin: 20px 0; font-size: 13px; line-height: 1.6; }
   .callout.blue { background: #eff6ff; border-left: 4px solid var(--blue); }
   .callout.green { background: #ecfdf5; border-left: 4px solid var(--green); }
   .callout strong { font-weight: 700; color: var(--dark); }
-  .s-dark .callout.blue { background: rgba(59,130,246,0.1); border-left-color: #60a5fa; }
-  .s-dark .callout.green { background: rgba(16,185,129,0.1); border-left-color: var(--green); }
-  .s-dark .callout strong { color: var(--white); }
+  .s-dark .callout.blue { background: #eff6ff; border-left-color: var(--blue); }
+  .s-dark .callout.green { background: #ecfdf5; border-left-color: var(--green); }
+  .s-dark .callout strong { color: var(--dark); }
 
   /* ===== TABLE (minimal use) ===== */
   table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; border-radius: 10px; overflow: hidden; border: 1px solid var(--lighter); margin: 16px 0; }
@@ -392,12 +398,12 @@
 <main class="deck">
 
   <!-- ===== 1. COVER ===== -->
-  <section class="slide cover active">
+  <section class="slide s-white active">
     <div class="slide__inner">
       <div class="cover-badge reveal">Platform Walkthrough + Proposal</div>
       <h1 class="reveal r1">Loyalty & Rewards<br><em>Platform</em></h1>
       <p class="sub reveal r2">A custom website that tracks loyalty, rewards referrals, and grows repeat business. No app downloads. Runs in any browser.</p>
-      <p class="reveal r2" style="font-size:11px; color:var(--slate); margin-bottom:40px;">All visuals in this deck are conceptual mockups, not the final product. The finished platform will be designed and approved with you before development begins.</p>
+      <p class="reveal r2" style="font-size:14px; color:var(--light); margin-bottom:40px;">All visuals in this deck are conceptual mockups, not the final product. The finished platform will be designed and approved with you before development begins.</p>
       <dl class="cover-meta reveal r3">
         <div><dt>Prepared For</dt><dd>Anthony Vodnik</dd></div>
         <div><dt>Prepared By</dt><dd>Arc Garde</dd></div>
@@ -431,14 +437,14 @@
   </section>
 
   <!-- ===== 3. CUSTOMER EXPERIENCE ===== -->
-  <section class="slide s-gradient">
+  <section class="slide s-white">
     <div class="slide__inner">
       <div class="combo">
         <div class="combo-text">
           <div class="eyebrow reveal">What Customers See</div>
           <h2 class="reveal r1">Their Rewards.<br><span>One Tap Away.</span></h2>
-          <p class="reveal r2" style="color:var(--light);">Customers open a link in their browser. No app store. No downloads. They see their points, share referrals, and redeem rewards.</p>
-          <p class="reveal r2" style="color:var(--light);">Login with phone number (text code) or email and password. Session stays active 30 days.</p>
+          <p class="reveal r2" style="color:var(--slate);">Customers open a link in their browser. No app store. No downloads. They see their points, share referrals, and redeem rewards.</p>
+          <p class="reveal r2" style="color:var(--slate);">Login with phone number (text code) or email and password. Session stays active 30 days.</p>
           <div class="callout green reveal r3">
             <strong>Save to Home Screen</strong> for an app-like experience without the App Store.
           </div>
@@ -463,6 +469,7 @@
               <div class="phone-nav-item">History</div>
             </div>
           </div>
+          <p style="font-size:12px; color:var(--slate); margin-top:14px; text-align:center;">Conceptual mockup. Not the final design.</p>
         </div>
       </div>
     </div>
@@ -491,6 +498,7 @@
           </div>
         </div>
       </div>
+      <p style="font-size:12px; color:var(--slate); margin-top:14px; text-align:center;">Conceptual mockup. Not the final design.</p>
     </div>
   </section>
 
@@ -518,7 +526,7 @@
   </section>
 
   <!-- ===== 6. PAYMENTS ===== -->
-  <section class="slide s-dark">
+  <section class="slide s-white">
     <div class="slide__inner" style="text-align:center;">
       <div class="eyebrow reveal">Payment Logging</div>
       <h2 class="reveal r1">Two Ways to <span>Trigger Points.</span></h2>
@@ -586,7 +594,7 @@
   </section>
 
   <!-- ===== 9. BUILD PLAN ===== -->
-  <section class="slide s-dark">
+  <section class="slide s-white">
     <div class="slide__inner" style="text-align:center;">
       <div class="eyebrow reveal">Build Plan</div>
       <h2 class="reveal r1"><span>8 Weeks</span> to Launch.</h2>
@@ -682,24 +690,26 @@
   <section class="slide s-white">
     <div class="slide__inner" style="text-align:center;">
       <div class="eyebrow reveal">After Launch</div>
-      <h2 class="reveal r1"><span>~$48/mo</span> to Run.</h2>
-      <p class="sub reveal r2" style="margin-left:auto; margin-right:auto;">Third-party service costs. Not fees to us. No per-seat charges. Hosting is on us.</p>
-      <div class="stat-big reveal r3">
+      <h2 class="reveal r1">What You'll Need <span>Running.</span></h2>
+      <p class="sub reveal r2" style="margin-left:auto; margin-right:auto;">These are the accounts and services that power the platform. You own all of them.</p>
+      <table class="reveal r3">
+        <thead><tr><th>Platform</th><th>What It Does</th><th>Monthly Cost</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Supabase</strong></td><td>Database, authentication, backups</td><td>$25</td></tr>
+          <tr><td><strong>Twilio</strong></td><td>SMS login codes, notifications, referral texts</td><td>~$23</td></tr>
+          <tr><td><strong>Vercel</strong></td><td>Website hosting, auto-deploys</td><td>Free tier</td></tr>
+          <tr><td><strong>GitHub</strong></td><td>Source code repository</td><td>Free</td></tr>
+          <tr><td><strong>Stripe</strong></td><td>Payment processing (optional)</td><td>2.9% + $0.30/txn</td></tr>
+          <tr><td><strong>Cloudflare</strong></td><td>Bot protection, DDoS defense, firewall</td><td>Free tier</td></tr>
+          <tr><td><strong>Resend</strong></td><td>Email newsletters</td><td>Free under 3,000/mo</td></tr>
+          <tr><td><strong>Domain</strong></td><td>Your rewards site URL</td><td>~$12/year</td></tr>
+        </tbody>
+      </table>
+      <div class="stat-big reveal r4">
         <div class="stat-big-card">
-          <div class="stat-big-val">$25</div>
-          <div class="stat-big-label">Supabase (Database)</div>
+          <div class="stat-big-val">~$48/mo</div>
+          <div class="stat-big-label">Total estimated running cost</div>
         </div>
-        <div class="stat-big-card">
-          <div class="stat-big-val">~$23</div>
-          <div class="stat-big-label">Twilio (SMS)</div>
-        </div>
-        <div class="stat-big-card">
-          <div class="stat-big-val">$0</div>
-          <div class="stat-big-label">Vercel Hosting (free tier)</div>
-        </div>
-      </div>
-      <div class="callout green reveal r4" style="text-align:left; max-width:560px; margin-left:auto; margin-right:auto;">
-        <strong>Scales slowly.</strong> Adding customers does not increase the base cost. SMS adds ~$5/mo per 200 customers. Email free under 3,000/mo. Stripe is per-transaction only.
       </div>
     </div>
   </section>
@@ -728,7 +738,7 @@
   </section>
 
   <!-- ===== 14. NEXT STEPS ===== -->
-  <section class="slide s-dark">
+  <section class="slide s-white">
     <div class="slide__inner" style="text-align:center;">
       <div class="eyebrow reveal">Next Steps</div>
       <h2 class="reveal r1">From Here to <span>Launch.</span></h2>
@@ -736,23 +746,23 @@
       <div class="steps-row reveal r3">
         <div class="step-card">
           <div class="step-num">1</div>
-          <h4 style="color:var(--white);">Review</h4>
-          <p style="color:var(--light);">Review this deck. Ask any questions.</p>
+          <h4 style="color:var(--navy);">Review</h4>
+          <p style="color:var(--slate);">Review this deck. Ask any questions.</p>
         </div>
         <div class="step-card">
           <div class="step-num">2</div>
-          <h4 style="color:var(--white);">Call</h4>
-          <p style="color:var(--light);">We walk through everything together.</p>
+          <h4 style="color:var(--navy);">Call</h4>
+          <p style="color:var(--slate);">We walk through everything together.</p>
         </div>
         <div class="step-card">
           <div class="step-num">3</div>
-          <h4 style="color:var(--white);">Approve</h4>
-          <p style="color:var(--light);">Approve scope. We send a short questionnaire.</p>
+          <h4 style="color:var(--navy);">Approve</h4>
+          <p style="color:var(--slate);">Approve scope. We send a short questionnaire.</p>
         </div>
         <div class="step-card">
           <div class="step-num">4</div>
-          <h4 style="color:var(--white);">Build</h4>
-          <p style="color:var(--light);">Mockups in 2 weeks. You approve before we go deep.</p>
+          <h4 style="color:var(--navy);">Build</h4>
+          <p style="color:var(--slate);">Mockups in 2 weeks. You approve before we go deep.</p>
         </div>
       </div>
       <div class="callout green reveal r4" style="text-align:left; max-width:560px; margin-left:auto; margin-right:auto;">
