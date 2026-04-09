@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Anthony's Plumbing - Loyalty & Rewards Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f172a;
+    --dark: #1e293b;
+    --mid: #334155;
+    --slate: #64748b;
+    --light: #94a3b8;
+    --lighter: #e2e8f0;
+    --ghost: #f8fafc;
+    --white: #ffffff;
+    --blue: #3b82f6;
+    --blue-dark: #2563eb;
+    --blue-light: #dbeafe;
+    --blue-glow: rgba(59,130,246,0.08);
+    --green: #10b981;
+    --green-dark: #059669;
+    --green-light: #d1fae5;
+    --amber: #f59e0b;
+    --amber-light: #fef3c7;
+    --bar-bg: #0a0e1a;
+    --bar-text: rgba(255,255,255,0.4);
+    --bar-text-bright: #ffffff;
+    --font-body: 'Inter', -apple-system, sans-serif;
+    --font-data: 'Space Grotesk', sans-serif;
+    --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: var(--font-body); font-size: 16px; color: var(--dark);
+    background: var(--navy); line-height: 1.6; -webkit-font-smoothing: antialiased;
+    overflow: hidden; height: 100dvh; width: 100vw;
+    display: flex; flex-direction: column;
+  }
+  h1,h2,h3,h4,h5,h6 { text-wrap: balance; }
+  p,li,blockquote { text-wrap: pretty; }
+  ::selection { background: var(--blue); color: #fff; }
+
+  /* ===== DECK ===== */
+  .deck { position: relative; flex: 1; overflow: hidden; }
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: clamp(1.25rem, 1rem + 2vw, 3rem) clamp(1.25rem, 1rem + 3vw, 4rem);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+    transform: translateY(12px) scale(0.99);
+    overflow-y: auto;
+    background: var(--white);
+  }
+  .slide.active { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+  .slide__inner { width: 100%; max-width: 1060px; margin: auto; }
+
+  /* ===== PROGRESS ===== */
+  .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--blue), var(--green)); z-index: 9999; transition: width 0.7s var(--ease-out); }
+
+  /* ===== BOTTOM BAR ===== */
+  .bottom-bar {
+    height: 56px; background: var(--bar-bg); display: flex; align-items: center;
+    justify-content: space-between; padding: 0 clamp(1rem, 0.75rem + 1vw, 2rem);
+    flex-shrink: 0; z-index: 100;
+  }
+  .bottom-bar__dots { display: flex; gap: 6px; align-items: center; }
+  .bottom-bar__dot {
+    width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.12);
+    border: none; cursor: pointer; transition: all 0.3s var(--ease); touch-action: manipulation;
+  }
+  .bottom-bar__dot.active { background: var(--blue); width: 24px; border-radius: 3px; }
+  .bottom-bar__nav { display: flex; align-items: center; gap: 12px; }
+  .bottom-bar__arrow {
+    width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--bar-text); transition: all 0.3s var(--ease); touch-action: manipulation;
+  }
+  .bottom-bar__arrow:hover { background: rgba(255,255,255,0.1); color: var(--bar-text-bright); }
+  .bottom-bar__arrow:disabled { opacity: 0.15; cursor: default; }
+  .bottom-bar__arrow svg { width: 16px; height: 16px; }
+  .bottom-bar__counter { font-family: var(--font-data); font-size: 13px; font-weight: 500; color: var(--bar-text); letter-spacing: 0.06em; min-width: 54px; text-align: center; }
+  .bottom-bar__counter-current { color: var(--bar-text-bright); font-weight: 700; }
+
+  /* ===== REVEALS ===== */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+  .slide.active .reveal { opacity: 1; transform: translateY(0); }
+  .slide.active .r1 { transition-delay: .1s; }
+  .slide.active .r2 { transition-delay: .2s; }
+  .slide.active .r3 { transition-delay: .3s; }
+  .slide.active .r4 { transition-delay: .4s; }
+  .slide.active .r5 { transition-delay: .6s; }
+  .slide.active .r6 { transition-delay: .7s; }
+
+  /* ===== BACKGROUNDS ===== */
+  .s-dark { background: var(--navy); color: var(--white); }
+  .s-ghost { background: var(--ghost); }
+  .s-white { background: var(--white); }
+  .s-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); color: var(--white); }
+
+  /* ===== EYEBROW ===== */
+  .eyebrow {
+    font-family: var(--font-data); font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2.5px; color: var(--blue);
+    margin-bottom: 14px; display: inline-flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::before { content: ''; width: 24px; height: 2px; background: linear-gradient(90deg, var(--blue), var(--green)); border-radius: 1px; }
+  .s-dark .eyebrow, .s-gradient .eyebrow { color: #60a5fa; }
+
+  /* ===== HEADINGS ===== */
+  .slide h2 {
+    font-size: clamp(1.75rem, 1.3rem + 2vw, 2.75rem); font-weight: 900;
+    color: var(--navy); margin-bottom: 10px; letter-spacing: -1.5px; line-height: 1.08;
+  }
+  .s-dark h2, .s-gradient h2 { color: var(--white); }
+  .slide h2 span { color: var(--blue); }
+  .s-dark h2 span, .s-gradient h2 span { color: #60a5fa; }
+
+  .sub { font-size: clamp(.875rem, .8rem + .35vw, 1.063rem); color: var(--slate); max-width: 600px; line-height: 1.65; margin-bottom: 40px; }
+  .s-dark .sub, .s-gradient .sub { color: var(--light); }
+
+  /* ===== COVER ===== */
+  .cover { background: var(--navy); position: relative; overflow: hidden; }
+  .cover::before {
+    content: ''; position: absolute; top: -40%; right: -20%; width: 70vw; height: 70vw; border-radius: 50%;
+    background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 65%); pointer-events: none;
+  }
+  .cover::after {
+    content: ''; position: absolute; bottom: -30%; left: -10%; width: 50vw; height: 50vw; border-radius: 50%;
+    background: radial-gradient(circle, rgba(16,185,129,0.07) 0%, transparent 65%); pointer-events: none;
+  }
+  .cover .slide__inner { position: relative; z-index: 1; }
+  .cover-badge {
+    display: inline-block; padding: 8px 22px; background: rgba(59,130,246,0.12);
+    border: 1px solid rgba(59,130,246,0.2); border-radius: 100px;
+    font-size: 11px; font-weight: 700; color: #93c5fd; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 36px;
+  }
+  .cover h1 {
+    font-size: clamp(2.75rem, 2rem + 3vw, 4rem); font-weight: 900; line-height: 1.02;
+    color: var(--white); margin-bottom: 18px; letter-spacing: -2.5px;
+  }
+  .cover h1 em { font-style: normal; color: #60a5fa; }
+  .cover .sub { color: var(--light); margin-bottom: 56px; max-width: 560px; font-weight: 300; }
+  .cover-meta {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;
+    padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .cover-meta dt { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--slate); margin-bottom: 3px; }
+  .cover-meta dd { font-size: 14px; font-weight: 600; color: var(--lighter); }
+
+  /* ===== PHONE MOCKUP ===== */
+  .phone {
+    width: 260px; background: var(--white); border-radius: 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.08);
+    overflow: hidden; flex-shrink: 0;
+  }
+  .phone-status {
+    height: 36px; background: var(--navy); display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: var(--white); letter-spacing: 0.5px;
+  }
+  .phone-content { padding: 20px 18px 24px; }
+  .phone-content h5 { font-size: 11px; color: var(--slate); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600; }
+  .phone-balance { font-size: 42px; font-weight: 900; color: var(--navy); letter-spacing: -2px; line-height: 1; margin-bottom: 4px; }
+  .phone-balance-sub { font-size: 12px; color: var(--green); font-weight: 600; margin-bottom: 20px; }
+  .phone-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
+  .phone-row:last-child { border-bottom: none; }
+  .phone-row-label { font-size: 12px; color: var(--mid); font-weight: 500; }
+  .phone-row-value { font-size: 12px; color: var(--navy); font-weight: 700; }
+  .phone-row-value.green { color: var(--green); }
+  .phone-btn {
+    display: block; width: 100%; margin-top: 16px; padding: 12px; background: var(--blue);
+    color: var(--white); border: none; border-radius: 10px; font-size: 13px; font-weight: 700;
+    text-align: center; letter-spacing: 0.3px;
+  }
+  .phone-nav { display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #f1f5f9; }
+  .phone-nav-item { font-size: 9px; color: var(--light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; text-align: center; }
+  .phone-nav-item.active { color: var(--blue); }
+
+  /* ===== DASHBOARD MOCKUP ===== */
+  .dash {
+    background: var(--ghost); border-radius: 14px; border: 1px solid var(--lighter);
+    overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+  }
+  .dash-bar {
+    height: 36px; background: var(--navy); display: flex; align-items: center; padding: 0 14px; gap: 6px;
+  }
+  .dash-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dash-dot.r { background: #ef4444; }
+  .dash-dot.y { background: #f59e0b; }
+  .dash-dot.g { background: #10b981; }
+  .dash-body { padding: 20px; }
+  .dash-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+  .dash-metric {
+    background: var(--white); border-radius: 10px; padding: 16px; border: 1px solid #f1f5f9; text-align: center;
+  }
+  .dash-metric-val { font-size: 22px; font-weight: 800; color: var(--navy); letter-spacing: -0.5px; }
+  .dash-metric-label { font-size: 10px; color: var(--slate); margin-top: 2px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+  .dash-table { width: 100%; background: var(--white); border-radius: 10px; border: 1px solid #f1f5f9; overflow: hidden; }
+  .dash-table-header { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; padding: 10px 14px; background: var(--ghost); border-bottom: 1px solid #f1f5f9; }
+  .dash-table-header span { font-size: 10px; font-weight: 600; color: var(--slate); text-transform: uppercase; letter-spacing: 0.5px; }
+  .dash-table-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; padding: 10px 14px; border-bottom: 1px solid #f8fafc; }
+  .dash-table-row:last-child { border-bottom: none; }
+  .dash-table-row span { font-size: 12px; color: var(--mid); font-weight: 500; }
+  .dash-table-row span:first-child { color: var(--navy); font-weight: 600; }
+
+  /* ===== VISUAL FLOW ===== */
+  .vflow { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 32px 0; flex-wrap: wrap; }
+  .vflow-step {
+    background: var(--white); border: 1px solid var(--lighter); border-radius: 14px;
+    padding: 20px 24px; text-align: center; flex: 1; min-width: 140px; max-width: 200px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .s-dark .vflow-step { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); }
+  .vflow-step.highlight { background: var(--blue); border-color: var(--blue); box-shadow: 0 4px 20px rgba(59,130,246,0.3); }
+  .vflow-num {
+    width: 32px; height: 32px; border-radius: 50%; background: var(--blue-light); color: var(--blue-dark);
+    display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800;
+    margin: 0 auto 10px;
+  }
+  .vflow-step.highlight .vflow-num { background: rgba(255,255,255,0.2); color: var(--white); }
+  .vflow-label { font-size: 12px; font-weight: 600; color: var(--navy); line-height: 1.4; }
+  .vflow-step.highlight .vflow-label { color: var(--white); }
+  .vflow-arrow { color: var(--lighter); font-size: 20px; flex-shrink: 0; }
+  .s-dark .vflow-arrow { color: rgba(255,255,255,0.15); }
+
+  /* ===== ICON CARDS ===== */
+  .icon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 28px 0; }
+  .icon-card {
+    background: var(--white); border: 1px solid var(--lighter); border-radius: 16px;
+    padding: 28px 24px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  }
+  .s-dark .icon-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+  .icon-card-emoji { font-size: 32px; margin-bottom: 14px; line-height: 1; }
+  .icon-card h4 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .s-dark .icon-card h4 { color: var(--white); }
+  .icon-card p { font-size: 12.5px; color: var(--slate); line-height: 1.5; margin: 0; }
+  .s-dark .icon-card p { color: var(--light); }
+
+  /* ===== STAT BIG ===== */
+  .stat-big { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 28px 0; }
+  .stat-big-card {
+    text-align: center; padding: 28px 16px; border-radius: 16px;
+    background: var(--white); border: 1px solid var(--lighter);
+  }
+  .s-dark .stat-big-card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); }
+  .stat-big-val { font-size: clamp(2rem, 1.5rem + 2vw, 3rem); font-weight: 900; color: var(--navy); letter-spacing: -1.5px; line-height: 1; }
+  .s-dark .stat-big-val { color: var(--white); }
+  .stat-big-label { font-size: 12px; color: var(--slate); margin-top: 6px; font-weight: 500; }
+  .s-dark .stat-big-label { color: var(--light); }
+
+  /* ===== PRICING ===== */
+  .price-hero {
+    text-align: center; padding: 44px 36px; background: var(--white); border: 2px solid var(--blue);
+    border-radius: 20px; box-shadow: 0 8px 40px rgba(59,130,246,0.15);
+    max-width: 560px; margin: 0 auto; position: relative;
+  }
+  .price-hero::before {
+    content: 'YOUR INVESTMENT'; position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+    background: var(--blue); color: var(--white); padding: 5px 20px; border-radius: 100px;
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  }
+  .price-hero-val { font-size: clamp(3rem, 2.5rem + 2vw, 4rem); font-weight: 900; color: var(--navy); letter-spacing: -2px; line-height: 1; margin: 8px 0; }
+  .price-hero-sub { font-size: 14px; color: var(--slate); margin-bottom: 28px; }
+  .price-list { list-style: none; text-align: left; }
+  .price-list li { padding: 9px 0; font-size: 13.5px; color: var(--mid); padding-left: 26px; position: relative; border-bottom: 1px solid #f1f5f9; }
+  .price-list li::before { content: '\2713'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+  .price-list li:last-child { border-bottom: none; }
+  .price-list li strong { color: var(--navy); }
+
+  /* ===== SUPPORT CARDS ===== */
+  .support-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 28px 0; }
+  .support-card { background: var(--white); border: 1px solid var(--lighter); border-radius: 16px; padding: 28px; }
+  .support-card h3 { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 3px; }
+  .support-tag { display: inline-block; font-size: 11px; font-weight: 700; color: var(--blue); background: var(--blue-light); padding: 3px 10px; border-radius: 6px; margin-bottom: 14px; }
+  .support-card p { font-size: 13px; color: var(--slate); line-height: 1.6; margin: 0; }
+
+  /* ===== STEPS ROW ===== */
+  .steps-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 40px 0; }
+  .step-card { text-align: center; padding: 20px 12px; }
+  .step-num {
+    width: 48px; height: 48px; border-radius: 50%; background: var(--blue); color: var(--white);
+    display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; margin: 0 auto 14px;
+  }
+  .step-card h4 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .step-card p { font-size: 12px; color: var(--slate); margin: 0; line-height: 1.5; }
+
+  /* ===== COMBO LAYOUT ===== */
+  .combo { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .combo-text h3 { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 12px; }
+  .s-dark .combo-text h3 { color: var(--white); }
+  .combo-text p { font-size: 13.5px; color: var(--slate); line-height: 1.65; margin-bottom: 12px; }
+  .s-dark .combo-text p { color: var(--light); }
+
+  /* ===== CALLOUT ===== */
+  .callout { padding: 16px 20px; border-radius: 10px; margin: 20px 0; font-size: 13px; line-height: 1.6; }
+  .callout.blue { background: #eff6ff; border-left: 4px solid var(--blue); }
+  .callout.green { background: #ecfdf5; border-left: 4px solid var(--green); }
+  .callout strong { font-weight: 700; color: var(--dark); }
+  .s-dark .callout.blue { background: rgba(59,130,246,0.1); border-left-color: #60a5fa; }
+  .s-dark .callout.green { background: rgba(16,185,129,0.1); border-left-color: var(--green); }
+  .s-dark .callout strong { color: var(--white); }
+
+  /* ===== TABLE (minimal use) ===== */
+  table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; border-radius: 10px; overflow: hidden; border: 1px solid var(--lighter); margin: 16px 0; }
+  thead th { background: var(--navy); color: var(--white); padding: 10px 16px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; }
+  tbody td { padding: 10px 16px; border-bottom: 1px solid #f1f5f9; color: var(--mid); }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: var(--ghost); }
+  tbody td strong { color: var(--dark); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .cover-meta { grid-template-columns: 1fr 1fr; }
+    .combo { grid-template-columns: 1fr; }
+    .phone { display: none; }
+    .icon-grid { grid-template-columns: 1fr; }
+    .stat-big { grid-template-columns: 1fr; }
+    .support-grid { grid-template-columns: 1fr; }
+    .steps-row { grid-template-columns: 1fr 1fr; }
+    .vflow { flex-direction: column; }
+    .vflow-arrow { transform: rotate(90deg); }
+    .dash-metrics { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<main class="deck">
+
+  <!-- ===== 1. COVER ===== -->
+  <section class="slide cover active">
+    <div class="slide__inner">
+      <div class="cover-badge reveal">Platform Walkthrough + Proposal</div>
+      <h1 class="reveal r1">Loyalty & Rewards<br><em>Platform</em></h1>
+      <p class="sub reveal r2">A custom website that tracks loyalty, rewards referrals, and grows repeat business. No app downloads. Runs in any browser.</p>
+      <dl class="cover-meta reveal r3">
+        <div><dt>Prepared For</dt><dd>Anthony Vodnik</dd></div>
+        <div><dt>Prepared By</dt><dd>Arc Garde</dd></div>
+        <div><dt>Platform Type</dt><dd>Custom Website</dd></div>
+        <div><dt>Date</dt><dd>April 2026</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ===== 2. THE CONCEPT ===== -->
+  <section class="slide s-white">
+    <div class="slide__inner" style="text-align:center;">
+      <div class="eyebrow reveal">The Concept</div>
+      <h2 class="reveal r1">Every Dollar Earns <span>Points.</span><br>Every Referral Earns <span>More.</span></h2>
+      <p class="sub reveal r2" style="margin-left:auto; margin-right:auto;">Your customers earn rewards on every job, refer friends for bonuses, and redeem points for real value. You see everything from one dashboard.</p>
+      <div class="stat-big reveal r3">
+        <div class="stat-big-card">
+          <div class="stat-big-val">5%</div>
+          <div class="stat-big-label">Back on every dollar</div>
+        </div>
+        <div class="stat-big-card">
+          <div class="stat-big-val">$25</div>
+          <div class="stat-big-label">Referral bonus (both sides)</div>
+        </div>
+        <div class="stat-big-card">
+          <div class="stat-big-val">$0</div>
+          <div class="stat-big-label">App downloads required</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 3. CUSTOMER EXPERIENCE ===== -->
+  <section class="slide s-gradient">
+    <div class="slide__inner">
+      <div class="combo">
+        <div class="combo-text">
+          <div class="eyebrow reveal">What Customers See</div>
+          <h2 class="reveal r1">Their Rewards.<br><span>One Tap Away.</span></h2>
+          <p class="reveal r2" style="color:var(--light);">Customers open a link in their browser. No app store. No downloads. They see their points, share referrals, and redeem rewards.</p>
+          <p class="reveal r2" style="color:var(--light);">Login with phone number (text code) or email and password. Session stays active 30 days.</p>
+          <div class="callout green reveal r3">
+            <strong>Save to Home Screen</strong> for an app-like experience without the App Store.
+          </div>
+        </div>
+        <div class="reveal r4" style="display:flex; justify-content:center;">
+          <div class="phone">
+            <div class="phone-status">anthonysplumbing.com</div>
+            <div class="phone-content">
+              <h5>Your Points</h5>
+              <div class="phone-balance">1,250</div>
+              <div class="phone-balance-sub">$62.50 available</div>
+              <div class="phone-row"><span class="phone-row-label">Drain Cleaning</span><span class="phone-row-value green">+300 pts</span></div>
+              <div class="phone-row"><span class="phone-row-label">Referral Bonus</span><span class="phone-row-value green">+500 pts</span></div>
+              <div class="phone-row"><span class="phone-row-label">Water Heater Repair</span><span class="phone-row-value green">+450 pts</span></div>
+              <div class="phone-btn">Redeem Rewards</div>
+            </div>
+            <div class="phone-nav">
+              <div class="phone-nav-item active">Home</div>
+              <div class="phone-nav-item">Referrals</div>
+              <div class="phone-nav-item">Rewards</div>
+              <div class="phone-nav-item">History</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. YOUR DASHBOARD ===== -->
+  <section class="slide s-ghost">
+    <div class="slide__inner">
+      <div class="eyebrow reveal">Your Dashboard</div>
+      <h2 class="reveal r1">Everything You Need.<br><span>One Screen.</span></h2>
+      <p class="sub reveal r2">Search any customer, log a payment, check your numbers. Works on your phone or any computer.</p>
+      <div class="dash reveal r3">
+        <div class="dash-bar"><div class="dash-dot r"></div><div class="dash-dot y"></div><div class="dash-dot g"></div></div>
+        <div class="dash-body">
+          <div class="dash-metrics">
+            <div class="dash-metric"><div class="dash-metric-val">847</div><div class="dash-metric-label">Customers</div></div>
+            <div class="dash-metric"><div class="dash-metric-val">68%</div><div class="dash-metric-label">Repeat Rate</div></div>
+            <div class="dash-metric"><div class="dash-metric-val">142</div><div class="dash-metric-label">Referrals</div></div>
+            <div class="dash-metric"><div class="dash-metric-val">$8.2k</div><div class="dash-metric-label">Pts Outstanding</div></div>
+          </div>
+          <div class="dash-table">
+            <div class="dash-table-header"><span>Customer</span><span>Points</span><span>Total Spend</span><span>Referrals</span></div>
+            <div class="dash-table-row"><span>Mike Rodriguez</span><span>2,450</span><span>$4,800</span><span>3</span></div>
+            <div class="dash-table-row"><span>Sarah Chen</span><span>1,800</span><span>$3,200</span><span>5</span></div>
+            <div class="dash-table-row"><span>David Kim</span><span>950</span><span>$1,900</span><span>1</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. REFERRAL ENGINE ===== -->
+  <section class="slide s-white">
+    <div class="slide__inner" style="text-align:center;">
+      <div class="eyebrow reveal">Referral Engine</div>
+      <h2 class="reveal r1">Customers Bring <span>Customers.</span></h2>
+      <p class="sub reveal r2" style="margin-left:auto; margin-right:auto;">Every customer gets a unique referral link. They text it to friends. When the friend books and pays, both earn bonus points. Built-in fraud protection catches gaming.</p>
+      <div class="vflow reveal r3">
+        <div class="vflow-step"><div class="vflow-num">1</div><div class="vflow-label">Customer shares referral link</div></div>
+        <div class="vflow-arrow">&rarr;</div>
+        <div class="vflow-step"><div class="vflow-num">2</div><div class="vflow-label">Friend clicks and registers</div></div>
+        <div class="vflow-arrow">&rarr;</div>
+        <div class="vflow-step"><div class="vflow-num">3</div><div class="vflow-label">Friend books a job</div></div>
+        <div class="vflow-arrow">&rarr;</div>
+        <div class="vflow-step"><div class="vflow-num">4</div><div class="vflow-label">Friend pays</div></div>
+        <div class="vflow-arrow">&rarr;</div>
+        <div class="vflow-step highlight"><div class="vflow-num">&#x2713;</div><div class="vflow-label">Both earn points</div></div>
+      </div>
+      <div class="callout blue reveal r4" style="text-align:left; max-width:640px; margin-left:auto; margin-right:auto;">
+        <strong>Anti-fraud built in:</strong> Self-referral blocking, duplicate detection, phone validation, velocity limits, staff cross-checks. Every suspicious pattern flagged for your review.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6. PAYMENTS ===== -->
+  <section class="slide s-dark">
+    <div class="slide__inner" style="text-align:center;">
+      <div class="eyebrow reveal">Payment Logging</div>
+      <h2 class="reveal r1">Two Ways to <span>Trigger Points.</span></h2>
+      <p class="sub reveal r2" style="margin-left:auto; margin-right:auto;">Stripe automates everything. Manual entry handles cash and checks. Both are equally reliable.</p>
+      <div class="icon-grid reveal r3" style="max-width: 700px; margin-left:auto; margin-right:auto; grid-template-columns: 1fr 1fr;">
+        <div class="icon-card">
+          <div class="icon-card-emoji">&#x26a1;</div>
+          <h4>Stripe (Automatic)</h4>
+          <p>Customer pays an invoice. Points are awarded instantly. Zero manual work. Add anytime.</p>
+        </div>
+        <div class="icon-card">
+          <div class="icon-card-emoji">&#x270d;&#xfe0f;</div>
+          <h4>Manual Entry (15 sec)</h4>
+          <p>Cash or check? Enter customer, amount, type. Points held 24hrs for fraud protection. Full audit trail.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 7. COMMUNICATIONS ===== -->
+  <section class="slide s-white">
+    <div class="slide__inner" style="text-align:center;">
+      <div class="eyebrow reveal">Communications</div>
+      <h2 class="reveal r1">Reach Them by <span>Text</span> and <span>Email.</span></h2>
+      <p class="sub reveal r2" style="margin-left:auto; margin-right:auto;">Automated texts for instant notifications. Email newsletters for promotions. Both channels built in.</p>
+      <div class="icon-grid reveal r3" style="grid-template-columns: 1fr 1fr; max-width:700px; margin-left:auto; margin-right:auto;">
+        <div class="icon-card">
+          <div class="icon-card-emoji">&#x1f4f2;</div>
+          <h4>SMS via Twilio</h4>
+          <p>Login codes, point notifications, referral delivery. TCPA compliant. A2P registered. ~$23/mo.</p>
+        </div>
+        <div class="icon-card">
+          <div class="icon-card-emoji">&#x1f4e7;</div>
+          <h4>Email via Resend</h4>
+          <p>Balance reminders, seasonal promos, referral nudges. Audience filtering. Free under 3,000/mo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 8. SECURITY ===== -->
+  <section class="slide s-ghost">
+    <div class="slide__inner" style="text-align:center;">
+      <div class="eyebrow reveal">Security & Data</div>
+      <h2 class="reveal r1">Bank-Grade <span>Protection.</span></h2>
+      <p class="sub reveal r2" style="margin-left:auto; margin-right:auto;">Your data is encrypted, backed up daily, and locked down by role. No credit card data ever touches the platform.</p>
+      <div class="icon-grid reveal r3">
+        <div class="icon-card">
+          <div class="icon-card-emoji">&#x1f512;</div>
+          <h4>Row Level Security</h4>
+          <p>Database enforces who sees what. Customers see only their own data.</p>
+        </div>
+        <div class="icon-card">
+          <div class="icon-card-emoji">&#x1f510;</div>
+          <h4>AES-256 + TLS 1.3</h4>
+          <p>All data encrypted at rest and in transit. Same standard as banks.</p>
+        </div>
+        <div class="icon-card">
+          <div class="icon-card-emoji">&#x1f6e1;&#xfe0f;</div>
+          <h4>Cloudflare</h4>
+          <p>Bot protection, DDoS defense, firewall. Blocks attacks 24/7.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 9. BUILD PLAN ===== -->
+  <section class="slide s-dark">
+    <div class="slide__inner" style="text-align:center;">
+      <div class="eyebrow reveal">Build Plan</div>
+      <h2 class="reveal r1"><span>8 Weeks</span> to Launch.</h2>
+      <p class="sub reveal r2" style="margin-left:auto; margin-right:auto;">Phase 1 gets you running. Phase 2 adds advanced features when you're ready.</p>
+      <div class="vflow reveal r3">
+        <div class="vflow-step"><div class="vflow-num">1-2</div><div class="vflow-label">Database, auth, shells, Stripe, mockup approval</div></div>
+        <div class="vflow-arrow">&rarr;</div>
+        <div class="vflow-step"><div class="vflow-num">3-4</div><div class="vflow-label">Points engine, referrals, profiles, rewards</div></div>
+        <div class="vflow-arrow">&rarr;</div>
+        <div class="vflow-step"><div class="vflow-num">5-6</div><div class="vflow-label">Partner rewards, SMS, manual payments, email</div></div>
+        <div class="vflow-arrow">&rarr;</div>
+        <div class="vflow-step highlight"><div class="vflow-num">7-8</div><div class="vflow-label">Dashboard, testing, polish, launch</div></div>
+      </div>
+      <div class="callout green reveal r4" style="text-align:left; max-width:560px; margin-left:auto; margin-right:auto;">
+        <strong>Mockups first.</strong> You see screens of the customer website and your dashboard within 2 weeks. You approve the look and feel before we go deep.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 10. OWNERSHIP ===== -->
+  <section class="slide s-white">
+    <div class="slide__inner" style="text-align:center;">
+      <div class="eyebrow reveal">Ownership</div>
+      <h2 class="reveal r1">You Own <span>Everything.</span></h2>
+      <p class="sub reveal r2" style="margin-left:auto; margin-right:auto;">This is not a subscription product. It is custom software built for your business. The code, the data, the accounts. All yours.</p>
+      <div class="icon-grid reveal r3">
+        <div class="icon-card">
+          <div class="icon-card-emoji">&#x1f4bb;</div>
+          <h4>Source Code</h4>
+          <p>100% yours. Delivered in a private repository you control. No licensing fees ever.</p>
+        </div>
+        <div class="icon-card">
+          <div class="icon-card-emoji">&#x1f5c3;&#xfe0f;</div>
+          <h4>Database & Data</h4>
+          <p>Your account. Your customer records. Your history. Exportable anytime.</p>
+        </div>
+        <div class="icon-card">
+          <div class="icon-card-emoji">&#x1f511;</div>
+          <h4>No Vendor Lock-In</h4>
+          <p>Part ways? You take everything. Any developer can continue where we left off.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 11. INVESTMENT ===== -->
+  <section class="slide s-ghost">
+    <div class="slide__inner">
+      <div style="text-align:center;">
+        <div class="eyebrow reveal">The Proposal</div>
+        <h2 class="reveal r1">Investment <span>Breakdown.</span></h2>
+        <p class="sub reveal r2" style="margin-left:auto; margin-right:auto;">Everything included in the Phase 1 build. One price. No hidden fees.</p>
+      </div>
+      <div class="reveal r3">
+        <div class="price-hero">
+          <div class="price-hero-val">$12,760</div>
+          <div class="price-hero-sub">Phase 1 &mdash; Complete Platform Build</div>
+          <ul class="price-list">
+            <li><strong>Customer Rewards Website</strong> &mdash; points, referrals, rewards, history, profile</li>
+            <li><strong>Business Dashboard</strong> &mdash; customer management, metrics, payments, referral tree</li>
+            <li><strong>Points & Rewards Engine</strong> &mdash; auto-calculation, redemption, audit trail</li>
+            <li><strong>Referral System</strong> &mdash; unique links, sharing, tracking, anti-fraud</li>
+            <li><strong>Payment Integration</strong> &mdash; Stripe auto-trigger + manual entry with guardrails</li>
+            <li><strong>SMS System</strong> &mdash; Twilio, A2P registration, login codes, notifications</li>
+            <li><strong>Email Newsletters</strong> &mdash; audience filtering, templates, scheduling</li>
+            <li><strong>Auth & Security</strong> &mdash; dual login, staff access, Cloudflare, encryption</li>
+            <li><strong>Legal Pages</strong> &mdash; ToS, Privacy, Cookie, SMS Terms, Rewards Terms</li>
+            <li><strong>Data Import</strong> &mdash; existing customers from any format</li>
+            <li><strong>Testing & Launch</strong> &mdash; QA, device testing, go-live support</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 12. ONGOING COSTS ===== -->
+  <section class="slide s-white">
+    <div class="slide__inner" style="text-align:center;">
+      <div class="eyebrow reveal">After Launch</div>
+      <h2 class="reveal r1"><span>~$48/mo</span> to Run.</h2>
+      <p class="sub reveal r2" style="margin-left:auto; margin-right:auto;">Third-party service costs. Not fees to us. No per-seat charges. Hosting is on us.</p>
+      <div class="stat-big reveal r3">
+        <div class="stat-big-card">
+          <div class="stat-big-val">$25</div>
+          <div class="stat-big-label">Supabase (Database)</div>
+        </div>
+        <div class="stat-big-card">
+          <div class="stat-big-val">~$23</div>
+          <div class="stat-big-label">Twilio (SMS)</div>
+        </div>
+        <div class="stat-big-card">
+          <div class="stat-big-val">$0</div>
+          <div class="stat-big-label">Hosting (we cover it)</div>
+        </div>
+      </div>
+      <div class="callout green reveal r4" style="text-align:left; max-width:560px; margin-left:auto; margin-right:auto;">
+        <strong>Scales slowly.</strong> Adding customers does not increase the base cost. SMS adds ~$5/mo per 200 customers. Email free under 3,000/mo. Stripe is per-transaction only.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 13. SUPPORT ===== -->
+  <section class="slide s-ghost">
+    <div class="slide__inner">
+      <div style="text-align:center;">
+        <div class="eyebrow reveal">Ongoing Support</div>
+        <h2 class="reveal r1">Two Options. <span>Your Call.</span></h2>
+        <p class="sub reveal r2" style="margin-left:auto; margin-right:auto;">Choose what fits your business. Switch anytime.</p>
+      </div>
+      <div class="support-grid reveal r3">
+        <div class="support-card">
+          <h3>Monthly Maintenance</h3>
+          <div class="support-tag">Pricing TBD</div>
+          <p>We monitor the platform, fix bugs, apply security updates, run database health checks, and keep all third-party services (Twilio, Stripe, Supabase) running smoothly. Priority response when something needs attention.</p>
+        </div>
+        <div class="support-card">
+          <h3>As-Needed</h3>
+          <div class="support-tag">Hourly or Per-Project</div>
+          <p>Feature additions, design changes, new integrations, Phase 2 builds, or troubleshooting. Scoped and quoted before work begins. No commitment required.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 14. NEXT STEPS ===== -->
+  <section class="slide s-dark">
+    <div class="slide__inner" style="text-align:center;">
+      <div class="eyebrow reveal">Next Steps</div>
+      <h2 class="reveal r1">From Here to <span>Launch.</span></h2>
+      <p class="sub reveal r2" style="margin-left:auto; margin-right:auto;">Four steps.</p>
+      <div class="steps-row reveal r3">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h4 style="color:var(--white);">Review</h4>
+          <p style="color:var(--light);">Review this deck. Ask any questions.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h4 style="color:var(--white);">Call</h4>
+          <p style="color:var(--light);">We walk through everything together.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h4 style="color:var(--white);">Approve</h4>
+          <p style="color:var(--light);">Approve scope. We send a short questionnaire.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <h4 style="color:var(--white);">Build</h4>
+          <p style="color:var(--light);">Mockups in 2 weeks. You approve before we go deep.</p>
+        </div>
+      </div>
+      <div class="callout green reveal r4" style="text-align:left; max-width:560px; margin-left:auto; margin-right:auto;">
+        <strong>You approve before we build.</strong> You sign off on mockups before we write the backend. No surprises.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+  <div class="bottom-bar__dots" id="dots"></div>
+  <div class="bottom-bar__nav">
+    <button class="bottom-bar__arrow" id="prev" aria-label="Previous slide" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="bottom-bar__counter">
+      <span class="bottom-bar__counter-current" id="counter-current">1</span> / <span id="counter-total">14</span>
+    </div>
+    <button class="bottom-bar__arrow" id="next" aria-label="Next slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var slides = document.querySelectorAll('.slide');
+    var total = slides.length;
+    var current = 0;
+    var transitioning = false;
+    var bar = document.getElementById('progressBar');
+    var counterCurrent = document.getElementById('counter-current');
+    var counterTotal = document.getElementById('counter-total');
+    var prevBtn = document.getElementById('prev');
+    var nextBtn = document.getElementById('next');
+    var dotsContainer = document.getElementById('dots');
+    counterTotal.textContent = total;
+    for (var i = 0; i < total; i++) {
+      var dot = document.createElement('button');
+      dot.className = 'bottom-bar__dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      dot.setAttribute('data-idx', i);
+      dotsContainer.appendChild(dot);
+    }
+    var dots = dotsContainer.querySelectorAll('.bottom-bar__dot');
+    function goTo(idx) {
+      if (idx < 0 || idx >= total || idx === current || transitioning) return;
+      transitioning = true;
+      slides[current].classList.remove('active');
+      slides[current].style.transform = 'translateY(-8px) scale(0.98)';
+      slides[current].style.opacity = '0';
+      slides[idx].style.transform = 'translateY(12px) scale(0.99)';
+      slides[idx].style.opacity = '0';
+      slides[idx].style.visibility = 'visible';
+      void slides[idx].offsetWidth;
+      slides[idx].classList.add('active');
+      slides[idx].style.transform = '';
+      slides[idx].style.opacity = '';
+      slides[idx].scrollTop = 0;
+      var prev = current;
+      current = idx;
+      setTimeout(function() {
+        slides[prev].style.transform = '';
+        slides[prev].style.opacity = '';
+        slides[prev].style.visibility = '';
+        transitioning = false;
+      }, 700);
+      updateUI();
+    }
+    function updateUI() {
+      bar.style.width = ((current + 1) / total * 100) + '%';
+      counterCurrent.textContent = current + 1;
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === total - 1;
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+    }
+    prevBtn.addEventListener('click', function() { goTo(current - 1); });
+    nextBtn.addEventListener('click', function() { goTo(current + 1); });
+    dotsContainer.addEventListener('click', function(e) {
+      var dot = e.target.closest('.bottom-bar__dot');
+      if (dot) goTo(parseInt(dot.getAttribute('data-idx')));
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+      else if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
+    });
+    var touchStartX = 0, touchStartY = 0;
+    document.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; }, { passive: true });
+    document.addEventListener('touchend', function(e) {
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      var dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) { if (dx < 0) goTo(current + 1); else goTo(current - 1); }
+    }, { passive: true });
+    var wheelTimeout;
+    document.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      if (wheelTimeout) return;
+      wheelTimeout = setTimeout(function() { wheelTimeout = null; }, 700);
+      if (e.deltaY > 0 || e.deltaX > 0) goTo(current + 1); else goTo(current - 1);
+    }, { passive: false });
+    updateUI();
+  })();
+</script>
+</body>
+</html>
