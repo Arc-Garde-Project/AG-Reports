@@ -848,6 +848,13 @@
     }, { passive: true });
     var wheelTimeout;
     document.addEventListener('wheel', function(e) {
+      var s = slides[current];
+      var atTop = s.scrollTop <= 0;
+      var atBottom = s.scrollTop + s.clientHeight >= s.scrollHeight - 2;
+      var canScroll = s.scrollHeight > s.clientHeight + 2;
+      if (canScroll && !atTop && !atBottom) return;
+      if (canScroll && e.deltaY > 0 && !atBottom) return;
+      if (canScroll && e.deltaY < 0 && !atTop) return;
       e.preventDefault();
       if (wheelTimeout) return;
       wheelTimeout = setTimeout(function() { wheelTimeout = null; }, 700);
