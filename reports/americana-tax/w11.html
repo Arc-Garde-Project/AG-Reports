@@ -2381,16 +2381,6 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
       <div class="eyebrow reveal">What's Next</div>
 
       <div class="next-block reveal">
-        <div class="next-title">Strategy</div>
-        <ul class="next-items">
-          <li class="next-item">Keep Ad Creative 1 running.<br>New April creative is already the biggest traffic driver at $0.79 CPC.</li>
-          <li class="next-item">Hold Ad 2 as OC champion. 4th consecutive period dominating the set. Don't touch the budget.</li>
-          <li class="next-item">Kill or replace Ad 6 officially. 7 days of zero delivery confirms Meta has fully moved on.</li>
-          <li class="next-item">Develop 1-2 new video variants to test against Ad Creative 1 next week. Catch fatigue early.</li>
-        </ul>
-      </div>
-
-      <div class="next-block reveal">
         <div class="next-title">Creative vs Retargeting</div>
         <div class="ab-grid">
           <div class="ab-col ab-col--red">
@@ -2441,8 +2431,8 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
           <canvas id="kpi-chart"></canvas>
         </div>
         <div class="chart-legend">
-          <span class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--prev"></span>W5 (Ad 6)</span>
-          <span class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--current" id="legend-current"></span>W6 (Ad 2)</span>
+          <span class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--prev"></span>W10 (Apr 2-8)</span>
+          <span class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--current" id="legend-current"></span>W11 (Apr 9-15)</span>
         </div>
         <p class="chart-summary" id="chart-summary">Ad 2 scaled from $1/day to $19/day as Meta shifted budget from Ad 6.</p>
       </div>
@@ -2475,9 +2465,9 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
       </div>
       <div class="diag-card">
         <span class="diag-name">Impressions</span>
-        <span class="diag-val" data-counter="7.7" data-suffix="k">0k</span>
-        <span class="diag-prev">7,256 total</span>
-        <span class="diag-what">Your brand seen 7,256 times across OC and real estate audiences this week.</span>
+        <span class="diag-val" data-counter="7.68" data-suffix="k">0k</span>
+        <span class="diag-prev">7,680 total</span>
+        <span class="diag-what">Brand seen 7,680 times across OC, Real Estate, and Retargeting audiences this week.</span>
       </div>
       <div class="diag-card">
         <span class="diag-name">Results</span>
@@ -2904,43 +2894,43 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   var chartMetrics = {
     spend: {
       labels: ['Thu','Fri','Sat','Sun','Mon','Tue','Wed'],
-      data: [1.04, 2.42, 1.79, 8.61, 13.29, 18.43, 19.33],
-      prev: [21.01, 16.56, 18.06, 21.49, 18.13, 16.43, 16.67],
+      data: [38.73, 37.54, 34.99, 37.03, 38.45, 44.49, 35.82],
+      prev: [40.75, 37.58, 32.83, 43.88, 42.23, 41.88, 40.20],
       prefix: '$', suffix: '',
       color: rgba(brandBlueBrightRGB, 1),
       colorFill: rgba(brandBlueRGB, 0.2),
       glowColor: rgba(brandBlueRGB, 0.3),
-      summary: 'Ad 2 scaled from $1/day to $19/day as Meta shifted budget from Ad 6.'
+      summary: 'Spend held steady at $35-$44/day all 7 days.<br>Tuesday peak ($44.49) as Meta pushed volume on high-CTR days.'
     },
     ctr: {
       labels: ['Thu','Fri','Sat','Sun','Mon','Tue','Wed'],
-      data: [3.12, 2.94, 6.90, 3.25, 2.12, 2.72, 4.00],
-      prev: [2.44, 2.08, 1.82, 2.54, 2.81, 2.13, 2.50],
+      data: [3.96, 2.51, 3.24, 3.95, 3.80, 5.02, 5.19],
+      prev: [2.65, 1.69, 1.87, 2.66, 2.90, 2.36, 2.74],
       prefix: '', suffix: '%',
       color: rgba(brandGreenRGB, 1),
       colorFill: rgba(brandGreenRGB, 0.12),
       glowColor: rgba(brandGreenRGB, 0.25),
-      summary: 'CTR climbed all week.<br>From 3.76% on Thu to 4.91% on Wed.<br>Every day above last week\'s average.'
+      summary: 'CTR climbed across the week.<br>2.51% low on Fri to 5.19% high on Wed.<br>Every day at or above 2.5%.'
     },
     cpc: {
       labels: ['Thu','Fri','Sat','Sun','Mon','Tue','Wed'],
-      data: [1.40, 1.78, 1.25, 1.11, 0.98, 0.76, 0.56],
-      prev: [1.67, 2.03, 2.33, 1.91, 1.33, 1.75, 1.81],
+      data: [1.38, 1.79, 1.25, 1.06, 0.94, 0.75, 0.56],
+      prev: [1.63, 2.68, 2.35, 1.91, 1.32, 1.68, 1.68],
       prefix: '$', suffix: '',
       color: rgba(brandAccentBrightRGB, 1),
       colorFill: rgba(brandAccentBrightRGB, 0.15),
       glowColor: rgba(brandAccentBrightRGB, 0.25),
-      summary: 'CPC dropped from $1.40 on Thu to $0.56 on Wed. Meta is rewarding the creative with cheaper clicks.'
+      summary: 'CPC dropped steadily all week.<br>From $1.79 on Fri to $0.56 on Wed.<br>Meta finding cheaper clicks as the ads matured.'
     },
     impressions: {
       labels: ['Thu','Fri','Sat','Sun','Mon','Tue','Wed'],
-      data: [771, 891, 960, 1031, 1248, 1394, 1385],
-      prev: [1065, 960, 824, 984, 1246, 1218, 959],
+      data: [707, 837, 864, 886, 1081, 1176, 1234],
+      prev: [943, 829, 747, 866, 1105, 1059, 875],
       prefix: '', suffix: '',
       color: rgba(brandCreamRGB, 0.6),
       colorFill: rgba(brandCreamRGB, 0.06),
       glowColor: rgba(brandCreamRGB, 0.15),
-      summary: 'Impressions climbed steadily all week.<br>771 on Thu up to 1,394 on Tue.<br>Meta scaled delivery as CTR held above 3%.'
+      summary: 'Impressions climbed steadily all week.<br>707 on Thu up to 1,234 on Wed.<br>Meta scaled delivery as CTR held above 2.5%.'
     },
     leads: {
       labels: ['Thu','Fri','Sat','Sun','Mon','Tue','Wed'],
@@ -2954,7 +2944,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     },
     cpl: {
       labels: ['Thu','Fri','Sat','Sun','Mon','Tue','Wed'],
-      data: [40.70, 39.09, 37.36, 0, 42.32, 0, 0],
+      data: [38.73, 37.54, 34.99, 0, 38.45, 0, 0],
       prev: [0, 0, 0, 0, 0, 0, 0],
       prefix: '$', suffix: '',
       color: rgba(brandRedRGB, 1),
