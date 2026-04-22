@@ -882,12 +882,13 @@ body { text-wrap: pretty; }
 }
 
 .rt-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 12px;
-  max-width: 640px;
+  max-width: 900px;
   width: 100%;
-  margin-bottom: 24px;
+  margin: 0 auto 24px;
 }
 
 .rt-card {
@@ -896,6 +897,8 @@ body { text-wrap: pretty; }
   border-radius: 12px;
   padding: 16px 14px;
   text-align: center;
+  flex: 0 1 calc(33.333% - 8px);
+  min-width: 170px;
 }
 
 .rt-card--champ {
