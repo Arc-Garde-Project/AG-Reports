@@ -4,19 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
-<title>The Tooth Place - Week 2 Report | Apr 20 - 26, 2026</title>
-<meta name="description" content="The Tooth Place ad performance report for Week 2 (Apr 20 - 26, 2026). Ad Set 1 (English). 9,018 impressions, 139 landing page views, 24 leads at $8.51 CPL.">
+<title>The Tooth Place - W2 Stable Window Report | Apr 27 - 30, 2026</title>
+<meta name="description" content="The Tooth Place W2 ad performance report for the stable 4-day testing window Apr 27 - 30, 2026. Ad Set 1 (English). 3,699 impressions, 36 landing page views, 3 leads at $45.83 CPL.">
 <meta name="robots" content="noindex, nofollow">
-<meta property="og:title" content="The Tooth Place - Week 2 Report | Apr 20 - 26, 2026">
-<meta property="og:description" content="Ad Set 1 (English) full 7-day window (Apr 20-26). 9,018 impressions, 139 landing page views, 24 leads, $8.51 CPL. 4x lead volume vs Week 1 at 73% lower CPL.">
+<meta property="og:title" content="The Tooth Place - W2 Stable Window Report | Apr 27 - 30, 2026">
+<meta property="og:description" content="Ad Set 1 (English) W2 stable 4-day window (Apr 27-30). 3,699 impressions, 36 landing page views, 3 leads, $45.83 CPL. Creative 4 carried the window.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Arc Garde">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The Tooth Place - Week 2 Report | Apr 20 - 26, 2026">
-<meta name="twitter:description" content="Ad Set 1 (English) full 7-day window (Apr 20-26). 9,018 impressions, 139 landing page views, 24 leads, $8.51 CPL.">
+<meta name="twitter:title" content="The Tooth Place - W2 Stable Window Report | Apr 27 - 30, 2026">
+<meta name="twitter:description" content="Ad Set 1 (English) W2 stable 4-day window (Apr 27-30). 3,699 impressions, 36 LP views, 3 leads, $45.83 CPL.">
 <meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
 <meta name="theme-color" content="#0A0A0A">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
@@ -29,7 +29,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0&display=swap" rel="stylesheet">
 <style>
 :root {
   /* ─── CLIENT BRAND TOKENS - THE TOOTH PLACE ─── */
@@ -239,7 +238,7 @@ h1, h2, h3, h4, h5, h6, .eyebrow, .label, .next-title, .action-title, .heatmap-t
   background-size: 128px;
 }
 
-.pg > *:not(.aurora):not(.particles):not(.grain):not(.scan-line):not(.grid-lines):not(.tooth-field) {
+.pg > *:not(.aurora):not(.particles):not(.grain):not(.scan-line):not(.grid-lines) {
   position: relative;
   z-index: 2;
 }
@@ -428,7 +427,7 @@ h1, h2, h3, h4, h5, h6, .eyebrow, .label, .next-title, .action-title, .heatmap-t
   font-size: clamp(24px, 3.5vw, 32px);
   font-style: italic;
   font-weight: 500;
-  color: #FFFFFF;
+  color: var(--cream);
   max-width: 1100px;
   margin: 0 auto 24px;
   line-height: 1.6;
@@ -474,9 +473,9 @@ h1, h2, h3, h4, h5, h6, .eyebrow, .label, .next-title, .action-title, .heatmap-t
 }
 
 .stat-lbl {
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 500;
-  color: #FFFFFF;
+  color: var(--cream70);
 }
 
 .stat .tag { margin-top: 12px; }
@@ -1280,10 +1279,10 @@ h1, h2, h3, h4, h5, h6, .eyebrow, .label, .next-title, .action-title, .heatmap-t
 
 .gauge-label {
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: 8px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #FFFFFF;
+  color: var(--cream35);
 }
 
 .gauge-value {
@@ -1300,10 +1299,10 @@ h1, h2, h3, h4, h5, h6, .eyebrow, .label, .next-title, .action-title, .heatmap-t
 
 .gauge-subtitle {
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: 9px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #FFFFFF;
+  color: var(--cream35);
   margin-top: 8px;
 }
 
@@ -1329,11 +1328,8 @@ h1, h2, h3, h4, h5, h6, .eyebrow, .label, .next-title, .action-title, .heatmap-t
 
 .heatmap-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   gap: 6px;
-  max-width: 880px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .heatmap-day-label {
@@ -1524,7 +1520,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   .kpi-toggle.active { animation: none; }
   .dot::after { animation: none; }
   .winner-card::before { display: none; }
-  .diag-grid { gap: 12px; grid-template-columns: repeat(2, 1fr); }
+  .diag-grid { gap: 12px; }
   .heatmap-cell { transition: none; }
   .winner-cards { grid-template-columns: 1fr; }
 }
@@ -1534,7 +1530,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   .stats { flex-direction: column; gap: 12px; }
   .stat { min-width: auto; }
   .rings { gap: 16px; }
-  .diag-grid { grid-template-columns: 1fr; }
+  .diag-grid { grid-template-columns: repeat(2, 1fr); }
   .kpi-toggles { gap: 4px; }
   .kpi-toggle { padding: 10px 14px; font-size: 13px; min-height: 48px; }
   .chart-container { height: 160px; }
@@ -1545,8 +1541,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   .gauge-svg { width: 180px; height: 110px; }
   .gauge-value { font-size: 21px; }
   .heatmap-cell-val { font-size: 8px; }
-  .heatmap-grid { display: flex; flex-wrap: wrap; justify-content: center; grid-template-columns: unset; max-width: 100%; }
-  .heatmap-cell { flex: 0 0 calc((100% - 18px) / 4); min-height: 90px; }
+  .heatmap-grid { grid-template-columns: repeat(4, 1fr); }
   .funnel-wrap { margin-bottom: 36px; }
   .f-bar { height: 48px; }
   .f-num { font-size: 18px; }
@@ -1714,45 +1709,9 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   max-width: 90%;
   object-fit: contain;
 }
-
-/* ─── Floating teeth (cover background, landing-page style) ─── */
-.tooth-field {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-}
-.tooth-float {
-  position: absolute;
-  font-family: 'Material Symbols Outlined';
-  font-weight: 200;
-  font-size: 32px;
-  color: #4ADE80;
-  opacity: 0.35;
-  pointer-events: none;
-  user-select: none;
-  will-change: transform;
-  animation: tooth-float 9s ease-in-out infinite;
-  line-height: 1;
-  font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
-}
-@keyframes tooth-float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-12px) rotate(6deg); }
-  50% { transform: translateY(4px) rotate(-4deg); }
-  75% { transform: translateY(-8px) rotate(3deg); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .tooth-float { animation: none; opacity: 0.15; }
-}
-
 </style>
 </head>
 <body>
-
-
-
 
 <!-- Reports Nav Modal -->
 <button class="reports-btn" onclick="toggleReportsNav()" aria-label="Open reports menu">
@@ -1764,7 +1723,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
 <nav class="reports-nav" id="reportsNav" role="navigation" aria-label="Reports navigation">
   <div class="reports-nav-group">Ad Testing</div>
   <a href="/reports/tooth-place/w1" class="reports-nav-link">Week 1<span>Apr 16-19 (stable)</span></a>
-  <a href="/reports/tooth-place/w2" class="reports-nav-link active">Week 2<span>Apr 20-26</span></a>
+  <a href="/reports/tooth-place/w2" class="reports-nav-link active">Week 2<span>Apr 27-30 (stable)</span></a>
   <div class="reports-nav-divider"></div>
   <a href="/reports/tooth-place" class="reports-nav-link reports-nav-all">All Reports</a>
 </nav>
@@ -1784,36 +1743,19 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     <div class="particles" id="number-particles"></div>
     <div class="grain"></div>
 
-    <div class="tooth-field" aria-hidden="true">
-      <span class="tooth-float" style="top:6%;left:3%;font-size:50px;animation-delay:0s;">dentistry</span>
-      <span class="tooth-float" style="top:22%;right:5%;font-size:38px;animation-delay:-3s;">dentistry</span>
-      <span class="tooth-float" style="bottom:18%;left:7%;font-size:30px;animation-delay:-6s;">dentistry</span>
-      <span class="tooth-float" style="bottom:28%;right:6%;font-size:44px;animation-delay:-2s;">dentistry</span>
-      <span class="tooth-float" style="top:45%;left:2%;font-size:26px;animation-delay:-7s;">dentistry</span>
-      <span class="tooth-float" style="top:12%;right:8%;font-size:32px;animation-delay:-4s;">dentistry</span>
-      <span class="tooth-float" style="bottom:38%;right:3%;font-size:36px;animation-delay:-9s;">dentistry</span>
-      <span class="tooth-float" style="top:58%;left:5%;font-size:22px;animation-delay:-1s;">dentistry</span>
-      <span class="tooth-float" style="top:4%;left:9%;font-size:34px;animation-delay:-5s;">dentistry</span>
-      <span class="tooth-float" style="top:35%;right:4%;font-size:42px;animation-delay:-8s;">dentistry</span>
-      <span class="tooth-float" style="bottom:10%;left:9%;font-size:38px;animation-delay:-3.5s;">dentistry</span>
-      <span class="tooth-float" style="bottom:32%;left:4%;font-size:28px;animation-delay:-6.3s;">dentistry</span>
-      <span class="tooth-float" style="top:48%;right:9%;font-size:20px;animation-delay:-2.1s;">dentistry</span>
-      <span class="tooth-float" style="top:68%;right:7%;font-size:40px;animation-delay:-4.2s;">dentistry</span>
-      <span class="tooth-float" style="top:15%;left:5%;font-size:24px;animation-delay:-9s;">dentistry</span>
-    </div>
     <header class="cover-block" style="text-align:center;margin-bottom:40px;">
-      <div class="brand-label reveal" style="font-size:13px;letter-spacing:5px;text-transform:uppercase;color:#FFFFFF;margin-bottom:20px;font-weight:600;">Arc Garde Media Buying</div>
-      <img class="tp-logo reveal" src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Tooth%20Place/The%20Tooth%20Place%20Logo%20Transparent.png" alt="The Tooth Place" width="140" height="136">
-      <div class="subtitle reveal" style="font-size:16px;color:#FFFFFF;margin-bottom:4px;font-weight:400;">Lead Generation Campaign | Ad Set 1 (English)</div>
-      <div class="date-range reveal" style="font-size:16px;color:#FFFFFF;font-weight:400;">Apr 20 - Apr 26, 2026 | Meta Ads | Week 2 | Full 7-Day Window</div>
-      <div class="reveal" style="font-size:14px;color:#FFFFFF;margin-top:6px;font-style:italic;opacity:0.9;">Originally a 4-day testing window. Extended to 7 days because the ads kept producing.<br>Both creatives still in test - no winner declared yet.</div>
+      <div class="brand-label reveal" style="font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--cream35);margin-bottom:20px;font-weight:600;">Arc Garde Media Buying</div>
+      <img class="tp-logo reveal" src="/assets/tooth-place/logo.webp" alt="The Tooth Place" width="140" height="136">
+      <div class="subtitle reveal" style="font-size:13px;color:var(--cream35);margin-bottom:4px;font-weight:400;">Lead Generation Campaign | Ad Set 1 (English)</div>
+      <div class="date-range reveal" style="font-size:13px;color:var(--cream35);font-weight:400;">Apr 27 - Apr 30, 2026 | Meta Ads | W2 Stable 4-Day Window</div>
+      <div class="reveal" style="font-size:11px;color:var(--cream35);margin-top:6px;font-style:italic;opacity:0.6;">Window opens Apr 27 once Creative 3 was algorithmically paused.<br>Apr 23-26 ran 12 leads at $9.89 CPL prior to the stable window.</div>
       <div class="divider reveal" style="width:140px;height:2px;margin:24px auto 0;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--blue));"></div>
     </header>
 
     <div class="label reveal" style="margin-bottom: 14px;">Your Return</div>
 
     <!-- Landing Page Views Gauge -->
-    <div class="gauge-wrap reveal" id="roas-gauge" data-gauge-value="70" data-gauge-display="139">
+    <div class="gauge-wrap reveal" id="roas-gauge" data-gauge-value="36" data-gauge-display="36">
       <svg class="gauge-svg" viewBox="0 0 240 140">
         <line class="gauge-tick" x1="30" y1="120" x2="38" y2="120"/>
         <line class="gauge-tick" x1="50" y1="55" x2="57" y2="60"/>
@@ -1829,36 +1771,36 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     <div class="gauge-labels reveal">
       <span class="gauge-label">0</span>
       <span class="gauge-subtitle">Landing Page Views</span>
-      <span class="gauge-label">200</span>
+      <span class="gauge-label">100</span>
     </div>
 
-    <p class="roi-context reveal" style="margin-bottom: 32px;">139 LP views across 7 days.<br>24 leads at $8.51 CPL.<br>Same daily spend as Week 1.</p>
+    <p class="roi-context reveal" style="margin-bottom: 32px;">36 LP views.<br>3 leads at $45.83 CPL.<br>Down from 12 leads in the prior 4 days (Apr 23-26).</p>
 
     <div class="stats">
       <div class="stat reveal">
-        <span class="stat-num" data-counter="139">0</span>
+        <span class="stat-num" data-counter="36">0</span>
         <span class="stat-lbl">LP Views</span>
-        <span class="tag tag--good">7-day test window</span>
+        <span class="tag tag--good">4 stable days</span>
       </div>
       <div class="stat reveal">
-        <span class="stat-num" data-counter="9018">0</span>
+        <span class="stat-num" data-counter="3699">0</span>
         <span class="stat-lbl">Impressions</span>
       </div>
       <div class="stat reveal">
-        <span class="stat-num" data-counter="3.37" data-suffix="%">0%</span>
+        <span class="stat-num" data-counter="3.08" data-suffix="%">0%</span>
         <span class="stat-lbl">Avg CTR</span>
       </div>
       <div class="stat reveal">
-        <span class="stat-num" data-counter="0.67" data-prefix="$">$0</span>
+        <span class="stat-num" data-counter="1.21" data-prefix="$">$0</span>
         <span class="stat-lbl">Cost / Click</span>
       </div>
       <div class="stat reveal">
-        <span class="stat-num" data-counter="24">0</span>
+        <span class="stat-num" data-counter="3">0</span>
         <span class="stat-lbl">Leads</span>
-        <span class="tag tag--good">24 leads</span>
+        <span class="tag">3 leads</span>
       </div>
       <div class="stat reveal">
-        <span class="stat-num" data-counter="8.51" data-prefix="$">$0</span>
+        <span class="stat-num" data-counter="45.83" data-prefix="$">$0</span>
         <span class="stat-lbl">Cost per Lead</span>
       </div>
     </div>
@@ -1875,47 +1817,47 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
 
       <div class="winner-cards">
         <div class="winner-card reveal--up reveal">
-          <div class="winner-badge">Higher Volume</div>
+          <div class="winner-badge winner-badge--new">Account Workhorse</div>
           <div class="winner-name">Ads Creative 4</div>
-          <div class="winner-plat">META / VIDEO</div>
+          <div class="winner-plat" style="color: var(--blue-bright);">META / VIDEO</div>
           <p class="winner-why">
-            Pulled the larger share of the test budget.<br>Ran <strong>all 7 days</strong> at <strong>84.9% of total budget</strong> ($173.46 spend).<br>Delivered <strong>106 LP views</strong>, <strong>7,545 impressions</strong>, <strong>2.97% CTR</strong>, <strong>$0.77 CPC</strong>.<br>The algorithm leaned on this ad for delivery from Apr 21 onward.
+            Carried the account across all 4 stable days.<br>Delivered <strong class="blue-hl">3 leads</strong>, <strong class="blue-hl">30 LP views</strong>, and <strong class="blue-hl">2,884 impressions</strong> at <strong class="blue-hl">2.84% CTR</strong> and a <strong class="blue-hl">$31.91 CPL</strong>.<br>Took <strong class="blue-hl">70% of the window budget</strong> and <strong class="blue-hl">78% of impressions</strong>.<br>Watch fatigue: CTR slid from 3.04% on Apr 27 to 2.21% on Apr 30.
           </p>
           <div class="rings">
-            <div class="ring reveal" data-ring="85">
-              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill" cx="50" cy="50" r="42"/></svg>
-              <div class="ring-inner"><span class="ring-v">85%</span><span class="ring-l">of week budget</span></div>
+            <div class="ring reveal" data-ring="70">
+              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill ring-fill--blue" cx="50" cy="50" r="42"/></svg>
+              <div class="ring-inner"><span class="ring-v">70%</span><span class="ring-l">of window budget</span></div>
             </div>
-            <div class="ring reveal" data-ring="76">
-              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill" cx="50" cy="50" r="42"/></svg>
-              <div class="ring-inner"><span class="ring-v">106</span><span class="ring-l">LP views</span></div>
+            <div class="ring reveal" data-ring="75">
+              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill ring-fill--blue" cx="50" cy="50" r="42"/></svg>
+              <div class="ring-inner"><span class="ring-v">30</span><span class="ring-l">LP views</span></div>
             </div>
-            <div class="ring reveal" data-ring="30">
-              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill" cx="50" cy="50" r="42"/></svg>
-              <div class="ring-inner"><span class="ring-v">3.0%</span><span class="ring-l">CTR</span></div>
+            <div class="ring reveal" data-ring="28">
+              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill ring-fill--blue" cx="50" cy="50" r="42"/></svg>
+              <div class="ring-inner"><span class="ring-v">2.8%</span><span class="ring-l">CTR</span></div>
             </div>
           </div>
         </div>
 
         <div class="winner-card reveal--up reveal">
-          <div class="winner-badge winner-badge--new">Stronger Per-Click</div>
-          <div class="winner-name">Ads Creative 3</div>
-          <div class="winner-plat" style="color: var(--blue-bright);">META / VIDEO</div>
+          <div class="winner-badge">Underperformer</div>
+          <div class="winner-name">Ads Creative 5</div>
+          <div class="winner-plat">META / VIDEO</div>
           <p class="winner-why">
-            Best per-impression CTR of the test at <strong class="blue-hl">5.34%</strong>.<br>Cheapest CPC at <strong class="blue-hl">$0.31</strong> and lowest cost per LP at <strong class="blue-hl">$0.81</strong>.<br>Ran <strong class="blue-hl">5 of 7 days</strong> on only <strong class="blue-hl">11.1% of budget</strong>.<br>Meta gave it less spend share because Creative 4 was converting more downstream, but the per-click economics were the strongest of the test.
+            Burned <strong>$39.18</strong> across the window with <strong>0 leads</strong>.<br>Generated only <strong>5 LP views</strong> from <strong>652 impressions</strong>.<br>Highest CPM in the account at <strong>$60.09</strong>.<br>High single-day CTR (9.38% on Apr 27 from $1.62 spend) was statistical noise on tiny impression bases.<br>Recommendation: kill next window and rotate Creative 1 or 2 back in.
           </p>
           <div class="rings">
-            <div class="ring reveal" data-ring="11">
-              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill ring-fill--blue" cx="50" cy="50" r="42"/></svg>
-              <div class="ring-inner"><span class="ring-v">11%</span><span class="ring-l">of week budget</span></div>
+            <div class="ring reveal" data-ring="29">
+              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill" cx="50" cy="50" r="42"/></svg>
+              <div class="ring-inner"><span class="ring-v">28%</span><span class="ring-l">of window budget</span></div>
             </div>
-            <div class="ring reveal" data-ring="20">
-              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill ring-fill--blue" cx="50" cy="50" r="42"/></svg>
-              <div class="ring-inner"><span class="ring-v">28</span><span class="ring-l">LP views</span></div>
+            <div class="ring reveal" data-ring="13">
+              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill" cx="50" cy="50" r="42"/></svg>
+              <div class="ring-inner"><span class="ring-v">5</span><span class="ring-l">LP views</span></div>
             </div>
-            <div class="ring reveal" data-ring="53">
-              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill ring-fill--blue" cx="50" cy="50" r="42"/></svg>
-              <div class="ring-inner"><span class="ring-v">5.3%</span><span class="ring-l">CTR</span></div>
+            <div class="ring reveal" data-ring="0">
+              <svg viewBox="0 0 100 100"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill" cx="50" cy="50" r="42"/></svg>
+              <div class="ring-inner"><span class="ring-v">0</span><span class="ring-l">leads</span></div>
             </div>
           </div>
         </div>
@@ -1923,17 +1865,38 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
 
       <ul class="tests">
         <li class="test reveal">
-          <div class="dot dot--test"></div>
+          <div class="dot dot--win"></div>
           <div>
-            <span class="test-name">Ads Creative 4. Continues into the next test window.</span>
-            <span class="test-desc">Larger spend share by algorithm choice.<br>84.9% of week budget. Ran all 7 days.<br>2.97% CTR, $0.77 CPC, $1.64 cost per LP.<br>Strong enough on volume and conversion to keep running while the test matures.</span>
+            <span class="test-name">Ads Creative 4. Holding into Week 3 — watch fatigue.</span>
+            <span class="test-desc">Account workhorse this window.<br>3 leads at $31.91 CPL, 70% of budget, 78% of impressions.<br>CTR decay across the 4 days (3.04% to 2.21%) is the fatigue signal worth watching.<br>Still above kill thresholds. Holds for now.</span>
+          </div>
+        </li>
+        <li class="test reveal">
+          <div class="dot dot--cut"></div>
+          <div>
+            <span class="test-name">Ads Creative 5. Recommend kill for Week 3.</span>
+            <span class="test-desc">$39.18 spent, 0 leads, highest CPM in the account.<br>5 LP views from 652 impressions.<br>9.38% one-day CTR was noise (32 impressions / 3 clicks).<br>Rotate out, bring Creative 1 or 2 back in to compete with Creative 4.</span>
+          </div>
+        </li>
+        <li class="test reveal">
+          <div class="dot dot--cut"></div>
+          <div>
+            <span class="test-name">Ads Creative 3. Algorithmically paused Apr 27.</span>
+            <span class="test-desc">$2.60 spend on Apr 27, then dark for the rest of the window.<br>Meta deprioritized it in the auction.<br>1 LP view, 0 leads.<br>Effectively benched.</span>
           </div>
         </li>
         <li class="test reveal">
           <div class="dot dot--test"></div>
           <div>
-            <span class="test-name">Ads Creative 3. Continues into the next test window.</span>
-            <span class="test-desc">Highest CTR of the test at 5.34%.<br>Strongest per-click economics: $0.31 CPC, $0.81 cost per LP.<br>Smaller delivery share (11.1% of budget, 5 of 7 days), but the front-end engagement signal is real.<br>Worth more spend share before any kill / lock decision.</span>
+            <span class="test-name">Ads Creative 1. Standby — could re-enter for Week 3.</span>
+            <span class="test-desc">Out of rotation since Apr 19.<br>$22.13 CPL with 4.34% CTR was the W1 winning profile.<br>Strong candidate to swap back in if Creative 5 is killed.</span>
+          </div>
+        </li>
+        <li class="test reveal">
+          <div class="dot dot--test"></div>
+          <div>
+            <span class="test-name">Ads Creative 2. Standby — could re-enter for Week 3.</span>
+            <span class="test-desc">Out of rotation since Apr 19.<br>$35.51 CPL workhorse from W1.<br>Backup option for the Week 3 head-to-head.</span>
           </div>
         </li>
       </ul>
@@ -1955,31 +1918,31 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
 
     <div class="funnel-wrap">
       <div class="f-row">
-        <div class="f-bar f-bar--1" data-width="100" style="width:100%"><span class="f-num">9,018</span></div>
+        <div class="f-bar f-bar--1" data-width="100" style="width:100%"><span class="f-num">3,699</span></div>
         <span class="f-name">impressions</span>
       </div>
       <div class="f-row">
-        <div class="f-bar f-bar--2" data-width="65" style="width:65%"><span class="f-num">304</span></div>
+        <div class="f-bar f-bar--2" data-width="65" style="width:65%"><span class="f-num">114</span></div>
         <span class="f-name">clicked</span>
       </div>
       <div class="f-row">
-        <div class="f-bar f-bar--3" data-width="42" style="width:42%"><span class="f-num">139</span></div>
+        <div class="f-bar f-bar--3" data-width="34" style="width:34%"><span class="f-num">36</span></div>
         <span class="f-name">landing page views</span>
       </div>
       <div class="f-row" id="conversion-row">
-        <div class="f-bar f-bar--4" data-width="20" style="width:20%"><span class="f-num">24</span></div>
-        <span class="f-name">leads | $8.51 CPL</span>
+        <div class="f-bar f-bar--4" data-width="10" style="width:10%"><span class="f-num">3</span></div>
+        <span class="f-name">leads | $45.83 CPL</span>
       </div>
     </div>
 
     <div class="rule reveal" style="margin: 24px auto; opacity: 0.3; max-width: 200px;"></div>
 
     <p class="roi-context reveal" style="margin-top: 16px; font-size: 16px;">
-      7 clean days.<br>1 in 30 impressions turned into a click.<br>1 in 65 impressions reached the landing page.<br>1 in 6 landing page visits became a lead.<br><strong style="color: var(--accent); font-style: normal;">$8.51 CPL</strong> on a cold audience with no retargeting layer.<br>Originally planned as a 4-day testing window. Extended by 3 more days because the ads kept producing leads at this CPL.
+      Four stable days, narrowing top to bottom.<br>1 in 32 impressions turned into a click.<br>1 in 103 impressions reached the landing page.<br>1 in 12 landing page visits became a lead.<br><strong style="color: var(--accent); font-style: normal;">$45.83 CPL</strong> — up from W1's $28.82.<br>The funnel is widening at the top (cheaper clicks, more impressions) but narrowing at conversion.
     </p>
 
     <p class="roi-context reveal" style="margin-top: 10px; font-size: 17px; opacity: 0.6; font-style: italic; text-wrap: pretty;">
-      Week 1 vs Week 2 comparison (same daily budget):<br>Impressions +125%. Clicks +122%. LP views +136%. CPC -51%. Cost/LP -54%. CPM -52%.<br>CTR held steady at 3.37%. The algorithm exited learning phase on Apr 20 and started finding more of the audience that converts.
+      Prior 4 days reference (Apr 23-26):<br>The account's strongest stretch yet.<br>$118.66 spent, 71 LP views, 12 leads at $9.89 CPL.<br>Same ad set, same creatives. The audience converted at 4.6x the rate of the Apr 27-30 window.<br>The drop-off is the diagnostic question heading into Week 3.
     </p>
 
   </section>
@@ -1991,38 +1954,38 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     <div class="ab-wrap">
 
       <div class="eyebrow reveal">Ad Comparison</div>
-      <p class="reveal" style="font-size: 18px; font-style: italic; color: var(--text60); margin-bottom: 24px; text-wrap: pretty;">Ads Creative 4 vs Ads Creative 3.<br>Full Week 2 window (Apr 20 to Apr 26).</p>
+      <p class="reveal" style="font-size: 18px; font-style: italic; color: var(--text60); margin-bottom: 24px; text-wrap: pretty;">Ads Creative 4 vs Ads Creative 5.<br>Stable window only (Apr 27 to Apr 30).</p>
 
       <div class="ab-grid">
-        <div class="ab-col ab-col--red reveal">
+        <div class="ab-col ab-col--blue reveal">
           <div class="ab-ad-name">Ads Creative 4</div>
-          <span class="ab-ad-sub">Video Ad &middot; 7 days live</span>
-          <div class="ab-stat-row"><span class="ab-stat-label">Spend</span><span class="ab-stat-val">$173.46</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">Impressions</span><span class="ab-stat-val">7,545</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">CTR</span><span class="ab-stat-val">2.97%</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">CPC</span><span class="ab-stat-val">$0.77</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">LP Views</span><span class="ab-stat-val">106</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">Cost / LP</span><span class="ab-stat-val">$1.64</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">Days Live</span><span class="ab-stat-val">7 / 7</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">Budget Share</span><span class="ab-stat-val">84.9%</span></div>
+          <span class="ab-ad-sub">Video Ad · 4 days live</span>
+          <div class="ab-stat-row"><span class="ab-stat-label">Spend</span><span class="ab-stat-val">$95.72</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">Impressions</span><span class="ab-stat-val">2,884</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">CTR</span><span class="ab-stat-val">2.84%</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">CPC</span><span class="ab-stat-val">$1.17</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">LP Views</span><span class="ab-stat-val">30</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">Leads</span><span class="ab-stat-val">3</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">CPL</span><span class="ab-stat-val">$31.91</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">Budget Share</span><span class="ab-stat-val">69.6%</span></div>
         </div>
 
-        <div class="ab-col ab-col--blue reveal">
-          <div class="ab-ad-name">Ads Creative 3</div>
-          <span class="ab-ad-sub">Video Ad &middot; 5 days live</span>
-          <div class="ab-stat-row"><span class="ab-stat-label">Spend</span><span class="ab-stat-val">$22.64</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">Impressions</span><span class="ab-stat-val">1,366</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">CTR</span><span class="ab-stat-val">5.34%</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">CPC</span><span class="ab-stat-val">$0.31</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">LP Views</span><span class="ab-stat-val">28</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">Cost / LP</span><span class="ab-stat-val">$0.81</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">Days Live</span><span class="ab-stat-val">5 / 7</span></div>
-          <div class="ab-stat-row"><span class="ab-stat-label">Budget Share</span><span class="ab-stat-val">11.1%</span></div>
+        <div class="ab-col ab-col--red reveal">
+          <div class="ab-ad-name">Ads Creative 5</div>
+          <span class="ab-ad-sub">Video Ad · 4 days live</span>
+          <div class="ab-stat-row"><span class="ab-stat-label">Spend</span><span class="ab-stat-val">$39.18</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">Impressions</span><span class="ab-stat-val">652</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">CTR</span><span class="ab-stat-val">3.99%</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">CPC</span><span class="ab-stat-val">$1.51</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">LP Views</span><span class="ab-stat-val">5</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">Leads</span><span class="ab-stat-val">0</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">CPL</span><span class="ab-stat-val">N/A</span></div>
+          <div class="ab-stat-row"><span class="ab-stat-label">Budget Share</span><span class="ab-stat-val">28.5%</span></div>
         </div>
       </div>
 
       <p class="ab-verdict reveal">
-        <strong>Creative 4</strong> took the bigger share of the test (84.9% of week budget, 7 of 7 days). The algorithm leaned on it because the back-end conversion rate was stronger.<br><strong>Creative 3</strong> showed the better front-end economics: highest CTR and lowest cost per LP.<br>Both creatives still in test. No winner declared. We are letting the test run another window before locking anything in.
+        <strong>Creative 4</strong> did the work — 78% of impressions, all 3 leads, $31.91 CPL.<br><strong>Creative 5</strong> took 28% of budget for zero leads at the highest CPM in the account ($60.09).<br>Cost per LP view: Creative 4 at $3.19 vs Creative 5 at $7.84 — over 2x as efficient at moving people from ad to landing page.<br>Creative 5's high single-day CTRs are coming on tiny impression bases.<br>Recommendation: kill Creative 5 next window. Bring Creative 1 or 2 back in to compete with Creative 4.
       </p>
 
     </div>
@@ -2035,7 +1998,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     <div class="p5-content">
 
       <div class="eyebrow reveal">What's Next</div>
-      <p class="reveal" style="font-size: 18px; font-style: italic; color: var(--text60); margin-bottom: 0; text-wrap: pretty;">Apr 27 onward (Week 3 begins).<br>Testing the winning Ad 4 against Ad 5 in this next window.<br>Not jumping straight to Ad 5 and Ad 6 - keeping the proven winner in rotation while we challenge it.</p>
+      <p class="reveal" style="font-size: 18px; font-style: italic; color: var(--text60); margin-bottom: 0; text-wrap: pretty;">Week 3 plan.<br>Kill Creative 5. Hold Creative 4. Bring Creative 1 or 2 back in.<br>Diagnose the Apr 29-30 zero-lead stretch — fatigue or follow-up gap?<br>Spanish ad set unblocked: pages live, audience untapped.</p>
 
     </div>
   </section>
@@ -2069,9 +2032,9 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
           <canvas id="kpi-chart"></canvas>
         </div>
         <div class="chart-legend">
-          <span class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--current" id="legend-current"></span>Week 2 (Apr 20-26)</span>
+          <span class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--current" id="legend-current"></span>W2 Stable Window (Apr 27-30)</span>
         </div>
-        <p class="chart-summary" id="chart-summary">Daily spend ranged $16-$38 across the week. Total $204.33 over 7 days. Wednesday Apr 22 was the slowest day, Friday Apr 24 was the heaviest.</p>
+        <p class="chart-summary" id="chart-summary">Spend ran $28-$37/day across the window. Apr 27 + 28 + 30 each took ~$36-$37; Apr 29 came in lighter at $27.75 as Meta paced down.</p>
       </div>
     </div>
 
@@ -2080,7 +2043,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
       <div class="heatmap-title">Daily Performance (Ad Set 1 LP Views)</div>
       <div class="heatmap-month">April 2026</div>
       <div class="heatmap-grid" id="heatmap-grid">
-        <!-- 7 calendar-tile cells injected by JS. Apr 20-26 = full Week 2 window (heat color). -->
+        <!-- 8 calendar-tile cells injected by JS. Apr 23-26 = prior strong run (dashed). Apr 27-30 = W2 stable window (heat color). -->
       </div>
       <div class="heatmap-legend">
         <span class="heatmap-legend-label">Low</span>
@@ -2096,39 +2059,39 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     <div class="diag-grid">
       <div class="diag-card">
         <span class="diag-name">Click-Through</span>
-        <span class="diag-val" data-counter="3.37" data-suffix="%">0%</span>
+        <span class="diag-val" data-counter="3.08" data-suffix="%">0%</span>
         <span class="diag-prev">industry avg ~1.5%</span>
-        <span class="diag-what">~2.2x the Meta benchmark.<br>Held steady from Week 1 (3.42%) on more than double the impression volume.</span>
+        <span class="diag-what">Holding ~2x the Meta benchmark.<br>Creative 4 trended down (3.04% to 2.21%) across the window — fatigue signal.</span>
       </div>
       <div class="diag-card">
         <span class="diag-name">Impressions</span>
-        <span class="diag-val" data-counter="9.0" data-suffix="k">0k</span>
-        <span class="diag-prev">9,018 total</span>
-        <span class="diag-what">Brand seen 9,018 times across the English audience in the 7-day window.<br>+125% vs Week 1 on essentially the same daily budget.</span>
+        <span class="diag-val" data-counter="3.7" data-suffix="k">0k</span>
+        <span class="diag-prev">3,699 total</span>
+        <span class="diag-what">Brand seen 3,699 times across the English audience in the 4-day window.<br>Up 18% from W1's 3,136.</span>
       </div>
       <div class="diag-card">
         <span class="diag-name">Results</span>
-        <span class="diag-val" data-counter="24">0</span>
-        <span class="diag-prev">24 leads via GHL</span>
-        <span class="diag-what">All 24 attributed to the Tooth Place LP Variation 1.<br>Creative 4 drove the bulk. Best day: Apr 21 (Tue) with 6 leads.</span>
+        <span class="diag-val" data-counter="3">0</span>
+        <span class="diag-prev">3 leads (all via GHL)</span>
+        <span class="diag-what">Window leads.<br>Creative 4 contributed all 3.<br>Creative 5 contributed 0 on $39.18 spend.<br>Apr 29 + 30 came in dry.</span>
       </div>
       <div class="diag-card">
         <span class="diag-name">CPM</span>
-        <span class="diag-val" data-counter="22.66" data-prefix="$">$0</span>
+        <span class="diag-val" data-counter="37.17" data-prefix="$">$0</span>
         <span class="diag-prev">video ads only</span>
-        <span class="diag-what">Cost per 1,000 impressions.<br>-52% vs Week 1 ($46.72 -> $22.66) as the algorithm exited learning.</span>
+        <span class="diag-what">Cost per 1,000 impressions.<br>Down 33% from W1 ($55.14) — cheaper top-of-funnel.<br>Creative 5 dragging the blend at $60.09.</span>
       </div>
       <div class="diag-card">
         <span class="diag-name">Cost / Click</span>
-        <span class="diag-val" data-counter="0.67" data-prefix="$">$0</span>
+        <span class="diag-val" data-counter="1.21" data-prefix="$">$0</span>
         <span class="diag-prev">blended avg</span>
-        <span class="diag-what">$0.67 per click across the week.<br>-51% vs Week 1 ($1.37 -> $0.67). Half the price for a click.</span>
+        <span class="diag-what">$1.21 per click — 31% improvement vs W1's $1.75.<br>Click-side economics got better. Conversion-side did not.</span>
       </div>
       <div class="diag-card">
         <span class="diag-name">LP Conv.</span>
-        <span class="diag-val" data-counter="17.27" data-suffix="%">0%</span>
-        <span class="diag-prev">24 of 139 LP views</span>
-        <span class="diag-what">Of the people who hit the landing page, 17.3% converted to a lead.<br>Up from 13.6% in Week 1. Landing page is doing its job.</span>
+        <span class="diag-val" data-counter="8.3" data-suffix="%">0%</span>
+        <span class="diag-prev">3 of 36 LP views</span>
+        <span class="diag-what">8.3% of LP visitors became leads.<br>Down from 13.6% in W1.<br>This is the diagnostic question: ad fatigue, page fatigue, or follow-up gap?</span>
       </div>
     </div>
 
@@ -2374,61 +2337,61 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
 
   function rgba(rgb, alpha) { return 'rgba(' + rgb + ',' + alpha + ')'; }
 
-  /* Week 2 full 7-day window: Mon Apr 20 -> Sun Apr 26 */
+  /* W2 Stable 4-day window: Mon Apr 27 -> Thu Apr 30 */
   var chartMetrics = {
     spend: {
-      labels: ['Mon 20','Tue 21','Wed 22','Thu 23','Fri 24','Sat 25','Sun 26'],
-      data: [38.16, 30.95, 16.56, 32.80, 35.77, 28.36, 21.73],
+      labels: ['Mon 27','Tue 28','Wed 29','Thu 30'],
+      data: [35.57, 37.13, 27.75, 37.05],
       prefix: '$', suffix: '',
       color: rgba(brandBlueBrightRGB, 1),
       colorFill: rgba(brandBlueRGB, 0.2),
       glowColor: rgba(brandBlueRGB, 0.3),
-      summary: 'Daily spend ranged $16-$38 across the week.<br>Total $204.33 over 7 days. Wednesday Apr 22 was the slowest day, Friday Apr 24 was the heaviest.'
+      summary: 'Spend ran $28-$37/day across the window.<br>Apr 29 came in lighter at $27.75 as Meta paced down — but no leads landed that day either.'
     },
     ctr: {
-      labels: ['Mon 20','Tue 21','Wed 22','Thu 23','Fri 24','Sat 25','Sun 26'],
-      data: [3.77, 4.37, 3.59, 3.28, 2.70, 2.45, 3.50],
+      labels: ['Mon 27','Tue 28','Wed 29','Thu 30'],
+      data: [3.28, 3.23, 3.51, 2.05],
       prefix: '', suffix: '%',
       color: rgba(brandGreenRGB, 1),
       colorFill: rgba(brandGreenRGB, 0.12),
       glowColor: rgba(brandGreenRGB, 0.25),
-      summary: 'CTR peaked at 4.37% on Tuesday Apr 21.<br>Weighted weekly avg 3.37% holds ~2.2x the Meta benchmark on more than double the volume of Week 1.'
+      summary: 'CTR held above 3% for 3 of 4 days.<br>Apr 30 collapse to 2.05% is the fatigue signal — Creative 4 dropped to 2.21% that day.<br>Weighted window avg: 3.08%.'
     },
     cpc: {
-      labels: ['Mon 20','Tue 21','Wed 22','Thu 23','Fri 24','Sat 25','Sun 26'],
-      data: [0.78, 0.47, 0.50, 0.67, 1.05, 0.79, 0.59],
+      labels: ['Mon 27','Tue 28','Wed 29','Thu 30'],
+      data: [0.85, 1.09, 1.16, 2.65],
       prefix: '$', suffix: '',
       color: rgba(brandAccentBrightRGB, 1),
       colorFill: rgba(brandAccentBrightRGB, 0.15),
       glowColor: rgba(brandAccentBrightRGB, 0.25),
-      summary: 'CPC dipped to $0.47 on Tuesday and stayed under $1 every day except Friday.<br>Blended weekly CPC $0.67 - half what we paid in Week 1.'
+      summary: 'CPC rose from $0.85 to $2.65 across the window.<br>The Apr 30 spike pairs with the CTR collapse — fewer people clicking, costing more per click.'
     },
     impressions: {
-      labels: ['Mon 20','Tue 21','Wed 22','Thu 23','Fri 24','Sat 25','Sun 26'],
-      data: [1301, 1512, 919, 1496, 1258, 1474, 1058],
+      labels: ['Mon 27','Tue 28','Wed 29','Thu 30'],
+      data: [1279, 1054, 684, 682],
       prefix: '', suffix: '',
       color: rgba(brandCreamRGB, 0.6),
       colorFill: rgba(brandCreamRGB, 0.06),
       glowColor: rgba(brandCreamRGB, 0.15),
-      summary: 'Impressions held above 900 every day, peaking at 1,512 on Tuesday.<br>9,018 total - more than double Week 1.'
+      summary: 'Impressions stepped down across the window — 1,279 to 682.<br>Audience saturation showing on Creative 4 by Wed/Thu.'
     },
     leads: {
-      labels: ['Mon 20','Tue 21','Wed 22','Thu 23','Fri 24','Sat 25','Sun 26'],
-      data: [4, 6, 2, 2, 4, 3, 3],
+      labels: ['Mon 27','Tue 28','Wed 29','Thu 30'],
+      data: [1, 2, 0, 0],
       prefix: '', suffix: '',
       color: rgba(brandGreenRGB, 1),
       colorFill: rgba(brandGreenRGB, 0.12),
       glowColor: rgba(brandGreenRGB, 0.25),
-      summary: 'Leads every single day of the week.<br>Best day: Tuesday Apr 21 with 6.<br>24 leads total - 4x Week 1.'
+      summary: 'Leads on Mon + Tue.<br>Then 0 leads on Wed + Thu despite $64.80 combined spend.<br>The 2-day dry stretch is the diagnostic flag for Week 3.'
     },
     cpl: {
-      labels: ['Mon 20','Tue 21','Wed 22','Thu 23','Fri 24','Sat 25','Sun 26'],
-      data: [9.54, 5.16, 8.28, 16.40, 8.94, 9.45, 7.24],
+      labels: ['Mon 27','Tue 28','Wed 29','Thu 30'],
+      data: [35.57, 18.57, 0, 0],
       prefix: '$', suffix: '',
       color: rgba(brandRedRGB, 1),
       colorFill: rgba(brandRedRGB, 0.1),
       glowColor: rgba(brandRedRGB, 0.2),
-      summary: 'CPL stayed under $10 on 6 of 7 days. Best: $5.16 on Tuesday.<br>Blended weekly CPL: $8.51 - 73% lower than Week 1 ($31.19).'
+      summary: 'CPL: $35.57 Mon, $18.57 Tue, then no conversion Wed + Thu (charted as $0 = no leads).<br>Blended 4-day CPL: $45.83.'
     }
   };
 
@@ -2701,19 +2664,20 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     });
   }
 
-  /* Heatmap calendar - 7 days Apr 20-26. Full Week 2 window. */
+  /* Heatmap calendar - 8 days Apr 23-30. Apr 23-26 flagged as pre-window context (the strong run). */
   var heatmapGrid = document.getElementById('heatmap-grid');
   var heatmapTip = document.getElementById('heatmap-tip');
   if (heatmapGrid) {
     /* Daily LP views, Ad Set 1 combined */
     var heatDays = [
-      { dow: 'Mon', date: 20, val: 24, pre: false, dateLabel: 'Mon, Apr 20 (Week 2)' },
-      { dow: 'Tue', date: 21, val: 31, pre: false, dateLabel: 'Tue, Apr 21 (Week 2)' },
-      { dow: 'Wed', date: 22, val: 13, pre: false, dateLabel: 'Wed, Apr 22 (Week 2)' },
-      { dow: 'Thu', date: 23, val: 17, pre: false, dateLabel: 'Thu, Apr 23 (Week 2)' },
-      { dow: 'Fri', date: 24, val: 15, pre: false, dateLabel: 'Fri, Apr 24 (Week 2)' },
-      { dow: 'Sat', date: 25, val: 24, pre: false, dateLabel: 'Sat, Apr 25 (Week 2)' },
-      { dow: 'Sun', date: 26, val: 15, pre: false, dateLabel: 'Sun, Apr 26 (Week 2)' }
+      { dow: 'Thu', date: 23, val: 17, pre: true,  dateLabel: 'Thu, Apr 23 (prior 4-day)' },
+      { dow: 'Fri', date: 24, val: 15, pre: true,  dateLabel: 'Fri, Apr 24 (prior 4-day)' },
+      { dow: 'Sat', date: 25, val: 24, pre: true,  dateLabel: 'Sat, Apr 25 (prior 4-day)' },
+      { dow: 'Sun', date: 26, val: 15, pre: true,  dateLabel: 'Sun, Apr 26 (prior 4-day)' },
+      { dow: 'Mon', date: 27, val: 12, pre: false, dateLabel: 'Mon, Apr 27 (W2 stable)' },
+      { dow: 'Tue', date: 28, val: 10, pre: false, dateLabel: 'Tue, Apr 28 (W2 stable)' },
+      { dow: 'Wed', date: 29, val: 9,  pre: false, dateLabel: 'Wed, Apr 29 (W2 stable)' },
+      { dow: 'Thu', date: 30, val: 5,  pre: false, dateLabel: 'Thu, Apr 30 (W2 stable)' }
     ];
 
     /* Heat intensity scaled to stable-window max only; pre-window cells use muted styling. */
@@ -2731,7 +2695,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
       var cell = document.createElement('div');
       cell.className = 'heatmap-cell' + (day.pre ? ' heatmap-cell--pre' : '');
 
-      /* Add dashed divider after the last pre-window cell (Apr 15). */
+      /* Add dashed divider after the last pre-window cell (Apr 26). */
       if (day.pre && (i === 3)) {
         cell.classList.add('heatmap-cell--divider-after');
       }
