@@ -3313,28 +3313,40 @@ p, li, blockquote, figcaption,
     opacity: 1;
   }
 
-  /* Trapezoid + body title hidden — per-slide h2 renders inline instead */
-  .title-trap { display: none !important; }
-  .active-title { display: none !important; }
-  .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__title {
-    position: relative !important;
-    width: auto; height: auto;
-    overflow: visible;
-    clip: auto;
-    margin: 28px 16px 18px;
-    padding: 0;
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(1.5rem, 6.4vw, 2.2rem);
-    line-height: 1.05;
-    letter-spacing: 0.005em;
-    text-transform: uppercase;
-    color: hsl(var(--current-hue, 0), 90%, 75%);
-    text-align: center;
-    text-wrap: balance;
+  /* Trapezoid + active-title shown at top (desktop parity), sized for phone */
+  .title-trap {
+    display: block !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: min(96vw, 520px) !important;
+    height: clamp(72px, 11vh, 100px) !important;
+    z-index: 49;
   }
-  .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__title::before,
-  .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__title::after { display: none !important; }
+  .active-title {
+    display: block !important;
+    position: fixed !important;
+    top: clamp(14px, 2.4vh, 24px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    padding: 0 24px !important;
+    font-size: clamp(1.05rem, 4.2vw, 1.5rem) !important;
+    line-height: 1.05 !important;
+    text-align: center;
+    transform: none !important;
+    z-index: 50;
+  }
+  /* Per-slide h2 stays hidden (clip rect from base rule) */
+  .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__title {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    margin: -1px;
+    padding: 0;
+  }
 
   /* Container — outlined card that grows with content */
   .slide:not([data-arch="hero"]):not([data-arch="thanks"]) {
@@ -3357,7 +3369,7 @@ p, li, blockquote, figcaption,
   .content-wrap {
     width: calc(100vw - 20px) !important;
     max-width: 100% !important;
-    margin: 0 auto 24px !important;
+    margin: clamp(96px, 14vh, 120px) auto 24px !important;
     height: auto !important;
     min-height: 0 !important;
     padding: 22px 16px !important;
@@ -3367,6 +3379,7 @@ p, li, blockquote, figcaption,
     opacity: 1 !important;
     gap: 18px !important;
     justify-content: flex-start !important;
+    align-self: center !important;
   }
   .content-wrap > * { z-index: 1; position: relative; opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
   .content-wrap > .slide__logo { display: none; }
@@ -4301,19 +4314,41 @@ p, li, blockquote, figcaption,
 </main>
 
 <script>
-/* Fit-to-viewport zoom — deck designed at 1440x810; smaller viewports zoom out proportionally.
-   On mobile (<768px) we BAIL and let the @media mobile CSS take over with native flow. */
+/* Fit-to-viewport — designed at 1440x810; uses transform: scale with centering
+   so the deck always sits centered (not stuck top-left when zoom < 1).
+   On mobile (<768px) bails to native fluid flow. */
 (function() {
   var REF_W = 1440, REF_H = 810, MOBILE_BREAK = 768;
+  var html = document.documentElement;
+  function reset() {
+    html.style.transform = '';
+    html.style.transformOrigin = '';
+    html.style.width = '';
+    html.style.height = '';
+    html.style.position = '';
+    html.style.left = '';
+    html.style.top = '';
+    html.style.zoom = '';
+  }
   function fit() {
     if (window.innerWidth < MOBILE_BREAK) {
-      document.documentElement.style.zoom = '';
+      reset();
       document.body.classList.add('is-mobile');
       return;
     }
     document.body.classList.remove('is-mobile');
-    var s = Math.min(window.innerWidth / REF_W, window.innerHeight / REF_H, 1);
-    document.documentElement.style.zoom = s.toFixed(3);
+    var sw = window.innerWidth, sh = window.innerHeight;
+    var s = Math.min(sw / REF_W, sh / REF_H, 1);
+    if (s >= 0.999) { reset(); return; }
+    var ox = (sw - REF_W * s) / 2;
+    var oy = (sh - REF_H * s) / 2;
+    html.style.position = 'fixed';
+    html.style.left = '0';
+    html.style.top = '0';
+    html.style.width = REF_W + 'px';
+    html.style.height = REF_H + 'px';
+    html.style.transformOrigin = '0 0';
+    html.style.transform = 'translate(' + ox + 'px, ' + oy + 'px) scale(' + s.toFixed(4) + ')';
   }
   window.addEventListener('resize', fit);
   window.addEventListener('orientationchange', fit);
