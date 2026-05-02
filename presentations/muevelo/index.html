@@ -400,7 +400,7 @@ body::after {
   left: 50%;
   transform: translateX(-50%);
   width: clamp(460px, var(--trap-width, 50vw), 95vw);
-  height: clamp(110px, 13vh, 140px);
+  height: clamp(132px, 17vh, 180px);
   z-index: 49;
   pointer-events: none;
   opacity: 0;
@@ -626,11 +626,10 @@ body.hide-lines .curve-svg { opacity: 0; }
     radial-gradient(circle at 100% 100%, rgba(0, 216, 255, 0.05), transparent 45%),
     rgba(10, 10, 14, 0.5);
   border-radius: 0;
-  /* Top buffer holds the trapezoid+title; bottom buffer holds the nav bar.
-     Both scale with viewport height so smaller laptops (1366x768, 1500x900)
-     get more content space — eliminates clipping at <1500 widths. */
+  /* Top buffer holds the trapezoid+title (now 132-180px tall to fit 2-line titles);
+     bottom buffer holds the nav bar. Both scale with viewport height. */
   padding:
-    clamp(140px, 17vh, 180px)
+    clamp(160px, 20vh, 210px)
     clamp(var(--space-md), 2vw, var(--space-lg))
     calc(clamp(98px, 11vh, 130px) + env(safe-area-inset-bottom));
   display: flex;
@@ -655,8 +654,8 @@ body.hide-lines .curve-svg { opacity: 0; }
   gap: clamp(var(--space-md), 2vw, var(--space-lg));
   margin: 0 auto;
   position: relative;
-  /* Locked to title-to-nav window with internal scroll fallback if content exceeds */
-  height: calc(100vh - clamp(238px, 28vh, 310px) - env(safe-area-inset-bottom));
+  /* Locked to title-to-nav window. Top buffer ~160-210, bottom ~98-130 = ~258-340 total. */
+  height: calc(100vh - clamp(258px, 31vh, 340px) - env(safe-area-inset-bottom));
   width:  calc(100vw - clamp(120px, 14vw, 360px));
   max-width: calc(100vw - clamp(var(--space-md), 2vw, var(--space-lg)) * 2);
   flex-shrink: 0;
