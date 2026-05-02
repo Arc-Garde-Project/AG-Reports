@@ -795,6 +795,17 @@ body.hide-lines .glow-grid { opacity: 0; }
 #slide-18 { --slide-hue: 193; }
 #slide-19 { --slide-hue: 206; }
 #slide-20 { --slide-hue: 219; }
+/* Slide 20 has 7 paragraphs — tighter spacing + clean scroll if it overflows */
+#slide-20 .content-wrap {
+  gap: clamp(var(--space-xs), 0.8vw, var(--space-sm)) !important;
+  padding-bottom: clamp(var(--space-md), 2vw, var(--space-xl)) !important;
+}
+#slide-20 .slide__inner > p,
+#slide-20 .content-wrap > p {
+  font-size: clamp(0.92rem, 0.82rem + 0.3vw, 1.12rem) !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+}
 #slide-21 { --slide-hue: 231; }
 #slide-22 { --slide-hue: 244; }
 #slide-23 { --slide-hue: 257; }
