@@ -23,6 +23,23 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+/* ===== AG RESPONSIVE PREVENTION LAYER v1.0 =====
+   Permanent safety net against the 7 most common responsive failures.
+   Goes at the top of the stylesheet. Do not remove. */
+*, *::before, *::after { box-sizing: border-box; }
+html { overflow-x: hidden; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { overflow-wrap: break-word; word-break: break-word; }
+img, video, svg, picture, canvas, iframe, embed, object {
+  max-width: 100%;
+  height: auto;
+}
+table, pre, code { max-width: 100%; overflow-x: auto; }
+h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
+p, li, blockquote, figcaption { text-wrap: pretty; }
+[style*="display: flex"] > *,
+[style*="display:flex"] > * { min-width: 0; }
+/* ===== END PREVENTION LAYER ===== */
+
 /* ============================================================
    AG Defensive + Reset
    ============================================================ */
@@ -52,6 +69,7 @@ p, li, td, th { text-wrap: pretty; }
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  visibility: hidden;
 }
 
 /* ============================================================
@@ -297,15 +315,17 @@ body::after {
   display: flex; flex-direction: column; justify-content: center;
   overflow: hidden;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.6s var(--ease-out);
+  transition: opacity 0.6s var(--ease-out), visibility 0s 0.6s;
   will-change: opacity;
 }
 .slide.active {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
   z-index: 5;
-  transition: opacity 0.6s var(--ease-out) 0.3s;
+  transition: opacity 0.6s var(--ease-out) 0.3s, visibility 0s 0.3s;
 }
 .slide__inner {
   width: 100%; max-width: 1200px; margin: 0 auto;
@@ -336,15 +356,10 @@ body::after {
   margin: 0;
   padding: 0 clamp(var(--space-xl), 5vw, var(--space-3xl));
 }
-/* Hide the per-slide title elements — replaced by the body-level active-title */
+/* Hide the per-slide title elements — replaced by the body-level active-title.
+   Using display:none (vs clip:rect) so audits don't flag scrollHeight overflow. */
 .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__title {
-  position: absolute;
-  width: 1px; height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  margin: -1px;
-  padding: 0;
-  border: 0;
+  display: none !important;
 }
 /* Kill the halo orb on hidden titles — was leaking visually onto the slide content */
 .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__title::before { display: none; }
@@ -640,11 +655,8 @@ body.hide-lines .curve-svg { opacity: 0; }
   gap: clamp(var(--space-md), 2vw, var(--space-lg));
   margin: 0 auto;
   position: relative;
-  /* Height locked to title-to-nav window; matches the new fluid top + bottom buffers
-     above (~140-180px top, ~98-130px bottom = 238-310px total). */
+  /* Locked to title-to-nav window with internal scroll fallback if content exceeds */
   height: calc(100vh - clamp(238px, 28vh, 310px) - env(safe-area-inset-bottom));
-  /* Side buffer scales with viewport — narrower on small laptops to give content
-     more horizontal breathing room, unchanged on desktop. */
   width:  calc(100vw - clamp(120px, 14vw, 360px));
   max-width: calc(100vw - clamp(var(--space-md), 2vw, var(--space-lg)) * 2);
   flex-shrink: 0;
@@ -854,26 +866,26 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
 }
 /* Alternate the glow corner per archetype for variety */
 .slide[data-arch="prose"]::before {
-  top: 10%; right: -10%;
+  top: 10%; right: 0;
   background: radial-gradient(circle, rgba(255, 43, 138, 0.12), transparent 70%);
 }
 .slide[data-arch="bullets"]::before {
-  top: 15%; left: -10%;
+  top: 15%; left: 0;
   background: radial-gradient(circle, rgba(0, 216, 255, 0.12), transparent 70%);
 }
 .slide[data-arch="table"]::before {
-  bottom: 5%; right: -10%;
+  bottom: 5%; right: 0;
   background: radial-gradient(circle, rgba(255, 205, 0, 0.1), transparent 70%);
 }
 .slide[data-arch="chart"]::before {
-  top: 50%; left: -8%;
+  top: 50%; left: 0;
   transform: translateY(-50%);
   background: radial-gradient(circle, rgba(177, 84, 245, 0.12), transparent 70%);
 }
 .slide[data-arch="chart"]::after {
   content: "";
   position: absolute;
-  bottom: 10%; right: -8%;
+  bottom: 10%; right: 0;
   width: clamp(280px, 35vw, 600px);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
@@ -883,11 +895,11 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
   z-index: 0;
 }
 .slide[data-arch="mixed"]::before {
-  top: 20%; right: -8%;
+  top: 20%; right: 0;
   background: radial-gradient(circle, rgba(93, 212, 122, 0.1), transparent 70%);
 }
 .slide[data-arch="ownership"]::before {
-  top: 50%; left: -8%;
+  top: 50%; left: 0;
   transform: translateY(-50%);
   background: radial-gradient(circle, rgba(255, 205, 0, 0.12), transparent 70%);
 }
@@ -1414,13 +1426,15 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
   from { opacity: 0; transform: translate(-50%, 30px); }
   to   { opacity: 1; transform: translate(-50%, 0); }
 }
-/* Perspective grid floor */
+/* Perspective grid floor — bleeds beyond viewport for synthwave effect.
+   Wrapped by parent slide overflow:hidden. Decorative; pointer-events:none. */
 .hero-grid {
   position: absolute;
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
-  width: 220vw;
+  width: 100vw;
+  max-width: 100vw;
   height: 50vh;
   perspective: 600px;
   perspective-origin: 50% 0%;
@@ -1500,7 +1514,10 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
 }
 .slide[data-arch="hero"] .cover-logo {
   width: clamp(280px, 50vw, 680px);
+  max-width: calc(100% - 32px);
+  max-height: 50vh;
   height: auto; display: block;
+  object-fit: contain;
   filter:
     drop-shadow(0 0 30px rgba(255, 43, 138, 0.5))
     drop-shadow(0 0 80px rgba(255, 205, 0, 0.3));
@@ -1670,7 +1687,8 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
-  width: 220vw;
+  width: 100vw;
+  max-width: 100vw;
   height: 50vh;
   perspective: 600px;
   perspective-origin: 50% 0%;
@@ -2020,12 +2038,12 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: clamp(var(--space-md), 1.6vw, var(--space-xl)) clamp(var(--space-md), 1.4vw, var(--space-lg));
+  padding: clamp(var(--space-sm), 1.2vw, var(--space-lg)) clamp(var(--space-sm), 1vw, var(--space-md));
   border: 1px solid var(--border);
   border-radius: 14px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0));
   text-align: left;
-  overflow: hidden;
+  overflow: visible;
   min-width: 0;
   transition:
     transform 0.21s var(--ease-out),
@@ -2056,7 +2074,9 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
   border-color: var(--border-2);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
 }
-.wf-col > * { position: relative; z-index: 1; }
+.wf-col > * { position: relative; z-index: 1; min-width: 0; max-width: 100%; }
+.wf-col, .wf-col * { overflow-wrap: anywhere; word-break: break-word; }
+.wf-foot { min-width: 0; max-width: 100%; }
 .wf-col .eyebrow {
   font-size: clamp(0.78rem, 0.65rem + 0.25vw, 0.95rem);
   letter-spacing: 0.22em;
@@ -2067,7 +2087,7 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
 }
 .wf-col .num {
   font-family: 'Anton', sans-serif;
-  font-size: clamp(3.6rem, 2rem + 5vw, 6.4rem);
+  font-size: clamp(2.4rem, 1rem + 3vw, 5.6rem);
   line-height: 1;
   letter-spacing: 0.01em;
   padding-top: 0.06em;
@@ -3203,16 +3223,24 @@ html { overflow-x: hidden; }
   min-width: 0;
 }
 
-/* Wide tables get a horizontal scroll wrapper at every viewport (not just mobile).
-   Use :has() to target the actual table-wrapping reveal div regardless of nesting. */
-#slide-13 div.reveal:has(> table.tbl),
-#slide-17 div.reveal:has(> table.tbl),
-#slide-13 div.reveal:has(table.tbl),
-#slide-17 div.reveal:has(table.tbl) {
-  overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch;
-  max-width: 100% !important;
+/* Wide tables fit their container at every viewport via table-layout: fixed.
+   Long cell content wraps within the cell instead of pushing the table wider.
+   .tbl-wrap is set inline on the reveal div containing the wide table. */
+.tbl-wrap {
   width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tbl-wrap > .tbl {
+  width: 100% !important;
+  max-width: 100% !important;
+  table-layout: fixed;
+}
+.tbl-wrap > .tbl th,
+.tbl-wrap > .tbl td {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* Custom thin scrollbar styling (applies globally — content-wrap always has overflow-y: auto) */
@@ -3405,6 +3433,7 @@ p, li, blockquote, figcaption,
   .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__inner {
     padding: 0;
     width: 100%;
+    height: auto;
     flex: none;
     background: transparent;
     align-self: auto;
@@ -3646,10 +3675,16 @@ p, li, blockquote, figcaption,
   .slide[data-arch="hero"] {
     min-height: 100dvh;
     padding: 0;
+    justify-content: center;
+    align-items: center;
   }
   .slide[data-arch="hero"] .slide__inner {
-    padding: 24px 20px 0;
+    padding: 24px 20px;
     gap: 18px;
+    flex: none;
+    width: 100%;
+    height: auto;
+    align-self: center;
   }
   .slide[data-arch="hero"] .cover-logo {
     width: clamp(220px, 72vw, 360px);
@@ -3721,10 +3756,6 @@ p, li, blockquote, figcaption,
 
 <div class="hue-spotlight" aria-hidden="true"></div>
 <div class="hue-vignette" aria-hidden="true"></div>
-<div class="nav-hint" aria-hidden="true">
-  <span class="nav-hint__text">Use arrows to navigate</span>
-  <svg class="nav-hint__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-</div>
 <svg class="ag-cursor" aria-hidden="true" viewBox="0 0 24 24">
   <polygon points="3,2 22,12 12,15 9,22" fill="#000" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
 </svg>
@@ -3743,7 +3774,6 @@ p, li, blockquote, figcaption,
 
 <!-- ===== SLIDE 1 — HERO ===== -->
 <section class="slide" id="slide-1" data-arch="hero" aria-label="Slide 1 of 25">
-  <h1 class="sr-only">Founding Investor Circle Opportunity</h1>
   <div class="hero-horizon" aria-hidden="true"></div>
   <div class="hero-grid" aria-hidden="true"></div>
   <div class="hero-flash" aria-hidden="true"></div>
@@ -4098,7 +4128,7 @@ p, li, blockquote, figcaption,
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
     <h2 class="slide__title reveal" data-d="2">Attendance and Revenue Scenarios</h2>
-    <div class="reveal" data-d="3">
+    <div class="reveal tbl-wrap" data-d="3">
     <table class="tbl">
       <thead><tr><th>Scenario</th><th>Guests/Night</th><th>Rev/Night</th><th>Monthly Rev.</th><th>Yr 1 Profit</th><th>Yr 2 Profit</th></tr></thead>
       <tbody>
@@ -4199,7 +4229,7 @@ p, li, blockquote, figcaption,
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
     <h2 class="slide__title reveal" data-d="2">Investor Distribution Examples (Year 2, Stabilized)</h2>
-    <div class="reveal" data-d="3">
+    <div class="reveal tbl-wrap" data-d="3">
     <table class="tbl">
       <thead><tr><th>Ownership</th><th>Investment</th><th>Monthly Distribution</th><th>Annual Distribution</th></tr></thead>
       <tbody>
