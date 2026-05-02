@@ -3168,6 +3168,30 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
 /* ============================================================
    MOBILE-FRIENDLY OVERRIDES (< 768px) — iOS-safe per-slide layout
    ============================================================ */
+/* GLOBAL HORIZONTAL SCROLL PREVENTION — every viewport */
+html { overflow-x: hidden; }
+
+/* GLOBAL: every heading balances, every paragraph prettifies. Prevents single-word
+   overflow at any viewport. AG DNA standard. */
+h1, h2, h3, h4, h5, h6,
+.slide__title, .thanks-headline, .active-title,
+.cap-stmt__total, .own-donut__big, .own-stat__num,
+.staff-role, .y2-row .label h4, .phase h3, .wf-col .label,
+.cap-stmt__eyebrow {
+  text-wrap: balance;
+}
+p, li, blockquote, figcaption,
+.cap-stmt__name, .cap-stmt__amt, .cap-stmt__sub,
+.staff-meta, .staff-tag, .staff-split,
+.subnote, .footnote, .y2-takeaway,
+.thanks-subline {
+  text-wrap: pretty;
+}
+/* Long currency tokens, % numbers, etc must break instead of pushing parent wider */
+.hl, .cap-stmt__amt, .y2-bar .val, .staff-amount {
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 767px) {
   /* === HARD OVERFLOW GUARDS === */
   html, body {
@@ -3178,11 +3202,19 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
     -webkit-overflow-scrolling: touch;
     max-width: 100vw;
   }
-  body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
-  /* Nothing exceeds viewport */
+  body {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  /* Nothing exceeds viewport — but allow inline-shrinking too */
   body * {
-    max-width: 100vw;
+    max-width: 100% !important;
     box-sizing: border-box;
+  }
+  /* Universal text wrap on mobile — no long word can push container */
+  *, *::before, *::after {
+    overflow-wrap: anywhere;
   }
   /* Flex/grid children must shrink — without this, fixed-px content blows out the parent */
   .slide,
@@ -3328,21 +3360,17 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
   /* Slide-num corner pill */
   .slide__num {
     position: absolute;
-    top: 12px;
+    top: 10px;
     right: 12px;
-    font-size: 0.62rem;
+    font-size: 0.6rem;
     color: rgba(255, 255, 255, 0.5);
     letter-spacing: 0.06em;
     z-index: 5;
+    max-width: 60px;
+    white-space: nowrap;
   }
-  .slide__pc {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    font-size: 0.55rem !important;
-    color: rgba(255, 255, 255, 0.45);
-    letter-spacing: 0.04em;
-  }
+  /* Hide Privileged & Confidential badge on phones — saves space + avoids overlap with titles */
+  .slide__pc { display: none !important; }
 
   /* Nav: fixed full-width bottom bar with iOS safe area */
   .nav {
