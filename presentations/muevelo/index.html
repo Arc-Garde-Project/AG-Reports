@@ -648,7 +648,9 @@ body.hide-lines .curve-svg { opacity: 0; }
   width:  calc(100vw - clamp(120px, 14vw, 360px));
   max-width: calc(100vw - clamp(var(--space-md), 2vw, var(--space-lg)) * 2);
   flex-shrink: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
   padding: clamp(var(--space-sm), 1.5vw, var(--space-lg)) clamp(var(--space-md), 2vw, var(--space-xl));
   background:
     radial-gradient(circle at 0% 0%, hsla(var(--current-hue, 0), 60%, 22%, 0.18), transparent 55%),
@@ -3213,21 +3215,19 @@ html { overflow-x: hidden; }
   width: 100% !important;
 }
 
-/* Tablet/laptop content-wrap gets internal scroll if content exceeds locked height.
-   Prevents clipping at 768-1024 viewport sizes where content is denser than fits. */
-@media (max-width: 1024px) and (min-width: 768px) {
-  .content-wrap {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-  }
-  .content-wrap::-webkit-scrollbar { width: 6px; }
-  .content-wrap::-webkit-scrollbar-thumb {
-    background: hsla(var(--current-hue, 0), 80%, 60%, 0.4);
-    border-radius: 999px;
-  }
+/* Custom thin scrollbar styling (applies globally — content-wrap always has overflow-y: auto) */
+.content-wrap::-webkit-scrollbar { width: 6px; }
+.content-wrap::-webkit-scrollbar-track { background: transparent; }
+.content-wrap::-webkit-scrollbar-thumb {
+  background: hsla(var(--current-hue, 0), 80%, 60%, 0.35);
+  border-radius: 999px;
+  transition: background 1.4s cubic-bezier(0.65, 0, 0.35, 1);
 }
+.content-wrap::-webkit-scrollbar-thumb:hover {
+  background: hsla(var(--current-hue, 0), 85%, 65%, 0.6);
+}
+.content-wrap { -ms-overflow-style: none; }
+.content-wrap { -webkit-overflow-scrolling: touch; }
 
 /* GLOBAL: every heading balances, every paragraph prettifies. Prevents single-word
    overflow at any viewport. AG DNA standard. */
