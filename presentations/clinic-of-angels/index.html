@@ -582,15 +582,18 @@
       width: max-content;
       animation: marquee 9s linear infinite;
       will-change: transform;
+      backface-visibility: hidden;
+      transform: translateZ(0);
     }
     .ca-marquee-set {
       display: flex;
       align-items: center;
       flex-shrink: 0;
+      backface-visibility: hidden;
     }
     @keyframes marquee {
       from { transform: translate3d(0, 0, 0); }
-      to { transform: translate3d(-50%, 0, 0); }
+      to { transform: translate3d(calc(-100% / 3), 0, 0); }
     }
     .ca-marquee-word {
       font-family: var(--font-display);
@@ -2046,6 +2049,16 @@
           <span class="ca-marquee-word ca-marquee-word--lit">RESULTS</span>
           <span class="ca-marquee-dot"></span>
         </div>
+        <div class="ca-marquee-set" aria-hidden="true">
+          <span class="ca-marquee-word ca-marquee-word--muted">PATIENTS</span>
+          <span class="ca-marquee-dot"></span>
+          <span class="ca-marquee-word ca-marquee-word--lit">PRACTICE</span>
+          <span class="ca-marquee-dot"></span>
+          <span class="ca-marquee-word ca-marquee-word--muted">SYSTEM</span>
+          <span class="ca-marquee-dot"></span>
+          <span class="ca-marquee-word ca-marquee-word--lit">RESULTS</span>
+          <span class="ca-marquee-dot"></span>
+        </div>
       </div>
     </div>
 
@@ -2087,10 +2100,10 @@
           <article class="ca-engine">
             <div class="ca-engine-number">02</div>
             <div>
-              <h3 class="ca-engine-title">A/B Testing&nbsp;Engine</h3>
+              <h3 class="ca-engine-title">Strategic A/B&nbsp;Testing</h3>
               <div class="ca-engine-body ca-prose">
                 <ul>
-                  <li>4-day head-to-head sprints, 2 ads compete, 1&nbsp;survives</li>
+                  <li>4-day head-to-head sprints, 2 ads compete each&nbsp;sprint</li>
                   <li>Winner carries forward, new challenger introduced each&nbsp;cycle</li>
                   <li>14 video ad creatives per testing cycle, run head-to-head to find your highest&nbsp;performer</li>
                   <li>No guessing, the data picks the winner, not&nbsp;opinions</li>
