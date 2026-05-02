@@ -3248,18 +3248,47 @@ html { overflow-x: hidden; }
   min-width: 0;
 }
 
-/* Wide tables fit their container at every viewport via table-layout: fixed.
-   .tbl-wrap is set inline on the reveal div containing the wide table. */
+/* AG TABLE SCROLL WRAPPER — every wide table gets natural-width columns
+   inside a horizontal-scroll container with fade indicators (per AG spec). */
 .tbl-wrap {
+  position: relative;
   width: 100% !important;
   max-width: 100% !important;
   overflow-x: auto;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
 }
 .tbl-wrap > .tbl {
-  width: 100% !important;
-  max-width: 100% !important;
-  table-layout: fixed;
+  min-width: 600px;
+  width: 100%;
+  max-width: none !important;
+  table-layout: auto;
+}
+/* Fade indicators — right edge says "more content this way" */
+.tbl-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 48px;
+  background: linear-gradient(to right, transparent, rgba(10, 10, 14, 0.92) 90%);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.3s var(--ease);
+  z-index: 2;
+  border-radius: 0 12px 12px 0;
+}
+.tbl-wrap.scrolled-end::after { opacity: 0; }
+.tbl-wrap.scrolled-start::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 48px;
+  background: linear-gradient(to left, transparent, rgba(10, 10, 14, 0.92) 90%);
+  pointer-events: none;
+  opacity: 1;
+  z-index: 2;
+  border-radius: 12px 0 0 12px;
 }
 /* Anti-orphan: use overflow-wrap (only breaks long unbreakable words),
    text-wrap pretty (browser avoids orphans), and hyphens for clean breaks.
@@ -3846,9 +3875,9 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-2" data-arch="prose" aria-label="Slide 2 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Investor Participation Disclaimer</h2>
+    <h2 class="slide__title reveal" data-d="2">Investor Participation&nbsp;Disclaimer</h2>
     <p class="reveal" data-d="3">Ownership of shares in the Founding Investor Circle <span class="hl">does not grant voting rights, management authority, or any decision-making power</span> over the operations of Muevelo West. All investors in the Founding Investor Circle are <span class="hl">silent partners with no controlling interest</span>. Day-to-day operations, strategic direction, staffing, programming, and all business decisions remain solely under the authority of the founding operators (<span class="hl">Mario &amp; Henry Trujillo, 51%</span>).</p>
-    <p class="reveal" data-d="4">Investor distributions <span class="hl">will not commence until the seller carry note ($100,000, 12-month term) has been repaid in full</span>. Repayment of this note will be prioritized from early operating profits, with accelerated paydown when possible. Following full retirement of the seller carry obligation, investor distributions will be made <span class="hl">proportionally based on each investor&rsquo;s share ownership</span> within the 49% Founding Investor Circle pool.</p>
+    <p class="reveal" data-d="4">Investor distributions <span class="hl">will not commence until the seller carry note ($100,000, 12-month&nbsp;term) has been repaid in full</span>. Repayment of this note will be prioritized from early operating profits, with accelerated paydown when possible. Following full retirement of the seller carry obligation, investor distributions will be made <span class="hl">proportionally based on each investor&rsquo;s share ownership</span> within the 49% Founding Investor Circle pool.</p>
   </div>
   <div class="slide__pc">Privileged &amp; Confidential</div>
   <div class="slide__num">02 / 25</div>
@@ -3858,10 +3887,10 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-3" data-arch="prose" aria-label="Slide 3 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Executive Summary</h2>
+    <h2 class="slide__title reveal" data-d="2">Executive&nbsp;Summary</h2>
     <p class="reveal" data-d="3">Muevelo West combines the <span class="hl">established Muevelo nightlife brand</span> with the long-standing <span class="hl">Chico’s Montebello venue</span>, creating a concept that launches with an existing audience and recognizable location.</p>
     <p class="reveal" data-d="4">The investment structure allocates <span class="hl">51% ownership</span> to the founding operators and <span class="hl">49% to the Founding Investor Circle</span>, providing investors the opportunity to participate in the early growth of the brand.</p>
-    <p class="reveal" data-d="5">Projected attendance ranges from <span class="hl">110 to 180 guests per night</span> with an estimated average spend of <span class="hl">~$50 per guest</span>.</p>
+    <p class="reveal" data-d="5">Projected attendance ranges from <span class="hl">110 to 180 guests per&nbsp;night</span> with an estimated average spend of <span class="hl">~$50 per&nbsp;guest</span>.</p>
     <p class="reveal" data-d="5">Under the base scenario, projected monthly revenue is <span class="hl">~$97,500</span> with upside potential through special programming, themed events, and expanded operating concepts.</p>
     <p class="reveal" data-d="6">The business is structured to prioritize <span class="hl">stable operations and cash flow</span> in the early stages while creating <span class="hl">long‑term brand equity</span> and potential enterprise value growth.</p>
   </div>
@@ -3872,7 +3901,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-4" data-arch="bullets" aria-label="Slide 4 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Key Investment Highlights</h2>
+    <h2 class="slide__title reveal" data-d="2">Key Investment&nbsp;Highlights</h2>
     <ul>
       <li class="reveal" data-d="2">2,400 SF nightlife venue located in Montebello</li>
       <li class="reveal" data-d="3">Combination of Chico’s Montebello’s legacy location with the Muevelo brand following</li>
@@ -3890,13 +3919,13 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-5" data-arch="prose" aria-label="Slide 5 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Investment Opportunity</h2>
+    <h2 class="slide__title reveal" data-d="2">Investment&nbsp;Opportunity</h2>
     <p class="reveal" data-d="3">Muevelo West represents the relocation of the <span class="hl">successful Muevelo nightlife brand</span> into the historic <span class="hl">Chico’s Montebello venue</span>. Muevelo already brings an established audience and event demand, while Chico’s Montebello provides a recognizable nightlife location.</p>
     <p class="reveal" data-d="4">This combination allows the concept to launch with <span class="hl">built‑in awareness</span> and <span class="hl">significantly lower risk</span> than a traditional nightclub startup.</p>
     <p class="reveal" data-d="5">The total capital requirement for the project is <span class="hl">approximately $720,000</span> including acquisition, renovations, rebranding, legal, inventory, and working capital.</p>
     <div class="callout reveal" data-d="6">
       <strong>Acquisition Structure:</strong>
-      <p><span class="hl">$600,000 purchase price</span> structured as <span class="hl">$500,000 cash at close</span> + <span class="hl">$100,000 seller carry</span> (12-month term). Early Year 1 profits will be directed toward paying down the seller carry ahead of schedule.</p>
+      <p><span class="hl">$600,000 purchase price</span> structured as <span class="hl">$500,000 cash at close</span> + <span class="hl">$100,000 seller carry</span> (12-month&nbsp;term). Early Year 1 profits will be directed toward paying down the seller carry ahead of schedule.</p>
     </div>
   </div>
   <div class="slide__pc">Privileged &amp; Confidential</div>
@@ -3907,8 +3936,8 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-6" data-arch="prose" aria-label="Slide 6 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Venue and Lease Control</h2>
-    <p class="reveal" data-d="3">The venue operates under a <span class="hl">five‑year lease</span> with <span class="hl">three additional five‑year extensions</span>. If all options are exercised, operators could control the location for <span class="hl">up to twenty years</span>.</p>
+    <h2 class="slide__title reveal" data-d="2">Venue and Lease&nbsp;Control</h2>
+    <p class="reveal" data-d="3">The venue operates under a <span class="hl">five‑year&nbsp;lease</span> with <span class="hl">three additional five‑year&nbsp;extensions</span>. If all options are exercised, operators could control the location for <span class="hl">up to twenty&nbsp;years</span>.</p>
     <p class="reveal" data-d="4">This <span class="hl">long‑term control</span> allows the ownership group to build brand equity, grow a loyal audience, and stabilize operations in the market.</p>
     <p class="subnote reveal" data-d="5">Additional transition provisions include: a minimum of <span class="hl">1 year</span> for use of the Chico name on exterior signage, and a minimum of <span class="hl">3 months</span> of access to Chico’s existing social media platforms to support audience migration and brand continuity.</p>
   </div>
@@ -3920,7 +3949,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-7" data-arch="ownership" aria-label="Slide 7 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Ownership and Investor Structure</h2>
+    <h2 class="slide__title reveal" data-d="2">Ownership and Investor&nbsp;Structure</h2>
     <div class="own-grid">
       <div class="own-split reveal" data-d="3">
         <div class="own-donut" role="img" aria-label="Ownership split: 51% Trujillo family, 49% Founding Investor Circle">
@@ -3971,7 +4000,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-8" data-arch="chart" aria-label="Slide 8 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Cash Flow Waterfall Structure</h2>
+    <h2 class="slide__title reveal" data-d="2">Cash Flow Waterfall&nbsp;Structure</h2>
     <div class="waterfall">
       <div class="wf-col r1 reveal" data-d="3">
         <span class="eyebrow">Stage 01 · Operations</span>
@@ -4032,8 +4061,8 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-9" data-arch="table" aria-label="Slide 9 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Use of Funds</h2>
-    <div class="reveal" data-d="3">
+    <h2 class="slide__title reveal" data-d="2">Use of&nbsp;Funds</h2>
+    <div class="reveal tbl-wrap" data-d="3">
     <table class="tbl">
       <thead><tr><th>Category</th><th>Amount</th></tr></thead>
       <tbody>
@@ -4057,7 +4086,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-10" data-arch="chart" aria-label="Slide 10 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Capital Allocation Breakdown</h2>
+    <h2 class="slide__title reveal" data-d="2">Capital Allocation&nbsp;Breakdown</h2>
     <p class="reveal" data-d="3">Total target: ~$720,000 (midpoint estimates shown for range items)</p>
 
     <div class="cap-stmt reveal" data-d="3">
@@ -4116,8 +4145,8 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-11" data-arch="table" aria-label="Slide 11 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Estimated Monthly Operating Expenses</h2>
-    <div class="reveal" data-d="3">
+    <h2 class="slide__title reveal" data-d="2">Estimated Monthly Operating&nbsp;Expenses</h2>
+    <div class="reveal tbl-wrap" data-d="3">
     <table class="tbl">
       <thead><tr><th>Expense Category</th><th>Monthly Estimate</th></tr></thead>
       <tbody>
@@ -4147,7 +4176,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-12" data-arch="chart" aria-label="Slide 12 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Rebranding Strategy</h2>
+    <h2 class="slide__title reveal" data-d="2">Rebranding&nbsp;Strategy</h2>
     <div class="phases">
       <div class="phase p1 reveal" data-d="3">
         <h3>Phase 1: Year 1</h3>
@@ -4181,7 +4210,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-13" data-arch="table" aria-label="Slide 13 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Attendance and Revenue Scenarios</h2>
+    <h2 class="slide__title reveal" data-d="2">Attendance and Revenue&nbsp;Scenarios</h2>
     <div class="reveal tbl-wrap" data-d="3">
     <table class="tbl">
       <thead><tr><th>Scenario</th><th>Guests/Night</th><th>Rev/Night</th><th>Monthly Rev.</th><th>Yr 1 Profit</th><th>Yr 2 Profit</th></tr></thead>
@@ -4204,8 +4233,8 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-14" data-arch="table" aria-label="Slide 14 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Projected Revenue by Night</h2>
-    <div class="reveal" data-d="3">
+    <h2 class="slide__title reveal" data-d="2">Projected Revenue by&nbsp;Night</h2>
+    <div class="reveal tbl-wrap" data-d="3">
     <table class="tbl">
       <thead><tr><th>Night</th><th>Estimated Guests</th><th>Estimated Revenue</th></tr></thead>
       <tbody>
@@ -4224,7 +4253,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-15" data-arch="chart" aria-label="Slide 15 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Year 1 vs. Year 2 Monthly Profit</h2>
+    <h2 class="slide__title reveal" data-d="2">Year 1 vs. Year 2 Monthly&nbsp;Profit</h2>
     <p class="reveal" data-d="3">Year 2 stabilized profits after seller carry ($100K) is retired and brand transition completes</p>
     <div class="y2-legend reveal" data-d="3">
       <span class="y1"><span class="swatch"></span>Year 1</span>
@@ -4262,8 +4291,8 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-16" data-arch="table" aria-label="Slide 16 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Estimated Break‑Even Timeline</h2>
-    <div class="reveal" data-d="3">
+    <h2 class="slide__title reveal" data-d="2">Estimated Break‑Even&nbsp;Timeline</h2>
+    <div class="reveal tbl-wrap" data-d="3">
     <table class="tbl">
       <thead><tr><th>Scenario</th><th>Stabilized Monthly Profit (Yr 2)</th><th>Break‑Even Timeframe</th></tr></thead>
       <tbody>
@@ -4282,7 +4311,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-17" data-arch="table" aria-label="Slide 17 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Investor Distribution Examples (Year 2, Stabilized)</h2>
+    <h2 class="slide__title reveal" data-d="2">Investor Distribution Examples (Year 2,&nbsp;Stabilized)</h2>
     <div class="reveal tbl-wrap" data-d="3">
     <table class="tbl">
       <thead><tr><th>Ownership</th><th>Investment</th><th>Monthly Distribution</th><th>Annual Distribution</th></tr></thead>
@@ -4302,8 +4331,8 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-18" data-arch="prose" aria-label="Slide 18 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Distribution Structure</h2>
-    <p class="reveal" data-d="3">Financial projections are modeled <span class="hl">conservatively</span> based on estimated weekly attendance, average spend per guest, and controlled operating costs. Across scenarios, projected monthly revenue ranges from <span class="hl">~$71K–$117K</span> with estimated monthly profit outcomes ranging from <span class="hl">~$12K to ~$57K</span> depending on performance.</p>
+    <h2 class="slide__title reveal" data-d="2">Distribution&nbsp;Structure</h2>
+    <p class="reveal" data-d="3">Financial projections are modeled <span class="hl">conservatively</span> based on estimated weekly attendance, average spend per&nbsp;guest, and controlled operating costs. Across scenarios, projected monthly revenue ranges from <span class="hl">~$71K–$117K</span> with estimated monthly profit outcomes ranging from <span class="hl">~$12K to ~$57K</span> depending on performance.</p>
     <p class="reveal" data-d="4">In the spirit of <span class="hl">transparency</span> and acknowledging potential economic and external influences, investor return scenarios are presented across low to strong performance outcomes within these modeled ranges.</p>
     <p class="reveal" data-d="5">Investor distribution examples are based on the <span class="hl">strong performance scenario</span> (<span class="hl">~$57K monthly profit / ~$685K annualized</span>), reflecting a stabilized operating environment. Actual distributions may vary based on performance within the modeled range.</p>
   </div>
@@ -4315,7 +4344,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-19" data-arch="prose" aria-label="Slide 19 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Long‑Term Enterprise Value Growth</h2>
+    <h2 class="slide__title reveal" data-d="2">Long‑Term Enterprise Value&nbsp;Growth</h2>
     <p class="reveal" data-d="3">Hospitality venues are often valued based on <span class="hl">multiples of annual profit</span>. If the venue stabilizes near approximately <span class="hl">$600,000 in annual profit</span>, enterprise value could reasonably grow into the <span class="hl">$2M–$3M range</span>.</p>
     <p class="reveal" data-d="4">The founders intend to <span class="hl">operate and grow the venue long‑term</span> rather than pursue a near‑term sale. This projection simply illustrates potential value creation for founding investors as the venue matures.</p>
   </div>
@@ -4327,7 +4356,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-20" data-arch="prose" aria-label="Slide 20 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Revenue Growth Opportunities</h2>
+    <h2 class="slide__title reveal" data-d="2">Revenue Growth&nbsp;Opportunities</h2>
     <p class="reveal" data-d="3">Muevelo West&rsquo;s base projections intentionally assume a <span class="hl">conservative operating model</span> focused on core weekend traffic and beverage sales. However, nightlife venues often grow revenue significantly through <span class="hl">special programming, branded events, and community engagement</span>. These initiatives can increase guest counts, average spend per visitor, and overall brand equity.</p>
     <p class="reveal" data-d="4"><span class="hl">Theme Nights</span> (Latin Night, Throwback Nights, Pride Nights, etc.) that drive repeat attendance and niche audiences.</p>
     <p class="reveal" data-d="4"><span class="hl">Guest DJs, entertainers, or drag performers</span> that attract new crowds and allow <span class="hl">ticketed or premium cover pricing</span>.</p>
@@ -4344,10 +4373,10 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-21" data-arch="table" aria-label="Slide 21 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Professional Services &amp; Revenue Efficiency</h2>
+    <h2 class="slide__title reveal" data-d="2">Professional Services &amp; Revenue&nbsp;Efficiency</h2>
     <p class="reveal" data-d="3">Professional services such as accounting, legal guidance, HR support, and regulatory compliance are modeled as <span class="hl">variable operating expenses</span>. These services may scale depending on operational complexity, growth initiatives, and compliance needs.</p>
     <p class="reveal" data-d="4">Using the average revenue scenario (<span class="hl">~$97,500 per month / ~$1.17M annually</span>) and the venue size of approximately <span class="hl">2,400 square feet</span>, estimated revenue productivity equates to <span class="hl">~$487 per square foot annually</span>.</p>
-    <div class="reveal" data-d="5">
+    <div class="reveal tbl-wrap" data-d="5">
     <table class="tbl">
       <thead><tr><th>Metric</th><th>Estimate</th></tr></thead>
       <tbody>
@@ -4367,11 +4396,11 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-22" data-arch="bullets" aria-label="Slide 22 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Operating Model &amp; Assumptions</h2>
+    <h2 class="slide__title reveal" data-d="2">Operating Model &amp;&nbsp;Assumptions</h2>
     <ul class="spec-list reveal" data-d="3">
       <li>Operating nights: Friday – Sunday | Hours: 9PM – 2AM</li>
       <li>Attendance: Friday ~150 guests | Saturday ~180 guests | Sunday lower ramp</li>
-      <li>Average guest spend: ≈ $50 per guest</li>
+      <li>Average guest spend: ≈ $50 per&nbsp;guest</li>
       <li>Alcohol COGS: ~25% of beverage sales</li>
       <li>Rent: ~$3,600/month (NNN)</li>
       <li>Utilities: ~$1,200/month</li>
@@ -4388,7 +4417,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-23" data-arch="mixed" aria-label="Slide 23 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Labor Model &amp; Staffing Structure</h2>
+    <h2 class="slide__title reveal" data-d="2">Labor Model &amp; Staffing&nbsp;Structure</h2>
     <p class="reveal" data-d="3">Staffing is modeled on a <span class="hl">shift-based nightlife schedule</span> (~6 hours per night, Friday–Sunday). Labor scales with attendance and event programming and is expected to range approximately <span class="hl">between 15%–22% of revenue</span>.</p>
     <ul class="staff-grid reveal" data-d="4">
       <li class="staff-card staff-card--feature">
@@ -4424,7 +4453,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <!-- ===== SLIDE 23 — Important Disclosure ===== -->
 <section class="slide" id="slide-24" data-arch="closer" aria-label="Slide 24 of 25">
   <div class="slide__inner">
-    <h2 class="slide__title reveal" data-d="2">Important Disclosure</h2>
+    <h2 class="slide__title reveal" data-d="2">Important&nbsp;Disclosure</h2>
     <p class="reveal" data-d="3">By reviewing this investment opportunity, each participant acknowledges that they are either an <span class="hl">accredited investor</span> as defined under applicable securities laws or are otherwise <span class="hl">financially sophisticated and capable of evaluating the merits and risks</span> of the opportunity.</p>
     <p class="reveal" data-d="4">All investment decisions should be made <span class="hl">independently</span> and with consideration of personal financial circumstances. Participation in this opportunity <span class="hl">should not create financial hardship</span>.</p>
     <p class="reveal" data-d="5">All information presented is <span class="hl">for discussion purposes only</span> and does not constitute an offer to sell or a solicitation of an offer to buy securities. Any investment will be <span class="hl">subject to formal agreements and operating documents</span>.</p>
@@ -4487,6 +4516,21 @@ body, p, li, td, th, blockquote, figcaption, span,
     c.style.transform = 'translate3d(' + (x - 6) + 'px, ' + (y - 4) + 'px, 0)';
     requestAnimationFrame(loop);
   })();
+})();
+
+/* AG table scroll indicators — toggle .scrolled-start/.scrolled-end on .tbl-wrap */
+(function() {
+  document.querySelectorAll('.tbl-wrap').forEach(function(wrap) {
+    function update() {
+      var atStart = wrap.scrollLeft <= 1;
+      var atEnd = wrap.scrollLeft + wrap.clientWidth >= wrap.scrollWidth - 1;
+      wrap.classList.toggle('scrolled-start', !atStart);
+      wrap.classList.toggle('scrolled-end', atEnd);
+    }
+    wrap.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  });
 })();
 </script>
 <script>
