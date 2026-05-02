@@ -611,11 +611,13 @@ body.hide-lines .curve-svg { opacity: 0; }
     radial-gradient(circle at 100% 100%, rgba(0, 216, 255, 0.05), transparent 45%),
     rgba(10, 10, 14, 0.5);
   border-radius: 0;
-  /* Symmetric AG spacing — same gap top/bottom and tighter on sides so the container extends wider */
+  /* Top buffer holds the trapezoid+title; bottom buffer holds the nav bar.
+     Both scale with viewport height so smaller laptops (1366x768, 1500x900)
+     get more content space — eliminates clipping at <1500 widths. */
   padding:
-    180px
+    clamp(140px, 17vh, 180px)
     clamp(var(--space-md), 2vw, var(--space-lg))
-    calc(180px + env(safe-area-inset-bottom));
+    calc(clamp(98px, 11vh, 130px) + env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -638,9 +640,12 @@ body.hide-lines .curve-svg { opacity: 0; }
   gap: clamp(var(--space-md), 2vw, var(--space-lg));
   margin: 0 auto;
   position: relative;
-  /* Height locked to title-to-nav window; width uses the same 180px buffer on each side */
-  height: calc(100vh - 360px - env(safe-area-inset-bottom));
-  width:  calc(100vw - 360px);
+  /* Height locked to title-to-nav window; matches the new fluid top + bottom buffers
+     above (~140-180px top, ~98-130px bottom = 238-310px total). */
+  height: calc(100vh - clamp(238px, 28vh, 310px) - env(safe-area-inset-bottom));
+  /* Side buffer scales with viewport — narrower on small laptops to give content
+     more horizontal breathing room, unchanged on desktop. */
+  width:  calc(100vw - clamp(120px, 14vw, 360px));
   max-width: calc(100vw - clamp(var(--space-md), 2vw, var(--space-lg)) * 2);
   flex-shrink: 0;
   overflow: hidden;
@@ -3645,7 +3650,7 @@ p, li, blockquote, figcaption,
   <button id="prev" aria-label="Previous slide">‹</button>
   <div class="progress">
     <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-    <span class="counter"><span class="cur">1</span><span class="sep">/</span>24</span>
+    <span class="counter"><span class="cur">1</span><span class="sep">/</span>25</span>
   </div>
   <button id="next" aria-label="Next slide">›</button>
 </nav>
