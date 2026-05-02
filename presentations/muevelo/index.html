@@ -1468,10 +1468,62 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
 }
 .slide[data-arch="hero"] .slide__num,
 .slide[data-arch="hero"] .slide__pc { display: none; }
+
+/* Investor deck pill — fades in AFTER all hero animations settle */
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: clamp(var(--space-md), 2vw, var(--space-lg));
+  padding: 10px clamp(20px, 2vw, 28px);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 205, 0, 0.65);
+  background: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+          backdrop-filter: blur(14px) saturate(160%);
+  font-family: var(--font-sans);
+  font-size: clamp(0.78rem, 0.7rem + 0.25vw, 0.95rem);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.95);
+  white-space: nowrap;
+  position: relative;
+  z-index: 4;
+  opacity: 0;
+  box-shadow:
+    0 0 32px rgba(255, 205, 0, 0.22),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 12px 40px rgba(0, 0, 0, 0.5);
+  animation: heroPillIn 0.9s var(--ease-out) 4.2s forwards;
+}
+.hero-pill__dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #ffcd00;
+  box-shadow: 0 0 10px rgba(255, 205, 0, 0.8);
+  flex: none;
+  animation: heroPillPulse 2.1s ease-in-out 4.9s infinite;
+}
+.hero-pill__text {
+  background: linear-gradient(90deg, #ffe98a, #ffcd00 50%, #ff9933);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@keyframes heroPillIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes heroPillPulse {
+  0%, 100% { opacity: 1;   box-shadow: 0 0 10px rgba(255, 205, 0, 0.8); }
+  50%      { opacity: 0.45; box-shadow: 0 0 18px rgba(255, 205, 0, 1); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .slide[data-arch="hero"] .cover-logo,
   .slide[data-arch="hero"]::after,
-  .hero-grid, .hero-horizon, .hero-flash {
+  .hero-grid, .hero-horizon, .hero-flash, .hero-pill, .hero-pill__dot {
     animation: none !important;
     opacity: 1 !important;
   }
@@ -3109,6 +3161,10 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
   <div class="hero-flash" aria-hidden="true"></div>
   <div class="slide__inner">
     <img class="cover-logo" src="assets/muevelo-logo.png" alt="Muevelo @ Chico">
+    <div class="hero-pill" aria-label="Investor pitch deck">
+      <span class="hero-pill__dot" aria-hidden="true"></span>
+      <span class="hero-pill__text">Founding Investor Circle &middot; Investor Pitch Deck</span>
+    </div>
   </div>
   <div class="slide__pc">Privileged &amp; Confidential</div>
   <div class="slide__num">01 / 25</div>
