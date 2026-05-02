@@ -3169,15 +3169,76 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
    MOBILE-FRIENDLY OVERRIDES (< 768px) — iOS-safe per-slide layout
    ============================================================ */
 @media (max-width: 767px) {
-  /* iOS-safe document flow: html/body scroll, deck contains stacked slides */
+  /* === HARD OVERFLOW GUARDS === */
   html, body {
     height: auto;
     min-height: 100%;
-    overflow-x: hidden;
+    overflow-x: hidden !important;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    max-width: 100vw;
   }
   body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+  /* Nothing exceeds viewport */
+  body * {
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+  /* Flex/grid children must shrink — without this, fixed-px content blows out the parent */
+  .slide,
+  .slide__inner,
+  .content-wrap,
+  .slide__inner > *,
+  .content-wrap > *,
+  .phases,
+  .phases > *,
+  .y2-bars,
+  .y2-bars > *,
+  .y2-row,
+  .y2-row > *,
+  .cap-stmt,
+  .cap-stmt > *,
+  .cap-stmt__rows,
+  .cap-stmt__rows > *,
+  .cap-stmt__row,
+  .cap-stmt__row > *,
+  .staff-grid,
+  .staff-grid > *,
+  .waterfall,
+  .waterfall > *,
+  .own-grid,
+  .own-grid > *,
+  .own-split,
+  .own-split > *,
+  .own-stats,
+  .own-stats > *,
+  .nav,
+  .nav > * {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+  /* Aggressive text wrapping so long words/numbers don't push containers wider */
+  p, li, td, th, span, h1, h2, h3, h4, h5, h6,
+  .thanks-headline, .slide__title, .active-title,
+  .cap-stmt__total, .cap-stmt__name, .cap-stmt__amt,
+  .staff-role, .staff-amount, .staff-meta, .staff-tag, .staff-split,
+  .y2-bar .val, .own-donut__big, .own-stat__num, .own-stat__label, .own-stat__hint {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    text-wrap: pretty;
+  }
+  /* Images + svgs never exceed parent */
+  img, svg, video {
+    max-width: 100% !important;
+    height: auto;
+  }
+  /* Wrap any table in horizontal scroll inside its reveal wrapper */
+  .slide[data-arch="table"] .slide__inner > div.reveal,
+  .slide[data-arch="table"] .content-wrap > div.reveal {
+    width: 100% !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 
   .deck {
     position: relative;
