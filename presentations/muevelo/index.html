@@ -3166,86 +3166,208 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
 }
 
 /* ============================================================
-   MOBILE-FRIENDLY OVERRIDES (< 768px)
+   MOBILE-FRIENDLY OVERRIDES (< 768px) — iOS-safe per-slide layout
    ============================================================ */
 @media (max-width: 767px) {
-  html, body { overflow: hidden auto; height: auto; min-height: 100%; }
+  /* iOS-safe document flow: html/body scroll, deck contains stacked slides */
+  html, body {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
 
-  /* Slides become document flow, scrollable, stacked */
-  .deck { position: relative; height: auto; display: block; z-index: 5; }
+  .deck {
+    position: relative;
+    height: auto;
+    width: 100vw;
+    display: block;
+    z-index: 5;
+  }
   .slide {
     position: relative;
     width: 100vw;
     height: auto;
     min-height: 100dvh;
-    padding: 96px 0 120px;
+    padding: 0;
     grid-area: auto;
     opacity: 1;
     pointer-events: auto;
     transition: none;
     z-index: auto;
+    display: none;
   }
-  .slide:not(.active) { display: none; }
-  .slide.active { display: flex; opacity: 1; }
+  .slide.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    opacity: 1;
+  }
 
-  /* Container: full-width, auto height, breathing room */
-  .slide:not([data-arch="hero"]):not([data-arch="thanks"]) {
-    padding: 0;
-  }
-  .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__inner {
-    padding: 84px 12px 32px;
-    min-height: calc(100dvh - 200px);
-  }
-  .content-wrap {
-    width: calc(100vw - 24px) !important;
-    max-width: calc(100vw - 24px) !important;
-    height: auto !important;
-    min-height: 60dvh;
-    padding: 24px 16px !important;
-    overflow: visible !important;
-    border-radius: 14px !important;
-    transform: none !important;
-    opacity: 1 !important;
-  }
-  .content-wrap > * { z-index: 1; position: relative; }
-
-  /* Hide trapezoid + show plain top title bar instead */
+  /* Trapezoid + body title hidden — per-slide h2 renders inline instead */
   .title-trap { display: none !important; }
-  .active-title {
-    position: relative;
-    top: 0 !important;
-    left: 0;
-    right: 0;
-    font-size: clamp(1.3rem, 5vw, 1.75rem) !important;
-    line-height: 1.1;
-    padding: 16px 12px;
-    transform: none !important;
-    width: 100%;
-    text-align: center;
-  }
-  /* Show the per-slide title element directly inside the slide on mobile */
+  .active-title { display: none !important; }
   .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__title {
     position: relative !important;
     width: auto; height: auto;
     overflow: visible;
     clip: auto;
-    margin: 0 0 18px;
-    padding: 0 8px;
-    font-size: clamp(1.4rem, 5.5vw, 1.9rem);
-    line-height: 1.1;
+    margin: 28px 16px 18px;
+    padding: 0;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 6.4vw, 2.2rem);
+    line-height: 1.05;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
     color: hsl(var(--current-hue, 0), 90%, 75%);
+    text-align: center;
+    text-wrap: balance;
+  }
+  .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__title::before,
+  .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__title::after { display: none !important; }
+
+  /* Container — outlined card that grows with content */
+  .slide:not([data-arch="hero"]):not([data-arch="thanks"]) {
+    padding: 0;
+  }
+  .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__inner {
+    padding: 0;
+    width: 100%;
+    flex: none;
+    background: transparent;
+    align-self: auto;
+    overflow: visible;
+    gap: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__inner > * {
+    z-index: 1;
+  }
+  .content-wrap {
+    width: calc(100vw - 20px) !important;
+    max-width: 100% !important;
+    margin: 0 auto 24px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 22px 16px !important;
+    overflow: visible !important;
+    border-radius: 14px !important;
+    transform: none !important;
+    opacity: 1 !important;
+    gap: 18px !important;
+    justify-content: flex-start !important;
+  }
+  .content-wrap > * { z-index: 1; position: relative; opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
+  .content-wrap > .slide__logo { display: none; }
+
+  /* Slide-num corner pill */
+  .slide__num {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 0.62rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.06em;
+    z-index: 5;
+  }
+  .slide__pc {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 0.55rem !important;
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 0.04em;
   }
 
-  /* Slide num + nav: smaller, less obtrusive */
-  .slide__num { font-size: 0.65rem; }
+  /* Nav: fixed full-width bottom bar with iOS safe area */
   .nav {
-    bottom: 12px;
-    padding: 6px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100vw;
+    border-radius: 0;
+    border: none;
+    border-top: 1px solid hsla(var(--current-hue, 0), 90%, 60%, 0.5);
+    background: rgba(8, 8, 10, 0.98);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.55), 0 0 24px hsla(var(--current-hue, 0), 90%, 60%, 0.18);
   }
-  .nav button { width: 40px; height: 40px; }
-  .nav .progress { display: none; }
-  .nav .counter { font-size: 0.78rem; padding: 0 6px; }
+  .nav button {
+    width: 48px; height: 48px;
+    flex: none;
+  }
+  .nav .progress { flex: 1; max-width: none; padding: 0 8px; }
+  .nav .progress-bar { width: 100%; }
+  .nav .counter { font-size: 0.85rem; padding: 0 4px; }
   .nav-hint { display: none !important; }
+
+  /* Reveal stagger off — instant on mobile, less jank */
+  .reveal { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; transition-delay: 0s !important; }
+
+  /* Background grid + decorations: keep but lighter */
+  .glow-grid { opacity: 0.25; }
+  .hue-line-top, .hue-line-bottom { display: none; }
+  .hue-spotlight, .hue-vignette { opacity: 0.6; }
+
+  /* Hide cursor on touch */
+  .ag-cursor { display: none !important; }
+
+  /* Tables: comfortable reading + tap-friendly rows */
+  .tbl {
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 0.85rem;
+    border-radius: 10px;
+  }
+  .tbl thead th { padding: 10px 12px !important; font-size: 0.68rem !important; letter-spacing: 0.08em; }
+  .tbl tbody td { padding: 10px 12px !important; font-size: 0.85rem !important; line-height: 1.35; }
+  .tbl tr.total td { padding: 10px 12px !important; font-size: 0.95rem !important; }
+  /* Wide tables (slide 13 has 6 cols) — horizontal scroll */
+  #slide-13 .reveal,
+  #slide-17 .reveal {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+  #slide-13 .tbl,
+  #slide-17 .tbl {
+    min-width: 540px;
+  }
+  #slide-13 .tbl thead th,
+  #slide-13 .tbl tbody td { padding: 9px 10px !important; font-size: 0.75rem !important; }
+
+  /* Prose / closer / mixed paragraphs */
+  .slide[data-arch="prose"] p,
+  .slide[data-arch="closer"] p,
+  .slide[data-arch="mixed"] p,
+  .slide[data-arch="table"] .slide__inner > p,
+  .slide[data-arch="chart"] .slide__inner > p,
+  #slide-21 .slide__inner > p,
+  #slide-21 .content-wrap > p {
+    font-size: 0.95rem !important;
+    line-height: 1.55;
+  }
+  .slide[data-arch="prose"] .slide__inner,
+  .slide[data-arch="closer"] .slide__inner,
+  .slide[data-arch="mixed"] .slide__inner,
+  .slide[data-arch="chart"] .slide__inner {
+    max-width: 100%;
+  }
+
+  /* Highlight pill: scale down */
+  .hl { padding: 0 2px; }
 
   /* Stack every multi-column grid */
   .phases,
@@ -3255,85 +3377,147 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
   .own-grid,
   .own-stats,
   .waterfall,
-  #slide-7 .own-stats,
-  #slide-22 .spec-list { grid-template-columns: 1fr !important; }
+  #slide-22 .spec-list { grid-template-columns: 1fr !important; height: auto !important; }
   .staff-card--feature,
   .staff-card--total { grid-column: span 1 !important; grid-row: auto !important; }
-  .staff-card--total { flex-direction: column !important; align-items: flex-start !important; }
-  .wf-arrow-h, .wf-arrow-h--split { display: none; }
+  .staff-card--total { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; }
+  .wf-arrow-h,
+  .wf-arrow-h--split { display: none !important; }
+  .wf-split { display: contents !important; }
 
-  /* Tables: scrollable + tighter */
-  .tbl {
+  /* Phase cards: simpler */
+  .phase { padding: 18px 16px !important; }
+  .phase h3 { font-size: clamp(1.5rem, 7vw, 2rem) !important; margin-bottom: 6px !important; }
+  .phase .subhead { margin-bottom: 14px !important; font-size: 0.78rem !important; }
+  .phase ul li { font-size: 0.92rem !important; }
+
+  /* Waterfall cols (slide 8): full-width stacks */
+  .wf-col {
+    padding: 16px 16px !important;
+  }
+  .wf-col .num { font-size: 3.4rem !important; line-height: 1 !important; }
+  .wf-col .label { font-size: 1.05rem !important; }
+  .wf-col .desc { font-size: 0.85rem !important; }
+
+  /* Capital allocation (slide 10): hero + rows stack */
+  .cap-stmt__hero { padding: 22px 16px !important; }
+  .cap-stmt__total { font-size: clamp(2.4rem, 11vw, 3.6rem) !important; }
+  .cap-stmt__row {
+    padding: 12px 12px !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 6px 10px !important;
+  }
+  .cap-stmt__track { grid-column: 1 / -1 !important; height: 8px !important; }
+  .cap-stmt__name { font-size: 0.88rem !important; }
+  .cap-stmt__amt { font-size: 1rem !important; }
+
+  /* Year1 vs Year2 chart (slide 15): row label stacked above bars */
+  #slide-15 .y2-row { padding: 14px 14px !important; gap: 10px !important; }
+  .y2-row .label h4 { font-size: 1.3rem !important; }
+  .y2-row .label small { font-size: 0.78rem !important; }
+  .y2-bar .fill { height: 22px !important; }
+  .y2-bar .val { font-size: 0.92rem !important; }
+  .y2-legend { font-size: 0.75rem !important; gap: 12px !important; justify-content: flex-start !important; }
+  .y2-takeaway { font-size: 0.85rem !important; padding: 14px !important; }
+  .footnote { font-size: 0.85rem !important; padding: 14px !important; }
+
+  /* Ownership (slide 7): donut + legend + stats stacked */
+  #slide-7 .own-split { padding: 18px 14px !important; gap: 18px !important; flex-direction: column !important; }
+  #slide-7 .own-donut { width: 220px !important; height: 220px !important; }
+  #slide-7 .own-donut__big { font-size: 2.4rem !important; }
+  #slide-7 .own-donut__sub { font-size: 0.75rem !important; }
+  #slide-7 .own-legend__row strong { font-size: 0.95rem !important; }
+  #slide-7 .own-legend__row small { font-size: 0.78rem !important; }
+  #slide-7 .own-stats { gap: 12px !important; margin-top: 16px !important; }
+  #slide-7 .own-stat { padding: 16px !important; }
+  #slide-7 .own-stat__num { font-size: 2rem !important; }
+  #slide-7 .own-stat__label { font-size: 0.78rem !important; }
+
+  /* Bullets archetype (slide 4 + 22) */
+  .slide[data-arch="bullets"] ul {
+    grid-template-columns: 1fr !important;
     width: 100% !important;
     max-width: 100% !important;
-    font-size: 0.78rem;
+    gap: 12px !important;
   }
-  .tbl thead th { padding: 8px 10px !important; font-size: 0.7rem !important; letter-spacing: 0.06em; }
-  .tbl tbody td { padding: 8px 10px !important; font-size: 0.85rem !important; line-height: 1.35; }
-  .tbl tr.total td { padding: 8px 10px !important; font-size: 0.92rem !important; }
-  /* Wrap tables in horizontal scroll if they still overflow */
-  [class*="-wrap"] table.tbl { display: block; overflow-x: auto; }
-
-  /* Prose paragraphs: comfortable reading */
-  .slide[data-arch="prose"] p,
-  .slide[data-arch="closer"] p,
-  .slide[data-arch="mixed"] p,
-  .slide[data-arch="table"] .slide__inner > p,
-  #slide-21 .slide__inner > p,
-  #slide-21 .content-wrap > p {
-    font-size: 0.95rem !important;
-    line-height: 1.55;
+  .slide[data-arch="bullets"] ul li {
+    min-height: 0 !important;
+    padding: 16px 16px !important;
+    font-size: 0.92rem !important;
+  }
+  .slide[data-arch="bullets"] ul li::before { font-size: 1.7rem !important; top: 12px !important; left: 14px !important; }
+  .spec-list li { padding: 12px 14px !important; font-size: 0.9rem !important; }
+  #slide-22 .spec-list li {
+    min-height: 0 !important;
+    padding: 14px !important;
+    font-size: 0.92rem !important;
   }
 
-  /* Hero: shrink everything, keep brand impact */
-  .slide[data-arch="hero"] .slide__inner { padding: 24px 16px; }
+  /* Mixed (slide 23) staff grid */
+  #slide-23 .staff-card { padding: 16px 14px !important; }
+  #slide-23 .staff-card .staff-role { font-size: 1.05rem !important; }
+  #slide-23 .staff-card--feature .staff-role { font-size: 1.4rem !important; }
+  #slide-23 .staff-card .staff-amount { font-size: 1.5rem !important; }
+  #slide-23 .staff-card--feature .staff-amount { font-size: 2rem !important; }
+  #slide-23 .staff-card--total .staff-amount { font-size: 1.6rem !important; }
+
+  /* Callout (slide 5) */
+  .callout { padding: 16px !important; margin-top: 16px !important; }
+
+  /* Hero (slide 1) */
+  .slide[data-arch="hero"] {
+    min-height: 100dvh;
+    padding: 0;
+  }
+  .slide[data-arch="hero"] .slide__inner {
+    padding: 24px 20px 0;
+    gap: 18px;
+  }
   .slide[data-arch="hero"] .cover-logo {
-    width: clamp(220px, 70vw, 360px);
+    width: clamp(220px, 72vw, 360px);
   }
   .hero-pill {
-    font-size: 0.7rem !important;
+    font-size: 0.68rem !important;
     padding: 10px 18px !important;
     letter-spacing: 0.18em !important;
     white-space: normal !important;
     text-align: center;
-    line-height: 1.3;
-    margin-bottom: 24px !important;
+    line-height: 1.4;
+    gap: 10px !important;
+    margin-bottom: 18px !important;
   }
   .hero-pill__dot { width: 8px; height: 8px; }
   .slide[data-arch="hero"]::after {
-    width: clamp(280px, 80vw, 480px);
+    width: clamp(280px, 88vw, 480px);
     bottom: 38%;
   }
-  .hero-grid { display: none; }
+  .hero-grid { height: 35vh; opacity: 0.55; }
 
-  /* Thank You: shrink */
-  .slide[data-arch="thanks"] .thanks-logo { width: clamp(180px, 55vw, 320px); }
-  .thanks-headline { font-size: clamp(2rem, 12vw, 4rem) !important; -webkit-text-stroke-width: 1.5px; }
-  .thanks-subline { font-size: clamp(0.95rem, 3.5vw, 1.2rem) !important; padding: 0 16px; }
-  .thanks-grid { display: none; }
-
-  /* Cards: tighten padding so content fits without overflow */
-  .phase, .wf-col, .y2-row, .cap-stmt__hero, .cap-stmt__row, .staff-card,
-  .own-stat, .own-split, .footnote, .y2-takeaway, .callout {
-    padding: 14px 14px !important;
+  /* Thank You (slide 25) */
+  .slide[data-arch="thanks"] {
+    min-height: 100dvh;
+    padding: 24px 20px;
   }
-
-  /* Slide-21 spec-list cards: smaller min-height */
-  #slide-22 .spec-list li {
-    min-height: 80px !important;
-    padding: 12px !important;
-    font-size: 0.85rem !important;
+  .slide[data-arch="thanks"] .slide__inner {
+    gap: 18px;
+    padding: 0;
   }
-  /* Bullets archetype list items: less tall */
-  .slide[data-arch="bullets"] ul li {
-    min-height: 0 !important;
-    padding: 16px 16px 16px !important;
-    font-size: 0.9rem !important;
+  .slide[data-arch="thanks"] .thanks-logo {
+    width: clamp(180px, 55vw, 320px);
   }
-  .slide[data-arch="bullets"] ul li::before { font-size: 1.6rem !important; }
-
-  /* Hide cursor on touch devices entirely (already done by hover query) */
-  .ag-cursor { display: none !important; }
+  .thanks-headline {
+    font-size: clamp(2.4rem, 13vw, 4.4rem) !important;
+    -webkit-text-stroke-width: 1.5px !important;
+    line-height: 0.95;
+  }
+  .thanks-subline {
+    font-size: clamp(0.95rem, 3.6vw, 1.2rem) !important;
+    padding: 0 12px;
+    margin-top: 6px;
+  }
+  .thanks-grid { display: none !important; }
+  .thanks-horizon { display: none !important; }
+  .slide[data-arch="thanks"]::after { width: clamp(260px, 80vw, 420px); }
 }
 </style>
 </head>
