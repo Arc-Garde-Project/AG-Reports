@@ -3267,35 +3267,7 @@ html { overflow-x: hidden; }
   max-width: none !important;
   table-layout: auto;
 }
-/* Fade indicators — only appear when table actually overflows the wrapper.
-   Default hidden so non-overflowing tables don't get a dark right strip. */
-.tbl-wrap::after {
-  content: "";
-  position: absolute;
-  top: 0; right: 0; bottom: 0;
-  width: 40px;
-  background: linear-gradient(to right, transparent, rgba(10, 10, 14, 0.85) 90%);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s var(--ease);
-  z-index: 2;
-  border-radius: 0 12px 12px 0;
-}
-.tbl-wrap::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; bottom: 0;
-  width: 40px;
-  background: linear-gradient(to left, transparent, rgba(10, 10, 14, 0.85) 90%);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s var(--ease);
-  z-index: 2;
-  border-radius: 12px 0 0 12px;
-}
-/* Fades only when table overflows AND we're not at that edge */
-.tbl-wrap.has-overflow:not(.scrolled-end)::after { opacity: 1; }
-.tbl-wrap.has-overflow.scrolled-start::before { opacity: 1; }
+/* Fade indicators removed — natural scrollbar handles the affordance, no dark strip. */
 /* Anti-orphan: use overflow-wrap (only breaks long unbreakable words),
    text-wrap pretty (browser avoids orphans), and hyphens for clean breaks.
    word-break: break-word would split mid-word and create orphan letters. */
