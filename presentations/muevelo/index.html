@@ -3201,6 +3201,31 @@ html { overflow-x: hidden; }
   min-width: 0;
 }
 
+/* Wide tables get a horizontal scroll wrapper at every viewport (not just mobile).
+   Slide 13 (6-col scenarios) and slide 17 (4-col distribution) need this. */
+#slide-13 .slide__inner > div.reveal,
+#slide-17 .slide__inner > div.reveal {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+/* Tablet/laptop content-wrap gets internal scroll if content exceeds locked height.
+   Prevents clipping at 768-1024 viewport sizes where content is denser than fits. */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .content-wrap {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .content-wrap::-webkit-scrollbar { width: 6px; }
+  .content-wrap::-webkit-scrollbar-thumb {
+    background: hsla(var(--current-hue, 0), 80%, 60%, 0.4);
+    border-radius: 999px;
+  }
+}
+
 /* GLOBAL: every heading balances, every paragraph prettifies. Prevents single-word
    overflow at any viewport. AG DNA standard. */
 h1, h2, h3, h4, h5, h6,
