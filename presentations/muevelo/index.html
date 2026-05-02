@@ -2075,7 +2075,7 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
 }
 .wf-col > * { position: relative; z-index: 1; min-width: 0; max-width: 100%; }
-.wf-col, .wf-col * { overflow-wrap: anywhere; word-break: break-word; }
+.wf-col, .wf-col * { overflow-wrap: break-word; word-break: normal; hyphens: auto; -webkit-hyphens: auto; }
 .wf-foot { min-width: 0; max-width: 100%; }
 .wf-col .eyebrow {
   font-size: clamp(0.78rem, 0.65rem + 0.25vw, 0.95rem);
@@ -3224,7 +3224,6 @@ html { overflow-x: hidden; }
 }
 
 /* Wide tables fit their container at every viewport via table-layout: fixed.
-   Long cell content wraps within the cell instead of pushing the table wider.
    .tbl-wrap is set inline on the reveal div containing the wide table. */
 .tbl-wrap {
   width: 100% !important;
@@ -3237,10 +3236,20 @@ html { overflow-x: hidden; }
   max-width: 100% !important;
   table-layout: fixed;
 }
+/* Anti-orphan: use overflow-wrap (only breaks long unbreakable words),
+   text-wrap pretty (browser avoids orphans), and hyphens for clean breaks.
+   word-break: break-word would split mid-word and create orphan letters. */
+.tbl th,
+.tbl td,
 .tbl-wrap > .tbl th,
 .tbl-wrap > .tbl td {
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  text-wrap: pretty;
+  widows: 3;
+  orphans: 3;
 }
 
 /* Custom thin scrollbar styling (applies globally — content-wrap always has overflow-y: auto) */
@@ -3273,9 +3282,22 @@ p, li, blockquote, figcaption,
 .thanks-subline {
   text-wrap: pretty;
 }
-/* Long currency tokens, % numbers, etc must break instead of pushing parent wider */
+/* Long currency/% tokens break only when they would push past parent — never mid-word */
 .hl, .cap-stmt__amt, .y2-bar .val, .staff-amount {
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/* Global anti-orphan: text-wrap pretty + widows/orphans, no aggressive mid-word breaks */
+body, p, li, td, th, blockquote, figcaption, span,
+.thanks-subline, .y2-takeaway, .footnote, .subnote,
+.cap-stmt__sub, .cap-stmt__name, .staff-meta, .staff-split,
+.phase ul li, .wf-col .desc {
+  text-wrap: pretty;
+  widows: 3;
+  orphans: 3;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 @media (max-width: 767px) {
@@ -3304,9 +3326,9 @@ p, li, blockquote, figcaption,
     max-width: 100% !important;
     box-sizing: border-box;
   }
-  /* Universal text wrap on mobile — no long word can push container */
+  /* Universal text wrap on mobile — break-word only (no mid-word breaks = no orphan letters) */
   *, *::before, *::after {
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
   }
   /* Flex/grid children must shrink — without this, fixed-px content blows out the parent */
   .slide,
