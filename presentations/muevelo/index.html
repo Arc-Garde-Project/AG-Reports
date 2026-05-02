@@ -1811,19 +1811,38 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
   100%  { color: #ff0066; -webkit-text-stroke-color: #00d8aa; }
 }
 .thanks-subline {
+  display: inline-block;
   margin: 0 auto;
   text-align: center;
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: clamp(1.1rem, 0.95rem + 0.7vw, 1.5rem);
-  line-height: 1.4;
-  letter-spacing: 0.02em;
-  color: rgba(255, 255, 255, 0.9);
-  text-wrap: balance;
+  padding: 14px clamp(28px, 4vw, 44px);
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 205, 0, 0.7);
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+          backdrop-filter: blur(14px) saturate(160%);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: clamp(1rem, 0.85rem + 0.5vw, 1.35rem);
+  line-height: 1.2;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffe98a;
+  text-shadow: 0 0 16px rgba(255, 205, 0, 0.55);
+  white-space: nowrap;
+  box-shadow:
+    0 0 36px rgba(255, 205, 0, 0.32),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 14px 44px rgba(0, 0, 0, 0.55);
   opacity: 0;
 }
 .slide[data-arch="thanks"].active .thanks-subline {
-  animation: thanksFade var(--t-xslow) var(--ease-out) 2.1s forwards;
+  animation:
+    thanksFade var(--t-xslow) var(--ease-out) 2.1s forwards,
+    thanksSubPulse 2.1s ease-in-out 4.2s infinite;
+}
+@keyframes thanksSubPulse {
+  0%, 100% { box-shadow: 0 0 36px rgba(255, 205, 0, 0.32), 0 0 0 1px rgba(255, 255, 255, 0.04) inset, 0 14px 44px rgba(0, 0, 0, 0.55); }
+  50%      { box-shadow: 0 0 56px rgba(255, 205, 0, 0.6),  0 0 0 1px rgba(255, 255, 255, 0.06) inset, 0 14px 48px rgba(0, 0, 0, 0.6); }
 }
 @keyframes thanksFade {
   from { opacity: 0; transform: translateY(20px); }
@@ -3788,8 +3807,9 @@ body, p, li, td, th, blockquote, figcaption, span,
     line-height: 0.95;
   }
   .thanks-subline {
-    font-size: clamp(0.95rem, 3.6vw, 1.2rem) !important;
-    padding: 0 12px;
+    font-size: clamp(0.78rem, 3vw, 1rem) !important;
+    padding: 12px clamp(20px, 5vw, 32px) !important;
+    letter-spacing: 0.14em !important;
     margin-top: 6px;
   }
   .thanks-grid { display: none !important; }
@@ -3856,7 +3876,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-2" data-arch="prose" aria-label="Slide 2 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Investor Participation&nbsp;Disclaimer</h2>
+    <h2 class="slide__title reveal" data-d="2">Investor Participation<br>Disclaimer</h2>
     <p class="reveal" data-d="3">Ownership of shares in the Founding Investor Circle <span class="hl">does not grant voting rights, management authority, or any decision-making power</span> over the operations of Muevelo West. All investors in the Founding Investor Circle are <span class="hl">silent partners with no controlling interest</span>. Day-to-day operations, strategic direction, staffing, programming, and all business decisions remain solely under the authority of the founding operators (<span class="hl">Mario &amp; Henry Trujillo, 51%</span>).</p>
     <p class="reveal" data-d="4">Investor distributions <span class="hl">will not commence until the seller carry note ($100,000, 12-month&nbsp;term) has been repaid in full</span>. Repayment of this note will be prioritized from early operating profits, with accelerated paydown when possible. Following full retirement of the seller carry obligation, investor distributions will be made <span class="hl">proportionally based on each investor&rsquo;s share ownership</span> within the 49% Founding Investor Circle pool.</p>
   </div>
@@ -3981,7 +4001,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-8" data-arch="chart" aria-label="Slide 8 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Cash Flow Waterfall&nbsp;Structure</h2>
+    <h2 class="slide__title reveal" data-d="2">Cash Flow<br>Waterfall Structure</h2>
     <div class="waterfall">
       <div class="wf-col r1 reveal" data-d="3">
         <span class="eyebrow">Stage 01 · Operations</span>
@@ -4067,7 +4087,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-10" data-arch="chart" aria-label="Slide 10 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Capital Allocation&nbsp;Breakdown</h2>
+    <h2 class="slide__title reveal" data-d="2">Capital Allocation<br>Breakdown</h2>
     <p class="reveal" data-d="3">Total target: ~$720,000 (midpoint estimates shown for range items)</p>
 
     <div class="cap-stmt reveal" data-d="3">
@@ -4191,7 +4211,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-13" data-arch="table" aria-label="Slide 13 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Attendance and Revenue&nbsp;Scenarios</h2>
+    <h2 class="slide__title reveal" data-d="2">Attendance and<br>Revenue Scenarios</h2>
     <div class="reveal tbl-wrap" data-d="3">
     <table class="tbl">
       <thead><tr><th>Scenario</th><th>Guests/Night</th><th>Rev/Night</th><th>Monthly Rev.</th><th>Yr 1 Profit</th><th>Yr 2 Profit</th></tr></thead>
@@ -4234,7 +4254,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-15" data-arch="chart" aria-label="Slide 15 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Year 1 vs. Year 2 Monthly&nbsp;Profit</h2>
+    <h2 class="slide__title reveal" data-d="2">Year 1 vs. Year 2<br>Monthly Profit</h2>
     <p class="reveal" data-d="3">Year 2 stabilized profits after seller carry ($100K) is retired and brand transition completes</p>
     <div class="y2-legend reveal" data-d="3">
       <span class="y1"><span class="swatch"></span>Year 1</span>
@@ -4272,7 +4292,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-16" data-arch="table" aria-label="Slide 16 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Estimated Break‑Even&nbsp;Timeline</h2>
+    <h2 class="slide__title reveal" data-d="2">Estimated Break‑Even<br>Timeline</h2>
     <div class="reveal tbl-wrap" data-d="3">
     <table class="tbl">
       <thead><tr><th>Scenario</th><th>Stabilized Monthly Profit (Yr 2)</th><th>Break‑Even Timeframe</th></tr></thead>
@@ -4337,7 +4357,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-20" data-arch="prose" aria-label="Slide 20 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Revenue Growth&nbsp;Opportunities</h2>
+    <h2 class="slide__title reveal" data-d="2">Revenue Growth<br>Opportunities</h2>
     <p class="reveal" data-d="3">Muevelo West&rsquo;s base projections intentionally assume a <span class="hl">conservative operating model</span> focused on core weekend traffic and beverage sales. However, nightlife venues often grow revenue significantly through <span class="hl">special programming, branded events, and community engagement</span>. These initiatives can increase guest counts, average spend per visitor, and overall brand equity.</p>
     <p class="reveal" data-d="4"><span class="hl">Theme Nights</span> (Latin Night, Throwback Nights, Pride Nights, etc.) that drive repeat attendance and niche audiences.</p>
     <p class="reveal" data-d="4"><span class="hl">Guest DJs, entertainers, or drag performers</span> that attract new crowds and allow <span class="hl">ticketed or premium cover pricing</span>.</p>
@@ -4377,7 +4397,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-22" data-arch="bullets" aria-label="Slide 22 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Operating Model &amp;&nbsp;Assumptions</h2>
+    <h2 class="slide__title reveal" data-d="2">Operating Model &amp;<br>Assumptions</h2>
     <ul class="spec-list reveal" data-d="3">
       <li>Operating nights: Friday – Sunday | Hours: 9PM – 2AM</li>
       <li>Attendance: Friday ~150 guests | Saturday ~180 guests | Sunday lower ramp</li>
@@ -4398,7 +4418,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-23" data-arch="mixed" aria-label="Slide 23 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Labor Model &amp; Staffing&nbsp;Structure</h2>
+    <h2 class="slide__title reveal" data-d="2">Labor Model &amp;<br>Staffing Structure</h2>
     <p class="reveal" data-d="3">Staffing is modeled on a <span class="hl">shift-based nightlife schedule</span> (~6 hours per night, Friday–Sunday). Labor scales with attendance and event programming and is expected to range approximately <span class="hl">between 15%–22% of revenue</span>.</p>
     <ul class="staff-grid reveal" data-d="4">
       <li class="staff-card staff-card--feature">
