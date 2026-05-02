@@ -3185,6 +3185,22 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
 /* GLOBAL HORIZONTAL SCROLL PREVENTION — every viewport */
 html { overflow-x: hidden; }
 
+/* GLOBAL: grid/flex children shrink properly at every viewport (prevents
+   fixed-px content from blowing out parent at intermediate widths 768-1440) */
+.phases > *,
+.y2-row > *,
+.y2-bars > *,
+.cap-stmt > *,
+.cap-stmt__rows > *,
+.cap-stmt__row > *,
+.staff-grid > *,
+.waterfall > *,
+.own-grid > *,
+.own-split > *,
+.own-stats > * {
+  min-width: 0;
+}
+
 /* GLOBAL: every heading balances, every paragraph prettifies. Prevents single-word
    overflow at any viewport. AG DNA standard. */
 h1, h2, h3, h4, h5, h6,
@@ -4314,13 +4330,12 @@ p, li, blockquote, figcaption,
 </main>
 
 <script>
-/* Fit-to-viewport — designed at 1440x810; uses transform: scale with centering
-   so the deck always sits centered (not stuck top-left when zoom < 1).
-   On mobile (<768px) bails to native fluid flow. */
+/* Viewport mode flag only — fluid CSS handles all sizing 768px+, mobile CSS handles <768px.
+   No transform/zoom (those caused letterboxing at non-16:9 viewports). */
 (function() {
-  var REF_W = 1440, REF_H = 810, MOBILE_BREAK = 768;
-  var html = document.documentElement;
-  function reset() {
+  var MOBILE_BREAK = 768;
+  function fit() {
+    var html = document.documentElement;
     html.style.transform = '';
     html.style.transformOrigin = '';
     html.style.width = '';
@@ -4329,26 +4344,11 @@ p, li, blockquote, figcaption,
     html.style.left = '';
     html.style.top = '';
     html.style.zoom = '';
-  }
-  function fit() {
     if (window.innerWidth < MOBILE_BREAK) {
-      reset();
       document.body.classList.add('is-mobile');
-      return;
+    } else {
+      document.body.classList.remove('is-mobile');
     }
-    document.body.classList.remove('is-mobile');
-    var sw = window.innerWidth, sh = window.innerHeight;
-    var s = Math.min(sw / REF_W, sh / REF_H, 1);
-    if (s >= 0.999) { reset(); return; }
-    var ox = (sw - REF_W * s) / 2;
-    var oy = (sh - REF_H * s) / 2;
-    html.style.position = 'fixed';
-    html.style.left = '0';
-    html.style.top = '0';
-    html.style.width = REF_W + 'px';
-    html.style.height = REF_H + 'px';
-    html.style.transformOrigin = '0 0';
-    html.style.transform = 'translate(' + ox + 'px, ' + oy + 'px) scale(' + s.toFixed(4) + ')';
   }
   window.addEventListener('resize', fit);
   window.addEventListener('orientationchange', fit);
