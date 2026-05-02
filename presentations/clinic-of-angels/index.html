@@ -518,18 +518,21 @@
 
     .ca-hero-stats {
       display: flex; align-items: center; justify-content: center;
-      gap: 0; flex-wrap: wrap;
+      gap: 0;
+      flex-wrap: nowrap;
       opacity: 0;
       transform: translateY(21px);
       animation: fadeUp var(--duration-long) var(--ease-satisfying) 1.2s forwards;
     }
     .ca-hero-stat {
       text-align: center;
-      padding: 0 clamp(14px, 4vw, 35px);
+      padding: 0 clamp(10px, 2.2vw, 21px);
+      min-width: 0;
+      flex: 1 1 0;
     }
     .ca-hero-stat-value {
       font-family: var(--font-display);
-      font-size: clamp(2.25rem, 6vw, 3.5rem);
+      font-size: clamp(1.75rem, 4.5vw, 2.625rem);
       letter-spacing: 0.042em;
       line-height: 1;
       background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
@@ -537,18 +540,25 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       margin-bottom: 7px;
+      white-space: nowrap;
     }
     .ca-hero-stat-label {
       font-family: var(--font-mono);
-      font-size: var(--text-eyebrow);
-      letter-spacing: 0.21em;
+      font-size: 0.6875rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--text-muted);
+      line-height: 1.4;
     }
     .ca-hero-stat-divider {
-      width: 1px; height: 42px;
+      width: 1px; height: 35px;
       background: linear-gradient(180deg, transparent, var(--accent), transparent);
       flex-shrink: 0;
+    }
+    @media (max-width: 600px) {
+      .ca-hero-stats { flex-wrap: wrap; gap: 14px 0; }
+      .ca-hero-stat { flex: 1 1 calc(50% - 1px); padding: 0 7px; }
+      .ca-hero-stat-divider:nth-of-type(2) { display: none; }
     }
 
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -2361,7 +2371,7 @@
                   <span class="ca-deliv-group-name">Management</span>
                 </div>
                 <ul class="ca-deliv-list">
-                  <li>A/B testing across 4-day sprint&nbsp;cycles</li>
+                  <li>Strategic A/B testing across 4-day sprint&nbsp;cycles</li>
                   <li>KPI reports after every 4-day&nbsp;cycle</li>
                   <li>Weekly performance reports, generated Wed, delivered&nbsp;Thu</li>
                   <li>Optimizations Mon / Wed / Fri once a winner is&nbsp;identified</li>
