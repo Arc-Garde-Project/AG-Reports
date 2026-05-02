@@ -944,21 +944,27 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
 #slide-12 .phases { margin-top: 0; }
 /* Slide 14 Y1 vs Y2 chart — fill the outlined container (100vh - 360px) */
 #slide-15 .content-wrap {
-  gap: clamp(var(--space-sm), 1.6vw, var(--space-md));
+  gap: clamp(var(--space-xs), 1.2vw, var(--space-sm));
   justify-content: space-between;
 }
 #slide-15 .y2-legend { margin-bottom: 0; }
 #slide-15 .y2-row {
-  padding: var(--space-md) var(--space-lg);
+  padding: clamp(var(--space-sm), 1.4vw, var(--space-md)) var(--space-lg);
   margin-bottom: 0;
+  gap: clamp(var(--space-md), 1.6vw, var(--space-lg));
 }
-#slide-15 .y2-bars { gap: 14px; }
-#slide-15 .y2-bar .fill { height: 30px; }
+#slide-15 .y2-bars { gap: 9px; }
+#slide-15 .y2-bar .fill { height: clamp(20px, 2.4vh, 26px); }
+#slide-15 .y2-bar { gap: var(--space-sm); }
 #slide-15 .y2-axis { display: none; }
 #slide-15 .y2-takeaway {
-  padding: var(--space-md) var(--space-lg);
+  padding: clamp(var(--space-sm), 1.4vw, var(--space-md)) var(--space-lg);
   margin-top: 0;
+  font-size: clamp(0.88rem, 0.78rem + 0.3vw, 1.05rem);
+  line-height: 1.5;
 }
+#slide-15 .y2-row .label h4 { font-size: clamp(1.3rem, 1rem + 1vw, 1.8rem); }
+#slide-15 .y2-bar .val { font-size: clamp(0.92rem, 0.82rem + 0.3vw, 1.1rem); }
 /* Slide 7 — Ownership: 51/49 donut + featured stat cards. Brand primaries: gold + magenta */
 #slide-7 {
   --m-gold: #ffcd00;
