@@ -3164,6 +3164,177 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
   .slide__pc { right: var(--space-md); }
   .slide__title { font-size: var(--text-lg); }
 }
+
+/* ============================================================
+   MOBILE-FRIENDLY OVERRIDES (< 768px)
+   ============================================================ */
+@media (max-width: 767px) {
+  html, body { overflow: hidden auto; height: auto; min-height: 100%; }
+
+  /* Slides become document flow, scrollable, stacked */
+  .deck { position: relative; height: auto; display: block; z-index: 5; }
+  .slide {
+    position: relative;
+    width: 100vw;
+    height: auto;
+    min-height: 100dvh;
+    padding: 96px 0 120px;
+    grid-area: auto;
+    opacity: 1;
+    pointer-events: auto;
+    transition: none;
+    z-index: auto;
+  }
+  .slide:not(.active) { display: none; }
+  .slide.active { display: flex; opacity: 1; }
+
+  /* Container: full-width, auto height, breathing room */
+  .slide:not([data-arch="hero"]):not([data-arch="thanks"]) {
+    padding: 0;
+  }
+  .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__inner {
+    padding: 84px 12px 32px;
+    min-height: calc(100dvh - 200px);
+  }
+  .content-wrap {
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
+    height: auto !important;
+    min-height: 60dvh;
+    padding: 24px 16px !important;
+    overflow: visible !important;
+    border-radius: 14px !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .content-wrap > * { z-index: 1; position: relative; }
+
+  /* Hide trapezoid + show plain top title bar instead */
+  .title-trap { display: none !important; }
+  .active-title {
+    position: relative;
+    top: 0 !important;
+    left: 0;
+    right: 0;
+    font-size: clamp(1.3rem, 5vw, 1.75rem) !important;
+    line-height: 1.1;
+    padding: 16px 12px;
+    transform: none !important;
+    width: 100%;
+    text-align: center;
+  }
+  /* Show the per-slide title element directly inside the slide on mobile */
+  .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__title {
+    position: relative !important;
+    width: auto; height: auto;
+    overflow: visible;
+    clip: auto;
+    margin: 0 0 18px;
+    padding: 0 8px;
+    font-size: clamp(1.4rem, 5.5vw, 1.9rem);
+    line-height: 1.1;
+    color: hsl(var(--current-hue, 0), 90%, 75%);
+  }
+
+  /* Slide num + nav: smaller, less obtrusive */
+  .slide__num { font-size: 0.65rem; }
+  .nav {
+    bottom: 12px;
+    padding: 6px;
+  }
+  .nav button { width: 40px; height: 40px; }
+  .nav .progress { display: none; }
+  .nav .counter { font-size: 0.78rem; padding: 0 6px; }
+  .nav-hint { display: none !important; }
+
+  /* Stack every multi-column grid */
+  .phases,
+  .y2-row,
+  .cap-stmt,
+  .staff-grid,
+  .own-grid,
+  .own-stats,
+  .waterfall,
+  #slide-7 .own-stats,
+  #slide-22 .spec-list { grid-template-columns: 1fr !important; }
+  .staff-card--feature,
+  .staff-card--total { grid-column: span 1 !important; grid-row: auto !important; }
+  .staff-card--total { flex-direction: column !important; align-items: flex-start !important; }
+  .wf-arrow-h, .wf-arrow-h--split { display: none; }
+
+  /* Tables: scrollable + tighter */
+  .tbl {
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 0.78rem;
+  }
+  .tbl thead th { padding: 8px 10px !important; font-size: 0.7rem !important; letter-spacing: 0.06em; }
+  .tbl tbody td { padding: 8px 10px !important; font-size: 0.85rem !important; line-height: 1.35; }
+  .tbl tr.total td { padding: 8px 10px !important; font-size: 0.92rem !important; }
+  /* Wrap tables in horizontal scroll if they still overflow */
+  [class*="-wrap"] table.tbl { display: block; overflow-x: auto; }
+
+  /* Prose paragraphs: comfortable reading */
+  .slide[data-arch="prose"] p,
+  .slide[data-arch="closer"] p,
+  .slide[data-arch="mixed"] p,
+  .slide[data-arch="table"] .slide__inner > p,
+  #slide-21 .slide__inner > p,
+  #slide-21 .content-wrap > p {
+    font-size: 0.95rem !important;
+    line-height: 1.55;
+  }
+
+  /* Hero: shrink everything, keep brand impact */
+  .slide[data-arch="hero"] .slide__inner { padding: 24px 16px; }
+  .slide[data-arch="hero"] .cover-logo {
+    width: clamp(220px, 70vw, 360px);
+  }
+  .hero-pill {
+    font-size: 0.7rem !important;
+    padding: 10px 18px !important;
+    letter-spacing: 0.18em !important;
+    white-space: normal !important;
+    text-align: center;
+    line-height: 1.3;
+    margin-bottom: 24px !important;
+  }
+  .hero-pill__dot { width: 8px; height: 8px; }
+  .slide[data-arch="hero"]::after {
+    width: clamp(280px, 80vw, 480px);
+    bottom: 38%;
+  }
+  .hero-grid { display: none; }
+
+  /* Thank You: shrink */
+  .slide[data-arch="thanks"] .thanks-logo { width: clamp(180px, 55vw, 320px); }
+  .thanks-headline { font-size: clamp(2rem, 12vw, 4rem) !important; -webkit-text-stroke-width: 1.5px; }
+  .thanks-subline { font-size: clamp(0.95rem, 3.5vw, 1.2rem) !important; padding: 0 16px; }
+  .thanks-grid { display: none; }
+
+  /* Cards: tighten padding so content fits without overflow */
+  .phase, .wf-col, .y2-row, .cap-stmt__hero, .cap-stmt__row, .staff-card,
+  .own-stat, .own-split, .footnote, .y2-takeaway, .callout {
+    padding: 14px 14px !important;
+  }
+
+  /* Slide-21 spec-list cards: smaller min-height */
+  #slide-22 .spec-list li {
+    min-height: 80px !important;
+    padding: 12px !important;
+    font-size: 0.85rem !important;
+  }
+  /* Bullets archetype list items: less tall */
+  .slide[data-arch="bullets"] ul li {
+    min-height: 0 !important;
+    padding: 16px 16px 16px !important;
+    font-size: 0.9rem !important;
+  }
+  .slide[data-arch="bullets"] ul li::before { font-size: 1.6rem !important; }
+
+  /* Hide cursor on touch devices entirely (already done by hover query) */
+  .ag-cursor { display: none !important; }
+}
 </style>
 </head>
 <body>
@@ -3831,10 +4002,17 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
 </main>
 
 <script>
-/* Fit-to-viewport zoom — deck designed at 1440x810; smaller viewports zoom out proportionally */
+/* Fit-to-viewport zoom — deck designed at 1440x810; smaller viewports zoom out proportionally.
+   On mobile (<768px) we BAIL and let the @media mobile CSS take over with native flow. */
 (function() {
-  var REF_W = 1440, REF_H = 810;
+  var REF_W = 1440, REF_H = 810, MOBILE_BREAK = 768;
   function fit() {
+    if (window.innerWidth < MOBILE_BREAK) {
+      document.documentElement.style.zoom = '';
+      document.body.classList.add('is-mobile');
+      return;
+    }
+    document.body.classList.remove('is-mobile');
     var s = Math.min(window.innerWidth / REF_W, window.innerHeight / REF_H, 1);
     document.documentElement.style.zoom = s.toFixed(3);
   }
