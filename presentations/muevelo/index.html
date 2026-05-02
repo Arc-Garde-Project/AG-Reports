@@ -4635,31 +4635,8 @@ body, p, li, td, th, blockquote, figcaption, span,
     }
   });
 
-  // Wheel — debounced advance, one slide per gesture
-  var wheelLock = false;
-  document.addEventListener('wheel', function(e) {
-    if (wheelLock) return;
-    if (Math.abs(e.deltaY) < 8) return;
-    wheelLock = true;
-    if (e.deltaY > 0) goTo(current + 1);
-    else goTo(current - 1);
-    setTimeout(function() { wheelLock = false; }, 1400);
-  }, { passive: true });
-
-  // Touch swipe (horizontal)
-  var touchStartX = null;
-  document.addEventListener('touchstart', function(e) {
-    touchStartX = e.touches[0].clientX;
-  }, { passive: true });
-  document.addEventListener('touchend', function(e) {
-    if (touchStartX === null) return;
-    var dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 50) {
-      if (dx < 0) goTo(current + 1);   // swipe left → next
-      else goTo(current - 1);          // swipe right → prev
-    }
-    touchStartX = null;
-  }, { passive: true });
+  // Scroll wheel + touch swipe slide-change DISABLED.
+  // Slides only change via nav buttons (prev/next), keyboard arrows, or URL hash.
 
   // Wrap all non-title content in each middle slide so it fills the remaining vertical space
   document.querySelectorAll('.slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__inner').forEach(function(inner) {
