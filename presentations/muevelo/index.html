@@ -1245,9 +1245,12 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
 .slide__num { display: none; }
 .slide__pc {
   position: absolute;
-  top: var(--space-md); right: var(--space-xl);
-  font-size: var(--text-xs); color: var(--ink-dim);
+  bottom: clamp(var(--space-md), 2vh, var(--space-lg));
+  right: var(--space-xl);
+  font-size: var(--text-xs);
+  color: var(--ink-dim);
   letter-spacing: 0.04em;
+  z-index: 6;
 }
 
 .slide p {
@@ -3374,8 +3377,20 @@ p, li, blockquote, figcaption,
     max-width: 60px;
     white-space: nowrap;
   }
-  /* Hide Privileged & Confidential badge on phones — saves space + avoids overlap with titles */
-  .slide__pc { display: none !important; }
+  /* Privileged & Confidential — fixed bottom-right above nav bar on phones */
+  .slide__pc {
+    display: block !important;
+    position: fixed !important;
+    bottom: calc(72px + env(safe-area-inset-bottom));
+    right: 12px;
+    top: auto !important;
+    left: auto !important;
+    font-size: 0.55rem !important;
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 0.06em;
+    z-index: 96;
+    pointer-events: none;
+  }
 
   /* Nav: fixed full-width bottom bar with iOS safe area */
   .nav {
