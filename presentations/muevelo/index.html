@@ -807,22 +807,24 @@ body.hide-lines .glow-grid { opacity: 0; }
   margin: 0 !important;
 }
 
-/* Slide 12 (Rebranding Strategy): at 768-1024 viewports the 2 phase cards stack
-   vertically via the existing 800px breakpoint. Their combined height + bullets
-   exceeds content-wrap, so internal scroll hides the top of phase 1 when user
-   scrolls down. Allow content-wrap to grow naturally — page scroll instead. */
+/* Slide 12 (Rebranding Strategy) + Slide 23 (Labor Model): at intermediate
+   viewports their content (stacked phase cards / staff grid + paragraphs)
+   exceeds content-wrap and internal scroll hides the top. Use page-scroll
+   instead by giving content-wrap auto height. */
 @media (max-width: 1024px) {
-  #slide-12 .content-wrap {
+  #slide-12 .content-wrap,
+  #slide-23 .content-wrap {
     height: auto !important;
     min-height: 0 !important;
     overflow: visible !important;
   }
-  #slide-12 .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__inner,
-  #slide-12 .slide__inner {
+  #slide-12 .slide__inner,
+  #slide-23 .slide__inner {
     height: auto;
     min-height: 100vh;
   }
-  #slide-12.slide {
+  #slide-12.slide,
+  #slide-23.slide {
     height: auto !important;
     min-height: 100vh;
     overflow: visible !important;
@@ -4188,7 +4190,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-11" data-arch="table" aria-label="Slide 11 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Estimated Monthly Operating&nbsp;Expenses</h2>
+    <h2 class="slide__title reveal" data-d="2">Estimated Monthly<br>Operating Expenses</h2>
     <div class="reveal tbl-wrap" data-d="3">
     <table class="tbl">
       <thead><tr><th>Expense Category</th><th>Monthly Estimate</th></tr></thead>
@@ -4387,7 +4389,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <section class="slide" id="slide-19" data-arch="prose" aria-label="Slide 19 of 25">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Long‑Term Enterprise Value&nbsp;Growth</h2>
+    <h2 class="slide__title reveal" data-d="2">Long‑Term Enterprise<br>Value Growth</h2>
     <p class="reveal" data-d="3">Hospitality venues are often valued based on <span class="hl">multiples of annual profit</span>. If the venue stabilizes near approximately <span class="hl">$600,000 in annual profit</span>, enterprise value could reasonably grow into the <span class="hl">$2M–$3M range</span>.</p>
     <p class="reveal" data-d="4">The founders intend to <span class="hl">operate and grow the venue long‑term</span> rather than pursue a near‑term sale. This projection simply illustrates potential value creation for founding investors as the venue matures.</p>
   </div>
