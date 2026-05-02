@@ -569,14 +569,20 @@
       align-items: center;
       justify-content: center;
       gap: 0;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       opacity: 0;
       transform: translateY(21px);
       animation: fadeUp var(--duration-long) var(--ease-satisfying) 1.2s forwards;
     }
     .md-hero-stat {
       text-align: center;
-      padding: 0 clamp(14px, 4vw, 35px);
+      padding: 0 clamp(7px, 1.5vw, 14px);
+      max-width: 175px;
+      min-width: 0;
+      flex: 0 1 auto;
+    }
+    @media (max-width: 600px) {
+      .md-hero-stats { flex-wrap: wrap; }
     }
     .md-hero-stat-value {
       font-family: var(--font-display);
@@ -595,13 +601,15 @@
       letter-spacing: 0.21em;
       text-transform: uppercase;
       color: var(--text-muted);
+      line-height: 1;
+      text-wrap: balance;
     }
     .md-hero-stat-sublabel {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      font-style: italic;
-      letter-spacing: 0.014em;
-      color: color-mix(in oklch, var(--text-muted) 70%, transparent);
+      font-family: var(--font-mono);
+      font-size: var(--text-eyebrow);
+      letter-spacing: 0.21em;
+      text-transform: uppercase;
+      color: var(--text-muted);
       margin-top: 7px;
       text-wrap: balance;
     }
@@ -2271,6 +2279,17 @@
       text-transform: uppercase;
       color: var(--text-muted);
     }
+    .md-stat3-disclaimer {
+      max-width: 63ch;
+      margin: 14px auto 0;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-style: italic;
+      line-height: 1.5;
+      color: color-mix(in oklch, var(--text-muted) 70%, transparent);
+      text-wrap: pretty;
+    }
 
     /* ═══════════════════════════════════════════════════════════════════════
        VISUAL GRAPHICS - INVESTMENT BUDGET CHART
@@ -3035,13 +3054,20 @@
           <div class="md-hero-stats" role="list">
             <div class="md-hero-stat" role="listitem">
               <div class="md-hero-stat-value">14</div>
-              <div class="md-hero-stat-label">Ad Creatives</div>
-              <div class="md-hero-stat-sublabel">per testing cycle</div>
+              <div class="md-hero-stat-label">Video Ad Creatives</div>
+              <div class="md-hero-stat-sublabel">per testing&nbsp;cycle</div>
             </div>
             <div class="md-hero-stat-divider" aria-hidden="true"></div>
             <div class="md-hero-stat" role="listitem">
               <div class="md-hero-stat-value">24/7</div>
-              <div class="md-hero-stat-label">Optimization</div>
+              <div class="md-hero-stat-label">Management</div>
+              <div class="md-hero-stat-sublabel">+ Analysis<br>+ Optimization</div>
+            </div>
+            <div class="md-hero-stat-divider" aria-hidden="true"></div>
+            <div class="md-hero-stat" role="listitem">
+              <div class="md-hero-stat-value">2</div>
+              <div class="md-hero-stat-label">Platforms</div>
+              <div class="md-hero-stat-sublabel">(Facebook + Instagram)</div>
             </div>
           </div>
         </div>
@@ -3115,7 +3141,7 @@
       <div class="md-section-inner">
         <header class="md-section-heading reveal">
           <p class="md-eyebrow">The Engine</p>
-          <h2 class="md-section-title" id="md-engine-title">Five modules. One&nbsp;system.</h2>
+          <h2 class="md-section-title" id="md-engine-title">5 modules. One&nbsp;system.</h2>
           <p class="md-section-paragraph">This is what runs every day on your account, in your name, on your&nbsp;numbers.</p>
         </header>
 
@@ -3124,7 +3150,6 @@
             <div class="md-engine-number">01</div>
             <div>
               <h3 class="md-engine-title">Hyper&nbsp;Targeting</h3>
-              <p class="md-engine-condition">(after winning ad is&nbsp;found)</p>
               <div class="md-engine-body md-prose">
                 <p>Coaches, programs, athletic directors, performance&nbsp;staff.</p>
               </div>
@@ -3156,7 +3181,7 @@
             <div>
               <h3 class="md-engine-title">Creative&nbsp;engine</h3>
               <div class="md-engine-body md-prose">
-                <p>Three to five new ads every week, cut from your&nbsp;footage.</p>
+                <p>14 video ad creatives per testing&nbsp;cycle, cut from your&nbsp;footage.</p>
                 <p>Your voice, your&nbsp;authority.</p>
               </div>
             </div>
@@ -3180,7 +3205,7 @@
             <div>
               <h3 class="md-engine-title">Funnel&nbsp;build</h3>
               <div class="md-engine-body md-prose">
-                <p>A purpose built landing page for your three signature talks, calendar&nbsp;embedded.</p>
+                <p>A purpose built landing page for your 3 signature talks, calendar&nbsp;embedded.</p>
                 <p>No Wix&nbsp;forms.</p>
               </div>
             </div>
@@ -3206,8 +3231,8 @@
             <div>
               <h3 class="md-engine-title">Performance&nbsp;optimization</h3>
               <div class="md-engine-body md-prose">
-                <p>Four day testing cycles, seven day cycles on&nbsp;winners.</p>
-                <p>Scale winners, cut losers, rotate&nbsp;hooks.</p>
+                <p>4-day testing cycles, 7-day cycles on&nbsp;winners.</p>
+                <p>Scale winners, cut losers, swap copy and&nbsp;headlines.</p>
               </div>
             </div>
             <div class="md-engine-diagram" aria-hidden="true">
@@ -3242,7 +3267,7 @@
             <div>
               <h3 class="md-engine-title">Reporting</h3>
               <div class="md-engine-body md-prose">
-                <p>Four day reports while testing, seven day reports on&nbsp;winners.</p>
+                <p>4-day reports while testing, 7-day reports on&nbsp;winners.</p>
                 <p>Every dollar, lead, and booking&nbsp;visible.</p>
               </div>
             </div>
@@ -3316,7 +3341,7 @@
             <div>
               <h3 class="md-phase-title">Build</h3>
               <div class="md-phase-body md-prose">
-                <p>First creatives, landing page live, tracking&nbsp;validated.</p>
+                <p>First testing cycle of 14 video ad creatives launched, landing page live, tracking&nbsp;validated.</p>
               </div>
             </div>
           </article>
@@ -3327,7 +3352,7 @@
               <h3 class="md-phase-title">Launch</h3>
               <div class="md-phase-body md-prose">
                 <p>Ads go&nbsp;live.</p>
-                <p>Hook testing&nbsp;begins.</p>
+                <p>First testing cycle&nbsp;begins.</p>
               </div>
             </div>
           </article>
@@ -3337,8 +3362,7 @@
             <div>
               <h3 class="md-phase-title">Optimize</h3>
               <div class="md-phase-body md-prose">
-                <p>First leads in your&nbsp;inbox.</p>
-                <p>First booking on your&nbsp;calendar.</p>
+                <p>Monitoring + as needed&nbsp;adjustments.</p>
               </div>
             </div>
           </article>
@@ -3351,7 +3375,7 @@
       <div class="md-section-inner">
         <header class="md-section-heading reveal">
           <p class="md-eyebrow">Performance</p>
-          <h2 class="md-section-title" id="md-dash-title">Three numbers that&nbsp;matter.</h2>
+          <h2 class="md-section-title" id="md-dash-title">3 numbers that&nbsp;matter.</h2>
         </header>
 
         <div class="md-stat3-grid reveal-stagger">
@@ -3407,7 +3431,8 @@
           </div>
         </div>
 
-        <p class="md-stat3-note reveal">Industry benchmarks for performance mindset coaching campaigns at $30 to $35 daily ad&nbsp;spend.</p>
+        <p class="md-stat3-note reveal">Example data&nbsp;^</p>
+        <p class="md-stat3-disclaimer reveal">Illustrative example only. Actual performance varies by offer, audience, creative, market conditions, and budget. Results are not&nbsp;guaranteed.</p>
       </div>
     </section>
 
@@ -3415,8 +3440,7 @@
     <section class="md-section md-section--secondary" id="investment" aria-labelledby="md-invest-title">
       <div class="md-section-inner">
         <header class="md-section-heading reveal">
-          <p class="md-eyebrow">The Investment</p>
-          <h2 class="md-section-title" id="md-invest-title">Two numbers. That is&nbsp;it.</h2>
+          <p class="md-eyebrow" id="md-invest-title">The Investment</p>
         </header>
 
         <div class="md-pricing-wrap reveal-stagger">
@@ -3433,9 +3457,9 @@
 
             <ul class="md-price-list">
               <li>Full Meta ads management end to&nbsp;end</li>
-              <li>Three to five new creatives every&nbsp;week</li>
+              <li>14 new video ad creatives per testing&nbsp;cycle</li>
               <li>Custom built booking landing&nbsp;page</li>
-              <li>Four day testing reports, seven day winning&nbsp;reports</li>
+              <li>4-day testing reports, 7-day winning&nbsp;reports</li>
               <li>Direct line to your account&nbsp;manager</li>
               <li>Month to month, you own every&nbsp;asset</li>
             </ul>
@@ -3460,7 +3484,7 @@
             <p class="md-price-cadence">Per Day Recommended</p>
 
             <ul class="md-price-list">
-              <li>Roughly nine hundred to a thousand fifty per&nbsp;month</li>
+              <li>Roughly $900 to $1,050 per&nbsp;month</li>
               <li>Floor budget to learn the audience&nbsp;properly</li>
               <li>Scaled up only when winners are&nbsp;proven</li>
               <li>Charged by Meta on your card, not&nbsp;ours</li>
