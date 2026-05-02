@@ -662,6 +662,46 @@ body.hide-lines .curve-svg { opacity: 0; }
     opacity 0.7s var(--ease-out) 0.2s,
     transform 0.9s var(--ease-out) 0.2s;
 }
+/* Nav hint — tiny indicator pointing at the nav bar (slide 1 only) */
+.nav-hint {
+  position: fixed;
+  left: 50%;
+  bottom: calc(clamp(16px, 2vw, 28px) + env(safe-area-inset-bottom) + 76px);
+  transform: translateX(-50%);
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  opacity: 0;
+  transition: opacity 0.7s var(--ease-out);
+}
+body:has(#slide-1.active) .nav-hint {
+  opacity: 1;
+  transition: opacity 0.7s var(--ease-out) 4.2s;
+}
+.nav-hint__chev {
+  width: 14px;
+  height: 14px;
+  animation: navHintBob 2.1s ease-in-out infinite;
+  filter: drop-shadow(0 0 4px rgba(255, 205, 0, 0.4));
+  color: rgba(255, 205, 0, 0.85);
+}
+@keyframes navHintBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-hint__chev { animation: none; }
+}
+
 /* AG wedge cursor — gold stroke locked, fill tracks slide hue */
 .ag-cursor {
   position: fixed;
@@ -1474,7 +1514,7 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  margin-top: clamp(var(--space-lg), 2.5vw, var(--space-xl));
+  margin-bottom: clamp(var(--space-lg), 2.5vw, var(--space-xl));
   padding: 16px clamp(32px, 3vw, 48px);
   border-radius: 999px;
   border: 1.5px solid rgba(255, 205, 0, 0.7);
@@ -3137,6 +3177,10 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
 
 <div class="hue-spotlight" aria-hidden="true"></div>
 <div class="hue-vignette" aria-hidden="true"></div>
+<div class="nav-hint" aria-hidden="true">
+  <span class="nav-hint__text">Use arrows to navigate</span>
+  <svg class="nav-hint__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
 <svg class="ag-cursor" aria-hidden="true" viewBox="0 0 24 24">
   <polygon points="3,2 22,12 12,15 9,22" fill="#000" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
 </svg>
@@ -3160,11 +3204,11 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
   <div class="hero-grid" aria-hidden="true"></div>
   <div class="hero-flash" aria-hidden="true"></div>
   <div class="slide__inner">
-    <img class="cover-logo" src="assets/muevelo-logo.png" alt="Muevelo @ Chico">
     <div class="hero-pill" aria-label="Investor pitch deck">
       <span class="hero-pill__dot" aria-hidden="true"></span>
       <span class="hero-pill__text">Founding Investor Circle &middot; Investor Pitch Deck</span>
     </div>
+    <img class="cover-logo" src="assets/muevelo-logo.png" alt="Muevelo @ Chico">
   </div>
   <div class="slide__pc">Privileged &amp; Confidential</div>
   <div class="slide__num">01 / 25</div>
