@@ -3202,12 +3202,15 @@ html { overflow-x: hidden; }
 }
 
 /* Wide tables get a horizontal scroll wrapper at every viewport (not just mobile).
-   Slide 13 (6-col scenarios) and slide 17 (4-col distribution) need this. */
-#slide-13 .slide__inner > div.reveal,
-#slide-17 .slide__inner > div.reveal {
-  overflow-x: auto;
+   Use :has() to target the actual table-wrapping reveal div regardless of nesting. */
+#slide-13 div.reveal:has(> table.tbl),
+#slide-17 div.reveal:has(> table.tbl),
+#slide-13 div.reveal:has(table.tbl),
+#slide-17 div.reveal:has(table.tbl) {
+  overflow-x: auto !important;
   -webkit-overflow-scrolling: touch;
-  max-width: 100%;
+  max-width: 100% !important;
+  width: 100% !important;
 }
 
 /* Tablet/laptop content-wrap gets internal scroll if content exceeds locked height.
