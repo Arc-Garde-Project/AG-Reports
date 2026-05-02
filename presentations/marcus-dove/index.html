@@ -597,6 +597,15 @@
       text-transform: uppercase;
       color: var(--text-muted);
     }
+    .md-hero-stat-sublabel {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-style: italic;
+      letter-spacing: 0.014em;
+      color: color-mix(in oklch, var(--text-muted) 70%, transparent);
+      margin-top: 7px;
+      text-wrap: balance;
+    }
     .md-hero-stat-divider {
       width: 1px;
       height: 42px;
@@ -833,6 +842,14 @@
       margin: 0 0 7px;
       text-wrap: balance;
     }
+    .md-engine-condition {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: color-mix(in oklch, var(--accent) 70%, var(--text-muted));
+      margin: 0 0 14px;
+    }
     .md-engine-body {
       display: flex;
       flex-direction: column;
@@ -937,18 +954,48 @@
     .md-pricing-wrap {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 315px), 1fr));
-      gap: 21px;
+      gap: 28px;
       margin: var(--space-xl) auto 0;
       max-width: 945px;
+      position: relative;
+    }
+    @media (min-width: 769px) {
+      .md-pricing-wrap::before {
+        content: '+';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 49px;
+        height: 49px;
+        border-radius: 50%;
+        background: var(--bg-primary);
+        border: 1px solid var(--border-soft);
+        display: grid;
+        place-items: center;
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 300;
+        color: var(--text-muted);
+        z-index: 5;
+        pointer-events: none;
+      }
     }
 
     .md-pricing-card {
-      background: linear-gradient(135deg, var(--surface), var(--bg-tertiary));
-      border: 1px solid var(--border-accent);
-      border-radius: 14px;
+      --card-accent: var(--accent);
+      background: linear-gradient(180deg, var(--surface), var(--bg-tertiary));
+      border: 1px solid var(--border-soft);
+      border-radius: 21px;
       padding: 35px 28px;
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition:
+        transform var(--duration-quick) var(--ease-settle),
+        border-color var(--duration-quick) var(--ease-settle),
+        box-shadow var(--duration-quick) var(--ease-settle);
     }
     .md-pricing-card::before {
       content: '';
@@ -956,8 +1003,64 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--card-accent), transparent);
+      opacity: 0.7;
+      transition: opacity var(--duration-quick) var(--ease-settle);
+      z-index: 2;
+    }
+    .md-pricing-card::after {
+      content: '';
+      position: absolute;
+      top: -126px;
+      right: -126px;
+      width: 336px;
+      height: 336px;
+      background: radial-gradient(circle, color-mix(in oklch, var(--card-accent) 21%, transparent) 0%, transparent 65%);
+      pointer-events: none;
+      opacity: 0.7;
+      transition: opacity var(--duration-quick) var(--ease-settle);
+      z-index: 0;
+    }
+    .md-pricing-card > * { position: relative; z-index: 1; }
+    .md-pricing-card:hover {
+      transform: translateY(-7px);
+      border-color: color-mix(in oklch, var(--card-accent) 45%, var(--border-soft));
+      box-shadow: 0 21px 42px color-mix(in oklch, var(--card-accent) 14%, transparent);
+    }
+    .md-pricing-card:hover::before { opacity: 1; }
+    .md-pricing-card:hover::after { opacity: 1; }
+
+    .md-pricing-card--primary {
+      --card-accent: var(--brand-primary, #F38330);
+    }
+    .md-pricing-card--secondary {
+      --card-accent: var(--brand-secondary, #0057E1);
+    }
+
+    .md-pricing-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 21px;
+    }
+    .md-pricing-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.21em;
+      color: color-mix(in oklch, var(--card-accent) 85%, var(--paper));
+      background: color-mix(in oklch, var(--card-accent) 14%, transparent);
+      border: 1px solid color-mix(in oklch, var(--card-accent) 35%, transparent);
+      border-radius: 999px;
+      padding: 7px 14px;
+    }
+    .md-pricing-tag {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      letter-spacing: 0.21em;
+      text-transform: uppercase;
+      color: var(--text-muted);
     }
 
     .md-price-eyebrow {
@@ -965,7 +1068,7 @@
       font-size: var(--text-eyebrow);
       letter-spacing: 0.21em;
       text-transform: uppercase;
-      color: color-mix(in oklch, var(--accent) 80%, var(--paper));
+      color: color-mix(in oklch, var(--card-accent) 85%, var(--paper));
       margin-bottom: 14px;
     }
 
@@ -986,7 +1089,7 @@
       font-size: 0.38em;
       padding-top: 0.21em;
       margin-right: 2px;
-      color: color-mix(in oklch, var(--accent) 80%, var(--paper));
+      color: color-mix(in oklch, var(--card-accent) 85%, var(--paper));
       letter-spacing: 0;
     }
     .md-price-figure {
@@ -1020,8 +1123,9 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 10px;
       margin: 0;
+      padding: 0;
     }
     .md-price-list li {
       position: relative;
@@ -1036,26 +1140,29 @@
     .md-price-list li::before {
       content: '';
       flex-shrink: 0;
-      width: 14px;
-      height: 14px;
-      margin-top: 4px;
+      width: 16px;
+      height: 16px;
+      margin-top: 3px;
       border-radius: 50%;
-      background: color-mix(in oklch, var(--accent) 8%, transparent);
-      border: 1px solid var(--accent);
+      background: color-mix(in oklch, var(--card-accent) 14%, transparent);
+      border: 1px solid color-mix(in oklch, var(--card-accent) 50%, transparent);
     }
     .md-price-list li::after {
       content: '';
       position: absolute;
-      width: 5px;
+      width: 6px;
       height: 3px;
-      border-left: 1.5px solid var(--accent);
-      border-bottom: 1.5px solid var(--accent);
-      transform: translate(4px, 7px) rotate(-45deg);
+      border-left: 1.5px solid var(--card-accent);
+      border-bottom: 1.5px solid var(--card-accent);
+      transform: translate(5px, 7px) rotate(-45deg);
     }
     .md-price-divider {
       height: 1px;
-      background: var(--border-soft);
+      background: linear-gradient(90deg, transparent, color-mix(in oklch, var(--card-accent) 35%, transparent), transparent);
       margin: var(--space-md) 0;
+    }
+    .md-price-note {
+      margin-top: auto;
     }
     .md-price-note p {
       font-size: var(--text-sm);
@@ -1072,7 +1179,7 @@
       margin-bottom: 0;
     }
     .md-price-note strong {
-      color: color-mix(in oklch, var(--accent) 80%, var(--paper));
+      color: color-mix(in oklch, var(--card-accent) 85%, var(--paper));
       font-weight: 600;
       font-style: normal;
     }
@@ -2924,6 +3031,7 @@
             <div class="md-hero-stat" role="listitem">
               <div class="md-hero-stat-value">14</div>
               <div class="md-hero-stat-label">Ad Creatives</div>
+              <div class="md-hero-stat-sublabel">per testing cycle</div>
             </div>
             <div class="md-hero-stat-divider" aria-hidden="true"></div>
             <div class="md-hero-stat" role="listitem">
@@ -3010,10 +3118,10 @@
           <article class="md-engine">
             <div class="md-engine-number">01</div>
             <div>
-              <h3 class="md-engine-title">Audience&nbsp;lock</h3>
+              <h3 class="md-engine-title">Hyper&nbsp;Targeting</h3>
+              <p class="md-engine-condition">(after winning ad is&nbsp;found)</p>
               <div class="md-engine-body md-prose">
                 <p>Coaches, programs, athletic directors, performance&nbsp;staff.</p>
-                <p>Built on the people who hire&nbsp;you.</p>
               </div>
             </div>
             <div class="md-engine-diagram" aria-hidden="true">
@@ -3307,7 +3415,11 @@
         </header>
 
         <div class="md-pricing-wrap reveal-stagger">
-          <div class="md-pricing-card">
+          <article class="md-pricing-card md-pricing-card--primary">
+            <header class="md-pricing-head">
+              <span class="md-pricing-num">01</span>
+              <span class="md-pricing-tag">Agency Fee</span>
+            </header>
             <p class="md-price-eyebrow">Arc Garde&nbsp;Management</p>
             <div class="md-price-number">
               <span class="md-price-currency">$</span><span class="md-price-figure">2<span class="md-price-comma">,</span>100</span>
@@ -3329,9 +3441,13 @@
               <p>Paid directly to <strong>Arc Garde</strong> on the first of each&nbsp;month.</p>
               <p>Onboarding begins the day the first invoice&nbsp;clears.</p>
             </div>
-          </div>
+          </article>
 
-          <div class="md-pricing-card">
+          <article class="md-pricing-card md-pricing-card--secondary">
+            <header class="md-pricing-head">
+              <span class="md-pricing-num">02</span>
+              <span class="md-pricing-tag">Ad Spend</span>
+            </header>
             <p class="md-price-eyebrow">Meta Ad&nbsp;Spend</p>
             <div class="md-price-number">
               <span class="md-price-currency">$</span><span class="md-price-figure">30</span><span class="md-price-range">to</span><span class="md-price-figure">35</span>
@@ -3353,7 +3469,7 @@
               <p>Arc Garde never touches the ad&nbsp;budget.</p>
               <p>We only spend what you tell us&nbsp;to.</p>
             </div>
-          </div>
+          </article>
         </div>
       </div>
     </section>
