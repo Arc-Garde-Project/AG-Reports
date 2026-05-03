@@ -1925,15 +1925,51 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
 }
 .reports-overlay.open { opacity: 1; pointer-events: auto; }
 .reports-nav {
-  position: fixed; top: 76px; right: 20px; z-index: 999;
-  width: 280px; padding: 12px;
-  background: rgba(17,17,24,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-  opacity: 0; transform: translateY(-10px);
-  pointer-events: none; transition: opacity 0.3s, transform 0.3s;
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  z-index: 999;
+  width: min(440px, calc(100vw - 32px));
+  max-height: min(720px, calc(100vh - 64px));
+  display: flex; flex-direction: column;
+  padding: 0;
+  background: rgba(17,17,24,0.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
 }
-.reports-nav.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.reports-nav.open { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+.reports-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 16px 14px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+.reports-modal-title {
+  font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: #fff;
+}
+.reports-modal-close {
+  width: 36px; height: 36px; min-width: 36px;
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+  background: rgba(255,255,255,0.04); color: #999;
+  cursor: pointer; font-size: 18px; line-height: 1; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+  touch-action: manipulation;
+}
+.reports-modal-close:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+.reports-modal-close:focus-visible { outline: 2px solid var(--blue-bright, #4A90D9); outline-offset: 2px; }
+.reports-modal-body {
+  overflow-y: auto; overscroll-behavior: contain;
+  padding: 12px;
+  flex: 1 1 auto;
+}
+.reports-modal-body::-webkit-scrollbar { width: 6px; }
+.reports-modal-body::-webkit-scrollbar-track { background: transparent; }
+.reports-modal-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+.reports-modal-body::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
 .reports-nav-group {
   font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
   color: #555; padding: 8px 12px 4px; font-weight: 700;
@@ -2001,6 +2037,11 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
 <div class="menu-tooltip" id="menuTooltip">View all weekly reports <span class="menu-tooltip-dismiss" onclick="dismissTooltip()">Got it</span></div>
 <div class="reports-overlay" id="reportsOverlay" onclick="closeReportsNav()"></div>
 <nav class="reports-nav" id="reportsNav" role="navigation" aria-label="Reports navigation">
+  <div class="reports-modal-header">
+    <span class="reports-modal-title">Reports</span>
+    <button class="reports-modal-close" type="button" onclick="closeReportsNav()" aria-label="Close reports menu">&#10005;</button>
+  </div>
+  <div class="reports-modal-body">
   <div class="reports-nav-group">Ad Testing</div>
   <a href="/reports/americana-tax/feb-4-8" class="reports-nav-link">LA County - Week 1<span>Feb 4-8</span></a>
   <a href="/reports/americana-tax/feb-9-13" class="reports-nav-link">OC County - Week 2<span>Feb 9-13</span></a>
@@ -2027,6 +2068,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   <a href="/reports/americana-tax/mar-2026" class="reports-nav-link">March 2026<span>Monthly</span></a>
   <div class="reports-nav-divider"></div>
   <a href="/reports/americana-tax" class="reports-nav-link reports-nav-all">All Reports</a>
+  </div>
 </nav>
 
 <a class="skip-link" href="#what-worked">Skip to content</a>
