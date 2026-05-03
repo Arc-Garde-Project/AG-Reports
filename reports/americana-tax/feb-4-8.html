@@ -110,6 +110,8 @@ body {
   overflow-y: auto; overscroll-behavior: contain;
   padding: 12px;
   flex: 1 1 auto;
+  min-height: 0;
+  -webkit-overflow-scrolling: touch;
 }
 .reports-modal-body::-webkit-scrollbar { width: 6px; }
 .reports-modal-body::-webkit-scrollbar-track { background: transparent; }
@@ -365,7 +367,7 @@ body {
     <span class="reports-modal-title">Reports</span>
     <button class="reports-modal-close" type="button" onclick="closeReportsNav()" aria-label="Close reports menu">&#10005;</button>
   </div>
-  <div class="reports-modal-body">
+  <div class="reports-modal-body" data-lenis-prevent>
   <div class="reports-nav-group">Ad Testing</div>
   <a href="/reports/americana-tax/feb-4-8" class="reports-nav-link active">LA County - Week 1<span>Feb 4-8</span></a>
   <a href="/reports/americana-tax/feb-9-13" class="reports-nav-link">OC County - Week 2<span>Feb 9-13</span></a>
@@ -604,14 +606,23 @@ function renderRetargetBars(){
 }
 
 /* Reports Nav */
+function _modalLockScroll(lock){
+  document.documentElement.style.overflow = lock ? 'hidden' : '';
+  document.body.style.overflow = lock ? 'hidden' : '';
+  try { if (typeof lenis !== 'undefined' && lenis) { lock ? lenis.stop() : lenis.start(); } } catch(e){}
+}
 function toggleReportsNav(){
-  document.getElementById('reportsNav').classList.toggle('open');
+  var nav = document.getElementById('reportsNav');
+  var willOpen = !nav.classList.contains('open');
+  nav.classList.toggle('open');
   document.getElementById('reportsOverlay').classList.toggle('open');
+  _modalLockScroll(willOpen);
   dismissTooltip();
 }
 function closeReportsNav(){
   document.getElementById('reportsNav').classList.remove('open');
   document.getElementById('reportsOverlay').classList.remove('open');
+  _modalLockScroll(false);
 }
 document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeReportsNav(); dismissTooltip(); } });
 
