@@ -468,6 +468,14 @@ button, a {
   filter: drop-shadow(0 0 12px currentColor);
 }
 .stat-plat-icon svg { width: 100%; height: 100%; }
+/* Small inline icon used in the Top Platform stat label */
+.stat-plat-icon-sm {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 14px; height: 14px;
+  vertical-align: -2px; margin-right: 6px;
+  filter: drop-shadow(0 0 4px currentColor);
+}
+.stat-plat-icon-sm svg { width: 100%; height: 100%; }
 .stat-lbl {
   font-family: var(--font-display);
   font-size: 10px; letter-spacing: 0.18em;
@@ -1287,14 +1295,15 @@ main.fading { opacity: 0.18; }
     document.getElementById('s-views').textContent = fmt(b.totals.views);
     document.getElementById('s-eng').textContent = fmt(b.totals.eng);
     document.getElementById('s-fol').textContent = fmtSigned(b.totals.folNet);
-    /* Render top platform as an inline brand icon (in brand color) instead of text */
+    /* Top Platform stat: big views number with brand icon + name in the label */
     const tpColor = platColors[b.topPlat] || 'var(--accent)';
     const tpSVG = platSVGs[b.topPlat] || '';
-    document.getElementById('s-top').innerHTML =
-      '<span class="stat-plat-icon" style="color:' + tpColor + ';" aria-label="' + b.topPlat + '">' +
+    const tpName = (typeof platLabels !== 'undefined' && platLabels[b.topPlat]) || b.topPlat;
+    document.getElementById('s-top').textContent = b.topPlatVal;
+    document.getElementById('s-top-lbl').innerHTML =
+      '<span class="stat-plat-icon-sm" style="color:' + tpColor + ';" aria-label="' + tpName + '">' +
         '<svg viewBox="0 0 24 24" fill="currentColor" role="img" aria-hidden="true">' + tpSVG + '</svg>' +
-      '</span>';
-    document.getElementById('s-top-lbl').textContent = b.topPlatVal + ' views';
+      '</span>' + tpName + ' views';
   }
 
   function renderBeforeAfter(b) {
