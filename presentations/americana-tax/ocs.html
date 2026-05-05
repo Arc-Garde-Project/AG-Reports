@@ -355,12 +355,17 @@ body > footer {
   gap: 12px;
 }
 
-.arc-ocs2-label::before {
+.arc-ocs2-label::before,
+.arc-ocs2-label::after {
   content: '';
-  width: 40px;
-  height: 1px;
-  background: var(--blue);
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid var(--blue);
+  border-right: 2px solid var(--blue);
 }
+
+.arc-ocs2-label::before { transform: rotate(-135deg); }
+.arc-ocs2-label::after { transform: rotate(45deg); }
 
 .arc-ocs2-title {
   font-family: 'Bebas Neue', sans-serif;
@@ -555,7 +560,7 @@ body > footer {
 }
 
 .arc-ocs2-card-list li {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text-muted);
   padding: 6px 0;
   display: flex;
@@ -605,12 +610,17 @@ body > footer {
   gap: 12px;
 }
 
-.arc-ocs3-label::before {
+.arc-ocs3-label::before,
+.arc-ocs3-label::after {
   content: '';
-  width: 40px;
-  height: 1px;
-  background: var(--blue);
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid var(--blue);
+  border-right: 2px solid var(--blue);
 }
+
+.arc-ocs3-label::before { transform: rotate(-135deg); }
+.arc-ocs3-label::after { transform: rotate(45deg); }
 
 .arc-ocs3-title {
   font-family: 'Bebas Neue', sans-serif;
@@ -780,12 +790,17 @@ body > footer {
   gap: 12px;
 }
 
-.arc-ocs4-label::before {
+.arc-ocs4-label::before,
+.arc-ocs4-label::after {
   content: '';
-  width: 40px;
-  height: 1px;
-  background: var(--blue);
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid var(--blue);
+  border-right: 2px solid var(--blue);
 }
+
+.arc-ocs4-label::before { transform: rotate(-135deg); }
+.arc-ocs4-label::after { transform: rotate(45deg); }
 
 .arc-ocs4-title {
   font-family: 'Bebas Neue', sans-serif;
@@ -897,7 +912,7 @@ body > footer {
 }
 
 .arc-ocs4-card-list li {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text-body);
   padding: 8px 0;
   display: flex;
@@ -962,12 +977,17 @@ body > footer {
   gap: 12px;
 }
 
-.arc-ocs5-label::before {
+.arc-ocs5-label::before,
+.arc-ocs5-label::after {
   content: '';
-  width: 40px;
-  height: 1px;
-  background: var(--blue);
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid var(--blue);
+  border-right: 2px solid var(--blue);
 }
+
+.arc-ocs5-label::before { transform: rotate(-135deg); }
+.arc-ocs5-label::after { transform: rotate(45deg); }
 
 .arc-ocs5-title {
   font-family: 'Bebas Neue', sans-serif;
@@ -1051,7 +1071,7 @@ body > footer {
 }
 
 .arc-ocs5-step-desc {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text-muted);
   line-height: 1.65;
 }
@@ -1088,12 +1108,17 @@ body > footer {
   gap: 12px;
 }
 
-.arc-ocs5-needs-label::before {
+.arc-ocs5-needs-label::before,
+.arc-ocs5-needs-label::after {
   content: '';
-  width: 40px;
-  height: 1px;
-  background: var(--blue);
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid var(--blue);
+  border-right: 2px solid var(--blue);
 }
+
+.arc-ocs5-needs-label::before { transform: rotate(-135deg); }
+.arc-ocs5-needs-label::after { transform: rotate(45deg); }
 
 .arc-ocs5-needs-title {
   font-family: 'Bebas Neue', sans-serif;
@@ -1272,6 +1297,10 @@ body > footer {
    ══════════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
+  .arc-ocs1-eyebrow-cs {
+    display: block;
+  }
+
   .arc-ocs2-problem-grid {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -1305,7 +1334,7 @@ body > footer {
   }
 
   .arc-ocs5-needs-list li {
-    font-size: 15px;
+    font-size: 16px;
     padding-left: 32px;
   }
 
@@ -1329,11 +1358,11 @@ body > footer {
   }
 
   .arc-ocs1-platform-name {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .arc-ocs1-platform-tag {
-    font-size: 11px;
+    font-size: 12px;
   }
 }
 
@@ -1359,7 +1388,7 @@ body > footer {
   <section class="arc-ocs1-hero">
     <div class="arc-ocs1-eyebrow arc-reveal arc-reveal--blur">
       <span class="arc-ocs1-eyebrow-line"></span>
-      <span class="arc-ocs1-eyebrow-text">Organic Content System</span>
+      <span class="arc-ocs1-eyebrow-text">Organic <span class="arc-ocs1-eyebrow-cs">Content System</span></span>
       <span class="arc-ocs1-eyebrow-line"></span>
     </div>
 
@@ -1733,7 +1762,7 @@ body > footer {
   <div class="arc-ocs6-footer-name">ARC GARDE</div>
   <div class="arc-ocs6-footer-tagline">The system behind the visibility.</div>
   <div class="arc-ocs6-footer-divider"></div>
-  <div class="arc-ocs6-footer-prepared">Prepared for Americana Tax Planning | April 2026</div>
+  <div class="arc-ocs6-footer-prepared">Prepared for Americana Tax Planning | May 2026</div>
 </footer>
 
 <script>
