@@ -5,12 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
 <meta name="theme-color" content="#1A0D00">
-<title>Dr. Bob + Deepwaters KPI Report for November 2025</title>
-<meta name="description" content="November 2025 KPI report for Dr. Bob + Deepwaters. Monthly campaign performance metrics and insights.">
-<meta property="og:title" content="Dr. Bob + Deepwaters KPI Report for November 2025">
-<meta property="og:description" content="November 2025 KPI report for Dr. Bob + Deepwaters. Monthly campaign performance metrics and insights.">
-<meta property="og:image" content="https://ag-reports.vercel.app/assets/dr-bob/og-banner.png">
+<title>Dr. Bob + Deep Waters | April 2026 KPI Dashboard</title>
+<meta name="description" content="April 2026 monthly KPI dashboard for Dr Bob Beare and Deep Waters Recovery organic content performance.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://ag-reports.vercel.app/reports/dr-bob/apr-2026">
 <meta property="og:type" content="website">
+<meta property="og:title" content="Dr. Bob + Deep Waters | April 2026 KPI Dashboard">
+<meta property="og:description" content="April 2026 monthly KPI dashboard for Dr Bob Beare and Deep Waters Recovery organic content performance.">
+<meta property="og:url" content="https://ag-reports.vercel.app/reports/dr-bob/apr-2026">
+<meta property="og:image" content="https://ag-reports.vercel.app/assets/dr-bob/og-banner.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dr. Bob + Deep Waters | April 2026 KPI Dashboard">
+<meta name="twitter:description" content="April 2026 monthly KPI dashboard for Dr Bob Beare and Deep Waters Recovery organic content performance.">
+<meta name="twitter:image" content="https://ag-reports.vercel.app/assets/dr-bob/og-banner.png">
+<link rel="icon" type="image/x-icon" href="/assets/dr-bob/favicon.ico">
 <link rel="icon" type="image/png" href="/assets/dr-bob/favicon.png">
 <link rel="apple-touch-icon" href="/assets/dr-bob/apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -28,13 +38,11 @@ body{background:#000;font-family:'Roboto',sans-serif;color:#fff;min-height:100dv
 
 .ag-inner{max-width:1200px;margin:0 auto}
 
-/* GLOBAL TOUCH & FOCUS */
 button,a,.ag-toggle-btn,.ag-metric-btn,.ag-nav-btn,.ag-modal-btn,.ag-nav-menu a{
   touch-action:manipulation;-webkit-tap-highlight-color:transparent;
 }
 button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2px}
 
-/* NAV */
 .ag-nav{position:fixed;top:calc(24px + env(safe-area-inset-top));right:calc(24px + env(safe-area-inset-right));z-index:1000}
 .ag-nav-btn{
   display:flex;align-items:center;gap:8px;min-height:48px;min-width:48px;padding:10px 16px;border-radius:10px;
@@ -47,7 +55,7 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 .ag-nav-menu{
   position:absolute;top:calc(100% + 8px);right:0;
   background:rgba(15,15,20,0.95);border:1px solid rgba(255,255,255,0.08);
-  border-radius:14px;padding:12px 8px;min-width:160px;
+  border-radius:14px;padding:12px 8px;min-width:180px;
   opacity:0;visibility:hidden;transform:translateY(-8px);
   transition:all 0.25s ease;backdrop-filter:blur(16px);box-shadow:0 12px 40px rgba(0,0,0,0.5);
 }
@@ -58,7 +66,6 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 .ag-nav-menu a:active{background:rgba(255,255,255,0.08);color:#fff}
 .ag-nav-menu a.active{color:#fff;font-weight:600;background:rgba(255,255,255,0.04)}
 
-/* TOGGLE */
 .ag-toggle{display:flex;justify-content:center;gap:12px;margin-bottom:28px;padding-top:60px}
 .ag-toggle-btn{
   padding:12px 28px;border-radius:10px;min-height:48px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);
@@ -71,7 +78,6 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 .ag-toggle-btn.active.dw-active{background:linear-gradient(135deg,#0D2137,#4A90A4);box-shadow:0 6px 28px rgba(74,144,164,0.35)}
 .ag-toggle-btn.active.cb-active{background:linear-gradient(135deg,#5B21B6,#A855F7);box-shadow:0 6px 28px rgba(168,85,247,0.35)}
 
-/* HEADER */
 .ag-header{text-align:center;margin-bottom:24px}
 .ag-brand{font-size:36px;font-weight:700;letter-spacing:-0.5px;margin-bottom:8px;transition:text-shadow 0.5s ease}
 .ag-brand.db{text-shadow:0 0 60px rgba(232,93,4,0.3)}
@@ -83,7 +89,6 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 .ag-badge.dw{background:rgba(74,144,164,0.1);color:#4A90A4;border:1px solid rgba(74,144,164,0.18)}
 .ag-badge.cb{background:rgba(168,85,247,0.1);color:#A855F7;border:1px solid rgba(168,85,247,0.18)}
 
-/* CARDS */
 .ag-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
 .ag-card{
   background:rgba(255,255,255,0.025);border-radius:16px;padding:22px 20px;
@@ -107,13 +112,11 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 .ag-card-sub.up{color:#4ADE80}.ag-card-sub.down{color:#F87171}.ag-card-sub.neutral{color:#555}
 .ag-card.hero .ag-card-sub{color:rgba(255,255,255,0.85)}
 
-/* DIVIDER */
 .ag-divider{height:1px;margin:24px 0;border:none;transition:background 0.5s ease}
 .ag-divider.db{background:linear-gradient(90deg,transparent,rgba(232,93,4,0.15),transparent)}
 .ag-divider.dw{background:linear-gradient(90deg,transparent,rgba(74,144,164,0.15),transparent)}
 .ag-divider.cb{background:linear-gradient(90deg,transparent,rgba(168,85,247,0.15),transparent)}
 
-/* CHARTS */
 .ag-chart-wrap{
   background:rgba(255,255,255,0.02);border-radius:16px;padding:24px 28px;
   border:1px solid rgba(255,255,255,0.05);margin-bottom:16px;position:relative;overflow:hidden;
@@ -126,7 +129,6 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 .ag-chart-desc{font-size:13px;color:#4a4a4a;margin-bottom:10px}
 .ag-chart-canvas{padding:4px 0;position:relative;height:220px}
 
-/* TABLE */
 .ag-table-wrap{
   background:rgba(255,255,255,0.02);border-radius:16px;padding:24px 28px;
   border:1px solid rgba(255,255,255,0.05);margin-bottom:16px;
@@ -143,7 +145,6 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 .ag-table .plat-icon{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .ag-table .plat-name{color:#ccc;font-weight:600}
 
-/* ALERT */
 .ag-alert{
   padding:20px 24px;border-radius:14px;border:1px solid rgba(248,113,113,0.12);background:rgba(248,113,113,0.03);
   margin-bottom:16px;display:flex;gap:14px;align-items:flex-start;
@@ -152,7 +153,6 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 .ag-alert-text{font-size:14px;color:#aaa;line-height:1.7}
 .ag-alert-text strong{color:#F87171}
 
-/* INSIGHTS */
 .ag-insights{
   padding:24px 28px;border-radius:16px;border:1px solid rgba(34,197,94,0.1);
   background:linear-gradient(135deg,rgba(34,197,94,0.04),rgba(34,197,94,0.005));
@@ -167,7 +167,6 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 .ag-insight .g{color:#4ADE80;font-weight:600}
 .ag-insight .r{color:#F87171;font-weight:600}
 
-/* FOOTER */
 .ag-footer{text-align:center;margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.03)}
 .ag-footer p{font-size:13px;color:#333;letter-spacing:0.5px}
 .ag-footer a{color:#4a4a4a;text-decoration:none;font-weight:600;transition:color 0.3s ease}
@@ -175,14 +174,12 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 @media(hover:hover){#ag-kpi.dw .ag-footer a:hover{color:#4A90A4}}
 @media(hover:hover){#ag-kpi.cb .ag-footer a:hover{color:#A855F7}}
 
-/* LOGO */
 .ag-logo-wrap{display:flex;justify-content:center;align-items:center;gap:20px;margin-bottom:12px}
 .ag-logo{height:56px;object-fit:contain;transition:opacity 0.4s ease}
 .ag-logo.hidden{display:none}
 .ag-logo-divider{width:1px;height:40px;background:rgba(255,255,255,0.12);display:none}
 .ag-logo-divider.show{display:block}
 
-/* INTRO MODAL */
 .ag-modal-overlay{
   position:fixed;top:0;left:0;right:0;bottom:0;z-index:2000;
   background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);
@@ -210,23 +207,15 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
   background:linear-gradient(135deg,#8B1E3F,#E85D04);
   color:#fff;font-family:'Roboto',sans-serif;font-size:14px;font-weight:600;
   cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 18px rgba(232,93,4,0.3);
+  min-height:48px;
 }
 @media(hover:hover){.ag-modal-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(232,93,4,0.4)}}
 .ag-modal-btn:active{opacity:0.9}
-.ag-modal-btn{min-height:48px}
 
 .ag-fade{transition:opacity 0.35s ease}
 .ag-fade.fading{opacity:0}
 
-/* TABLE SCROLL */
 .ag-table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-
-/* LOGO */
-.ag-logo-wrap{display:flex;justify-content:center;align-items:center;gap:20px;margin-bottom:12px}
-.ag-logo{height:56px;object-fit:contain;transition:opacity 0.4s ease}
-.ag-logo.hidden{display:none}
-.ag-logo-divider{width:1px;height:40px;background:rgba(255,255,255,0.12);display:none}
-.ag-logo-divider.show{display:block}
 
 @media(max-width:1024px){
   #ag-kpi{padding:48px 36px}.ag-cards{grid-template-columns:repeat(2,1fr)}.ag-brand{font-size:36px}
@@ -277,8 +266,15 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
     <span>Reports</span>
   </button>
   <div class="ag-nav-menu" role="menu" aria-label="Report navigation">
-    <p class="ag-nav-label">Monthly Reports</p>
-    <a href="/reports/dr-bob/nov-2025" class="active">Nov</a><a href="/reports/dr-bob/dec-2025">Dec</a><a href="/reports/dr-bob/jan-2026">Jan</a><a href="/reports/dr-bob/feb-2026">Feb</a><a href="/reports/dr-bob/mar-2026">Mar</a><a href="/reports/dr-bob">4-Month</a>
+    <p class="ag-nav-label">Monthly</p>
+    <a href="/reports/dr-bob/dec-2025">Dec</a>
+    <a href="/reports/dr-bob/jan-2026">Jan</a>
+    <a href="/reports/dr-bob/feb-2026">Feb</a>
+    <a href="/reports/dr-bob/mar-2026">Mar</a>
+    <a href="/reports/dr-bob/apr-2026" class="active">Apr</a>
+    <p class="ag-nav-label" style="margin-top:10px;">Rollup</p>
+    <a href="/reports/dr-bob/4-month-nov-feb-2026">4-Month</a>
+    <a href="/reports/dr-bob/6-month-nov-apr-2026">6-Month</a>
   </div>
 </div>
 
@@ -294,12 +290,12 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 
 <div class="ag-header">
   <div class="ag-logo-wrap" id="ag-logo-wrap">
-    <a href="https://www.drbobbeare.com/" target="_blank"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Dr%20Bob/Bob%20Beare%20Logo.png" alt="Dr. Bob Beare" class="ag-logo" id="logo-db"></a>
+    <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Dr%20Bob/Bob%20Beare%20Logo.png" alt="Dr. Bob Beare" class="ag-logo" id="logo-db">
     <div class="ag-logo-divider" id="logo-divider"></div>
-    <a href="https://deepwatersrecovery.org/" target="_blank"><img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Dr%20Bob/Deepwaters%20Logo.png" alt="Deep Waters Recovery" class="ag-logo hidden" id="logo-dw"></a>
+    <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Dr%20Bob/Deepwaters%20Logo.png" alt="Deep Waters Recovery" class="ag-logo hidden" id="logo-dw">
   </div>
   <p class="ag-brand db" id="ag-brand">Dr. Bob Beare</p>
-  <p class="ag-period">November 2025</p>
+  <p class="ag-period">April 2026</p>
   <span class="ag-badge db" id="ag-badge">MONTHLY KPI REPORT</span>
 </div>
 
@@ -313,8 +309,8 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 <hr class="ag-divider db" id="divider-1">
 
 <div class="ag-chart-wrap db" id="trend-wrap">
-  <h2 class="ag-chart-title">1-Month Trend</h2>
-  <p class="ag-chart-desc" id="trend-desc">Monthly views &mdash; Start through Nov</p>
+  <h2 class="ag-chart-title">6-Month Trend</h2>
+  <p class="ag-chart-desc" id="trend-desc">Monthly views, Nov through Apr</p>
   <div class="ag-chart-canvas"><canvas id="trendChart"></canvas></div>
 </div>
 
@@ -347,48 +343,74 @@ button:focus-visible,a:focus-visible{outline:2px solid #E85D04;outline-offset:2p
 </div>
 
 <div class="ag-footer">
-  <p><a href="https://www.arcgarde.com" target="_blank">Arc Garde</a> &mdash; KPI Dashboard</p>
+  <p><a href="https://www.arcgarde.com" target="_blank">Arc Garde</a> KPI Dashboard</p>
 </div>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const MONTH_INDEX=1;
-const allMonths=['Start','Nov'];
+const MONTH_INDEX=6;
+const allMonths=['Start','Nov','Dec','Jan','Feb','Mar','Apr'];
 const platNames=['Instagram','TikTok','YouTube','Facebook','Threads'];
-const platColorsRGBA=['rgba(225,48,108,0.85)','rgba(130,130,130,0.85)','rgba(255,50,50,0.85)','rgba(24,119,242,0.85)','rgba(90,90,90,0.85)'];
 const platDotColors={Instagram:'#E1306C',TikTok:'#888',YouTube:'#FF0000',Facebook:'#1877F2',Threads:'#666'};
 
 const D={
   db:{
     name:'Dr. Bob Beare',cls:'db',
     colors:{primary:'#8B1E3F',secondary:'#E85D04',accent:'#F9A825'},
-    views:{Instagram:10315,TikTok:18000,YouTube:22062,Facebook:9070,Threads:253},eng:{Instagram:401,TikTok:908,YouTube:562,Facebook:569,Threads:65},fol:{Instagram:-39,TikTok:100,YouTube:100,Facebook:5,Threads:0},
-    totalViews:59700,totalEng:2505,folNet:166,
-    topPlat:'YouTube',topPlatVal:'22,062 views',
-    trendViews:[0, 59700],
-    insights:['Strong opening month at <span class="g">59,700 views</span> across 5 platforms','YouTube led all platforms at <span class="g">22,062 views</span> &mdash; 37% of total traffic','TikTok and YouTube each gained <span class="g">100 followers</span> &mdash; strong early momentum','Facebook engagement was the second highest at <span class="g">569 interactions</span>','Instagram lost <span class="r">39 followers</span> &mdash; early signal of the decline to come'],
+    views:{Instagram:6239,TikTok:10000,YouTube:13426,Facebook:7100,Threads:100},
+    eng:{Instagram:45,TikTok:174,YouTube:48,Facebook:152,Threads:34},
+    fol:{Instagram:null,TikTok:5,YouTube:8,Facebook:6,Threads:2},
+    totalViews:36865,totalEng:453,folNet:21,folNote:'+21 (excl IG)',
+    topPlat:'YouTube',topPlatVal:'13,426 views',
+    trendViews:[0,59700,67609,64498,50261,46518,36865],
+    insights:[
+      'Views dropped to <span class="r">36,865</span>. Down 20.8% from March, biggest single-month decline in 6 months',
+      'Engagement collapsed to <span class="r">453</span> (down 39.2%). YouTube engagement halved (121 to 48), TikTok engagement down 44%',
+      'Facebook engagement bucked the trend with <span class="g">152 interactions</span>, up 79% from March (85 to 152)',
+      'YouTube watch time UP <span class="g">21%</span> (62.9 to 76.3 hrs) despite views down 19%. Audience holding deeper attention per view',
+      '<span class="g">+21 followers</span> across confirmed platforms (TikTok +5, YouTube +8, Facebook +6, Threads +2)',
+      'Instagram access lost mid-April. Engagement excludes saves and IG follower change is unavailable'
+    ],
     alert:null
   },
   dw:{
     name:'Deep Waters Recovery',cls:'dw',
     colors:{primary:'#0D2137',secondary:'#2C5A6E',accent:'#4A90A4'},
-    views:{Instagram:7545,TikTok:6016,YouTube:14300,Facebook:1664,Threads:58},eng:{Instagram:157,TikTok:205,YouTube:89,Facebook:101,Threads:0},fol:{Instagram:3,TikTok:4,YouTube:7,Facebook:3,Threads:140},
-    totalViews:29583,totalEng:552,folNet:157,
-    topPlat:'YouTube',topPlatVal:'14,300 views',
-    trendViews:[0, 29583],
-    insights:['Launched with <span class="g">29,583 views</span> across brand new accounts','YouTube dominated at <span class="g">14,300 views</span> &mdash; 48% of all traffic in month one','Threads gained <span class="g">140 followers</span> in launch month &mdash; strongest single-platform follower gain','Instagram led engagement at <span class="g">157 interactions</span> with TikTok close behind at 205','Every platform gained followers &mdash; <span class="g">+157 net</span> in the first month'],
+    views:{Instagram:6138,TikTok:18000,YouTube:5807,Facebook:4336,Threads:88},
+    eng:{Instagram:48,TikTok:537,YouTube:30,Facebook:50,Threads:0},
+    fol:{Instagram:3,TikTok:6,YouTube:2,Facebook:0,Threads:1},
+    totalViews:34369,totalEng:665,folNet:12,folNote:'+12 net',
+    topPlat:'TikTok',topPlatVal:'18,000 views',
+    trendViews:[0,29583,17818,37048,27544,25026,34369],
+    insights:[
+      'Views surged to <span class="g">34,369</span>, up 37.3% from March, best month since January',
+      'Engagement rose to <span class="g">665</span> (up 25.2%), reversing the 3-month decline',
+      'Facebook breakout: <span class="g">4,336 views</span>, up 317% from March (1,040 to 4,336)',
+      'TikTok engagement engine intact at <span class="g">537 interactions</span> (up 44% from March), 18,000 views',
+      'Instagram views climbed <span class="g">43%</span> (4,291 to 6,138) and follower count flipped positive (+3 vs -4 in March)',
+      'Net follower growth at <span class="g">+12</span>, sixth straight positive month'
+    ],
     alert:null
   },
   cb:{
     name:'Combined Results',cls:'cb',
     colors:{primary:'#5B21B6',secondary:'#7C3AED',accent:'#A855F7'},
-    views:{Instagram:17860,TikTok:24016,YouTube:36362,Facebook:10734,Threads:311},eng:{Instagram:558,TikTok:1113,YouTube:651,Facebook:670,Threads:65},fol:{Instagram:-36,TikTok:104,YouTube:107,Facebook:8,Threads:140},
-    totalViews:89283,totalEng:3057,folNet:323,
-    topPlat:'YouTube',topPlatVal:'36,362 views',
-    trendViews:[0, 89283],
-    insights:['<span class="g">89,283 combined views</span> in the opening month across both brands','YouTube led at <span class="g">36,362 views</span> &mdash; 41% of combined traffic','TikTok led engagement at <span class="g">1,113 interactions</span> &mdash; already the engagement engine from day one','Net follower growth at <span class="g">+323</span> &mdash; the strongest month across the entire reporting period','Facebook quietly delivered <span class="g">670 engagements</span> &mdash; second highest engagement platform'],
+    views:{Instagram:12377,TikTok:28000,YouTube:19233,Facebook:11436,Threads:188},
+    eng:{Instagram:93,TikTok:711,YouTube:78,Facebook:202,Threads:34},
+    fol:{Instagram:3,TikTok:11,YouTube:10,Facebook:6,Threads:3},
+    totalViews:71234,totalEng:1118,folNet:33,folNote:'+33 (excl Dr Bob IG)',
+    topPlat:'TikTok',topPlatVal:'28,000 views',
+    trendViews:[0,89283,85427,101546,77805,71544,71234],
+    insights:[
+      'Combined views nearly flat at <span class="g">71,234</span> (-0.4%). Deep Waters absorbed most of the Dr Bob slowdown',
+      'TikTok dominates: <span class="g">28,000 views</span> and <span class="g">711 engagement</span> (64% of all combined engagement)',
+      'Facebook combined surged: <span class="g">11,436 views</span> (37% increase) and <span class="g">202 engagement</span> (more than doubled)',
+      'Combined engagement at <span class="r">1,118</span>, down 12.4% (Dr Bob -39%, DW +25%)',
+      '<span class="g">+33 net followers</span>, third positive month in a row across both brands',
+      'Brand divergence is the headline: Dr Bob softened, Deep Waters accelerated'
+    ],
     alert:null
   }
 };
@@ -396,7 +418,6 @@ const D={
 let brand='db',trendChart;
 
 function fmt(n){return n.toLocaleString();}
-
 function brandGradient(ctx,c){
   const g=ctx.createLinearGradient(0,0,ctx.canvas.width,0);
   g.addColorStop(0,c.primary);g.addColorStop(0.5,c.secondary);g.addColorStop(1,c.accent);return g;
@@ -408,8 +429,6 @@ function brandArea(ctx,c){
 
 function initCharts(){
   const b=D[brand];
-
-  // Trend line chart
   const ctx1=document.getElementById('trendChart').getContext('2d');
   const pointRadii=allMonths.map((_,i)=>i===MONTH_INDEX?10:5);
   const pointBorders=allMonths.map((_,i)=>i===MONTH_INDEX?4:2);
@@ -438,7 +457,6 @@ function initCharts(){
       }
     }
   });
-
   updateAll();
 }
 
@@ -461,7 +479,6 @@ function setBrand(b){
 
 function updateAll(){
   const b=D[brand],c=b.cls;
-  // Logos
   const logoDB=document.getElementById('logo-db');
   const logoDW=document.getElementById('logo-dw');
   const logoDivider=document.getElementById('logo-divider');
@@ -480,12 +497,12 @@ function updateAll(){
   const fNet=b.folNet;
   document.getElementById('c2-val').textContent=(fNet>=0?'+':'')+fmt(fNet);
   document.getElementById('c2-sub').className='ag-card-sub '+(fNet>=0?'up':'down');
+  document.getElementById('c2-sub').textContent=b.folNote||'net this month';
   document.getElementById('c3-val').textContent=b.topPlat;
   document.getElementById('c3-sub').textContent=b.topPlatVal;
   document.getElementById('trend-wrap').className='ag-chart-wrap '+c;
   document.querySelectorAll('.ag-divider').forEach(d=>{d.className='ag-divider '+c;});
 
-  // Update trend chart
   const ctx1=document.getElementById('trendChart').getContext('2d');
   trendChart.data.datasets[0].data=b.trendViews;
   trendChart.data.datasets[0].borderColor=brandGradient(ctx1,b.colors);
@@ -494,21 +511,20 @@ function updateAll(){
   trendChart.data.datasets[0].pointBorderColor=b.colors.primary;
   trendChart.update();
 
-  // Table
   const tbody=document.getElementById('ag-tbody');
   tbody.innerHTML='';
   platNames.forEach(p=>{
     const tr=document.createElement('tr');
-    const fVal=b.fol[p];const fStr=(fVal>=0?'+':'')+fmt(fVal);
+    const fVal=b.fol[p];
+    const fStr=(fVal===null||fVal===undefined)?'n/a':((fVal>=0?'+':'')+fmt(fVal));
     tr.innerHTML='<td><span class="plat-icon" style="background:'+platDotColors[p]+'"></span><span class="plat-name">'+p+'</span></td><td>'+fmt(b.views[p])+'</td><td>'+fmt(b.eng[p])+'</td><td>'+fStr+'</td>';
     tbody.appendChild(tr);
   });
   const trT=document.createElement('tr');
-  const totalFol=platNames.reduce((a,p)=>a+b.fol[p],0);
+  const totalFol=platNames.reduce((a,p)=>a+(b.fol[p]||0),0);
   trT.innerHTML='<td>Total</td><td>'+fmt(b.totalViews)+'</td><td>'+fmt(b.totalEng)+'</td><td>'+(totalFol>=0?'+':'')+fmt(totalFol)+'</td>';
   tbody.appendChild(trT);
 
-  // Insights
   const list=document.getElementById('ag-insight-list');
   list.innerHTML='';
   b.insights.forEach(txt=>{
@@ -517,7 +533,6 @@ function updateAll(){
     list.appendChild(div);
   });
 
-  // Alert
   const alertEl=document.getElementById('ag-alert');
   if(b.alert){alertEl.style.display='flex';document.getElementById('ag-alert-text').innerHTML=b.alert;}
   else{alertEl.style.display='none';}
@@ -525,7 +540,6 @@ function updateAll(){
 
 document.addEventListener('DOMContentLoaded',initCharts);
 
-// Intro modal
 function dismissModal(e){
   if(e&&e.target!==document.getElementById('ag-modal-overlay'))return;
   const overlay=document.getElementById('ag-modal-overlay');
