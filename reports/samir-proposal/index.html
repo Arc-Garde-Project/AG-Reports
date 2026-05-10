@@ -1,0 +1,881 @@
+<!--
+ * Project: Growth Partnership Proposal — Samir Tarazi
+ * Date: 2026-02-17
+ * Modified: 2026-02-17
+ * Description: 7-slide sales presentation with 3 pricing tiers for Samir Tarazi
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Growth Partnership Proposal — Samir Tarazi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+/* Design Tokens */
+:root{
+  /* Colors — Core */
+  --black:#000000;               /* Page background */
+  --dark:#0a0a0a;                /* Slightly lifted black */
+  --card:#111111;                /* Card/panel background */
+  --yellow:#f5c518;              /* Primary accent */
+  --yellow-light:#ffe066;        /* Secondary accent (highlights) */
+  --white:#ffffff;               /* Primary text on dark */
+  --gray:#999999;                /* Muted captions */
+  --gray-light:#cccccc;          /* Body text */
+  --gray-dark:#767676;           /* Subdued text (WCAG AA compliant on #000) */
+
+  /* Colors — Alpha (standard opacity scale: .1 .2 .3 .5 .7 .85 .95) */
+  --yellow-alpha-subtle:rgba(245,197,24,.1);   /* Glow backgrounds, icon bg */
+  --yellow-alpha-light:rgba(245,197,24,.2);    /* Borders, dividers */
+  --yellow-alpha-medium:rgba(245,197,24,.3);   /* Gradient accents, hover borders */
+  --black-alpha-heavy:rgba(0,0,0,.85);         /* Footer overlay */
+
+  /* Gradients */
+  --gradient:linear-gradient(135deg,var(--yellow),var(--yellow-light),var(--yellow));
+  --gradient-fade:linear-gradient(90deg,transparent,var(--yellow),transparent);
+  --gradient-text:linear-gradient(180deg,var(--white) 40%,var(--yellow));
+  --gradient-border:linear-gradient(135deg,var(--yellow-alpha-medium),transparent 50%,var(--yellow-alpha-light));
+
+  /* Shadows (custom glow system for dark-bg presentation) */
+  --shadow-glow:0 0 42px var(--yellow-alpha-subtle);
+  --shadow-glow-strong:0 0 84px var(--yellow-alpha-subtle);
+
+  /* AG Fluid Type Tokens (350px → 1400px) */
+  --text-hero:clamp(2.8rem, 1.8rem + 4.2vw, 5.5rem);     /* 45px → 88px (presentation scale) */
+  --text-h1:clamp(2rem, 1.2rem + 3.4vw, 3.2rem);          /* 32px → 51px */
+  --text-h2:clamp(1.4rem, 1rem + 1.6vw, 2rem);            /* 22px → 32px */
+  --text-h3:clamp(1.15rem, .95rem + .9vw, 1.5rem);        /* 18px → 24px */
+  --text-body:clamp(.9rem, .85rem + .2vw, 1.1rem);        /* 14px → 18px */
+  --text-caption:clamp(.85rem, .8rem + .2vw, 1rem);       /* 14px → 16px */
+  --text-label:clamp(.65rem, .6rem + .2vw, .8rem);        /* 10px → 13px */
+  --text-subtitle:clamp(1.1rem, 1rem + .5vw, 1.4rem);     /* 18px → 22px */
+  --text-brand:clamp(.85rem, .8rem + .2vw, 1rem);         /* 14px → 16px */
+  --text-price:clamp(3.5rem, 2.5rem + 4vw, 6rem);         /* 56px → 96px */
+  --text-price-sm:clamp(2.5rem, 1.8rem + 3vw, 4rem);      /* 40px → 64px */
+  --text-commission:clamp(3.5rem, 2.5rem + 4.5vw, 6.5rem);/* 56px → 104px */
+  --text-ongoing:clamp(1.3rem, 1rem + 1.2vw, 1.8rem);     /* 21px → 29px */
+
+  /* AG Fluid Spacing Tokens (350px → 1400px) */
+  --space-xs:clamp(0.188rem, 0.102rem + 0.37vw, 0.375rem);   /* 3 → 6 */
+  --space-sm:clamp(0.375rem, 0.204rem + 0.73vw, 0.75rem);    /* 6 → 12 */
+  --space-md:clamp(0.75rem, 0.407rem + 1.47vw, 1.5rem);      /* 12 → 24 */
+  --space-lg:clamp(1.125rem, 0.611rem + 2.2vw, 2.25rem);     /* 18 → 36 */
+  --space-xl:clamp(1.5rem, 0.814rem + 2.93vw, 3rem);         /* 24 → 48 */
+  --space-2xl:clamp(2.25rem, 1.222rem + 4.4vw, 4.5rem);      /* 36 → 72 */
+  --space-section:clamp(3rem, 1.629rem + 5.86vw, 6rem);       /* 48 → 96 */
+  --space-container:clamp(1.125rem, 0.268rem + 3.66vw, 3rem); /* 18 → 48 */
+
+  /* Layout */
+  --max-width:1200px;
+  --radius:14px;       /* Standard card/panel radius */
+  --radius-sm:7px;     /* Small elements */
+}
+
+/* ========== BASE ========== */
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  color:var(--white);
+  background:var(--black);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ========== TYPOGRAPHY ========== */
+h1,h2,h3,h4,h5,h6{text-wrap:balance}
+p,li,blockquote,figcaption{text-wrap:pretty}
+
+.t-hero{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:var(--text-hero);
+  font-weight:800;
+  line-height:1.2;
+  letter-spacing:-3px;
+  text-wrap:balance;
+}
+.t-h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:var(--text-h1);
+  font-weight:700;
+  line-height:1.2;
+  letter-spacing:-1px;
+  text-wrap:balance;
+}
+.t-h2{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:var(--text-h2);
+  font-weight:700;
+  line-height:1.2;
+  text-wrap:balance;
+}
+.t-h3{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:var(--text-h3);
+  font-weight:600;
+  line-height:1.2;
+  text-wrap:balance;
+}
+.t-body{
+  font-size:var(--text-body);
+  line-height:1.6;
+  color:var(--gray-light);
+  text-wrap:pretty;
+}
+.t-caption{
+  font-size:var(--text-caption);
+  color:var(--gray);
+  font-style:italic;
+  text-wrap:pretty;
+}
+.t-label{
+  font-size:var(--text-label);
+  font-weight:700;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:var(--yellow);
+  display:block;
+}
+.t-yellow{color:var(--yellow)}
+
+/* ========== SLIDES ========== */
+.slide{
+  position:relative;
+  width:100%;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  overflow:hidden;
+  background:var(--black);
+}
+
+/* Yellow top accent bar */
+.slide::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+  background:var(--gradient);
+  z-index:3;
+}
+
+.slide__content{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:var(--space-section) var(--space-xl);
+}
+
+/* Full-height centered variant */
+.slide__content--full{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+/* Centered flex variant */
+.slide__content--center{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* ========== AMBIENT GLOW EFFECTS ========== */
+.glow{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:0;
+  background:var(--yellow-alpha-subtle);
+  will-change:filter;
+  contain:strict;
+}
+.glow--tl{width:350px;height:350px;top:-140px;left:-105px;filter:blur(70px)}
+.glow--br{width:420px;height:420px;bottom:-175px;right:-140px;filter:blur(70px)}
+.glow--center{width:280px;height:280px;top:50%;left:50%;transform:translate(-50%,-50%);filter:blur(70px)}
+.glow--tr{width:315px;height:315px;top:-126px;right:-84px;filter:blur(70px)}
+.glow--lg{width:420px;height:420px;filter:blur(70px)}
+.glow--half{opacity:0.5}
+
+/* ========== DECORATIVE CORNER ACCENTS ========== */
+.corner-accent{
+  position:absolute;
+  z-index:1;
+  border-color:var(--yellow-alpha-light);
+  border-style:solid;
+  border-width:0;
+}
+.corner-accent--tr{
+  top:42px;right:48px;
+  width:96px;height:96px;
+  border-top-width:2px;
+  border-right-width:2px;
+}
+.corner-accent--bl{
+  bottom:42px;left:48px;
+  width:63px;height:63px;
+  border-bottom-width:2px;
+  border-left-width:2px;
+  border-color:var(--yellow-alpha-subtle);
+}
+.corner-accent--br{
+  bottom:42px;right:48px;
+  width:96px;height:96px;
+  border-bottom-width:2px;
+  border-right-width:2px;
+}
+
+/* ========== CARDS ========== */
+.card{
+  background:var(--card);
+  border:1px solid var(--yellow-alpha-light);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-glow);
+}
+
+/* ========== YELLOW ACCENT LINES ========== */
+.y-line{
+  width:96px;
+  height:4px;
+  background:var(--gradient);
+  border-radius:2px;
+}
+.y-line--mb{margin-bottom:var(--space-xl)}
+.y-line--full{
+  width:100%;
+  height:2px;
+  background:var(--gradient-fade);
+  margin-bottom:var(--space-xl);
+}
+
+/* ========== SLIDE HEADER ========== */
+.slide__heading{margin-bottom:var(--space-sm)}
+.slide__heading--with-icon{
+  display:flex;
+  align-items:center;
+  gap:var(--space-sm);
+}
+.slide__heading-icon{
+  font-size:36px;
+  color:var(--yellow);
+}
+
+/* ========== COVER SLIDE ========== */
+.cover__title{margin-bottom:var(--space-lg)}
+.cover__subtitle{
+  font-size:var(--text-subtitle);
+  font-weight:300;
+  color:var(--gray-light);
+  margin-bottom:var(--space-xs);
+  text-wrap:pretty;
+}
+.cover__brand{
+  font-size:var(--text-brand);
+  color:var(--gray-dark);
+}
+
+/* ========== PRICE BOX ========== */
+.price-box{
+  text-align:center;
+  padding:var(--space-xl) var(--space-xl);
+  position:relative;
+}
+.price-box--contained{
+  width:min(100%,420px);
+  flex-shrink:0;
+}
+.price-box::before{
+  content:'';
+  position:absolute;
+  inset:-1px;
+  border-radius:calc(var(--radius) + 1px);
+  background:var(--gradient-border);
+  z-index:-1;
+}
+.price-box__label{margin-bottom:var(--space-xs)}
+.price-box__amount{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:var(--text-price);
+  font-weight:800;
+  line-height:1.2;
+  letter-spacing:-3px;
+  background:var(--gradient-text);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.price-box__sub{
+  font-size:14px;
+  color:var(--gray);
+  margin-top:var(--space-xs);
+}
+
+/* ========== FEATURES LIST ========== */
+.features-col{
+  display:flex;
+  flex-direction:column;
+  gap:var(--space-lg);
+  flex:1;
+}
+.feature{
+  padding-left:var(--space-md);
+  border-left:3px solid var(--yellow);
+}
+.feature__title{margin-bottom:3px}
+.feature__desc{
+  font-size:var(--text-caption);
+  color:var(--gray);
+  text-wrap:pretty;
+}
+
+/* ========== OPT-A GRID (price + features side by side) ========== */
+.opt-grid{
+  display:flex;
+  gap:var(--space-2xl);
+  align-items:flex-start;
+}
+
+/* ========== SLIDE FOOTER ========== */
+.slide-foot{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  z-index:2;
+  background:var(--black-alpha-heavy);
+  border-top:1px solid var(--yellow-alpha-subtle);
+  padding:var(--space-md) var(--space-xl);
+  text-align:center;
+}
+.slide-foot__text{
+  color:var(--gray-light);
+  font-size:var(--text-caption);
+  font-style:italic;
+  text-wrap:pretty;
+}
+
+/* ========== COMMISSION BOX ========== */
+.comm-box{
+  display:flex;
+  align-items:center;
+  gap:var(--space-xl);
+  padding:var(--space-xl) var(--space-2xl);
+  margin-bottom:var(--space-xl);
+  position:relative;
+}
+.comm-box::before{
+  content:'';
+  position:absolute;
+  inset:-1px;
+  border-radius:calc(var(--radius) + 1px);
+  background:linear-gradient(135deg,var(--yellow-alpha-medium),transparent 60%);
+  z-index:-1;
+}
+.comm-num{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:var(--text-commission);
+  font-weight:800;
+  line-height:1.2;
+  letter-spacing:-3px;
+  background:var(--gradient);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  flex-shrink:0;
+}
+.comm-label{margin-bottom:var(--space-xs)}
+.comm-caption{
+  font-size:var(--text-body);
+  font-style:italic;
+  color:var(--gray);
+  text-wrap:pretty;
+}
+
+/* ========== SERVICE CARDS ========== */
+.svc-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));
+  gap:var(--space-md);
+}
+.svc-card{
+  text-align:center;
+  padding:var(--space-xl) var(--space-md);
+  border-radius:var(--radius);
+  position:relative;
+  overflow:hidden;
+}
+.svc-card::after{
+  content:'';
+  position:absolute;
+  bottom:0;left:20%;right:20%;
+  height:1px;
+  background:var(--gradient-fade);
+}
+.svc-card__icon{
+  font-size:36px;
+  width:63px;
+  height:63px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:var(--yellow-alpha-subtle);
+  color:var(--yellow);
+  border:1px solid var(--yellow-alpha-light);
+  margin:0 auto var(--space-md);
+}
+.svc-card__title{margin-bottom:var(--space-xs)}
+.svc-card__desc{font-size:14px;color:var(--gray);text-wrap:pretty}
+.svc-card--accent{border-color:var(--yellow-alpha-medium)}
+.svc-card--accent .svc-card__icon{
+  background:var(--yellow-alpha-light);
+  color:var(--yellow-light);
+}
+
+/* ========== OPTION B ========== */
+.optb-ongoing{
+  border-top:1px solid var(--yellow-alpha-subtle);
+  padding-top:var(--space-lg);
+  margin-bottom:var(--space-md);
+}
+.optb-ongoing__amount{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:var(--text-ongoing);
+  font-weight:700;
+  color:var(--yellow);
+}
+.optb-ongoing__desc{
+  color:var(--gray);
+  margin-top:var(--space-xs);
+  text-wrap:pretty;
+}
+.optb-included{flex:1}
+.optb-included__label{margin-bottom:var(--space-md)}
+
+/* ========== OPTION C — PHASES ========== */
+.phases{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:var(--space-md);
+  align-items:stretch;
+  margin-bottom:var(--space-lg);
+}
+.phase-arrow{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:42px;
+  color:var(--yellow);
+}
+.phase-box{
+  padding:var(--space-xl) var(--space-lg);
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+}
+.phase-box__label{margin-bottom:var(--space-md)}
+.phase-box__heading{margin-bottom:var(--space-sm)}
+.phase-box__body{font-size:14px;text-wrap:pretty}
+.phase-box__accent{
+  margin-top:auto;
+  padding-top:var(--space-md);
+  font-size:14px;
+  font-style:italic;
+  color:var(--yellow);
+}
+.phase-box__price{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:var(--text-price-sm);
+  font-weight:800;
+  line-height:1.2;
+  letter-spacing:-2px;
+  margin-bottom:var(--space-sm);
+  background:var(--gradient-text);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.phase-box__price-unit{
+  font-size:var(--text-caption);
+  font-weight:500;
+  letter-spacing:0;
+}
+.phase-box__features{
+  font-weight:600;
+  font-size:15px;
+  color:var(--yellow);
+}
+
+/* ========== TOTAL BAR ========== */
+.total-bar{
+  background:var(--card);
+  border:1px solid var(--yellow-alpha-light);
+  border-radius:var(--radius);
+  padding:var(--space-md) var(--space-lg);
+  text-align:center;
+  box-shadow:var(--shadow-glow);
+}
+
+/* ========== AT A GLANCE ========== */
+.glance-title{text-align:center;margin-bottom:var(--space-sm)}
+.glance-line{margin-bottom:var(--space-xl)}
+
+.glance-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));
+  gap:var(--space-md);
+  width:100%;
+}
+.glance-card{
+  padding:var(--space-xl) var(--space-lg);
+  border-radius:var(--radius);
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  overflow:hidden;
+}
+.glance-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+  background:var(--yellow);
+}
+.glance-card--b::before{background:var(--white)}
+.glance-card--c::before{background:var(--yellow-light)}
+.glance-card--b{border-color:var(--yellow-alpha-subtle)}
+.glance-card--c{border-color:var(--yellow-alpha-light)}
+.glance-card__label{margin-bottom:var(--space-xs);text-align:center}
+.glance-card--b .glance-card__label{color:var(--white)}
+.glance-card--c .glance-card__label{color:var(--yellow-light)}
+.glance-card__name{text-align:center;margin-bottom:var(--space-xs)}
+.glance-card__price{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(2rem, 1.5rem + 2.2vw, 3rem);
+  font-weight:800;
+  text-align:center;
+  line-height:1.2;
+  letter-spacing:-2px;
+  margin-bottom:3px;
+}
+.glance-card__sub{
+  text-align:center;
+  font-size:13px;
+  color:var(--gray);
+  margin-bottom:var(--space-md);
+}
+.glance-card__div{
+  width:42px;
+  height:2px;
+  border-radius:2px;
+  margin:0 auto var(--space-md);
+  background:var(--yellow);
+}
+.glance-card--b .glance-card__div{background:var(--white)}
+.glance-card--b .glance-feat__check{color:var(--white)}
+.glance-card--c .glance-card__div{background:var(--yellow-light)}
+.glance-card--c .glance-feat__check{color:var(--yellow-light)}
+.glance-feat{
+  display:flex;
+  align-items:center;
+  gap:var(--space-sm);
+  font-size:14px;
+  color:var(--gray-light);
+  padding:var(--space-xs) 0;
+}
+.glance-feat__check{
+  color:var(--yellow);
+  font-weight:700;
+  font-size:var(--text-body);
+}
+
+/* ========== CLOSING SLIDE ========== */
+.closing{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.closing__line{margin:var(--space-lg) auto var(--space-xl)}
+.closing__body{
+  font-size:var(--text-subtitle);
+  max-width:560px;
+  color:var(--gray-light);
+  text-wrap:pretty;
+}
+.closing__brand{
+  margin-top:var(--space-section);
+  font-size:var(--text-brand);
+  color:var(--gray-dark);
+}
+
+/* ========== RESPONSIVE ========== */
+/* Tablet — layout shifts only */
+@media(max-width:768px){
+  .slide__content{padding:var(--space-xl) var(--space-md)}
+  .phases{grid-template-columns:1fr;gap:var(--space-sm)}
+  .phase-arrow{transform:rotate(90deg);font-size:30px;justify-self:center}
+  .comm-box{flex-direction:column;text-align:center}
+  .opt-grid{flex-direction:column;gap:var(--space-lg)}
+  .opt-grid .price-box--contained{width:100%}
+  .slide-foot{padding:var(--space-sm) var(--space-md)}
+  .glow{filter:blur(56px);opacity:.5}
+  .corner-accent{display:none}
+}
+
+/* Small mobile — layout shifts only */
+@media(max-width:480px){
+  .slide__content{padding:var(--space-xl) var(--space-sm)}
+  .t-hero{letter-spacing:-1.5px}
+}
+
+/* Print */
+@media print{
+  .slide{min-height:100vh;page-break-after:always;page-break-inside:avoid}
+  body{background:var(--black)}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<main>
+
+<!-- Slide 1: Cover -->
+<section class="slide">
+  <div class="glow glow--tl"></div>
+  <div class="glow glow--br"></div>
+  <div class="slide__content slide__content--full">
+    <h1 class="t-hero cover__title">
+      GROWTH<br>PARTNERSHIP<br><span class="t-yellow">PROPOSAL</span>
+    </h1>
+    <div class="y-line y-line--mb"></div>
+    <p class="cover__subtitle">Prepared for Samir</p>
+    <p class="cover__brand">Arc Garde | Digital Marketing & Growth</p>
+  </div>
+  <div class="corner-accent corner-accent--tr"></div>
+  <div class="corner-accent corner-accent--bl"></div>
+</section>
+
+<!-- Slide 2: Option A — Full Package -->
+<section class="slide">
+  <div class="glow glow--tr"></div>
+  <div class="slide__content">
+    <h2 class="t-h1 slide__heading">OPTION A: FULL PACKAGE</h2>
+    <div class="y-line--full"></div>
+
+    <div class="opt-grid">
+      <div class="card price-box price-box--contained">
+        <span class="t-label price-box__label">UPFRONT FEE</span>
+        <div class="price-box__amount">$2,900</div>
+        <p class="price-box__sub">USD &bull; One-Time Setup</p>
+      </div>
+
+      <div class="features-col">
+        <div class="feature">
+          <h3 class="t-h3 feature__title">Funnel Build</h3>
+          <p class="feature__desc">Landing page, pre-call clarity page, Zapier automations</p>
+        </div>
+        <div class="feature">
+          <h3 class="t-h3 feature__title">Website Build</h3>
+          <p class="feature__desc">Full website design & development</p>
+        </div>
+        <div class="feature">
+          <h3 class="t-h3 feature__title">VSL Filming & Editing</h3>
+          <p class="feature__desc">Video sales letter — scripted, filmed, edited</p>
+        </div>
+        <div class="feature">
+          <h3 class="t-h3 feature__title">42 Creatives</h3>
+          <p class="feature__desc">14 video creatives + 28 static image creatives</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-foot">
+    <p class="slide-foot__text">Everything you need to start generating leads from day one.</p>
+  </div>
+</section>
+
+<!-- Slide 3: Ongoing Services -->
+<section class="slide">
+  <div class="glow glow--center"></div>
+  <div class="slide__content">
+    <h2 class="t-h1 slide__heading">ONGOING SERVICES</h2>
+    <div class="y-line--full"></div>
+
+    <div class="card comm-box">
+      <div class="comm-num">21%</div>
+      <div>
+        <h3 class="t-h2 comm-label">of Samir's Commission</h3>
+        <p class="comm-caption">Performance-aligned — we grow when you grow.</p>
+      </div>
+    </div>
+
+    <div class="svc-grid">
+      <div class="svc-card card">
+        <span class="material-icons-outlined svc-card__icon" aria-label="Team icon">groups</span>
+        <h3 class="t-h3 svc-card__title">Appointment Setter</h3>
+        <p class="svc-card__desc">Commission-only — placed & managed by us</p>
+      </div>
+      <div class="svc-card card">
+        <span class="material-icons-outlined svc-card__icon" aria-label="Growth chart icon">trending_up</span>
+        <h3 class="t-h3 svc-card__title">Weekly KPI Reporting</h3>
+        <p class="svc-card__desc">Full transparency on campaign performance</p>
+      </div>
+      <div class="svc-card card svc-card--accent">
+        <span class="material-icons-outlined svc-card__icon" aria-label="Settings icon">settings</span>
+        <h3 class="t-h3 svc-card__title">Ads Management</h3>
+        <p class="svc-card__desc">End-to-end paid advertising management</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 4: Option B — Essentials -->
+<section class="slide">
+  <div class="glow glow--tl"></div>
+  <div class="slide__content">
+    <div class="slide__heading slide__heading--with-icon">
+      <span class="material-icons-outlined slide__heading-icon" aria-label="Lightning bolt icon">bolt</span>
+      <h2 class="t-h1">OPTION B: ESSENTIALS</h2>
+    </div>
+    <div class="y-line--full"></div>
+
+    <div class="opt-grid">
+      <div class="card price-box price-box--contained">
+        <span class="t-label price-box__label">ONE-TIME FEE</span>
+        <div class="price-box__amount">$1,500</div>
+        <p class="price-box__sub">USD &bull; Creatives Only</p>
+      </div>
+      <div class="optb-included">
+        <span class="t-label optb-included__label">WHAT'S INCLUDED</span>
+        <div class="feature">
+          <h3 class="t-h3 feature__title">42 Total Creatives</h3>
+          <p class="feature__desc">14 video creatives + 28 static image creatives</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="optb-ongoing">
+      <span class="t-label">ONGOING</span>
+      <p class="optb-ongoing__amount">% of each funded deal</p>
+      <p class="optb-ongoing__desc t-body">Lower upfront cost, performance-based ongoing partnership.</p>
+    </div>
+  </div>
+  <div class="slide-foot">
+    <p class="slide-foot__text">"Break glass in case of emergency" — lean start, full performance.</p>
+  </div>
+</section>
+
+<!-- Slide 5: Option C — Phased Rollout -->
+<section class="slide">
+  <div class="glow glow--br"></div>
+  <div class="slide__content">
+    <div class="slide__heading slide__heading--with-icon">
+      <span class="material-icons-outlined slide__heading-icon" aria-label="Clock icon">schedule</span>
+      <h2 class="t-h1">OPTION C: PHASED ROLLOUT</h2>
+    </div>
+    <div class="y-line--full"></div>
+
+    <div class="phases">
+      <div class="card phase-box">
+        <span class="t-label phase-box__label">PHASE 1 &bull; DAY 1</span>
+        <h3 class="t-h2 phase-box__heading">Same as Option B</h3>
+        <p class="t-body phase-box__body">42 creatives (14 video + 28 static)<br>+ % of funded deals</p>
+        <p class="phase-box__accent">Start generating results immediately</p>
+      </div>
+      <div class="phase-arrow">&rarr;</div>
+      <div class="card phase-box">
+        <span class="t-label phase-box__label">PHASE 2 &bull; AFTER 60 DAYS</span>
+        <div class="phase-box__price">$1,700 <span class="phase-box__price-unit">USD</span></div>
+        <p class="t-body phase-box__body">Unlocks the full suite:</p>
+        <p class="phase-box__features">VSL &bull; Funnel &bull; Website &bull; Automations</p>
+        <p class="phase-box__accent">Scale up once you've validated the pipeline</p>
+      </div>
+    </div>
+
+    <div class="total-bar">
+      <p class="t-h3">Total Investment: Creatives upfront + $1,700 at 60 days = Full Package unlocked</p>
+    </div>
+  </div>
+  <div class="slide-foot">
+    <p class="slide-foot__text">Prove the model first, then invest in the full growth engine.</p>
+  </div>
+</section>
+
+<!-- Slide 6: At a Glance -->
+<section class="slide">
+  <div class="glow glow--center"></div>
+  <div class="glow glow--tl glow--half"></div>
+  <div class="glow glow--br glow--half"></div>
+  <div class="slide__content slide__content--center">
+    <h2 class="t-h1 glance-title">AT A GLANCE</h2>
+    <div class="y-line glance-line"></div>
+
+    <div class="glance-grid">
+      <!-- Option A -->
+      <div class="glance-card card">
+        <span class="t-label glance-card__label">OPTION A</span>
+        <h3 class="t-h2 glance-card__name">Full Package</h3>
+        <div class="glance-card__price">$2,900</div>
+        <p class="glance-card__sub">21% of commission</p>
+        <div class="glance-card__div"></div>
+        <div class="glance-feat"><span class="glance-feat__check">&#10003;</span> Funnel build</div>
+        <div class="glance-feat"><span class="glance-feat__check">&#10003;</span> Website build</div>
+        <div class="glance-feat"><span class="glance-feat__check">&#10003;</span> VSL filming & editing</div>
+        <div class="glance-feat"><span class="glance-feat__check">&#10003;</span> 42 creatives</div>
+        <div class="glance-feat"><span class="glance-feat__check">&#10003;</span> Appointment setter</div>
+        <div class="glance-feat"><span class="glance-feat__check">&#10003;</span> Weekly KPI reporting</div>
+        <div class="glance-feat"><span class="glance-feat__check">&#10003;</span> Ads management</div>
+      </div>
+      <!-- Option B -->
+      <div class="glance-card glance-card--b card">
+        <span class="t-label glance-card__label">OPTION B</span>
+        <h3 class="t-h2 glance-card__name">Essentials</h3>
+        <div class="glance-card__price">$1,500</div>
+        <p class="glance-card__sub">% of funded deal</p>
+        <div class="glance-card__div"></div>
+        <div class="glance-feat"><span class="glance-feat__check">&#10003;</span> 42 creatives</div>
+      </div>
+      <!-- Option C -->
+      <div class="glance-card glance-card--c card">
+        <span class="t-label glance-card__label">OPTION C</span>
+        <h3 class="t-h2 glance-card__name">Phased Rollout</h3>
+        <div class="glance-card__price">$1,500 + $1,700</div>
+        <p class="glance-card__sub">% of funded deal</p>
+        <div class="glance-card__div"></div>
+        <div class="glance-feat"><span class="glance-feat__check">&#10003;</span> 42 creatives now</div>
+        <div class="glance-feat"><span class="glance-feat__check">&#10003;</span> Funnel build (60 days)</div>
+        <div class="glance-feat"><span class="glance-feat__check">&#10003;</span> Website build (60 days)</div>
+        <div class="glance-feat"><span class="glance-feat__check">&#10003;</span> VSL filming (60 days)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 7: Closing -->
+<section class="slide">
+  <div class="glow glow--center glow--lg"></div>
+  <div class="slide__content closing">
+    <h2 class="t-hero">LET'S BUILD</h2>
+    <p class="t-hero t-yellow">SOMETHING.</p>
+    <div class="y-line closing__line"></div>
+    <p class="closing__body">Ready to get started? Pick the option that fits and let's go.</p>
+    <p class="closing__brand">Arc Garde &bull; Digital Marketing & Growth</p>
+  </div>
+  <div class="corner-accent corner-accent--br"></div>
+</section>
+
+</main>
+
+</body>
+</html>

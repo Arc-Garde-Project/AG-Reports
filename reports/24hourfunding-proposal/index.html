@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>24HourFunding | Growth Partnership Proposal</title>
+  <meta name="description" content="A performance-aligned growth partnership built for 24HourFunding - more leads, lower cost, full ownership of your traffic and data.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="24HourFunding | Growth Partnership Proposal">
+  <meta property="og:description" content="A performance-aligned growth partnership - more leads, lower cost, full ownership of your pipeline.">
+  <meta property="og:image" content="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%2024%20Hour%20Funding/Banner%20Image%20for%2024%20hour%20Proposal.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="24HourFunding | Growth Partnership Proposal">
+  <meta name="twitter:description" content="A performance-aligned growth partnership - more leads, lower cost, full ownership of your pipeline.">
+  <meta name="twitter:image" content="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%2024%20Hour%20Funding/Banner%20Image%20for%2024%20hour%20Proposal.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════
+   24HF GROWTH PROPOSAL - ARC GARDE TEMPLATE
+   ═══════════════════════════════════════════ */
+
+:root {
+  /* Brand - Orange */
+  --accent: #F26522;
+  --accent-light: #FF8A50;
+  --accent-dark: #C44D12;
+  --accent-glow: rgba(242, 101, 34, 0.35);
+  --accent-dim: rgba(242, 101, 34, 0.08);
+
+  /* Backgrounds */
+  --bg: #000000;
+  --charcoal: #0A0A0A;
+
+  /* Text */
+  --text-primary: #FFFFFF;
+  --text-muted: rgba(255, 255, 255, 0.5);
+  --text-subtle: rgba(255, 255, 255, 0.3);
+  --text-dim: rgba(255, 255, 255, 0.35);
+  --text-faint: rgba(255, 255, 255, 0.4);
+
+  /* UI */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --success: #4ADE80;
+  --error: #FF6B6B;
+
+  /* Spacing (multiples of 7) */
+  --s-7: 7px; --s-14: 14px; --s-21: 21px; --s-28: 28px;
+  --s-35: 35px; --s-42: 42px; --s-49: 49px; --s-56: 56px;
+  --s-63: 63px; --s-70: 70px; --s-84: 84px;
+
+  /* Radius */
+  --r-7: 7px; --r-14: 14px; --r-21: 21px; --r-28: 28px;
+}
+
+/* RESET */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+::selection { background: var(--accent); color: #000; }
+html { scroll-behavior: smooth; display: block !important; width: 100% !important; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; display: block !important; width: 100% !important; }
+
+/* FRAMER EMBED FIX - Force vertical stacking */
+.hf-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  min-height: 100vh;
+}
+.hf-wrapper > * {
+  width: 100% !important;
+  flex-shrink: 0 !important;
+}
+h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
+p, li, blockquote { text-wrap: pretty; }
+
+/* SECTION DIVIDERS */
+.hf-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(242, 101, 34, 0.15) 30%, rgba(242, 101, 34, 0.35) 50%, rgba(242, 101, 34, 0.15) 70%, transparent 100%); background-size: 200% 100%; animation: hfDividerFlow 6s linear infinite; }
+
+/* ═══════════════════════════════════════════
+   01 - HERO
+   ═══════════════════════════════════════════ */
+.hf-hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.hf-hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--s-84) var(--s-21) var(--s-42);
+  position: relative;
+  z-index: 10;
+}
+
+.hf-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-14);
+  margin-bottom: var(--s-28);
+  opacity: 0;
+  transform: translateY(21px);
+  animation: hfReveal 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.1s forwards;
+}
+
+.hf-eyebrow__line {
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent));
+  animation: hfLineExpand 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.6s forwards;
+}
+
+.hf-eyebrow__line--right {
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+@keyframes hfLineExpand { to { width: 42px; } }
+
+.hf-eyebrow__text {
+  font-size: 12px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.hf-hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(49px, 11vw, 126px);
+  line-height: 0.9;
+  letter-spacing: -2px;
+  margin-bottom: var(--s-28);
+  opacity: 0;
+  transform: translateY(28px);
+  animation: hfReveal 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) 0.3s forwards;
+}
+
+.hf-hero-title span { display: block; }
+
+.hf-hero-title__accent {
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent), var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hf-hero-subtitle {
+  font-size: 15px;
+  line-height: 2.1;
+  color: var(--text-muted);
+  max-width: 490px;
+  margin: 0 auto var(--s-42);
+  opacity: 0;
+  transform: translateY(21px);
+  animation: hfReveal 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.6s forwards;
+}
+
+.hf-hero-subtitle strong { color: var(--text-primary); font-weight: 600; }
+
+/* HERO LOGO */
+.hf-hero-logo {
+  width: clamp(140px, 22vw, 220px);
+  height: auto;
+  margin-bottom: var(--s-35);
+  filter: brightness(0) invert(1);
+  opacity: 0;
+  transform: translateY(21px);
+  animation: hfReveal 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.05s forwards;
+}
+
+/* MARQUEE */
+.hf-marquee {
+  width: 100%;
+  overflow: hidden;
+  padding: var(--s-49) 0;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
+  z-index: 10;
+}
+
+.hf-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: hfMarquee 21s linear infinite;
+}
+
+@keyframes hfMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.hf-marquee__item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(63px, 10vw, 98px);
+  letter-spacing: 7px;
+  white-space: nowrap;
+  padding: 0 var(--s-42);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
+}
+
+.hf-marquee__item span {
+  color: var(--accent);
+  -webkit-text-fill-color: var(--accent);
+  -webkit-text-stroke: 0;
+  text-shadow: 0 0 28px rgba(242, 101, 34, 0.3);
+}
+
+@keyframes hfReveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════
+   02 - PROBLEM / SOLUTION
+   ═══════════════════════════════════════════ */
+.hf-section {
+  position: relative;
+  width: 100%;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.hf-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-14);
+  font-size: 12px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--s-21);
+}
+
+.hf-label::before,
+.hf-label::after {
+  content: '';
+  width: 42px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.hf-section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(33px, 6vw, 56px);
+  line-height: 1;
+  margin-bottom: var(--s-49);
+}
+
+.hf-section-title__accent {
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent), var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+
+/* ═══════════════════════════════════════════
+   03 - SCOPE / SOLUTION CARDS
+   ═══════════════════════════════════════════ */
+.hf-scope {
+  padding: var(--s-84) var(--s-21);
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.hf-scope__inner { max-width: 1050px; margin: 0 auto; }
+
+.hf-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-21);
+  margin-top: var(--s-42);
+}
+
+.hf-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-21);
+  padding: var(--s-35);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.hf-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-light));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hf-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(242, 101, 34, 0.2);
+}
+
+.hf-card:hover::before { opacity: 1; }
+
+.hf-card__icon {
+  width: 49px;
+  height: 49px;
+  border-radius: var(--r-14);
+  background: linear-gradient(135deg, rgba(242, 101, 34, 0.12), rgba(242, 101, 34, 0.04));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--s-21);
+  font-size: 24px;
+  color: var(--accent);
+  animation: hfBreathe 3s ease-in-out infinite;
+}
+
+@keyframes hfBreathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+.hf-card__title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: var(--s-14);
+}
+
+.hf-card__text {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════════
+   04 - PRICING SECTIONS (Paid Ads, Ongoing, Organic, UGC)
+   ═══════════════════════════════════════════ */
+.hf-pricing-section {
+  padding: var(--s-84) var(--s-21);
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.hf-pricing-section__inner {
+  max-width: 1050px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hf-price-display {
+  margin: var(--s-42) 0;
+}
+
+.hf-price-display__amount {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(49px, 8vw, 84px);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent), var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  position: relative;
+  display: inline-block;
+}
+
+.hf-price-display__amount::after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-light));
+  border-radius: 3px;
+}
+
+.hf-price-display__label {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-top: var(--s-21);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════
+   05 - METRICS / NUMBERS
+   ═══════════════════════════════════════════ */
+.hf-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-21);
+  max-width: 700px;
+  margin: var(--s-49) auto 0;
+}
+
+.hf-metric {
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-21);
+  padding: var(--s-28);
+  text-align: center;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.hf-metric:hover {
+  border-color: rgba(242, 101, 34, 0.2);
+  transform: translateY(-3px);
+}
+
+.hf-metric__value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.hf-metric__value--accent { color: var(--accent); }
+.hf-metric__value--error { color: var(--error); opacity: 0.6; }
+
+.hf-metric__label {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: var(--s-7);
+}
+
+/* CPA comparison bars */
+.hf-compare {
+  max-width: 700px;
+  margin: var(--s-49) auto 0;
+  text-align: left;
+}
+
+.hf-compare__bar {
+  margin-bottom: var(--s-28);
+}
+
+.hf-compare__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--s-7);
+}
+
+.hf-compare__label {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.hf-compare__value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.hf-compare__track {
+  height: 14px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.hf-compare__fill {
+  height: 100%;
+  border-radius: 7px;
+  transition: width 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+  width: 0;
+}
+
+.hf-compare__fill--old { background: linear-gradient(90deg, rgba(255,107,107,0.3), rgba(255,107,107,0.15)); }
+.hf-compare__fill--new {
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-light));
+  box-shadow: 0 0 21px rgba(242, 101, 34, 0.25);
+}
+
+.hf-compare.visible .hf-compare__fill--old { width: 100%; }
+.hf-compare.visible .hf-compare__fill--new { width: 40%; }
+
+/* Benchmark callout */
+.hf-benchmark {
+  display: flex;
+  align-items: center;
+  gap: var(--s-35);
+  background: linear-gradient(135deg, rgba(242, 101, 34, 0.06), rgba(242, 101, 34, 0.01));
+  border: 1px solid rgba(242, 101, 34, 0.15);
+  border-radius: var(--r-21);
+  padding: var(--s-35);
+  margin-top: var(--s-49);
+  max-width: 700px;
+}
+
+.hf-benchmark__value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(42px, 7vw, 63px);
+  font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.hf-benchmark__text {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+
+.hf-benchmark__source {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: var(--s-7);
+}
+
+/* ═══════════════════════════════════════════
+   06 - SUMMARY TABLE (At a Glance)
+   ═══════════════════════════════════════════ */
+.hf-summary-grid {
+  max-width: 800px;
+  margin: var(--s-49) auto 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-21);
+  overflow: hidden;
+}
+
+.hf-summary-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background 0.3s ease;
+}
+
+.hf-summary-row:last-child { border-bottom: none; }
+
+.hf-summary-row:not(.hf-summary-row--header):hover {
+  background: rgba(255,255,255,0.02);
+}
+
+.hf-summary-row--header {
+  background: rgba(242, 101, 34, 0.06);
+}
+
+.hf-summary-cell {
+  padding: var(--s-21) var(--s-28);
+  font-size: 14px;
+}
+
+.hf-summary-cell--label { color: var(--text-muted); }
+.hf-summary-row--header .hf-summary-cell {
+  color: var(--accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 3px;
+}
+
+.hf-summary-cell--value {
+  text-align: right;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+}
+
+.hf-summary-cell--value.accent { color: var(--accent); }
+.hf-summary-cell--value.green { color: var(--success); }
+
+/* ═══════════════════════════════════════════
+   07 - CLOSING
+   ═══════════════════════════════════════════ */
+.hf-closing {
+  position: relative;
+  width: 100%;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--s-84) var(--s-21);
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.hf-closing__inner { position: relative; z-index: 10; }
+
+.hf-closing__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(49px, 11vw, 126px);
+  line-height: 0.9;
+  letter-spacing: -2px;
+}
+
+.hf-closing__title span {
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent), var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hf-closing__subtitle {
+  font-size: 15px;
+  line-height: 2.1;
+  color: var(--text-muted);
+  margin-top: var(--s-28);
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ═══════════════════════════════════════════
+   08 - FEATURE TAGS
+   ═══════════════════════════════════════════ */
+.hf-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-14);
+  justify-content: center;
+  margin-top: var(--s-35);
+}
+
+.hf-tag {
+  display: inline-block;
+  padding: 9px 21px;
+  border: 1px solid rgba(242, 101, 34, 0.2);
+  border-radius: 42px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  background: rgba(242, 101, 34, 0.04);
+  width: fit-content;
+  transition: all 0.3s ease;
+}
+
+.hf-tag:hover {
+  background: rgba(242, 101, 34, 0.1);
+  border-color: rgba(242, 101, 34, 0.4);
+  transform: translateY(-3px);
+}
+
+/* ═══════════════════════════════════════════
+   09 - TAGLINE / NOTE
+   ═══════════════════════════════════════════ */
+.hf-note {
+  font-size: 14px;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-top: var(--s-42);
+  border-left: 2px solid rgba(242, 101, 34, 0.3);
+  padding-left: var(--s-21);
+  max-width: 560px;
+  text-align: left;
+}
+
+.hf-note--center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ═══════════════════════════════════════════
+   10 - PROGRESS NAV
+   ═══════════════════════════════════════════ */
+.hf-nav {
+  position: fixed;
+  right: 21px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  z-index: 100;
+}
+
+.hf-nav__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.hf-nav__dot:hover { background: rgba(255,255,255,0.3); transform: scale(1.4); }
+.hf-nav__dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.hf-card:focus-visible { transform: translateY(-7px); border-color: rgba(242, 101, 34, 0.2); outline: none; }
+.hf-card:focus-visible::before { opacity: 1; }
+.hf-tag:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.hf-nav__dot.active { background: var(--accent); box-shadow: 0 0 14px var(--accent-glow); transform: scale(1.5); }
+
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL SYSTEM
+   ═══════════════════════════════════════════ */
+.hf-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.hf-reveal.visible { opacity: 1; transform: translateY(0); }
+.hf-reveal--d1 { transition-delay: 0.1s; }
+.hf-reveal--d2 { transition-delay: 0.3s; }
+.hf-reveal--d3 { transition-delay: 0.6s; }
+.hf-reveal--d4 { transition-delay: 0.9s; }
+
+/* ═══════════════════════════════════════════
+   ENHANCED VISUAL EFFECTS
+   ═══════════════════════════════════════════ */
+
+/* Noise texture overlay */
+.hf-wrapper::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.4;
+}
+
+/* Ambient floating orbs */
+.hf-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 1;
+}
+.hf-orb--1 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(242, 101, 34, 0.15), transparent 70%);
+  top: -10%; right: -5%;
+  animation: hfOrbDrift1 7s ease-in-out infinite alternate;
+}
+.hf-orb--2 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(242, 101, 34, 0.1), transparent 70%);
+  bottom: 20%; left: -8%;
+  animation: hfOrbDrift2 9s ease-in-out infinite alternate;
+}
+.hf-orb--3 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(255, 138, 80, 0.08), transparent 70%);
+  top: 40%; left: 50%;
+  transform: translateX(-50%);
+  animation: hfOrbDrift3 12.6s ease-in-out infinite alternate;
+}
+@keyframes hfOrbDrift1 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-35px, 42px); }
+}
+@keyframes hfOrbDrift2 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(42px, -28px); }
+}
+@keyframes hfOrbDrift3 {
+  0% { transform: translateX(-50%) translate(0, 0); }
+  100% { transform: translateX(-50%) translate(-21px, 35px); }
+}
+
+/* Animated shimmer on price text gradient */
+.hf-price-display__amount {
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-light), rgba(255, 200, 150, 0.9), var(--accent-light), var(--accent), var(--accent-dark));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: hfPriceGlow 4.2s ease-in-out infinite;
+}
+@keyframes hfPriceGlow {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
+/* Glassmorphism + 3D card foundation */
+.hf-card {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transform-style: preserve-3d;
+}
+
+/* Enhanced reveal direction variants */
+.hf-reveal--left { transform: translateX(-42px); }
+.hf-reveal--left.visible { transform: translateX(0); }
+.hf-reveal--right { transform: translateX(42px); }
+.hf-reveal--right.visible { transform: translateX(0); }
+.hf-reveal--scale { transform: scale(0.88); }
+.hf-reveal--scale.visible { transform: scale(1); }
+
+/* Section title accent underline animation */
+.hf-section-title__accent { position: relative; }
+.hf-section-title__accent::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light), transparent);
+  transition: width 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) 0.3s;
+}
+.hf-reveal.visible .hf-section-title__accent::after { width: 100%; }
+
+/* Closing section glow pulse */
+.hf-closing::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(242, 101, 34, 0.12), transparent 60%);
+  animation: hfGlowPulse 4.2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes hfGlowPulse {
+  0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+}
+
+/* Marquee soft fade edges */
+.hf-marquee {
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+
+/* Nav dot ping pulse */
+.hf-nav__dot { position: relative; }
+.hf-nav__dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+}
+.hf-nav__dot.active::after {
+  animation: hfDotPing 2.1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes hfDotPing {
+  0% { transform: scale(1); opacity: 0.6; }
+  75%, 100% { transform: scale(3); opacity: 0; }
+}
+
+/* Tag hover glow */
+.hf-tag:hover { box-shadow: 0 0 28px rgba(242, 101, 34, 0.2); }
+
+/* Summary row hover sweep */
+.hf-summary-row:not(.hf-summary-row--header) { position: relative; overflow: hidden; }
+.hf-summary-row:not(.hf-summary-row--header)::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 0;
+  background: rgba(242, 101, 34, 0.06);
+  transition: width 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  z-index: 0;
+}
+.hf-summary-row:not(.hf-summary-row--header):hover::before { width: 100%; }
+
+/* Ambient value glows */
+.hf-benchmark__value { text-shadow: 0 0 42px rgba(242, 101, 34, 0.3); }
+.hf-hero-title { text-shadow: 0 0 84px rgba(242, 101, 34, 0.08); }
+
+/* Card icon hover enhancement */
+.hf-card:hover .hf-card__icon {
+  box-shadow: 0 0 28px rgba(242, 101, 34, 0.3);
+  background: linear-gradient(135deg, rgba(242, 101, 34, 0.2), rgba(242, 101, 34, 0.08));
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+/* Sombre background - rising from bottom */
+.hf-wrapper::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 25% 100%, rgba(242, 101, 34, 0.1), transparent 45%),
+    radial-gradient(ellipse at 75% 95%, rgba(196, 77, 18, 0.07), transparent 40%),
+    radial-gradient(ellipse at 50% 100%, rgba(139, 69, 19, 0.06), transparent 50%);
+  animation: hfSombre 21s ease-in-out infinite;
+}
+@keyframes hfSombre {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Ember particle canvas */
+.hf-ember-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Semi-transparent sections for sombre bleed-through */
+.hf-section, .hf-hero-section, .hf-closing { background: rgba(0, 0, 0, 0.88); }
+
+/* Scroll progress bar */
+.hf-progress {
+  position: fixed;
+  top: 0; left: 0;
+  width: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-light));
+  z-index: 1001;
+  box-shadow: 0 0 14px rgba(242, 101, 34, 0.4);
+}
+
+/* Hero dot grid pattern */
+.hf-hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 42px 42px;
+  z-index: 2;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+}
+
+/* Summary table border pulse */
+.hf-summary-grid { animation: hfTablePulse 4.2s ease-in-out infinite; }
+@keyframes hfTablePulse {
+  0%, 100% { border-color: var(--border-subtle); box-shadow: 0 0 0 rgba(242, 101, 34, 0); }
+  50% { border-color: rgba(242, 101, 34, 0.25); box-shadow: 0 0 28px rgba(242, 101, 34, 0.06); }
+}
+
+/* Divider flow keyframes */
+@keyframes hfDividerFlow {
+  0% { background-position: 200% center; }
+  100% { background-position: 0% center; }
+}
+
+/* ═══════════════════════════════════════════
+   OPTION CARD - ROTATING GRADIENT BORDER
+   ═══════════════════════════════════════════ */
+@property --border-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.hf-card--option {
+  --border-angle: 0deg;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.95)) padding-box,
+    conic-gradient(from var(--border-angle), transparent 25%, var(--accent) 50%, transparent 75%) border-box;
+  animation: hfBorderSpin 4.2s linear infinite;
+}
+
+.hf-card--option:hover { border-color: transparent; }
+.hf-card--option::before { content: none; }
+
+@keyframes hfBorderSpin {
+  to { --border-angle: 360deg; }
+}
+
+/* ═══════════════════════════════════════════
+   LIGHT SWEEP ON CARD HOVER
+   ═══════════════════════════════════════════ */
+.hf-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    transparent 40%,
+    rgba(255, 255, 255, 0.02) 44%,
+    rgba(255, 255, 255, 0.07) 50%,
+    rgba(255, 255, 255, 0.02) 56%,
+    transparent 60%
+  );
+  transform: translateX(-100%) rotate(35deg);
+  transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.hf-card:hover::after {
+  transform: translateX(100%) rotate(35deg);
+}
+
+/* ═══════════════════════════════════════════
+   HERO TEXT STAGGER REVEAL
+   ═══════════════════════════════════════════ */
+.hf-hero-title {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+.hf-hero-title > span {
+  opacity: 0;
+  transform: translateY(35px) scale(0.96);
+  animation: hfTitleStagger 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+.hf-hero-title > span:nth-child(1) { animation-delay: 0.3s; }
+.hf-hero-title > span:nth-child(2) { animation-delay: 0.7s; }
+
+@keyframes hfTitleStagger {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+@media (max-width: 800px) {
+  .hf-cards-grid { grid-template-columns: 1fr !important; }
+  .hf-metrics { grid-template-columns: 1fr; }
+  .hf-benchmark { flex-direction: column; text-align: center; }
+  .hf-summary-row { grid-template-columns: 1fr; }
+  .hf-summary-cell--value { text-align: left; padding-top: 0; }
+  .hf-nav { display: none; }
+}
+
+@media (max-width: 600px) {
+  .hf-hero { padding: var(--s-63) 18px var(--s-35); }
+  .hf-eyebrow__line { display: none; }
+  .hf-marquee__item { padding: 0 var(--s-21); }
+  .hf-label::before, .hf-label::after { width: 21px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hf-hero-logo, .hf-eyebrow, .hf-hero-title, .hf-hero-title > span, .hf-hero-subtitle, .hf-reveal,
+  .hf-reveal--left, .hf-reveal--right, .hf-reveal--scale {
+    opacity: 1; transform: none; animation: none; transition: none;
+  }
+  .hf-eyebrow__line { width: 42px; animation: none; }
+  .hf-card--option { animation: none; border: 1px solid rgba(242, 101, 34, 0.25); }
+  .hf-card::after { display: none; }
+  .hf-marquee__track { animation: none; }
+  .hf-card__icon { animation: none; }
+  .hf-orb { animation: none; }
+  .hf-price-display__amount { animation: none; }
+  .hf-closing::before { animation: none; }
+  .hf-nav__dot::after { animation: none; }
+.hf-summary-grid { animation: none; }
+  .hf-divider { animation: none; }
+  .hf-wrapper::before { animation: none; }
+  .hf-ember-canvas { display: none; }
+  .hf-wrapper::after { display: none; }
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(242, 101, 34, 0.3); border-radius: 2px; }
+</style>
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js" defer></script>
+</head>
+<body>
+<main class="hf-wrapper">
+  <div class="hf-progress"></div>
+
+  <!-- PROGRESS NAV -->
+  <nav class="hf-nav" aria-label="Sections">
+    <button class="hf-nav__dot active" data-target="hero" aria-label="Cover"></button>
+    <button class="hf-nav__dot" data-target="solution" aria-label="The Solution"></button>
+    <button class="hf-nav__dot" data-target="paid-ads" aria-label="Paid Ads Setup"></button>
+    <button class="hf-nav__dot" data-target="ongoing" aria-label="Ongoing Partnership"></button>
+    <button class="hf-nav__dot" data-target="organic" aria-label="Organic Content"></button>
+    <button class="hf-nav__dot" data-target="ugc" aria-label="UGC Production"></button>
+    <button class="hf-nav__dot" data-target="numbers" aria-label="The Numbers"></button>
+    <button class="hf-nav__dot" data-target="website" aria-label="Website Revamp"></button>
+    <button class="hf-nav__dot" data-target="summary" aria-label="At a Glance"></button>
+    <button class="hf-nav__dot" data-target="closing" aria-label="Closing"></button>
+  </nav>
+
+  <!-- === 01 HERO === -->
+  <section class="hf-hero-section" id="hero">
+    <div class="hf-orb hf-orb--1" aria-hidden="true"></div>
+    <div class="hf-orb hf-orb--2" aria-hidden="true"></div>
+    <div class="hf-hero-grid" aria-hidden="true"></div>
+    <div class="hf-hero">
+      <img class="hf-hero-logo" src="24hf-logo.png" alt="24HourFunding">
+      <div class="hf-eyebrow">
+        <span class="hf-eyebrow__line"></span>
+        <span class="hf-eyebrow__text">Growth Partnership</span>
+        <span class="hf-eyebrow__line hf-eyebrow__line--right"></span>
+      </div>
+      <h1 class="hf-hero-title">
+        <span>YOUR PIPELINE</span>
+        <span class="hf-hero-title__accent">YOUR GROWTH</span>
+      </h1>
+      <p class="hf-hero-subtitle">A performance-aligned partnership built for <strong>24HourFunding</strong> - more leads, lower cost, full ownership of your traffic and data.</p>
+    </div>
+    <div class="hf-marquee" aria-hidden="true">
+      <div class="hf-marquee__track">
+        <span class="hf-marquee__item">24HOUR<span>FUNDING</span></span>
+        <span class="hf-marquee__item">OWN YOUR <span>PIPELINE</span></span>
+        <span class="hf-marquee__item">STOP RENTING <span>LEADS</span></span>
+        <span class="hf-marquee__item">GROWTH <span>PARTNERSHIP</span></span>
+        <span class="hf-marquee__item">24HOUR<span>FUNDING</span></span>
+        <span class="hf-marquee__item">OWN YOUR <span>PIPELINE</span></span>
+        <span class="hf-marquee__item">STOP RENTING <span>LEADS</span></span>
+        <span class="hf-marquee__item">GROWTH <span>PARTNERSHIP</span></span>
+      </div>
+    </div>
+  </section>
+
+  <div class="hf-divider"></div>
+
+  <!-- === 02 THE SOLUTION === -->
+  <section class="hf-section" id="solution">
+    <div class="hf-scope">
+      <div class="hf-scope__inner">
+        <div class="hf-label hf-reveal">The Solution</div>
+        <h2 class="hf-section-title hf-reveal hf-reveal--d1">STOP RENTING LEADS<br><span class="hf-section-title__accent">START OWNING YOUR PIPELINE</span></h2>
+
+        <div class="hf-cards-grid">
+          <div class="hf-card hf-reveal hf-reveal--d1">
+            <div class="hf-card__icon">&#9670;</div>
+            <h3 class="hf-card__title">Own Your Traffic</h3>
+            <p class="hf-card__text">Your pixel. Your audiences. Your retargeting data. Every dollar spent builds your asset, not someone else's.</p>
+          </div>
+          <div class="hf-card hf-reveal hf-reveal--d2">
+            <div class="hf-card__icon">&#9670;</div>
+            <h3 class="hf-card__title">Performance-Aligned</h3>
+            <p class="hf-card__text">We earn when you earn. Compensation tied directly to your funded deals - no empty retainers eating your margin.</p>
+          </div>
+          <div class="hf-card hf-reveal hf-reveal--d3">
+            <div class="hf-card__icon">&#9670;</div>
+            <h3 class="hf-card__title">Unlimited Scale</h3>
+            <p class="hf-card__text">No volume caps. Scale your ad spend, scale your leads. The ceiling is whatever you want it to be.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hf-divider"></div>
+
+  <!-- === 04 PAID ADS SETUP === -->
+  <section class="hf-section" id="paid-ads">
+    <div class="hf-pricing-section">
+      <div class="hf-pricing-section__inner">
+        <div class="hf-label hf-reveal">Paid Ads Setup</div>
+        <h2 class="hf-section-title hf-reveal hf-reveal--d1">LAUNCH YOUR <span class="hf-section-title__accent">LEAD ENGINE</span></h2>
+
+        <p class="hf-reveal hf-reveal--d1" style="font-size: 15px; line-height: 2.1; color: var(--text-muted); max-width: 560px; margin: 0 auto var(--s-42);">14 video creatives + 28 static image creatives - two production paths, same firepower.</p>
+
+        <div class="hf-cards-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 800px; margin: 0 auto;">
+          <div class="hf-card hf-card--option hf-reveal hf-reveal--left hf-reveal--d2" style="text-align: center; padding: var(--s-42) var(--s-28);">
+            <div class="hf-card__icon">&#9656;</div>
+            <h3 class="hf-card__title">Option A - UGC</h3>
+            <p class="hf-card__text" style="margin-bottom: var(--s-28);">Content creators film and deliver - scripted, authentic, fully edited. No camera time needed from you.</p>
+            <div class="hf-price-display" style="margin: 0;">
+              <div class="hf-price-display__amount" style="font-size: clamp(35px, 6vw, 56px);">~$3,640</div>
+              <p class="hf-price-display__label" style="font-size: 12px;">+ 10% of Commission Per Deal</p>
+            </div>
+          </div>
+          <div class="hf-card hf-card--option hf-reveal hf-reveal--right hf-reveal--d3" style="text-align: center; padding: var(--s-42) var(--s-28);">
+            <div class="hf-card__icon">&#9656;</div>
+            <h3 class="hf-card__title">Option B - Videographer</h3>
+            <p class="hf-card__text" style="margin-bottom: var(--s-28);">We fly a videographer out to film and edit on location. Premium production, cinematic quality.</p>
+            <div class="hf-price-display" style="margin: 0;">
+              <div class="hf-price-display__amount" style="font-size: clamp(35px, 6vw, 56px);">~$3,000</div>
+              <p class="hf-price-display__label" style="font-size: 12px;">+ 10% of Commission Per Deal</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="hf-note hf-note--center hf-reveal hf-reveal--d4">Both options include full funnel build - landing page, pre-call clarity page, and Zapier automations. You cover ad spend directly - estimated ~$200/day.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="hf-divider"></div>
+
+  <!-- === 05 ONGOING PARTNERSHIP === -->
+  <section class="hf-section" id="ongoing">
+    <div class="hf-pricing-section">
+      <div class="hf-pricing-section__inner">
+        <div class="hf-label hf-reveal">Ongoing Partnership</div>
+        <h2 class="hf-section-title hf-reveal hf-reveal--d1">WE GROW <span class="hf-section-title__accent">WHEN YOU GROW</span></h2>
+
+        <div class="hf-price-display hf-reveal hf-reveal--d2">
+          <div class="hf-price-display__amount">10%</div>
+          <p class="hf-price-display__label">Of Your Commission Per Funded Deal</p>
+        </div>
+
+        <div class="hf-cards-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 750px; margin: var(--s-42) auto 0;">
+          <div class="hf-card hf-reveal hf-reveal--d2">
+            <div class="hf-card__icon">&#9656;</div>
+            <h3 class="hf-card__title">Ads Management</h3>
+            <p class="hf-card__text">End-to-end paid advertising - targeting, optimization, creative rotation, and scaling managed for you.</p>
+          </div>
+          <div class="hf-card hf-reveal hf-reveal--d3">
+            <div class="hf-card__icon">&#9656;</div>
+            <h3 class="hf-card__title">Weekly KPI Reporting</h3>
+            <p class="hf-card__text">Full transparency - leads generated, cost per lead, conversion rates, and funded deal tracking every week.</p>
+          </div>
+        </div>
+
+        <p class="hf-note hf-note--center hf-reveal hf-reveal--d4">Performance-aligned - we grow when you grow. Open to discussion.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="hf-divider"></div>
+
+  <!-- === 06 ORGANIC CONTENT === -->
+  <section class="hf-section" id="organic">
+    <div class="hf-pricing-section">
+      <div class="hf-pricing-section__inner">
+        <div class="hf-label hf-reveal">Organic Content System</div>
+        <h2 class="hf-section-title hf-reveal hf-reveal--d1">BUILD YOUR <span class="hf-section-title__accent">BRAND ON AUTOPILOT</span></h2>
+
+        <div class="hf-price-display hf-reveal hf-reveal--d2">
+          <div class="hf-price-display__amount">$3,100/mo</div>
+          <p class="hf-price-display__label">3x Daily Across 7 Platforms</p>
+        </div>
+
+        <div class="hf-cards-grid">
+          <div class="hf-card hf-reveal hf-reveal--d1">
+            <div class="hf-card__icon">&#9670;</div>
+            <h3 class="hf-card__title">Consistent Presence</h3>
+            <p class="hf-card__text">Three posts every single day across all major platforms - building trust and authority on autopilot.</p>
+          </div>
+          <div class="hf-card hf-reveal hf-reveal--d2">
+            <div class="hf-card__icon">&#9670;</div>
+            <h3 class="hf-card__title">7 Platforms</h3>
+            <p class="hf-card__text">Full cross-platform distribution so you're visible wherever potential clients spend their time.</p>
+          </div>
+          <div class="hf-card hf-reveal hf-reveal--d3">
+            <div class="hf-card__icon">&#9670;</div>
+            <h3 class="hf-card__title">Performance Bonus</h3>
+            <p class="hf-card__text">Base retainer covers up to 250K views/month. Beyond that, $0.01 per additional view kicks in.</p>
+          </div>
+        </div>
+
+        <p class="hf-note hf-note--center hf-reveal hf-reveal--d4">Organic traffic is free traffic - every post is a long-term asset that compounds over time.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="hf-divider"></div>
+
+  <!-- === 07 UGC PRODUCTION === -->
+  <section class="hf-section" id="ugc">
+    <div class="hf-pricing-section">
+      <div class="hf-pricing-section__inner">
+        <div class="hf-label hf-reveal">UGC Production</div>
+        <h2 class="hf-section-title hf-reveal hf-reveal--d1">AUTHENTIC CONTENT <span class="hf-section-title__accent">AT SCALE</span></h2>
+
+        <div class="hf-price-display hf-reveal hf-reveal--d2">
+          <div class="hf-price-display__amount">$275 - $375</div>
+          <p class="hf-price-display__label">Per Fully Edited Video</p>
+        </div>
+
+        <div class="hf-cards-grid">
+          <div class="hf-card hf-reveal hf-reveal--d1">
+            <div class="hf-card__icon">&#9656;</div>
+            <h3 class="hf-card__title">Professional Quality</h3>
+            <p class="hf-card__text">Scripted, filmed, and fully edited user-generated content that feels authentic and converts viewers into leads.</p>
+          </div>
+          <div class="hf-card hf-reveal hf-reveal--d2">
+            <div class="hf-card__icon">&#9656;</div>
+            <h3 class="hf-card__title">Multiple Creators</h3>
+            <p class="hf-card__text">Diverse faces and voices - real people telling real stories about funding. No need to be on camera yourself.</p>
+          </div>
+          <div class="hf-card hf-reveal hf-reveal--d3">
+            <div class="hf-card__icon">&#9656;</div>
+            <h3 class="hf-card__title">Scalable Output</h3>
+            <p class="hf-card__text">Need 5 videos or 50 - the production pipeline scales with your demand without sacrificing quality.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hf-divider"></div>
+
+  <!-- === 08 THE NUMBERS === -->
+  <section class="hf-section" id="numbers">
+    <div class="hf-pricing-section">
+      <div class="hf-pricing-section__inner">
+        <div class="hf-label hf-reveal">The Numbers</div>
+        <h2 class="hf-section-title hf-reveal hf-reveal--d1">CUT YOUR ACQUISITION COST <span class="hf-section-title__accent">IN HALF</span></h2>
+
+        <div class="hf-compare hf-reveal hf-reveal--d2">
+          <div class="hf-compare__bar">
+            <div class="hf-compare__header">
+              <span class="hf-compare__label">Current Cost Per Funded Deal</span>
+              <span class="hf-compare__value" style="color: var(--error); opacity: 0.6;">~$1,000</span>
+            </div>
+            <div class="hf-compare__track">
+              <div class="hf-compare__fill hf-compare__fill--old"></div>
+            </div>
+          </div>
+          <div class="hf-compare__bar">
+            <div class="hf-compare__header">
+              <span class="hf-compare__label">Projected Cost Per Funded Deal</span>
+              <span class="hf-compare__value" style="color: var(--accent);">$300 - $500</span>
+            </div>
+            <div class="hf-compare__track">
+              <div class="hf-compare__fill hf-compare__fill--new"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hf-benchmark hf-reveal hf-reveal--scale hf-reveal--d3">
+          <div class="hf-benchmark__value" data-count="8" data-suffix="%">0%</div>
+          <div>
+            <p class="hf-benchmark__text">Landing page conversion rate from live campaign data -50 visitors, 4 qualified leads, 1 highly qualified.</p>
+            <p class="hf-benchmark__source">Based on a brand new account with only two creatives tested and $160 total spend.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hf-divider"></div>
+
+  <!-- === 09 WEBSITE REVAMP === -->
+  <section class="hf-section" id="website">
+    <div class="hf-pricing-section">
+      <div class="hf-pricing-section__inner">
+        <div class="hf-label hf-reveal">Website Revamp</div>
+        <h2 class="hf-section-title hf-reveal hf-reveal--d1">A WEBSITE THAT MATCHES<br><span class="hf-section-title__accent">YOUR AMBITION</span></h2>
+        <p class="hf-reveal hf-reveal--d2" style="font-size: 15px; line-height: 2.1; color: var(--text-muted); max-width: 560px; margin: 0 auto;">Custom-coded redesign of 24hourfunding.ca - modern, professional, and built to convert. Included as a complementary asset.</p>
+
+        <div class="hf-tags hf-reveal hf-reveal--d3">
+          <span class="hf-tag">Custom-Coded</span>
+          <span class="hf-tag">Responsive</span>
+          <span class="hf-tag">Conversion-Optimized</span>
+          <span class="hf-tag">Modern Design</span>
+          <span class="hf-tag">Fast Loading</span>
+          <span class="hf-tag">SEO-Ready</span>
+        </div>
+
+        <p class="hf-note hf-note--center hf-reveal hf-reveal--d4">Replaces your current Squarespace site with a professional build that establishes credibility from the first click.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="hf-divider"></div>
+
+  <!-- === 10 AT A GLANCE === -->
+  <section class="hf-section" id="summary">
+    <div class="hf-pricing-section">
+      <div class="hf-pricing-section__inner">
+        <div class="hf-label hf-reveal">At a Glance</div>
+        <h2 class="hf-section-title hf-reveal hf-reveal--d1">EVERYTHING <span class="hf-section-title__accent">INCLUDED</span></h2>
+
+        <div class="hf-summary-grid hf-reveal hf-reveal--d2">
+          <div class="hf-summary-row hf-summary-row--header">
+            <div class="hf-summary-cell hf-summary-cell--label">Deliverable</div>
+            <div class="hf-summary-cell hf-summary-cell--value">Investment</div>
+          </div>
+          <div class="hf-summary-row">
+            <div class="hf-summary-cell hf-summary-cell--label">Paid Ads Setup (42 creatives + funnel)</div>
+            <div class="hf-summary-cell hf-summary-cell--value accent">$3,000 - $3,640</div>
+          </div>
+          <div class="hf-summary-row">
+            <div class="hf-summary-cell hf-summary-cell--label">Ongoing Ads Management</div>
+            <div class="hf-summary-cell hf-summary-cell--value accent">10% of Commission</div>
+          </div>
+          <div class="hf-summary-row">
+            <div class="hf-summary-cell hf-summary-cell--label">Organic Content (3x/day, 7 platforms)</div>
+            <div class="hf-summary-cell hf-summary-cell--value accent">$3,100/month</div>
+          </div>
+          <div class="hf-summary-row">
+            <div class="hf-summary-cell hf-summary-cell--label">UGC Video Production</div>
+            <div class="hf-summary-cell hf-summary-cell--value accent">$275 - $375/video</div>
+          </div>
+          <div class="hf-summary-row">
+            <div class="hf-summary-cell hf-summary-cell--label">Website Redesign</div>
+            <div class="hf-summary-cell hf-summary-cell--value green">Included</div>
+          </div>
+          <div class="hf-summary-row">
+            <div class="hf-summary-cell hf-summary-cell--label">Ad Spend</div>
+            <div class="hf-summary-cell hf-summary-cell--value">Covered by You</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hf-divider"></div>
+
+  <!-- === 11 CLOSING === -->
+  <section class="hf-closing" id="closing">
+    <div class="hf-orb hf-orb--1" aria-hidden="true"></div>
+    <div class="hf-orb hf-orb--3" aria-hidden="true"></div>
+    <div class="hf-closing__inner">
+      <div class="hf-label hf-reveal" style="justify-content: center;">Prepared for Dominic</div>
+      <h2 class="hf-closing__title hf-reveal hf-reveal--d1">
+        LET'S BUILD<br><span>SOMETHING.</span>
+      </h2>
+      <p class="hf-closing__subtitle hf-reveal hf-reveal--d2">Ready to own your pipeline? Pick what fits and let's go.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       JAVASCRIPT
+  ═══════════════════════════════════════════ -->
+  <script>
+  (function() {
+    /* Scroll reveal */
+    var reveals = document.querySelectorAll('.hf-reveal');
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(function(el) { observer.observe(el); });
+
+    /* CPA comparison bar animation */
+    var compare = document.querySelector('.hf-compare');
+    if (compare) {
+      var barObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+        });
+      }, { threshold: 0.3 });
+      barObserver.observe(compare);
+    }
+
+    /* Progress nav */
+    var sections = document.querySelectorAll('[id]');
+    var dots = document.querySelectorAll('.hf-nav__dot');
+    var sectionIds = Array.from(dots).map(function(d) { return d.dataset.target; });
+
+    var navObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting && sectionIds.indexOf(entry.target.id) !== -1) {
+          dots.forEach(function(dot) {
+            dot.classList.toggle('active', dot.dataset.target === entry.target.id);
+          });
+        }
+      });
+    }, { threshold: 0.35 });
+
+    sectionIds.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) navObserver.observe(el);
+    });
+
+    dots.forEach(function(dot) {
+      dot.addEventListener('click', function() {
+        var target = document.getElementById(dot.dataset.target);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    /* 3D Tilt on cards */
+    document.querySelectorAll('.hf-card').forEach(function(card) {
+      card.addEventListener('mousemove', function(e) {
+        var rect = card.getBoundingClientRect();
+        var x = (e.clientX - rect.left) / rect.width;
+        var y = (e.clientY - rect.top) / rect.height;
+        var rotateY = (x - 0.5) * 10;
+        var rotateX = (y - 0.5) * -10;
+        card.style.transform = 'perspective(700px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-7px)';
+      });
+      card.addEventListener('mouseleave', function() {
+        card.style.transition = 'transform 0.7s ease, border-color 0.3s ease';
+        card.style.transform = '';
+        setTimeout(function() { card.style.transition = ''; }, 600);
+      });
+    });
+
+    /* Scroll progress bar */
+    var progressBar = document.querySelector('.hf-progress');
+    if (progressBar) {
+      window.addEventListener('scroll', function() {
+        var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (docHeight > 0) progressBar.style.width = (scrollTop / docHeight * 100) + '%';
+      });
+    }
+
+    /* Count-up animation */
+    var countEls = document.querySelectorAll('[data-count]');
+    var countObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var el = entry.target;
+          setTimeout(function() {
+            var target = parseInt(el.dataset.count);
+            var suffix = el.dataset.suffix || '';
+            var prefix = el.dataset.prefix || '';
+            var duration = 2100;
+            var startTime = performance.now();
+            function update(now) {
+              var elapsed = now - startTime;
+              var progress = Math.min(elapsed / duration, 1);
+              var eased = 1 - Math.pow(1 - progress, 3);
+              el.textContent = prefix + Math.floor(eased * target) + suffix;
+              if (progress < 1) requestAnimationFrame(update);
+            }
+            requestAnimationFrame(update);
+          }, 900);
+          countObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.3 });
+    countEls.forEach(function(el) { countObserver.observe(el); });
+
+    /* Cursor spotlight on sections */
+    document.querySelectorAll('.hf-section').forEach(function(section) {
+      var raf = null;
+      section.addEventListener('mousemove', function(e) {
+        if (raf) return;
+        raf = requestAnimationFrame(function() {
+          var rect = section.getBoundingClientRect();
+          section.style.backgroundImage = 'radial-gradient(600px circle at ' + (e.clientX - rect.left) + 'px ' + (e.clientY - rect.top) + 'px, rgba(242, 101, 34, 0.04), transparent 40%)';
+          raf = null;
+        });
+      });
+      section.addEventListener('mouseleave', function() {
+        section.style.backgroundImage = '';
+      });
+    });
+  })();
+
+  /* Scroll parallax depth */
+  (function() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var heroGrid = document.querySelector('.hf-hero-grid');
+    var orbs = document.querySelectorAll('.hf-orb');
+    var speeds = [0.1, -0.06, 0.08];
+    var ticking = false;
+
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(function() {
+          var scrollY = window.scrollY || window.pageYOffset;
+          if (heroGrid) {
+            heroGrid.style.transform = 'translateY(' + (scrollY * 0.12) + 'px)';
+          }
+          for (var i = 0; i < orbs.length; i++) {
+            orbs[i].style.marginTop = (scrollY * (speeds[i] || 0.08)) + 'px';
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  })();
+
+  /* Canvas ember particles - sparks from hot coals */
+  (function() {
+    var wrapper = document.querySelector('.hf-wrapper');
+    if (!wrapper) return;
+    var canvas = document.createElement('canvas');
+    canvas.className = 'hf-ember-canvas';
+    wrapper.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    var W, H;
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    var embers = [];
+    var COUNT = 18;
+
+    function spawn() {
+      return {
+        x: Math.random() * W,
+        y: H + 4,
+        size: 1 + Math.random() * 2,
+        speedY: 0.3 + Math.random() * 0.7,
+        wobbleAmp: 7 + Math.random() * 14,
+        wobbleFreq: 0.008 + Math.random() * 0.012,
+        wobbleOffset: Math.random() * Math.PI * 2,
+        life: 0,
+        maxLife: 400 + Math.random() * 500,
+        peakOpacity: 0.15 + Math.random() * 0.2,
+        hue: Math.random() < 0.7 ? 0 : (Math.random() < 0.5 ? -10 : 15)
+      };
+    }
+
+    for (var i = 0; i < COUNT; i++) {
+      var e = spawn();
+      e.life = Math.random() * e.maxLife;
+      e.y = H - (e.life / e.maxLife) * H * 0.8;
+      embers.push(e);
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < embers.length; i++) {
+        var e = embers[i];
+        e.life++;
+        e.y -= e.speedY;
+        var wx = Math.sin(e.life * e.wobbleFreq + e.wobbleOffset) * e.wobbleAmp;
+
+        var progress = e.life / e.maxLife;
+        var alpha;
+        if (progress < 0.1) alpha = progress / 0.1;
+        else if (progress > 0.7) alpha = (1 - progress) / 0.3;
+        else alpha = 1;
+        alpha *= e.peakOpacity;
+
+        var r = 242 + e.hue;
+        var g = 101 + e.hue * 2;
+        var b = 34;
+
+        ctx.beginPath();
+        ctx.arc(e.x + wx, e.y, e.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + alpha.toFixed(3) + ')';
+        ctx.fill();
+
+        if (alpha > 0.08) {
+          ctx.beginPath();
+          ctx.arc(e.x + wx, e.y, e.size * 3, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + (alpha * 0.25).toFixed(3) + ')';
+          ctx.fill();
+        }
+
+        if (e.life >= e.maxLife || e.y < -10) {
+          embers[i] = spawn();
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  })();
+  </script>
+</main>
+<!-- Lenis Smooth Scroll Init -->
+<script>
+(function(){
+  window.addEventListener('DOMContentLoaded', function() {
+  if (typeof Lenis === 'undefined') return;
+  var lenis = new Lenis({
+    duration: 0.9,
+    easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+    touchMultiplier: 2,
+    infinite: false
+  });
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+  /* Disable Lenis when mobile nav is open */
+  var mobileNav = document.querySelector('.tf-mobile-nav');
+  if (mobileNav) {
+    new MutationObserver(function() {
+      if (mobileNav.classList.contains('open')) { lenis.stop(); }
+      else { lenis.start(); }
+    }).observe(mobileNav, { attributes: true, attributeFilter: ['class'] });
+  }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    lenis.destroy();
+  }
+  }); /* end DOMContentLoaded */
+})();
+</script>
+</body>
+</html>
