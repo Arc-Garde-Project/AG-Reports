@@ -1434,7 +1434,12 @@
       .pass__grid { grid-template-columns: 1fr; }
       .steps__grid { grid-template-columns: 1fr; }
       .case__metrics { grid-template-columns: repeat(2, 1fr); }
+      .case__metrics--three { grid-template-columns: repeat(3, 1fr); }
       .platforms__grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .case__metrics--three { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 540px) {
+      .case__metrics--three { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
       .bottom-bar__dots { display: none; }
@@ -1718,17 +1723,13 @@
         <h2 class="case__industry reveal reveal-d1"><span>Local Dental&nbsp;Clinic</span></h2>
         <p class="case__period reveal reveal-d2">Day 1 &nbsp;//&nbsp; Under 23 Hours</p>
 
-        <div class="case__metrics reveal reveal-d3">
+        <div class="case__metrics case__metrics--three reveal reveal-d3">
           <div class="case__metric">
             <div class="case__metric-value">$30</div>
             <div class="case__metric-label">Daily Spend</div>
           </div>
           <div class="case__metric">
-            <div class="case__metric-value case__metric-value--gold">$15K</div>
-            <div class="case__metric-label">Pipeline Potential</div>
-          </div>
-          <div class="case__metric">
-            <div class="case__metric-value">10</div>
+            <div class="case__metric-value case__metric-value--gold">10</div>
             <div class="case__metric-label">Leads</div>
           </div>
           <div class="case__metric">
