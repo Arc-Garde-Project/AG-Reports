@@ -2291,7 +2291,7 @@
         <button class="proof-modal__arrow proof-modal__arrow--prev" id="proof-prev" type="button" aria-label="Previous">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <img class="proof-modal__img" id="proof-modal__img" src="proof-1.png" alt="Proof screenshot 1 of 3">
+        <img class="proof-modal__img" id="proof-modal__img" src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/white-mp-pd/proof-1.png" alt="Proof screenshot 1 of 3">
         <button class="proof-modal__arrow proof-modal__arrow--next" id="proof-next" type="button" aria-label="Next">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
         </button>
@@ -2407,7 +2407,11 @@
       var closeBtn = document.getElementById('proof-close');
       var captionEl = document.getElementById('proof-caption');
       var dots = modal.querySelectorAll('.proof-modal__dot');
-      var images = ['proof-1.png', 'proof-2.png', 'proof-3.png'];
+      var images = [
+        'https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/white-mp-pd/proof-1.png',
+        'https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/white-mp-pd/proof-2.png',
+        'https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/white-mp-pd/proof-3.png'
+      ];
       var current = 0;
 
       function show(idx) {
