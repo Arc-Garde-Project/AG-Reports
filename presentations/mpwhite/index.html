@@ -1744,7 +1744,7 @@
           <span class="s">Full stack built from zero: landing page, CRM, Meta Pixel, KPI&nbsp;tracker.</span>
         </p>
 
-        <button class="case__proof-btn reveal reveal-d5" type="button" data-cursor="hover" id="proof-btn">
+        <button class="case__proof-btn reveal reveal-d5" type="button" data-cursor="hover" data-proof-set="cs1" id="proof-btn">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           <span>See Proof</span>
         </button>
@@ -1782,6 +1782,11 @@
           <span class="s"><strong>1 paying client closed</strong> within the first 56 days.</span>
           <span class="s">Tax strategists average <strong>$3,500 per closed engagement</strong>&nbsp;industry-wide.</span>
         </p>
+
+        <button class="case__proof-btn reveal reveal-d5" type="button" data-cursor="hover" data-proof-set="cs2">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>See Proof</span>
+        </button>
       </div>
     </section>
 
@@ -1816,6 +1821,11 @@
           <span class="s">Peak day hit <strong>4.78x ROAS</strong>.</span>
           <span class="s">Launch month produced 3.11x average&nbsp;ROAS.</span>
         </p>
+
+        <button class="case__proof-btn reveal reveal-d5" type="button" data-cursor="hover" data-proof-set="cs3">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>See Proof</span>
+        </button>
       </div>
     </section>
 
@@ -2297,11 +2307,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
         </button>
       </div>
-      <div class="proof-modal__dots" id="proof-dots">
-        <button class="proof-modal__dot is-active" type="button" data-idx="0" aria-label="Show proof 1"></button>
-        <button class="proof-modal__dot" type="button" data-idx="1" aria-label="Show proof 2"></button>
-        <button class="proof-modal__dot" type="button" data-idx="2" aria-label="Show proof 3"></button>
-      </div>
+      <div class="proof-modal__dots" id="proof-dots"></div>
       <p class="proof-modal__caption" id="proof-caption">1 of 3</p>
     </div>
   </div>
@@ -2397,35 +2403,72 @@
       });
     })();
 
-    /* PROOF MODAL | case study image carousel */
+    /* PROOF MODAL | case study image carousel | set-driven */
     (function() {
-      var btn = document.getElementById('proof-btn');
       var modal = document.getElementById('proof-modal');
-      if (!btn || !modal) return;
+      var triggers = document.querySelectorAll('[data-proof-set]');
+      if (!modal || !triggers.length) return;
       var imgEl = document.getElementById('proof-modal__img');
       var prevBtn = document.getElementById('proof-prev');
       var nextBtn = document.getElementById('proof-next');
       var closeBtn = document.getElementById('proof-close');
       var captionEl = document.getElementById('proof-caption');
-      var dots = modal.querySelectorAll('.proof-modal__dot');
-      var images = [
-        'https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/white-mp-pd/proof-1.png',
-        'https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/white-mp-pd/proof-2.png',
-        'https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/white-mp-pd/proof-3.png'
-      ];
+      var dotsWrap = document.getElementById('proof-dots');
+
+      var BASE = 'https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/white-mp-pd/';
+      var proofSets = {
+        'cs1': [BASE + 'proof-1.png', BASE + 'proof-2.png', BASE + 'proof-3.png'],
+        'cs2': [BASE + 'proof-cs2-1.png'],
+        'cs3': [BASE + 'proof-cs3-1.png']
+      };
+
+      var images = [];
       var current = 0;
 
-      function show(idx) {
-        current = (idx + images.length) % images.length;
-        imgEl.src = images[current];
-        imgEl.alt = 'Proof screenshot ' + (current + 1) + ' of ' + images.length;
-        captionEl.textContent = (current + 1) + ' of ' + images.length;
-        dots.forEach(function(d, i) {
-          d.classList.toggle('is-active', i === current);
+      function rebuildDots() {
+        dotsWrap.innerHTML = '';
+        if (images.length <= 1) return;
+        for (var i = 0; i < images.length; i++) {
+          var d = document.createElement('button');
+          d.className = 'proof-modal__dot' + (i === 0 ? ' is-active' : '');
+          d.type = 'button';
+          d.setAttribute('data-idx', i);
+          d.setAttribute('aria-label', 'Show proof ' + (i + 1));
+          dotsWrap.appendChild(d);
+        }
+        dotsWrap.querySelectorAll('.proof-modal__dot').forEach(function(d) {
+          d.addEventListener('click', function() {
+            show(parseInt(d.getAttribute('data-idx'), 10));
+          });
         });
       }
 
-      function openModal() {
+      function show(idx) {
+        if (!images.length) return;
+        current = (idx + images.length) % images.length;
+        imgEl.src = images[current];
+        imgEl.alt = 'Proof screenshot ' + (current + 1) + ' of ' + images.length;
+        if (images.length > 1) {
+          captionEl.textContent = (current + 1) + ' of ' + images.length;
+          captionEl.style.display = '';
+          prevBtn.style.display = '';
+          nextBtn.style.display = '';
+          dotsWrap.querySelectorAll('.proof-modal__dot').forEach(function(d, i) {
+            d.classList.toggle('is-active', i === current);
+          });
+        } else {
+          captionEl.textContent = '';
+          captionEl.style.display = 'none';
+          prevBtn.style.display = 'none';
+          nextBtn.style.display = 'none';
+        }
+      }
+
+      function openModal(setKey) {
+        var set = proofSets[setKey];
+        if (!set || !set.length) return;
+        images = set;
+        rebuildDots();
         show(0);
         modal.classList.add('is-open');
         modal.setAttribute('aria-hidden', 'false');
@@ -2437,16 +2480,14 @@
         document.documentElement.style.overflow = '';
       }
 
-      btn.addEventListener('click', openModal);
+      triggers.forEach(function(t) {
+        t.addEventListener('click', function() {
+          openModal(t.getAttribute('data-proof-set'));
+        });
+      });
       closeBtn.addEventListener('click', closeModal);
       prevBtn.addEventListener('click', function() { show(current - 1); });
       nextBtn.addEventListener('click', function() { show(current + 1); });
-
-      dots.forEach(function(d) {
-        d.addEventListener('click', function() {
-          show(parseInt(d.getAttribute('data-idx'), 10));
-        });
-      });
 
       modal.addEventListener('click', function(e) {
         if (e.target === modal) closeModal();
@@ -2455,8 +2496,8 @@
       document.addEventListener('keydown', function(e) {
         if (!modal.classList.contains('is-open')) return;
         if (e.key === 'Escape') { closeModal(); e.stopPropagation(); }
-        else if (e.key === 'ArrowLeft') { show(current - 1); e.stopPropagation(); }
-        else if (e.key === 'ArrowRight') { show(current + 1); e.stopPropagation(); }
+        else if (e.key === 'ArrowLeft' && images.length > 1) { show(current - 1); e.stopPropagation(); }
+        else if (e.key === 'ArrowRight' && images.length > 1) { show(current + 1); e.stopPropagation(); }
       }, true);
 
       var tStartX = 0, tStartY = 0;
@@ -2465,6 +2506,7 @@
         tStartY = e.touches[0].clientY;
       }, { passive: true });
       modal.addEventListener('touchend', function(e) {
+        if (images.length <= 1) return;
         var dx = e.changedTouches[0].clientX - tStartX;
         var dy = e.changedTouches[0].clientY - tStartY;
         if (Math.abs(dx) > Math.abs(dy) * 1.3 && Math.abs(dx) > 50) {
