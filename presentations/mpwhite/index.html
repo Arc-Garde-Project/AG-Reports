@@ -8,7 +8,7 @@
   <meta name="author" content="Growth Partners">
 
   <title>Growth Proposal by Growth Partners | Paid Ads + Organic Content System</title>
-  <meta name="description" content="Growth Partners builds the full advertising system. 14 video ads per testing cycle, custom landing page, CRM, and live reporting. Plus daily organic content across 8 platforms. Not a freelancer running boosts.">
+  <meta name="description" content="Growth Partners builds the full advertising system. 14 video ads per testing cycle, custom landing page, CRM, and live reporting. Plus daily organic content across 7 platforms. Not a freelancer running boosts.">
 
   <link rel="canonical" href="https://ag-reports.vercel.app/presentations/mpwhite">
 
@@ -169,7 +169,6 @@
       --pf-linkedin:  #0A66C2;
       --pf-x:         #FFFFFF;
       --pf-threads:   #FFFFFF;
-      --pf-maps:      #EA4335;
 
       /* AG TYPOGRAPHY STANDARD v2.2 */
       --font-display: 'Bebas Neue', system-ui, sans-serif;
@@ -441,13 +440,15 @@
       margin-bottom: clamp(1.25rem, 0.9rem + 1vw, 1.75rem);
       display: inline-flex; align-items: center; gap: 12px;
     }
-    .eyebrow::before {
+    .eyebrow::before, .eyebrow::after {
       content: ''; width: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent));
       transition: width var(--duration-long) var(--ease-satisfying);
       transition-delay: 252ms;
     }
-    .slide.active .eyebrow::before { width: 42px; }
+    .eyebrow::before { background: linear-gradient(90deg, transparent, var(--accent)); }
+    .eyebrow::after  { background: linear-gradient(90deg, var(--accent), transparent); }
+    .slide.active .eyebrow::before,
+    .slide.active .eyebrow::after { width: 42px; }
 
     /* HERO / COVER */
     .hero { text-align: center; }
@@ -712,6 +713,46 @@
       line-height: 1.8;
     }
     .case__story strong { color: var(--accent); font-weight: 600; }
+    .case__platforms {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      margin: 0 auto clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+    }
+    .case__platforms-label {
+      font-family: var(--font-data);
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .case__platforms-label strong {
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+    .case__platforms-icons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: clamp(0.875rem, 0.6rem + 0.8vw, 1.5rem);
+    }
+    .case__platforms-icons img {
+      width: clamp(28px, 24px + 1.4vw, 42px);
+      height: clamp(28px, 24px + 1.4vw, 42px);
+      object-fit: contain;
+      opacity: 0.92;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+      transition: transform var(--duration-quick) var(--ease-satisfying), opacity var(--duration-quick) var(--ease-satisfying);
+    }
+    @media (hover: hover) {
+      .case__platforms-icons img:hover {
+        transform: translateY(-3px);
+        opacity: 1;
+      }
+    }
     .case__proof-btn {
       display: inline-flex; align-items: center; gap: 9px;
       margin-top: clamp(1.25rem, 0.9rem + 1vw, 1.75rem);
@@ -1373,7 +1414,6 @@
     .pf-linkedin  { --platform-color: #0A66C2; --platform-glow: rgba(10,102,194,0.45); }
     .pf-x         { --platform-color: #FFFFFF; --platform-glow: rgba(255,255,255,0.35); }
     .pf-threads   { --platform-color: #FFFFFF; --platform-glow: rgba(255,255,255,0.35); }
-    .pf-maps      { --platform-color: #EA4335; --platform-glow: rgba(234,67,53,0.45); }
 
     .pf-instagram::before {
       background: linear-gradient(90deg, #F58529, #DD2A7B, #8134AF, #515BD4);
@@ -1746,7 +1786,7 @@
 
         <button class="case__proof-btn reveal reveal-d5" type="button" data-cursor="hover" data-proof-set="cs1" id="proof-btn">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          <span>See Proof</span>
+          <span>See Other Results</span>
         </button>
       </div>
     </section>
@@ -1785,7 +1825,7 @@
 
         <button class="case__proof-btn reveal reveal-d5" type="button" data-cursor="hover" data-proof-set="cs2">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          <span>See Proof</span>
+          <span>See Other Results</span>
         </button>
       </div>
     </section>
@@ -1824,7 +1864,7 @@
 
         <button class="case__proof-btn reveal reveal-d5" type="button" data-cursor="hover" data-proof-set="cs3">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          <span>See Proof</span>
+          <span>See Other Results</span>
         </button>
       </div>
     </section>
@@ -1887,7 +1927,7 @@
               <span>Month To Month</span>
             </div>
             <h3 class="pricing__card-title">Paid Ads&nbsp;System</h3>
-            <div class="pricing__quote">Quote Provided On Discovery Call</div>
+            <div class="pricing__quote">TBD: To Be Determined On Call</div>
           </div>
 
           <div class="pricing__categories">
@@ -2012,18 +2052,18 @@
         <h2 class="ocs-cover__title reveal reveal-d1">
           ORGANIC<br><span>CONTENT&nbsp;SYSTEM</span>
         </h2>
-        <p class="ocs-cover__subline reveal reveal-d2">3 posts per day.<span class="ag-break"></span>8 platforms.<span class="ag-break"></span>672 posts per&nbsp;month.</p>
+        <p class="ocs-cover__subline reveal reveal-d2">3 posts per day.<span class="ag-break"></span>7 platforms.<span class="ag-break"></span>588 posts per&nbsp;month.</p>
         <div class="stat-grid" style="max-width: 800px; margin-left: auto; margin-right: auto;">
           <div class="stat-card reveal reveal-d3">
             <div class="stat-card__value">3</div>
             <div class="stat-card__label">Posts<br>Per Day</div>
           </div>
           <div class="stat-card reveal reveal-d4">
-            <div class="stat-card__value">8</div>
+            <div class="stat-card__value">7</div>
             <div class="stat-card__label">Platforms<br>Covered</div>
           </div>
           <div class="stat-card reveal reveal-d5">
-            <div class="stat-card__value">672</div>
+            <div class="stat-card__value">588</div>
             <div class="stat-card__label">Posts<br>Per Month</div>
           </div>
         </div>
@@ -2038,7 +2078,7 @@
           Daily visibility.<br><span>Built and&nbsp;published for&nbsp;you.</span>
         </h2>
         <div class="overview__body spaced-copy reveal reveal-d2">
-          <span class="s">We produce and publish content across Facebook, Instagram, TikTok, YouTube, LinkedIn, X, Threads, and Google Maps.</span>
+          <span class="s">We produce and publish content across Facebook, Instagram, TikTok, YouTube, LinkedIn, X, and Threads.</span>
           <span class="s">Every day.</span>
           <span class="s">Short-form video, image posts, and written content.</span>
           <span class="s">Built from your real expertise.<span class="ag-break"></span>Formatted per&nbsp;platform.</span>
@@ -2051,7 +2091,7 @@
       <div class="slide__inner">
         <div class="eyebrow reveal">Platforms Covered</div>
         <h2 class="platforms__title reveal reveal-d1">
-          The 8 <span>platforms&nbsp;covered.</span>
+          The 7 <span>platforms&nbsp;covered.</span>
         </h2>
 
         <div class="platforms__grid">
@@ -2097,15 +2137,6 @@
             </div>
             <div class="platform__name">Threads</div>
           </div>
-          <div class="platform pf-maps reveal reveal-d5">
-            <div class="platform__icon">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 22s-7-7.5-7-13a7 7 0 1 1 14 0c0 5.5-7 13-7 13z" fill="#EA4335" stroke="#FFFFFF" stroke-width="0.6"/>
-                <circle cx="12" cy="9" r="2.8" fill="#FFFFFF"/>
-              </svg>
-            </div>
-            <div class="platform__name">Google Maps</div>
-          </div>
         </div>
       </div>
     </section>
@@ -2118,7 +2149,7 @@
           <div class="dive__content">
             <div class="eyebrow reveal">Production</div>
             <h2 class="dive__title reveal reveal-d1">Daily Content&nbsp;Production</h2>
-            <p class="dive__lead reveal reveal-d2">3 posts per day. 8&nbsp;platforms.</p>
+            <p class="dive__lead reveal reveal-d2">3 posts per day. 7&nbsp;platforms.</p>
             <div class="dive__body reveal reveal-d3">
               <p>Short-form video, image posts, and written content.<span class="ag-break"></span>Produced and published every day.</p>
               <p>Built from your real expertise.<span class="ag-break"></span>Formatted per platform.</p>
@@ -2172,10 +2203,10 @@
         <h2 class="case__industry reveal reveal-d1"><span>Experiential&nbsp;Marketing</span></h2>
         <p class="case__period reveal reveal-d2">90-Day Window</p>
 
-        <div class="case__metrics reveal reveal-d3">
+        <div class="case__metrics case__metrics--three reveal reveal-d3">
           <div class="case__metric">
             <div class="case__metric-value case__metric-value--gold">200,788</div>
-            <div class="case__metric-label">Organic Views</div>
+            <div class="case__metric-label">Brand-New Account Views</div>
           </div>
           <div class="case__metric">
             <div class="case__metric-value case__metric-value--good">+73.6%</div>
@@ -2185,14 +2216,23 @@
             <div class="case__metric-value case__metric-value--good">187%</div>
             <div class="case__metric-label">Of Conservative Floor</div>
           </div>
-          <div class="case__metric">
-            <div class="case__metric-value">7</div>
-            <div class="case__metric-label">Active Platforms</div>
+        </div>
+
+        <div class="case__platforms reveal reveal-d4">
+          <div class="case__platforms-label">Active across <strong>7 platforms</strong></div>
+          <div class="case__platforms-icons">
+            <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20FaceBook%20Icon%20Official.png" alt="Facebook" loading="lazy">
+            <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20Instagram%20Icon%20Official.png" alt="Instagram" loading="lazy">
+            <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20TikTok%20Icon%20Official.png" alt="TikTok" loading="lazy">
+            <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20Youtube%20Icon%20Official.png" alt="YouTube" loading="lazy">
+            <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20LinkedIn%20Icon%20Official.png" alt="LinkedIn" loading="lazy">
+            <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20Twitter%20Icon%20Official.png" alt="X" loading="lazy">
+            <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20Threads%20Icon%20Official.png" alt="Threads" loading="lazy">
           </div>
         </div>
 
-        <p class="case__story spaced-copy reveal reveal-d4">
-          <span class="s"><strong>200,788 organic views</strong> in 90 days. Zero paid spend.</span>
+        <p class="case__story spaced-copy reveal reveal-d5">
+          <span class="s"><strong>200,788 views on brand-new accounts</strong> in 90 days.</span>
           <span class="s">View growth of <strong>+73.6%</strong> month over month from month 1 to month 2.</span>
           <span class="s">Month 3 hit <strong>187% of the conservative monthly baseline</strong> across 7 active&nbsp;platforms.</span>
         </p>
@@ -2225,7 +2265,18 @@
           </div>
         </div>
 
-        <p class="case__story spaced-copy reveal reveal-d4">
+        <div class="case__platforms reveal reveal-d4">
+          <div class="case__platforms-label"><strong>2x a day</strong> across 5 platforms</div>
+          <div class="case__platforms-icons">
+            <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20Instagram%20Icon%20Official.png" alt="Instagram" loading="lazy">
+            <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20TikTok%20Icon%20Official.png" alt="TikTok" loading="lazy">
+            <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20FaceBook%20Icon%20Official.png" alt="Facebook" loading="lazy">
+            <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20Threads%20Icon%20Official.png" alt="Threads" loading="lazy">
+            <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Icons%20Official/AG%20Youtube%20Icon%20Official.png" alt="YouTube" loading="lazy">
+          </div>
+        </div>
+
+        <p class="case__story spaced-copy reveal reveal-d5">
           <span class="s">Nearly <strong>half a million organic views</strong> in 6 months. Two brands, 5 platforms each.</span>
           <span class="s">Recovery brand: <strong>zero to 171,388 views</strong> on brand-new YouTube, TikTok, and Threads accounts.</span>
           <span class="s">TikTok grew <strong>+199%</strong> across the same window.</span>
@@ -2247,7 +2298,7 @@
               <span>Month To Month</span>
             </div>
             <h3 class="pricing__card-title">Organic Content&nbsp;System</h3>
-            <div class="pricing__quote">Quote Provided On Discovery Call</div>
+            <div class="pricing__quote">TBD: To Be Determined On Call</div>
           </div>
 
           <div class="pricing__categories">
@@ -2255,7 +2306,7 @@
               <div class="pricing__cat-label"><span class="pricing__cat-num">01</span>Production</div>
               <ul class="pricing__cat-list">
                 <li>Short-form video content produced and published monthly.</li>
-                <li>Image posts and written content across all 8 platforms.</li>
+                <li>Image posts and written content across all 7 platforms.</li>
                 <li>Formatted for each platform, built from your real expertise.</li>
               </ul>
             </div>
@@ -2263,8 +2314,8 @@
               <div class="pricing__cat-label"><span class="pricing__cat-num">02</span>Publishing</div>
               <ul class="pricing__cat-list">
                 <li>Full account setup and alignment across every profile.</li>
-                <li>Daily publishing on a consistent schedule, 8 platforms.</li>
-                <li>3 posts per day across Facebook, Instagram, TikTok, YouTube, LinkedIn, X, Threads, and Google Maps.</li>
+                <li>Daily publishing on a consistent schedule, 7 platforms.</li>
+                <li>3 posts per day across Facebook, Instagram, TikTok, YouTube, LinkedIn, X, and Threads.<span class="ag-break"></span>(you choose the format. 3 videos, or 2 videos and a graphic, etc.)</li>
               </ul>
             </div>
             <div class="pricing__category">
