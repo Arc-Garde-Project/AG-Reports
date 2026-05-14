@@ -301,7 +301,8 @@
       html.is-ready, html.is-ready body,
       html.is-ready a, html.is-ready button,
       html.is-ready [role="button"], html.is-ready input,
-      html.is-ready textarea, html.is-ready select {
+      html.is-ready textarea, html.is-ready select,
+      .ag-curtain, .ag-curtain * {
         cursor: none !important;
       }
       .ag-cursor {
@@ -1360,9 +1361,11 @@
     }
     .platforms__grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(8, 1fr);
       gap: clamp(0.625rem, 0.4rem + 0.8vw, 1.125rem);
     }
+    .platform { grid-column: span 2; }
+    .platform:nth-child(5) { grid-column: 2 / span 2; }
     .platform {
       background: var(--surface);
       background-image: linear-gradient(180deg, color-mix(in oklch, var(--paper) 4%, transparent) 0%, transparent 56%);
@@ -1475,7 +1478,6 @@
       .steps__grid { grid-template-columns: 1fr; }
       .case__metrics { grid-template-columns: repeat(2, 1fr); }
       .case__metrics--three { grid-template-columns: repeat(3, 1fr); }
-      .platforms__grid { grid-template-columns: repeat(4, 1fr); }
     }
     .case__metrics--three { grid-template-columns: repeat(3, 1fr); }
     @media (max-width: 540px) {
@@ -1486,6 +1488,8 @@
       .bottom-bar { justify-content: center; }
       .stat-grid { grid-template-columns: repeat(3, 1fr); }
       .platforms__grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .platform { grid-column: auto; }
+      .platform:nth-child(5) { grid-column: auto; }
     }
     @media (max-width: 540px) {
       .stat-grid { grid-template-columns: 1fr; }
