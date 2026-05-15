@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#0A0E14">
+  <meta name="theme-color" content="#0A0908">
   <meta name="format-detection" content="telephone=no">
 
   <title>Osborne Advisory | Get Your Complimentary Seller Analysis | Southern California</title>
@@ -26,7 +26,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@400;600;700&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     /* ===== AG Defensive CSS (inline) ===== */
@@ -52,23 +53,25 @@
     ul, ol { margin: 0; padding: 0; }
 
     /* ===== Brand Tokens =====
-       Real estate palette: Black / Blue / White
+       True Modern Old Money: warm ivory paper, ink black, champagne gold accent.
+       Champagne gold #C9A861 matches Charles's heraldic crest and AG signature gold.
        Variable names retained for stability; values swapped.
-       --olive*  = near-black text/headlines/dark sections
-       --cream*  = white / off-white surfaces
-       --gold    = navy primary accent + CTA bg
-       --gold-bright = royal blue (CTA hover, accents on dark surfaces) */
+       --olive*  = near-black text / headlines / dark sections
+       --cream*  = warm ivory paper surfaces (parchment, not flat white)
+       --gold    = primary CTA bg (ink-fill on ivory)
+       --gold-bright = champagne gold accent (heritage trim) */
     :root {
-      --olive: #0F172A;
-      --olive-deep: #0A0E14;
-      --olive-soft: #475569;
-      --cream: #FFFFFF;
-      --cream-deep: #F1F5F9;
-      --gold: #1E3A8A;
-      --gold-bright: #2563EB;
-      --ink: #0A0E14;
-      --paper: #F8FAFC;
-      --line: rgba(15, 23, 42, 0.12);
+      --olive: #141414;
+      --olive-deep: #0A0908;
+      --olive-soft: #5C5247;
+      --cream: #F5F1E8;
+      --cream-deep: #EBE6D8;
+      --sage: #D9D2C5;
+      --gold: #141414;
+      --gold-bright: #C9A861;
+      --ink: #141414;
+      --paper: #F0EBE0;
+      --line: rgba(20, 20, 20, 0.14);
 
       /* Fluid type tokens (AG Responsive System) */
       --text-hero: clamp(2.25rem, 1.4rem + 3.6vw, 4rem);
@@ -94,7 +97,7 @@
       --radius-md: 10px;
       --radius-lg: 18px;
       --shadow-card: 0 18px 42px -24px rgba(31, 40, 24, 0.28);
-      --shadow-cta: 0 14px 32px -14px rgba(30, 58, 138, 0.42);
+      --shadow-cta: 0 14px 32px -14px rgba(20, 20, 20, 0.42);
 
       /* Motion (AG DNA timings only) */
       --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -104,6 +107,7 @@
 
       /* Fonts */
       --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+      --font-roman: "Cinzel", "Trajan Pro", Georgia, serif;
       --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
@@ -149,13 +153,14 @@
     }
 
     /* Scroll progress hairline */
+    /* Scroll progress: 1px champagne hairline, low opacity. Editorial trim, not UI chrome. */
     .scroll-progress {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      height: 2px;
-      background: rgba(15, 23, 42, 0.05);
+      height: 1px;
+      background: transparent;
       z-index: 999;
       pointer-events: none;
     }
@@ -163,7 +168,8 @@
       display: block;
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-bright) 100%);
+      background: var(--gold-bright);
+      opacity: 0.55;
       transition: width 0.21s linear;
       transform-origin: left;
     }
@@ -206,25 +212,27 @@
       margin-bottom: var(--space-sm);
     }
 
-    /* ===== CTA Buttons ===== */
+    /* ===== CTA Buttons (Old Money: sharp rectangle, ink fill, gold hairline) ===== */
     .cta {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.6em;
+      gap: 0.7em;
       width: fit-content;
       max-width: 100%;
       min-height: 56px;
-      padding: 1rem 2rem;
+      padding: 1rem 2.25rem;
       background: var(--gold);
       color: var(--cream);
       font-family: var(--font-body);
       font-weight: 600;
       font-size: var(--text-lg);
-      letter-spacing: 0.01em;
-      border-radius: 999px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      border: 1px solid var(--gold);
       box-shadow: var(--shadow-cta);
-      transition: transform var(--t-fast) var(--ease-out), box-shadow var(--t-fast) var(--ease-out), background var(--t-fast) var(--ease-out);
+      transition: transform var(--t-fast) var(--ease-out), box-shadow var(--t-fast) var(--ease-out), background var(--t-fast) var(--ease-out), color var(--t-fast) var(--ease-out), border-color var(--t-fast) var(--ease-out);
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
       text-align: center;
@@ -247,8 +255,10 @@
     @media (hover: hover) {
       .cta:hover {
         transform: translateY(-2px);
-        box-shadow: 0 18px 36px -14px rgba(37, 99, 235, 0.55);
+        box-shadow: 0 14px 28px -14px rgba(20, 20, 20, 0.42);
         background: var(--gold-bright);
+        color: var(--ink);
+        border-color: var(--gold-bright);
       }
       .cta:hover .cta__arrow { transform: translateX(4px); }
     }
@@ -280,11 +290,17 @@
     }
     .title-wipe-bar {
       position: absolute;
-      background: var(--gold-bright);
+      background: var(--olive-deep);
       transform: translateX(0);
       transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
       pointer-events: none;
       z-index: 1;
+    }
+    .receive .title-wipe-bar,
+    .vip .title-wipe-bar,
+    .form-section .title-wipe-bar,
+    .footer .title-wipe-bar {
+      background: var(--cream);
     }
     .title-wipe.is-visible .title-wipe-bar {
       transform: translateX(calc(100% + 100vw));
@@ -295,11 +311,13 @@
     }
 
     /* ===== Text highlight (key copy moments) =====
-       Default: navy on light sections.
-       Inside dark sections (.receive .vip .form-section .footer + .proof__punch callout): royal blue. */
+       Modern Old Money pattern: italic Playfair on light (editorial accent within roman).
+       On dark sections: citron color does the lift, italic drops out. */
     .hl {
-      color: var(--gold);
-      font-weight: 700;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 600;
+      color: var(--olive);
     }
     .receive .hl,
     .vip .hl,
@@ -307,6 +325,9 @@
     .footer .hl,
     .proof__punch .hl {
       color: var(--gold-bright);
+      font-style: normal;
+      font-family: inherit;
+      font-weight: 700;
     }
 
     /* ===== Reveal animation (IO-driven) ===== */
@@ -319,6 +340,81 @@
     .reveal.is-visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* Paid-ad LP: hero (above-the-fold) skips reveal gate.
+       Hero is the LCP element — needs to paint on first frame, not after JS+fonts+IO.
+       The reveal animation framework still runs for everything below the fold. */
+    .hero .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .hero .title-wipe-bar { display: none; }
+
+    /* ===== Hero premium entrance (CSS-only, no opacity:0 starts) =====
+       Every element is visible at frame 1 — animations layer on transform/letter-spacing
+       only, so LCP is not gated. Cascade is short (multiples of 7 for AG DNA compliance). */
+    @keyframes ag-hero-rise {
+      from { transform: translateY(7px); }
+      to   { transform: translateY(0); }
+    }
+    @keyframes ag-hero-hairline-draw {
+      from { transform: scaleX(0); opacity: 0; }
+      to   { transform: scaleX(1); opacity: 0.6; }
+    }
+    @keyframes ag-hero-track {
+      from { letter-spacing: 0.21em; }
+      to   { letter-spacing: 0.35em; }
+    }
+    @keyframes ag-hero-breathe {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.06); }
+    }
+    .hero .brandmark__text {
+      animation: ag-hero-track 0.9s var(--ease-out) both;
+    }
+    .hero .brandmark__rule {
+      transform-origin: center;
+      animation: ag-hero-hairline-draw 0.9s var(--ease-out) 280ms both;
+    }
+    .hero .hero__credentials {
+      animation: ag-hero-rise 0.7s var(--ease-out) 140ms both;
+    }
+    .hero h1 {
+      animation: ag-hero-rise 0.7s var(--ease-out) 210ms both;
+    }
+    .hero .hero__vsl-wrap {
+      animation: ag-hero-rise 0.7s var(--ease-out) 420ms both;
+    }
+    .hero .hero__sub {
+      animation: ag-hero-rise 0.7s var(--ease-out) 350ms both;
+    }
+    .hero .hero__cta-wrap {
+      animation: ag-hero-rise 0.7s var(--ease-out) 490ms both;
+    }
+    /* VSL placeholder play button: gentle infinite breathe (attention, not entrance) */
+    .hero .vsl__play {
+      animation: ag-hero-breathe 2.1s ease-in-out infinite;
+      transform-origin: center;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero .brandmark__text,
+      .hero .brandmark__rule,
+      .hero .hero__credentials,
+      .hero h1,
+      .hero .hero__vsl-wrap,
+      .hero .hero__sub,
+      .hero .hero__cta-wrap,
+      .hero .vsl__play {
+        animation: none;
+      }
+    }
+
+    /* Mobile: skip the per-line title-wipe (heavy DOM injection + getClientRects per H2).
+       Mobile gets the simple fade-in reveal — same motion language, lighter cost. */
+    @media (max-width: 768px) {
+      .title-wipe-bar { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -357,19 +453,19 @@
       opacity: 0.6;
     }
     .brandmark__text {
-      font-family: var(--font-display);
-      font-style: italic;
+      font-family: var(--font-roman);
+      font-weight: 500;
       font-size: var(--text-sm);
-      letter-spacing: 0.42em;
+      letter-spacing: 0.35em;
       text-transform: uppercase;
       color: var(--gold);
       white-space: nowrap;
     }
     .hero__credentials {
-      font-family: var(--font-display);
-      font-style: italic;
+      font-family: var(--font-body);
       font-size: var(--text-sm);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
       color: var(--olive-soft);
       margin: 0 auto clamp(1.5rem, 1rem + 2vw, 2.4rem);
       text-align: center;
@@ -378,7 +474,7 @@
       color: var(--gold);
       margin: 0 0.5em;
       font-style: normal;
-      opacity: 0.7;
+      opacity: 0.5;
     }
     .hero h1 {
       margin-bottom: var(--space-md);
@@ -416,23 +512,25 @@
       position: relative;
       overflow: hidden;
     }
+    /* VSL play: stroke-only champagne circle, gold triangle (Architectural Digest tier) */
     .vsl__play {
       width: clamp(60px, 8vw, 88px);
       height: clamp(60px, 8vw, 88px);
       border-radius: 50%;
-      background: var(--gold-bright);
+      background: transparent;
+      border: 1px solid var(--gold-bright);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--cream);
+      color: var(--gold-bright);
       font-size: clamp(1.5rem, 2.5vw, 2rem);
     }
     .vsl__play::before {
       content: "";
       width: 0; height: 0;
-      border-left: 20px solid var(--cream);
-      border-top: 12px solid transparent;
-      border-bottom: 12px solid transparent;
+      border-left: 18px solid var(--gold-bright);
+      border-top: 11px solid transparent;
+      border-bottom: 11px solid transparent;
       margin-left: 4px;
     }
     .vsl__label {
@@ -478,8 +576,8 @@
       padding: clamp(0.875rem, 0.625rem + 1vw, 1.25rem) 0;
       overflow: hidden;
       position: relative;
-      border-top: 1px solid rgba(37, 99, 235, 0.25);
-      border-bottom: 1px solid rgba(37, 99, 235, 0.25);
+      border-top: 1px solid rgba(201, 168, 97, 0.25);
+      border-bottom: 1px solid rgba(201, 168, 97, 0.25);
     }
     .trust-strip__track {
       display: flex;
@@ -603,8 +701,8 @@
     @media (hover: hover) {
       .question:hover {
         transform: translateY(-4px);
-        box-shadow: 0 28px 56px -22px rgba(15, 23, 42, 0.28);
-        border-color: rgba(30, 58, 138, 0.3);
+        box-shadow: 0 28px 56px -22px rgba(20, 20, 20, 0.28);
+        border-color: rgba(20, 20, 20, 0.3);
       }
     }
     .question__num {
@@ -618,7 +716,7 @@
       margin-bottom: 0.9rem;
       line-height: 1;
       padding-bottom: 0.6rem;
-      border-bottom: 1px solid rgba(30, 58, 138, 0.3);
+      border-bottom: 1px solid rgba(20, 20, 20, 0.3);
     }
     .question__text {
       font-family: var(--font-display);
@@ -677,7 +775,7 @@
     }
     .deliverable {
       background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(37, 99, 235, 0.32);
+      border: 1px solid rgba(201, 168, 97, 0.32);
       border-radius: var(--radius-md);
       padding: var(--space-md);
       position: relative;
@@ -689,7 +787,7 @@
       position: absolute;
       inset: 0;
       border-radius: inherit;
-      background: radial-gradient(circle at 30% 0%, rgba(37, 99, 235, 0.18) 0%, transparent 60%);
+      background: radial-gradient(circle at 30% 0%, rgba(201, 168, 97, 0.18) 0%, transparent 60%);
       opacity: 0;
       pointer-events: none;
       transition: opacity var(--t-med) var(--ease-out);
@@ -717,7 +815,7 @@
       margin: var(--space-block) auto 0;
       text-align: center;
       padding-top: var(--space-block);
-      border-top: 1px solid rgba(37, 99, 235, 0.3);
+      border-top: 1px solid rgba(201, 168, 97, 0.3);
     }
     .receive__close p {
       font-family: var(--font-display);
@@ -735,7 +833,7 @@
       max-width: 760px;
       margin: 0 auto var(--space-block);
       padding-left: clamp(1.25rem, 0.5rem + 2.5vw, 2.5rem);
-      border-left: 1px solid rgba(30, 58, 138, 0.32);
+      border-left: 1px solid rgba(20, 20, 20, 0.32);
     }
     .why__bio .lede {
       font-family: var(--font-display);
@@ -854,7 +952,7 @@
       color: var(--gold-bright);
       margin-bottom: 0.7rem;
       padding-bottom: 0.5rem;
-      border-bottom: 1px solid rgba(37, 99, 235, 0.35);
+      border-bottom: 1px solid rgba(201, 168, 97, 0.35);
     }
     .phase__title {
       font-family: var(--font-display);
@@ -867,7 +965,7 @@
       max-width: 720px;
       margin: 0 auto;
       padding: clamp(2.25rem, 1.4rem + 3.4vw, 3.5rem) clamp(1.5rem, 1rem + 2vw, 2.5rem);
-      background: rgba(37, 99, 235, 0.07);
+      background: rgba(201, 168, 97, 0.07);
       border: 1px solid var(--gold-bright);
       outline: 1px solid var(--gold-bright);
       outline-offset: 7px;
@@ -957,7 +1055,7 @@
       line-height: 1;
       margin-bottom: var(--space-md);
       padding-bottom: var(--space-md);
-      border-bottom: 1px solid rgba(15, 23, 42, 0.14);
+      border-bottom: 1px solid rgba(20, 20, 20, 0.14);
       letter-spacing: -0.01em;
     }
     .listing--ours .listing__price { color: var(--gold); }
@@ -1064,10 +1162,16 @@
     .form-field select:focus {
       outline: 0;
       border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.22);
+      box-shadow: 0 0 0 3px rgba(20, 20, 20, 0.22);
     }
     .form-field select { appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--olive-soft) 50%), linear-gradient(135deg, var(--olive-soft) 50%, transparent 50%); background-position: calc(100% - 18px) center, calc(100% - 12px) center; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 2.5rem; }
     .form-card .cta { margin-top: var(--space-md); }
+    .form-card button[type="submit"][disabled] { opacity: 0.6; cursor: progress; }
+    .form-success { text-align: center; gap: var(--space-md); }
+    .form-success__title { font-family: var(--font-display); font-size: var(--text-h2); color: var(--olive-deep); margin: 0; text-wrap: balance; }
+    .form-success__body { font-family: var(--font-body); font-size: var(--text-lg); color: var(--olive); max-width: 540px; margin: var(--space-md) auto 0; text-wrap: pretty; }
+    .form-success__signoff { font-family: var(--font-display); font-style: italic; font-size: var(--text-lg); color: var(--gold); margin: var(--space-md) 0 0; }
+    .form-error { margin-top: var(--space-md); padding: 0.7rem 1rem; background: rgba(178, 34, 34, 0.08); border: 1px solid rgba(178, 34, 34, 0.35); border-radius: var(--radius-sm); color: #7a1f1f; font-family: var(--font-body); font-size: var(--text-base); text-align: center; width: 100%; }
 
     /* === FOOTER === */
     .footer {
@@ -1193,7 +1297,7 @@
           <span class="brandmark__text">Osborne Advisory</span>
           <span class="brandmark__rule"></span>
         </div>
-        <p class="hero__credentials reveal" aria-hidden="true">Beverly &amp; Company <span class="hero__credentials-dot">&middot;</span> CA DRE #02230695</p>
+        <p class="hero__credentials reveal" aria-hidden="true">Beverly &amp; Company <span class="hero__credentials-dot">&middot;</span> DRE #02230695</p>
         <h1 id="hero-h1">
           <span class="reveal title-wipe">Before You Sell Your Home in Southern&nbsp;California, Get the <span class="hl">3 Answers</span> That Actually&nbsp;Matter</span>
         </h1>
@@ -1211,9 +1315,9 @@
           <p>A complimentary Seller Analysis from Osborne Advisory gives you the real numbers before you make a move.</p>
         </div>
         <div class="hero__cta-wrap reveal">
-          <a href="#seller-analysis-form" class="cta" aria-label="Get Your Complimentary Seller Analysis">
-            <span class="cta__text-full" aria-hidden="true">Get Your Complimentary Seller Analysis</span>
-            <span class="cta__text-short" aria-hidden="true">Get Your Seller Analysis</span>
+          <a href="#seller-analysis-form" class="cta" aria-label="Get your seller analysis">
+            <span class="cta__text-full" aria-hidden="true">Get Your Analysis</span>
+            <span class="cta__text-short" aria-hidden="true">Get Your Analysis</span>
             <svg class="cta__arrow" viewBox="0 0 8 14" aria-hidden="true">
               <path d="M1 1l5 6-5 6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -1227,7 +1331,7 @@
       <div class="trust-strip__track">
         <ul class="trust-strip__list">
           <li>Beverly &amp; Company</li>
-          <li>CA DRE #02230695</li>
+          <li>DRE #02230695</li>
           <li>MLS</li>
           <li>Zillow Showcase</li>
           <li>Comparable Sales Analysis</li>
@@ -1237,7 +1341,7 @@
         </ul>
         <ul class="trust-strip__list" aria-hidden="true">
           <li>Beverly &amp; Company</li>
-          <li>CA DRE #02230695</li>
+          <li>DRE #02230695</li>
           <li>MLS</li>
           <li>Zillow Showcase</li>
           <li>Comparable Sales Analysis</li>
@@ -1495,7 +1599,7 @@
           <p class="reveal">Just clarity on where you stand and what your options look&nbsp;like.</p>
         </div>
 
-        <form class="form-card reveal" action="#" method="post" novalidate>
+        <form class="form-card reveal" id="seller-form" action="https://services.leadconnectorhq.com/hooks/jRujdKsdyGwlln5j7udu/webhook-trigger/bea3ec0b-1e95-43b0-bdf4-1df97b3893d9" method="post" novalidate>
           <div class="form-grid">
             <div class="form-field form-field--full">
               <label for="full-name">Full Name</label>
@@ -1541,9 +1645,9 @@
             </div>
           </div>
 
-          <button type="submit" class="cta" aria-label="Get My Complimentary Seller Analysis">
-            <span class="cta__text-full" aria-hidden="true">Get My Complimentary Seller Analysis</span>
-            <span class="cta__text-short" aria-hidden="true">Get My Seller Analysis</span>
+          <button type="submit" class="cta" aria-label="Request my seller analysis">
+            <span class="cta__text-full" aria-hidden="true">Request My Analysis</span>
+            <span class="cta__text-short" aria-hidden="true">Request My Analysis</span>
             <svg class="cta__arrow" viewBox="0 0 8 14" aria-hidden="true">
               <path d="M1 1l5 6-5 6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -1561,7 +1665,7 @@
         <span class="footer__rule"></span>
         <p class="footer__id">
           Charles Osborne&nbsp;/ Real Estate Advisor&nbsp;/ Osborne Advisory<br>
-          Beverly &amp; Company&nbsp;/ CA DRE #02230695
+          Beverly &amp; Company&nbsp;/ DRE #02230695
         </p>
         <div class="footer__divider"></div>
         <p class="footer__disclaimer">This is not legal, tax, or investment advice.<span class="ag-break"></span>Consult a licensed CPA, attorney, or financial advisor for guidance specific to your situation.</p>
@@ -1805,8 +1909,9 @@
       if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(init);
       }
-      // Safety nets if fonts.ready is unsupported or never resolves
-      setTimeout(init, 1200);
+      // Safety nets if fonts.ready is unsupported or never resolves.
+      // Tight (600ms) so below-fold reveals fire fast on slow font loads.
+      setTimeout(init, 600);
       if (document.readyState === 'complete') {
         init();
       } else {
@@ -1859,15 +1964,80 @@
         updateProgress();
       }
 
-      // ===== Local-preview form-submit guard =====
-      // The action="#" stub would scroll to top on submit during local testing.
-      // GHL will overwrite this handler with its own form routing.
-      document.addEventListener('submit', function (e) {
-        var form = e.target;
-        if (form && form.classList && form.classList.contains('form-card')) {
+      // ===== Seller-analysis form: AJAX POST JSON to GHL inbound webhook =====
+      // Webhook (LeadConnector / GoHighLevel) accepts JSON. On 2xx response we
+      // swap the form for a success state; on failure we re-enable the button.
+      var sellerForm = document.getElementById('seller-form');
+      if (sellerForm) {
+        sellerForm.addEventListener('submit', function (e) {
           e.preventDefault();
-        }
-      });
+          if (sellerForm.dataset.submitting === 'true') return;
+
+          var submitBtn = sellerForm.querySelector('button[type="submit"]');
+          var existingError = sellerForm.querySelector('.form-error');
+          if (existingError) existingError.remove();
+
+          // Build JSON payload from named fields
+          var payload = {};
+          var fields = sellerForm.querySelectorAll('input[name], select[name], textarea[name]');
+          for (var i = 0; i < fields.length; i++) {
+            payload[fields[i].name] = (fields[i].value || '').trim();
+          }
+          payload.source = 'osborne-advisory-lp';
+          payload.submitted_at = new Date().toISOString();
+
+          sellerForm.dataset.submitting = 'true';
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.setAttribute('aria-busy', 'true');
+            submitBtn.dataset.originalLabel = submitBtn.dataset.originalLabel || submitBtn.getAttribute('aria-label') || '';
+            submitBtn.setAttribute('aria-label', 'Submitting your analysis request');
+            var fullLabel  = submitBtn.querySelector('.cta__text-full');
+            var shortLabel = submitBtn.querySelector('.cta__text-short');
+            if (fullLabel)  fullLabel.textContent  = 'Sending...';
+            if (shortLabel) shortLabel.textContent = 'Sending...';
+          }
+
+          fetch(sellerForm.action, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(payload)
+          }).then(function (res) {
+            if (!res.ok) throw new Error('Webhook responded ' + res.status);
+            return res;
+          }).then(function () {
+            // Build success state with the same visual treatment as the form card
+            var success = document.createElement('div');
+            success.className = 'form-card form-success';
+            success.setAttribute('role', 'status');
+            success.setAttribute('aria-live', 'polite');
+            success.innerHTML = ''
+              + '<h3 class="form-success__title">Request received.</h3>'
+              + '<p class="form-success__body">Thank you. I will personally review your situation and reach out within one business day with your Seller Analysis.</p>'
+              + '<p class="form-success__signoff">&mdash; Charles Osborne</p>';
+            // Strip the em dash per AG copy standard (in case the entity slipped in)
+            success.innerHTML = success.innerHTML.replace(/&mdash;/g, '');
+            sellerForm.parentNode.replaceChild(success, sellerForm);
+            success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }).catch(function () {
+            sellerForm.dataset.submitting = 'false';
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.removeAttribute('aria-busy');
+              submitBtn.setAttribute('aria-label', submitBtn.dataset.originalLabel || 'Request my seller analysis');
+              var fullLabel2  = submitBtn.querySelector('.cta__text-full');
+              var shortLabel2 = submitBtn.querySelector('.cta__text-short');
+              if (fullLabel2)  fullLabel2.textContent  = 'Request My Analysis';
+              if (shortLabel2) shortLabel2.textContent = 'Request My Analysis';
+            }
+            var err = document.createElement('p');
+            err.className = 'form-error';
+            err.setAttribute('role', 'alert');
+            err.textContent = 'Something went wrong sending your request. Please try again, or call directly.';
+            sellerForm.appendChild(err);
+          });
+        });
+      }
     })();
   </script>
 </body>
