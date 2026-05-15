@@ -2007,8 +2007,11 @@
             return res;
           }).then(function () {
             // Redirect to the dedicated thank-you page after the webhook confirms 2xx.
-            // Relative path keeps this portable across local preview and deploy.
-            window.location.href = 'thank-you/';
+            // Build a slash-anchored base so the path works regardless of how the LP
+            // URL ends (slug, trailing slash, or index.html). Works on local file://
+            // preview and on the Vercel deploy which strips trailing slashes.
+            var basePath = window.location.pathname.replace(/\/?(index\.html?)?$/, '/');
+            window.location.href = basePath + 'thank-you/';
           }).catch(function () {
             sellerForm.dataset.submitting = 'false';
             if (submitBtn) {
