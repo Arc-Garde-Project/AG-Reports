@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0A0908">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>Request Received | Osborne Advisory</title>
+  <meta name="description" content="Your complimentary Seller Analysis request has been received. Charles Osborne will personally review your situation and reach out within one business day.">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a0a'/%3E%3Ctext x='16' y='22' font-family='serif' font-size='21' fill='%23c9a861' text-anchor='middle'%3EAG%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== AG Defensive CSS (inline) ===== */
+    *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html { overflow-x: hidden; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body { margin: 0; overflow-wrap: break-word; min-height: 100dvh; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    }
+    img, svg { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; }
+    h1, h2, h3 { text-wrap: balance; margin: 0; }
+    p { text-wrap: pretty; margin: 0; }
+    ul, ol { margin: 0; padding: 0; list-style: none; }
+
+    /* ===== Brand Tokens (mirror LP) ===== */
+    :root {
+      --olive: #141414;
+      --olive-deep: #0A0908;
+      --olive-soft: #5C5247;
+      --cream: #F5F1E8;
+      --cream-deep: #EBE6D8;
+      --gold-bright: #C9A861;
+      --ink: #141414;
+
+      --text-hero: clamp(2.25rem, 1.4rem + 3.6vw, 4rem);
+      --text-h2: clamp(1.5rem, 1.155rem + 1.47vw, 2.25rem);
+      --text-h4: clamp(1.125rem, 0.952rem + 0.74vw, 1.5rem);
+      --text-lg: clamp(1.063rem, 0.99rem + 0.31vw, 1.25rem);
+      --text-base: clamp(1rem, 0.964rem + 0.15vw, 1.125rem);
+      --text-sm: clamp(0.875rem, 0.857rem + 0.08vw, 0.938rem);
+
+      --space-section: clamp(3.5rem, 1.857rem + 7vw, 7rem);
+      --space-container: clamp(1.25rem, 0.357rem + 3.81vw, 3rem);
+      --space-block: clamp(2rem, 1.357rem + 2.74vw, 3.5rem);
+      --space-md: clamp(1rem, 0.857rem + 0.61vw, 1.5rem);
+      --space-sm: clamp(0.5rem, 0.429rem + 0.31vw, 0.75rem);
+
+      --container-narrow: 720px;
+
+      --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+      --font-roman: "Cinzel", "Trajan Pro", Georgia, serif;
+      --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+      --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    /* ===== Base ===== */
+    body {
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: 1.6;
+      color: var(--cream);
+      background: var(--olive-deep);
+      display: flex;
+      flex-direction: column;
+      min-height: 100dvh;
+    }
+
+    .skip-link {
+      position: absolute; left: -9999px; top: 0;
+      background: var(--cream); color: var(--olive-deep);
+      padding: 0.6rem 1rem; font-weight: 600;
+      text-decoration: none; z-index: 999;
+    }
+    .skip-link:focus { left: 1rem; top: 1rem; }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-narrow);
+      margin: 0 auto;
+      padding: 0 var(--space-container);
+    }
+
+    /* ===== Hero ===== */
+    main {
+      flex: 1 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-section) 0;
+    }
+
+    .ty {
+      text-align: center;
+      animation: ty-rise 0.9s var(--ease-out) both;
+    }
+    @keyframes ty-rise {
+      from { opacity: 0; transform: translateY(21px); letter-spacing: 0.02em; }
+      to { opacity: 1; transform: translateY(0); letter-spacing: 0; }
+    }
+
+    .brandmark {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(0.7rem, 0.4rem + 1.2vw, 1.2rem);
+      margin-bottom: var(--space-block);
+      color: var(--gold-bright);
+    }
+    .brandmark__rule {
+      flex: 0 1 clamp(28px, 4vw, 56px);
+      height: 1px;
+      background: var(--gold-bright);
+      opacity: 0.6;
+    }
+    .brandmark__text {
+      font-family: var(--font-roman);
+      font-weight: 500;
+      font-size: var(--text-sm);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+      white-space: nowrap;
+    }
+
+    .ty__title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: var(--text-hero);
+      line-height: 1.05;
+      color: var(--cream);
+      margin: 0 0 var(--space-md);
+      letter-spacing: -0.01em;
+    }
+    .ty__title em {
+      font-style: italic;
+      color: var(--gold-bright);
+    }
+
+    .ty__lead {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: var(--text-h4);
+      color: rgba(245, 241, 232, 0.92);
+      max-width: 540px;
+      margin: 0 auto var(--space-block);
+      line-height: 1.45;
+    }
+
+    .ty__rule {
+      display: block;
+      width: 56px;
+      height: 1px;
+      background: var(--gold-bright);
+      margin: 0 auto var(--space-block);
+    }
+
+    /* ===== Next Steps Timeline ===== */
+    .timeline__title {
+      font-family: var(--font-roman);
+      font-weight: 500;
+      font-size: var(--text-sm);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+      margin: 0 0 var(--space-md);
+    }
+    .timeline {
+      display: grid;
+      gap: var(--space-md);
+      max-width: 580px;
+      margin: 0 auto var(--space-block);
+      text-align: left;
+    }
+    .timeline__item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: clamp(0.8rem, 0.6rem + 0.8vw, 1.25rem);
+      align-items: baseline;
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid rgba(201, 168, 97, 0.22);
+    }
+    .timeline__item:last-child { border-bottom: 0; padding-bottom: 0; }
+    .timeline__num {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: var(--text-h2);
+      line-height: 1;
+      color: var(--gold-bright);
+      min-width: 1.4em;
+    }
+    .timeline__body strong {
+      display: block;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: var(--text-base);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--cream);
+      margin-bottom: 0.3rem;
+    }
+    .timeline__body p {
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      color: rgba(245, 241, 232, 0.82);
+      line-height: 1.6;
+    }
+
+    .ty__closing {
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      color: rgba(245, 241, 232, 0.78);
+      letter-spacing: 0.04em;
+      margin: 0 0 var(--space-md);
+    }
+    .ty__signoff {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: var(--text-h4);
+      color: var(--gold-bright);
+      margin: 0;
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      background: var(--olive-deep);
+      color: var(--cream);
+      padding: clamp(2.5rem, 1.5rem + 4vw, 4rem) 0 calc(clamp(1.5rem, 1rem + 2vw, 2.5rem) + env(safe-area-inset-bottom));
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
+      flex-shrink: 0;
+    }
+    .footer__compliance { max-width: 880px; margin: 0 auto; text-align: center; }
+    .footer__wordmark {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+      color: var(--cream);
+      margin: 0 0 clamp(1rem, 0.7rem + 1.2vw, 1.6rem);
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
+    .footer__rule {
+      display: block;
+      width: 56px;
+      height: 1px;
+      background: var(--gold-bright);
+      margin: 0 auto clamp(1.25rem, 0.9rem + 1.4vw, 2rem);
+    }
+    .footer__id {
+      font-family: var(--font-display);
+      font-size: var(--text-h4);
+      color: var(--cream);
+      margin: 0 0 var(--space-md);
+      line-height: 1.5;
+    }
+    .footer__divider {
+      width: 56px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.32);
+      margin: var(--space-md) auto;
+    }
+    .footer__disclaimer {
+      font-size: var(--text-sm);
+      color: rgba(255, 255, 255, 0.82);
+      font-style: italic;
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ===== Mobile center anchor ===== */
+    @media (max-width: 640px) {
+      .timeline { text-align: center; }
+      .timeline__item {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 0.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <main id="main" role="main">
+    <div class="container">
+      <div class="ty">
+        <div class="brandmark" aria-hidden="true">
+          <span class="brandmark__rule"></span>
+          <span class="brandmark__text">Osborne Advisory</span>
+          <span class="brandmark__rule"></span>
+        </div>
+
+        <h1 class="ty__title">Request <em>received</em>.</h1>
+
+        <p class="ty__lead">Your Seller Analysis is in motion.</p>
+
+        <span class="ty__rule" aria-hidden="true"></span>
+
+        <p class="timeline__title">What happens next</p>
+
+        <ol class="timeline">
+          <li class="timeline__item">
+            <span class="timeline__num">1</span>
+            <div class="timeline__body">
+              <strong>Within 24 hours</strong>
+              <p>A brief confirmation will arrive by phone or email so you know your request is in motion.</p>
+            </div>
+          </li>
+          <li class="timeline__item">
+            <span class="timeline__num">2</span>
+            <div class="timeline__body">
+              <strong>Within one business day</strong>
+              <p>Your custom Comparable Sales, three Pricing Strategies, and Net Sheet land in your inbox.</p>
+            </div>
+          </li>
+          <li class="timeline__item">
+            <span class="timeline__num">3</span>
+            <div class="timeline__body">
+              <strong>From there</strong>
+              <p>A short, no-pressure conversation if you want to walk through what the numbers mean for your situation.</p>
+            </div>
+          </li>
+        </ol>
+
+        <p class="ty__closing">No pressure.&nbsp;No obligation.&nbsp;Just clarity.</p>
+
+        <p class="ty__signoff">Charles Osborne</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__compliance">
+        <p class="footer__wordmark" aria-hidden="true">Osborne Advisory</p>
+        <span class="footer__rule"></span>
+        <p class="footer__id">
+          Charles Osborne&nbsp;/ Real Estate Advisor&nbsp;/ Osborne Advisory<br>
+          Beverly &amp; Company&nbsp;/ DRE #02230695
+        </p>
+        <div class="footer__divider"></div>
+        <p class="footer__disclaimer">This is not legal, tax, or investment advice. Consult a licensed CPA, attorney, or financial advisor for guidance specific to your situation.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

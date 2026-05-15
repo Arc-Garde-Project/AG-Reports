@@ -2006,19 +2006,9 @@
             if (!res.ok) throw new Error('Webhook responded ' + res.status);
             return res;
           }).then(function () {
-            // Build success state with the same visual treatment as the form card
-            var success = document.createElement('div');
-            success.className = 'form-card form-success';
-            success.setAttribute('role', 'status');
-            success.setAttribute('aria-live', 'polite');
-            success.innerHTML = ''
-              + '<h3 class="form-success__title">Request received.</h3>'
-              + '<p class="form-success__body">Thank you. I will personally review your situation and reach out within one business day with your Seller Analysis.</p>'
-              + '<p class="form-success__signoff">&mdash; Charles Osborne</p>';
-            // Strip the em dash per AG copy standard (in case the entity slipped in)
-            success.innerHTML = success.innerHTML.replace(/&mdash;/g, '');
-            sellerForm.parentNode.replaceChild(success, sellerForm);
-            success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Redirect to the dedicated thank-you page after the webhook confirms 2xx.
+            // Relative path keeps this portable across local preview and deploy.
+            window.location.href = 'thank-you/';
           }).catch(function () {
             sellerForm.dataset.submitting = 'false';
             if (submitBtn) {
