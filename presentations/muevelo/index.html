@@ -416,6 +416,16 @@ body::after {
   transition: opacity 0.21s var(--ease-out), transform 0.21s var(--ease-out);
 }
 
+/* Mobile-only line breaks in titles — collapse on desktop so wider trapezoid fits the
+   title as one line, but split into two lines on mobile (< 768px) where the trap is
+   constrained to the polygon's narrow 56% bottom edge. */
+@media (min-width: 768px) {
+  .active-title br.mb-br,
+  .slide__title br.mb-br {
+    display: none;
+  }
+}
+
 /* Slide 2 — diagonals fan UP from the title (narrow bottom) to the screen
    edges (wide top). The TOP edge is the existing .hue-line-top. */
 .title-trap {
@@ -5840,7 +5850,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 <!-- ===== SLIDE 3 — The Pitch Hub (Table of Contents) =====
      7 clickable circles — each jumps to its dedicated chapter slide. -->
 <section class="slide" id="slide-hub" data-arch="hub" aria-label="Slide 3 of 12 — The Pitch Hub">
-  <h2 class="slide__title" hidden>Welcome to Muevelo West</h2>
+  <h2 class="slide__title" hidden>Welcome to <br class="mb-br">Muevelo West</h2>
   <div class="slide__inner">
     <div class="hub-stage" role="group" aria-label="Pitch hub — click any section to expand">
 
@@ -5941,7 +5951,7 @@ body, p, li, td, th, blockquote, figcaption, span,
         </article>
 
         <!-- Mini-slide 3 — Venue and Lease Control (verbatim from slide-6) -->
-        <article class="modal-slide" data-title="Venue and Lease Control">
+        <article class="modal-slide" data-title="Venue and &lt;br class=&quot;mb-br&quot;&gt;Lease Control">
           <p>The venue operates under a <span class="hl">five&#8209;year&nbsp;lease</span> with <span class="hl">three additional five&#8209;year&nbsp;extensions</span>.<span class="ag-break"></span>If all options are exercised, operators could control the location for <span class="hl">up to twenty&nbsp;years</span>.</p>
           <p>This <span class="hl">long&#8209;term control</span> allows the ownership group to build brand equity, grow a loyal audience, and stabilize operations in the market.</p>
           <p class="modal-subnote">Additional transition provisions include: a minimum of <span class="hl">1 year</span> for use of the Chico name on exterior signage, and a minimum of <span class="hl">3 months</span> of access to Chico&rsquo;s existing social media platforms to support audience migration and brand continuity.</p>
@@ -6004,7 +6014,7 @@ body, p, li, td, th, blockquote, figcaption, span,
       <div class="modal-slides">
 
         <!-- Mini-slide 1 — Key Investment Highlights (verbatim from slide-4) -->
-        <article class="modal-slide" data-active="true" data-title="Key Investment Highlights">
+        <article class="modal-slide" data-active="true" data-title="Key &lt;br class=&quot;mb-br&quot;&gt;Investment Highlights">
           <ul class="modal-highlights">
             <li>2,400 SF nightlife venue located in Montebello</li>
             <li>Combination of Chico&rsquo;s Montebello&rsquo;s legacy location with the Muevelo brand following</li>
@@ -6157,7 +6167,7 @@ body, p, li, td, th, blockquote, figcaption, span,
         </article>
 
         <!-- Mini-slide 2 — Capital Allocation Breakdown (verbatim from slide-10) -->
-        <article class="modal-slide" data-title="Capital Allocation Breakdown">
+        <article class="modal-slide" data-title="Capital &lt;br class=&quot;mb-br&quot;&gt;Allocation Breakdown">
           <p>Total target: ~$720,000 (midpoint estimates shown for range items)</p>
           <div class="modal-cap">
             <div class="modal-cap__hero">
@@ -6203,7 +6213,7 @@ body, p, li, td, th, blockquote, figcaption, span,
         </article>
 
         <!-- Mini-slide 4 — Operating Model & Assumptions (verbatim from slide-22) -->
-        <article class="modal-slide" data-title="Operating Model &amp; Assumptions">
+        <article class="modal-slide" data-title="Operating Model &lt;br class=&quot;mb-br&quot;&gt;&amp; Assumptions">
           <ul class="modal-highlights">
             <li>Operating nights: Friday to Sunday | Hours: 9PM to 2AM</li>
             <li>Attendance: Friday ~150 guests | Saturday ~180 guests | Sunday lower ramp</li>
@@ -6261,7 +6271,7 @@ body, p, li, td, th, blockquote, figcaption, span,
         </article>
 
         <!-- Mini-slide 2 — Projected Revenue by Night (verbatim from slide-14) -->
-        <article class="modal-slide" data-title="Projected Revenue by Night">
+        <article class="modal-slide" data-title="Projected Revenue &lt;br class=&quot;mb-br&quot;&gt;by Night">
           <div class="modal-table-wrap">
           <table class="modal-table">
             <thead><tr><th>Night</th><th>Estimated Guests</th><th>Estimated Revenue</th></tr></thead>
@@ -6275,7 +6285,7 @@ body, p, li, td, th, blockquote, figcaption, span,
         </article>
 
         <!-- Mini-slide 3 — Year 1 vs Year 2 Monthly Profit (verbatim from slide-15) -->
-        <article class="modal-slide" data-title="Year 1 vs Year 2 Monthly Profit">
+        <article class="modal-slide" data-title="Year 1 vs Year 2 &lt;br class=&quot;mb-br&quot;&gt;Monthly Profit">
           <p>Year 2 stabilized profits after seller carry ($100K) is retired and brand transition completes</p>
           <div class="modal-y2">
             <div class="modal-y2__legend"><span class="modal-y2__lg modal-y2__lg--y1"><i></i>Year 1</span><span class="modal-y2__lg modal-y2__lg--y2"><i></i>Year 2 (Stabilized)</span></div>
@@ -6287,7 +6297,7 @@ body, p, li, td, th, blockquote, figcaption, span,
         </article>
 
         <!-- Mini-slide 4 — Break-Even Timeline (verbatim from slide-16) -->
-        <article class="modal-slide" data-title="Estimated Break-Even Timeline">
+        <article class="modal-slide" data-title="Estimated &lt;br class=&quot;mb-br&quot;&gt;Break-Even Timeline">
           <div class="modal-table-wrap">
           <table class="modal-table">
             <thead><tr><th>Scenario</th><th>Stabilized Monthly Profit (Yr 2)</th><th>Break&#8209;Even Timeframe</th></tr></thead>
@@ -6337,7 +6347,7 @@ body, p, li, td, th, blockquote, figcaption, span,
       <div class="modal-slides">
 
         <!-- Mini-slide 1 — Cash Flow Waterfall (verbatim from slide-8) -->
-        <article class="modal-slide" data-active="true" data-title="Cash Flow Waterfall Structure">
+        <article class="modal-slide" data-active="true" data-title="Cash Flow &lt;br class=&quot;mb-br&quot;&gt;Waterfall Structure">
           <div class="modal-wf">
             <div class="modal-wf__stage">
               <span class="modal-wf__eyebrow">Stage 01 &middot; Operations</span>
@@ -6373,7 +6383,7 @@ body, p, li, td, th, blockquote, figcaption, span,
         </article>
 
         <!-- Mini-slide 2 — Investor Distribution Examples (verbatim from slide-17) -->
-        <article class="modal-slide" data-title="Investor Distribution Examples">
+        <article class="modal-slide" data-title="Investor &lt;br class=&quot;mb-br&quot;&gt;Distribution Examples">
           <p>Year 2, Stabilized</p>
           <div class="modal-table-wrap">
           <table class="modal-table">
@@ -6394,7 +6404,7 @@ body, p, li, td, th, blockquote, figcaption, span,
         </article>
 
         <!-- Mini-slide 4 — Revenue Growth Opportunities (verbatim from slide-20) -->
-        <article class="modal-slide" data-title="Revenue Growth Opportunities">
+        <article class="modal-slide" data-title="Revenue &lt;br class=&quot;mb-br&quot;&gt;Growth Opportunities">
           <p>Muevelo West&rsquo;s base projections intentionally assume a <span class="hl">conservative operating model</span> focused on core weekend traffic and beverage sales.<span class="ag-break"></span>However, nightlife venues often grow revenue significantly through <span class="hl">special programming, branded events, and community engagement</span>.<span class="ag-break"></span>These initiatives can increase guest counts, average spend per visitor, and overall brand equity.</p>
           <ul class="modal-highlights">
             <li><span class="hl">Theme Nights</span> (Latin Night, Throwback Nights, Pride Nights, etc.) that drive repeat attendance and niche audiences.</li>
