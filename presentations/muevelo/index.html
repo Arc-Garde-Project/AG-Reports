@@ -6898,9 +6898,12 @@ body, p, li, td, th, blockquote, figcaption, span,
       });
       if (prevBtn) prevBtn.disabled = (i === 0);
       if (nextBtn) nextBtn.disabled = (i === slides.length - 1);
-      // Header title becomes the active mini-slide's data-title
+      // Header title becomes the active mini-slide's data-title.
+      // Use innerHTML (not textContent) so embedded <br class="mb-br"> tags stay as
+      // real elements — otherwise they get stored as literal angle-bracket text and,
+      // on a later prepareTitle() read, render as visible "<br ...>" instead of a line break.
       var title = slides[i].getAttribute('data-title');
-      if (titleEl && title) titleEl.textContent = title;
+      if (titleEl && title) titleEl.innerHTML = title;
       // Push that title into the deck's body-level active-title (the trapezoid at top).
       // Sequence: fade out → swap text + morph trap → fade in. Mirrors the deck-level
       // transition so mini-slide title changes never show text mid-morph.
