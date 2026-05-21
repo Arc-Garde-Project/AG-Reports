@@ -783,6 +783,31 @@ body:has(#slide-1.active) .nav-hint {
 @media (hover: hover) and (pointer: fine) {
   .ag-cursor { display: block; }
   body, button, a, .slide, .nav, .nav button { cursor: none !important; }
+  /* Scrollable containers — explicitly cancel the UA "default" cursor that the
+     browser draws over scrollbar tracks/thumbs (notably .modal-table-wrap's
+     horizontal scrollbar). Without these the native arrow re-appears when the
+     mouse crosses the scrollbar region. */
+  .modal-table-wrap,
+  .modal-table-wrap *,
+  .modal-slide,
+  .slide__inner,
+  .content-wrap {
+    cursor: none !important;
+  }
+  .modal-table-wrap::-webkit-scrollbar,
+  .modal-table-wrap::-webkit-scrollbar-track,
+  .modal-table-wrap::-webkit-scrollbar-thumb,
+  .modal-slide::-webkit-scrollbar,
+  .modal-slide::-webkit-scrollbar-track,
+  .modal-slide::-webkit-scrollbar-thumb,
+  .slide__inner::-webkit-scrollbar,
+  .slide__inner::-webkit-scrollbar-track,
+  .slide__inner::-webkit-scrollbar-thumb,
+  .content-wrap::-webkit-scrollbar,
+  .content-wrap::-webkit-scrollbar-track,
+  .content-wrap::-webkit-scrollbar-thumb {
+    cursor: none !important;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .ag-cursor { display: none; cursor: auto !important; }
