@@ -5351,35 +5351,22 @@ body, p, li, td, th, blockquote, figcaption, span,
 .modal-table-wrap {
   position: relative;
   width: 100%;
-  overflow-x: scroll;            /* scroll (not auto) — scrollbar always rendered */
+  overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: hsl(var(--sat-hue, 280) 75% 60% / 0.85) rgba(255, 255, 255, 0.1);
+  /* Native scrollbar fully hidden — browsers paint a default cursor over scrollbar
+     tracks (UA-controlled, ignores cursor CSS in Chrome/Safari), so removing the
+     scrollbar entirely is the only reliable way to keep the AG cursor over the
+     table wrap. The "SWIPE TO SEE MORE →" hint sibling signals scrollability. */
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;       /* IE 10+ */
   border-radius: 6px;
   padding-bottom: 4px;
 }
-/* Hide scrollbar entirely when the table actually fits the wrap — only show when overflowing */
-.modal-table-wrap:not(:hover) {
-  scrollbar-color: hsl(var(--sat-hue, 280) 75% 60% / 0.7) rgba(255, 255, 255, 0.08);
-}
 .modal-table-wrap::-webkit-scrollbar {
-  height: 10px;
-  -webkit-appearance: none;
-}
-.modal-table-wrap::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 999px;
-}
-.modal-table-wrap::-webkit-scrollbar-thumb {
-  background: hsl(var(--sat-hue, 280) 75% 58% / 0.75);
-  border-radius: 999px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-.modal-table-wrap::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--sat-hue, 280) 80% 65% / 0.95);
-  background-clip: padding-box;
+  display: none;                  /* Chrome, Safari, Edge */
+  width: 0;
+  height: 0;
 }
 .modal-table-wrap .modal-table {
   min-width: 100%;
