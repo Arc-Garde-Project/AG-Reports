@@ -21,7 +21,7 @@
 <meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bagel+Fat+One&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet">
 <style>
 /* ===== AG RESPONSIVE PREVENTION LAYER v1.0 =====
    Permanent safety net against the 7 most common responsive failures.
@@ -237,8 +237,8 @@ body::after {
     0 0 0 1px rgba(255, 255, 255, 0.04) inset,
     0 0 24px hsla(var(--current-hue, 0), 90%, 60%, 0.35);
   transition:
-    border-color 1.4s cubic-bezier(0.65, 0, 0.35, 1),
-    box-shadow 1.4s cubic-bezier(0.65, 0, 0.35, 1);
+    border-color 0.45s cubic-bezier(0.65, 0, 0.35, 1),
+    box-shadow 0.45s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .nav button {
   width: 48px; height: 48px;
@@ -317,15 +317,31 @@ body::after {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.6s var(--ease-out), visibility 0s 0.6s;
-  will-change: opacity;
+  transform: scale(1.012) translateZ(0);
+  transform-origin: center center;
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out),
+    visibility 0s linear 0.7s;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
 }
 .slide.active {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   z-index: 5;
-  transition: opacity 0.6s var(--ease-out) 0.3s, visibility 0s 0.3s;
+  transform: scale(1) translateZ(0);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.9s var(--ease-out),
+    visibility 0s linear;
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide, .slide.active {
+    transform: none;
+    transition: opacity 0.3s linear, visibility 0s linear;
+  }
 }
 .slide__inner {
   width: 100%; max-width: 1200px; margin: 0 auto;
@@ -364,18 +380,23 @@ body::after {
 /* Kill the halo orb on hidden titles — was leaking visually onto the slide content */
 .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__title::before { display: none; }
 .slide:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__title::after { display: none; }
-/* Body-level title — fixed at 63px from viewport top, completely separate from slide content */
+/* Body-level title — flex-centered inside the trapezoid bounds.
+   top: 0 + height = trap height so 1-line and 2-line titles both vertically center in the shape. */
 .active-title {
   position: fixed;
-  top: clamp(28px, 3.6vh, 46px);
+  top: 0;
   left: 0;
   right: 0;
+  height: clamp(132px, 17vh, 180px);
   z-index: 50;
   margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-display);
   font-weight: 400;
   font-size: var(--text-display);
-  line-height: 0.95;
+  line-height: 1.05;
   letter-spacing: 0.005em;
   text-transform: uppercase;
   color: var(--ink);
@@ -384,11 +405,15 @@ body::after {
   padding: 0 clamp(var(--space-xl), 5vw, var(--space-3xl));
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.6s var(--ease-out);
+  transform: translateY(-6px);
+  /* Fade-out: 0.21s — completes before trap-width morph (which starts at t=225ms in goTo) */
+  transition: opacity 0.21s var(--ease-out), transform 0.21s var(--ease-out);
 }
 .active-title.visible {
   opacity: 1;
-  transition: opacity 0.6s var(--ease-out) 0.3s;
+  transform: translateY(0);
+  /* Fade-in: 0.21s — triggered by goTo at t=700ms, after trap finishes morphing */
+  transition: opacity 0.21s var(--ease-out), transform 0.21s var(--ease-out);
 }
 
 /* Slide 2 — diagonals fan UP from the title (narrow bottom) to the screen
@@ -407,8 +432,8 @@ body::after {
   color: hsl(var(--current-hue, 0), 80%, 60%);
   transition:
     opacity 0.7s var(--ease-out),
-    width 0.9s cubic-bezier(0.65, 0, 0.35, 1),
-    color 1.4s cubic-bezier(0.65, 0, 0.35, 1);
+    width 0.45s cubic-bezier(0.65, 0, 0.35, 1),
+    color 0.45s cubic-bezier(0.65, 0, 0.35, 1);
   overflow: visible;
   will-change: width, opacity, color;
 }
@@ -417,8 +442,8 @@ body:not(.hide-lines) .title-trap {
   opacity: 1;
   transition:
     opacity 0.7s var(--ease-out) 0.3s,
-    width 0.9s cubic-bezier(0.65, 0, 0.35, 1),
-    color 1.4s cubic-bezier(0.65, 0, 0.35, 1);
+    width 0.45s cubic-bezier(0.65, 0, 0.35, 1),
+    color 0.45s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 /* Dev jump panel — fixed top-right, click any number to jump */
@@ -511,7 +536,7 @@ body:not(.hide-lines) .title-trap {
     hsla(var(--current-hue, 0), 90%, 60%, 0.08) 30%,
     transparent 70%);
   filter: blur(40px);
-  transition: background 1.4s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: background 0.45s cubic-bezier(0.65, 0, 0.35, 1);
 }
 /* Edge vignette to deepen the corners and contain the eye */
 .hue-vignette {
@@ -598,7 +623,7 @@ body.curves-variant-5 .curve-svg path {
   stroke-dasharray: none;
   stroke-dashoffset: 0;
   stroke: hsl(var(--current-hue, 0), 90%, 65%);
-  transition: stroke 1.4s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: stroke 0.45s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 
@@ -676,8 +701,8 @@ body.hide-lines .curve-svg { opacity: 0; }
   opacity: 0;
   transform: translateY(28px) scale(0.985);
   transition:
-    border-color 1.4s cubic-bezier(0.65, 0, 0.35, 1),
-    box-shadow 1.4s cubic-bezier(0.65, 0, 0.35, 1),
+    border-color 0.45s cubic-bezier(0.65, 0, 0.35, 1),
+    box-shadow 0.45s cubic-bezier(0.65, 0, 0.35, 1),
     opacity 0.7s var(--ease-out),
     transform 0.9s var(--ease-out);
   will-change: opacity, transform;
@@ -686,8 +711,8 @@ body.hide-lines .curve-svg { opacity: 0; }
   opacity: 1;
   transform: translateY(0) scale(1);
   transition:
-    border-color 1.4s cubic-bezier(0.65, 0, 0.35, 1),
-    box-shadow 1.4s cubic-bezier(0.65, 0, 0.35, 1),
+    border-color 0.45s cubic-bezier(0.65, 0, 0.35, 1),
+    box-shadow 0.45s cubic-bezier(0.65, 0, 0.35, 1),
     opacity 0.7s var(--ease-out) 0.2s,
     transform 0.9s var(--ease-out) 0.2s;
 }
@@ -742,7 +767,7 @@ body:has(#slide-1.active) .nav-hint {
   filter: drop-shadow(0 0 6px hsla(var(--current-hue, 0), 90%, 60%, 0.55));
   transform: translate3d(-100px, -100px, 0);
   will-change: transform, color;
-  transition: color 1.4s cubic-bezier(0.65, 0, 0.35, 1), filter 1.4s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: color 0.45s cubic-bezier(0.65, 0, 0.35, 1), filter 0.45s cubic-bezier(0.65, 0, 0.35, 1);
   display: none;
 }
 @media (hover: hover) and (pointer: fine) {
@@ -1825,12 +1850,13 @@ body.hide-lines .hue-line-bottom { opacity: 0; }
   animation: heroLand 2.8s var(--ease-out) 0.6s both, heroHueRotate 9s linear 3.5s infinite;
 }
 .thanks-headline {
-  font-family: var(--font-display);
+  /* Bagel Fat One — chunky retro display, matches the Muevelo logo's neon-sign vibe */
+  font-family: 'Bagel Fat One', var(--font-display);
   font-weight: 400;
-  font-size: clamp(3rem, 2rem + 4.2vw, 6.4rem);
+  font-size: clamp(3.4rem, 2.2rem + 5vw, 7.4rem);
   line-height: 0.95;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   color: #ff0066;
   -webkit-text-fill-color: currentColor;
   -webkit-text-stroke: 2px #00d8aa;
@@ -3353,7 +3379,7 @@ html { overflow-x: hidden; }
 .content-wrap::-webkit-scrollbar-thumb {
   background: hsla(var(--current-hue, 0), 80%, 60%, 0.35);
   border-radius: 999px;
-  transition: background 1.4s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: background 0.45s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .content-wrap::-webkit-scrollbar-thumb:hover {
   background: hsla(var(--current-hue, 0), 85%, 65%, 0.6);
@@ -3589,6 +3615,23 @@ body, p, li, td, th, blockquote, figcaption, span,
   }
   .content-wrap > * { z-index: 1; position: relative; opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
   .content-wrap > .slide__logo { display: none; }
+
+  /* Hub slide: kill the title-buffer top margin + radial frame + auto height.
+     Welcome trapezoid must hug viewport top on mobile too.
+     Content-wrap ends exactly at nav top so margin: auto on stage gives equal gaps. */
+  .slide[data-arch="hub"] .content-wrap {
+    margin: 0 auto calc(clamp(16px, 2vw, 28px) + 67px + env(safe-area-inset-bottom)) !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - clamp(16px, 2vw, 28px) - 67px - env(safe-area-inset-bottom)) !important;
+    min-height: 0 !important;
+    border-radius: 0 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    gap: 0 !important;
+    justify-content: flex-start !important;
+  }
 
   /* Slide-num corner pill */
   .slide__num {
@@ -3860,6 +3903,1824 @@ body, p, li, td, th, blockquote, figcaption, span,
   .thanks-horizon { display: none !important; }
   .slide[data-arch="thanks"]::after { width: clamp(260px, 80vw, 420px); }
 }
+
+/* ============================================================
+   SLIDE — Pitch Hub (7-Hub Section Grid)  [v1]
+   1 center "The Pitch" + 6 satellite hubs around a hex ring.
+   Interconnected SVG flower-of-life web behind. Each satellite
+   is a button that fires a fullscreen modal.
+   ============================================================ */
+/* Hub slide: no title.
+   21px gap from viewport top, 21px+ gap from the nav-bar pill.
+   Nav pill height ~64px + 16-28px bottom offset → nav top ~80-92px above viewport bottom.
+   Bottom buffer 130px gives clearance for the satellite + its glow above the nav.
+   SPECIFICITY FIX: matched the default rule's 0,3,0 specificity via the :not() trio
+   so this override actually wins. (data-arch="hub" passes both :not checks.) */
+.slide[data-arch="hub"]:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__inner {
+  /* Top buffer = trap height exactly (so available space starts at trap.bottom).
+     Bottom buffer = nav clearance (67px pill + 16-28px gap + safe area).
+     With justify-content: center the stage centers between trap.bottom and nav.top. */
+  padding:
+    clamp(132px, 17vh, 180px)
+    clamp(var(--space-md), 2vw, var(--space-lg))
+    calc(clamp(16px, 2vw, 28px) + 67px + env(safe-area-inset-bottom));
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hub + chapter slides both use the deck's standard body-level title-trap + active-title.
+   (Previously hub had its own embedded welcome trapezoid — replaced for visual consistency.) */
+
+/* Hide the chapter__head inside the slide — title shows in the deck's title-trap at top */
+.slide[data-arch="chapter"] .chapter__head {
+  display: none;
+}
+
+/* ============================================================
+   CHAPTER SLIDE LAYOUT — flex column: head + body + nav footer
+   ============================================================ */
+.slide[data-arch="chapter"]:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__inner {
+  /* Top buffer clears the title-trap (same as default middle slides), nav clearance at bottom.
+     justify-content: center vertically centers the content-wrap in the available space. */
+  padding:
+    clamp(160px, 20vh, 210px)
+    clamp(var(--space-md), 2vw, var(--space-lg))
+    calc(clamp(16px, 2vw, 28px) + 67px + env(safe-area-inset-bottom));
+  justify-content: center;
+}
+.slide[data-arch="chapter"] .content-wrap {
+  /* Override the default content-wrap styling — chapter slides own their layout.
+     justify-content: center vertically centers content inside the wrap (when it fits) */
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: clamp(12px, 1.6vmin, 18px);
+  height: calc(100vh - clamp(160px, 20vh, 210px) - clamp(16px, 2vw, 28px) - 67px - env(safe-area-inset-bottom));
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  min-height: 0;
+}
+.slide.active[data-arch="chapter"] .content-wrap {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.chapter__head {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.chapter__head .hub-modal__eyebrow {
+  font-family: var(--font-display);
+  font-size: clamp(0.7rem, 0.95vmin, 0.85rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: hsl(var(--sat-hue, 280) 80% 68%);
+}
+/* Override the global hide rule for .slide__title on chapter slides — we want it visible inside chapter__head */
+.slide[data-arch="chapter"] .slide__title.chapter__title {
+  display: block !important;
+  position: static !important;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.6vmin, 2.4rem);
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  text-shadow: none;
+  background: none;
+  -webkit-text-fill-color: #fff;
+}
+.slide[data-arch="chapter"] .slide__title.chapter__title::before,
+.slide[data-arch="chapter"] .slide__title.chapter__title::after {
+  display: none;
+}
+
+.chapter__body {
+  flex: 1 1 auto;
+  position: relative;
+  min-height: 0;
+}
+.chapter__body .modal-slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+/* Chapter slide nav footer — same styling as modal slide nav, but with no top border separator inherited */
+.slide[data-arch="chapter"] .modal-slide-nav {
+  flex: 0 0 auto;
+  margin-top: clamp(8px, 1.2vmin, 14px);
+  padding: clamp(10px, 1.4vmin, 16px) 0;
+  background: none;
+}
+
+/* Mobile (<600px) — nav buttons shrink to 44px so nav pill height = 59 (not 67).
+   Recompute padding-bottom, content-wrap height, and stage size to match new nav extent. */
+@media (max-width: 600px) {
+  .slide[data-arch="hub"]:not([data-arch="hero"]):not([data-arch="thanks"]) .slide__inner {
+    padding-bottom: calc(clamp(16px, 2vw, 28px) + 59px + env(safe-area-inset-bottom));
+  }
+  .slide[data-arch="hub"] .content-wrap {
+    height: calc(100vh - clamp(16px, 2vw, 28px) - 59px - env(safe-area-inset-bottom)) !important;
+    margin: 0 auto calc(clamp(16px, 2vw, 28px) + 59px + env(safe-area-inset-bottom)) !important;
+  }
+  .hub-stage {
+    --stage-size: min(calc(100vh - clamp(16px, 2vw, 28px) - 59px - env(safe-area-inset-bottom) - 116px), 92vw);
+  }
+}
+
+/* Content-wrap on hub: kill chrome, fill the slot, center the stage inside it.
+   slide__inner's padding already carves out trap clearance (top) + nav clearance (bottom),
+   so 100% height + center is enough to center the diagram between trap-bottom and nav-top. */
+.slide[data-arch="hub"] .content-wrap {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+/* Welcome header — trapezoid wrapper matching .title-trap shape, scaled smaller */
+.hub-welcome {
+  flex: 0 0 auto;
+  position: relative;
+  isolation: isolate;
+  width: min(560px, 82vw);
+  height: clamp(86px, 12vh, 116px);
+  /* currentColor feeds the SVG stroke + gradient — inherits the slide hue */
+  color: hsl(var(--current-hue, 215), 80%, 60%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* Wide side-padding stays inside the narrow bottom of the trapezoid (22-78% of width) */
+  padding: clamp(8px, 1.2vh, 14px) clamp(64px, 12vw, 110px) clamp(14px, 1.8vh, 20px);
+}
+.hub-welcome__trap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: visible;
+}
+.hub-welcome__title {
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 1.7vmin, 1.3rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #fff;
+  margin: 0;
+  text-wrap: balance;
+  line-height: 1.15;
+}
+.hub-welcome__desc {
+  font-family: var(--font-body);
+  font-size: clamp(0.66rem, 0.95vmin, 0.84rem);
+  color: rgba(255, 255, 255, 0.72);
+  margin: clamp(3px, 0.5vh, 6px) 0 0;
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+.slide.active[data-arch="hub"] .content-wrap {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Square stage — fits inside (content-wrap.height - welcome.height_max).
+   Welcome height max = 116px (from clamp(86px, 12vh, 116px)).
+   margin: auto absorbs remaining vertical space EQUALLY above and below the stage —
+   so the stage stays centered between welcome bottom and nav top on every viewport. */
+.hub-stage {
+  /* Available vertical = 100vh - trap clearance - bottom nav clearance - small breathing buffer.
+     Cap by 86vmin (1.4x the previous 62vmin cap) so the diagram fills more of the area. */
+  --stage-size: min(
+    calc(100vh - clamp(132px, 17vh, 180px) - clamp(16px, 2vw, 28px) - 67px - env(safe-area-inset-bottom) - 16px),
+    86vmin
+  );
+  position: relative;
+  width:  var(--stage-size);
+  height: var(--stage-size);
+  margin: 0 auto;
+  isolation: isolate;
+  flex: 0 0 auto;
+  /* Default: yellow. Each circle shifts to its destination slide's hue on hover —
+     see .hub-center[...]:hover + .hub-satellite[...]:hover rules below. */
+}
+}
+
+/* Decorative SVG web — flower-of-life pattern */
+.hub-web {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: visible;
+  filter: drop-shadow(0 0 10px rgba(255, 205, 0, 0.15));
+}
+.hub-web .web-circle {
+  fill: none;
+  stroke: rgba(255, 205, 0, 0.22);
+  stroke-width: 1;
+}
+.hub-web .web-circle--center {
+  stroke: rgba(255, 205, 0, 0.4);
+  stroke-width: 1.4;
+}
+.hub-web .web-ring {
+  fill: none;
+  stroke: rgba(255, 205, 0, 0.18);
+  stroke-width: 1;
+  stroke-dasharray: 2 7;
+}
+.hub-web .web-spoke {
+  stroke: rgba(255, 205, 0, 0.32);
+  stroke-width: 1;
+  transition: stroke 0.21s ease, stroke-width 0.21s ease, filter 0.21s ease;
+}
+
+/* Line-glow on hover: each hub lights up only its own connections.
+   Center (pitch) lights all 6 radial spokes; each satellite lights its
+   radial + 2 chord lines. data-hover is set/cleared by JS on .hub-web. */
+.hub-web[data-hover="pitch"] .web-spoke[data-type="radial"] {
+  stroke: hsl(75 90% 70% / 0.95);
+  stroke-width: 2;
+  filter: drop-shadow(0 0 6px hsl(75 90% 60% / 0.8));
+}
+.hub-web[data-hover="why"]     .web-spoke[data-conn~="1"],
+.hub-web[data-hover="deal"]    .web-spoke[data-conn~="3"],
+.hub-web[data-hover="money"]   .web-spoke[data-conn~="5"],
+.hub-web[data-hover="returns"] .web-spoke[data-conn~="6"],
+.hub-web[data-hover="upside"]  .web-spoke[data-conn~="4"],
+.hub-web[data-hover="next"]    .web-spoke[data-conn~="2"] {
+  stroke-width: 2;
+}
+.hub-web[data-hover="why"]     .web-spoke[data-conn~="1"] { stroke: hsl(105 90% 70% / 0.95); filter: drop-shadow(0 0 6px hsl(105 90% 60% / 0.8)); }
+.hub-web[data-hover="deal"]    .web-spoke[data-conn~="3"] { stroke: hsl(135 90% 70% / 0.95); filter: drop-shadow(0 0 6px hsl(135 90% 60% / 0.8)); }
+.hub-web[data-hover="money"]   .web-spoke[data-conn~="5"] { stroke: hsl(165 90% 70% / 0.95); filter: drop-shadow(0 0 6px hsl(165 90% 60% / 0.8)); }
+.hub-web[data-hover="returns"] .web-spoke[data-conn~="6"] { stroke: hsl(195 90% 70% / 0.95); filter: drop-shadow(0 0 6px hsl(195 90% 60% / 0.8)); }
+.hub-web[data-hover="upside"]  .web-spoke[data-conn~="4"] { stroke: hsl(225 90% 70% / 0.95); filter: drop-shadow(0 0 6px hsl(225 90% 60% / 0.8)); }
+.hub-web[data-hover="next"]    .web-spoke[data-conn~="2"] { stroke: hsl(250 90% 70% / 0.95); filter: drop-shadow(0 0 6px hsl(250 90% 60% / 0.8)); }
+.hub-web .web-node {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.85));
+  transition: fill 0.21s ease, filter 0.21s ease;
+}
+
+/* Nodes light up with their connected lines on hover.
+   Pitch (center) hover: all 12 nodes glow indigo.
+   Each satellite hover: only the nodes matching its position glow in its hub color. */
+.hub-web[data-hover="pitch"] .web-node {
+  fill: hsl(75 90% 70%);
+  filter: drop-shadow(0 0 9px hsl(75 90% 60% / 0.95));
+}
+.hub-web[data-hover="why"]     .web-node[data-conn="1"] { fill: hsl(105 90% 70%); filter: drop-shadow(0 0 9px hsl(105 90% 60% / 0.95)); }
+.hub-web[data-hover="deal"]    .web-node[data-conn="3"] { fill: hsl(135 90% 70%); filter: drop-shadow(0 0 9px hsl(135 90% 60% / 0.95)); }
+.hub-web[data-hover="money"]   .web-node[data-conn="5"] { fill: hsl(165 90% 70%); filter: drop-shadow(0 0 9px hsl(165 90% 60% / 0.95)); }
+.hub-web[data-hover="returns"] .web-node[data-conn="6"] { fill: hsl(195 90% 70%); filter: drop-shadow(0 0 9px hsl(195 90% 60% / 0.95)); }
+.hub-web[data-hover="upside"]  .web-node[data-conn="4"] { fill: hsl(225 90% 70%); filter: drop-shadow(0 0 9px hsl(225 90% 60% / 0.95)); }
+.hub-web[data-hover="next"]    .web-node[data-conn="2"] { fill: hsl(250 90% 70%); filter: drop-shadow(0 0 9px hsl(250 90% 60% / 0.95)); }
+
+/* Center: The Pitch — clickable button, square enforced via explicit width + height */
+.hub-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width:  clamp(140px, 23%, 290px);
+  height: clamp(140px, 23%, 290px);
+  border-radius: 50%;
+  cursor: pointer;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  transition:
+    transform 0.42s cubic-bezier(0.33, 1, 0.68, 1),
+    box-shadow 0.42s cubic-bezier(0.33, 1, 0.68, 1);
+  background:
+    radial-gradient(circle at 50% 30%, hsla(var(--sat-hue, 50), 90%, 65%, 0.28) 0%, transparent 65%),
+    radial-gradient(circle, rgba(20, 18, 38, 0.96) 0%, rgba(8, 6, 18, 0.99) 70%);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  z-index: 3;
+  box-shadow:
+    0 0 0 1.5px hsla(var(--sat-hue, 50), 90%, 65%, 0.55) inset,
+    0 0 90px hsla(var(--sat-hue, 50), 90%, 60%, 0.35),
+    0 20px 80px rgba(0, 0, 0, 0.65);
+}
+.hub-center::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  padding: 5px;
+  background: conic-gradient(
+    from 0deg,
+    hsl(var(--sat-hue, 50) 90% 65%),
+    hsl(var(--sat-hue, 50) 90% 50%),
+    hsl(var(--sat-hue, 50) 90% 65%),
+    hsl(var(--sat-hue, 50) 90% 75%),
+    hsl(var(--sat-hue, 50) 90% 65%)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.55;
+}
+/* Center hover: glow refinement (matches the satellite hover scale) */
+.hub-center:hover,
+.hub-center:focus-visible {
+  transform: translate(-50%, -50%) scale(1.4);
+  box-shadow:
+    0 0 0 1.5px hsla(var(--sat-hue, 50), 90%, 75%, 0.85) inset,
+    0 0 18px hsla(var(--sat-hue, 50), 90%, 65%, 0.5),
+    0 0 44px hsla(var(--sat-hue, 50), 90%, 65%, 0.25),
+    0 16px 60px rgba(0, 0, 0, 0.6);
+  outline: none;
+  z-index: 6;
+}
+.hub-center__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 1vmin, 12px);
+  padding: clamp(10px, 1.6vmin, 18px);
+}
+.hub-center__icon {
+  font-family: 'Material Symbols Outlined';
+  font-size: clamp(22px, 3vmin, 32px);
+  color: hsl(var(--sat-hue, 50) 90% 72%);
+  filter: drop-shadow(0 0 14px hsla(var(--sat-hue, 50), 90%, 65%, 0.85));
+  line-height: 1;
+}
+.hub-center__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.1vmin, 1.65rem);
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  margin: 0;
+  -webkit-text-stroke: 0 transparent;
+  paint-order: stroke fill;
+  transition:
+    color 0.21s ease,
+    -webkit-text-stroke-width 0.21s ease,
+    -webkit-text-stroke-color 0.21s ease;
+}
+/* On hover: center title fills with hub hue + black outline behind */
+.hub-center:hover .hub-center__title,
+.hub-center:focus-visible .hub-center__title {
+  color: hsl(var(--sat-hue, 50) 90% 68%);
+  -webkit-text-stroke: 1px #000;
+}
+.hub-center__sub {
+  font-family: var(--font-body);
+  font-size: clamp(0.58rem, 0.85vmin, 0.72rem);
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.32;
+  margin: 0;
+  text-wrap: balance;
+  max-width: 19ch;
+}
+
+/* Satellites — square enforced via explicit width + height */
+.hub-satellite {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width:  clamp(96px, 16%, 200px);
+  height: clamp(96px, 16%, 200px);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 28%, hsl(var(--sat-hue) 85% 55% / 0.22) 0%, transparent 62%),
+    radial-gradient(circle, rgba(16, 14, 28, 0.96) 0%, rgba(8, 6, 18, 0.99) 72%);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  z-index: 4;
+  cursor: pointer;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  padding: clamp(8px, 1.5vmin, 16px);
+  box-shadow:
+    0 0 0 1.5px hsl(var(--sat-hue) 80% 60% / 0.55) inset,
+    0 0 22px hsl(var(--sat-hue) 90% 50% / 0.3),
+    0 6px 24px rgba(0, 0, 0, 0.5);
+  transition:
+    transform 0.42s cubic-bezier(0.33, 1, 0.68, 1),
+    box-shadow 0.42s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Hue per satellite (matched to modal --sat-hue) */
+/* Hub circles default to the slide's yellow --sat-hue (50). On hover/focus,
+   each circle adopts the hue of the slide it links to — so hovering "The Pitch"
+   previews yellow-green, "Why" previews green, etc. */
+.hub-center[data-modal="pitch"]:hover,
+.hub-center[data-modal="pitch"]:focus-visible      { --sat-hue: 75;  } /* yellow-green */
+.hub-satellite[data-modal="why"]:hover,
+.hub-satellite[data-modal="why"]:focus-visible     { --sat-hue: 105; } /* green */
+.hub-satellite[data-modal="deal"]:hover,
+.hub-satellite[data-modal="deal"]:focus-visible    { --sat-hue: 135; } /* teal-green */
+.hub-satellite[data-modal="money"]:hover,
+.hub-satellite[data-modal="money"]:focus-visible   { --sat-hue: 165; } /* teal */
+.hub-satellite[data-modal="returns"]:hover,
+.hub-satellite[data-modal="returns"]:focus-visible { --sat-hue: 195; } /* cyan-blue */
+.hub-satellite[data-modal="upside"]:hover,
+.hub-satellite[data-modal="upside"]:focus-visible  { --sat-hue: 225; } /* blue */
+.hub-satellite[data-modal="next"]:hover,
+.hub-satellite[data-modal="next"]:focus-visible    { --sat-hue: 250; } /* indigo */
+
+/* Positions — hexagonal ring at 38% radius, rotated 30° CW so the hex has FLAT
+   top + bottom edges (points at 3 and 9 o'clock). Same vertical extent ~82%
+   instead of 92%, which lets the stage grow ~12%. */
+.hub-satellite[data-pos="2"] { top: 17%;  left: 31%; }   /* 11 o'clock — Fine Print */
+.hub-satellite[data-pos="1"] { top: 17%;  left: 69%; }   /* 1 o'clock  — Why This Works */
+.hub-satellite[data-pos="3"] { top: 50%;  left: 88%; }   /* 3 o'clock  — The Deal */
+.hub-satellite[data-pos="5"] { top: 83%;  left: 69%; }   /* 5 o'clock  — Where The Money Goes */
+.hub-satellite[data-pos="6"] { top: 83%;  left: 31%; }   /* 7 o'clock  — The Returns */
+.hub-satellite[data-pos="4"] { top: 50%;  left: 12%; }   /* 9 o'clock  — The Upside */
+
+.hub-satellite__num {
+  position: absolute;
+  top: 11%;
+  font-family: var(--font-display);
+  font-size: clamp(0.62rem, 0.95vmin, 0.78rem);
+  color: hsl(var(--sat-hue) 80% 70%);
+  letter-spacing: 0.22em;
+  opacity: 0.9;
+}
+.hub-satellite__icon {
+  font-family: 'Material Symbols Outlined';
+  font-size: clamp(22px, 3.4vmin, 34px);
+  color: hsl(var(--sat-hue) 90% 70%);
+  filter: drop-shadow(0 0 10px hsl(var(--sat-hue) 90% 55% / 0.7));
+  line-height: 1;
+  margin-top: clamp(10px, 1.4vmin, 16px);
+}
+.hub-satellite__title {
+  font-family: var(--font-display);
+  font-size: clamp(0.85rem, 1.5vmin, 1.15rem);
+  font-weight: 400;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+  margin: 0;
+  text-wrap: balance;
+  max-width: 11ch;
+  padding: 0 0.3em;
+  -webkit-text-stroke: 0 transparent;
+  paint-order: stroke fill;
+  transition:
+    color 0.21s ease,
+    -webkit-text-stroke-width 0.21s ease,
+    -webkit-text-stroke-color 0.21s ease;
+}
+/* On hover: title fills with the satellite's hue + black outline behind */
+.hub-satellite:hover .hub-satellite__title,
+.hub-satellite:focus-visible .hub-satellite__title {
+  color: hsl(var(--sat-hue) 90% 62%);
+  -webkit-text-stroke: 1px #000;
+}
+.hub-satellite__desc {
+  font-family: var(--font-body);
+  font-size: clamp(0.52rem, 0.76vmin, 0.62rem);
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.32;
+  margin-top: clamp(2px, 0.4vmin, 5px);
+  padding: 0 0.4em;
+  max-width: 14ch;
+  text-wrap: balance;
+}
+
+.hub-satellite:hover,
+.hub-satellite:focus-visible {
+  transform: translate(-50%, -50%) scale(1.4);
+  box-shadow:
+    0 0 0 1.5px hsl(var(--sat-hue) 85% 68% / 0.85) inset,
+    0 0 14px hsl(var(--sat-hue) 90% 60% / 0.45),
+    0 0 32px hsl(var(--sat-hue) 90% 55% / 0.2),
+    0 8px 24px rgba(0, 0, 0, 0.5);
+  outline: none;
+  z-index: 5;
+}
+.hub-satellite:hover .hub-satellite__icon,
+.hub-satellite:focus-visible .hub-satellite__icon {
+  color: hsl(var(--sat-hue) 95% 80%);
+  filter: drop-shadow(0 0 18px hsl(var(--sat-hue) 95% 60% / 0.9));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hub-satellite,
+  .hub-center { transition: none; }
+  .hub-satellite:hover,
+  .hub-satellite:focus-visible,
+  .hub-center:hover,
+  .hub-center:focus-visible {
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* ============================================================
+   MODAL — Fullscreen detail panel per hub
+   ============================================================ */
+/* Modal backdrop — glassy and subtly lively.
+   Two slow-drifting indigo radial gradients sit on top of a half-opaque dark base,
+   so the hub diagram behind reads through but the modal stays the focus. */
+.hub-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(ellipse 65% 45% at 0% 0%,   hsl(var(--sat-hue, 280) 75% 38% / 0.22) 0%, transparent 62%),
+    radial-gradient(ellipse 65% 45% at 100% 100%, hsl(var(--sat-hue, 280) 75% 38% / 0.18) 0%, transparent 62%),
+    rgba(4, 3, 12, 0.42);
+  background-size: 220% 220%, 220% 220%, 100% 100%;
+  background-position: 0% 0%, 100% 100%, 0 0;
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+          backdrop-filter: blur(28px) saturate(150%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.42s cubic-bezier(0.33, 1, 0.68, 1);
+  padding: clamp(20px, 4vmin, 60px);
+}
+.hub-modal[data-open="true"] {
+  animation: hubModalDrift 21s ease-in-out infinite;
+}
+@keyframes hubModalDrift {
+  0%   { background-position: 0%   0%,   100% 100%, 0 0; }
+  50%  { background-position: 70%  30%,  30%  70%,  0 0; }
+  100% { background-position: 0%   0%,   100% 100%, 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hub-modal[data-open="true"] { animation: none; }
+}
+.hub-modal[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+.hub-modal[hidden] { display: none; }
+
+.hub-modal#modal-pitch   { --sat-hue: 222; } /* indigo — center brand color */
+.hub-modal#modal-why     { --sat-hue: 145; }
+.hub-modal#modal-deal    { --sat-hue: 32;  }
+.hub-modal#modal-money   { --sat-hue: 322; }
+.hub-modal#modal-returns { --sat-hue: 212; }
+.hub-modal#modal-upside  { --sat-hue: 270; }
+.hub-modal#modal-next    { --sat-hue: 178; }
+
+/* Linear rainbow progression — red (slide 1) through violet (slide 12). */
+.slide#slide-1       { --sat-hue: 0;   } /* red          — Hero */
+.slide#slide-2       { --sat-hue: 25;  } /* red-orange   — Disclaimer */
+.slide#slide-hub     { --sat-hue: 50;  } /* amber        — Hub */
+.slide#slide-pitch   { --sat-hue: 75;  } /* yellow-green — The Pitch */
+.slide#slide-why     { --sat-hue: 105; } /* green        — Why This Works */
+.slide#slide-deal    { --sat-hue: 135; } /* teal-green   — The Deal */
+.slide#slide-money   { --sat-hue: 165; } /* teal         — Where The Money Goes */
+.slide#slide-returns { --sat-hue: 195; } /* cyan-blue    — The Returns */
+.slide#slide-upside  { --sat-hue: 225; } /* blue         — The Upside */
+.slide#slide-next    { --sat-hue: 250; } /* indigo       — Fine Print & Next Steps */
+.slide#slide-24      { --sat-hue: 270; } /* purple       — Important Disclosure */
+.slide#slide-25      { --sat-hue: 290; } /* violet       — Thank You */
+
+.hub-modal__panel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 1240px;
+  background:
+    radial-gradient(ellipse at 50% 0%, hsl(var(--sat-hue, 280) 70% 32% / 0.22) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(18, 14, 32, 0.98) 0%, rgba(8, 6, 18, 0.99) 100%);
+  border-radius: clamp(12px, 1.5vmin, 22px);
+  border: 1px solid hsl(var(--sat-hue, 280) 80% 60% / 0.32);
+  box-shadow:
+    0 0 80px hsl(var(--sat-hue, 280) 90% 50% / 0.28),
+    0 30px 100px rgba(0, 0, 0, 0.7);
+  transform: scale(0.94) translateY(21px);
+  opacity: 0;
+  transition:
+    transform 0.6s cubic-bezier(0.33, 1, 0.68, 1),
+    opacity 0.42s cubic-bezier(0.33, 1, 0.68, 1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.hub-modal[data-open="true"] .hub-modal__panel {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+.hub-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: clamp(18px, 2.5vmin, 32px) clamp(24px, 3vmin, 48px);
+  border-bottom: 1px solid hsl(var(--sat-hue, 280) 60% 50% / 0.18);
+  flex: 0 0 auto;
+}
+.hub-modal__eyebrow {
+  font-family: var(--font-display);
+  font-size: clamp(0.7rem, 0.95vmin, 0.85rem);
+  color: hsl(var(--sat-hue, 280) 80% 68%);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.hub-modal__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.6vmin, 2.4rem);
+  font-weight: 700;
+  color: #fff;
+  margin: clamp(4px, 0.5vmin, 8px) 0 0;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+}
+.hub-modal__close {
+  width: clamp(38px, 4.2vmin, 52px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-family: 'Material Symbols Outlined';
+  font-size: clamp(20px, 2.4vmin, 26px);
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.42s cubic-bezier(0.33, 1, 0.68, 1);
+  flex: 0 0 auto;
+}
+.hub-modal__close:hover,
+.hub-modal__close:focus-visible {
+  background: hsl(var(--sat-hue, 280) 80% 50% / 0.18);
+  border-color: hsl(var(--sat-hue, 280) 80% 65% / 0.55);
+  transform: rotate(90deg);
+  outline: none;
+}
+.hub-modal__body {
+  flex: 1 1 auto;
+  overflow: hidden;
+  padding: clamp(14px, 2vmin, 28px) clamp(24px, 3.5vmin, 56px);
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.55;
+  display: flex;
+  min-height: 0;
+}
+/* Body itself does not scroll — overflow is on the active .modal-slide (see below) */
+
+/* AG-COPYWRITING-STANDARD v1.1 — half-line break after every period
+   inside a single block element. Use as: <span class="ag-break"></span> */
+.ag-break {
+  display: block;
+  height: 0.5em;
+  line-height: 0;
+}
+.hub-modal__body p {
+  font-family: var(--font-body);
+  font-size: clamp(0.85rem, 1.15vmin, 1rem);
+  margin: 0 0 1em;
+}
+.hub-modal__placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 200px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.55);
+  font-style: italic;
+  font-size: clamp(0.9rem, 1.3vmin, 1.1rem);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: clamp(24px, 4vmin, 48px);
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* ===== MINI-SLIDES inside modal — show one section at a time, bigger text ===== */
+.modal-slides {
+  position: relative;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.modal-slide {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.42s cubic-bezier(0.33, 1, 0.68, 1);
+  overflow-y: auto;
+  /* Scrollbar appears ONLY when this slide's content exceeds the container.
+     Slides that fit show no scrollbar. */
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--sat-hue, 280) 80% 60% / 0.55) transparent;
+  /* Flex column so the main visual can grow to fill height when content is short.
+     align-items: center keeps max-width-constrained children (prose <p>s, narrow lists)
+     horizontally centered within the wider container.
+     justify-content: safe center vertically centers when content fits, falls back to
+     flex-start when content overflows (so top isn't clipped on scroll). */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
+  gap: clamp(10px, 1.4vmin, 16px);
+}
+/* Stretch visual containers to fill any remaining vertical space — DESKTOP ONLY.
+   On mobile/tablet, content takes natural height (no shrinking to 0) and slide scrolls. */
+.modal-slide > .modal-own,
+.modal-slide > .modal-staff,
+.modal-slide > .modal-wf,
+.modal-slide > .modal-y2,
+.modal-slide > .modal-phases {
+  flex: 0 0 auto;
+}
+@media (min-width: 768px) {
+  .modal-slide > .modal-own,
+  .modal-slide > .modal-staff,
+  .modal-slide > .modal-wf,
+  .modal-slide > .modal-y2,
+  .modal-slide > .modal-phases {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+}
+.modal-slide[data-active="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+/* Webkit scrollbar inside an active slide */
+.modal-slide::-webkit-scrollbar {
+  width: 8px;
+}
+.modal-slide::-webkit-scrollbar-track {
+  background: transparent;
+}
+.modal-slide::-webkit-scrollbar-thumb {
+  background: hsl(var(--sat-hue, 280) 80% 60% / 0.5);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.modal-slide::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--sat-hue, 280) 85% 65% / 0.85);
+  background-clip: padding-box;
+}
+.modal-slide__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.85vmin, 2.3rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: hsl(var(--sat-hue, 280) 85% 72%);
+  text-transform: uppercase;
+  margin: 0 0 clamp(18px, 2.4vmin, 28px);
+  line-height: 1.15;
+  text-wrap: balance;
+}
+/* Body text — sized so Executive Summary (the densest slide, 5 paragraphs)
+   fills the container without scrolling. Other mini-slides match the same size
+   and have some breathing room. */
+.modal-slide p {
+  font-size: clamp(1.18rem, 1.6vmin, 1.4rem);
+  line-height: 1.55;
+  margin: 0 0 clamp(16px, 2vmin, 22px);
+}
+.modal-slide p:last-child { margin-bottom: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-slide { transition: none; }
+}
+
+/* Callout box (Investment Opportunity → Acquisition Structure) */
+.modal-callout {
+  margin: clamp(14px, 2vmin, 22px) 0 0;
+  padding: clamp(14px, 2vmin, 22px) clamp(16px, 2.4vmin, 26px);
+  background: hsl(var(--sat-hue, 280) 70% 32% / 0.12);
+  border-left: 3px solid hsl(var(--sat-hue, 280) 85% 60% / 0.7);
+  border-radius: 6px;
+  color: #fff;
+}
+.modal-callout strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: hsl(var(--sat-hue, 280) 85% 75%);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  font-size: clamp(0.88rem, 1.18vmin, 1.05rem);
+}
+.modal-callout p {
+  margin: 0;
+}
+
+/* Subnote (smaller, slightly muted — for transition provisions) */
+.modal-subnote {
+  font-size: clamp(0.92rem, 1.25vmin, 1.1rem) !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-style: italic;
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
+  padding-top: clamp(12px, 1.6vmin, 18px);
+  margin-top: clamp(14px, 2vmin, 22px) !important;
+}
+
+/* Phases grid (Rebranding Strategy: Phase 1 + Phase 2 side by side, stretches to fill) */
+.modal-phases {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
+  gap: clamp(14px, 2.2vmin, 28px);
+  margin-top: clamp(4px, 0.6vmin, 8px);
+}
+@media (max-width: 720px) {
+  .modal-phases { grid-template-columns: 1fr; grid-auto-rows: auto; }
+}
+.modal-phase {
+  padding: clamp(12px, 1.8vmin, 20px);
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid hsl(var(--sat-hue, 280) 70% 55% / 0.18);
+  border-radius: 10px;
+}
+.modal-phase__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.12rem, 1.7vmin, 1.4rem);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: hsl(var(--sat-hue, 280) 85% 72%);
+  margin: 0;
+  line-height: 1.2;
+}
+.modal-phase__subhead {
+  font-family: var(--font-body) !important;
+  font-size: clamp(0.92rem, 1.18vmin, 1.08rem) !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+  margin: 6px 0 clamp(12px, 1.6vmin, 18px) !important;
+  font-style: italic;
+}
+.modal-phase ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.modal-phase li {
+  position: relative;
+  padding: 7px 0 7px 22px;
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 1.35vmin, 1.22rem);
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.modal-phase li:last-child { border-bottom: none; }
+.modal-phase li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 12px;
+  height: 1px;
+  background: hsl(var(--sat-hue, 280) 85% 60% / 0.7);
+}
+
+/* ===== Modal highlights — bulleted list (Why This Works → Key Investment Highlights) ===== */
+.modal-highlights {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.modal-highlights li {
+  position: relative;
+  padding: clamp(10px, 1.4vmin, 16px) 0 clamp(10px, 1.4vmin, 16px) clamp(24px, 2.8vmin, 32px);
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 1.4vmin, 1.25rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.modal-highlights li:last-child { border-bottom: none; }
+.modal-highlights li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: clamp(18px, 2.4vmin, 26px);
+  width: clamp(14px, 1.6vmin, 18px);
+  height: 1px;
+  background: hsl(var(--sat-hue, 280) 85% 60% / 0.8);
+}
+
+/* ===== Modal staff grid — Labor Model & Staffing Structure (stretches to fill) ===== */
+.modal-staff {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
+  gap: clamp(8px, 1.2vmin, 14px);
+  padding: 0;
+  margin: clamp(14px, 1.8vmin, 22px) 0 0;
+}
+.modal-staff__card {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: clamp(10px, 1.5vmin, 18px) clamp(12px, 1.8vmin, 20px);
+  border: 1px solid hsl(var(--sat-hue, 280) 70% 55% / 0.2);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, hsl(var(--sat-hue, 280) 70% 30% / 0.06) 0%, transparent 100%);
+  position: relative;
+  overflow: hidden;
+}
+.modal-staff__card::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: hsl(var(--sat-hue, 280) 85% 60% / 0.65);
+}
+.modal-staff__card--feature {
+  grid-column: span 2;
+  grid-row: span 2;
+  border-color: hsl(var(--sat-hue, 280) 85% 60% / 0.35);
+  background:
+    linear-gradient(180deg, hsl(var(--sat-hue, 280) 75% 35% / 0.14) 0%, hsl(var(--sat-hue, 280) 75% 25% / 0.04) 100%);
+  gap: 6px;
+}
+.modal-staff__card--feature::before { height: 3px; opacity: 1; }
+.modal-staff__card--total {
+  grid-column: span 2;
+  background:
+    linear-gradient(180deg, hsl(var(--sat-hue, 280) 85% 35% / 0.18) 0%, hsl(var(--sat-hue, 280) 85% 30% / 0.06) 100%);
+  border-color: hsl(var(--sat-hue, 280) 85% 60% / 0.4);
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-staff__card--total::before { height: 3px; opacity: 1; }
+@media (max-width: 720px) {
+  .modal-staff { grid-template-columns: 1fr 1fr; grid-auto-rows: auto; }
+  .modal-staff__card--feature { grid-column: span 2; grid-row: auto; }
+}
+@media (max-width: 500px) {
+  .modal-staff { grid-template-columns: 1fr; grid-auto-rows: auto; }
+  .modal-staff__card--feature,
+  .modal-staff__card--total { grid-column: span 1; }
+  .modal-staff__card { padding: clamp(12px, 3vmin, 18px); }
+}
+
+.modal-staff__tag {
+  font-family: var(--font-sans);
+  font-size: clamp(0.65rem, 0.85vmin, 0.78rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: hsl(var(--sat-hue, 280) 85% 72%);
+}
+.modal-staff__role {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(0.95rem, 1.3vmin, 1.2rem);
+  line-height: 1.15;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+.modal-staff__role em {
+  font-style: normal;
+  color: hsl(var(--sat-hue, 280) 85% 72%);
+  font-weight: 500;
+  margin-left: 4px;
+  font-size: 0.78em;
+  letter-spacing: 0.05em;
+}
+.modal-staff__card--feature .modal-staff__role {
+  font-size: clamp(1.15rem, 1.7vmin, 1.55rem);
+}
+.modal-staff__meta {
+  font-size: clamp(0.75rem, 1vmin, 0.92rem);
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+.modal-staff__amount {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.2rem, 1.8vmin, 1.7rem);
+  line-height: 1;
+  letter-spacing: 0.005em;
+  color: hsl(var(--sat-hue, 280) 85% 75%);
+  margin-top: auto;
+  font-variant-numeric: tabular-nums;
+}
+.modal-staff__amount small {
+  font-size: 0.5em;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 400;
+  margin-left: 3px;
+  letter-spacing: 0.02em;
+}
+.modal-staff__card--feature .modal-staff__amount {
+  font-size: clamp(1.6rem, 2.4vmin, 2.3rem);
+}
+.modal-staff__card--total .modal-staff__amount {
+  font-size: clamp(1.35rem, 2vmin, 1.9rem);
+}
+.modal-staff__split {
+  font-size: clamp(0.72rem, 0.95vmin, 0.88rem);
+  color: rgba(255, 255, 255, 0.68);
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== Modal ownership — donut + legend + stats (fills container) ===== */
+.modal-own {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(16px, 2.4vmin, 28px);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+.modal-own__visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 2.4vmin, 28px);
+  padding: clamp(16px, 2.4vmin, 28px);
+  border: 1px solid hsl(var(--sat-hue, 280) 70% 55% / 0.22);
+  border-radius: 12px;
+  background: linear-gradient(180deg, hsl(var(--sat-hue, 280) 75% 30% / 0.1) 0%, transparent 100%);
+}
+.modal-own__donut {
+  width: clamp(160px, 24vmin, 240px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  position: relative;
+  background: conic-gradient(
+    hsl(var(--sat-hue, 280) 85% 60%) 0% 51%,
+    rgba(255, 255, 255, 0.18) 51% 100%
+  );
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 36px hsl(var(--sat-hue, 280) 85% 55% / 0.25);
+}
+.modal-own__donut::after {
+  content: "";
+  position: absolute;
+  inset: 13%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 30%, hsl(var(--sat-hue, 280) 70% 16% / 0.7) 0%, hsl(var(--sat-hue, 280) 60% 6% / 1) 70%);
+}
+.modal-own__donut-inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 12px;
+}
+.modal-own__split {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.2vmin, 3.4rem);
+  font-weight: 500;
+  color: #fff;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+.modal-own__split span {
+  margin: 0 0.05em;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 300;
+}
+.modal-own__split-label {
+  font-family: var(--font-sans);
+  font-size: clamp(0.62rem, 0.85vmin, 0.78rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 10px;
+}
+.modal-own__legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.2vmin, 12px);
+  width: 100%;
+}
+.modal-own__legend li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0;
+  border: 0;
+}
+.modal-own__chip {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  flex: 0 0 auto;
+}
+.modal-own__chip--primary {
+  background: hsl(var(--sat-hue, 280) 85% 60%);
+  box-shadow: 0 0 12px hsl(var(--sat-hue, 280) 85% 55% / 0.5);
+}
+.modal-own__chip--investors {
+  background: rgba(255, 255, 255, 0.35);
+}
+.modal-own__legend strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(0.92rem, 1.2vmin, 1.08rem);
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+.modal-own__legend small {
+  display: block;
+  font-family: var(--font-body);
+  font-size: clamp(0.72rem, 0.95vmin, 0.88rem);
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 2px;
+}
+.modal-own__stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.4vmin, 16px);
+}
+.modal-own__stat {
+  flex: 1;
+  padding: clamp(14px, 2vmin, 22px) clamp(16px, 2.2vmin, 24px);
+  border: 1px solid hsl(var(--sat-hue, 280) 70% 55% / 0.22);
+  border-radius: 12px;
+  background: linear-gradient(180deg, hsl(var(--sat-hue, 280) 75% 30% / 0.08) 0%, transparent 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.modal-own__stat::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: hsl(var(--sat-hue, 280) 85% 60%);
+  opacity: 0.6;
+}
+.modal-own__stat--feature {
+  border-color: hsl(var(--sat-hue, 280) 85% 60% / 0.45);
+  background: linear-gradient(180deg, hsl(var(--sat-hue, 280) 85% 35% / 0.2) 0%, hsl(var(--sat-hue, 280) 85% 28% / 0.04) 100%);
+}
+.modal-own__stat--feature::before { height: 3px; opacity: 1; }
+.modal-own__stat-num {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.6vmin, 2.2rem);
+  line-height: 1;
+  color: hsl(var(--sat-hue, 280) 85% 75%);
+  font-variant-numeric: tabular-nums;
+}
+.modal-own__stat-label {
+  font-family: var(--font-sans);
+  font-size: clamp(0.65rem, 0.88vmin, 0.78rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 6px;
+}
+.modal-own__stat-hint {
+  font-family: var(--font-body);
+  font-size: clamp(0.75rem, 1vmin, 0.9rem);
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 4px;
+  font-style: italic;
+}
+@media (max-width: 720px) {
+  .modal-own { grid-template-columns: 1fr; }
+}
+
+/* ===== Modal split — Ownership block (51/49 headline + legend) ===== */
+.modal-split {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "big legend"
+    "sub legend";
+  align-items: center;
+  gap: clamp(8px, 1.4vmin, 18px) clamp(20px, 3vmin, 36px);
+  padding: clamp(14px, 2vmin, 22px) clamp(16px, 2vmin, 26px);
+  border: 1px solid hsl(var(--sat-hue, 280) 70% 55% / 0.22);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, hsl(var(--sat-hue, 280) 75% 30% / 0.1) 0%, transparent 100%);
+  margin-bottom: clamp(14px, 1.8vmin, 22px);
+}
+.modal-split__big {
+  grid-area: big;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vmin, 3.6rem);
+  font-weight: 500;
+  line-height: 1;
+  color: hsl(var(--sat-hue, 280) 85% 72%);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+.modal-split__big span {
+  margin: 0 0.05em;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 300;
+}
+.modal-split__sub {
+  grid-area: sub;
+  font-family: var(--font-sans);
+  font-size: clamp(0.7rem, 0.95vmin, 0.85rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+.modal-split__legend {
+  grid-area: legend;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.2vmin, 14px);
+}
+.modal-split__legend li {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1.2vmin, 14px);
+  padding: 0;
+  border: 0;
+}
+.modal-split__legend li::before { display: none; }
+.modal-split__chip {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex: 0 0 auto;
+}
+.modal-split__chip--primary {
+  background: hsl(var(--sat-hue, 280) 85% 60%);
+}
+.modal-split__chip--investors {
+  background: rgba(255, 255, 255, 0.35);
+}
+.modal-split__legend strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(0.9rem, 1.2vmin, 1.05rem);
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+.modal-split__legend small {
+  display: block;
+  font-family: var(--font-body);
+  font-size: clamp(0.75rem, 1vmin, 0.92rem);
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 2px;
+}
+@media (max-width: 600px) {
+  .modal-split {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "big"
+      "sub"
+      "legend";
+    text-align: center;
+  }
+  .modal-split__legend li { justify-content: flex-start; }
+}
+
+/* ===== Modal table wrap — horizontal scroll container with ALWAYS-VISIBLE scrollbar
+   so users on touch devices can see they can swipe left/right. ===== */
+.modal-table-wrap {
+  position: relative;
+  width: 100%;
+  overflow-x: scroll;            /* scroll (not auto) — scrollbar always rendered */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--sat-hue, 280) 75% 60% / 0.85) rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding-bottom: 4px;
+}
+/* Hide scrollbar entirely when the table actually fits the wrap — only show when overflowing */
+.modal-table-wrap:not(:hover) {
+  scrollbar-color: hsl(var(--sat-hue, 280) 75% 60% / 0.7) rgba(255, 255, 255, 0.08);
+}
+.modal-table-wrap::-webkit-scrollbar {
+  height: 10px;
+  -webkit-appearance: none;
+}
+.modal-table-wrap::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+}
+.modal-table-wrap::-webkit-scrollbar-thumb {
+  background: hsl(var(--sat-hue, 280) 75% 58% / 0.75);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.modal-table-wrap::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--sat-hue, 280) 80% 65% / 0.95);
+  background-clip: padding-box;
+}
+.modal-table-wrap .modal-table {
+  min-width: 100%;
+  width: max-content;
+}
+.modal-table-wrap .modal-table td,
+.modal-table-wrap .modal-table th {
+  white-space: nowrap;
+}
+/* Right-edge fade gradient + "swipe" caption BELOW the table — never overlaps data.
+   Caption uses the modal slide's flow so it sits just under the table when scrollable. */
+.modal-table-wrap {
+  background:
+    linear-gradient(to right, transparent 90%, hsl(var(--sat-hue, 280) 30% 8% / 0.0) 100%);
+  background-attachment: local;
+}
+.modal-table-wrap[data-scrollable="true"] {
+  /* Subtle fade on the right edge — local attachment keeps it pinned during scroll */
+  background:
+    linear-gradient(to right, hsl(var(--sat-hue, 280) 75% 35% / 0) 80%, hsl(var(--sat-hue, 280) 75% 35% / 0.35) 100%) no-repeat,
+    linear-gradient(to right, transparent, transparent);
+  background-attachment: local, scroll;
+  background-size: 100% 100%, auto;
+  background-position: right top, left top;
+}
+.modal-table-wrap[data-scrollable="true"][data-end="true"] {
+  background: none;
+}
+/* Caption appears as a sibling generated by JS */
+.modal-table-hint {
+  display: none;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: clamp(0.62rem, 0.85vmin, 0.74rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: hsl(var(--sat-hue, 280) 85% 70%);
+  margin-top: 6px;
+  padding: 4px 10px;
+  background: hsl(var(--sat-hue, 280) 70% 30% / 0.25);
+  border-radius: 999px;
+  width: max-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+.modal-table-hint[data-show="true"] { display: block; }
+
+/* ===== Modal table — Use of Funds + Operating Expenses ===== */
+.modal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.2vmin, 1.1rem);
+}
+.modal-table thead th {
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: clamp(0.75rem, 0.95vmin, 0.85rem);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: hsl(var(--sat-hue, 280) 85% 72%);
+  padding: clamp(5px, 0.8vmin, 9px) clamp(10px, 1.4vmin, 14px);
+  border-bottom: 1px solid hsl(var(--sat-hue, 280) 70% 55% / 0.3);
+}
+.modal-table thead th:last-child { text-align: right; }
+.modal-table tbody td {
+  padding: clamp(6px, 0.85vmin, 9px) clamp(10px, 1.4vmin, 14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.35;
+}
+.modal-table tbody td:last-child {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: #fff;
+}
+.modal-table tbody tr:last-child td { border-bottom: none; }
+.modal-table__total td {
+  font-family: var(--font-display) !important;
+  font-weight: 500 !important;
+  color: hsl(var(--sat-hue, 280) 85% 75%) !important;
+  background: hsl(var(--sat-hue, 280) 75% 35% / 0.1);
+  border-top: 1.5px solid hsl(var(--sat-hue, 280) 70% 60% / 0.4) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: clamp(0.95rem, 1.3vmin, 1.18rem);
+}
+
+/* ===== Modal capital allocation breakdown ===== */
+.modal-cap {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.8vmin, 22px);
+  margin-top: clamp(8px, 1.2vmin, 14px);
+}
+.modal-cap__hero {
+  text-align: center;
+  padding: clamp(12px, 1.8vmin, 20px);
+  border: 1px solid hsl(var(--sat-hue, 280) 70% 55% / 0.3);
+  border-radius: 12px;
+  background:
+    radial-gradient(ellipse at top, hsl(var(--sat-hue, 280) 75% 35% / 0.18) 0%, transparent 60%),
+    linear-gradient(180deg, hsl(var(--sat-hue, 280) 70% 30% / 0.08) 0%, transparent 100%);
+}
+.modal-cap__eyebrow {
+  font-family: var(--font-sans);
+  font-size: clamp(0.7rem, 0.95vmin, 0.85rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 4px;
+}
+.modal-cap__total {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 4vmin, 3.4rem);
+  line-height: 1;
+  color: hsl(var(--sat-hue, 280) 85% 72%);
+  font-variant-numeric: tabular-nums;
+}
+.modal-cap__sub {
+  font-size: clamp(0.78rem, 1.05vmin, 0.95rem);
+  color: rgba(255, 255, 255, 0.68);
+  margin-top: 6px;
+}
+.modal-cap__rows {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 0.9vmin, 10px);
+}
+.modal-cap__row {
+  display: grid;
+  grid-template-columns: minmax(120px, 1.4fr) minmax(80px, 2fr) auto;
+  gap: clamp(10px, 1.4vmin, 16px);
+  align-items: center;
+  padding: clamp(4px, 0.7vmin, 8px) 0;
+}
+.modal-cap__name {
+  font-family: var(--font-body);
+  font-size: clamp(0.85rem, 1.1vmin, 1rem);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.3;
+}
+.modal-cap__name em {
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.82em;
+  margin-left: 4px;
+}
+.modal-cap__track {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.modal-cap__fill {
+  height: 100%;
+  background: linear-gradient(90deg, hsl(var(--sat-hue, 280) 85% 55%) 0%, hsl(var(--sat-hue, 280) 85% 70%) 100%);
+  border-radius: 999px;
+}
+.modal-cap__amt {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(0.85rem, 1.15vmin, 1.05rem);
+  color: hsl(var(--sat-hue, 280) 85% 72%);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+@media (max-width: 600px) {
+  .modal-cap__row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .modal-cap__amt { text-align: left; }
+}
+
+/* ===== Modal footnote — small italic explanatory text ===== */
+.modal-footnote {
+  font-family: var(--font-body);
+  font-size: clamp(0.78rem, 1vmin, 0.92rem);
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.4;
+  margin-top: clamp(10px, 1.4vmin, 16px);
+  padding: clamp(10px, 1.4vmin, 14px) clamp(12px, 1.6vmin, 18px);
+  border-left: 2px solid hsl(var(--sat-hue, 280) 70% 55% / 0.5);
+  background: hsl(var(--sat-hue, 280) 70% 30% / 0.08);
+  border-radius: 0 6px 6px 0;
+}
+.modal-footnote strong {
+  color: hsl(var(--sat-hue, 280) 85% 75%);
+  font-weight: 500;
+}
+
+/* ===== Modal Year-1-vs-Year-2 comparison chart (stretches to fill) ===== */
+.modal-y2 {
+  margin-top: clamp(10px, 1.4vmin, 16px);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.modal-y2 .modal-y2__row { flex: 1; }
+.modal-y2 .modal-y2__bar { height: clamp(20px, 3vmin, 32px); }
+.modal-y2__legend {
+  display: flex;
+  gap: clamp(14px, 2vmin, 22px);
+  align-items: center;
+  margin-bottom: clamp(8px, 1vmin, 12px);
+  font-size: clamp(0.75rem, 1vmin, 0.9rem);
+  color: rgba(255, 255, 255, 0.72);
+}
+.modal-y2__lg { display: inline-flex; align-items: center; gap: 6px; }
+.modal-y2__lg i {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+.modal-y2__lg--y1 i { background: rgba(255, 255, 255, 0.35); }
+.modal-y2__lg--y2 i { background: hsl(var(--sat-hue, 280) 85% 60%); }
+
+.modal-y2__row {
+  display: grid;
+  grid-template-columns: minmax(110px, 1fr) 3fr;
+  gap: clamp(10px, 1.4vmin, 16px);
+  align-items: center;
+  padding: clamp(6px, 0.9vmin, 10px) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.modal-y2__row:last-child { border-bottom: none; }
+.modal-y2__lbl strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(0.92rem, 1.2vmin, 1.08rem);
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+.modal-y2__lbl small {
+  display: block;
+  font-size: clamp(0.7rem, 0.9vmin, 0.82rem);
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 2px;
+}
+.modal-y2__bars {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3px, 0.5vmin, 6px);
+}
+.modal-y2__bar {
+  position: relative;
+  height: clamp(16px, 2.4vmin, 22px);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.modal-y2__bar--y1 .modal-y2__fill {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.5) 100%);
+}
+.modal-y2__bar--y2 .modal-y2__fill {
+  background: linear-gradient(90deg, hsl(var(--sat-hue, 280) 85% 55%) 0%, hsl(var(--sat-hue, 280) 85% 70%) 100%);
+}
+.modal-y2__fill {
+  height: 100%;
+  border-radius: 4px;
+}
+.modal-y2__val {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(0.75rem, 1vmin, 0.9rem);
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 600px) {
+  .modal-y2__row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+/* ===== Modal waterfall — Cash Flow stages (compact grid, stretches to fill) ===== */
+.modal-wf {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-areas: "s1 s2 s3 s4 s5";
+  grid-auto-rows: 1fr;
+  gap: clamp(8px, 1.2vmin, 14px);
+  margin-top: clamp(8px, 1.2vmin, 14px);
+}
+.modal-wf__stage:nth-child(1) { grid-area: s1; }
+.modal-wf__stage:nth-child(2) { grid-area: s2; }
+.modal-wf__stage:nth-child(3) { grid-area: s3; }
+.modal-wf__stage:nth-child(4) { grid-area: s4; }
+.modal-wf__stage:nth-child(5) { grid-area: s5; }
+.modal-wf__stage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(6px, 0.9vmin, 10px);
+  padding: clamp(14px, 2vmin, 22px) clamp(12px, 1.6vmin, 18px);
+  background: linear-gradient(180deg, hsl(var(--sat-hue, 280) 70% 30% / 0.1) 0%, transparent 100%);
+  border: 1px solid hsl(var(--sat-hue, 280) 70% 55% / 0.2);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.modal-wf__stage::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: hsl(var(--sat-hue, 280) 85% 60% / 0.6);
+}
+.modal-wf__stage--split {
+  background: linear-gradient(180deg, hsl(var(--sat-hue, 280) 85% 35% / 0.18) 0%, transparent 100%);
+  border-color: hsl(var(--sat-hue, 280) 85% 60% / 0.35);
+}
+.modal-wf__stage--split::before { height: 3px; }
+.modal-wf__eyebrow {
+  font-family: var(--font-sans);
+  font-size: clamp(0.72rem, 1vmin, 0.86rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: hsl(var(--sat-hue, 280) 85% 70%);
+  margin-bottom: 4px;
+}
+.modal-wf__num {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 3.6vmin, 3rem);
+  line-height: 1;
+  color: hsl(var(--sat-hue, 280) 85% 75%);
+  font-variant-numeric: tabular-nums;
+}
+.modal-wf__label {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.05rem, 1.5vmin, 1.4rem);
+  color: #fff;
+  letter-spacing: 0.01em;
+  margin-top: 10px;
+  line-height: 1.2;
+}
+.modal-wf__desc {
+  font-family: var(--font-body);
+  font-size: clamp(0.85rem, 1.15vmin, 1.05rem);
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.45;
+  margin-top: 8px;
+}
+@media (max-width: 720px) {
+  .modal-wf {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "s1 s2"
+      "s3 s3"
+      "s4 s5";
+    grid-auto-rows: auto;
+  }
+}
+@media (max-width: 500px) {
+  .modal-wf {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "s1"
+      "s2"
+      "s3"
+      "s4"
+      "s5";
+    grid-auto-rows: auto;
+  }
+  .modal-wf__stage { padding: clamp(12px, 3vmin, 18px); }
+}
+
+/* ===== Mini-slide nav footer (prev / dots / next) ===== */
+.modal-slide-nav {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(12px, 2vmin, 20px);
+  padding: clamp(14px, 2vmin, 22px) clamp(24px, 3.5vmin, 56px);
+  border-top: 1px solid hsl(var(--sat-hue, 280) 60% 50% / 0.22);
+  background: hsl(var(--sat-hue, 280) 60% 18% / 0.18);
+}
+.modal-slide-nav__prev,
+.modal-slide-nav__next {
+  width: clamp(40px, 4.4vmin, 52px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid hsl(var(--sat-hue, 280) 70% 60% / 0.45);
+  color: hsl(var(--sat-hue, 280) 85% 78%);
+  font-size: clamp(1.4rem, 2vmin, 1.8rem);
+  font-family: inherit;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.21s ease, border-color 0.21s ease, color 0.21s ease, opacity 0.21s ease;
+  flex: 0 0 auto;
+  padding: 0;
+}
+.modal-slide-nav__prev:hover:not(:disabled),
+.modal-slide-nav__next:hover:not(:disabled),
+.modal-slide-nav__prev:focus-visible,
+.modal-slide-nav__next:focus-visible {
+  background: hsl(var(--sat-hue, 280) 80% 50% / 0.22);
+  border-color: hsl(var(--sat-hue, 280) 80% 65% / 0.85);
+  color: #fff;
+  outline: none;
+}
+.modal-slide-nav__prev:disabled,
+.modal-slide-nav__next:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+.modal-slide-nav__dots {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.modal-slide-nav__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.21s ease, transform 0.21s ease;
+}
+.modal-slide-nav__dot:hover {
+  background: hsl(var(--sat-hue, 280) 80% 65% / 0.7);
+}
+.modal-slide-nav__dot[data-active="true"] {
+  background: hsl(var(--sat-hue, 280) 85% 65%);
+  transform: scale(1.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hub-modal,
+  .hub-modal__panel { transition: none; }
+  .hub-modal[data-open="true"] .hub-modal__panel { transform: none; }
+}
 </style>
 </head>
 <body>
@@ -3893,7 +5754,7 @@ body, p, li, td, th, blockquote, figcaption, span,
   <button id="prev" aria-label="Previous slide">‹</button>
   <div class="progress">
     <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-    <span class="counter"><span class="cur">1</span><span class="sep">/</span>25</span>
+    <span class="counter"><span class="cur">1</span><span class="sep">/</span>12</span>
   </div>
   <button id="next" aria-label="Next slide">›</button>
 </nav>
@@ -3901,23 +5762,19 @@ body, p, li, td, th, blockquote, figcaption, span,
 <main class="deck" id="main">
 
 <!-- ===== SLIDE 1 — HERO ===== -->
-<section class="slide" id="slide-1" data-arch="hero" aria-label="Slide 1 of 25">
+<section class="slide" id="slide-1" data-arch="hero" aria-label="Slide 1 of 12">
   <div class="hero-horizon" aria-hidden="true"></div>
   <div class="hero-grid" aria-hidden="true"></div>
   <div class="hero-flash" aria-hidden="true"></div>
   <div class="slide__inner">
-    <div class="hero-pill" aria-label="Investor pitch deck">
-      <span class="hero-pill__dot" aria-hidden="true"></span>
-      <span class="hero-pill__text">Founding Investor Circle &middot; Investor Pitch Deck</span>
-    </div>
     <img class="cover-logo" src="assets/muevelo-logo.png" alt="Muevelo @ Chico">
   </div>
   <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">01 / 25</div>
+  <div class="slide__num">01 / 12</div>
 </section>
 
 <!-- ===== SLIDE 2 — Investor Participation Disclaimer ===== -->
-<section class="slide" id="slide-2" data-arch="prose" aria-label="Slide 2 of 25">
+<section class="slide" id="slide-2" data-arch="prose" aria-label="Slide 2 of 12">
   <div class="slide__inner">
     <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
     <h2 class="slide__title reveal" data-d="2">Investor Participation<br>Disclaimer</h2>
@@ -3925,578 +5782,674 @@ body, p, li, td, th, blockquote, figcaption, span,
     <p class="reveal" data-d="4">Investor distributions <span class="hl">will not commence until the seller carry note ($100,000, 12-month&nbsp;term) has been repaid in full</span>. Repayment of this note will be prioritized from early operating profits, with accelerated paydown when possible. Following full retirement of the seller carry obligation, investor distributions will be made <span class="hl">proportionally based on each investor&rsquo;s share ownership</span> within the 49% Founding Investor Circle pool.</p>
   </div>
   <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">02 / 25</div>
+  <div class="slide__num">02 / 12</div>
 </section>
 
-<!-- ===== SLIDE 3 — Executive Summary ===== -->
-<section class="slide" id="slide-3" data-arch="prose" aria-label="Slide 3 of 25">
+<!-- ===== SLIDE 3 — The Pitch Hub (Table of Contents) =====
+     7 clickable circles — each jumps to its dedicated chapter slide. -->
+<section class="slide" id="slide-hub" data-arch="hub" aria-label="Slide 3 of 12 — The Pitch Hub">
+  <h2 class="slide__title" hidden>Welcome to Muevelo West</h2>
   <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Executive<br>Summary</h2>
-    <p class="reveal" data-d="3">Muevelo West combines the <span class="hl">established Muevelo nightlife brand</span> with the long-standing <span class="hl">Chico’s Montebello venue</span>, creating a concept that launches with an existing audience and recognizable location.</p>
-    <p class="reveal" data-d="4">The investment structure allocates <span class="hl">51% ownership</span> to the founding operators and <span class="hl">49% to the Founding Investor Circle</span>, providing investors the opportunity to participate in the early growth of the brand.</p>
-    <p class="reveal" data-d="5">Projected attendance ranges from <span class="hl">110 to 180 guests per&nbsp;night</span> with an estimated average spend of <span class="hl">~$50 per&nbsp;guest</span>.</p>
-    <p class="reveal" data-d="5">Under the base scenario, projected monthly revenue is <span class="hl">~$97,500</span> with upside potential through special programming, themed events, and expanded operating concepts.</p>
-    <p class="reveal" data-d="6">The business is structured to prioritize <span class="hl">stable operations and cash flow</span> in the early stages while creating <span class="hl">long‑term brand equity</span> and potential enterprise value growth.</p>
-  </div>
-  <div class="slide__num">03 / 25</div>
-</section>
+    <div class="hub-stage" role="group" aria-label="Pitch hub — click any section to expand">
 
-<!-- ===== SLIDE 3 — Key Investment Highlights ===== -->
-<section class="slide" id="slide-4" data-arch="bullets" aria-label="Slide 4 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Key Investment&nbsp;Highlights</h2>
-    <ul>
-      <li class="reveal" data-d="2">2,400 SF nightlife venue located in Montebello</li>
-      <li class="reveal" data-d="3">Combination of Chico’s Montebello’s legacy location with the Muevelo brand following</li>
-      <li class="reveal" data-d="3">51% founder ownership with 49% available to the Founding Investor Circle</li>
-      <li class="reveal" data-d="4">Projected base revenue ≈ $1.17M annually (~$97.5K monthly scenario)</li>
-      <li class="reveal" data-d="4">Estimated revenue productivity ≈ $487 per square foot annually</li>
-      <li class="reveal" data-d="5">20‑year potential market presence through initial lease and extension options</li>
-    </ul>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">04 / 25</div>
-</section>
+      <!-- Decorative web: hex rotated 30° CW (flat top + bottom edges, points at 3/9 o'clock) -->
+      <svg class="hub-web" viewBox="0 0 1000 1000" aria-hidden="true">
+        <!-- Radial spokes (center -> satellite). data-conn = satellite position. -->
+        <line class="web-spoke" data-type="radial" data-conn="2" x1="500" y1="500" x2="310" y2="171"/>
+        <line class="web-spoke" data-type="radial" data-conn="1" x1="500" y1="500" x2="690" y2="171"/>
+        <line class="web-spoke" data-type="radial" data-conn="3" x1="500" y1="500" x2="880" y2="500"/>
+        <line class="web-spoke" data-type="radial" data-conn="5" x1="500" y1="500" x2="690" y2="829"/>
+        <line class="web-spoke" data-type="radial" data-conn="6" x1="500" y1="500" x2="310" y2="829"/>
+        <line class="web-spoke" data-type="radial" data-conn="4" x1="500" y1="500" x2="120" y2="500"/>
+        <!-- Chord hexagon (adjacent satellites). data-conn = both positions, space-separated. -->
+        <line class="web-spoke" data-type="chord" data-conn="2 1" x1="310" y1="171" x2="690" y2="171"/>
+        <line class="web-spoke" data-type="chord" data-conn="1 3" x1="690" y1="171" x2="880" y2="500"/>
+        <line class="web-spoke" data-type="chord" data-conn="3 5" x1="880" y1="500" x2="690" y2="829"/>
+        <line class="web-spoke" data-type="chord" data-conn="5 6" x1="690" y1="829" x2="310" y2="829"/>
+        <line class="web-spoke" data-type="chord" data-conn="6 4" x1="310" y1="829" x2="120" y2="500"/>
+        <line class="web-spoke" data-type="chord" data-conn="4 2" x1="120" y1="500" x2="310" y2="171"/>
+        <!-- Glow nodes at 6 satellite centers (sit behind buttons) -->
+        <circle class="web-node" data-conn="2" cx="310" cy="171" r="5" fill="#ffe066"/>
+        <circle class="web-node" data-conn="1" cx="690" cy="171" r="5" fill="#ffe066"/>
+        <circle class="web-node" data-conn="3" cx="880" cy="500" r="5" fill="#ffe066"/>
+        <circle class="web-node" data-conn="5" cx="690" cy="829" r="5" fill="#ffe066"/>
+        <circle class="web-node" data-conn="6" cx="310" cy="829" r="5" fill="#ffe066"/>
+        <circle class="web-node" data-conn="4" cx="120" cy="500" r="5" fill="#ffe066"/>
+        <!-- Inner glow nodes at radial spoke midpoints -->
+        <circle class="web-node" data-conn="2" cx="405" cy="335" r="3.5" fill="#fff7cc"/>
+        <circle class="web-node" data-conn="1" cx="595" cy="335" r="3.5" fill="#fff7cc"/>
+        <circle class="web-node" data-conn="3" cx="690" cy="500" r="3.5" fill="#fff7cc"/>
+        <circle class="web-node" data-conn="5" cx="595" cy="665" r="3.5" fill="#fff7cc"/>
+        <circle class="web-node" data-conn="6" cx="405" cy="665" r="3.5" fill="#fff7cc"/>
+        <circle class="web-node" data-conn="4" cx="310" cy="500" r="3.5" fill="#fff7cc"/>
+      </svg>
 
-<!-- ===== SLIDE 4 — Investment Opportunity ===== -->
-<section class="slide" id="slide-5" data-arch="prose" aria-label="Slide 5 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Investment<br>Opportunity</h2>
-    <p class="reveal" data-d="3">Muevelo West represents the relocation of the <span class="hl">successful Muevelo nightlife brand</span> into the historic <span class="hl">Chico’s Montebello venue</span>. Muevelo already brings an established audience and event demand, while Chico’s Montebello provides a recognizable nightlife location.</p>
-    <p class="reveal" data-d="4">This combination allows the concept to launch with <span class="hl">built‑in awareness</span> and <span class="hl">significantly lower risk</span> than a traditional nightclub startup.</p>
-    <p class="reveal" data-d="5">The total capital requirement for the project is <span class="hl">approximately $720,000</span> including acquisition, renovations, rebranding, legal, inventory, and working capital.</p>
-    <div class="callout reveal" data-d="6">
-      <strong>Acquisition Structure:</strong>
-      <p><span class="hl">$600,000 purchase price</span> structured as <span class="hl">$500,000 cash at close</span> + <span class="hl">$100,000 seller carry</span> (12-month&nbsp;term). Early Year 1 profits will be directed toward paying down the seller carry ahead of schedule.</p>
+      <!-- Center: The Pitch (clickable — opens The Pitch modal) -->
+      <button class="hub-center" type="button" data-modal="pitch" aria-label="Open The Pitch">
+        <h3 class="hub-center__title">THE PITCH</h3>
+      </button>
+
+      <!-- 6 satellite hubs -->
+      <button class="hub-satellite" data-pos="1" data-modal="why" type="button" aria-label="Open Why This Works">
+        <div class="hub-satellite__title">Why This Works</div>
+      </button>
+      <button class="hub-satellite" data-pos="3" data-modal="deal" type="button" aria-label="Open The Deal">
+        <div class="hub-satellite__title">The Deal</div>
+      </button>
+      <button class="hub-satellite" data-pos="5" data-modal="money" type="button" aria-label="Open Where The Money Goes">
+        <div class="hub-satellite__title">Where The Money Goes</div>
+      </button>
+      <button class="hub-satellite" data-pos="6" data-modal="returns" type="button" aria-label="Open The Returns">
+        <div class="hub-satellite__title">The Returns</div>
+      </button>
+      <button class="hub-satellite" data-pos="4" data-modal="upside" type="button" aria-label="Open The Upside">
+        <div class="hub-satellite__title">The Upside</div>
+      </button>
+      <button class="hub-satellite" data-pos="2" data-modal="next" type="button" aria-label="Open Fine Print and Next Steps">
+        <div class="hub-satellite__title">Fine Print &amp; Next Steps</div>
+      </button>
+
     </div>
   </div>
   <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">05 / 25</div>
+  <div class="slide__num">03 / 12</div>
 </section>
 
-<!-- ===== SLIDE 5 — Venue and Lease Control ===== -->
-<section class="slide" id="slide-6" data-arch="prose" aria-label="Slide 6 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Venue and Lease&nbsp;Control</h2>
-    <p class="reveal" data-d="3">The venue operates under a <span class="hl">five‑year&nbsp;lease</span> with <span class="hl">three additional five‑year&nbsp;extensions</span>. If all options are exercised, operators could control the location for <span class="hl">up to twenty&nbsp;years</span>.</p>
-    <p class="reveal" data-d="4">This <span class="hl">long‑term control</span> allows the ownership group to build brand equity, grow a loyal audience, and stabilize operations in the market.</p>
-    <p class="subnote reveal" data-d="5">Additional transition provisions include: a minimum of <span class="hl">1 year</span> for use of the Chico name on exterior signage, and a minimum of <span class="hl">3 months</span> of access to Chico’s existing social media platforms to support audience migration and brand continuity.</p>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">06 / 25</div>
-</section>
+<!-- ===== CHAPTER SLIDES (4-10) — one slide per hub circle (replaces source slides 3-23) ===== -->
+<!-- ===== HUB MODALS — one per hub (center + 6 satellites) ===== -->
+<section class="slide" id="slide-pitch" data-arch="chapter" aria-label="Slide 4 of 12 — The Pitch">
+  <div class="slide__inner chapter__panel">
+    <header class="chapter__head">
+      <div>
+        <div class="hub-modal__eyebrow">The Pitch</div>
+        <h2 class="slide__title chapter__title" id="modal-pitch-title">Executive Summary</h2>
+      </div>
+    </header>
+    <div class="chapter__body">
+      <div class="modal-slides">
 
-<!-- ===== SLIDE 6 — Ownership and Investor Structure ===== -->
-<section class="slide" id="slide-7" data-arch="ownership" aria-label="Slide 7 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Ownership and Investor&nbsp;Structure</h2>
-    <div class="own-grid">
-      <div class="own-split reveal" data-d="3">
-        <div class="own-donut" role="img" aria-label="Ownership split: 51% Trujillo family, 49% Founding Investor Circle">
-          <div class="own-donut__inner">
-            <div class="own-donut__big">51<span>/</span>49</div>
-            <div class="own-donut__sub">Ownership Split</div>
+        <!-- Mini-slide 1 — Executive Summary (verbatim from slide-3) -->
+        <article class="modal-slide" data-active="true" data-title="Executive Summary">
+          <p>Muevelo West combines the <span class="hl">established Muevelo nightlife brand</span> with the long-standing <span class="hl">Chico&rsquo;s Montebello venue</span>, creating a concept that launches with an existing audience and recognizable location.</p>
+          <p>The investment structure allocates <span class="hl">51% ownership</span> to the founding operators and <span class="hl">49% to the Founding Investor Circle</span>, providing investors the opportunity to participate in the early growth of the brand.</p>
+          <p>Projected attendance ranges from <span class="hl">110 to 180 guests per&nbsp;night</span> with an estimated average spend of <span class="hl">~$50 per&nbsp;guest</span>.</p>
+          <p>Under the base scenario, projected monthly revenue is <span class="hl">~$97,500</span> with upside potential through special programming, themed events, and expanded operating concepts.</p>
+          <p>The business is structured to prioritize <span class="hl">stable operations and cash flow</span> in the early stages while creating <span class="hl">long&#8209;term brand equity</span> and potential enterprise value growth.</p>
+        </article>
+
+        <!-- Mini-slide 2 — Investment Opportunity (verbatim from slide-5) -->
+        <article class="modal-slide" data-title="Investment Opportunity">
+          <p>Muevelo West represents the relocation of the <span class="hl">successful Muevelo nightlife brand</span> into the historic <span class="hl">Chico&rsquo;s Montebello venue</span>.<span class="ag-break"></span>Muevelo already brings an established audience and event demand, while Chico&rsquo;s Montebello provides a recognizable nightlife location.</p>
+          <p>This combination allows the concept to launch with <span class="hl">built&#8209;in awareness</span> and <span class="hl">significantly lower risk</span> than a traditional nightclub startup.</p>
+          <p>The total capital requirement for the project is <span class="hl">approximately $720,000</span> including acquisition, renovations, rebranding, legal, inventory, and working capital.</p>
+          <div class="modal-callout">
+            <strong>Acquisition Structure:</strong>
+            <p><span class="hl">$600,000 purchase price</span> structured as <span class="hl">$500,000 cash at close</span> + <span class="hl">$100,000 seller carry</span> (12&#8209;month&nbsp;term).<span class="ag-break"></span>Early Year 1 profits will be directed toward paying down the seller carry ahead of schedule.</p>
           </div>
-        </div>
-        <div class="own-legend">
-          <div class="own-legend__row">
-            <span class="own-legend__chip own-legend__chip--primary"></span>
-            <div>
-              <strong>51% — Primary Owners</strong>
-              <small>Mario &amp; Henry Trujillo (operators)</small>
+        </article>
+
+        <!-- Mini-slide 3 — Venue and Lease Control (verbatim from slide-6) -->
+        <article class="modal-slide" data-title="Venue and Lease Control">
+          <p>The venue operates under a <span class="hl">five&#8209;year&nbsp;lease</span> with <span class="hl">three additional five&#8209;year&nbsp;extensions</span>.<span class="ag-break"></span>If all options are exercised, operators could control the location for <span class="hl">up to twenty&nbsp;years</span>.</p>
+          <p>This <span class="hl">long&#8209;term control</span> allows the ownership group to build brand equity, grow a loyal audience, and stabilize operations in the market.</p>
+          <p class="modal-subnote">Additional transition provisions include: a minimum of <span class="hl">1 year</span> for use of the Chico name on exterior signage, and a minimum of <span class="hl">3 months</span> of access to Chico&rsquo;s existing social media platforms to support audience migration and brand continuity.</p>
+        </article>
+
+        <!-- Mini-slide 4 — Rebranding Strategy (verbatim from slide-12) -->
+        <article class="modal-slide" data-title="Rebranding Strategy">
+          <div class="modal-phases">
+            <div class="modal-phase">
+              <h5 class="modal-phase__title">Phase 1: Year 1</h5>
+              <p class="modal-phase__subhead">Operate Under Chico&rsquo;s Name</p>
+              <ul>
+                <li>Retain &ldquo;Chico&rsquo;s Montebello&rdquo; branding on exterior signage for a minimum of 12 months per agreement</li>
+                <li>Leverage Chico&rsquo;s social media (min. 3 months access) to migrate audience to Muevelo channels</li>
+                <li>Softly introduce Muevelo brand elements: interior decor, events, merch, and digital presence</li>
+                <li>Stabilize operations, build customer trust, and pay down seller carry note</li>
+                <li>Reduced Year 1 profit expectations due to transition costs and seller carry obligations</li>
+              </ul>
+            </div>
+            <div class="modal-phase">
+              <h5 class="modal-phase__title">Phase 2: Year 2+</h5>
+              <p class="modal-phase__subhead">Full Muevelo Transition</p>
+              <ul>
+                <li>Complete exterior signage update to Muevelo West brand identity</li>
+                <li>Full decor refresh, branded merchandise, and Muevelo-first event calendar</li>
+                <li>Seller carry fully repaid; cash flow stabilizes for investor distributions</li>
+                <li>Full Muevelo social and digital presence; expanded programming and partnerships</li>
+                <li>Year 2 positioned as growth phase: stabilized profitability and brand equity building</li>
+              </ul>
             </div>
           </div>
-          <div class="own-legend__row">
-            <span class="own-legend__chip own-legend__chip--investors"></span>
-            <div>
-              <strong>49% — Founding Investor Circle</strong>
-              <small>Investor pool</small>
+        </article>
+
+      </div>
+    </div>
+    <footer class="modal-slide-nav">
+      <button class="modal-slide-nav__prev" type="button" aria-label="Previous mini slide">&lsaquo;</button>
+      <div class="modal-slide-nav__dots" role="tablist">
+        <button class="modal-slide-nav__dot" data-index="0" data-active="true" type="button" aria-label="Executive Summary"></button>
+        <button class="modal-slide-nav__dot" data-index="1" type="button" aria-label="Investment Opportunity"></button>
+        <button class="modal-slide-nav__dot" data-index="2" type="button" aria-label="Venue and Lease Control"></button>
+        <button class="modal-slide-nav__dot" data-index="3" type="button" aria-label="Rebranding Strategy"></button>
+      </div>
+      <button class="modal-slide-nav__next" type="button" aria-label="Next mini slide">&rsaquo;</button>
+    </footer>
+  </div>
+  <div class="slide__pc">Privileged &amp; Confidential</div>
+  <div class="slide__num">04 / 12</div>
+</section>
+
+<section class="slide" id="slide-why" data-arch="chapter" aria-label="Slide 5 of 12 — Why This Works">
+  <div class="slide__inner chapter__panel">
+    <header class="chapter__head">
+      <div>
+        <div class="hub-modal__eyebrow">Why This Works</div>
+        <h2 class="slide__title chapter__title" id="modal-why-title">Key Investment Highlights</h2>
+      </div>
+    </header>
+    <div class="chapter__body">
+      <div class="modal-slides">
+
+        <!-- Mini-slide 1 — Key Investment Highlights (verbatim from slide-4) -->
+        <article class="modal-slide" data-active="true" data-title="Key Investment Highlights">
+          <ul class="modal-highlights">
+            <li>2,400 SF nightlife venue located in Montebello</li>
+            <li>Combination of Chico&rsquo;s Montebello&rsquo;s legacy location with the Muevelo brand following</li>
+            <li>51% founder ownership with 49% available to the Founding Investor Circle</li>
+            <li>Projected base revenue &asymp; $1.17M annually (~$97.5K monthly scenario)</li>
+            <li>Estimated revenue productivity &asymp; $487 per square foot annually</li>
+            <li>20&#8209;year potential market presence through initial lease and extension options</li>
+          </ul>
+        </article>
+
+        <!-- Mini-slide 2 — Labor Model & Staffing Structure (verbatim from slide-23) -->
+        <article class="modal-slide" data-title="Labor Model &amp; Staffing">
+          <p>Staffing is modeled on a <span class="hl">shift-based nightlife schedule</span> (~6 hours per night, Friday to Sunday).<span class="ag-break"></span>Labor scales with attendance and event programming and is expected to range approximately <span class="hl">between 15% and 22% of revenue</span>.</p>
+          <ul class="modal-staff">
+            <li class="modal-staff__card modal-staff__card--feature">
+              <span class="modal-staff__tag">Dual Role</span>
+              <span class="modal-staff__role">Henry Trujillo</span>
+              <span class="modal-staff__meta">GM 50% &middot; Marketing 50% &middot; $75K/yr total</span>
+              <span class="modal-staff__amount">$6,250<small>/mo</small></span>
+              <span class="modal-staff__split">$3,125 GM &nbsp;+&nbsp; $3,125 Marketing</span>
+            </li>
+            <li class="modal-staff__card">
+              <span class="modal-staff__role">Bartenders <em>&times;3</em></span>
+              <span class="modal-staff__amount">$5,600<small>/mo</small></span>
+            </li>
+            <li class="modal-staff__card">
+              <span class="modal-staff__role">Bar&#8209;backs <em>&times;2</em></span>
+              <span class="modal-staff__amount">$3,200<small>/mo</small></span>
+            </li>
+            <li class="modal-staff__card">
+              <span class="modal-staff__role">Security</span>
+              <span class="modal-staff__amount">$1,600<small>/mo</small></span>
+            </li>
+            <li class="modal-staff__card modal-staff__card--total">
+              <span class="modal-staff__tag">Total Payroll</span>
+              <span class="modal-staff__amount">&asymp; $17K<small>/mo</small></span>
+            </li>
+          </ul>
+          <p>Henry&rsquo;s dual role spans <span class="hl">General Manager (50%)</span> and <span class="hl">Marketing Director (50%)</span>.<span class="ag-break"></span>GM responsibilities include: staff scheduling, inventory and vendor management, bar program oversight, compliance oversight, and day&#8209;to&#8209;day operational leadership.<span class="ag-break"></span>Marketing responsibilities include: brand strategy, social media, event promotion, influencer outreach, and <span class="hl">audience growth for the Muevelo brand transition</span>.</p>
+        </article>
+
+      </div>
+    </div>
+    <footer class="modal-slide-nav">
+      <button class="modal-slide-nav__prev" type="button" aria-label="Previous mini slide">&lsaquo;</button>
+      <div class="modal-slide-nav__dots" role="tablist">
+        <button class="modal-slide-nav__dot" data-index="0" data-active="true" type="button" aria-label="Key Investment Highlights"></button>
+        <button class="modal-slide-nav__dot" data-index="1" type="button" aria-label="Labor Model and Staffing"></button>
+      </div>
+      <button class="modal-slide-nav__next" type="button" aria-label="Next mini slide">&rsaquo;</button>
+    </footer>
+  </div>
+  <div class="slide__pc">Privileged &amp; Confidential</div>
+  <div class="slide__num">05 / 12</div>
+</section>
+
+<section class="slide" id="slide-deal" data-arch="chapter" aria-label="Slide 6 of 12 — The Deal">
+  <div class="slide__inner chapter__panel">
+    <header class="chapter__head">
+      <div>
+        <div class="hub-modal__eyebrow">The Deal</div>
+        <h2 class="slide__title chapter__title" id="modal-deal-title">Ownership and Investor Structure</h2>
+      </div>
+    </header>
+    <div class="chapter__body">
+      <div class="modal-slides">
+
+        <!-- Mini-slide 1 — Ownership & Investor Structure (verbatim from slide-7) -->
+        <article class="modal-slide" data-active="true" data-title="Ownership and Investor Structure">
+          <div class="modal-own">
+            <div class="modal-own__visual">
+              <div class="modal-own__donut" role="img" aria-label="Ownership split: 51 percent Trujillo family, 49 percent Founding Investor Circle">
+                <div class="modal-own__donut-inner">
+                  <div class="modal-own__split">51<span>/</span>49</div>
+                  <div class="modal-own__split-label">Ownership Split</div>
+                </div>
+              </div>
+              <ul class="modal-own__legend">
+                <li><span class="modal-own__chip modal-own__chip--primary"></span><div><strong>51% Primary Owners</strong><small>Mario &amp; Henry Trujillo</small></div></li>
+                <li><span class="modal-own__chip modal-own__chip--investors"></span><div><strong>49% Founding Investor Circle</strong><small>Investor pool</small></div></li>
+              </ul>
+            </div>
+            <ul class="modal-own__stats">
+              <li class="modal-own__stat">
+                <div class="modal-own__stat-num">49</div>
+                <div class="modal-own__stat-label">Total Shares Available</div>
+              </li>
+              <li class="modal-own__stat">
+                <div class="modal-own__stat-num">$7,200</div>
+                <div class="modal-own__stat-label">Price Per Share</div>
+              </li>
+              <li class="modal-own__stat modal-own__stat--feature">
+                <div class="modal-own__stat-num">$36,000</div>
+                <div class="modal-own__stat-label">Minimum Investment</div>
+                <div class="modal-own__stat-hint">5 Shares</div>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Mini-slide 2 — Investor Participation (verbatim from slide-2) -->
+        <article class="modal-slide" data-title="Investor Participation">
+          <p>Ownership of shares in the Founding Investor Circle <span class="hl">does not grant voting rights, management authority, or any decision-making power</span> over the operations of Muevelo West.<span class="ag-break"></span>All investors in the Founding Investor Circle are <span class="hl">silent partners with no controlling interest</span>.<span class="ag-break"></span>Day-to-day operations, strategic direction, staffing, programming, and all business decisions remain solely under the authority of the founding operators (<span class="hl">Mario &amp; Henry Trujillo, 51%</span>).</p>
+          <p>Investor distributions <span class="hl">will not commence until the seller carry note ($100,000, 12-month&nbsp;term) has been repaid in full</span>.<span class="ag-break"></span>Repayment of this note will be prioritized from early operating profits, with accelerated paydown when possible.<span class="ag-break"></span>Following full retirement of the seller carry obligation, investor distributions will be made <span class="hl">proportionally based on each investor&rsquo;s share ownership</span> within the 49% Founding Investor Circle pool.</p>
+        </article>
+
+      </div>
+    </div>
+    <footer class="modal-slide-nav">
+      <button class="modal-slide-nav__prev" type="button" aria-label="Previous mini slide">&lsaquo;</button>
+      <div class="modal-slide-nav__dots" role="tablist">
+        <button class="modal-slide-nav__dot" data-index="0" data-active="true" type="button" aria-label="Ownership and Investor Structure"></button>
+        <button class="modal-slide-nav__dot" data-index="1" type="button" aria-label="Investor Participation"></button>
+      </div>
+      <button class="modal-slide-nav__next" type="button" aria-label="Next mini slide">&rsaquo;</button>
+    </footer>
+  </div>
+  <div class="slide__pc">Privileged &amp; Confidential</div>
+  <div class="slide__num">06 / 12</div>
+</section>
+
+<section class="slide" id="slide-money" data-arch="chapter" aria-label="Slide 7 of 12 — Where The Money Goes">
+  <div class="slide__inner chapter__panel">
+    <header class="chapter__head">
+      <div>
+        <div class="hub-modal__eyebrow">Where The Money Goes</div>
+        <h2 class="slide__title chapter__title" id="modal-money-title">Use of Funds</h2>
+      </div>
+    </header>
+    <div class="chapter__body">
+      <div class="modal-slides">
+
+        <!-- Mini-slide 1 — Use of Funds (verbatim from slide-9) -->
+        <article class="modal-slide" data-active="true" data-title="Use of Funds">
+          <div class="modal-table-wrap">
+          <table class="modal-table">
+            <thead><tr><th>Category</th><th>Amount</th></tr></thead>
+            <tbody>
+              <tr><td>Acquisition (Cash at Close)</td><td>$500,000</td></tr>
+              <tr><td>Seller Carry (12&#8209;Month Term)</td><td>$100,000</td></tr>
+              <tr><td>Renovations</td><td>$100,000</td></tr>
+              <tr><td>Rebranding (Signage, Decor)</td><td>$20,000</td></tr>
+              <tr><td>Legal (Agreements)</td><td>$5,000 to $10,000</td></tr>
+              <tr><td>Inventory (Bar Stock)</td><td>$20,000 to $40,000</td></tr>
+              <tr><td>Working Capital</td><td>$30,000 to $50,000</td></tr>
+              <tr class="modal-table__total"><td>Total Capital Target</td><td>~$720,000</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+
+        <!-- Mini-slide 2 — Capital Allocation Breakdown (verbatim from slide-10) -->
+        <article class="modal-slide" data-title="Capital Allocation Breakdown">
+          <p>Total target: ~$720,000 (midpoint estimates shown for range items)</p>
+          <div class="modal-cap">
+            <div class="modal-cap__hero">
+              <div class="modal-cap__eyebrow">Total Capital Target</div>
+              <div class="modal-cap__total">~$720K</div>
+              <div class="modal-cap__sub">49 Shares @ $7,200 &nbsp;&middot;&nbsp; Min: 5 shares ($36K)</div>
+            </div>
+            <div class="modal-cap__rows">
+              <div class="modal-cap__row"><div class="modal-cap__name">Acquisition <em>Cash at Close</em></div><div class="modal-cap__track"><div class="modal-cap__fill" style="width: 69.4%;"></div></div><div class="modal-cap__amt">$500,000</div></div>
+              <div class="modal-cap__row"><div class="modal-cap__name">Seller Carry <em>12&#8209;Month Term</em></div><div class="modal-cap__track"><div class="modal-cap__fill" style="width: 13.9%;"></div></div><div class="modal-cap__amt">$100,000</div></div>
+              <div class="modal-cap__row"><div class="modal-cap__name">Renovations</div><div class="modal-cap__track"><div class="modal-cap__fill" style="width: 13.9%;"></div></div><div class="modal-cap__amt">$100,000</div></div>
+              <div class="modal-cap__row"><div class="modal-cap__name">Working Capital</div><div class="modal-cap__track"><div class="modal-cap__fill" style="width: 5.6%;"></div></div><div class="modal-cap__amt">$30K to $50K</div></div>
+              <div class="modal-cap__row"><div class="modal-cap__name">Inventory <em>Bar Stock</em></div><div class="modal-cap__track"><div class="modal-cap__fill" style="width: 4.2%;"></div></div><div class="modal-cap__amt">$20K to $40K</div></div>
+              <div class="modal-cap__row"><div class="modal-cap__name">Rebranding <em>Signage, Decor</em></div><div class="modal-cap__track"><div class="modal-cap__fill" style="width: 2.8%;"></div></div><div class="modal-cap__amt">$20,000</div></div>
+              <div class="modal-cap__row"><div class="modal-cap__name">Legal <em>Agreements</em></div><div class="modal-cap__track"><div class="modal-cap__fill" style="width: 1.0%;"></div></div><div class="modal-cap__amt">$5K to $10K</div></div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="own-stats">
-        <div class="own-stat reveal" data-d="4">
-          <div class="own-stat__num">49</div>
-          <div class="own-stat__label">Total Shares Available</div>
-        </div>
-        <div class="own-stat reveal" data-d="5">
-          <div class="own-stat__num">$7,200</div>
-          <div class="own-stat__label">Price Per Share</div>
-        </div>
-        <div class="own-stat own-stat--feature reveal" data-d="6">
-          <div class="own-stat__num">$36,000</div>
-          <div class="own-stat__label">Minimum Investment</div>
-          <div class="own-stat__hint">5 Shares</div>
-        </div>
+        </article>
+
+        <!-- Mini-slide 3 — Estimated Monthly Operating Expenses (verbatim from slide-11) -->
+        <article class="modal-slide" data-title="Estimated Monthly Operating Expenses">
+          <div class="modal-table-wrap">
+          <table class="modal-table">
+            <thead><tr><th>Expense Category</th><th>Monthly Estimate</th></tr></thead>
+            <tbody>
+              <tr><td>Alcohol Cost of Goods (~30% COGS)</td><td>$29,250</td></tr>
+              <tr><td>Payroll &amp; Staffing (incl. Bar, Security)</td><td>$10,400</td></tr>
+              <tr><td>Henry Trujillo, GM Salary (50%)</td><td>$3,125</td></tr>
+              <tr><td>Henry Trujillo, Marketing (50%)</td><td>$3,125</td></tr>
+              <tr><td>Rent + CAM</td><td>$5,100</td></tr>
+              <tr><td>Utilities</td><td>$1,200</td></tr>
+              <tr><td>Insurance &amp; Licensing</td><td>$2,000</td></tr>
+              <tr><td>Marketing / Promotions</td><td>$5,000</td></tr>
+              <tr><td>Payment Processing Fees (3.25%)</td><td>~$3,169</td></tr>
+              <tr><td>Sales Tax Liability (10.5%)</td><td>~$10,238</td></tr>
+              <tr><td>Accounting / Bookkeeping</td><td>$500 to $1,000</td></tr>
+              <tr><td>Repairs &amp; Maintenance</td><td>$500 to $1,500</td></tr>
+              <tr><td>Inventory Loss / Shrinkage (~1%)</td><td>~$975</td></tr>
+              <tr class="modal-table__total"><td>Total Est. Monthly Expenses</td><td>~$74,882+</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+
+        <!-- Mini-slide 4 — Operating Model & Assumptions (verbatim from slide-22) -->
+        <article class="modal-slide" data-title="Operating Model &amp; Assumptions">
+          <ul class="modal-highlights">
+            <li>Operating nights: Friday to Sunday | Hours: 9PM to 2AM</li>
+            <li>Attendance: Friday ~150 guests | Saturday ~180 guests | Sunday lower ramp</li>
+            <li>Average guest spend: &asymp; $50 per&nbsp;guest</li>
+            <li>Alcohol COGS: ~25% of beverage sales</li>
+            <li>Rent: ~$3,600/month (NNN)</li>
+            <li>Utilities: ~$1,200/month</li>
+            <li>Insurance: ~$2,000/month</li>
+            <li>Marketing: ~$5,000/month</li>
+            <li>Professional services: $1K to $3K/month</li>
+          </ul>
+        </article>
+
       </div>
     </div>
+    <footer class="modal-slide-nav">
+      <button class="modal-slide-nav__prev" type="button" aria-label="Previous mini slide">&lsaquo;</button>
+      <div class="modal-slide-nav__dots" role="tablist">
+        <button class="modal-slide-nav__dot" data-index="0" data-active="true" type="button" aria-label="Use of Funds"></button>
+        <button class="modal-slide-nav__dot" data-index="1" type="button" aria-label="Capital Allocation"></button>
+        <button class="modal-slide-nav__dot" data-index="2" type="button" aria-label="Operating Expenses"></button>
+        <button class="modal-slide-nav__dot" data-index="3" type="button" aria-label="Operating Model"></button>
+      </div>
+      <button class="modal-slide-nav__next" type="button" aria-label="Next mini slide">&rsaquo;</button>
+    </footer>
   </div>
   <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">07 / 25</div>
+  <div class="slide__num">07 / 12</div>
 </section>
 
-<!-- ===== SLIDE 7 — Cash Flow Waterfall ===== -->
-<section class="slide" id="slide-8" data-arch="chart" aria-label="Slide 8 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Cash Flow<br>Waterfall Structure</h2>
-    <div class="waterfall">
-      <div class="wf-col r1 reveal" data-d="3">
-        <span class="eyebrow">Stage 01 · Operations</span>
-        <span class="num">01</span>
-        <div class="wf-foot">
-          <span class="label">Operating Expenses</span>
-          <span class="desc">Payroll, COGS, rent, utilities, insurance, taxes, processing fees</span>
-        </div>
+<section class="slide" id="slide-returns" data-arch="chapter" aria-label="Slide 8 of 12 — The Returns">
+  <div class="slide__inner chapter__panel">
+    <header class="chapter__head">
+      <div>
+        <div class="hub-modal__eyebrow">The Returns</div>
+        <h2 class="slide__title chapter__title" id="modal-returns-title">Attendance and Revenue Scenarios</h2>
       </div>
-      <div class="wf-arrow-h reveal" data-d="3" aria-hidden="true"></div>
-      <div class="wf-col r2 reveal" data-d="4">
-        <span class="eyebrow">Stage 02 · Debt Service</span>
-        <span class="num">02</span>
-        <div class="wf-foot">
-          <span class="label">Seller Carry Repayment</span>
-          <span class="desc">Year 1 only — $100,000 paid down from early profits; accelerated when possible</span>
-        </div>
+    </header>
+    <div class="chapter__body">
+      <div class="modal-slides">
+
+        <!-- Mini-slide 1 — Attendance and Revenue Scenarios (verbatim from slide-13) -->
+        <article class="modal-slide" data-active="true" data-title="Attendance and Revenue Scenarios">
+          <div class="modal-table-wrap">
+          <table class="modal-table">
+            <thead><tr><th>Scenario</th><th>Guests/Night</th><th>Rev/Night</th><th>Monthly Rev.</th><th>Yr 1 Profit</th><th>Yr 2 Profit</th></tr></thead>
+            <tbody>
+              <tr><td>Conservative</td><td>110</td><td>$5,500</td><td>$71,500</td><td>~$3,500</td><td>~$12,000</td></tr>
+              <tr><td>Average</td><td>150</td><td>$7,500</td><td>$97,500</td><td>~$20,000</td><td>~$37,000</td></tr>
+              <tr><td>Strong</td><td>180</td><td>$9,000</td><td>$117,000</td><td>~$40,000</td><td>~$57,000</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <div class="modal-footnote"><strong>Year 1 profits are suppressed</strong> by seller carry repayment ($100K / 12 months = ~$8,333/mo) and brand transition costs.<span class="ag-break"></span><strong>Year 2 profits</strong> reflect stabilized operations after seller note is retired and the Muevelo brand transition is complete.</div>
+        </article>
+
+        <!-- Mini-slide 2 — Projected Revenue by Night (verbatim from slide-14) -->
+        <article class="modal-slide" data-title="Projected Revenue by Night">
+          <div class="modal-table-wrap">
+          <table class="modal-table">
+            <thead><tr><th>Night</th><th>Estimated Guests</th><th>Estimated Revenue</th></tr></thead>
+            <tbody>
+              <tr><td>Friday</td><td>150</td><td>~$7,500</td></tr>
+              <tr><td>Saturday</td><td>180</td><td>~$9,000</td></tr>
+              <tr><td>Sunday</td><td>120</td><td>~$6,000</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+
+        <!-- Mini-slide 3 — Year 1 vs Year 2 Monthly Profit (verbatim from slide-15) -->
+        <article class="modal-slide" data-title="Year 1 vs Year 2 Monthly Profit">
+          <p>Year 2 stabilized profits after seller carry ($100K) is retired and brand transition completes</p>
+          <div class="modal-y2">
+            <div class="modal-y2__legend"><span class="modal-y2__lg modal-y2__lg--y1"><i></i>Year 1</span><span class="modal-y2__lg modal-y2__lg--y2"><i></i>Year 2 (Stabilized)</span></div>
+            <div class="modal-y2__row"><div class="modal-y2__lbl"><strong>Conservative</strong><small>110 guests/night</small></div><div class="modal-y2__bars"><div class="modal-y2__bar modal-y2__bar--y1"><div class="modal-y2__fill" style="width:6%;"></div><span class="modal-y2__val">$3,500</span></div><div class="modal-y2__bar modal-y2__bar--y2"><div class="modal-y2__fill" style="width:21%;"></div><span class="modal-y2__val">$12,000</span></div></div></div>
+            <div class="modal-y2__row"><div class="modal-y2__lbl"><strong>Average</strong><small>150 guests/night</small></div><div class="modal-y2__bars"><div class="modal-y2__bar modal-y2__bar--y1"><div class="modal-y2__fill" style="width:35%;"></div><span class="modal-y2__val">$20,000</span></div><div class="modal-y2__bar modal-y2__bar--y2"><div class="modal-y2__fill" style="width:65%;"></div><span class="modal-y2__val">$37,000</span></div></div></div>
+            <div class="modal-y2__row"><div class="modal-y2__lbl"><strong>Strong</strong><small>180 guests/night</small></div><div class="modal-y2__bars"><div class="modal-y2__bar modal-y2__bar--y1"><div class="modal-y2__fill" style="width:70%;"></div><span class="modal-y2__val">$40,000</span></div><div class="modal-y2__bar modal-y2__bar--y2"><div class="modal-y2__fill" style="width:100%;"></div><span class="modal-y2__val">$57,000</span></div></div></div>
+          </div>
+          <div class="modal-footnote"><strong>Key takeaway:</strong> Profitability more than triples from Year 1 to Year 2 across all scenarios as seller carry is retired and the Muevelo brand transition completes.</div>
+        </article>
+
+        <!-- Mini-slide 4 — Break-Even Timeline (verbatim from slide-16) -->
+        <article class="modal-slide" data-title="Estimated Break-Even Timeline">
+          <div class="modal-table-wrap">
+          <table class="modal-table">
+            <thead><tr><th>Scenario</th><th>Stabilized Monthly Profit (Yr 2)</th><th>Break&#8209;Even Timeframe</th></tr></thead>
+            <tbody>
+              <tr><td>Conservative</td><td>~$12,000</td><td>~28+ months</td></tr>
+              <tr><td>Average</td><td>~$37,000</td><td>~19 months</td></tr>
+              <tr><td>Strong</td><td>~$57,000</td><td>~13&#8209;15 months</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+
+        <!-- Mini-slide 5 — Distribution Structure (verbatim from slide-18) -->
+        <article class="modal-slide" data-title="Distribution Structure">
+          <p>Financial projections are modeled <span class="hl">conservatively</span> based on estimated weekly attendance, average spend per&nbsp;guest, and controlled operating costs.<span class="ag-break"></span>Across scenarios, projected monthly revenue ranges from <span class="hl">~$71K to ~$117K</span> with estimated monthly profit outcomes ranging from <span class="hl">~$12K to ~$57K</span> depending on performance.</p>
+          <p>In the spirit of <span class="hl">transparency</span> and acknowledging potential economic and external influences, investor return scenarios are presented across low to strong performance outcomes within these modeled ranges.</p>
+          <p>Investor distribution examples are based on the <span class="hl">strong performance scenario</span> (<span class="hl">~$57K monthly profit / ~$685K annualized</span>), reflecting a stabilized operating environment.<span class="ag-break"></span>Actual distributions may vary based on performance within the modeled range.</p>
+        </article>
+
       </div>
-      <div class="wf-arrow-h reveal" data-d="4" aria-hidden="true"></div>
-      <div class="wf-col r3 reveal" data-d="5">
-        <span class="eyebrow">Stage 03 · Reserve</span>
-        <span class="num">03</span>
-        <div class="wf-foot">
-          <span class="label">Reserve Account</span>
-          <span class="desc">Working capital buffer for maintenance, emergencies, and compliance</span>
-        </div>
+    </div>
+    <footer class="modal-slide-nav">
+      <button class="modal-slide-nav__prev" type="button" aria-label="Previous mini slide">&lsaquo;</button>
+      <div class="modal-slide-nav__dots" role="tablist">
+        <button class="modal-slide-nav__dot" data-index="0" data-active="true" type="button" aria-label="Attendance and Revenue Scenarios"></button>
+        <button class="modal-slide-nav__dot" data-index="1" type="button" aria-label="Projected Revenue by Night"></button>
+        <button class="modal-slide-nav__dot" data-index="2" type="button" aria-label="Year 1 vs Year 2 Monthly Profit"></button>
+        <button class="modal-slide-nav__dot" data-index="3" type="button" aria-label="Break-Even Timeline"></button>
+        <button class="modal-slide-nav__dot" data-index="4" type="button" aria-label="Distribution Structure"></button>
       </div>
-      <div class="wf-arrow-h wf-arrow-h--split reveal" data-d="5" aria-hidden="true"></div>
-      <div class="wf-split">
-        <div class="wf-col wf-col--half r4 reveal" data-d="6">
-          <span class="eyebrow">Stage 04 · Distribution</span>
-          <div class="wf-num-row">
-            <span class="num">04</span>
-            <div class="wf-foot">
-              <span class="label">Investor Distributions</span>
-              <span class="desc">49% pool — Founding Investor Circle</span>
+      <button class="modal-slide-nav__next" type="button" aria-label="Next mini slide">&rsaquo;</button>
+    </footer>
+  </div>
+  <div class="slide__pc">Privileged &amp; Confidential</div>
+  <div class="slide__num">08 / 12</div>
+</section>
+
+<section class="slide" id="slide-upside" data-arch="chapter" aria-label="Slide 9 of 12 — The Upside">
+  <div class="slide__inner chapter__panel">
+    <header class="chapter__head">
+      <div>
+        <div class="hub-modal__eyebrow">The Upside</div>
+        <h2 class="slide__title chapter__title" id="modal-upside-title">Cash Flow Waterfall Structure</h2>
+      </div>
+    </header>
+    <div class="chapter__body">
+      <div class="modal-slides">
+
+        <!-- Mini-slide 1 — Cash Flow Waterfall (verbatim from slide-8) -->
+        <article class="modal-slide" data-active="true" data-title="Cash Flow Waterfall Structure">
+          <div class="modal-wf">
+            <div class="modal-wf__stage">
+              <span class="modal-wf__eyebrow">Stage 01 &middot; Operations</span>
+              <span class="modal-wf__num">01</span>
+              <span class="modal-wf__label">Operating Expenses</span>
+              <span class="modal-wf__desc">Payroll, COGS, rent, utilities, insurance, taxes, processing fees</span>
+            </div>
+            <div class="modal-wf__stage">
+              <span class="modal-wf__eyebrow">Stage 02 &middot; Debt Service</span>
+              <span class="modal-wf__num">02</span>
+              <span class="modal-wf__label">Seller Carry Repayment</span>
+              <span class="modal-wf__desc">Year 1 only: $100,000 paid down from early profits; accelerated when possible</span>
+            </div>
+            <div class="modal-wf__stage">
+              <span class="modal-wf__eyebrow">Stage 03 &middot; Reserve</span>
+              <span class="modal-wf__num">03</span>
+              <span class="modal-wf__label">Reserve Account</span>
+              <span class="modal-wf__desc">Working capital buffer for maintenance, emergencies, and compliance</span>
+            </div>
+            <div class="modal-wf__stage modal-wf__stage--split">
+              <span class="modal-wf__eyebrow">Stage 04 &middot; Distribution</span>
+              <span class="modal-wf__num">04</span>
+              <span class="modal-wf__label">Investor Distributions</span>
+              <span class="modal-wf__desc">49% pool, Founding Investor Circle</span>
+            </div>
+            <div class="modal-wf__stage modal-wf__stage--split">
+              <span class="modal-wf__eyebrow">Stage 05 &middot; Distribution</span>
+              <span class="modal-wf__num">05</span>
+              <span class="modal-wf__label">Ownership Distributions</span>
+              <span class="modal-wf__desc">51%, Trujillo family operator share</span>
             </div>
           </div>
-        </div>
-        <div class="wf-col wf-col--half r5 reveal" data-d="6">
-          <span class="eyebrow">Stage 05 · Distribution</span>
-          <div class="wf-num-row">
-            <span class="num">05</span>
-            <div class="wf-foot">
-              <span class="label">Ownership Distributions</span>
-              <span class="desc">51% — Trujillo family operator share</span>
-            </div>
+        </article>
+
+        <!-- Mini-slide 2 — Investor Distribution Examples (verbatim from slide-17) -->
+        <article class="modal-slide" data-title="Investor Distribution Examples">
+          <p>Year 2, Stabilized</p>
+          <div class="modal-table-wrap">
+          <table class="modal-table">
+            <thead><tr><th>Ownership</th><th>Investment</th><th>Monthly Distribution</th><th>Annual Distribution</th></tr></thead>
+            <tbody>
+              <tr><td>5% (5 shares)</td><td>$36,000</td><td>~$2,857</td><td>~$34,284</td></tr>
+              <tr><td>7% (7 shares)</td><td>$50,400</td><td>~$4,000</td><td>~$48,000</td></tr>
+              <tr><td>10% (10 shares)</td><td>$72,000</td><td>~$5,715</td><td>~$68,580</td></tr>
+            </tbody>
+          </table>
           </div>
-        </div>
+        </article>
+
+        <!-- Mini-slide 3 — Long-Term Enterprise Value Growth (verbatim from slide-19) -->
+        <article class="modal-slide" data-title="Long-Term Enterprise Value Growth">
+          <p>Hospitality venues are often valued based on <span class="hl">multiples of annual profit</span>.<span class="ag-break"></span>If the venue stabilizes near approximately <span class="hl">$600,000 in annual profit</span>, enterprise value could reasonably grow into the <span class="hl">$2M to $3M range</span>.</p>
+          <p>The founders intend to <span class="hl">operate and grow the venue long&#8209;term</span> rather than pursue a near&#8209;term sale.<span class="ag-break"></span>This projection simply illustrates potential value creation for founding investors as the venue matures.</p>
+        </article>
+
+        <!-- Mini-slide 4 — Revenue Growth Opportunities (verbatim from slide-20) -->
+        <article class="modal-slide" data-title="Revenue Growth Opportunities">
+          <p>Muevelo West&rsquo;s base projections intentionally assume a <span class="hl">conservative operating model</span> focused on core weekend traffic and beverage sales.<span class="ag-break"></span>However, nightlife venues often grow revenue significantly through <span class="hl">special programming, branded events, and community engagement</span>.<span class="ag-break"></span>These initiatives can increase guest counts, average spend per visitor, and overall brand equity.</p>
+          <ul class="modal-highlights">
+            <li><span class="hl">Theme Nights</span> (Latin Night, Throwback Nights, Pride Nights, etc.) that drive repeat attendance and niche audiences.</li>
+            <li><span class="hl">Guest DJs, entertainers, or drag performers</span> that attract new crowds and allow <span class="hl">ticketed or premium cover pricing</span>.</li>
+            <li><span class="hl">Influencer or celebrity host nights</span> that create social buzz and increase organic marketing reach.</li>
+            <li><span class="hl">Corporate events, birthday celebrations, and community gatherings</span> that can be booked during off&#8209;hours or early evenings.</li>
+            <li><span class="hl">Sunday Funday concepts</span> such as Beer Bust or Tardeada-style afternoon parties that can expand operating hours and daytime revenue.</li>
+            <li><span class="hl">Brand sponsorships and beverage promotions</span> that can generate additional marketing support and revenue partnerships.</li>
+          </ul>
+        </article>
+
+        <!-- Mini-slide 5 — Professional Services & Revenue Efficiency (verbatim from slide-21) -->
+        <article class="modal-slide" data-title="Professional Services and Revenue Efficiency">
+          <p>Professional services such as accounting, legal guidance, HR support, and regulatory compliance are modeled as <span class="hl">variable operating expenses</span>.<span class="ag-break"></span>These services may scale depending on operational complexity, growth initiatives, and compliance needs.</p>
+          <p>Using the average revenue scenario (<span class="hl">~$97,500 per month / ~$1.17M annually</span>) and the venue size of approximately <span class="hl">2,400 square feet</span>, estimated revenue productivity equates to <span class="hl">~$487 per square foot annually</span>.</p>
+          <div class="modal-table-wrap">
+          <table class="modal-table">
+            <thead><tr><th>Metric</th><th>Estimate</th></tr></thead>
+            <tbody>
+              <tr><td>Average Monthly Revenue (Mid Scenario)</td><td>~$97,500</td></tr>
+              <tr><td>Estimated Annual Revenue</td><td>~$1,170,000</td></tr>
+              <tr><td>Venue Size</td><td>~2,400 sq ft</td></tr>
+              <tr><td>Estimated Revenue per Square Foot</td><td>~$487 per sq ft annually</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+
       </div>
     </div>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">08 / 25</div>
-</section>
-
-<!-- ===== SLIDE 8 — Use of Funds ===== -->
-<section class="slide" id="slide-9" data-arch="table" aria-label="Slide 9 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Use of<br>Funds</h2>
-    <div class="reveal tbl-wrap" data-d="3">
-    <table class="tbl">
-      <thead><tr><th>Category</th><th>Amount</th></tr></thead>
-      <tbody>
-        <tr><td>Acquisition (Cash at Close)</td><td>$500,000</td></tr>
-        <tr><td>Seller Carry (12-Month Term)</td><td>$100,000</td></tr>
-        <tr><td>Renovations</td><td>$100,000</td></tr>
-        <tr><td>Rebranding (Signage, Decor)</td><td>$20,000</td></tr>
-        <tr><td>Legal (Agreements)</td><td>$5,000 – $10,000</td></tr>
-        <tr><td>Inventory (Bar Stock)</td><td>$20,000 – $40,000</td></tr>
-        <tr><td>Working Capital</td><td>$30,000 – $50,000</td></tr>
-        <tr class="total"><td>Total Capital Target</td><td>~$720,000</td></tr>
-      </tbody>
-    </table>
-    </div>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">09 / 25</div>
-</section>
-
-<!-- ===== SLIDE 9 — Capital Allocation Breakdown ===== -->
-<section class="slide" id="slide-10" data-arch="chart" aria-label="Slide 10 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Capital Allocation<br>Breakdown</h2>
-    <p class="reveal" data-d="3">Total target: ~$720,000 (midpoint estimates shown for range items)</p>
-
-    <div class="cap-stmt reveal" data-d="3">
-
-      <div class="cap-stmt__hero">
-        <div class="cap-stmt__eyebrow">Total Capital Target</div>
-        <div class="cap-stmt__total">~$720K</div>
-        <div class="cap-stmt__sub">49 Shares @ $7,200 &nbsp;&middot;&nbsp; Min: 5 shares ($36K)</div>
+    <footer class="modal-slide-nav">
+      <button class="modal-slide-nav__prev" type="button" aria-label="Previous mini slide">&lsaquo;</button>
+      <div class="modal-slide-nav__dots" role="tablist">
+        <button class="modal-slide-nav__dot" data-index="0" data-active="true" type="button" aria-label="Cash Flow Waterfall"></button>
+        <button class="modal-slide-nav__dot" data-index="1" type="button" aria-label="Investor Distribution Examples"></button>
+        <button class="modal-slide-nav__dot" data-index="2" type="button" aria-label="Long-Term Enterprise Value Growth"></button>
+        <button class="modal-slide-nav__dot" data-index="3" type="button" aria-label="Revenue Growth Opportunities"></button>
+        <button class="modal-slide-nav__dot" data-index="4" type="button" aria-label="Professional Services"></button>
       </div>
-
-      <div class="cap-stmt__rows">
-        <div class="cap-stmt__row">
-          <div class="cap-stmt__name">Acquisition <em>Cash at Close</em></div>
-          <div class="cap-stmt__track"><div class="cap-stmt__fill" style="width: 69.4%;"></div></div>
-          <div class="cap-stmt__amt">$500,000</div>
-        </div>
-        <div class="cap-stmt__row">
-          <div class="cap-stmt__name">Seller Carry <em>12-Month Term</em></div>
-          <div class="cap-stmt__track"><div class="cap-stmt__fill" style="width: 13.9%;"></div></div>
-          <div class="cap-stmt__amt">$100,000</div>
-        </div>
-        <div class="cap-stmt__row">
-          <div class="cap-stmt__name">Renovations</div>
-          <div class="cap-stmt__track"><div class="cap-stmt__fill" style="width: 13.9%;"></div></div>
-          <div class="cap-stmt__amt">$100,000</div>
-        </div>
-        <div class="cap-stmt__row">
-          <div class="cap-stmt__name">Working Capital</div>
-          <div class="cap-stmt__track"><div class="cap-stmt__fill" style="width: 5.6%;"></div></div>
-          <div class="cap-stmt__amt">$30K&ndash;$50K</div>
-        </div>
-        <div class="cap-stmt__row">
-          <div class="cap-stmt__name">Inventory <em>Bar Stock</em></div>
-          <div class="cap-stmt__track"><div class="cap-stmt__fill" style="width: 4.2%;"></div></div>
-          <div class="cap-stmt__amt">$20K&ndash;$40K</div>
-        </div>
-        <div class="cap-stmt__row">
-          <div class="cap-stmt__name">Rebranding <em>Signage, Decor</em></div>
-          <div class="cap-stmt__track"><div class="cap-stmt__fill" style="width: 2.8%;"></div></div>
-          <div class="cap-stmt__amt">$20,000</div>
-        </div>
-        <div class="cap-stmt__row">
-          <div class="cap-stmt__name">Legal <em>Agreements</em></div>
-          <div class="cap-stmt__track"><div class="cap-stmt__fill" style="width: 1.0%;"></div></div>
-          <div class="cap-stmt__amt">$5K&ndash;$10K</div>
-        </div>
-      </div>
-
-    </div>
+      <button class="modal-slide-nav__next" type="button" aria-label="Next mini slide">&rsaquo;</button>
+    </footer>
   </div>
   <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">10 / 25</div>
+  <div class="slide__num">09 / 12</div>
 </section>
 
-<!-- ===== SLIDE 10 — Estimated Monthly Operating Expenses ===== -->
-<section class="slide" id="slide-11" data-arch="table" aria-label="Slide 11 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Estimated Monthly<br>Operating Expenses</h2>
-    <div class="reveal tbl-wrap" data-d="3">
-    <table class="tbl">
-      <thead><tr><th>Expense Category</th><th>Monthly Estimate</th></tr></thead>
-      <tbody>
-        <tr><td>Alcohol Cost of Goods (~30% COGS)</td><td>$29,250</td></tr>
-        <tr><td>Payroll &amp; Staffing (incl. Bar, Security)</td><td>$10,400</td></tr>
-        <tr><td>Henry Trujillo — GM Salary (50%)</td><td>$3,125</td></tr>
-        <tr><td>Henry Trujillo — Marketing (50%)</td><td>$3,125</td></tr>
-        <tr><td>Rent + CAM</td><td>$5,100</td></tr>
-        <tr><td>Utilities</td><td>$1,200</td></tr>
-        <tr><td>Insurance &amp; Licensing</td><td>$2,000</td></tr>
-        <tr><td>Marketing / Promotions</td><td>$5,000</td></tr>
-        <tr><td>Payment Processing Fees (3.25%)</td><td>~$3,169</td></tr>
-        <tr><td>Sales Tax Liability (10.5%)</td><td>~$10,238</td></tr>
-        <tr><td>Accounting / Bookkeeping</td><td>$500 – $1,000</td></tr>
-        <tr><td>Repairs &amp; Maintenance</td><td>$500 – $1,500</td></tr>
-        <tr><td>Inventory Loss / Shrinkage (~1%)</td><td>~$975</td></tr>
-        <tr class="total"><td>Total Est. Monthly Expenses</td><td>~$74,882+</td></tr>
-      </tbody>
-    </table>
-    </div>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">11 / 25</div>
-</section>
-
-<!-- ===== SLIDE 11 — Rebranding Strategy ===== -->
-<section class="slide" id="slide-12" data-arch="chart" aria-label="Slide 12 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Rebranding<br>Strategy</h2>
-    <div class="phases">
-      <div class="phase p1 reveal" data-d="3">
-        <h3>Phase 1: Year 1</h3>
-        <p class="subhead">Operate Under Chico’s Name</p>
-        <ul>
-          <li>Retain “Chico’s Montebello” branding on exterior signage for a minimum of 12 months per agreement</li>
-          <li>Leverage Chico’s social media (min. 3 months access) to migrate audience to Muevelo channels</li>
-          <li>Softly introduce Muevelo brand elements — interior decor, events, merch, and digital presence</li>
-          <li>Stabilize operations, build customer trust, and pay down seller carry note</li>
-          <li>Reduced Year 1 profit expectations due to transition costs and seller carry obligations</li>
-        </ul>
+<section class="slide" id="slide-next" data-arch="chapter" aria-label="Slide 10 of 12 — Fine Print &amp; Next Steps">
+  <div class="slide__inner chapter__panel">
+    <header class="chapter__head">
+      <div>
+        <div class="hub-modal__eyebrow">Fine Print &amp; Next Steps</div>
+        <h2 class="slide__title chapter__title" id="modal-next-title">Risks &amp; Mitigations</h2>
       </div>
-      <div class="phase p2 reveal" data-d="4">
-        <h3>Phase 2: Year 2+</h3>
-        <p class="subhead">Full Muevelo Transition</p>
-        <ul>
-          <li>Complete exterior signage update to Muevelo West brand identity</li>
-          <li>Full decor refresh, branded merchandise, and Muevelo-first event calendar</li>
-          <li>Seller carry fully repaid; cash flow stabilizes for investor distributions</li>
-          <li>Full Muevelo social and digital presence; expanded programming and partnerships</li>
-          <li>Year 2 positioned as growth phase — stabilized profitability and brand equity building</li>
-        </ul>
+    </header>
+    <div class="chapter__body">
+      <div class="modal-slides">
+
+        <!-- Mini-slide 1 — Risks & Mitigations -->
+        <article class="modal-slide" data-active="true" data-title="Risks &amp; Mitigations">
+          <p>Investing in a nightlife venue carries operational, market, and regulatory risk. Material risks include:</p>
+          <ul class="modal-highlights">
+            <li><span class="hl">Liquor license &amp; ABC approval:</span> operating dependence on California ABC license transfer and renewal.<span class="ag-break"></span>Delay or denial would impact opening or operating timeline.</li>
+            <li><span class="hl">Audience migration:</span> the thesis assumes Muevelo&rsquo;s existing audience follows the brand to the Chico&rsquo;s Montebello location.<span class="ag-break"></span>Migration may underperform projections.</li>
+            <li><span class="hl">Lease extension:</span> the 5+5+5+5-year lease structure depends on each extension being exercised by the landlord at then-current terms.<span class="ag-break"></span>Renewal is not contractually guaranteed beyond the initial five years.</li>
+            <li><span class="hl">Key-person risk:</span> operational success is concentrated with Mario &amp; Henry Trujillo.<span class="ag-break"></span>Loss or extended absence of either operator could materially affect performance.</li>
+            <li><span class="hl">COGS &amp; operating-cost pressure:</span> alcohol cost of goods (modeled at 25% to 30%), labor, and rent are subject to inflation.<span class="ag-break"></span>Sustained input-cost increases could compress modeled margins.</li>
+          </ul>
+        </article>
+
+        <!-- Mini-slide 2 — Next Steps -->
+        <article class="modal-slide" data-title="Next Steps">
+          <p>To participate in the Founding Investor Circle, prospective investors follow these steps:</p>
+          <ul class="modal-highlights">
+            <li><span class="hl">Introductory call:</span> review the opportunity with the founders and confirm fit, share-count interest, and timeline.</li>
+            <li><span class="hl">Accredited Investor Questionnaire:</span> confirm accredited status under SEC Rule 501(a) or sophisticated-investor capability.</li>
+            <li><span class="hl">Subscription documents:</span> review and execute the Subscription Agreement and Operating Agreement at the agreed share count (minimum $36,000 / 5 shares; up to 49 shares total available).</li>
+            <li><span class="hl">Wire funds at close:</span> transfer of investment commitment per the executed subscription documents.</li>
+            <li><span class="hl">Founding Investor Circle:</span> receive operational updates, financial reporting, and distribution statements per the Operating Agreement.</li>
+          </ul>
+          <div class="modal-footnote"><strong>To express interest:</strong> Contact Mario Trujillo to schedule an introductory call.<span class="ag-break"></span>Target close date and subscription document delivery to be confirmed upon initial discussion.</div>
+        </article>
+
+        <!-- Mini-slide 3 — Important Disclosure (verbatim from slide-24) -->
+        <article class="modal-slide" data-title="Important Disclosure">
+          <p>By reviewing this investment opportunity, each participant acknowledges that they are either an <span class="hl">accredited investor</span> as defined under applicable securities laws or are otherwise <span class="hl">financially sophisticated and capable of evaluating the merits and risks</span> of the opportunity.</p>
+          <p>All investment decisions should be made <span class="hl">independently</span> and with consideration of personal financial circumstances.<span class="ag-break"></span>Participation in this opportunity <span class="hl">should not create financial hardship</span>.</p>
+          <p>All information presented is <span class="hl">for discussion purposes only</span> and does not constitute an offer to sell or a solicitation of an offer to buy securities.<span class="ag-break"></span>Any investment will be <span class="hl">subject to formal agreements and operating documents</span>.</p>
+        </article>
+
       </div>
     </div>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">12 / 25</div>
-</section>
-
-<!-- ===== SLIDE 12 — Attendance and Revenue Scenarios ===== -->
-<section class="slide" id="slide-13" data-arch="table" aria-label="Slide 13 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Attendance and<br>Revenue Scenarios</h2>
-    <div class="reveal tbl-wrap" data-d="3">
-    <table class="tbl">
-      <thead><tr><th>Scenario</th><th>Guests/Night</th><th>Rev/Night</th><th>Monthly Rev.</th><th>Yr 1 Profit</th><th>Yr 2 Profit</th></tr></thead>
-      <tbody>
-        <tr><td>Conservative</td><td>110</td><td>$5,500</td><td>$71,500</td><td>~$3,500</td><td>~$12,000</td></tr>
-        <tr><td>Average</td><td>150</td><td>$7,500</td><td>$97,500</td><td>~$20,000</td><td>~$37,000</td></tr>
-        <tr><td>Strong</td><td>180</td><td>$9,000</td><td>$117,000</td><td>~$40,000</td><td>~$57,000</td></tr>
-      </tbody>
-    </table>
-    </div>
-    <div class="footnote reveal" data-d="4">
-      <strong class="y1">Year 1 profits are suppressed</strong> by seller carry repayment ($100K / 12 months = ~$8,333/mo) and brand transition costs. <strong class="y2">Year 2 profits</strong> reflect stabilized operations after seller note is retired and the Muevelo brand transition is complete.
-    </div>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">13 / 25</div>
-</section>
-
-<!-- ===== SLIDE 13 — Projected Revenue by Night ===== -->
-<section class="slide" id="slide-14" data-arch="table" aria-label="Slide 14 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Projected Revenue by&nbsp;Night</h2>
-    <div class="reveal tbl-wrap" data-d="3">
-    <table class="tbl">
-      <thead><tr><th>Night</th><th>Estimated Guests</th><th>Estimated Revenue</th></tr></thead>
-      <tbody>
-        <tr><td>Friday</td><td>150</td><td>~$7,500</td></tr>
-        <tr><td>Saturday</td><td>180</td><td>~$9,000</td></tr>
-        <tr><td>Sunday</td><td>120</td><td>~$6,000</td></tr>
-      </tbody>
-    </table>
-    </div>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">14 / 25</div>
-</section>
-
-<!-- ===== SLIDE 14 — Year 1 vs. Year 2 Monthly Profit ===== -->
-<section class="slide" id="slide-15" data-arch="chart" aria-label="Slide 15 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Year 1 vs. Year 2<br>Monthly Profit</h2>
-    <p class="reveal" data-d="3">Year 2 stabilized profits after seller carry ($100K) is retired and brand transition completes</p>
-    <div class="y2-legend reveal" data-d="3">
-      <span class="y1"><span class="swatch"></span>Year 1</span>
-      <span class="y2"><span class="swatch"></span>Year 2 (Stabilized)</span>
-    </div>
-    <div class="y2-row reveal" data-d="4">
-      <div class="label"><h4>Conservative</h4><small>110 guests/night</small></div>
-      <div class="y2-bars">
-        <div class="y2-bar year1"><div class="fill" style="width:6%;"></div><span class="val">$3,500</span></div>
-        <div class="y2-bar year2"><div class="fill" style="width:21%;"></div><span class="val">$12,000</span></div>
+    <footer class="modal-slide-nav">
+      <button class="modal-slide-nav__prev" type="button" aria-label="Previous mini slide">&lsaquo;</button>
+      <div class="modal-slide-nav__dots" role="tablist">
+        <button class="modal-slide-nav__dot" data-index="0" data-active="true" type="button" aria-label="Risks and Mitigations"></button>
+        <button class="modal-slide-nav__dot" data-index="1" type="button" aria-label="Next Steps"></button>
+        <button class="modal-slide-nav__dot" data-index="2" type="button" aria-label="Important Disclosure"></button>
       </div>
-    </div>
-    <div class="y2-row reveal" data-d="5">
-      <div class="label"><h4>Average</h4><small>150 guests/night</small></div>
-      <div class="y2-bars">
-        <div class="y2-bar year1"><div class="fill" style="width:35%;"></div><span class="val">$20,000</span></div>
-        <div class="y2-bar year2"><div class="fill" style="width:65%;"></div><span class="val">$37,000</span></div>
-      </div>
-    </div>
-    <div class="y2-row reveal" data-d="6">
-      <div class="label"><h4>Strong</h4><small>180 guests/night</small></div>
-      <div class="y2-bars">
-        <div class="y2-bar year1"><div class="fill" style="width:70%;"></div><span class="val">$40,000</span></div>
-        <div class="y2-bar year2"><div class="fill" style="width:100%;"></div><span class="val">$57,000</span></div>
-      </div>
-    </div>
-    <div class="y2-axis"><span>$0</span><span>$20K</span><span>$40K</span><span>$60K</span></div>
-    <div class="y2-takeaway reveal" data-d="6"><strong>Key takeaway:</strong> Profitability more than triples from Year 1 to Year 2 across all scenarios as seller carry is retired and the Muevelo brand transition completes.</div>
+      <button class="modal-slide-nav__next" type="button" aria-label="Next mini slide">&rsaquo;</button>
+    </footer>
   </div>
   <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">15 / 25</div>
-</section>
-
-<!-- ===== SLIDE 15 — Estimated Break‑Even Timeline ===== -->
-<section class="slide" id="slide-16" data-arch="table" aria-label="Slide 16 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Estimated Break‑Even<br>Timeline</h2>
-    <div class="reveal tbl-wrap" data-d="3">
-    <table class="tbl">
-      <thead><tr><th>Scenario</th><th>Stabilized Monthly Profit (Yr 2)</th><th>Break‑Even Timeframe</th></tr></thead>
-      <tbody>
-        <tr><td>Conservative</td><td>~$12,000</td><td>~28+ months</td></tr>
-        <tr><td>Average</td><td>~$37,000</td><td>~19 months</td></tr>
-        <tr><td>Strong</td><td>~$57,000</td><td>~13‑15 months</td></tr>
-      </tbody>
-    </table>
-    </div>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">16 / 25</div>
-</section>
-
-<!-- ===== SLIDE 16 — Investor Distribution Examples ===== -->
-<section class="slide" id="slide-17" data-arch="table" aria-label="Slide 17 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Investor Distribution Examples (Year 2,&nbsp;Stabilized)</h2>
-    <div class="reveal tbl-wrap" data-d="3">
-    <table class="tbl">
-      <thead><tr><th>Ownership</th><th>Investment</th><th>Monthly Distribution</th><th>Annual Distribution</th></tr></thead>
-      <tbody>
-        <tr><td>5% (5 shares)</td><td>$36,000</td><td>~$2,857</td><td>~$34,284</td></tr>
-        <tr><td>7% (7 shares)</td><td>$50,400</td><td>~$4,000</td><td>~$48,000</td></tr>
-        <tr><td>10% (10 shares)</td><td>$72,000</td><td>~$5,715</td><td>~$68,580</td></tr>
-      </tbody>
-    </table>
-    </div>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">17 / 25</div>
-</section>
-
-<!-- ===== SLIDE 17 — Distribution Structure ===== -->
-<section class="slide" id="slide-18" data-arch="prose" aria-label="Slide 18 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Distribution<br>Structure</h2>
-    <p class="reveal" data-d="3">Financial projections are modeled <span class="hl">conservatively</span> based on estimated weekly attendance, average spend per&nbsp;guest, and controlled operating costs. Across scenarios, projected monthly revenue ranges from <span class="hl">~$71K–$117K</span> with estimated monthly profit outcomes ranging from <span class="hl">~$12K to ~$57K</span> depending on performance.</p>
-    <p class="reveal" data-d="4">In the spirit of <span class="hl">transparency</span> and acknowledging potential economic and external influences, investor return scenarios are presented across low to strong performance outcomes within these modeled ranges.</p>
-    <p class="reveal" data-d="5">Investor distribution examples are based on the <span class="hl">strong performance scenario</span> (<span class="hl">~$57K monthly profit / ~$685K annualized</span>), reflecting a stabilized operating environment. Actual distributions may vary based on performance within the modeled range.</p>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">18 / 25</div>
-</section>
-
-<!-- ===== SLIDE 18 — Long‑Term Enterprise Value Growth ===== -->
-<section class="slide" id="slide-19" data-arch="prose" aria-label="Slide 19 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Long‑Term Enterprise<br>Value Growth</h2>
-    <p class="reveal" data-d="3">Hospitality venues are often valued based on <span class="hl">multiples of annual profit</span>. If the venue stabilizes near approximately <span class="hl">$600,000 in annual profit</span>, enterprise value could reasonably grow into the <span class="hl">$2M–$3M range</span>.</p>
-    <p class="reveal" data-d="4">The founders intend to <span class="hl">operate and grow the venue long‑term</span> rather than pursue a near‑term sale. This projection simply illustrates potential value creation for founding investors as the venue matures.</p>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">19 / 25</div>
-</section>
-
-<!-- ===== SLIDE 19 — Revenue Growth Opportunities ===== -->
-<section class="slide" id="slide-20" data-arch="prose" aria-label="Slide 20 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Revenue Growth<br>Opportunities</h2>
-    <p class="reveal" data-d="3">Muevelo West&rsquo;s base projections intentionally assume a <span class="hl">conservative operating model</span> focused on core weekend traffic and beverage sales. However, nightlife venues often grow revenue significantly through <span class="hl">special programming, branded events, and community engagement</span>. These initiatives can increase guest counts, average spend per visitor, and overall brand equity.</p>
-    <p class="reveal" data-d="4"><span class="hl">Theme Nights</span> (Latin Night, Throwback Nights, Pride Nights, etc.) that drive repeat attendance and niche audiences.</p>
-    <p class="reveal" data-d="4"><span class="hl">Guest DJs, entertainers, or drag performers</span> that attract new crowds and allow <span class="hl">ticketed or premium cover pricing</span>.</p>
-    <p class="reveal" data-d="5"><span class="hl">Influencer or celebrity host nights</span> that create social buzz and increase organic marketing reach.</p>
-    <p class="reveal" data-d="5"><span class="hl">Corporate events, birthday celebrations, and community gatherings</span> that can be booked during off‑hours or early evenings.</p>
-    <p class="reveal" data-d="6"><span class="hl">Sunday Funday concepts</span> such as Beer Bust or Tardeada-style afternoon parties that can expand operating hours and daytime revenue.</p>
-    <p class="reveal" data-d="6"><span class="hl">Brand sponsorships and beverage promotions</span> that can generate additional marketing support and revenue partnerships.</p>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">20 / 25</div>
-</section>
-
-<!-- ===== SLIDE 20 — Professional Services & Revenue Efficiency ===== -->
-<section class="slide" id="slide-21" data-arch="table" aria-label="Slide 21 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Professional Services &amp; Revenue&nbsp;Efficiency</h2>
-    <p class="reveal" data-d="3">Professional services such as accounting, legal guidance, HR support, and regulatory compliance are modeled as <span class="hl">variable operating expenses</span>. These services may scale depending on operational complexity, growth initiatives, and compliance needs.</p>
-    <p class="reveal" data-d="4">Using the average revenue scenario (<span class="hl">~$97,500 per month / ~$1.17M annually</span>) and the venue size of approximately <span class="hl">2,400 square feet</span>, estimated revenue productivity equates to <span class="hl">~$487 per square foot annually</span>.</p>
-    <div class="reveal tbl-wrap" data-d="5">
-    <table class="tbl">
-      <thead><tr><th>Metric</th><th>Estimate</th></tr></thead>
-      <tbody>
-        <tr><td>Average Monthly Revenue (Mid Scenario)</td><td>~$97,500</td></tr>
-        <tr><td>Estimated Annual Revenue</td><td>~$1,170,000</td></tr>
-        <tr><td>Venue Size</td><td>~2,400 sq ft</td></tr>
-        <tr><td>Estimated Revenue per Square Foot</td><td>~$487 per sq ft annually</td></tr>
-      </tbody>
-    </table>
-    </div>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">21 / 25</div>
-</section>
-
-<!-- ===== SLIDE 21 — Operating Model & Assumptions ===== -->
-<section class="slide" id="slide-22" data-arch="bullets" aria-label="Slide 22 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Operating Model &amp;<br>Assumptions</h2>
-    <ul class="spec-list reveal" data-d="3">
-      <li>Operating nights: Friday – Sunday | Hours: 9PM – 2AM</li>
-      <li>Attendance: Friday ~150 guests | Saturday ~180 guests | Sunday lower ramp</li>
-      <li>Average guest spend: ≈ $50 per&nbsp;guest</li>
-      <li>Alcohol COGS: ~25% of beverage sales</li>
-      <li>Rent: ~$3,600/month (NNN)</li>
-      <li>Utilities: ~$1,200/month</li>
-      <li>Insurance: ~$2,000/month</li>
-      <li>Marketing: ~$5,000/month</li>
-      <li>Professional services: $1K–$3K/month</li>
-    </ul>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">22 / 25</div>
-</section>
-
-<!-- ===== SLIDE 22 — Labor Model & Staffing Structure ===== -->
-<section class="slide" id="slide-23" data-arch="mixed" aria-label="Slide 23 of 25">
-  <div class="slide__inner">
-    <img class="slide__logo reveal" src="assets/muevelo-logo.png" alt="Muevelo @ Chico" loading="lazy">
-    <h2 class="slide__title reveal" data-d="2">Labor Model &amp;<br>Staffing Structure</h2>
-    <p class="reveal" data-d="3">Staffing is modeled on a <span class="hl">shift-based nightlife schedule</span> (~6 hours per night, Friday–Sunday). Labor scales with attendance and event programming and is expected to range approximately <span class="hl">between 15%–22% of revenue</span>.</p>
-    <ul class="staff-grid reveal" data-d="4">
-      <li class="staff-card staff-card--feature">
-        <span class="staff-tag">Dual Role</span>
-        <span class="staff-role">Henry Trujillo</span>
-        <span class="staff-meta">GM 50% &middot; Marketing 50% &middot; $75K/yr total</span>
-        <span class="staff-amount">$6,250<small>/mo</small></span>
-        <span class="staff-split">$3,125 GM &nbsp;+&nbsp; $3,125 Marketing</span>
-      </li>
-      <li class="staff-card">
-        <span class="staff-role">Bartenders <em>&times;3</em></span>
-        <span class="staff-amount">$5,600<small>/mo</small></span>
-      </li>
-      <li class="staff-card">
-        <span class="staff-role">Bar-backs <em>&times;2</em></span>
-        <span class="staff-amount">$3,200<small>/mo</small></span>
-      </li>
-      <li class="staff-card">
-        <span class="staff-role">Security</span>
-        <span class="staff-amount">$1,600<small>/mo</small></span>
-      </li>
-      <li class="staff-card staff-card--total">
-        <span class="staff-tag">Total Payroll</span>
-        <span class="staff-amount">&asymp; $17K<small>/mo</small></span>
-      </li>
-    </ul>
-    <p class="reveal" data-d="5">Henry’s dual role spans <span class="hl">General Manager (50%)</span> and <span class="hl">Marketing Director (50%)</span>. GM responsibilities include: staff scheduling, inventory and vendor management, bar program oversight, compliance oversight, and day-to-day operational leadership. Marketing responsibilities include: brand strategy, social media, event promotion, influencer outreach, and <span class="hl">audience growth for the Muevelo brand transition</span>.</p>
-  </div>
-  <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">23 / 25</div>
+  <div class="slide__num">10 / 12</div>
 </section>
 
 <!-- ===== SLIDE 23 — Important Disclosure ===== -->
-<section class="slide" id="slide-24" data-arch="closer" aria-label="Slide 24 of 25">
+<section class="slide" id="slide-24" data-arch="closer" aria-label="Slide 11 of 12">
   <div class="slide__inner">
     <h2 class="slide__title reveal" data-d="2">Important<br>Disclosure</h2>
     <p class="reveal" data-d="3">By reviewing this investment opportunity, each participant acknowledges that they are either an <span class="hl">accredited investor</span> as defined under applicable securities laws or are otherwise <span class="hl">financially sophisticated and capable of evaluating the merits and risks</span> of the opportunity.</p>
@@ -4504,11 +6457,11 @@ body, p, li, td, th, blockquote, figcaption, span,
     <p class="reveal" data-d="5">All information presented is <span class="hl">for discussion purposes only</span> and does not constitute an offer to sell or a solicitation of an offer to buy securities. Any investment will be <span class="hl">subject to formal agreements and operating documents</span>.</p>
   </div>
   <div class="slide__pc">Privileged &amp; Confidential</div>
-  <div class="slide__num">24 / 25</div>
+  <div class="slide__num">11 / 12</div>
 </section>
 
 <!-- ===== SLIDE 24 — Thank You ===== -->
-<section class="slide" id="slide-25" data-arch="thanks" aria-label="Slide 25 of 25">
+<section class="slide" id="slide-25" data-arch="thanks" aria-label="Slide 12 of 12">
   <div class="thanks-horizon" aria-hidden="true"></div>
   <div class="thanks-grid" aria-hidden="true"></div>
   <div class="thanks-flash" aria-hidden="true"></div>
@@ -4520,6 +6473,7 @@ body, p, li, td, th, blockquote, figcaption, span,
 </section>
 
 </main>
+
 
 <script>
 /* Viewport mode flag only — fluid CSS handles all sizing 768px+, mobile CSS handles <768px.
@@ -4602,50 +6556,81 @@ body, p, li, td, th, blockquote, figcaption, span,
   }
 
   // Per-slide hues — must mirror the CSS rules
+  // Slide hues — 12 slides total (Hero → Disclaimer → Hub → 7 chapters → Disclosure → Thanks)
+  // Each chapter inherits its hub circle's hue for visual identity.
+  // Linear rainbow progression — red (slide 1) through violet (slide 12).
   var slideHues = {
-    1: null, 2: 0, 3: 0, 4: 13, 5: 26, 6: 39, 7: 51, 8: 64, 9: 77, 10: 90,
-    11: 103, 12: 116, 13: 129, 14: 141, 15: 154, 16: 167, 17: 180,
-    18: 193, 19: 206, 20: 219, 21: 231, 22: 244, 23: 257, 24: 270, 25: null
+    1: 0,                // Hero — red
+    2: 25,               // Investor Participation Disclaimer — red-orange
+    3: 50,               // THE HUB — amber
+    4: 75,               // The Pitch — yellow-green
+    5: 105,              // Why This Works — green
+    6: 135,              // The Deal — teal-green
+    7: 165,              // Where The Money Goes — teal
+    8: 195,              // The Returns — cyan-blue
+    9: 225,              // The Upside — blue
+    10: 250,             // Fine Print & Next Steps — indigo
+    11: 270,             // Important Disclosure — purple
+    12: 290              // Thank You — violet
   };
+
+  // Slides that hide the decorative motion lines (hero + thanks — clean visual frame).
+  var hideLinesOn = { 1: true, 12: true };
 
   function applyHue(slideNumber) {
     var hue = slideHues[slideNumber];
-    if (hue === null || hue === undefined) {
-      document.body.classList.add('hide-lines');
-    } else {
-      document.body.classList.remove('hide-lines');
+    if (hue !== null && hue !== undefined) {
       document.body.style.setProperty('--current-hue', hue);
     }
+    if (hideLinesOn[slideNumber]) document.body.classList.add('hide-lines');
+    else document.body.classList.remove('hide-lines');
   }
 
-  // Body-level active title — sets text from current slide's .slide__title
+  // Body-level active title — sets text from current slide's .slide__title.
+  // Split into two phases so transitions can hide the title text WHILE the trapezoid
+  // is morphing to its new width: prepareTitle (text + trap width) then showTitle (fade in).
   var activeTitle = document.querySelector('.active-title');
-  function applyTitle(slideNumber) {
+  function prepareTitle(slideNumber) {
     var slide = slides[slideNumber - 1];
     if (!slide) return;
     var title = slide.querySelector('.slide__title');
     var arch = slide.getAttribute('data-arch');
     if (title && arch !== 'hero' && arch !== 'thanks') {
       activeTitle.innerHTML = title.innerHTML;
-      activeTitle.classList.add('visible');
-      // Measure rendered title text and size the trapezoid to match
+      // Measure rendered title text and size the trapezoid to match.
       // Polygon bottom = 56% of trap width (22%..78%). For title to sit comfortably
       // inside that bottom edge with margin, trap-width = (text + side-margin*2) / 0.56
       var range = document.createRange();
       range.selectNodeContents(activeTitle);
       var textWidth = range.getBoundingClientRect().width;
-      var sideMargin = 48; // px on each side of the title text inside the bottom of the trap
+      var sideMargin = 48;
       var trapWidth = Math.ceil((textWidth + sideMargin * 2) / 0.56);
       document.body.style.setProperty('--trap-width', trapWidth + 'px');
     } else {
-      activeTitle.classList.remove('visible');
       document.body.style.removeProperty('--trap-width');
     }
+  }
+  function showTitle(slideNumber) {
+    var slide = slides[slideNumber - 1];
+    if (!slide) return;
+    var arch = slide.getAttribute('data-arch');
+    if (arch === 'hero' || arch === 'thanks') {
+      activeTitle.classList.remove('visible');
+    } else {
+      activeTitle.classList.add('visible');
+    }
+  }
+  // Initial render (page load) — set everything at once.
+  function applyTitle(slideNumber) {
+    prepareTitle(slideNumber);
+    showTitle(slideNumber);
   }
 
   function applyCurveVariant(slideNumber) {
     document.body.className = document.body.className.replace(/curves-variant-\d+/g, '').trim();
-    if (slideNumber >= 2 && slideNumber <= 24) {
+    // Curve background on middle slides (Disclaimer + chapters + Disclosure).
+    // Skip Hero (1), Hub (3), Thanks (12).
+    if ((slideNumber === 2) || (slideNumber >= 4 && slideNumber <= 11)) {
       document.body.classList.add('curves-variant-6');
     }
   }
@@ -4655,23 +6640,30 @@ body, p, li, td, th, blockquote, figcaption, span,
     if (i >= total) i = total - 1;
     if (i === current) return;
 
-    // 1. Fade out current slide + active title
+    // t=0: Begin fade-out — slide opacity (0.7s) + title opacity (0.42s, see CSS)
     slides[current].classList.remove('active');
     activeTitle.classList.remove('visible');
 
-    // 2. Mid-transition (300ms in): swap slide content (hue, variant, reveal, active class)
+    // t=225: Title fully invisible. Swap title text + start trap morph (0.45s).
+    //        Hue/color swap fires here too so the trapezoid recolors WHILE invisible —
+    //        no visible color lag behind the slide fade-in.
+    setTimeout(function() {
+      applyHue(i + 1);
+      prepareTitle(i + 1);
+    }, 225);
+
+    // t=350: Swap slide content (mid-crossfade for slides)
     setTimeout(function() {
       current = i;
-      applyHue(i + 1);
       applyCurveVariant(i + 1);
       revealSlide(i);
       slides[i].classList.add('active');
       updateCounter();
-    }, 300);
+    }, 350);
 
-    // 3. After title fully fades out (~700ms): swap text + fade in
+    // t=700: Trap done morphing (225 + ~450ms + small buffer). Fade title in (0.21s).
     setTimeout(function() {
-      applyTitle(i + 1);
+      showTitle(i + 1);
     }, 700);
   }
 
@@ -4734,15 +6726,38 @@ body, p, li, td, th, blockquote, figcaption, span,
     });
   }
 
-  // URL hash handler — #slide-N or #N jumps directly
+  // URL hash handler — #slide-N (number) OR #slide-NAME (e.g., slide-pitch)
   function handleHash() {
-    var m = window.location.hash.match(/(?:slide-)?(\d+)/);
-    if (m) {
-      var n = parseInt(m[1]);
+    var h = window.location.hash.replace(/^#/, '');
+    if (!h) return;
+    // Try named slide ID first (covers slide-24, slide-25, slide-pitch, etc.)
+    var el = document.getElementById(h);
+    if (el && el.classList.contains('slide')) {
+      for (var i = 0; i < slides.length; i++) {
+        if (slides[i] === el) { goTo(i); return; }
+      }
+    }
+    // Fall back to pure numeric (1-based)
+    var numMatch = h.match(/^(\d+)$/);
+    if (numMatch) {
+      var n = parseInt(numMatch[1]);
       if (n >= 1 && n <= total) goTo(n - 1);
     }
   }
   window.addEventListener('hashchange', handleHash);
+
+  // Expose goTo for hub satellite/center handlers (which live in a different IIFE)
+  window._deckGoTo = function(slideIdOrIdx) {
+    if (typeof slideIdOrIdx === 'number') {
+      goTo(slideIdOrIdx);
+      return;
+    }
+    var el = document.getElementById(slideIdOrIdx);
+    if (!el) return;
+    for (var i = 0; i < slides.length; i++) {
+      if (slides[i] === el) { goTo(i); return; }
+    }
+  };
 
   // Patch updateCounter to also highlight the jump button
   var _origUpdateCounter = updateCounter;
@@ -4760,6 +6775,246 @@ body, p, li, td, th, blockquote, figcaption, span,
   updateCounter();
   // If user loaded with #slide-N in URL, jump to it
   setTimeout(handleHash, 50);
+})();
+
+/* ============================================================
+   HUB MODALS — open on satellite click, close on X / ESC / backdrop
+   ============================================================ */
+(function() {
+  // All hub buttons: center + 6 satellites
+  var triggers = document.querySelectorAll('.hub-satellite[data-modal], .hub-center[data-modal]');
+
+  // Mini-slide containers: chapter slides + (legacy modals, if any remain)
+  var chapters = document.querySelectorAll('.slide[data-arch="chapter"], .hub-modal');
+
+  // Set up mini-slide nav per chapter slide
+  chapters.forEach(function(modal) {
+    var slides = modal.querySelectorAll('.modal-slide');
+    if (slides.length === 0) return;
+    var dots    = modal.querySelectorAll('.modal-slide-nav__dot');
+    var prevBtn = modal.querySelector('.modal-slide-nav__prev');
+    var nextBtn = modal.querySelector('.modal-slide-nav__next');
+    var titleEl = modal.querySelector('.chapter__title, .hub-modal__title');
+    var idx = 0;
+
+    function show(i) {
+      if (i < 0) i = 0;
+      if (i >= slides.length) i = slides.length - 1;
+      slides.forEach(function(s, n) {
+        if (n === i) s.setAttribute('data-active', 'true');
+        else s.removeAttribute('data-active');
+      });
+      dots.forEach(function(d, n) {
+        if (n === i) d.setAttribute('data-active', 'true');
+        else d.removeAttribute('data-active');
+      });
+      if (prevBtn) prevBtn.disabled = (i === 0);
+      if (nextBtn) nextBtn.disabled = (i === slides.length - 1);
+      // Header title becomes the active mini-slide's data-title
+      var title = slides[i].getAttribute('data-title');
+      if (titleEl && title) titleEl.textContent = title;
+      // Push that title into the deck's body-level active-title (the trapezoid at top).
+      // Sequence: fade out → swap text + morph trap → fade in. Mirrors the deck-level
+      // transition so mini-slide title changes never show text mid-morph.
+      if (title && modal.matches('.slide[data-arch="chapter"]') && modal.classList.contains('active')) {
+        var bodyActiveTitle = document.querySelector('.active-title');
+        if (bodyActiveTitle) {
+          // Phase 1: hide the current title (0.21s fade-out via CSS)
+          bodyActiveTitle.classList.remove('visible');
+          // Phase 2 (t=225ms): swap text + trigger trap morph while title is invisible
+          setTimeout(function() {
+            bodyActiveTitle.innerHTML = title;
+            var range = document.createRange();
+            range.selectNodeContents(bodyActiveTitle);
+            var textWidth = range.getBoundingClientRect().width;
+            var sideMargin = 48;
+            var trapWidth = Math.ceil((textWidth + sideMargin * 2) / 0.56);
+            document.body.style.setProperty('--trap-width', trapWidth + 'px');
+          }, 225);
+          // Phase 3 (t=700ms): trap done morphing → fade title back in
+          setTimeout(function() {
+            if (modal.classList.contains('active')) {
+              bodyActiveTitle.classList.add('visible');
+            }
+          }, 700);
+        }
+      }
+      idx = i;
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function() { show(idx - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function() { show(idx + 1); });
+    dots.forEach(function(d, n) {
+      d.addEventListener('click', function() { show(n); });
+    });
+
+    // Expose reset on the modal element so openHubModal can call it
+    modal._showMiniSlide = show;
+
+    // Init
+    show(0);
+  });
+
+  /* Arrow keys on a chapter slide advance mini-slides FIRST. If at last/first mini-slide,
+     pressing arrow again falls through to the deck (handled in the deck's own keydown). */
+  document.addEventListener('keydown', function(e) {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    var active = document.querySelector('.slide.active[data-arch="chapter"]');
+    if (!active || typeof active._showMiniSlide !== 'function') return;
+    var dotsList = active.querySelectorAll('.modal-slide-nav__dot');
+    var activeIdx = -1;
+    dotsList.forEach(function(d, n) { if (d.getAttribute('data-active') === 'true') activeIdx = n; });
+    if (e.key === 'ArrowRight' && activeIdx < dotsList.length - 1) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      active._showMiniSlide(activeIdx + 1);
+    } else if (e.key === 'ArrowLeft' && activeIdx > 0) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      active._showMiniSlide(activeIdx - 1);
+    }
+    // else: fall through to deck handler (advances to next/prev deck slide)
+  }, true); /* capture phase so it fires BEFORE the deck's bubble-phase handler */
+
+  function closeHubModal() {
+    if (!openModal) return;
+    var modal = openModal;
+    modal.removeAttribute('data-open');
+    setTimeout(function() {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    }, 420);
+    openModal = null;
+  }
+
+  // Cache the SVG web for hover-driven line-glow
+  var hubWeb = document.querySelector('.hub-web');
+
+  triggers.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      // Hub circle clicked → jump to that chapter slide
+      var key = btn.getAttribute('data-modal');
+      if (window._deckGoTo) window._deckGoTo('slide-' + key);
+    });
+    // Hover: light up connected lines in the hub's color
+    btn.addEventListener('mouseenter', function() {
+      if (hubWeb) hubWeb.setAttribute('data-hover', btn.getAttribute('data-modal'));
+    });
+    btn.addEventListener('mouseleave', function() {
+      if (hubWeb) hubWeb.removeAttribute('data-hover');
+    });
+    // Touch support: same hover semantics on focus
+    btn.addEventListener('focus', function() {
+      if (hubWeb) hubWeb.setAttribute('data-hover', btn.getAttribute('data-modal'));
+    });
+    btn.addEventListener('blur', function() {
+      if (hubWeb) hubWeb.removeAttribute('data-hover');
+    });
+  });
+
+  /* Modal close handlers removed — modals were converted into chapter slides.
+     Mini-slide nav inside chapter slides is handled by the dots/prev-next buttons + arrow keys above. */
+
+  /* Modal table — detect horizontal overflow + scroll position, toggle data attrs
+     so the right-edge fade gradient shows AND inject a "Swipe to see more" caption
+     directly below the table that disappears as the user reaches the end. */
+  function updateTableWrap(wrap) {
+    var scrollable = wrap.scrollWidth - wrap.clientWidth > 4;
+    var atEnd = scrollable && (wrap.scrollLeft + wrap.clientWidth >= wrap.scrollWidth - 4);
+    wrap.setAttribute('data-scrollable', scrollable ? 'true' : 'false');
+    wrap.setAttribute('data-end', atEnd ? 'true' : 'false');
+    /* Ensure hint sibling exists + reflect state */
+    var hint = wrap.nextElementSibling;
+    if (!hint || !hint.classList.contains('modal-table-hint')) {
+      hint = document.createElement('div');
+      hint.className = 'modal-table-hint';
+      hint.textContent = 'Swipe to see more →';
+      wrap.parentNode.insertBefore(hint, wrap.nextSibling);
+    }
+    hint.setAttribute('data-show', (scrollable && !atEnd) ? 'true' : 'false');
+  }
+  document.querySelectorAll('.modal-table-wrap').forEach(function(wrap) {
+    updateTableWrap(wrap);
+    wrap.addEventListener('scroll', function() { updateTableWrap(wrap); }, { passive: true });
+  });
+  window.addEventListener('resize', function() {
+    document.querySelectorAll('.modal-table-wrap').forEach(updateTableWrap);
+  });
+  /* Re-check overflow whenever a chapter slide becomes active.
+     The active slide changes via deck nav, hub jump, or swipe — observe via MutationObserver. */
+  var deckObserver = new MutationObserver(function() {
+    var active = document.querySelector('.slide.active[data-arch="chapter"]');
+    if (active) {
+      setTimeout(function() {
+        active.querySelectorAll('.modal-table-wrap').forEach(updateTableWrap);
+      }, 50);
+    }
+  });
+  document.querySelectorAll('.slide').forEach(function(s) {
+    deckObserver.observe(s, { attributes: true, attributeFilter: ['class'] });
+  });
+})();
+
+/* ============================================================
+   TOUCH SWIPE — slide-to-slide navigation on mobile / tablet
+   - On a chapter slide with mini-slides: swipe = next/prev MINI-slide (until end → deck slide)
+   - On other slides: swipe = next/prev DECK slide
+   - Started inside a .modal-table-wrap: native horizontal scroll, NO slide change
+   - Vertical swipes (dy >> dx) and small taps are ignored
+   ============================================================ */
+(function() {
+  var startX = null;
+  var startY = null;
+  var startedInScrollableTable = false;
+  var SWIPE_THRESHOLD_PX = 56;     // multiple of 7 — must move > 56px horizontally
+  var DIAGONAL_TOLERANCE = 0.7;    // dy must be < dx * tolerance to count as horizontal
+
+  document.addEventListener('touchstart', function(e) {
+    if (!e.touches.length) return;
+    var t = e.touches[0];
+    startX = t.clientX;
+    startY = t.clientY;
+    var tableWrap = e.target.closest && e.target.closest('.modal-table-wrap');
+    startedInScrollableTable = !!(tableWrap && tableWrap.getAttribute('data-scrollable') === 'true');
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    if (startX === null) return;
+    var wasInTable = startedInScrollableTable;
+    var sx = startX, sy = startY;
+    startX = null; startY = null; startedInScrollableTable = false;
+    if (wasInTable) return; // let native horizontal scroll handle it
+
+    if (!e.changedTouches.length) return;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - sx;
+    var dy = t.clientY - sy;
+    if (Math.abs(dx) < SWIPE_THRESHOLD_PX) return;
+    if (Math.abs(dy) > Math.abs(dx) * DIAGONAL_TOLERANCE) return;
+
+    var goNext = dx < 0; // swipe LEFT → next ; swipe RIGHT → prev
+
+    // Active chapter slide? Try mini-slides first; fall through to deck if at end/start.
+    var activeChapter = document.querySelector('.slide.active[data-arch="chapter"]');
+    if (activeChapter) {
+      var dots = activeChapter.querySelectorAll('.modal-slide-nav__dot');
+      if (dots.length) {
+        var activeIdx = -1;
+        dots.forEach(function(d, i) { if (d.getAttribute('data-active') === 'true') activeIdx = i; });
+        var target = goNext ? activeIdx + 1 : activeIdx - 1;
+        if (target >= 0 && target < dots.length) {
+          dots[target].click();
+          return;
+        }
+        // At the boundary — fall through to deck nav so user keeps moving forward/back
+      }
+    }
+
+    // Navigate main deck slides via existing prev/next buttons
+    var navBtn = goNext ? document.getElementById('next') : document.getElementById('prev');
+    if (navBtn && !navBtn.disabled) navBtn.click();
+  }, { passive: true });
 })();
 </script>
 </body>
