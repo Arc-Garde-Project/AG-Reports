@@ -3544,38 +3544,61 @@ body, p, li, td, th, blockquote, figcaption, span,
 
   .deck {
     position: relative;
-    height: auto;
+    height: 100vh;
+    height: 100svh;
     width: 100vw;
     display: block;
     z-index: 5;
   }
+  /* Mobile slides stack on top of each other (position: absolute) so we can crossfade
+     between them — same premium feel as desktop. Each slide stays in flex-column layout
+     always; .active toggles only opacity + transform + visibility. */
   .slide {
-    position: relative;
+    position: absolute !important;
+    inset: 0;
     width: 100vw;
-    height: 100vh;
-    height: 100svh;
+    height: 100%;
     padding: 0;
     grid-area: auto;
-    opacity: 1;
-    pointer-events: auto;
-    transition: none;
-    z-index: auto;
-    display: none;
-    overflow: hidden;
-  }
-  .slide.active {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     justify-content: flex-start;
-    opacity: 1;
-    animation: mobileSlideEnter 0.42s var(--ease-out);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(1.012) translateZ(0);
+    transform-origin: center center;
+    transition:
+      opacity 0.7s var(--ease-out),
+      transform 0.7s var(--ease-out),
+      visibility 0s linear 0.7s;
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+    z-index: 1;
+    overflow: hidden;
+    animation: none;
   }
-  @keyframes mobileSlideEnter {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
+  .slide.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: scale(1) translateZ(0);
+    z-index: 5;
+    transition:
+      opacity 0.7s var(--ease-out),
+      transform 0.9s var(--ease-out),
+      visibility 0s linear;
+    animation: none;
   }
   @media (prefers-reduced-motion: reduce) {
-    .slide.active { animation: none; }
+    .slide {
+      transform: none;
+      transition: opacity 0.3s linear, visibility 0s linear 0.3s;
+    }
+    .slide.active {
+      transform: none;
+      transition: opacity 0.3s linear, visibility 0s linear;
+    }
   }
   /* Slide__inner becomes the scroll container — fills the space between trap and nav.
      justify-content: safe center vertically centers when content fits the scroll viewport;
