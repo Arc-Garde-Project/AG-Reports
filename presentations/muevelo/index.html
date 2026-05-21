@@ -3517,8 +3517,8 @@ body, p, li, td, th, blockquote, figcaption, span,
   .slide {
     position: relative;
     width: 100vw;
-    height: auto;
-    min-height: 100svh;
+    height: 100vh;
+    height: 100svh;
     padding: 0;
     grid-area: auto;
     opacity: 1;
@@ -3526,12 +3526,27 @@ body, p, li, td, th, blockquote, figcaption, span,
     transition: none;
     z-index: auto;
     display: none;
+    overflow: hidden;
   }
   .slide.active {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     opacity: 1;
+  }
+  /* Slide__inner becomes the scroll container — fills the space between trap and nav.
+     justify-content: flex-start is critical: the desktop rule centers content vertically,
+     but on a scroll container that overflows the wrap above the viewport. */
+  .slide:not([data-arch="hero"]):not([data-arch="thanks"]):not([data-arch="hub"]) .slide__inner {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    padding-top: clamp(94px, 15vh, 132px) !important; /* clear trap */
+    padding-bottom: calc(72px + env(safe-area-inset-bottom)) !important; /* clear nav */
   }
 
   /* Trapezoid + active-title at top — full screen width on mobile (≤767px),
@@ -3601,10 +3616,11 @@ body, p, li, td, th, blockquote, figcaption, span,
   .content-wrap {
     width: calc(100vw - 20px) !important;
     max-width: 100% !important;
-    margin: clamp(108px, 16vh, 148px) auto 24px !important;
+    /* slide__inner handles trap/nav clearance via padding now — no margin needed */
+    margin: 0 auto !important;
     height: auto !important;
     min-height: 0 !important;
-    padding: 22px 16px !important;
+    padding: 16px !important;
     overflow: visible !important;
     border-radius: 14px !important;
     transform: none !important;
@@ -3634,21 +3650,22 @@ body, p, li, td, th, blockquote, figcaption, span,
   }
 
   /* Chapter slides on mobile:
-     Default modal-slide is position: absolute; inset: 0 — which collapses to height 0
-     when the parent .content-wrap is forced to height: auto on mobile. Fix: stack mini-slides
-     statically and display: none the inactive ones so the active one takes natural height. */
+     slide__inner handles trap/nav clearance + scrolling (rule above).
+     The content-wrap just hosts the active mini-slide at natural height. */
   .slide[data-arch="chapter"] .content-wrap {
     background: none !important;
     border: none !important;
     box-shadow: none !important;
     border-radius: 0 !important;
-    padding: 16px !important;
-    margin: clamp(132px, 17vh, 180px) auto calc(clamp(16px, 2vw, 28px) + 67px + env(safe-area-inset-bottom) + 8px) !important;
-    width: calc(100vw - 24px) !important;
+    padding: 8px 12px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
     height: auto !important;
     min-height: 0 !important;
     overflow: visible !important;
     align-items: stretch !important;
+    gap: 16px !important;
   }
   .slide[data-arch="chapter"] .modal-slide {
     position: static !important;
@@ -3661,9 +3678,12 @@ body, p, li, td, th, blockquote, figcaption, span,
     display: flex !important;
     opacity: 1 !important;
   }
-  /* The original modal-slide head (chapter__head) is hidden globally — title shows in trap.
-     But on mobile keep it hidden too. */
   .slide[data-arch="chapter"] .chapter__head { display: none !important; }
+  /* Mini-slide nav stays at the bottom of the scroll area, not stuck inside the prose */
+  .slide[data-arch="chapter"] .modal-slide-nav {
+    margin-top: 24px !important;
+    flex-shrink: 0;
+  }
 
   /* Slide-num corner pill */
   .slide__num {
