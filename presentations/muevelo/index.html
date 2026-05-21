@@ -3735,7 +3735,9 @@ body, p, li, td, th, blockquote, figcaption, span,
 
   /* Chapter slides on mobile:
      slide__inner handles trap/nav clearance + scrolling (rule above).
-     The content-wrap just hosts the active mini-slide at natural height. */
+     content-wrap + active modal-slide both stretch to min-height: 100% so a sticky
+     mini-slide nav inside reaches the bottom of the scroll viewport (otherwise
+     sticky would float mid-page when content is shorter than the viewport). */
   .slide[data-arch="chapter"] .content-wrap {
     background: none !important;
     border: none !important;
@@ -3746,7 +3748,7 @@ body, p, li, td, th, blockquote, figcaption, span,
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
-    min-height: 0 !important;
+    min-height: 100% !important;
     overflow: visible !important;
     align-items: stretch !important;
     gap: 16px !important;
@@ -3756,6 +3758,7 @@ body, p, li, td, th, blockquote, figcaption, span,
     inset: auto !important;
     display: none !important;
     height: auto !important;
+    min-height: 100% !important;
     overflow: visible !important;
   }
   .slide[data-arch="chapter"] .modal-slide[data-active="true"] {
@@ -3763,10 +3766,44 @@ body, p, li, td, th, blockquote, figcaption, span,
     opacity: 1 !important;
   }
   .slide[data-arch="chapter"] .chapter__head { display: none !important; }
-  /* Mini-slide nav stays at the bottom of the scroll area, not stuck inside the prose */
+  /* Mini-slide nav stays pinned to the bottom of the visible scroll area on mobile —
+     same UX as the fixed main deck nav so users see the dots without scrolling first. */
   .slide[data-arch="chapter"] .modal-slide-nav {
-    margin-top: 24px !important;
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 10;
+    margin: 16px -16px 0 !important;
+    padding: 10px 16px !important;
     flex-shrink: 0;
+    background: rgba(8, 6, 18, 0.92);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid hsla(var(--sat-hue, 50), 70%, 60%, 0.45);
+    box-shadow: 0 -8px 18px rgba(0, 0, 0, 0.35);
+  }
+  /* Boost the prev/next button visibility on mobile so the sub-nav reads at a glance */
+  .slide[data-arch="chapter"] .modal-slide-nav__prev,
+  .slide[data-arch="chapter"] .modal-slide-nav__next {
+    width: 38px !important;
+    height: 38px !important;
+    background: hsla(var(--sat-hue, 50), 70%, 35%, 0.25) !important;
+    border-color: hsla(var(--sat-hue, 50), 80%, 60%, 0.75) !important;
+    color: hsl(var(--sat-hue, 50), 90%, 78%) !important;
+  }
+  .slide[data-arch="chapter"] .modal-slide-nav__prev[disabled],
+  .slide[data-arch="chapter"] .modal-slide-nav__next[disabled] {
+    opacity: 0.35 !important;
+  }
+  .slide[data-arch="chapter"] .modal-slide-nav__dot {
+    width: 8px !important;
+    height: 8px !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+  }
+  .slide[data-arch="chapter"] .modal-slide-nav__dot[data-active="true"] {
+    width: 12px !important;
+    height: 12px !important;
+    background: hsl(var(--sat-hue, 50), 90%, 65%) !important;
+    box-shadow: 0 0 12px hsla(var(--sat-hue, 50), 90%, 60%, 0.65);
   }
 
   /* Slide-num corner pill */
