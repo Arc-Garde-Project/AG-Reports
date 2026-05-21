@@ -387,7 +387,7 @@ body::after {
   top: 0;
   left: 0;
   right: 0;
-  height: clamp(132px, 17vh, 180px);
+  height: clamp(98px, 12vh, 140px);
   z-index: 50;
   margin: 0;
   display: flex;
@@ -435,7 +435,7 @@ body::after {
   left: 50%;
   transform: translateX(-50%);
   width: clamp(460px, var(--trap-width, 50vw), 95vw);
-  height: clamp(132px, 17vh, 180px);
+  height: clamp(98px, 12vh, 140px);
   z-index: 49;
   pointer-events: none;
   opacity: 0;
@@ -664,7 +664,7 @@ body.hide-lines .curve-svg { opacity: 0; }
   /* Top buffer holds the trapezoid+title (now 132-180px tall to fit 2-line titles);
      bottom buffer holds the nav bar. Both scale with viewport height. */
   padding:
-    clamp(160px, 20vh, 210px)
+    clamp(120px, 15vh, 160px)
     clamp(var(--space-md), 2vw, var(--space-lg))
     calc(clamp(98px, 11vh, 130px) + env(safe-area-inset-bottom));
   display: flex;
@@ -3589,7 +3589,7 @@ body, p, li, td, th, blockquote, figcaption, span,
     -webkit-overflow-scrolling: touch;
     justify-content: safe center !important;
     align-items: stretch !important;
-    padding-top: clamp(86px, 13vh, 118px) !important; /* clear trap */
+    padding-top: clamp(64px, 9.5vh, 88px) !important; /* clear trap */
     padding-bottom: calc(72px + env(safe-area-inset-bottom)) !important; /* clear nav */
     /* Slim, themed scrollbar — uses the slide's --sat-hue so it color-shifts per slide */
     scrollbar-width: thin;
@@ -3621,7 +3621,7 @@ body, p, li, td, th, blockquote, figcaption, span,
     transform: none !important;
     width: 100vw !important;
     max-width: 100vw !important;
-    height: clamp(86px, 13vh, 118px) !important;
+    height: clamp(64px, 9.5vh, 88px) !important;
     z-index: 49;
   }
   .active-title {
@@ -3630,7 +3630,7 @@ body, p, li, td, th, blockquote, figcaption, span,
     justify-content: center !important;
     position: fixed !important;
     top: 0 !important;
-    height: clamp(86px, 13vh, 118px) !important;
+    height: clamp(64px, 9.5vh, 88px) !important;
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
@@ -4034,7 +4034,7 @@ body, p, li, td, th, blockquote, figcaption, span,
      Bottom buffer = nav clearance (67px pill + 16-28px gap + safe area).
      With justify-content: center the stage centers between trap.bottom and nav.top. */
   padding:
-    clamp(132px, 17vh, 180px)
+    clamp(98px, 12vh, 140px)
     clamp(var(--space-md), 2vw, var(--space-lg))
     calc(clamp(16px, 2vw, 28px) + 67px + env(safe-area-inset-bottom));
   justify-content: center;
@@ -4056,7 +4056,7 @@ body, p, li, td, th, blockquote, figcaption, span,
   /* Top buffer clears the title-trap (same as default middle slides), nav clearance at bottom.
      justify-content: center vertically centers the content-wrap in the available space. */
   padding:
-    clamp(160px, 20vh, 210px)
+    clamp(120px, 15vh, 160px)
     clamp(var(--space-md), 2vw, var(--space-lg))
     calc(clamp(16px, 2vw, 28px) + 67px + env(safe-area-inset-bottom));
   justify-content: center;
@@ -4077,7 +4077,7 @@ body, p, li, td, th, blockquote, figcaption, span,
   align-items: stretch;
   justify-content: center;
   gap: clamp(12px, 1.6vmin, 18px);
-  height: calc(100vh - clamp(160px, 20vh, 210px) - clamp(16px, 2vw, 28px) - 67px - env(safe-area-inset-bottom));
+  height: calc(100vh - clamp(120px, 15vh, 160px) - clamp(16px, 2vw, 28px) - 67px - env(safe-area-inset-bottom));
   width: 100%;
   max-width: 1240px;
   margin: 0 auto;
@@ -4238,7 +4238,7 @@ body, p, li, td, th, blockquote, figcaption, span,
   /* Available vertical = 100vh - trap clearance - bottom nav clearance - small breathing buffer.
      Cap by 86vmin (1.4x the previous 62vmin cap) so the diagram fills more of the area. */
   --stage-size: min(
-    calc(100vh - clamp(132px, 17vh, 180px) - clamp(16px, 2vw, 28px) - 67px - env(safe-area-inset-bottom) - 16px),
+    calc(100vh - clamp(98px, 12vh, 140px) - clamp(16px, 2vw, 28px) - 67px - env(safe-area-inset-bottom) - 16px),
     86vmin
   );
   position: relative;
