@@ -3633,6 +3633,38 @@ body, p, li, td, th, blockquote, figcaption, span,
     justify-content: flex-start !important;
   }
 
+  /* Chapter slides on mobile:
+     Default modal-slide is position: absolute; inset: 0 — which collapses to height 0
+     when the parent .content-wrap is forced to height: auto on mobile. Fix: stack mini-slides
+     statically and display: none the inactive ones so the active one takes natural height. */
+  .slide[data-arch="chapter"] .content-wrap {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 16px !important;
+    margin: clamp(132px, 17vh, 180px) auto calc(clamp(16px, 2vw, 28px) + 67px + env(safe-area-inset-bottom) + 8px) !important;
+    width: calc(100vw - 24px) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    align-items: stretch !important;
+  }
+  .slide[data-arch="chapter"] .modal-slide {
+    position: static !important;
+    inset: auto !important;
+    display: none !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .slide[data-arch="chapter"] .modal-slide[data-active="true"] {
+    display: flex !important;
+    opacity: 1 !important;
+  }
+  /* The original modal-slide head (chapter__head) is hidden globally — title shows in trap.
+     But on mobile keep it hidden too. */
+  .slide[data-arch="chapter"] .chapter__head { display: none !important; }
+
   /* Slide-num corner pill */
   .slide__num {
     position: absolute;
