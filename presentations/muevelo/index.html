@@ -3543,24 +3543,50 @@ body, p, li, td, th, blockquote, figcaption, span,
     flex-direction: column;
     justify-content: flex-start;
     opacity: 1;
+    animation: mobileSlideEnter 0.42s var(--ease-out);
+  }
+  @keyframes mobileSlideEnter {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .slide.active { animation: none; }
   }
   /* Slide__inner becomes the scroll container — fills the space between trap and nav.
-     justify-content: flex-start is critical: the desktop rule centers content vertically,
-     but on a scroll container that overflows the wrap above the viewport. */
+     justify-content: safe center vertically centers when content fits the scroll viewport;
+     falls back to flex-start when content overflows so the top stays reachable. */
   .slide:not([data-arch="hero"]):not([data-arch="thanks"]):not([data-arch="hub"]) .slide__inner {
     flex: 1 1 auto !important;
     min-height: 0 !important;
     height: 100% !important;
     overflow-y: auto !important;
+    overflow-x: hidden !important;
     -webkit-overflow-scrolling: touch;
-    justify-content: flex-start !important;
+    justify-content: safe center !important;
     align-items: stretch !important;
-    padding-top: clamp(94px, 15vh, 132px) !important; /* clear trap */
+    padding-top: clamp(86px, 13vh, 118px) !important; /* clear trap */
     padding-bottom: calc(72px + env(safe-area-inset-bottom)) !important; /* clear nav */
+    /* Slim, themed scrollbar — uses the slide's --sat-hue so it color-shifts per slide */
+    scrollbar-width: thin;
+    scrollbar-color: hsla(var(--sat-hue, 50), 80%, 60%, 0.55) transparent;
+  }
+  .slide:not([data-arch="hero"]):not([data-arch="thanks"]):not([data-arch="hub"]) .slide__inner::-webkit-scrollbar {
+    width: 4px;
+  }
+  .slide:not([data-arch="hero"]):not([data-arch="thanks"]):not([data-arch="hub"]) .slide__inner::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .slide:not([data-arch="hero"]):not([data-arch="thanks"]):not([data-arch="hub"]) .slide__inner::-webkit-scrollbar-thumb {
+    background: hsla(var(--sat-hue, 50), 80%, 60%, 0.5);
+    border-radius: 4px;
+  }
+  .slide:not([data-arch="hero"]):not([data-arch="thanks"]):not([data-arch="hub"]) .slide__inner::-webkit-scrollbar-thumb:hover {
+    background: hsla(var(--sat-hue, 50), 80%, 65%, 0.75);
   }
 
-  /* Trapezoid + active-title at top — full screen width on mobile (≤767px),
-     2-line capable, bigger font close to outlines */
+  /* Trapezoid + active-title — recalibrated for mobile (≤767px).
+     Shorter trap (more proportional to viewport), softer font scaling so 2-line titles
+     comfortably clear the polygon's 56%-width bottom edge with margin. */
   .title-trap {
     display: block !important;
     position: fixed !important;
@@ -3570,7 +3596,7 @@ body, p, li, td, th, blockquote, figcaption, span,
     transform: none !important;
     width: 100vw !important;
     max-width: 100vw !important;
-    height: clamp(94px, 15vh, 132px) !important;
+    height: clamp(86px, 13vh, 118px) !important;
     z-index: 49;
   }
   .active-title {
@@ -3579,13 +3605,13 @@ body, p, li, td, th, blockquote, figcaption, span,
     justify-content: center !important;
     position: fixed !important;
     top: 0 !important;
-    height: clamp(94px, 15vh, 132px) !important;
+    height: clamp(86px, 13vh, 118px) !important;
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
-    padding: 6px clamp(36px, 10vw, 72px) !important;
-    font-size: clamp(1.4rem, 5.6vw, 2.1rem) !important;
-    line-height: 1.04 !important;
+    padding: 6px clamp(56px, 18vw, 96px) !important;
+    font-size: clamp(1.05rem, 4.6vw, 1.85rem) !important;
+    line-height: 1.08 !important;
     text-align: center;
     text-wrap: balance;
     transform: none !important;
