@@ -3551,8 +3551,9 @@ body, p, li, td, th, blockquote, figcaption, span,
     z-index: 5;
   }
   /* Mobile slides stack on top of each other (position: absolute) so we can crossfade
-     between them — same premium feel as desktop. Each slide stays in flex-column layout
-     always; .active toggles only opacity + transform + visibility. */
+     between them. NO transform on mobile — transformed elements become the containing
+     block for fixed-positioned children, which would push the docked mini-slide nav
+     off-screen. Pure opacity crossfade still feels premium without the scale settle. */
   .slide {
     position: absolute !important;
     inset: 0;
@@ -3566,14 +3567,11 @@ body, p, li, td, th, blockquote, figcaption, span,
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transform: scale(1.012) translateZ(0);
-    transform-origin: center center;
+    transform: none !important;
     transition:
       opacity 0.7s var(--ease-out),
-      transform 0.7s var(--ease-out),
       visibility 0s linear 0.7s;
-    will-change: opacity, transform;
-    backface-visibility: hidden;
+    will-change: opacity;
     z-index: 1;
     overflow: hidden;
     animation: none;
@@ -3582,21 +3580,16 @@ body, p, li, td, th, blockquote, figcaption, span,
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transform: scale(1) translateZ(0);
+    transform: none !important;
     z-index: 5;
     transition:
       opacity 0.7s var(--ease-out),
-      transform 0.9s var(--ease-out),
       visibility 0s linear;
     animation: none;
   }
   @media (prefers-reduced-motion: reduce) {
-    .slide {
-      transform: none;
-      transition: opacity 0.3s linear, visibility 0s linear 0.3s;
-    }
+    .slide,
     .slide.active {
-      transform: none;
       transition: opacity 0.3s linear, visibility 0s linear;
     }
   }
@@ -3735,9 +3728,9 @@ body, p, li, td, th, blockquote, figcaption, span,
 
   /* Chapter slides on mobile:
      slide__inner handles trap/nav clearance + scrolling (rule above).
-     content-wrap + active modal-slide both stretch to min-height: 100% so a sticky
-     mini-slide nav inside reaches the bottom of the scroll viewport (otherwise
-     sticky would float mid-page when content is shorter than the viewport). */
+     CRITICAL: will-change + transform on .content-wrap (desktop entrance effect)
+     creates a containing block for fixed-positioned descendants — the docked
+     mini-nav would lose viewport-anchoring. Override both to none on mobile. */
   .slide[data-arch="chapter"] .content-wrap {
     background: none !important;
     border: none !important;
@@ -3748,10 +3741,12 @@ body, p, li, td, th, blockquote, figcaption, span,
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
-    min-height: 100% !important;
+    min-height: 0 !important;
     overflow: visible !important;
     align-items: stretch !important;
     gap: 16px !important;
+    transform: none !important;
+    will-change: auto !important;
   }
   .slide[data-arch="chapter"] .modal-slide {
     position: static !important;
@@ -3766,44 +3761,62 @@ body, p, li, td, th, blockquote, figcaption, span,
     opacity: 1 !important;
   }
   .slide[data-arch="chapter"] .chapter__head { display: none !important; }
-  /* Mini-slide nav stays pinned to the bottom of the visible scroll area on mobile —
-     same UX as the fixed main deck nav so users see the dots without scrolling first. */
+  /* Mini-slide nav docks in the BOTTOM MENU AREA directly above the deck nav —
+     visually part of the navigation cluster, not floating inside the slide content.
+     position: fixed inside the .slide (which has transform on mobile) positions relative
+     to the slide box, but each slide is inset: 0 covering the viewport so the result
+     lands at the viewport bottom edge anyway. Inactive slides have opacity 0, so only
+     the active slide's mini-nav shows through. */
   .slide[data-arch="chapter"] .modal-slide-nav {
-    position: sticky !important;
-    bottom: 0 !important;
-    z-index: 10;
-    margin: 16px -16px 0 !important;
-    padding: 10px 16px !important;
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: calc(72px + env(safe-area-inset-bottom)) !important;
+    z-index: 48;  /* below deck nav (100) but above slide content */
+    margin: 0 !important;
+    padding: 8px 16px !important;
     flex-shrink: 0;
-    background: rgba(8, 6, 18, 0.92);
+    background: rgba(8, 6, 18, 0.94);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    border-top: 1px solid hsla(var(--sat-hue, 50), 70%, 60%, 0.45);
-    box-shadow: 0 -8px 18px rgba(0, 0, 0, 0.35);
+    border-top: 1px solid hsla(var(--sat-hue, 50), 70%, 60%, 0.4);
+    border-bottom: 1px solid hsla(var(--sat-hue, 50), 70%, 60%, 0.18);
+    gap: 14px !important;
   }
-  /* Boost the prev/next button visibility on mobile so the sub-nav reads at a glance */
+  /* Mobile mini-nav buttons + dots — sized to match the bottom menu visual weight */
   .slide[data-arch="chapter"] .modal-slide-nav__prev,
   .slide[data-arch="chapter"] .modal-slide-nav__next {
-    width: 38px !important;
-    height: 38px !important;
+    width: 34px !important;
+    height: 34px !important;
     background: hsla(var(--sat-hue, 50), 70%, 35%, 0.25) !important;
-    border-color: hsla(var(--sat-hue, 50), 80%, 60%, 0.75) !important;
+    border-color: hsla(var(--sat-hue, 50), 80%, 60%, 0.7) !important;
     color: hsl(var(--sat-hue, 50), 90%, 78%) !important;
+    font-size: 1.1rem !important;
   }
   .slide[data-arch="chapter"] .modal-slide-nav__prev[disabled],
   .slide[data-arch="chapter"] .modal-slide-nav__next[disabled] {
     opacity: 0.35 !important;
   }
   .slide[data-arch="chapter"] .modal-slide-nav__dot {
-    width: 8px !important;
-    height: 8px !important;
+    width: 7px !important;
+    height: 7px !important;
     background: rgba(255, 255, 255, 0.3) !important;
   }
   .slide[data-arch="chapter"] .modal-slide-nav__dot[data-active="true"] {
-    width: 12px !important;
-    height: 12px !important;
+    width: 10px !important;
+    height: 10px !important;
     background: hsl(var(--sat-hue, 50), 90%, 65%) !important;
-    box-shadow: 0 0 12px hsla(var(--sat-hue, 50), 90%, 60%, 0.65);
+    box-shadow: 0 0 10px hsla(var(--sat-hue, 50), 90%, 60%, 0.7);
+  }
+  /* The mini-nav is now fixed-positioned outside the scroll flow, so content-wrap +
+     modal-slide no longer need min-height: 100% to support sticky. Restore natural height
+     and pad the slide__inner so scrolling content doesn't hide behind the docked nav. */
+  .slide[data-arch="chapter"] .content-wrap,
+  .slide[data-arch="chapter"] .modal-slide {
+    min-height: 0 !important;
+  }
+  .slide[data-arch="chapter"] .slide__inner {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom) + 56px) !important;
   }
 
   /* Slide-num corner pill */
