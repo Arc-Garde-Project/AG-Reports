@@ -1948,7 +1948,10 @@ body.hide-lines .nav__pc { display: none !important; }
    ============================================================ */
 .slide[data-arch="thanks"] {
   justify-content: center; align-items: center;
-  padding: 0;
+  /* Bottom clearance so the centered thank-you stack lifts clear of the bottom-center
+     nav pill (offset clamp(16-28px) + ~65px pill height). The mobile block below sets
+     its own clearance for the full-width bottom bar. */
+  padding: 0 0 calc(clamp(16px, 2vw, 28px) + 90px);
   background: var(--bg-primary);
   overflow: hidden;
   position: relative;
@@ -4398,7 +4401,9 @@ body, p, li, td, th, blockquote, figcaption, span,
   /* Thank You (slide 25) */
   .slide[data-arch="thanks"] {
     min-height: 100svh;
-    padding: 24px 20px;
+    /* Extra bottom clearance so the centered thank-you stack lifts clear of the
+       full-width bottom nav bar (it was overlapping the subline/headline on phones). */
+    padding: 24px 20px calc(88px + env(safe-area-inset-bottom));
   }
   .slide[data-arch="thanks"] .slide__inner {
     gap: 18px;
