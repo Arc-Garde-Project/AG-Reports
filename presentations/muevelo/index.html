@@ -5224,11 +5224,12 @@ body, p, li, td, th, blockquote, figcaption, span,
    fill the band. Mobile keeps the deck's existing whole-slide scroll. */
 .modal-slide[data-title="Estimated Monthly Operating Expenses"] {
   justify-content: flex-start;
-  align-items: flex-start;
 }
-.modal-slide[data-title="Estimated Monthly Operating Expenses"] .modal-table-wrap {
-  margin-left: 0;
-  margin-right: auto;
+/* Left-align the cell TEXT (incl. the value column, which is right-aligned by default) —
+   the table block itself stays where it is. */
+.modal-slide[data-title="Estimated Monthly Operating Expenses"] .modal-table th,
+.modal-slide[data-title="Estimated Monthly Operating Expenses"] .modal-table td {
+  text-align: left !important;
 }
 @media (min-width: 770px) {
   .modal-slide[data-title="Estimated Monthly Operating Expenses"] .modal-table-wrap {
@@ -7126,7 +7127,7 @@ a:active,
 
         <!-- Mini-slide 3 — Long-Term Enterprise Value Growth (verbatim from slide-19) -->
         <article class="modal-slide" data-title="Long-Term Enterprise Value Growth">
-          <p>Hospitality venues are often valued based on <span class="hl">multiples of annual profit</span>.<span class="ag-break"></span>If the venue stabilizes near approximately <span class="hl">$600,000 in annual profit</span>, enterprise value could reasonably grow into the <span class="hl">$2M to $3M range</span>.</p>
+          <p>Hospitality venues are often valued based on <span class="hl">multiples of annual profit</span>.<span class="ag-break"></span>If the venue stabilizes near approximately <span class="hl">$600,000 in annual profit</span>, enterprise value could reasonably grow into the <span class="hl">$2M-$3M range</span>.</p>
           <p>The founders intend to <span class="hl">operate and grow the venue long&#8209;term</span> rather than pursue a near&#8209;term sale.<span class="ag-break"></span>This projection simply illustrates potential value creation for founding investors as the venue matures.</p>
         </article>
 
