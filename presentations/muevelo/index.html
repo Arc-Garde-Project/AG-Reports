@@ -5265,6 +5265,9 @@ body, p, li, td, th, blockquote, figcaption, span,
     min-height: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
+    /* Stiffer scroll: drop iOS inertial momentum (base sets `touch`) so the table
+       tracks the finger and stops on release instead of gliding freely left-right. */
+    -webkit-overflow-scrolling: auto;
     scrollbar-width: thin;
     scrollbar-color: hsl(var(--sat-hue, 280) 80% 60% / 0.6) transparent;
   }
