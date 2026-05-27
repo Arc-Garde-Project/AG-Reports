@@ -5252,6 +5252,14 @@ body, p, li, td, th, blockquote, figcaption, span,
     background: transparent;
   }
 }
+/* Mobile: this expense table is the tallest in the deck. Force the active mini-slide to
+   top-align (overriding the generic safe-center !important) so the whole table is reachable
+   by the mini-slide's own vertical scroll instead of being center-clipped on phones. */
+@media (max-width: 770px) {
+  .slide[data-arch="chapter"] .modal-slide[data-active="true"][data-title="Estimated Monthly Operating Expenses"] {
+    justify-content: flex-start !important;
+  }
+}
 /* Stretch visual containers to fill any remaining vertical space — DESKTOP ONLY.
    On mobile/tablet, content takes natural height (no shrinking to 0) and slide scrolls. */
 .modal-slide > .modal-own,
