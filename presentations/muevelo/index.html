@@ -5253,11 +5253,31 @@ body, p, li, td, th, blockquote, figcaption, span,
   }
 }
 /* Mobile: this expense table is the tallest in the deck. Force the active mini-slide to
-   top-align (overriding the generic safe-center !important) so the whole table is reachable
-   by the mini-slide's own vertical scroll instead of being center-clipped on phones. */
+   top-align (overriding the generic safe-center !important), then make the table-wrap
+   ITSELF fill the band and scroll vertically with a VISIBLE scrollbar — so the full
+   15-row table is reachable AND the user can see that it scrolls. Mirrors the desktop fix. */
 @media (max-width: 770px) {
   .slide[data-arch="chapter"] .modal-slide[data-active="true"][data-title="Estimated Monthly Operating Expenses"] {
     justify-content: flex-start !important;
+  }
+  .modal-slide[data-title="Estimated Monthly Operating Expenses"] .modal-table-wrap {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--sat-hue, 280) 80% 60% / 0.6) transparent;
+  }
+  .modal-slide[data-title="Estimated Monthly Operating Expenses"] .modal-table-wrap::-webkit-scrollbar {
+    display: block;
+    width: 7px;
+  }
+  .modal-slide[data-title="Estimated Monthly Operating Expenses"] .modal-table-wrap::-webkit-scrollbar-thumb {
+    background: hsl(var(--sat-hue, 280) 80% 60% / 0.6);
+    border-radius: 4px;
+  }
+  .modal-slide[data-title="Estimated Monthly Operating Expenses"] .modal-table-wrap::-webkit-scrollbar-track {
+    background: hsl(var(--sat-hue, 280) 30% 20% / 0.25);
   }
 }
 /* Stretch visual containers to fill any remaining vertical space — DESKTOP ONLY.
@@ -6445,6 +6465,14 @@ body, p, li, td, th, blockquote, figcaption, span,
     border-color: revert !important;
     filter: revert !important;
     outline: revert !important;
+  }
+  /* The two hub circles are centered with transform: translate(-50%, -50%). The blanket
+     `transform: revert` above resets that to the UA default (none) on tap, so the circle
+     jumps out from under the finger — the first tap misses and a second is needed. Restore
+     their base centering (drops only the hover scale) so a single tap lands and navigates. */
+  .hub-satellite:hover,
+  .hub-center:hover {
+    transform: translate(-50%, -50%) !important;
   }
 }
 
