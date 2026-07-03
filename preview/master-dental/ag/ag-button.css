@@ -1,0 +1,96 @@
+/* =========================================================== */
+/* AG Button v1.0 - Golden Touch button (CANONICAL DROP-IN)    */
+/* No AG-BUTTON-STANDARD.md exists yet - derived 2026-06-26 from the Clinic of */
+/* Angels build-tier3 reference (ag-components.css Button block), verbatim.     */
+/*                                                                            */
+/* primary = solid brand fill + glossy sheen sweep + glow bloom on hover.      */
+/* secondary = outline that wipes a brand radial fill up and inverts on hover.  */
+/* arrow roll-swap: the -> rolls down/out while a ↗ rolls down into its place.  */
+/*                                                                            */
+/* MARKUP: <a class="ag-button ag-button--primary">Label<span class="arrow"    */
+/*   aria-hidden="true"></span></a>   (the .arrow span is empty - the two       */
+/*   arrows are pseudo-elements). --sm for the compact size.                    */
+/*                                                                            */
+/* OPTIONAL beam (.cta-beam): a gradient outline that travels the button edge.  */
+/* It needs an inline <svg class="cta-beam"> with a #ctaBeamGrad gradient built */
+/* per-build (Clinic uses craft.js) + an --aurora-sky token. The CSS below is   */
+/* kept verbatim but no-ops with no .cta-beam child - add the SVG per brand.    */
+/*                                                                            */
+/* TOKEN CONTRACT: --radius-md --font-heading --text-base --fw-h3 --brand-primary*/
+/*   --brand-700 --brand-rgb --c-white --accent --duration-quick --duration-instant*/
+/*   --ease-snap --ease-soft --ease-satisfying  (beam only: --aurora-sky).       */
+/* =========================================================== */
+
+.ag-button {
+  position: relative; overflow: hidden; isolation: isolate;
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px; width: fit-content;
+  min-height: 49px; padding: 14px 28px; border-radius: var(--radius-md);
+  font-family: var(--font-heading); font-size: var(--text-base); font-weight: var(--fw-h3);
+  line-height: 1; letter-spacing: 0.02em; border: 3px solid transparent; cursor: pointer;
+  text-decoration: none; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  transition: transform var(--duration-quick) var(--ease-snap),
+    background-color var(--duration-quick) var(--ease-soft), color var(--duration-quick) var(--ease-soft),
+    border-color var(--duration-quick) var(--ease-soft), box-shadow var(--duration-quick) var(--ease-soft);
+}
+.ag-button--primary { background: var(--brand-primary); color: var(--c-white); border-color: var(--brand-primary); }
+.ag-button--secondary { background: transparent; color: var(--brand-700); border-color: var(--brand-primary); }
+
+/* Creative hover: primary = glossy sheen sweep + brand glow bloom; secondary = brand fill wipes up + inverts.
+   Pseudos sit at z-index -1 (above the bg/fill, below the label); composes with data-magnetic. */
+/* arrow roll-swap: on hover the -> rolls DOWN and out while a ↗ rolls DOWN from above into its place.
+   The span's text glyph is hidden (visibility) and the two arrows are pseudos in a clipped window. */
+.ag-button .arrow {
+  position: relative; display: inline-block; overflow: hidden; visibility: hidden;
+  width: 1.15em; height: 1.05em; vertical-align: -0.16em; line-height: 1;
+}
+.ag-button .arrow::before, .ag-button .arrow::after {
+  visibility: visible; position: absolute; inset: 0; display: grid; place-items: center; line-height: 1;
+  transition: transform 0.42s var(--ease-satisfying);
+}
+.ag-button .arrow::after { content: "\2192"; transform: translateY(0); }       /* → visible at rest */
+.ag-button .arrow::before { content: "\2197"; transform: translateY(-105%); }  /* ↗ waiting above */
+/* primary signature: a gradient-blue beam travels the button outline at UNIFORM speed.
+   An SVG outline (built in craft.js) animates stroke-dashoffset with pathLength=100, so the
+   highlight moves by arc-length, not angle (a conic gradient reads fast-then-slow on a wide rect). */
+.cta-beam { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; overflow: visible; transition: opacity 0.3s var(--ease-soft); }
+.cta-beam__rect { fill: none; stroke: url(#ctaBeamGrad); stroke-width: 3; stroke-linejoin: round; stroke-dasharray: 50 50; }
+.cta-stop--a { stop-color: var(--brand-700); }
+.cta-stop--b { stop-color: var(--aurora-sky); }
+.cta-stop--c { stop-color: var(--c-white); }
+@keyframes ctaBeam { to { stroke-dashoffset: -100; } }
+.ag-button--primary::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 45%; z-index: -1; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.40), transparent);
+  transform: translateX(-220%) skewX(-14deg);
+}
+.ag-button--secondary::before {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  left: var(--mx, 50%); top: var(--my, 50%); width: 300%; aspect-ratio: 1; border-radius: 50%;
+  background: var(--brand-primary);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.5s var(--ease-soft);
+}
+@media (hover: hover) {
+  .ag-button:hover .arrow::after { transform: translateY(105%); }
+  .ag-button:hover .arrow::before { transform: translateY(0); }
+  .ag-button--primary:hover {
+    background: var(--brand-700); border-color: var(--brand-700);
+    box-shadow: 0 14px 30px -8px rgb(var(--brand-rgb) / 0.5), 0 0 22px rgb(var(--brand-rgb) / 0.4), 0 0 0 1px rgb(var(--brand-rgb) / 0.35);
+  }
+  /* transition only on hover so mouse-out snaps back without a reverse sweep */
+  .ag-button--primary:hover::after { transform: translateX(520%) skewX(-14deg); transition: transform 0.7s var(--ease-satisfying); }
+  .ag-button--primary:hover .cta-beam { opacity: 1; }
+  .ag-button--primary:hover .cta-beam__rect { animation: ctaBeam 3s linear infinite; }
+  .ag-button--secondary:hover {
+    color: var(--c-white); border-color: var(--brand-primary);
+    box-shadow: 0 12px 26px -8px rgb(var(--brand-rgb) / 0.32);
+  }
+  .ag-button--secondary:hover::before { transform: translate(-50%, -50%) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ag-button .arrow::before, .ag-button .arrow::after, .ag-button--secondary::before, .ag-button--primary:hover::after { transition: none; }
+  .ag-button--primary:hover .cta-beam__rect { animation: none; }
+}
+.ag-button:active { transform: translateY(0); transition-duration: var(--duration-instant); }
+.ag-button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.ag-button--sm { min-height: 42px; padding: 7px 18px; font-size: var(--text-sm); border-width: 2px; }

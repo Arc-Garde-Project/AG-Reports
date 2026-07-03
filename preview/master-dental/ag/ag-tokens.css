@@ -1,0 +1,86 @@
+/* =========================================================== */
+/* AG Tokens - default brand kit (SCAFFOLD)                    */
+/* The token contract every ag-* primitive references. These are the AG       */
+/* DEFAULT values (ink / paper / gold). Override per brand at G2 - change the  */
+/* VALUES here, never the token names (the primitives bind to the names).      */
+/* Sources: AG-PALETTE-STANDARD, AG-TYPOGRAPHY-STANDARD, AG RESPONSIVE-SYSTEM. */
+/* Motion tokens (--duration-* / --ease-* / --dist-*) are owned by ag-motion.css.*/
+/* =========================================================== */
+:root {
+  /* ---- Palette: Foundation (ink / paper / gold) ---- */
+  --ink: #0a0a0a;
+  --paper: #fafafa;
+  --accent: #c9a861;            /* gold - decorative/emphasis only, never body text */
+  --neutral-400: #a8a8a8;
+  --c-white: #ffffff;
+  --c-mint: #3ecf8e;
+  --mint-glow: rgba(62, 207, 142, 0.18);
+
+  /* ---- Palette: Brand slot (override per brand) ---- */
+  --brand: #1a2238;
+  --brand-700: #131a2b;
+  --brand-rgb: 26 34 56;        /* space-separated for rgb(var(--brand-rgb) / a) */
+  --brand-primary: var(--brand);
+
+  /* ---- Text colors ---- */
+  --text-primary: var(--ink);
+  --text-secondary: #4a4a4a;
+
+  /* ---- On-dark + glass (drawer / footer / overlays) ---- */
+  --on-ink: var(--paper);
+  --on-ink-soft: rgba(255, 255, 255, 0.5);
+  --glass-08: rgba(255, 255, 255, 0.08);
+  --glass-12: rgba(255, 255, 255, 0.12);
+  --drawer-backdrop: rgba(10, 10, 10, 0.5);
+  --drawer-close-border: rgba(255, 255, 255, 0.16);
+  --scrim-45: rgba(10, 10, 10, 0.45);
+
+  /* ---- Header surface ---- */
+  --header-bg: rgba(250, 250, 250, 0.82);
+  --header-border: rgba(10, 10, 10, 0.08);
+
+  /* ---- Footer slot (AG-FOOTER-STANDARD) ---- */
+  --bg-footer: var(--ink);
+  --text-on-footer: var(--paper);
+  --text-muted-on-footer: var(--neutral-400);
+  --link-on-footer: var(--text-on-footer);
+
+  /* ---- Layout ---- */
+  --header-h: 76px;
+  --logo-size: 28px;
+  --max-w: 1400px;
+  --maxw: var(--max-w);                       /* §19 watermark alias */
+  --section-padding-inline: clamp(21px, 5vw, 84px);
+  --section-pad-inline: var(--section-padding-inline);  /* §19 watermark alias */
+  --safe-edge: 21px;                          /* 14px @≤1200, 7px @≤900 (see RESPONSIVE) */
+  --radius-md: 12px;
+  --sh-sm: 0 1px 3px rgba(10, 10, 10, 0.12);
+
+  /* ---- Typography: families + weights (override per brand pairing) ---- */
+  --font-heading: 'Poppins', system-ui, sans-serif;
+  --font-display: var(--font-heading);
+  --font-body: 'Inter', system-ui, sans-serif;
+  --fw-hero: 700;
+  --fw-h2: 600;
+  --fw-h3: 500;
+
+  /* ---- Typography: fluid type scale (AG RESPONSIVE-SYSTEM / web-css rule) ---- */
+  --text-hero: clamp(2.25rem, 1.647rem + 2.57vw, 3.938rem);
+  --text-h1:   clamp(1.875rem, 1.357rem + 2.21vw, 3rem);
+  --text-h2:   clamp(1.5rem, 1.155rem + 1.47vw, 2.25rem);
+  --text-h3:   clamp(1.313rem, 1.054rem + 1.1vw, 1.875rem);
+  --text-h4:   clamp(1.125rem, 0.952rem + 0.74vw, 1.5rem);
+  --text-lg:   clamp(1rem, 0.943rem + 0.24vw, 1.125rem);
+  --text-base: clamp(0.938rem, 0.909rem + 0.12vw, 1rem);
+  --text-sm: 0.875rem;
+  --text-eyebrow: 0.75rem;
+
+  /* ---- Spacing (fluid) ---- */
+  --space-md: clamp(0.875rem, 0.6rem + 1.2vw, 1.5rem);
+  --space-lg: clamp(1.25rem, 0.9rem + 1.6vw, 2.25rem);
+  --space-section: clamp(3rem, 1.619rem + 5.89vw, 6rem);
+  --space-container: clamp(1.125rem, 0.262rem + 3.68vw, 3rem);
+}
+
+@media (max-width: 1200px) { :root { --safe-edge: 14px; } }
+@media (max-width: 900px)  { :root { --safe-edge: 7px; } }

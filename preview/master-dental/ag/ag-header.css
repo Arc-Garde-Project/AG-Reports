@@ -1,0 +1,216 @@
+/* =========================================================== */
+/* AG Header v2.5  - CANONICAL DROP-IN                          */
+/* Source of truth: sectors/web/standards/AG-ADAPTIVE-HEADER-STANDARD.md (v2.5) */
+/*                + sectors/web/standards/AG-HEADER-STANDARD.md (nav-link Golden Touch v2.1) */
+/* Extracted 2026-06-26 from the Clinic of Angels build-tier3 reference (the standard's */
+/* cited reference implementation), token-genericized. Pairs with ag-header.js.        */
+/*                                                                                      */
+/* Fixed blur bar (transparent over a dark hero, solid past it) + centered nav with the */
+/* Golden-Touch hover (underline wipe under the word + arrow drop) + the AG Spiral       */
+/* hamburger that winds into an X + a body-level SLIDE-FROM-RIGHT drawer (.ag-drawer).   */
+/* The retired full-screen slide-down dropdown is NOT this (see the standard).           */
+/*                                                                                      */
+/* PITFALL (scarred 2026-06-18): never put color-mix() inside a `background:` shorthand  */
+/* list - one unsupported value invalidates the whole declaration and the drawer renders */
+/* transparent. Keep the opaque fill in background-color, gradients in background-image.  */
+/*                                                                                      */
+/* REQUIRED MARKUP (see Nav reference in the standard):                                  */
+/*   <header class="ag-header" data-ag-header role="banner">                             */
+/*     <div class="ag-header__row">                                                      */
+/*       <a class="ag-header__brand" href="/"> <img class="ag-header__logo" ...> </a>    */
+/*       <nav class="ag-header__nav"> <a href=".."><span class="ag-nav-link-label">..    */
+/*           </span><span class="ag-nav-link-arrow" aria-hidden="true">&nearr;</span></a>*/
+/*       </nav>                                                                          */
+/*       <a class="ag-button ag-button--primary ag-button--sm" ...>CTA</a>               */
+/*       <button class="ag-header__toggle" aria-label="Open menu" aria-expanded="false"  */
+/*               aria-controls="ag-drawer"><span class="ag-hamburger" aria-hidden></span>*/
+/*       </button>                                                                       */
+/*     </div></header>                                                                   */
+/*   <!-- body-level siblings of <header> --> <div class="ag-backdrop" id="ag-backdrop" hidden></div> */
+/*   <aside class="ag-drawer" id="ag-drawer" aria-label="Site menu" aria-hidden="true" hidden> */
+/*     .ag-drawer__head (brand + .ag-drawer__close) · nav>ul.ag-drawer__list>li[style="--i:N"] */
+/*       >a>(.ag-drawer__index, .ag-drawer__label, .ag-drawer__chev) · optional .ag-drawer__meta */
+/*       (REAL facts only) · .ag-drawer__foot (.ag-drawer__cta + .ag-drawer__note) </aside> */
+/*                                                                                      */
+/* TOKEN CONTRACT (supplied by the build's brand kit + AG token system):                */
+/*   layout: --header-bg --header-border --header-h --max-w --section-padding-inline     */
+/*           --logo-size --space-md --space-lg --radius-md                               */
+/*   color:  --text-primary --text-secondary --accent --brand-primary --brand --brand-700*/
+/*           --brand-rgb --ink --on-ink --on-ink-soft --c-white --c-mint --mint-glow     */
+/*           --glass-08 --glass-12 --drawer-backdrop --drawer-close-border --scrim-45 --sh-sm */
+/*   type:   --font-heading --font-display --font-body --fw-hero --fw-h2 --fw-h3 --text-sm*/
+/*   motion: --duration-quick --duration-medium --ease-satisfying --ease-soft --ease-settle*/
+/* =========================================================== */
+
+/* ---------------- Header ---------------- */
+.ag-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 3px solid var(--header-border);
+  transition: transform var(--duration-quick) var(--ease-satisfying),
+    background-color var(--duration-medium) var(--ease-soft),
+    border-color var(--duration-medium) var(--ease-soft);
+}
+.ag-header.is-hidden { transform: translateY(-100%); }
+/* Transparent over the dark homepage hero; reverts to the solid bar once past it */
+.ag-header.is-transparent {
+  background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none;
+  border-bottom-color: transparent;
+}
+.ag-header.is-transparent .ag-header__logo { filter: brightness(0) invert(1); }
+.ag-header.is-transparent .ag-header__nav a:not(.ag-button) { color: rgba(255, 255, 255, 0.92); }
+@media (hover: hover) { .ag-header.is-transparent .ag-header__nav a:not(.ag-button):hover { color: #fff; } }
+.ag-header.is-transparent .ag-header__nav a:not(.ag-button)::after { background: #fff; }
+.ag-header.is-transparent .ag-nav-link-arrow { color: #fff; }
+.ag-header.is-transparent .ag-hamburger { color: #fff; }
+.ag-header__row {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; height: var(--header-h);
+  padding: 14px var(--section-padding-inline); max-width: var(--max-w); margin-inline: auto; gap: var(--space-md);
+}
+.ag-header__brand {
+  display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-heading);
+  font-size: var(--logo-size); font-weight: var(--fw-h2); color: var(--text-primary);
+  letter-spacing: -0.01em; text-decoration: none; min-height: 49px; line-height: 1;
+}
+.ag-header__brand-mark {
+  width: 42px; height: 42px; border-radius: 50%; background: var(--brand-primary); display: grid;
+  place-items: center; color: var(--c-white); font-weight: var(--fw-hero); font-size: 21px; flex-shrink: 0;
+}
+.ag-header__logo { height: 50px; width: auto; display: block; }
+@media (max-width: 1000px) { .ag-header__logo { height: 44px; } }
+.ag-header__nav { display: flex; align-items: center; justify-self: center; gap: var(--space-lg); }
+/* AG Header nav-link hover (v2.1, 2026-06-18 - Owners Table "Golden Touch" recipe):
+   underline draws left->right under the WORD only + a subtle 1.03 zoom + the arrow
+   parked above the line drops DOWN and fades in on hover. Restrained, not jumpy. */
+.ag-header__nav a:not(.ag-button) {
+  position: relative; display: inline-flex; align-items: center; min-height: 49px;
+  padding: 6px 1.1em 6px 0; overflow: hidden;
+  font-size: var(--text-sm); font-weight: var(--fw-h3); color: var(--text-secondary); text-decoration: none;
+  transition: color var(--duration-quick) var(--ease-satisfying);
+}
+.ag-nav-link-label {
+  display: inline-block; transform-origin: center;
+  transition: transform var(--duration-quick) var(--ease-satisfying);
+}
+/* underline under the word only, stops before the arrow gap */
+.ag-header__nav a:not(.ag-button)::after {
+  content: ""; position: absolute; left: 0; right: 1.1em; bottom: 0; height: 1.5px;
+  background: var(--accent); transform: scaleX(0); transform-origin: left center;
+  transition: transform var(--duration-medium) var(--ease-satisfying);
+}
+/* arrow parked above the line; drops DOWN + fades in on hover */
+.ag-nav-link-arrow {
+  position: absolute; right: 0; top: 50%; color: var(--accent); font-size: 1em; line-height: 1;
+  opacity: 0; transform: translateY(-180%);
+  transition: transform var(--duration-medium) var(--ease-satisfying), opacity var(--duration-quick) var(--ease-soft);
+}
+@media (hover: hover) {
+  .ag-header__nav a:not(.ag-button):hover { color: var(--accent); }
+  .ag-header__nav a:not(.ag-button):hover .ag-nav-link-label { transform: scale(1.03); }
+  .ag-header__nav a:not(.ag-button):hover::after { transform: scaleX(1); }
+  .ag-header__nav a:not(.ag-button):hover .ag-nav-link-arrow { opacity: 1; transform: translateY(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ag-nav-link-label, .ag-nav-link-arrow, .ag-header__nav a:not(.ag-button)::after { transition: none; }
+}
+.ag-header__toggle {
+  display: none; width: 49px; height: 49px; background: transparent; border: 0; cursor: pointer; padding: 0;
+  align-items: center; justify-content: center; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+}
+.ag-hamburger { position: relative; width: 28px; height: 14px; display: block; background: transparent; color: var(--text-primary); }
+.ag-hamburger::before, .ag-hamburger::after {
+  content: ''; position: absolute; right: 0; height: 2px; background: currentColor; border-radius: 1px;
+  transform-origin: center; transition: width 420ms var(--ease-satisfying), transform 520ms var(--ease-settle);
+}
+.ag-hamburger::before { top: 2px; width: 14px; }
+.ag-hamburger::after { top: 10px; width: 28px; transition-delay: 0ms, 100ms; }
+body.is-dropdown-open .ag-hamburger::before { width: 22px; transform: translate(-3px, 4px) rotate(135deg); }
+body.is-dropdown-open .ag-hamburger::after { width: 22px; transform: translate(-3px, -4px) rotate(45deg); transition-delay: 0ms, 100ms; }
+/* This build: collapse to the hamburger drawer through 1000px so the full
+   desktop nav only appears at 1001px+ (everything fits the header by then). */
+@media (max-width: 1000px) {
+  .ag-header__nav, .ag-header__row > .ag-button { display: none; }
+  .ag-header__toggle { display: inline-flex; justify-self: end; }
+  .ag-header__row { grid-template-columns: 1fr auto; padding-inline: 21px; }
+}
+
+/* ---------------- Slide-from-right drawer (Adaptive Header v2.5) ---------------- */
+.ag-backdrop {
+  position: fixed; inset: 0; background: var(--drawer-backdrop); z-index: 101; opacity: 0;
+  pointer-events: none; transition: opacity var(--duration-quick) var(--ease-satisfying);
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+}
+.ag-backdrop[hidden] { display: none; }
+.ag-backdrop.is-open { opacity: 1; pointer-events: auto; }
+
+.ag-drawer {
+  position: fixed; top: 0; right: 0; width: clamp(320px, 34vw, 440px); height: 100dvh;
+  color: var(--on-ink); z-index: 110; transform: translateX(100%);
+  background-color: var(--ink);
+  background-image:
+    radial-gradient(130% 80% at 100% 0%, rgb(var(--brand-rgb) / 0.26), transparent 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 46%);
+  border-left: 1px solid var(--glass-12);
+  transition: transform var(--duration-medium) var(--ease-satisfying);
+  display: flex; flex-direction: column; overflow-y: auto; overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch; box-shadow: -28px 0 72px var(--scrim-45);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.ag-drawer[hidden] { display: none; }
+.ag-drawer.is-open { transform: translateX(0); }
+@supports not (height: 100dvh) { .ag-drawer { height: 100vh; } }
+
+.ag-drawer__head { display: flex; align-items: center; justify-content: space-between; padding: calc(22px + env(safe-area-inset-top)) 28px 18px; border-bottom: 1px solid var(--glass-08); }
+.ag-drawer__brand { display: flex; align-items: center; gap: 10px; }
+.ag-drawer__logo { height: 58px; width: auto; display: block; }
+.ag-drawer__brand-mark { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: linear-gradient(135deg, var(--brand), var(--brand-700)); color: var(--c-white); font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; box-shadow: var(--sh-sm); }
+.ag-drawer__brand-name { font-family: var(--font-display); font-weight: 520; font-size: 1.05rem; color: var(--on-ink); letter-spacing: 0.01em; }
+.ag-drawer__close {
+  width: 49px; height: 49px; display: grid; place-items: center; background: var(--glass-08);
+  border: 1px solid var(--drawer-close-border); border-radius: var(--radius-md); color: var(--on-ink);
+  transition: background-color var(--duration-quick) var(--ease-satisfying), border-color var(--duration-quick) var(--ease-satisfying), transform var(--duration-quick) var(--ease-satisfying);
+  touch-action: manipulation; cursor: pointer;
+}
+@media (hover: hover) { .ag-drawer__close:hover { background: var(--accent); border-color: var(--accent); color: var(--c-white); transform: rotate(90deg); } }
+
+.ag-drawer__list { list-style: none; margin: 0; padding: 28px 20px 12px; display: flex; flex-direction: column; gap: 2px; flex: 0 0 auto; }
+.ag-drawer__list li { opacity: 0; transform: translateX(20px); transition: opacity var(--duration-quick) var(--ease-satisfying), transform var(--duration-quick) var(--ease-satisfying); transition-delay: calc(0.18s + (var(--i, 0) * 0.06s)); }
+.ag-drawer.is-open .ag-drawer__list li { opacity: 1; transform: none; }
+.ag-drawer__list a {
+  position: relative; display: flex; align-items: baseline; gap: 14px; min-height: 49px;
+  padding: 15px 16px; border-radius: 12px;
+  transition: background-color var(--duration-quick) var(--ease-satisfying), padding-left var(--duration-quick) var(--ease-satisfying);
+}
+.ag-drawer__list a::before {
+  content: ""; position: absolute; left: 4px; top: 50%; width: 3px; height: 56%; border-radius: 3px;
+  background: var(--accent); transform: translateY(-50%) scaleY(0); transform-origin: center;
+  transition: transform var(--duration-quick) var(--ease-satisfying);
+}
+.ag-drawer__index { font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; color: var(--accent); opacity: 0.7; min-width: 1.7em; }
+.ag-drawer__label { flex: 1; font-family: var(--font-display); font-size: clamp(1.5rem, 5vw, 1.95rem); font-weight: 460; color: var(--on-ink); letter-spacing: 0.01em; line-height: 1.1; transition: color var(--duration-quick) var(--ease-satisfying); }
+.ag-drawer__chev { align-self: center; color: var(--accent); font-size: 1.15rem; opacity: 0; transform: translateX(-7px); transition: opacity var(--duration-quick) var(--ease-satisfying), transform var(--duration-quick) var(--ease-satisfying); }
+.ag-drawer__list a[aria-current="page"] { background: var(--glass-08); }
+.ag-drawer__list a[aria-current="page"]::before { transform: translateY(-50%) scaleY(1); }
+.ag-drawer__list a[aria-current="page"] .ag-drawer__chev { opacity: 1; transform: none; }
+@media (hover: hover) {
+  .ag-drawer__list a:hover { background: var(--glass-08); padding-left: 22px; }
+  .ag-drawer__list a:hover::before { transform: translateY(-50%) scaleY(1); }
+  .ag-drawer__list a:hover .ag-drawer__label { color: var(--c-white); }
+  .ag-drawer__list a:hover .ag-drawer__chev { opacity: 1; transform: none; }
+}
+
+.ag-drawer__meta { margin-top: auto; padding: 22px 28px 6px; }
+.ag-drawer__meta-label { font-family: var(--font-body); font-size: 0.66rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
+.ag-drawer__info { list-style: none; margin: 0; padding: 16px 0 0; border-top: 1px solid var(--glass-08); display: grid; gap: 13px; }
+.ag-drawer__info li { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; }
+.ag-drawer__info-k { font-size: var(--text-sm); color: var(--on-ink-soft, rgba(255,255,255,0.5)); letter-spacing: 0.01em; }
+.ag-drawer__info-v { font-family: var(--font-display); font-size: 1.02rem; color: var(--on-ink); text-align: right; }
+
+.ag-drawer__foot { padding: 20px 28px calc(26px + env(safe-area-inset-bottom)); border-top: 1px solid var(--glass-12); display: flex; flex-direction: column; gap: 14px; }
+.ag-drawer__cta { width: 100%; justify-content: center; }
+.ag-drawer__note { display: flex; align-items: center; gap: 9px; color: var(--on-ink); font-weight: 500; letter-spacing: 0.01em; font-size: var(--text-sm); margin: 0; }
+.ag-drawer__note-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--c-mint); box-shadow: 0 0 0 4px var(--mint-glow); flex: none; }
+
+@media (max-width: 640px) { .ag-drawer { width: min(88vw, 400px); } }
+@media (max-width: 400px) { .ag-drawer { width: 100vw; } }
+@media (prefers-reduced-motion: reduce) { .ag-drawer, .ag-backdrop, .ag-drawer__list li { transition: none !important; } .ag-drawer__list li { transform: none; } }

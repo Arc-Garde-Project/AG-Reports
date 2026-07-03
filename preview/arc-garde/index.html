@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en" class="is-loading">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <base href="/preview/arc-garde/">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Arc Garde | Strategic Growth Partners for Scaling Businesses</title>
+    <meta name="description" content="Arc Garde delivers consulting, traffic, conversion, and systems infrastructure that scaling businesses need to compound revenue. 21 businesses per quarter.">
+    <meta name="theme-color" content="#0d0b09">
+    <link rel="canonical" href="https://arcgarde.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Arc Garde | Strategic Growth Partners">
+    <meta property="og:description" content="Comprehensive revenue reconstruction for businesses built to compound. 21 businesses per quarter.">
+    <meta property="og:url" content="https://arcgarde.com/">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" rel="stylesheet">
+
+    <!-- CRITICAL INLINE CSS — curtain mechanics, before external stylesheets (CTN spec) -->
+    <style>
+        :root{ --paper:#F7F3EE; --ink:#0d0b09; --accent:#c9a861; }
+        html.is-loading{ overflow:hidden; }
+        .ag-curtain{
+            position:fixed; inset:0; z-index:2147483645;
+            background:#070605;
+            display:flex; align-items:center; justify-content:center;
+            opacity:1; pointer-events:auto;
+            transition:opacity 500ms cubic-bezier(0.16,1,0.3,1);
+        }
+        html.is-ready .ag-curtain{ opacity:0; pointer-events:none; }
+        .ag-curtain::after{ content:''; position:absolute; inset:0; pointer-events:none; z-index:5; opacity:0.045; mix-blend-mode:overlay; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+        /* ===== DFY INTRO — phases driven by [data-phase] on .ag-curtain ===== */
+        .ld-layer{ position:absolute; inset:0; display:grid; place-items:center; opacity:0; transition:opacity 600ms cubic-bezier(0.16,1,0.3,1); pointer-events:none; }
+        .ag-curtain[data-phase="load"]        .ld-boot{ opacity:1; }
+        .ag-curtain[data-phase="brand"]       .ld-brand{ opacity:1; }
+        .ld-gold{ background:linear-gradient(100deg,#b9965a 0%,#e3c489 26%,#fffdf6 48%,#e3c489 70%,#b9965a 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+        /* PHASE 1 — boot (monogram + bar + dots) */
+        .ld-boot__in{ display:flex; flex-direction:column; align-items:center; gap:clamp(20px,3.4vh,30px); }
+        .ld-mono{ font-family:'Cinzel',serif; font-weight:600; font-size:clamp(2.6rem,8vw,4rem); letter-spacing:0.16em; padding-left:0.16em; line-height:1; animation:ld-mono-pulse 2.1s ease-in-out infinite; }
+        @keyframes ld-mono-pulse{ 0%,100%{ filter:drop-shadow(0 0 20px rgba(201,168,97,0.22)); } 50%{ filter:drop-shadow(0 0 34px rgba(201,168,97,0.44)); } }
+        .ld-bar{ width:clamp(150px,30vw,230px); height:2px; background:rgba(201,168,97,0.16); border-radius:2px; overflow:hidden; }
+        .ld-bar i{ display:block; height:100%; width:6%; border-radius:2px; background:linear-gradient(90deg,#b9965a,#fffdf6,#b9965a); animation:ld-fill 1.25s cubic-bezier(0.45,0.02,0.18,1) 0.15s forwards; }
+        @keyframes ld-fill{ to{ width:100%; } }
+        /* the swoosh: AG + loader leave AS ARC GARDE arrives (one synchronized gesture) */
+        .ld-boot__in{ transition:opacity 600ms cubic-bezier(0.16,1,0.3,1), transform 600ms cubic-bezier(0.16,1,0.3,1), filter 600ms ease; }
+        .ag-curtain:not([data-phase="load"]) .ld-boot__in{ opacity:0; transform:translateX(-26px) scale(0.96); filter:blur(4px); }
+        .ld-dots{ display:flex; gap:9px; }
+        .ld-dots b{ width:6px; height:6px; border-radius:50%; background:var(--accent); opacity:0.3; animation:ld-dot 1.2s ease-in-out infinite; }
+        .ld-dots b:nth-child(2){ animation-delay:0.16s; }
+        .ld-dots b:nth-child(3){ animation-delay:0.32s; }
+        @keyframes ld-dot{ 0%,100%{ opacity:0.25; transform:translateY(0); } 50%{ opacity:1; transform:translateY(-4px); } }
+
+        /* PHASE 2 — brand swoosh (fires the instant the boot leaves, so they cross simultaneously) */
+        .ld-wm{ position:relative; font-family:'Cinzel',serif; font-weight:600; font-size:clamp(2.4rem,11vw,6.2rem); letter-spacing:0.14em; margin-right:-0.14em; line-height:1; white-space:nowrap; }
+        .ag-curtain[data-phase="brand"] .ld-wm{ animation:ld-swoosh 900ms cubic-bezier(0.16,1,0.3,1) 0s both, ld-glare 1000ms linear 0.1s both; }
+        /* uniform reveal — spacing stays fixed (so it never fans out or drifts off-centre); every letter fades + rises + sharpens together */
+        @keyframes ld-swoosh{ 0%{ opacity:0; transform:translateY(10px); filter:blur(8px); } 60%{ opacity:1; } 100%{ opacity:1; transform:translateY(0); filter:blur(0); } }
+        /* glare lives INSIDE the letters only: a bright band sweeps across a second text-clipped layer; the gold base stays static */
+        .ld-wm.ld-gold{ background-image:linear-gradient(100deg,transparent 28%,rgba(255,255,255,0.7) 40%,#ffffff 47%,#ffffff 53%,rgba(255,255,255,0.7) 60%,transparent 72%),linear-gradient(100deg,#b9965a 0%,#d8b06e 28%,#f2d9a0 50%,#d8b06e 72%,#b9965a 100%); background-repeat:no-repeat,no-repeat; background-size:220% 100%,100% 100%; background-position:-120% 0,0 0; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; }
+        @keyframes ld-glare{ 0%{ background-position:-120% 0,0 0; } 100%{ background-position:220% 0,0 0; } }
+
+        @media (prefers-reduced-motion:reduce){
+            .ag-curtain{ transition:none; }
+            .ld-layer{ transition:none; }
+            .ld-bar i{ width:100%!important; animation:none!important; }
+            .ld-wm{ animation:none!important; }
+        }
+    </style>
+
+    <link rel="stylesheet" href="ag-defensive.css">
+    <link rel="stylesheet" href="ag-cursor.css">
+
+    <style>
+    /* ============================================================
+       ARC GARDE — assembled from ag-* Dominion primitives.
+       Authority / professional / fast-to-value. No scroll-jack.
+       ============================================================ */
+
+    :root{
+        /* Palette (foundation token values, locked) */
+        --paper:#F7F3EE; --paper-hi:#FCF9F4;
+        --ink:#0d0b09; --ink-2:#14110d; --ink-3:#1b1611;
+        --ivory:#F2E4C9; --ivory-warm:#E8D4A8;
+        --accent:#c9a861; --accent-bright:#e5c185; --accent-deep:#8B6A3D;
+        --glow:rgba(201,168,97,0.26);
+
+        /* Fluid type (web-css rule) */
+        --text-hero: clamp(2.25rem, 1.647rem + 2.57vw, 3.938rem);
+        --text-h1:   clamp(1.875rem, 1.357rem + 2.21vw, 3rem);
+        --text-h2:   clamp(1.5rem, 1.155rem + 1.47vw, 2.25rem);
+        --text-h3:   clamp(1.313rem, 1.054rem + 1.1vw, 1.875rem);
+        --text-lg:   clamp(1rem, 0.943rem + 0.24vw, 1.125rem);
+        --text-base: clamp(0.938rem, 0.909rem + 0.12vw, 1rem);
+        --text-eyebrow: 0.75rem;
+
+        --space-section: clamp(3.5rem, 1.9rem + 6.8vw, 7rem);
+        --safe-edge: clamp(1.3rem, 0.2rem + 4vw, 5.25rem);
+
+        /* Motion tokens (AG-MOTION, locked) */
+        --duration-instant:120ms; --duration-quick:300ms; --duration-medium:600ms; --duration-long:900ms;
+        --ease-satisfying:cubic-bezier(0.16,1,0.3,1);
+        --ease-soft:cubic-bezier(0.4,0,0.2,1);
+        --ease-snap:cubic-bezier(0.34,1.2,0.64,1);
+        --ease-settle:cubic-bezier(0.22,1,0.36,1);
+        --dist-micro:7px; --dist-base:14px; --dist-lg:21px;
+
+        /* Card slot (AG-CARD) */
+        --card-radius:7px;
+
+        /* default band = ink */
+        --tx:var(--ivory); --tx-soft:rgba(242,228,201,0.74); --tx-mute:rgba(242,228,201,0.46);
+        --hair:rgba(229,193,133,0.16); --surface:var(--ink); --card-bg:var(--ink-2); --accent-vis:var(--accent);
+        --header-h:76px;
+    }
+
+    body{
+        background:var(--ink); color:var(--tx);
+        font-family:'Inter',system-ui,sans-serif; font-weight:300;
+        font-size:var(--text-base); line-height:1.7; letter-spacing:0.01em;
+    }
+    h1,h2,h3,h4{ font-family:'Cinzel',serif; font-weight:500; line-height:1.12; letter-spacing:0.015em; text-wrap:balance; }
+    ::selection{ background:var(--accent); color:var(--ink); }
+    .material-symbols-outlined{ font-family:'Material Symbols Outlined'; font-variation-settings:'opsz' 24,'wght' 300,'FILL' 0,'GRAD' 0; }
+    .sr-only{ position:absolute!important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+
+    /* Lenis infra (AG-SCROLL) */
+    html.lenis,html.lenis body{ height:auto; }
+    .lenis.lenis-smooth{ scroll-behavior:auto !important; }
+    .lenis.lenis-stopped{ overflow:clip; }
+
+    /* ---------- bands ---------- */
+    .band{ background:var(--surface); position:relative; padding-block:var(--space-section); }
+    .band--ink{ --surface:var(--ink); --tx:var(--ivory); --tx-soft:rgba(242,228,201,0.74); --tx-mute:rgba(242,228,201,0.46); --hair:rgba(229,193,133,0.16); --card-bg:var(--ink-2); --accent-vis:var(--accent); }
+    .band--paper{ --surface:var(--paper); --tx:#0A0A0A; --tx-soft:rgba(10,10,10,0.74); --tx-mute:rgba(10,10,10,0.52); --hair:rgba(10,9,8,0.12); --card-bg:var(--paper-hi); --accent-vis:var(--accent-deep); color:#0A0A0A; }
+    .inner{ max-width:1400px; margin-inline:auto; padding-inline:var(--safe-edge); }
+    .measure{ max-width:60ch; }
+
+    .eyebrow{ font-family:'Inter',sans-serif; font-size:var(--text-eyebrow); font-weight:500; letter-spacing:0.24em; text-transform:uppercase; color:var(--accent-vis); display:inline-flex; align-items:center; gap:0.8em; margin-bottom:1.4rem; }
+    .eyebrow::before{ content:''; width:32px; height:1px; background:var(--accent-vis); opacity:0.7; }
+
+    /* ============ HEADER (adaptive) ============ */
+    .nav{ position:fixed; top:0; left:0; width:100%; z-index:100; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; padding:14px var(--safe-edge); transition:background var(--duration-medium) var(--ease-satisfying), padding var(--duration-medium) var(--ease-satisfying), border-color var(--duration-medium) var(--ease-satisfying); border-bottom:1px solid transparent; }
+    .nav.scrolled{ background:rgba(13,11,9,0.92); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom-color:rgba(229,193,133,0.1); }
+    .nav-brand{ grid-column:1; justify-self:start; font-family:'Cinzel',serif; font-weight:600; font-size:1.3rem; letter-spacing:0.2em; color:var(--ivory); display:inline-flex; align-items:center; gap:0.55em; }
+    .nav-brand .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px var(--accent); }
+    .nav-links{ grid-column:2; justify-self:center; display:flex; gap:clamp(1.2rem,2.4vw,2.6rem); align-items:center; }
+    .nav-links a:not(.nav-cta){ position:relative; display:inline-flex; align-items:center; overflow:hidden; padding:6px 1.1em 6px 0; color:rgba(242,228,201,0.74); font-size:0.82rem; font-weight:400; letter-spacing:0.14em; text-transform:uppercase; transition:color var(--duration-quick) var(--ease-satisfying); }
+    .nav-link-label{ display:inline-block; transform-origin:center; transition:transform var(--duration-quick) var(--ease-satisfying); }
+    .nav-links a:not(.nav-cta)::after{ content:""; position:absolute; left:0; right:1.1em; bottom:0; height:1.5px; background:var(--accent); transform:scaleX(0); transform-origin:left center; transition:transform var(--duration-medium) var(--ease-satisfying); }
+    .nav-link-arrow{ position:absolute; right:0; top:50%; color:var(--accent); font-size:1em; line-height:1; opacity:0; transform:translateY(-180%); transition:transform var(--duration-medium) var(--ease-satisfying), opacity var(--duration-quick) var(--ease-soft); }
+    .nav-cta{ grid-column:3; justify-self:end; font-family:'Inter',sans-serif; text-transform:uppercase; letter-spacing:0.14em; font-size:0.76rem; font-weight:500; color:var(--ink); background:var(--accent); padding:0.7rem 1.3rem; border-radius:2px; transition:background var(--duration-quick) var(--ease-satisfying), transform var(--duration-quick) var(--ease-satisfying), box-shadow var(--duration-quick) var(--ease-satisfying); }
+    @media (hover:hover){
+        .nav-links a:not(.nav-cta):hover{ color:var(--accent); }
+        .nav-links a:not(.nav-cta):hover .nav-link-label{ transform:scale(1.03); }
+        .nav-links a:not(.nav-cta):hover::after{ transform:scaleX(1); }
+        .nav-links a:not(.nav-cta):hover .nav-link-arrow{ opacity:1; transform:translateY(-50%); }
+        .nav-cta:hover{ background:var(--accent-bright); transform:translateY(-2px); box-shadow:0 8px 26px var(--glow); }
+    }
+    .nav-toggle{ display:none; grid-column:3; justify-self:end; width:48px; height:48px; align-items:center; justify-content:center; position:relative; z-index:140; }
+    .nav-toggle b{ display:block; width:24px; height:1.5px; background:var(--ivory); position:relative; transition:transform var(--duration-medium) var(--ease-satisfying), background var(--duration-quick); }
+    .nav-toggle b::before,.nav-toggle b::after{ content:''; position:absolute; left:0; width:24px; height:1.5px; background:var(--ivory); transition:transform var(--duration-medium) var(--ease-satisfying); }
+    .nav-toggle b::before{ transform:translateY(-7px); }
+    .nav-toggle b::after{ transform:translateY(7px); }
+    body.drawer-open .nav-toggle b{ background:transparent; }
+    body.drawer-open .nav-toggle b::before{ transform:rotate(45deg); }
+    body.drawer-open .nav-toggle b::after{ transform:rotate(-45deg); }
+
+    /* drawer (slide-from-right) */
+    .ag-backdrop{ position:fixed; inset:0; z-index:120; background:rgba(6,5,4,0.6); backdrop-filter:blur(2px); opacity:0; pointer-events:none; transition:opacity var(--duration-medium) var(--ease-satisfying); }
+    .ag-backdrop.is-open{ opacity:1; pointer-events:auto; }
+    .ag-drawer{ position:fixed; top:0; right:0; height:100%; width:clamp(320px,34vw,440px); z-index:130; background-color:var(--ink); background-image:radial-gradient(120% 80% at 100% 0%, rgba(201,168,97,0.14), transparent 60%); border-left:1px solid rgba(229,193,133,0.14); transform:translateX(100%); transition:transform var(--duration-medium) var(--ease-satisfying); display:flex; flex-direction:column; padding:1.6rem 1.8rem 2rem; }
+    .ag-drawer.is-open{ transform:translateX(0); }
+    .ag-drawer__head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:2.4rem; }
+    .ag-drawer__brand{ font-family:'Cinzel',serif; font-weight:600; letter-spacing:0.18em; color:var(--ivory); font-size:1.1rem; }
+    .ag-drawer__close{ width:44px; height:44px; color:var(--ivory); font-size:1.6rem; line-height:1; }
+    .ag-drawer__list{ display:flex; flex-direction:column; gap:0.3rem; }
+    .ag-drawer__list a{ display:flex; align-items:baseline; gap:0.9em; padding:0.85rem 0.9rem; border-radius:12px; color:var(--ivory); font-family:'Cinzel',serif; font-size:1.15rem; letter-spacing:0.04em; transition:background var(--duration-quick) var(--ease-satisfying); }
+    .ag-drawer__list a .ix{ font-family:'Inter',sans-serif; font-size:0.7rem; color:var(--accent); font-weight:500; letter-spacing:0.1em; }
+    @media (hover:hover){ .ag-drawer__list a:hover{ background:rgba(229,193,133,0.08); } }
+    .ag-drawer__foot{ margin-top:auto; }
+    .ag-drawer__cta{ display:block; text-align:center; width:100%; background:var(--accent); color:var(--ink); font-family:'Inter',sans-serif; text-transform:uppercase; letter-spacing:0.14em; font-size:0.78rem; font-weight:500; padding:1rem; border-radius:3px; }
+
+    @media (max-width:900px){
+        .nav-links{ position:fixed; inset:0 0 0 auto; }
+        .nav-links{ display:none; }
+        .nav-cta{ display:none; }
+        .nav-toggle{ display:flex; }
+    }
+
+    /* ============ HERO — Arc Garde watch, 4-layer dismantle ============ */
+    .watch-hero{ position:relative; height:100svh; background:#000; }
+    @supports not (height:100svh){ .watch-hero{ height:100vh; } }
+    .watch-hero__pin{ position:relative; top:0; height:100svh; width:100%; overflow:hidden; isolation:isolate; }
+    @supports not (height:100svh){ .watch-hero__pin{ height:100vh; } }
+    .watch-hero__stage{ position:absolute; inset:0; }
+    .watch-hero__stage::before{ content:''; position:absolute; inset:0; pointer-events:none; z-index:0; background:radial-gradient(46% 42% at 50% 42%, rgba(201,168,97,0.16), transparent 70%); }
+    .watch-scene{ position:absolute; top:53%; left:50%; width:min(54vh,78vw); aspect-ratio:1; transform:translate(-50%,-50%); z-index:1; transition:left var(--duration-medium) var(--ease-satisfying); }
+    .wpart{ position:absolute; inset:0; display:block; transform:translate(var(--x,0px),var(--y,0px)) scale(var(--s,1)); will-change:transform; }
+    /* layered SOFT shadows = premium depth without ghosting the engraved text */
+    .wpart img{ width:100%; height:100%; object-fit:contain; display:block; -webkit-user-drag:none;
+        filter:
+            drop-shadow(0 5px 9px rgba(0,0,0,0.42))
+            drop-shadow(0 18px 34px rgba(0,0,0,0.55));
+        transition:filter var(--duration-medium) var(--ease-satisfying); }
+    /* the dial face + its hands float as ONE locked unit (the plate), so they never drift apart */
+    .wpart__plate{ position:absolute; inset:0; }
+    .wpart__plate img{ width:100%; height:100%; object-fit:contain; display:block; }
+    /* lively float + glow once the watch breaks apart (constant subtle motion) */
+    .watch-hero.is-open .wpart:not(.wpart--dial):not(.wpart--movement) img{ animation:wfloat 4.2s var(--ease-soft) infinite; }
+    .watch-hero.is-open .wpart--dial .wpart__plate,
+    .watch-hero.is-open .wpart--movement .wpart__plate{ animation:wfloat 4.2s var(--ease-soft) infinite; }
+    .watch-hero.is-open .wpart:nth-of-type(1) img{ animation-delay:1.2s; }
+    .watch-hero.is-open .wpart--movement .wpart__plate{ animation-delay:0.6s; }
+    .watch-hero.is-open .wpart--dial .wpart__plate{ animation-delay:0s; }
+    .watch-hero.is-open .wpart:nth-of-type(4) img{ animation-delay:1.8s; }
+    @keyframes wfloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-3.2%); } }
+    /* CONVERSION = the movement: a FAL-generated alpha video of the real cogs turning (transparent bg, drops straight onto the scene) */
+    .mov-vid{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; display:block; pointer-events:none; filter:drop-shadow(0 8px 18px rgba(0,0,0,0.4)) drop-shadow(0 0 22px var(--glow)); }
+    .wpart__tag{ position:absolute; left:50%; bottom:-13%; transform:translateX(-50%) translateY(14px) scale(calc(1 / var(--s,1))); transform-origin:top center; display:flex; flex-direction:column; align-items:center; gap:0.34em; font-family:'Cinzel',serif; font-size:0.92rem; letter-spacing:0.08em; color:var(--ivory); white-space:nowrap; opacity:0; transition:opacity var(--duration-quick) var(--ease-satisfying), transform var(--duration-medium) var(--ease-satisfying), color var(--duration-quick); transition-delay:0.18s; text-shadow:0 2px 12px #000; }
+    .wpart__nm{ display:inline-flex; align-items:center; gap:0.5em; }
+    .wpart__tag i{ font-style:normal; font-size:0.66rem; color:var(--accent); }
+    /* tap/click affordance per core part (replaces the old hero CTA) */
+    .wpart__go{ font-family:'Inter',system-ui,sans-serif; font-size:0.56rem; font-weight:500; letter-spacing:0.26em; text-transform:uppercase; color:var(--accent); opacity:0.78; text-shadow:none; transition:opacity var(--duration-quick), color var(--duration-quick); animation:tapPulse 2.4s var(--ease-soft) infinite; }
+    .wpart__go::after{ content:"Tap to explore \2192"; }
+    @media (hover:hover){ .wpart__go::after{ content:"Click to explore \2192"; } }
+    @keyframes tapPulse{ 0%,100%{ opacity:0.5; } 50%{ opacity:1; } }
+    @media (prefers-reduced-motion:reduce){ .wpart__go{ animation:none; opacity:0.78; } }
+    .watch-hero.is-open .wpart{ pointer-events:auto; cursor:pointer; }
+    .watch-hero.is-open .wpart__tag{ opacity:1; transform:translateX(-50%) translateY(0) scale(calc(1 / var(--s,1))); }
+    @media (hover:hover){
+        .watch-hero.is-open .wpart:hover img{ filter:drop-shadow(0 8px 16px rgba(0,0,0,0.5)) drop-shadow(0 0 34px var(--glow)) brightness(1.16); }
+        .watch-hero.is-open .wpart:hover .wpart__tag{ color:var(--accent-bright); }
+        .watch-hero.is-open .wpart:hover .wpart__go{ animation:none; opacity:1; color:var(--accent-bright); letter-spacing:0.3em; }
+    }
+    .wpart:focus-visible{ outline:none; } .wpart:focus-visible img{ filter:drop-shadow(0 0 30px var(--accent)) brightness(1.12); }
+    /* hands live on the dial piece (.wpart--dial) — always visible, travel with the dial as it divides */
+    .watch-scene .ag-hands{ position:absolute; top:50%; left:50%; width:76%; height:76%; transform:translate(-50%,-50%); z-index:6; opacity:1; pointer-events:none; filter:drop-shadow(0 1px 1px rgba(0,0,0,0.95)) drop-shadow(0 0 2px rgba(0,0,0,0.85)) drop-shadow(0 0 9px var(--glow)); }
+    .watch-scene .ag-hands .agh-hr,.watch-scene .ag-hands .agh-min,.watch-scene .ag-hands .agh-sec{ transform-box:view-box; transform-origin:100px 100px; }
+    /* hero title — a replica of the loader's end title (.ld-state) so the curtain crossfade is seamless */
+    .hero-state{ position:absolute; left:0; right:0; top:clamp(6%,8vh,11%); z-index:40; text-align:center; pointer-events:none; padding-inline:5vw; }
+    .hero-state .hs-line{ position:absolute; left:0; right:0; top:0; display:block; font-family:'Cinzel',serif; font-weight:600; font-size:clamp(1.7rem, calc(1.05rem + 2.9vw), 3.6rem); letter-spacing:0.16em; text-transform:uppercase; line-height:1.05; color:var(--ivory); text-shadow:0 2px 30px rgba(0,0,0,0.75); opacity:0; transform:translateY(18px); transition:opacity 0.6s var(--ease-satisfying), transform 0.6s var(--ease-satisfying); }
+    .hero-state .hs-line i{ font-style:normal; color:var(--accent); }
+    /* hero copy — bottom-left */
+    .hero-content{ position:absolute; left:var(--safe-edge); bottom:clamp(2.6rem,7vh,4.6rem); width:min(46ch,82vw); text-align:left; z-index:3; opacity:0; transform:translateX(-32px); transition:opacity var(--duration-medium) var(--ease-satisfying), transform var(--duration-medium) var(--ease-satisfying); transition-delay:0.12s; }
+    .hero-title{ font-size:clamp(1.5rem,1.1rem+1.6vw,2.4rem); line-height:1.16; color:var(--ivory); text-shadow:0 6px 26px rgba(0,0,0,0.78); }
+    .hero-title em,.hero-title .accent{ font-style:normal; color:var(--accent); }
+    .hero-support{ font-size:var(--text-lg); color:var(--ivory-warm); margin-top:0.9rem; font-weight:300; text-shadow:0 3px 14px rgba(0,0,0,0.7); max-width:40ch; }
+    .hero-ctas{ display:flex; justify-content:flex-start; gap:1rem; align-items:center; margin-top:1.5rem; }
+    /* centered wordmark, top */
+    .hero-wordmark{ position:absolute; top:clamp(1.6rem,4.4vh,3rem); left:50%; transform:translateX(-50%); z-index:50; font-family:'Cinzel',serif; font-weight:600; font-size:clamp(1.9rem,1rem+2.6vw,3.4rem); letter-spacing:0.4em; padding-left:0.4em; text-transform:uppercase; color:var(--ivory); text-shadow:0 2px 22px rgba(0,0,0,0.6); opacity:0; animation:wordmarkIn var(--duration-long) var(--ease-satisfying) 0.4s forwards; }
+    @keyframes wordmarkIn{ from{ opacity:0; transform:translateX(-50%) translateY(-8px); } to{ opacity:1; transform:translateX(-50%) translateY(0); } }
+    /* scroll cue — center bottom */
+    .scroll-cue{ position:absolute; left:50%; bottom:1.5rem; transform:translateX(-50%); z-index:4; display:flex; flex-direction:column; align-items:center; gap:0.5rem; color:var(--accent); text-decoration:none; opacity:0; transition:opacity var(--duration-medium) var(--ease-satisfying); }
+    .scroll-cue .lbl{ font-family:'Inter',sans-serif; font-size:0.6rem; letter-spacing:0.34em; text-transform:uppercase; color:var(--ivory-warm); }
+    .scroll-cue svg{ display:block; filter:drop-shadow(0 0 5px var(--glow)); }
+    .scroll-cue .chev{ opacity:0.2; animation:scue 2100ms var(--ease-satisfying) infinite; }
+    .scroll-cue svg:nth-of-type(2){ animation-delay:700ms; }
+    .scroll-cue svg:nth-of-type(3){ animation-delay:1400ms; }
+    @keyframes scue{ 0%,100%{ opacity:0.2; } 30%{ opacity:1; } }
+    /* nav hidden over the hero, appears on scroll */
+    .nav{ transition:background var(--duration-medium) var(--ease-satisfying), padding var(--duration-medium) var(--ease-satisfying), border-color var(--duration-medium) var(--ease-satisfying), opacity var(--duration-medium) var(--ease-satisfying), transform var(--duration-medium) var(--ease-satisfying); }
+    .nav:not(.scrolled){ opacity:0; transform:translateY(-14px); pointer-events:none; }
+    .btn-primary{ display:inline-flex; align-items:center; gap:0.6em; white-space:nowrap; font-family:'Cinzel',serif; letter-spacing:0.05em; font-size:0.95rem; color:var(--ink); background:var(--accent); padding:0.95rem 1.9rem; border-radius:2px; width:fit-content; position:relative; overflow:hidden; transition:transform var(--duration-quick) var(--ease-satisfying), box-shadow var(--duration-quick); }
+    .nav-cta,.ag-drawer__cta{ white-space:nowrap; }
+    .btn-primary .arr{ transition:transform var(--duration-quick) var(--ease-satisfying); }
+    .btn-primary::before{ content:''; position:absolute; inset:0; background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,0.45) 50%,transparent 70%); transform:translateX(-130%); transition:transform var(--duration-long) var(--ease-satisfying); }
+    .btn-ghost{ display:inline-flex; align-items:center; gap:0.5em; font-size:0.82rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--ivory); border-bottom:1px solid rgba(242,228,201,0.4); padding-bottom:3px; width:fit-content; transition:color var(--duration-quick), border-color var(--duration-quick); }
+    @media (hover:hover){
+        .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 14px 40px var(--glow); }
+        .btn-primary:hover .arr{ transform:translateX(5px); }
+        .btn-primary:hover::before{ transform:translateX(130%); }
+        .btn-ghost:hover{ color:var(--accent); border-color:var(--accent); }
+    }
+    /* hero copy slides in once the watch opens */
+    .watch-hero.is-open .hero-content{ opacity:1; transform:translateX(0); }
+    @media (prefers-reduced-motion:reduce){ .hero-content{ opacity:1 !important; } .watch-head{ opacity:0; } .wpart{ opacity:1 !important; } }
+    /* mobile: vertical stack — lift the watch, give the copy room, label to the side */
+    @keyframes wordmarkInL{ from{ opacity:0; transform:translateY(-8px); } to{ opacity:1; transform:translateY(0); } }
+    @media (max-width:760px){
+        .watch-scene{ top:35%; }
+        .hero-content{ bottom:clamp(4rem,9vh,5.5rem); width:88vw; }   /* lifted so the scroll cue clears the CTA */
+        .hero-support{ display:none; }
+        .hero-title{ font-size:clamp(1.35rem,4.8vw,1.85rem); }
+        /* hero logo stays CENTERED on mobile (the header logo goes left + hamburger at section 2) */
+    }
+    @media (max-width:450px){               /* small phones: label below */
+        .wpart__tag{ font-size:0.86rem; bottom:-17%; }
+    }
+    @media (min-width:451px) and (max-width:760px){   /* big phones: label to the right, grows with width */
+        .wpart__tag{ left:100%; right:auto; bottom:auto; top:50%; align-items:flex-start; transform:translate(0.6rem,-50%) scale(calc(1 / var(--s,1))); transform-origin:left center; font-size:clamp(0.95rem,2.4vw,1.2rem); }
+        .watch-hero.is-open .wpart__tag{ transform:translate(0.6rem,-50%) scale(calc(1 / var(--s,1))); }
+        /* recenter the disc+label group: shift disc left so the pair sits centered */
+        .watch-hero.is-open .watch-scene{ left:38%; }
+    }
+
+    /* runway */
+    .runway{ position:absolute; left:50%; bottom:1.8rem; transform:translateX(-50%); z-index:3; display:flex; flex-direction:column; align-items:center; gap:0.5rem; color:var(--accent); text-decoration:none; }
+    .runway .lbl{ font-size:0.6rem; letter-spacing:0.34em; text-transform:uppercase; color:var(--ivory-warm); }
+    .runway svg{ display:block; filter:drop-shadow(0 0 5px var(--glow)); }
+    .runway .chev{ opacity:0.2; animation:chev 2100ms var(--ease-satisfying) infinite; }
+    .runway .chev:nth-child(2){ animation-delay:0ms; }
+    .runway .chev:nth-child(3){ animation-delay:700ms; }
+    .runway .chev:nth-child(4){ animation-delay:1400ms; }
+    @keyframes chev{ 0%,100%{ opacity:0.2; } 30%{ opacity:1; } }
+    @media (prefers-reduced-motion:reduce){ .runway .chev{ animation:none; opacity:0.6; } .hero-content > *{ opacity:1; transform:none; } }
+
+    /* ============ generic reveals (AG-MOTION Recipe 1/3) ============ */
+    .reveal{ opacity:0; transform:translateY(var(--dist-base)); transition:opacity var(--duration-medium) var(--ease-satisfying), transform var(--duration-medium) var(--ease-satisfying); will-change:opacity,transform; }
+    .reveal.in-view{ opacity:1; transform:translateY(0); }
+    .reveal-stagger > *{ opacity:0; transform:translateY(var(--dist-base)); transition:opacity var(--duration-medium) var(--ease-settle), transform var(--duration-medium) var(--ease-settle); transition-delay:calc(var(--i,0) * 81ms); }
+    .reveal-stagger.in-view > *{ opacity:1; transform:translateY(0); }
+    @media (prefers-reduced-motion:reduce){ .reveal,.reveal-stagger > *{ opacity:1 !important; transform:none !important; } }
+
+    /* ============ PHILOSOPHY ============ */
+    .phil-head{ font-size:var(--text-hero); line-height:1.06; max-width:17ch; }
+    .phil-head .accent{ color:var(--accent-vis); }
+    .phil-head .brk{ color:var(--accent-vis); font-style:italic; font-weight:400; }
+    .phil-body{ margin-top:2rem; max-width:52ch; }
+    .phil-body p{ font-size:var(--text-lg); color:var(--tx-soft); margin-bottom:0.8rem; }
+    .phil-body .em{ color:var(--tx); font-style:italic; }
+    .phil-os{ margin-top:var(--space-section); }
+    .phil-os span{ display:block; font-family:'Cinzel',serif; font-size:var(--text-h2); }
+    .phil-os span:nth-child(1){ color:var(--tx); }
+    .phil-os span:nth-child(2){ color:var(--accent-vis); }
+    .phil-os span:nth-child(3){ color:var(--tx-mute); }
+    .phil-recon{ margin-top:2rem; font-size:var(--text-lg); color:var(--tx-soft); max-width:54ch; }
+    .phil-recon .accent{ color:var(--accent-vis); font-style:italic; }
+
+    /* ============ DISCIPLINE BAND ============ */
+    .disc{ position:relative; display:grid; grid-template-columns:minmax(0,1fr); gap:clamp(2rem,4vw,3.5rem); }
+    .disc-head{ position:relative; z-index:1; }
+    .disc-main{ position:relative; z-index:1; }
+    /* ambient warm halo behind the medallion — gives the head depth instead of floating on flat bg */
+    .disc-head::before{ content:''; position:absolute; left:-8%; top:-10%; width:62%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle, color-mix(in oklch, var(--accent-vis) 16%, transparent), transparent 66%); filter:blur(6px); pointer-events:none; z-index:0; }
+    .disc-head > *{ position:relative; z-index:1; }
+    /* the discipline numeral lives top-left as a faint Roman-numeral SHADOW behind the content; it glows + pulses when the section is fully in view */
+    /* small Roman numeral pinned to the panel's TOP-LEFT corner; refined gold, muted until the section is in view, then a soft glyph-shaped glow + gentle pulse */
+    .disc-num{ position:absolute; top:clamp(4.6rem,12vh,6.4rem); left:clamp(1.2rem,4vw,3.4rem); z-index:2; font-family:'Cinzel',serif; font-weight:600; font-size:clamp(2.1rem,3.6vw,3.4rem); line-height:1; letter-spacing:0.06em; color:transparent; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; opacity:0.55; pointer-events:none; user-select:none; transition:opacity 0.6s var(--ease-soft), filter 0.6s var(--ease-soft); }
+    .band--ink  .disc-num{ background-image:linear-gradient(135deg,#cdb079,#f4e6c2 50%,#fffdf5); }   /* white gold on black */
+    .band--paper .disc-num{ background-image:linear-gradient(135deg,#5e4716,#8f6f33 55%,#b8954e); }  /* black gold on white */
+    .hpanel.is-active .disc-num{ opacity:1; animation:discNumPulse 3s var(--ease-soft) infinite; }
+    @keyframes discNumPulse{ 0%,100%{ filter:drop-shadow(0 0 4px var(--glow)); } 50%{ filter:drop-shadow(0 0 11px var(--accent)); } }
+    @media (prefers-reduced-motion:reduce){ .hpanel.is-active .disc-num{ animation:none; filter:drop-shadow(0 0 7px var(--glow)); } }
+    .disc-name{ font-size:var(--text-h1); color:var(--tx); margin-top:0.15rem; }
+    .disc-name .accent{ color:var(--accent-vis); }
+    .disc-lead{ font-family:'Cinzel',serif; font-weight:400; font-size:var(--text-h3); color:var(--accent-vis); margin-top:1rem; line-height:1.3; max-width:22ch; }
+    /* centered title block at the TOP of the panel */
+    .disc-title{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:0.5rem; }
+    .disc-title .disc-name{ margin:0; }
+    .disc-title .disc-lead{ margin-top:0.15rem; max-width:34ch; margin-inline:auto; }
+    .disc-body{ margin-top:1.2rem; color:var(--tx-soft); font-size:var(--text-lg); max-width:54ch; }
+    .disc-cards{ margin-top:1.1rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr)); gap:14px; counter-reset:disccard; }
+    .ag-card{ counter-increment:disccard; display:flex; flex-direction:column; position:relative; overflow:hidden; background-color:var(--card-bg); background-image:linear-gradient(180deg, rgba(229,193,133,0.06), transparent 44%); border:1px solid var(--hair); border-radius:var(--card-radius); padding:1.4rem 1.25rem 1.5rem; box-shadow:0 14px 34px -14px rgba(0,0,0,0.5); transition:transform var(--duration-quick) var(--ease-settle), box-shadow var(--duration-quick) var(--ease-settle), border-color var(--duration-quick) var(--ease-settle); }
+    .ag-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, transparent, var(--accent-vis), transparent); opacity:0.4; transition:opacity var(--duration-quick) var(--ease-settle); }
+    .ag-card::after{ content:counter(disccard,decimal-leading-zero); position:absolute; top:1.1rem; right:1.25rem; font-family:'Cinzel',serif; font-size:0.82rem; letter-spacing:0.06em; color:color-mix(in oklch, var(--accent-vis) 48%, transparent); }
+    .ag-card .ico{ color:var(--accent-vis); font-size:1.5rem; width:48px; height:48px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; border:1px solid color-mix(in oklch, var(--accent-vis) 45%, var(--hair)); background:radial-gradient(circle at 50% 32%, color-mix(in oklch, var(--accent-vis) 22%, transparent), color-mix(in oklch, var(--accent-vis) 6%, transparent)); transition:border-color var(--duration-quick) var(--ease-settle), box-shadow var(--duration-quick) var(--ease-settle), transform var(--duration-quick) var(--ease-settle); }
+    .ag-card .nm{ font-family:'Cinzel',serif; font-size:1rem; color:var(--tx); margin-top:0.9rem; letter-spacing:0.01em; line-height:1.25; overflow-wrap:normal; }
+    .ag-card .rule{ width:34px; height:1px; background:var(--accent-vis); opacity:0.55; margin:0.85rem 0; transition:width var(--duration-quick) var(--ease-settle); }
+    .ag-card .ds{ font-size:0.95rem; color:var(--tx-mute); line-height:1.6; }
+    @media (hover:hover){ .ag-card:hover{ transform:translateY(-4px); border-color:color-mix(in oklch, var(--accent-vis) 45%, var(--hair)); box-shadow:0 24px 46px -16px rgba(0,0,0,0.6); } .ag-card:hover::before{ opacity:1; } .ag-card:hover .ico{ border-color:var(--accent-vis); box-shadow:0 0 18px var(--glow); transform:translateY(-1px); } .ag-card:hover .rule{ width:54px; } }
+    @media (min-width:901px){
+        /* core part TOP-LEFT, title centered across the TOP, everything else below */
+        .disc{ grid-template-columns:auto 1fr; grid-template-areas:"title title" "main main"; column-gap:clamp(2rem,4vw,3.5rem); row-gap:clamp(1.4rem,3.5vh,2.4rem); align-items:start; }
+        .disc-title{ grid-area:title; align-self:start; }
+        .disc-head{ grid-column:1 / 2; grid-row:1 / 2; align-self:start; justify-self:start; }   /* core part pinned top-left */
+        .disc-main{ grid-area:main; }
+    }
+
+    /* ============ DISCIPLINES — horizontal track ============ */
+    .hwrap{ position:relative; background:var(--ink); overflow:hidden; }
+    .htrack{ display:flex; }
+    .hpanel{ position:relative; background:var(--surface); }
+    .hpanel .inner{ width:100%; position:relative; z-index:1; }
+    .htrack-rail{ position:absolute; left:var(--safe-edge); right:var(--safe-edge); bottom:clamp(1.4rem,4vh,2.4rem); height:2px; background:rgba(229,193,133,0.16); z-index:5; }
+    .htrack-rail i{ position:absolute; left:0; top:0; height:100%; width:25%; background:linear-gradient(90deg,var(--accent-deep),var(--accent),var(--accent-bright)); }
+    @media (min-width:901px){
+        /* panels stacked absolutely; first slides in from the right OVER pinned Philosophy, rest over it (top/left/bottom) */
+        #philosophy{ position:relative; z-index:1; }
+        .hwrap{ background:transparent; z-index:2; }   /* transparent so Philosophy shows behind the first panel sliding in */
+        .htrack{ position:relative; height:100dvh; width:100%; }
+        .hpanel{ position:absolute; inset:0; width:100vw; height:100dvh; display:flex; align-items:center; padding-block:clamp(5rem,9vh,7rem); overflow:hidden; will-change:transform; }
+        .hpanel:nth-of-type(1){ z-index:1; } .hpanel:nth-of-type(2){ z-index:2; } .hpanel:nth-of-type(3){ z-index:3; } .hpanel:nth-of-type(4){ z-index:4; }
+        .hpanel .disc{ width:100%; }
+        /* À La Carte slides UP and OVER the pinned disciplines (it sits one segment higher, on top) */
+        #alacarte{ z-index:6; margin-top:-100vh; }
+    }
+    @media (max-width:900px){
+        /* mobile: no pin, panels stack as bands */
+        .hwrap{ overflow:visible; }
+        .htrack{ flex-direction:column; }
+        .hpanel{ padding-block:var(--space-section); }
+        .htrack-rail{ display:none; }
+    }
+
+    /* core medallion — the "hole" each discipline seats its part into (key in lock) */
+    .disc-core{ position:relative; width:clamp(120px,13vw,184px); aspect-ratio:1; margin-bottom:clamp(1rem,2.4vh,1.6rem); }
+    .disc-core__ring{ position:absolute; inset:6%; border:1.5px solid color-mix(in oklch, var(--accent-vis) 55%, transparent); border-radius:50%; box-shadow:0 0 20px var(--glow); }   /* inset overridden per part to hug its silhouette */
+    .disc-core__img{ position:relative; width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 8px 18px rgba(0,0,0,0.4)) drop-shadow(0 0 22px var(--glow)); }
+    .disc-core .ag-hands{ position:absolute; top:50%; left:50%; width:76%; height:76%; transform:translate(-50%,-50%); z-index:2; filter:drop-shadow(0 1px 1px rgba(0,0,0,0.9)) drop-shadow(0 0 8px var(--glow)); }
+    .disc-core .ag-hands .agh-hr,.disc-core .ag-hands .agh-min,.disc-core .ag-hands .agh-sec{ transform-box:view-box; transform-origin:100px 100px; }
+    /* IGNITION — when a part seats, gold light surges from within (lit-from-below) + a quick electric burst */
+    .disc-core__under{ position:absolute; inset:-28%; border-radius:50%; background:radial-gradient(circle at 50% 54%, rgba(201,168,97,0.5), rgba(201,168,97,0.10) 46%, transparent 70%); opacity:0; pointer-events:none; z-index:0; }
+    .disc-core.is-charged .disc-core__under{ opacity:0.42; animation:coreBreathe 4.2s var(--ease-soft) infinite; }
+    @keyframes coreBreathe{ 0%,100%{ opacity:0.32; transform:scale(1); } 50%{ opacity:0.58; transform:scale(1.05); } }
+    .disc-core.is-charged .disc-core__ring{ border-color:color-mix(in oklch, var(--accent-vis) 82%, transparent); box-shadow:0 0 26px var(--accent), inset 0 0 22px rgba(201,168,97,0.22); }
+    .disc-core.is-charged .disc-core__img{ filter:drop-shadow(0 8px 18px rgba(0,0,0,0.4)) drop-shadow(0 0 30px rgba(201,168,97,0.55)) drop-shadow(0 0 62px rgba(201,168,97,0.28)); }
+    .cs{ position:absolute; inset:0; pointer-events:none; z-index:6; }
+    .cs__bloom{ position:absolute; left:50%; top:50%; width:135%; aspect-ratio:1; transform:translate(-50%,-50%); border-radius:50%; background:radial-gradient(circle, rgba(255,243,212,0.95), rgba(201,168,97,0.55) 34%, transparent 66%); opacity:0; mix-blend-mode:screen; }
+    .cs__shock{ position:absolute; left:50%; top:50%; width:100%; aspect-ratio:1; transform:translate(-50%,-50%); border-radius:50%; border:2px solid rgba(255,238,196,0.9); opacity:0; }
+    .cs__rays{ position:absolute; left:50%; top:50%; width:240%; aspect-ratio:1; transform:translate(-50%,-50%); opacity:0; mix-blend-mode:screen; overflow:visible; }
+    /* molten cracks ON the part + soft light beaming out (cracked-vase effect). Rides the part element. */
+    .crk{ position:absolute; inset:0; z-index:8; pointer-events:none; overflow:visible; }
+    .crk-bloom{ position:absolute; left:50%; top:50%; width:230%; aspect-ratio:1; transform:translate(-50%,-50%); border-radius:50%; background:radial-gradient(circle, rgba(255,186,98,0.6), rgba(255,120,40,0.18) 36%, transparent 64%); mix-blend-mode:screen; opacity:0; filter:blur(5px); }
+    .crk-rays,.crk-svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; mix-blend-mode:screen; }
+    .crk-rays{ opacity:0; }
+
+    /* dark "key into lock" transition overlay */
+    /* GSAP owns opacity (no CSS transition, to avoid double-animating) */
+    .fly-overlay{ position:fixed; inset:0; z-index:190; background:#070605; opacity:0; pointer-events:none; }
+    .fly-overlay.on{ pointer-events:auto; }
+    .fly-stage{ position:absolute; inset:0; display:grid; place-items:center; }
+    .fly-ring{ aspect-ratio:1; border:1.5px solid color-mix(in oklch, var(--accent) 68%, transparent); border-radius:50%; box-shadow:0 0 34px rgba(201,168,97,0.22), inset 0 0 26px rgba(201,168,97,0.08); opacity:0; }   /* width set in JS to hug the clicked part */
+    .fly-name{ position:absolute; left:0; right:0; top:calc(50% + min(22vh,190px)); text-align:center; font-family:'Cinzel',serif; font-weight:600; font-size:clamp(1.6rem, calc(1rem + 2.4vw), 3rem); letter-spacing:0.18em; text-transform:uppercase; color:var(--ivory); opacity:0; }
+    /* during the transition, hide the gold scrollbar so nothing reveals the scroll behind the dark */
+    body.fly-active .ag-sb{ opacity:0 !important; }
+
+    /* ============ A LA CARTE ============ */
+    .alc-head{ font-size:var(--text-h1); max-width:18ch; }
+    .alc-head .accent{ color:var(--accent-vis); }
+    .alc-intro{ margin-top:1.2rem; color:var(--tx-soft); font-size:var(--text-lg); max-width:54ch; }
+    .alc-grid{ margin-top:var(--space-section); display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr)); gap:21px; }
+    .alc-close{ margin-top:var(--space-section); max-width:60ch; }
+    .alc-close .bold{ font-family:'Cinzel',serif; font-size:var(--text-h3); color:var(--tx); }
+    .alc-close p{ color:var(--tx-soft); margin-top:0.8rem; }
+    .tagline{ font-family:'Cinzel',serif; font-size:var(--text-h3); color:var(--accent-vis); line-height:1.3; margin-top:var(--space-section); }
+
+    /* ============ visual language — filigree divider, themed watermark, premium structure ============ */
+    .ag-fil-divider{ position:relative; height:1px; width:min(220px,60%); margin:var(--space-section) auto clamp(1.6rem,4vh,2.6rem); background:linear-gradient(90deg,transparent,var(--accent-vis),transparent); opacity:0.85; }
+    .ag-fil-divider::after{ content:''; position:absolute; left:50%; top:50%; width:7px; height:7px; transform:translate(-50%,-50%) rotate(45deg); background:var(--accent-vis); box-shadow:0 0 10px var(--glow); }
+
+    /* Philosophy — two-column, engraved watermark, monumental operating-system line */
+    .phil-left .phil-body{ margin-top:1.8rem; }
+    .phil-right{ position:relative; display:flex; align-items:center; justify-content:center; margin-top:2.5rem; }
+    .phil-os{ position:relative; z-index:1; display:flex; flex-direction:column; gap:clamp(0.8rem,2vh,1.4rem); margin-top:0; }
+    .phil-os span{ display:flex; align-items:baseline; gap:0.55em; font-family:'Cinzel',serif; font-size:var(--text-h3); line-height:1.05; color:var(--tx); }
+    .phil-os span:last-child{ color:var(--tx-mute); }
+    .phil-os .n{ font-style:normal; font-weight:600; font-size:1.7em; line-height:0.7; color:var(--accent-vis); }
+    .phil-recon{ text-align:center; max-width:58ch; margin-inline:auto; font-size:var(--text-lg); color:var(--tx-soft); }
+    .phil-recon .accent{ color:var(--accent-vis); font-style:italic; }
+    @media (min-width:901px){
+        .phil-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:clamp(2rem,5vw,5rem); align-items:center; }
+        .phil-right{ margin-top:0; }
+        .phil-os span{ font-size:var(--text-h2); }
+    }
+
+    /* A La Carte — two-column header + indexed cards */
+    @media (min-width:901px){
+        .alc-head-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:clamp(2rem,5vw,4rem); align-items:end; }
+        .alc-head-grid .alc-intro{ margin-top:0; padding-bottom:0.4rem; }
+    }
+    .alc-grid{ counter-reset:alc; }
+    .alc-grid .ag-card{ padding-top:1.9rem; }
+    .alc-grid .ag-card::after{ counter-increment:alc; content:counter(alc, decimal-leading-zero); position:absolute; top:1.1rem; right:1.3rem; font-family:'Cinzel',serif; font-size:0.92rem; letter-spacing:0.08em; color:color-mix(in oklch, var(--accent-vis) 55%, transparent); }
+
+    /* ============ FINALE — One Operating System (reassembly + live watch) ============ */
+    .os-finale{ min-height:100svh; display:flex; align-items:center; overflow:hidden; }
+    @supports not (height:100svh){ .os-finale{ min-height:100vh; } }
+    .os-inner{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:clamp(1.6rem,4vh,3rem); }
+    .os-stage{ position:relative; width:min(52vh,82vw); aspect-ratio:1; }
+    .os-part{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; will-change:transform,opacity; transition:transform 1.7s var(--ease-satisfying), opacity 0.9s var(--ease-satisfying); filter:drop-shadow(0 16px 30px rgba(0,0,0,0.55)); }
+    .os-part--p0{ transform:translate(-62%,-42%) scale(0.66) rotate(-12deg); }
+    .os-part--p1{ transform:translate(58%,-46%) scale(0.66) rotate(10deg); }
+    .os-part--p2{ transform:translate(-52%,52%) scale(0.66) rotate(9deg); }
+    .os-part--p3{ transform:translate(60%,48%) scale(0.66) rotate(-9deg); }
+    .os-finale.converge .os-part{ transform:translate(0,0) scale(1) rotate(0); opacity:1; }
+    /* assembled: the 4 parts STAY (they ARE the watch); live hands ignite over them */
+    .ag-hands{ position:absolute; top:50%; left:50%; width:76%; height:76%; transform:translate(-50%,-50%); pointer-events:none; }
+    .ag-hands .agh-hr,.ag-hands .agh-min,.ag-hands .agh-sec{ transform-box:view-box; transform-origin:100px 100px; }
+    .os-stage .ag-hands{ z-index:6; opacity:0; transition:opacity 0.9s var(--ease-satisfying); filter:drop-shadow(0 1px 1px rgba(0,0,0,0.95)) drop-shadow(0 0 2px rgba(0,0,0,0.85)) drop-shadow(0 0 10px var(--glow)); }
+    .os-finale.is-assembled .ag-hands{ opacity:1; }
+    .os-line{ font-family:'Cinzel',serif; font-size:var(--text-h3); color:var(--tx); }
+    .os-line .accent{ color:var(--accent-vis); font-style:italic; }
+    @media (prefers-reduced-motion:reduce){ .os-finale.is-assembled .ag-hands{ opacity:1; } .os-part{ opacity:1 !important; transform:translate(0,0) scale(1) rotate(0) !important; } }
+
+    /* ============ CONTACT ============ */
+    .contact{ text-align:center; }
+    .contact .inner{ display:flex; flex-direction:column; align-items:center; }
+    .contact-head{ font-size:var(--text-hero); line-height:1.04; }
+    .contact-head .l2{ color:var(--accent); }
+    .contact-sub{ color:var(--tx-soft); font-size:var(--text-lg); margin-top:1.2rem; }
+    .contact-qual{ margin-top:2rem; display:flex; flex-direction:column; gap:0.6rem; max-width:60ch; }
+    .contact-qual p{ color:var(--tx-mute); }
+    .contact-punch{ font-family:'Cinzel',serif; font-size:var(--text-h3); color:var(--tx); margin-top:2rem; }
+    .contact .btn-primary{ margin-top:2rem; font-size:1.05rem; padding:1.1rem 2.4rem; }
+
+    /* ============ FOOTER (4-col + watermark) ============ */
+    .ag-footer{ position:relative; overflow:hidden; background:#040302; color:var(--ivory); padding-top:var(--space-section); padding-bottom:0; }
+    .ag-footer-inner{ position:relative; z-index:1; max-width:1400px; margin-inline:auto; padding-inline:var(--safe-edge); }
+    .ag-footer-cols{ display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:42px; }
+    .ag-footer-logo{ font-family:'Cinzel',serif; font-weight:600; font-size:1.6rem; letter-spacing:0.18em; color:var(--accent); }
+    .ag-footer-tagline{ font-size:0.86rem; color:rgba(242,228,201,0.5); margin-top:1rem; max-width:32ch; line-height:1.7; }
+    .ag-footer-col-label{ font-size:0.72rem; font-weight:500; text-transform:uppercase; letter-spacing:0.18em; color:rgba(242,228,201,0.5); margin-bottom:1.2rem; }
+    .ag-footer-col a{ display:block; font-size:0.9rem; color:var(--ivory-warm); padding:6px 0; transition:color var(--duration-quick); }
+    @media (hover:hover){ .ag-footer-col a:hover{ color:var(--accent); } }
+    .ag-footer-social{ display:flex; gap:0.4rem; }
+    .ag-footer-social a{ width:42px; height:42px; display:inline-flex; align-items:center; justify-content:center; color:var(--ivory-warm); }
+    .ag-footer-divider{ height:1px; background:rgba(242,228,201,0.14); border:0; margin:42px 0; }
+    .ag-footer-bottom{ display:flex; justify-content:space-between; align-items:center; gap:21px; flex-wrap:wrap; padding-bottom:2.4rem; }
+    .ag-footer-copyright{ font-size:0.74rem; color:rgba(242,228,201,0.4); }
+    .ag-footer-policy{ display:flex; gap:0.5rem 1.2rem; flex-wrap:wrap; }
+    .ag-footer-policy a{ font-size:0.78rem; color:rgba(242,228,201,0.55); transition:color var(--duration-quick); }
+    @media (hover:hover){ .ag-footer-policy a:hover{ color:var(--accent); } }
+    .ag-footer-bgname{ position:absolute; left:50%; bottom:-0.12em; transform:translateX(-50%); z-index:0; font-family:'Cinzel',serif; font-weight:600; font-size:calc(min(100vw - 2 * var(--safe-edge), 1400px) * 0.2); line-height:0.82; white-space:nowrap; letter-spacing:0.04em; color:var(--accent); opacity:0.05; pointer-events:none; user-select:none; }
+
+    @media (max-width:900px){
+        .ag-footer-cols{ grid-template-columns:1fr; gap:36px; text-align:center; justify-items:center; }
+        .ag-footer-tagline{ margin-inline:auto; }
+        .ag-footer-social{ justify-content:center; }
+        .ag-footer-bottom{ flex-direction:column-reverse; align-items:center; text-align:center; }
+        .ag-footer-col a{ min-height:49px; display:flex; align-items:center; justify-content:center; }
+    }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <!-- ===== CURTAIN (Horizon + clock loader) ===== -->
+    <div class="ag-curtain" data-phase="load" aria-hidden="true">
+        <!-- PHASE 1 — loading: monogram + bar + dots -->
+        <div class="ld-layer ld-boot">
+            <div class="ld-boot__in">
+                <div class="ld-mono ld-gold">AG</div>
+                <div class="ld-bar"><i></i></div>
+                <div class="ld-dots"><b></b><b></b><b></b></div>
+            </div>
+        </div>
+        <!-- PHASE 2 — brand swoosh, then the curtain lifts and the HERO itself plays the watch -> split -->
+        <div class="ld-layer ld-brand">
+            <div class="ld-wm ld-gold">ARC&nbsp;GARDE</div>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="nav" id="nav">
+        <a href="#top" class="nav-brand"><span class="dot"></span>Arc Garde</a>
+        <nav class="nav-links" id="navLinks" aria-label="Primary">
+            <a href="#philosophy"><span class="nav-link-label">Philosophy</span><span class="nav-link-arrow" aria-hidden="true">&nearr;</span></a>
+            <a href="#disciplines"><span class="nav-link-label">Disciplines</span><span class="nav-link-arrow" aria-hidden="true">&nearr;</span></a>
+            <a href="#alacarte"><span class="nav-link-label">À La Carte</span><span class="nav-link-arrow" aria-hidden="true">&nearr;</span></a>
+        </nav>
+        <a href="https://calendly.com/contactarcgarde/30min?month=2026-02" target="_blank" rel="noopener" class="nav-cta">Contact</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><b></b></button>
+    </header>
+
+    <!-- key-into-lock transition overlay (the part rides centred here, then seats into its section's hole) -->
+    <div class="fly-overlay" id="flyOverlay" aria-hidden="true">
+        <div class="fly-stage">
+            <span class="fly-ring" id="flyRing"></span>
+            <p class="fly-name" id="flyName"></p>
+        </div>
+    </div>
+
+    <div class="ag-backdrop" id="backdrop" hidden></div>
+    <aside class="ag-drawer" id="drawer" aria-label="Site menu" aria-hidden="true" hidden>
+        <div class="ag-drawer__head">
+            <span class="ag-drawer__brand">Arc Garde</span>
+            <button class="ag-drawer__close" id="drawerClose" aria-label="Close menu">&times;</button>
+        </div>
+        <nav aria-label="Mobile">
+            <div class="ag-drawer__list">
+                <a href="#philosophy"><span class="ix">01</span>Philosophy</a>
+                <a href="#disciplines"><span class="ix">02</span>Disciplines</a>
+                <a href="#alacarte"><span class="ix">03</span>À La Carte</a>
+                <a href="#contact"><span class="ix">04</span>Contact</a>
+            </div>
+        </nav>
+        <div class="ag-drawer__foot">
+            <a href="https://calendly.com/contactarcgarde/30min?month=2026-02" target="_blank" rel="noopener" class="ag-drawer__cta">Begin the conversation</a>
+        </div>
+    </aside>
+
+    <main id="main">
+        <a id="top"></a>
+        <!-- ===== HERO ===== -->
+        <section class="watch-hero" id="hero" data-sb-label="Arc Garde" aria-label="Arc Garde">
+            <div class="watch-hero__pin">
+                <div class="watch-hero__stage">
+                    <h1 class="sr-only">Arc Garde — Strategic Growth Partners</h1>
+                    <div class="hero-wordmark" id="heroWordmark" aria-hidden="true">Arc Garde</div>
+                    <div class="hero-state" aria-hidden="true">
+                        <span class="hs-line hs-os" id="hsOs"><i>One</i> Operating System</span>
+                        <span class="hs-line hs-disc" id="hsDisc"><i>Four</i> Disciplines</span>
+                    </div>
+                    <div class="watch-scene" id="watchScene">
+                        <a class="wpart wpart--caseback" data-disc="3" data-slot="3" href="#disciplines" aria-label="Systems discipline">
+                            <img src="scenes/hero/gen/part-4-caseback-cut.webp" alt="" draggable="false">
+                            <span class="wpart__tag"><span class="wpart__nm"><i>04</i>Systems</span><span class="wpart__go" aria-hidden="true"></span></span>
+                        </a>
+                        <a class="wpart wpart--movement" data-disc="2" data-slot="2" href="#disciplines" aria-label="Conversion discipline">
+                            <div class="wpart__plate">
+                                <video class="mov-vid" autoplay muted loop playsinline preload="auto" poster="scenes/hero/gen/part-3-movement-cut.webp" aria-hidden="true"><source src="scenes/hero/gen/movement-cogs-alpha.webm" type="video/webm"></video>
+                            </div>
+                            <span class="wpart__tag"><span class="wpart__nm"><i>03</i>Conversion</span><span class="wpart__go" aria-hidden="true"></span></span>
+                        </a>
+                        <a class="wpart wpart--dial" data-disc="1" data-slot="1" href="#disciplines" aria-label="Traffic discipline">
+                            <div class="wpart__plate">
+                                <img src="scenes/hero/gen/part-2-dial-cut.webp" alt="" draggable="false">
+                                <svg class="ag-hands" aria-hidden="true" viewBox="0 0 200 200">
+                                    <rect class="agh-hr"  x="97.6" y="48" width="4.8" height="60" rx="2.4" fill="#fff6d8"/>
+                                    <rect class="agh-min" x="98.5" y="24" width="3" height="84" rx="1.5" fill="#fff6d8"/>
+                                    <g class="agh-sec"><rect x="99.4" y="20" width="1.2" height="92" fill="#e3a93f"/><rect x="98.9" y="108" width="2.2" height="18" rx="1.1" fill="#e3a93f"/></g>
+                                    <circle cx="100" cy="100" r="3.6" fill="#fff6d8"/><circle cx="100" cy="100" r="1.3" fill="#160f0b"/>
+                                </svg>
+                            </div>
+                            <span class="wpart__tag"><span class="wpart__nm"><i>02</i>Traffic</span><span class="wpart__go" aria-hidden="true"></span></span>
+                        </a>
+                        <a class="wpart wpart--bezel" data-disc="0" data-slot="0" href="#disciplines" aria-label="Consulting discipline">
+                            <img src="scenes/hero/gen/part-1-bezel-cut.webp" alt="" draggable="false">
+                            <span class="wpart__tag"><span class="wpart__nm"><i>01</i>Consulting</span><span class="wpart__go" aria-hidden="true"></span></span>
+                        </a>
+                    </div>
+
+
+                    <a class="scroll-cue" id="scrollCue" href="#philosophy" aria-label="Scroll to content">
+                        <span class="lbl">Scroll</span>
+                        <svg class="chev" width="14" height="6" viewBox="0 0 14 6" fill="none" aria-hidden="true"><path d="M1 1l6 4 6-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <svg class="chev" width="21" height="8" viewBox="0 0 21 8" fill="none" aria-hidden="true" style="margin-top:-3px"><path d="M1.5 1.5l9 5 9-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <svg class="chev" width="28" height="10" viewBox="0 0 28 10" fill="none" aria-hidden="true" style="margin-top:-3px"><path d="M2 2l12 6 12-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PHILOSOPHY ===== -->
+        <section class="band band--paper" id="philosophy" data-sb-label="Philosophy">
+            <div class="inner phil-grid">
+                <div class="phil-left">
+                    <span class="eyebrow reveal">The Thesis</span>
+                    <h2 class="phil-head reveal">You aren't <span class="brk">just</span> under-marketed. You're <span class="brk">also</span> <span class="accent">under-structured</span>.</h2>
+                    <div class="phil-body reveal-stagger">
+                        <p>The revenue your business should be producing <span class="em">already exists</span> in the market.</p>
+                        <p>What stands between you and it isn't more effort. It is not more spend.</p>
+                        <p>It is the absence of <span class="em">infrastructure</span> built to capture what attention alone cannot hold.</p>
+                    </div>
+                </div>
+                <aside class="phil-right reveal">
+                    <div class="phil-os">
+                        <span><i class="n">4</i> disciplines.</span>
+                        <span><i class="n">1</i> operating system.</span>
+                        <span>No pretense.</span>
+                    </div>
+                </aside>
+            </div>
+            <div class="inner">
+                <div class="ag-fil-divider reveal" aria-hidden="true"></div>
+                <p class="phil-recon reveal">These are not just marketing services. They are <span class="accent">comprehensive revenue reconstruction</span>.</p>
+            </div>
+        </section>
+
+        <!-- ===== DISCIPLINES — horizontal scroll track (4 panels) ===== -->
+        <section class="hwrap" id="disciplines" data-sb-label="Disciplines">
+            <div class="htrack" id="htrack">
+
+                <article class="hpanel band--ink">
+                    <p class="disc-num" aria-hidden="true">I</p>
+                    <div class="inner"><div class="disc">
+                        <div class="disc-head reveal">
+                            <div class="disc-core" data-core="0" aria-hidden="true"><span class="disc-core__ring" style="inset:5.9%"></span><img class="disc-core__img" src="scenes/hero/gen/part-1-bezel-cut.webp" alt="" draggable="false"></div>
+                            <p class="disc-lead">Most strategies fail not in execution but in the thinking that preceded it.</p>
+                        </div>
+                        <div class="disc-title reveal">
+                            <span class="eyebrow">Arc Garde / Consulting</span>
+                            <h2 class="disc-name"><span class="accent">Consulting</span></h2>
+                        </div>
+                        <div class="disc-main">
+                            <p class="disc-body reveal">The wrong direction, executed with discipline, is still the wrong direction. We work at the level where the operating logic beneath everything lives.</p>
+                            <div class="disc-cards reveal-stagger">
+                                <div class="ag-card"><span class="material-symbols-outlined ico">hub</span><p class="nm">Marketing &amp; Sales Strategy</p><div class="rule"></div><p class="ds">The full architecture. From first impression to closed revenue.</p></div>
+                                <div class="ag-card"><span class="material-symbols-outlined ico">campaign</span><p class="nm">Marketing Strategy</p><div class="rule"></div><p class="ds">Where attention goes, in what sequence, and why.</p></div>
+                                <div class="ag-card"><span class="material-symbols-outlined ico">trending_up</span><p class="nm">Sales Strategy</p><div class="rule"></div><p class="ds">The difference between a pipeline and a process that closes.</p></div>
+                            </div>
+                        </div>
+                    </div></div>
+                </article>
+
+                <article class="hpanel band--paper">
+                    <p class="disc-num" aria-hidden="true">II</p>
+                    <div class="inner"><div class="disc disc--flip">
+                        <div class="disc-head reveal">
+                            <div class="disc-core" data-core="1" aria-hidden="true"><span class="disc-core__ring" style="inset:1.3%"></span><img class="disc-core__img" src="scenes/hero/gen/part-2-dial-cut.webp" alt="" draggable="false">
+                                <svg class="ag-hands" viewBox="0 0 200 200" aria-hidden="true"><rect class="agh-hr" x="97.6" y="48" width="4.8" height="60" rx="2.4" fill="#fff6d8"/><rect class="agh-min" x="98.5" y="24" width="3" height="84" rx="1.5" fill="#fff6d8"/><g class="agh-sec"><rect x="99.4" y="20" width="1.2" height="92" fill="#e3a93f"/><rect x="98.9" y="108" width="2.2" height="18" rx="1.1" fill="#e3a93f"/></g><circle cx="100" cy="100" r="3.6" fill="#fff6d8"/><circle cx="100" cy="100" r="1.3" fill="#160f0b"/></svg>
+                            </div>
+                            <p class="disc-lead">Attention is not the goal. It is the beginning of one.</p>
+                        </div>
+                        <div class="disc-title reveal">
+                            <span class="eyebrow">Arc Garde / Traffic</span>
+                            <h2 class="disc-name"><span class="accent">Traffic</span></h2>
+                        </div>
+                        <div class="disc-main">
+                            <p class="disc-body reveal">Attention, positioned correctly and captured with precision, becomes a pipeline. A properly working pipeline becomes revenue. But it starts with how you're seen.</p>
+                            <div class="disc-cards reveal-stagger">
+                                <div class="ag-card"><span class="material-symbols-outlined ico">brush</span><p class="nm">Organic Content</p><div class="rule"></div><p class="ds">Video and text content, scripted and calibrated. Written in your voice. Not close to it. Yours.</p></div>
+                                <div class="ag-card"><span class="material-symbols-outlined ico">ads_click</span><p class="nm">Paid Advertising</p><div class="rule"></div><p class="ds">Precision at scale across Meta, Google, TikTok, and YouTube. Copy written with one purpose: conversion.</p></div>
+                            </div>
+                        </div>
+                    </div></div>
+                </article>
+
+                <article class="hpanel band--ink">
+                    <p class="disc-num" aria-hidden="true">III</p>
+                    <div class="inner"><div class="disc">
+                        <div class="disc-head reveal">
+                            <div class="disc-core" data-core="2" aria-hidden="true"><span class="disc-core__ring" style="inset:5.9%"></span><video class="mov-vid" autoplay muted loop playsinline preload="auto" poster="scenes/hero/gen/part-3-movement-cut.webp" aria-hidden="true"><source src="scenes/hero/gen/movement-cogs-alpha.webm" type="video/webm"></video></div>
+                            <p class="disc-lead">You've already paid for the traffic. The question is whether the infrastructure is built to keep it.</p>
+                        </div>
+                        <div class="disc-title reveal">
+                            <span class="eyebrow">Arc Garde / Conversion</span>
+                            <h2 class="disc-name"><span class="accent">Conversion</span></h2>
+                        </div>
+                        <div class="disc-main">
+                            <p class="disc-body reveal">A 10% improvement in conversion outperforms a 30% increase in spend. Every time. Without exception. The businesses that compound treat it as the foundation.</p>
+                            <div class="disc-cards reveal-stagger">
+                                <div class="ag-card"><span class="material-symbols-outlined ico">search_insights</span><p class="nm">Audit</p><div class="rule"></div><p class="ds">The honest diagnosis most businesses avoid.</p></div>
+                                <div class="ag-card"><span class="material-symbols-outlined ico">fact_check</span><p class="nm">Audit + Implementation</p><div class="rule"></div><p class="ds">The diagnosis, and then the correction.</p></div>
+                                <div class="ag-card"><span class="material-symbols-outlined ico">autorenew</span><p class="nm">Continuous Testing</p><div class="rule"></div><p class="ds">Perpetual refinement. A ceiling is only a ceiling until it isn't.</p></div>
+                            </div>
+                        </div>
+                    </div></div>
+                </article>
+
+                <article class="hpanel band--paper">
+                    <p class="disc-num" aria-hidden="true">IV</p>
+                    <div class="inner"><div class="disc disc--flip">
+                        <div class="disc-head reveal">
+                            <div class="disc-core" data-core="3" aria-hidden="true"><span class="disc-core__ring" style="inset:5.9%"></span><img class="disc-core__img" src="scenes/hero/gen/part-4-caseback-cut.webp" alt="" draggable="false"></div>
+                            <p class="disc-lead">What's capping most businesses isn't a people problem. It's a structural one.</p>
+                        </div>
+                        <div class="disc-title reveal">
+                            <span class="eyebrow">Arc Garde / Systems</span>
+                            <h2 class="disc-name"><span class="accent">Systems</span></h2>
+                        </div>
+                        <div class="disc-main">
+                            <p class="disc-body reveal">Infrastructure replaces the fragile with the permanent. Systems that operate without supervision, that scale without degradation, that work whether or not anyone is watching.</p>
+                            <div class="disc-cards reveal-stagger">
+                                <div class="ag-card"><span class="material-symbols-outlined ico">calendar_clock</span><p class="nm">Social Content Management System</p><div class="rule"></div><p class="ds">Consistency that doesn't live or die on someone's availability.</p></div>
+                                <div class="ag-card"><span class="material-symbols-outlined ico">flowchart</span><p class="nm">Sales Optimization System</p><div class="rule"></div><p class="ds">The operational backbone your closers need to close what they were hired to close.</p></div>
+                            </div>
+                        </div>
+                    </div></div>
+                </article>
+
+            </div>
+            <div class="htrack-rail" aria-hidden="true"><i id="htrackFill"></i></div>
+        </section>
+
+        <!-- ===== A LA CARTE ===== -->
+        <section class="band band--ink" id="alacarte" data-sb-label="À La Carte">
+            <div class="inner">
+                <div class="alc-head-grid">
+                    <div class="reveal">
+                        <span class="eyebrow">Arc Garde / À La Carte</span>
+                        <h2 class="alc-head">Not every problem requires a <span class="accent">retainer</span>.</h2>
+                    </div>
+                    <p class="alc-intro reveal">Some require a single deliverable. A system built and left running. A specialist, deployed once, with precision. This is the full inventory. Take what applies. Ignore what doesn't.</p>
+                </div>
+                <div class="alc-grid reveal-stagger">
+                    <div class="ag-card"><span class="material-symbols-outlined ico">video_camera_front</span><p class="nm">Content Creation</p><div class="rule"></div><p class="ds">Short and long form, written and on camera. Scripted for conversion, not vanity metrics. Studio time, videography, editing — from a single asset to an engine that runs indefinitely.</p></div>
+                    <div class="ag-card"><span class="material-symbols-outlined ico">account_tree</span><p class="nm">Strategy &amp; Funnel Development</p><div class="rule"></div><p class="ds">Funnel blueprinting. Websites from one page to fully scaled infrastructure. Landing page copy, VSL scripting, webinar development — the complete structural design of a sales process that closes.</p></div>
+                    <div class="ag-card"><span class="material-symbols-outlined ico">storefront</span><p class="nm">E-Commerce &amp; Digital Assets</p><div class="rule"></div><p class="ds">Shopify builds, single product to full catalog. Digital branding built to hold its weight in a market that has seen everything.</p></div>
+                    <div class="ag-card"><span class="material-symbols-outlined ico">edit_note</span><p class="nm">Copywriting &amp; Messaging</p><div class="rule"></div><p class="ds">Every platform, every format. Meta, Google, TikTok, YouTube, email, VSLs, webinars. Words chosen because they work, not because they sound good at a distance.</p></div>
+                    <div class="ag-card"><span class="material-symbols-outlined ico">groups</span><p class="nm">Community Management</p><div class="rule"></div><p class="ds">WhatsApp, Discord, Whop, Skool, Slack. Built with the architecture of retention — not a place to land, but a reason to stay.</p></div>
+                    <div class="ag-card"><span class="material-symbols-outlined ico">devices</span><p class="nm">Social Media Management</p><div class="rule"></div><p class="ds">Instagram, Facebook, LinkedIn, TikTok, Threads, Pinterest, Snapchat. Presence that is consistent, deliberate, and compounds over time.</p></div>
+                    <div class="ag-card"><span class="material-symbols-outlined ico">area_chart</span><p class="nm">Advertising &amp; Media Buying</p><div class="rule"></div><p class="ds">Meta and Google, managed by people who treat budget like it's their own.</p></div>
+                    <div class="ag-card"><span class="material-symbols-outlined ico">handshake</span><p class="nm">Sales Enablement &amp; Operations</p><div class="rule"></div><p class="ds">Appointment setters and high-ticket closers, plug-and-play or fully managed. Inbox management, digital reception, and a three-week, fifteen-module sales curriculum.</p></div>
+                </div>
+                <div class="alc-close reveal">
+                    <p class="bold">This is not just a menu of marketing services.</p>
+                    <p>This is the full operational capacity of a business built to win, available in the specific configuration your situation requires.</p>
+                </div>
+                <p class="tagline reveal">Stop competing on price.<br>Start dominating with systems.</p>
+            </div>
+        </section>
+
+        <!-- ===== FINALE — One Operating System (4 components reassemble into a live watch) ===== -->
+        <section class="band band--ink os-finale" id="operating-system" data-sb-label="One Operating System">
+            <div class="inner os-inner">
+                <span class="eyebrow os-eyebrow reveal">The Operating System</span>
+                <div class="os-stage" id="osStage" aria-label="Four disciplines assembling into one operating system">
+                    <img class="os-part os-part--p3" src="scenes/hero/gen/part-4-caseback-cut.webp" alt="" aria-hidden="true" draggable="false">
+                    <img class="os-part os-part--p2" src="scenes/hero/gen/part-3-movement-cut.webp" alt="" aria-hidden="true" draggable="false">
+                    <img class="os-part os-part--p1" src="scenes/hero/gen/part-2-dial-cut.webp" alt="" aria-hidden="true" draggable="false">
+                    <img class="os-part os-part--p0" src="scenes/hero/gen/part-1-bezel-cut.webp" alt="" aria-hidden="true" draggable="false">
+                    <svg class="ag-hands" viewBox="0 0 200 200" aria-hidden="true">
+                        <rect class="agh-hr"  x="97.6" y="60" width="4.8" height="48" rx="2.4" fill="#fff6d8"/>
+                        <rect class="agh-min" x="98.5" y="38" width="3" height="70" rx="1.5" fill="#fff6d8"/>
+                        <g class="agh-sec"><rect x="99.4" y="34" width="1.2" height="78" fill="#e3a93f"/><rect x="98.9" y="108" width="2.2" height="18" rx="1.1" fill="#e3a93f"/></g>
+                        <circle cx="100" cy="100" r="3.6" fill="#fff6d8"/><circle cx="100" cy="100" r="1.3" fill="#160f0b"/>
+                    </svg>
+                </div>
+                <p class="os-line reveal">Four disciplines. <span class="accent">One operating system.</span></p>
+            </div>
+        </section>
+
+        <!-- ===== CONTACT ===== -->
+        <section class="band band--paper contact" id="contact" data-sb-label="Contact">
+            <div class="inner">
+                <h2 class="contact-head reveal">21 businesses. <span class="l2">One quarter.</span></h2>
+                <p class="contact-sub reveal">That is not a scarcity tactic. It is a quality one.</p>
+                <div class="contact-qual reveal-stagger">
+                    <p>If you are building something that should be compounding, but isn't —</p>
+                    <p>If the infrastructure beneath your revenue is more fragile than the revenue deserves —</p>
+                    <p>If you have outgrown the systems that got you here —</p>
+                </div>
+                <p class="contact-punch reveal">This is the conversation worth having.</p>
+                <a href="https://calendly.com/contactarcgarde/30min?month=2026-02" target="_blank" rel="noopener" class="btn-primary reveal">Begin the conversation <span class="arr">&rarr;</span></a>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="ag-footer">
+        <div class="ag-footer-inner">
+            <div class="ag-footer-cols">
+                <div class="ag-footer-identity">
+                    <p class="ag-footer-logo">Arc Garde</p>
+                    <p class="ag-footer-tagline">Strategic Growth Partners. Comprehensive revenue reconstruction for businesses built to compound.</p>
+                </div>
+                <nav class="ag-footer-col" aria-label="Sections">
+                    <p class="ag-footer-col-label">Explore</p>
+                    <a href="#philosophy">Philosophy</a>
+                    <a href="#disciplines">Disciplines</a>
+                    <a href="#alacarte">À La Carte</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+                <nav class="ag-footer-col" aria-label="Company">
+                    <p class="ag-footer-col-label">Company</p>
+                    <a href="https://calendly.com/contactarcgarde/30min?month=2026-02" target="_blank" rel="noopener">Book a call</a>
+                    <a href="/intake/">Intake</a>
+                    <a href="/free1pagewebsite/">Free 1-Page Website</a>
+                </nav>
+                <div class="ag-footer-col">
+                    <p class="ag-footer-col-label">Follow</p>
+                    <div class="ag-footer-social">
+                        <a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
+                        <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><span class="material-symbols-outlined">work</span></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="ag-footer-divider">
+            <div class="ag-footer-bottom">
+                <p class="ag-footer-copyright">&copy; 2026 Arc Garde LLC. All rights reserved.</p>
+                <nav class="ag-footer-policy" aria-label="Legal">
+                    <a href="/privacy-policy">Privacy Policy</a>
+                    <a href="/terms-of-service">Terms of Service</a>
+                    <a href="/cookie-policy">Cookie Policy</a>
+                    <a href="/disclaimer">Disclaimer</a>
+                    <a href="/acceptable-use">Acceptable Use</a>
+                </nav>
+            </div>
+        </div>
+        <span class="ag-footer-bgname" aria-hidden="true">Arc Garde</span>
+    </footer>
+
+    <!-- ===== Scripts ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+    <script>
+    (function(){
+        'use strict';
+        var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* ---- Lenis (AG-SCROLL, lerp 0.07 locked) ---- */
+        var lenis = null;
+        if(!reduce){
+            lenis = new Lenis({ lerp:0.07, smoothWheel:true, smoothTouch:false, touchMultiplier:2, wheelMultiplier:1, orientation:'vertical', gestureOrientation:'vertical', infinite:false });
+            function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
+            requestAnimationFrame(raf);
+            window.lenis = lenis;
+        }
+        /* ---- GSAP ScrollTrigger wired to Lenis (Scroll Scene engine) ---- */
+        if(window.gsap && window.ScrollTrigger){
+            gsap.registerPlugin(ScrollTrigger);
+            if(lenis){ lenis.on('scroll', ScrollTrigger.update); }
+        }
+
+        /* ---- anchor smooth scroll (0.7s easeOutExpo, AG-SCROLL) — NOT the watch parts (they run the key-into-lock transition) ---- */
+        document.querySelectorAll('a[href^="#"]:not(.wpart)').forEach(function(a){
+            a.addEventListener('click', function(e){
+                var id = a.getAttribute('href'); if(id==='#'||id.length<2) return;
+                var t = document.querySelector(id); if(!t) return;
+                e.preventDefault();
+                if(window.lenis){ lenis.scrollTo(t, { offset:-70, duration:0.7, easing:function(x){ return x===1?1:1-Math.pow(2,-10*x); } }); }
+                else { t.scrollIntoView({ behavior:'smooth' }); }
+                closeDrawer();
+            });
+        });
+
+        /* ---- nav scrolled state ---- */
+        var nav = document.getElementById('nav');
+        var heroEl = document.getElementById('hero');
+        // header waits until the hero is fully scrolled past (into the second section), then redistributes
+        function onScroll(){ var y = window.lenis ? lenis.scroll : window.scrollY; var sw = heroEl ? heroEl.offsetHeight - 72 : 600; nav.classList.toggle('scrolled', y > sw); }
+        if(window.lenis){ lenis.on('scroll', onScroll); } else { addEventListener('scroll', onScroll, { passive:true }); }
+        onScroll();
+
+        /* ---- drawer ---- */
+        var toggle = document.getElementById('navToggle'),
+            drawer = document.getElementById('drawer'),
+            backdrop = document.getElementById('backdrop'),
+            closeBtn = document.getElementById('drawerClose'),
+            lastFocus = null;
+        function openDrawer(){
+            lastFocus = document.activeElement;
+            drawer.hidden = false; backdrop.hidden = false;
+            requestAnimationFrame(function(){ drawer.classList.add('is-open'); backdrop.classList.add('is-open'); });
+            drawer.setAttribute('aria-hidden','false'); toggle.setAttribute('aria-expanded','true');
+            document.body.classList.add('drawer-open');
+            if(window.lenis) lenis.stop();
+            closeBtn.focus();
+            document.addEventListener('keydown', onKey);
+        }
+        function closeDrawer(){
+            if(drawer.hidden) return;
+            drawer.classList.remove('is-open'); backdrop.classList.remove('is-open');
+            drawer.setAttribute('aria-hidden','true'); toggle.setAttribute('aria-expanded','false');
+            document.body.classList.remove('drawer-open');
+            if(window.lenis) lenis.start();
+            document.removeEventListener('keydown', onKey);
+            setTimeout(function(){ drawer.hidden = true; backdrop.hidden = true; }, 600);
+            if(lastFocus) lastFocus.focus();
+        }
+        function onKey(e){
+            if(e.key === 'Escape'){ closeDrawer(); return; }
+            if(e.key === 'Tab'){
+                var f = drawer.querySelectorAll('a[href],button'); if(!f.length) return;
+                var first = f[0], last = f[f.length-1];
+                if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+                else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+            }
+        }
+        toggle.addEventListener('click', function(){ document.body.classList.contains('drawer-open') ? closeDrawer() : openDrawer(); });
+        closeBtn.addEventListener('click', closeDrawer);
+        backdrop.addEventListener('click', closeDrawer);
+
+        /* ---- motion reveals (AG-MOTION universal trigger) ---- */
+        var SEL = '.reveal, .reveal-stagger';
+        if(reduce){
+            document.querySelectorAll(SEL).forEach(function(el){ el.classList.add('in-view'); });
+        } else {
+            document.querySelectorAll('.reveal-stagger').forEach(function(g){
+                Array.prototype.forEach.call(g.children, function(c,i){ c.style.setProperty('--i', i); });
+            });
+            var io = new IntersectionObserver(function(entries){
+                entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in-view'); io.unobserve(en.target); } });
+            }, { threshold:0.15, rootMargin:'0px 0px -10% 0px' });
+            document.querySelectorAll(SEL).forEach(function(el){ io.observe(el); });
+        }
+
+        /* ---- DISCIPLINES horizontal scroll (desktop only) ---- */
+        (function(){
+            var wrap = document.getElementById('disciplines');
+            var track = document.getElementById('htrack');
+            var fill = document.getElementById('htrackFill');
+            if(!wrap || !track || !window.ScrollTrigger) return;
+            var desktop = matchMedia('(min-width:901px)').matches && !reduce;
+            // content inside the track must be visible regardless of IO (transforms confuse it)
+            wrap.querySelectorAll('.reveal,.reveal-stagger').forEach(function(el){
+                el.classList.add('in-view');
+                Array.prototype.forEach.call(el.children, function(c,i){ c.style.setProperty('--i', i); });
+            });
+            if(!desktop){
+                var mio=new IntersectionObserver(function(es){ es.forEach(function(e){ e.target.classList.toggle('is-active', e.isIntersecting && e.intersectionRatio>=0.55); }); }, { threshold:[0,0.55,0.9] });
+                [].slice.call(track.children).forEach(function(pn){ mio.observe(pn); });
+                return;
+            }
+            var panels = [].slice.call(track.children), N = panels.length;
+            // 1st (Consulting) slides in from the RIGHT over the pinned Philosophy; rest slide over it: top -> left -> bottom
+            var dirs = [['xPercent',100], ['yPercent',-100], ['xPercent',-100], ['yPercent',100]];
+            var tl = gsap.timeline();
+            panels.forEach(function(pn,i){
+                var d=dirs[i%4], fr={}, to={};
+                fr[d[0]]=d[1]; gsap.set(pn,fr);
+                to[d[0]]=0; to.ease='none'; to.duration=1;
+                tl.fromTo(pn, fr, to, i);                        // panel i slides IN during segment i
+                if(i>0){                                         // CONVEYOR: push the previous panel out the same way it travels, so it leaves instead of lingering under the new one
+                    var ef={}, et={}; ef[d[0]]=0; et[d[0]]=-d[1]; et.ease='none'; et.duration=1;
+                    tl.fromTo(panels[i-1], ef, et, i);
+                }
+            });
+            tl.to({}, {duration:1/0.62});   // trailing HOLD = one FULL viewport: Systems sits fully shown while À La Carte slides all the way up over the pin
+            // overlap the disciplines onto Philosophy so the 1st discipline starts sliding the instant
+            // Philosophy pins (no frozen/dead scroll) — every transition is now one equal segment
+            var phil=document.getElementById('philosophy');
+            if(phil) wrap.style.marginTop = (-phil.offsetHeight) + 'px';
+            // Philosophy ("The Thesis") stays fixed as the backdrop just while the 1st discipline slides over it
+            // scroll length per transition (snappier — less scroll per discipline)
+            if(phil) ScrollTrigger.create({ trigger:phil, start:'top top', end:function(){ return '+=' + (window.innerHeight*0.62); }, pin:true, pinSpacing:false });
+            var activeIdx=-1;
+            function setActive(i){ if(i===activeIdx) return; activeIdx=i; for(var k=0;k<N;k++){ panels[k].classList.toggle('is-active', k===i); } }
+            ScrollTrigger.create({
+                trigger:wrap, start:'top top', end:function(){ return '+=' + (window.innerHeight*(N*0.62 + 1)); },
+                pin:true, scrub:0.6, invalidateOnRefresh:true, anticipatePin:1, animation:tl,
+                onUpdate:function(self){ if(fill){ fill.style.width=(8 + self.progress*92)+'%'; } var t=self.progress*tl.duration(); setActive(Math.max(0,Math.min(N-1,Math.round(t)-1))); }
+            });
+            setActive(0);   // 1st discipline lit on arrival
+        })();
+
+        /* ============================================================
+           ARC GARDE WATCH — 4-component dismantle hero
+           The SAME 4 parts stacked = the watch; on scroll they break
+           apart LEFT -> RIGHT, flat/face-on, each a thick clickable coin.
+           ============================================================ */
+        var hero = document.getElementById('hero');
+        var scene = document.getElementById('watchScene');
+        var hint = document.getElementById('watchHint');
+        var wparts = [].slice.call(scene.querySelectorAll('.wpart'));
+        wparts.forEach(function(p){ p._slot = +p.getAttribute('data-slot') || 0; });  // 0=bezel(left) .. 3=caseback(right)
+
+        var GAPx, GAPy, tScaleD, tScaleM, vertical;
+        function measure(){
+            var sw = scene.offsetWidth || (window.innerWidth*0.5);
+            var pin = hero && hero.querySelector('.watch-hero__pin');
+            var iw = window.innerWidth, ih = (pin && pin.clientHeight) || window.innerHeight;   // sticky pin = 100svh (stable viewport)
+            vertical = window.matchMedia('(max-width: 760px)').matches;    // mobile = stack vertically
+            GAPx = 0.235 * iw;                                             // desktop column spacing
+            tScaleD = Math.min(1, (0.185 * iw) / sw);
+            if(vertical){
+                // give the stack its OWN band: clear of the wordmark (top) and copy (bottom)
+                var labelRight = iw > 450;                                 // >450 -> label beside, no vertical label reserve
+                var topR = 0.22 * ih, botR = 0.26 * ih;   // more top room (clears the big title), less wasted bottom
+                var label = labelRight ? 0 : 30;
+                var band = Math.max(240, ih - topR - botR);
+                var maxDiscW = (labelRight ? 0.32 : 0.19) * iw;            // grow with width; below-labels need smaller discs to clear
+                var discPx = Math.min(maxDiscW, (band - label) * (labelRight ? 0.215 : 0.235));
+                GAPy = (band - discPx - label) / 3;                        // 4 discs across the band
+                tScaleM = Math.min(1, discPx / sw);
+                scene.style.top = (topR + band/2) + 'px';                  // center the stack in its band
+            } else {
+                scene.style.top = '';                                      // revert to CSS (desktop)
+                GAPy = 0; tScaleM = tScaleD;
+            }
+        }
+        measure();
+
+        function applyWatch(p){
+            var s = vertical ? (1 - p*(1 - tScaleM)) : (1 - p*(1 - tScaleD));
+            var gap = vertical ? GAPy : GAPx;
+            wparts.forEach(function(el){
+                var off = (el._slot - 1.5) * p * gap;
+                el.style.setProperty('--x', (vertical ? 0 : off) + 'px');
+                el.style.setProperty('--y', (vertical ? off : 0) + 'px');
+                // When WHOLE: the dial nests small (0.80) and the Consulting bezel sits LARGER (1.14) so its
+                // ornate rim frames the dial without covering the numerals. As they separate both ease to 1.0
+                // so the 4 pieces are uniform. Hands ride the dial.
+                var es = s;
+                if(el.classList.contains('wpart--dial'))       es = (0.80 + 0.20*p) * s;
+                else if(el.classList.contains('wpart--bezel'))  es = (1.14 - 0.14*p) * s;
+                el.style.setProperty('--s', es.toFixed(3));
+            });
+            if(hint) hint.style.opacity = p>0.6 ? 1 : 0;
+            // cinematic cross-fade: "One Operating System" (whole) -> "Four Disciplines" (divided), each rises in
+            var osT = textReady * Math.max(0, Math.min(1, 1 - (p - 0.05) / 0.30));     // full while whole, gone by ~0.35
+            var dT  = textReady * Math.max(0, Math.min(1, (p - 0.50) / 0.22));         // arrives as the watch finishes splitting
+            if(hsOs){  hsOs.style.opacity = osT; hsOs.style.transform   = 'translateY(' + (-(1-osT)*10) + 'px)'; }
+            if(hsDisc){ hsDisc.style.opacity = dT; hsDisc.style.transform = 'translateY(' + ((1-dT)*14) + 'px)'; }
+            if(scrollCue) scrollCue.style.opacity = textReady * Math.max(0, Math.min(1, 1 - (p - 0.05) / 0.25));  // invites the scroll, fades as the split begins
+            hero.classList.toggle('is-open', p>0.45);
+        }
+
+        var textReady = 1;
+        var hsOs = document.getElementById('hsOs');
+        var hsDisc = document.getElementById('hsDisc');
+        var scrollCue = document.getElementById('scrollCue');
+        var heroSplit = false;   // true once the watch has rested on the four pieces
+        addEventListener('resize', function(){ measure(); applyWatch(heroSplit?1:0); if(heroSplit && scrollCue) scrollCue.style.opacity='1'; }, { passive:true });
+
+        /* The curtain only does load + brand, then lifts. The HERO itself plays the watch:
+           whole + "One Operating System" -> splits into the 4 cores + "Four Disciplines" -> rests.
+           This IS the hero (one watch), so it's pixel-perfect by definition — no crossfade seam. */
+        applyWatch(0);
+        function playHeroSplit(){
+            var start=null, HOLD=950, DUR=2050;
+            function step(ts){
+                if(!start) start=ts;
+                var e=ts-start;
+                var p = e<HOLD ? 0 : Math.min(1,(e-HOLD)/(DUR-HOLD));
+                var ep = p<0.5 ? 4*p*p*p : 1-Math.pow(-2*p+2,3)/2;   // easeInOutCubic
+                applyWatch(ep);
+                if(p<1) requestAnimationFrame(step);
+                else { heroSplit=true; if(scrollCue) scrollCue.style.opacity='1'; }
+            }
+            requestAnimationFrame(step);
+        }
+        if(reduce){ heroSplit=true; applyWatch(1); if(scrollCue) scrollCue.style.opacity='1'; }
+        else if(document.documentElement.classList.contains('is-ready')) playHeroSplit();
+        else window.addEventListener('ag:ready', playHeroSplit, { once:true });
+
+        /* click a component -> glide to that discipline panel */
+        function goToDiscipline(idx){
+            var wrap = document.getElementById('disciplines');
+            var track = document.getElementById('htrack');
+            var st = window.ScrollTrigger ? ScrollTrigger.getAll().filter(function(s){ return s.trigger===wrap; })[0] : null;
+            if(st && track && track.children.length>1){
+                var total = (st.animation && st.animation.duration && st.animation.duration()) || track.children.length;
+                var frac = (idx+1)/total;   // land on the panel's FULL-in time (timeline incl. the À La Carte hold) so the discipline fills the screen
+                var y = st.start + (st.end - st.start)*frac;
+                if(window.lenis) lenis.scrollTo(y,{duration:1.2,easing:function(x){return x===1?1:1-Math.pow(2,-10*x);}});
+                else window.scrollTo({top:y,behavior:'smooth'});
+            } else if(wrap){
+                if(window.lenis) lenis.scrollTo(wrap,{offset:-70,duration:0.7,easing:function(x){return x===1?1:1-Math.pow(2,-10*x);}});
+                else wrap.scrollIntoView({behavior:'smooth'});
+            }
+        }
+        /* CLICK a core part -> KEY INTO LOCK (flawless):
+           1) screen goes fully dark   2) part glides to centre (in its outline + name)
+           3) page scrolls HIDDEN behind the solid dark   4) part glides to the section's exact hole
+           5) ONLY THEN the dark fades — the part is already perfectly seated. */
+        var DISC_NAMES=['Consulting','Traffic','Conversion','Systems'];
+        // PREMIUM / RESTRAINED: the dark veil recedes from the part (a slow depth pull-back) and dissolves
+        // through a whisper of warm gold light, revealing the section. No mechanic — just expensive motion.
+        function revealVeil(overlay, ox, oy, onDone){
+            if(!window.gsap){ if(onDone) onDone(); return; }
+            var D=Math.hypot(window.innerWidth, window.innerHeight)*1.5;
+            var bloom=document.createElement('div'); bloom.className='veil-bloom';
+            bloom.style.cssText='position:fixed; left:'+ox.toFixed(0)+'px; top:'+oy.toFixed(0)+'px; width:'+D.toFixed(0)+'px; height:'+D.toFixed(0)+'px; transform:translate(-50%,-50%) scale(0.32); transform-origin:50% 50%; z-index:198; pointer-events:none; mix-blend-mode:screen; border-radius:50%; background:radial-gradient(circle, rgba(216,180,110,0.42), rgba(201,168,97,0.10) 42%, transparent 70%); opacity:0;';
+            document.body.appendChild(bloom);
+            gsap.set(overlay,{transformOrigin:ox.toFixed(0)+'px '+oy.toFixed(0)+'px'});
+            var tl=gsap.timeline({ onComplete:function(){ if(bloom.parentNode) bloom.remove(); gsap.set(overlay,{clearProps:'opacity,transform'}); if(onDone) onDone(); } });
+            tl.to(bloom,{scale:1,opacity:0.5,duration:0.6,ease:'power2.out'},0);            // warm light wells up from the part
+            tl.to(bloom,{opacity:0,duration:0.8,ease:'power2.in'},0.55);
+            tl.to(overlay,{opacity:0,scale:1.1,duration:1.05,ease:'power2.inOut'},0.15);     // the veil pulls back + dissolves
+        }
+        // settle the seated part to a lit-from-within glow
+        function igniteCore(med){
+            if(!med) return;
+            med.classList.add('is-charged');
+            if(!med.querySelector('.disc-core__under')){ var u=document.createElement('span'); u.className='disc-core__under'; med.insertBefore(u, med.firstChild); }
+        }
+        var flying=false;
+        function flyToDiscipline(partEl, idx){
+            if(flying || !heroSplit) return;
+            var overlay=document.getElementById('flyOverlay'), ring=document.getElementById('flyRing'), nameEl=document.getElementById('flyName');
+            if(reduce || !window.gsap || !overlay){ goToDiscipline(idx); return; }
+            flying=true;
+            document.body.classList.add('fly-active');
+            if(nameEl) nameEl.textContent=DISC_NAMES[idx]||'';
+            var r=partEl.getBoundingClientRect();
+            var clone=partEl.cloneNode(true);
+            var tag=clone.querySelector('.wpart__tag'); if(tag) tag.remove();
+            clone.setAttribute('aria-hidden','true');
+            clone.style.cssText='position:fixed;inset:auto;left:0;top:0;margin:0;z-index:200;pointer-events:none;width:'+r.width+'px;height:'+r.height+'px;';
+            document.body.appendChild(clone);
+            gsap.set(clone,{transformOrigin:'50% 50%', x:r.left, y:r.top, scale:1, force3D:true});
+            gsap.set([ring,nameEl].filter(Boolean),{opacity:0});
+            var track=document.getElementById('htrack');
+            var wrap=document.getElementById('disciplines');
+            var st=window.ScrollTrigger ? ScrollTrigger.getAll().filter(function(s){return s.trigger===wrap;})[0] : null;
+            var ease=function(x){return x===1?1:1-Math.pow(2,-10*x);};
+            var centered=false, scrollDone=false, presented=false, seated=false, done=false;
+
+            // STEP 1 — screen goes FULLY black before anything else (no scroll, no text yet)
+            overlay.classList.add('on'); overlay.setAttribute('aria-hidden','false');
+            gsap.set(overlay,{opacity:0});
+            gsap.to(overlay,{opacity:1,duration:0.18,ease:'power1.out',onComplete:function(){ requestAnimationFrame(function(){ requestAnimationFrame(startScroll); }); }});
+
+            // STEP 2 — part glides to centre (its spot). Size the outline to hug THIS part's silhouette.
+            var target=Math.min(window.innerHeight*0.34,272), cScale=target/r.width;
+            var CORE_RATIO=[0.84,0.928,0.84,0.84], OUTLINE_MARGIN=1.05;
+            if(ring){ var rd=(CORE_RATIO[idx]||0.88)*OUTLINE_MARGIN*target; ring.style.width=rd+'px'; ring.style.height=rd+'px'; }
+            gsap.to(clone,{ x:window.innerWidth/2 - r.width/2, y:window.innerHeight/2 - r.height/2, scale:cScale, duration:0.9, ease:'power2.inOut', onComplete:function(){
+                centered=true;
+                // the part has landed at centre; the name rises in (the discipline being set)
+                gsap.fromTo([nameEl].filter(Boolean),{opacity:0,y:8},{opacity:1,y:0,duration:0.4,ease:'power2.out'});
+                gsap.delayedCall(0.55, function(){ presented=true; maybeSeat(); });
+            }});
+
+            // the scroll happens HIDDEN behind the solid black, only after it is fully opaque
+            function startScroll(){
+                if(st && track && track.children.length>1){
+                    var total=(st.animation && st.animation.duration && st.animation.duration()) || track.children.length;
+                    var frac=(idx+1)/total;   // full-screen landing on the chosen discipline
+                    var y=st.start+(st.end-st.start)*frac;
+                    if(window.lenis) lenis.scrollTo(y,{duration:1.1,easing:ease,onComplete:function(){scrollDone=true;maybeSeat();}});
+                    else { window.scrollTo({top:y,behavior:'smooth'}); setTimeout(function(){scrollDone=true;maybeSeat();},1100); }
+                } else {
+                    var panel=track?track.children[idx]:null;
+                    if(window.lenis && panel) lenis.scrollTo(panel,{offset:-(window.innerHeight*0.18),duration:1.1,easing:ease,onComplete:function(){scrollDone=true;maybeSeat();}});
+                    else if(panel){ panel.scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(function(){scrollDone=true;maybeSeat();},1100); }
+                    else { scrollDone=true; maybeSeat(); }
+                }
+            }
+            function maybeSeat(){ if(presented && scrollDone) seat(); }
+            function finish(){ if(done) return; done=true; clone.remove(); [].forEach.call(document.querySelectorAll('.veil-bloom'),function(e){e.remove();}); overlay.style.background=''; gsap.set(overlay,{clearProps:'opacity,transform'}); overlay.classList.remove('on'); overlay.setAttribute('aria-hidden','true'); document.body.classList.remove('fly-active'); flying=false; }
+            function seat(){
+                if(seated) return; seated=true;
+                requestAnimationFrame(function(){ requestAnimationFrame(function(){   // 2x rAF: ScrollTrigger transform settled
+                    var panel=track ? track.children[idx] : null;
+                    var med=panel ? panel.querySelector('.disc-core') : null;
+                    gsap.to([ring,nameEl].filter(Boolean),{opacity:0,duration:0.4,ease:'power2.out'});
+                    if(!med){ revealVeil(overlay, window.innerWidth/2, window.innerHeight/2, finish); gsap.to(clone,{opacity:0,duration:0.7,delay:0.5,ease:'power2.out'}); return; }
+                    var m=med.getBoundingClientRect();
+                    igniteCore(med);   // the seated part stays lit from within
+                    // the part settles weightily into its hole as the veil dissolves through warm light
+                    gsap.to(clone,{ x:m.left+m.width/2 - r.width/2, y:m.top+m.height/2 - r.height/2, scale:m.width/r.width, duration:1.1, ease:'power3.inOut' });
+                    revealVeil(overlay, window.innerWidth/2, window.innerHeight/2, finish);
+                }); });
+            }
+            gsap.delayedCall(4.0, function(){ presented=true; scrollDone=true; maybeSeat(); });   // safety: never strand the clone
+        }
+        wparts.forEach(function(el){
+            el.addEventListener('click', function(e){ e.preventDefault(); flyToDiscipline(el, +el.getAttribute('data-disc')||0); });
+        });
+
+        /* ============================================================
+           LIVE HANDS (Tudor 8-beat sweep) — drives every .ag-hands
+           (loader, hero assembled, finale assembled) = one consistent watch
+           ============================================================ */
+        (function(){
+            var hands = [].slice.call(document.querySelectorAll('.ag-hands'));
+            if(hands.length){
+                function set(secDeg, minDeg, hrDeg){
+                    // re-query live so any cloned/seated dial (transition) ticks in perfect sync — no jump on swap
+                    [].slice.call(document.querySelectorAll('.ag-hands')).forEach(function(H){
+                        var sc=H.querySelector('.agh-sec'), mn=H.querySelector('.agh-min'), hr=H.querySelector('.agh-hr');
+                        if(sc) sc.style.transform='rotate('+secDeg+'deg)';
+                        if(mn) mn.style.transform='rotate('+minDeg+'deg)';
+                        if(hr) hr.style.transform='rotate('+hrDeg+'deg)';
+                    });
+                }
+                if(reduce){
+                    var d=new Date(), s=d.getSeconds(), m=d.getMinutes(), h=d.getHours()%12;
+                    set(s*6, (m+s/60)*6, (h+m/60)*30);
+                } else {
+                    (function loop(){
+                        var d=new Date(), ms=d.getMilliseconds(), s=d.getSeconds(), m=d.getMinutes(), h=d.getHours()%12;
+                        set(Math.floor((s*1000+ms)/125)*0.75, (m+s/60)*6, (h+m/60)*30);   // 8 beats/sec = 28,800 vph
+                        requestAnimationFrame(loop);
+                    })();
+                }
+            }
+            // finale converge -> assemble (autoplay on enter)
+            var fin = document.getElementById('operating-system');
+            if(!fin) return;
+            if(reduce){ fin.classList.add('is-assembled'); return; }
+            var played=false;
+            var io=new IntersectionObserver(function(es){
+                es.forEach(function(e){
+                    if(e.isIntersecting && !played){
+                        played=true; io.unobserve(e.target);
+                        fin.classList.add('converge');
+                        setTimeout(function(){ fin.classList.add('is-assembled'); }, 1900);
+                    }
+                });
+            }, { threshold:0.4 });
+            io.observe(fin);
+        })();
+    })();
+    </script>
+
+    <!-- cursor (canonical drop-in, self-init, body-level) -->
+    <script src="ag-cursor.js"></script>
+
+    <!-- gold scrollbar (AG-SCROLLBAR, after lenis) -->
+    <script>
+    (function () {
+      if (!window.matchMedia || !(matchMedia('(pointer: fine)').matches && matchMedia('(hover: hover)').matches)) return;
+      var lenis = window.lenis || null;
+      var docEl = document.scrollingElement || document.documentElement;
+      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function pos(){ return lenis ? lenis.scroll : docEl.scrollTop; }
+      function vmax(){ return Math.max(1, lenis ? lenis.limit : (docEl.scrollHeight - docEl.clientHeight)); }
+      function toY(y){ if(lenis) lenis.scrollTo(y,{immediate:true,force:true}); else docEl.scrollTop=y; }
+      var bar=document.createElement('div'); bar.className='ag-sb'; bar.setAttribute('aria-hidden','true');
+      var track=document.createElement('div'); track.className='ag-sb__track';
+      var thumb=document.createElement('div'); thumb.className='ag-sb__thumb';
+      var label=document.createElement('div'); label.className='ag-sb__label';
+      track.appendChild(thumb); bar.appendChild(track); bar.appendChild(label); document.body.appendChild(bar);
+      var TRACK_TOP=21, MIN_THUMB=42, trackH=0, hideT=0, dragging=false, hover=false, SECTIONS=[], activeI=-1;
+      function metrics(){ trackH=track.clientHeight; }
+      function build(){
+        [].slice.call(track.querySelectorAll('.ag-sb__tick')).forEach(function(t){ t.remove(); }); SECTIONS=[];
+        var sh=docEl.scrollHeight;
+        [].slice.call(document.querySelectorAll('section,[data-sb-checkpoint]')).forEach(function(s,i){
+          var head=s.querySelector('h1,h2,h3');
+          var name=s.dataset.sbLabel || (head?head.textContent.trim():(s.id||('Section '+(i+1))));
+          var t=document.createElement('div'); t.className='ag-sb__tick';
+          t.style.top=((s.offsetTop/sh)*trackH)+'px'; track.appendChild(t);
+          SECTIONS.push({ top:s.offsetTop, name:name, tick:t });
+        });
+      }
+      function currentIndex(){ var line=pos()+docEl.clientHeight*0.35, idx=0; for(var i=0;i<SECTIONS.length;i++){ if(SECTIONS[i].top<=line) idx=i; } return idx; }
+      function popLabel(){ label.classList.add('is-show'); if(reduce) return; label.animate([{transform:'scale(.9)'},{transform:'scale(1)'}],{duration:210,easing:'cubic-bezier(.22,1,.36,1)'}); }
+      function setActive(i){ if(i===activeI||!SECTIONS[i]) return false; if(SECTIONS[activeI]) SECTIONS[activeI].tick.classList.remove('is-active'); activeI=i; SECTIONS[i].tick.classList.add('is-active'); label.textContent=SECTIONS[i].name; return true; }
+      function update(){ var th=Math.max(MIN_THUMB,(docEl.clientHeight/docEl.scrollHeight)*trackH); var top=(pos()/vmax())*(trackH-th); thumb.style.height=th+'px'; thumb.style.top=top+'px'; var ch=setActive(currentIndex()); label.style.top=((TRACK_TOP+top+th/2)-label.offsetHeight/2)+'px'; if(ch) popLabel(); }
+      function show(){ bar.classList.add('is-active'); if(activeI>=0) label.classList.add('is-show'); if(reduce) return; clearTimeout(hideT); hideT=setTimeout(function(){ if(!dragging&&!hover){ bar.classList.remove('is-active'); label.classList.remove('is-show'); } },1400); }
+      function onScroll(){ update(); show(); }
+      function keepAlive(){ hover=true; clearTimeout(hideT); bar.classList.add('is-active'); if(activeI>=0) label.classList.add('is-show'); }
+      function release(){ hover=false; show(); }
+      bar.addEventListener('mouseenter',keepAlive); bar.addEventListener('mouseleave',release);
+      label.addEventListener('mouseenter',keepAlive); label.addEventListener('mouseleave',release);
+      if(lenis&&lenis.on) lenis.on('scroll',onScroll);
+      addEventListener('scroll',onScroll,{passive:true});
+      addEventListener('resize',function(){ metrics(); build(); update(); },{passive:true});
+      function yToScroll(clientY){ var r=track.getBoundingClientRect(), th=thumb.offsetHeight; var p=Math.min(1,Math.max(0,(clientY-r.top-th/2)/(trackH-th))); toY(p*vmax()); }
+      function startDrag(el,e){ dragging=true; bar.classList.add('is-drag'); try{ el.setPointerCapture(e.pointerId); }catch(x){} e.preventDefault(); }
+      thumb.addEventListener('pointerdown',function(e){ startDrag(thumb,e); });
+      label.addEventListener('pointerdown',function(e){ startDrag(label,e); });
+      addEventListener('pointermove',function(e){ if(dragging) yToScroll(e.clientY); });
+      addEventListener('pointerup',function(){ if(dragging){ dragging=false; bar.classList.remove('is-drag'); show(); } });
+      track.addEventListener('pointerdown',function(e){ if(e.target===track) yToScroll(e.clientY); });
+      // build after layout settles (curtain + fonts)
+      window.addEventListener('load', function(){ metrics(); build(); update(); show(); });
+      setTimeout(function(){ metrics(); build(); update(); }, 2400);
+      window.AGScrollbar={ refresh:function(){ metrics(); build(); update(); } };
+    })();
+    </script>
+    <style>
+    html{ scrollbar-width:none; } html::-webkit-scrollbar{ width:0; height:0; }
+    .ag-sb{ position:fixed; top:0; right:0; width:18px; height:100%; z-index:2147483640; opacity:0; pointer-events:none; transition:opacity 300ms var(--ease-satisfying); }
+    .ag-sb.is-active{ opacity:1; }
+    .ag-sb__track{ position:absolute; top:21px; bottom:21px; right:7px; width:3px; border-radius:7px; background:color-mix(in oklch, var(--accent) 16%, transparent); pointer-events:auto; cursor:pointer; }
+    .ag-sb__tick{ position:absolute; left:50%; width:5px; height:2px; border-radius:3px; transform:translate(-50%,-50%); background:color-mix(in oklch, var(--accent) 50%, transparent); transition:width 300ms var(--ease-settle), height 300ms var(--ease-settle), background 300ms var(--ease-settle), box-shadow 300ms var(--ease-settle); }
+    .ag-sb__tick.is-active{ width:7px; height:3px; background:var(--accent); box-shadow:0 0 9px var(--accent); }
+    .ag-sb__thumb{ position:absolute; left:50%; transform:translateX(-50%); width:7px; border-radius:7px; background:linear-gradient(180deg, var(--accent), color-mix(in oklch, var(--accent) 62%, #000)); box-shadow:0 0 9px color-mix(in oklch, var(--accent) 60%, transparent); pointer-events:auto; cursor:grab; transition:width 300ms var(--ease-settle), box-shadow 300ms var(--ease-settle); }
+    .ag-sb:hover .ag-sb__thumb,.ag-sb.is-drag .ag-sb__thumb{ width:11px; box-shadow:0 0 16px var(--accent); }
+    .ag-sb.is-drag .ag-sb__thumb{ cursor:grabbing; }
+    .ag-sb__label{ position:absolute; right:24px; transform-origin:right center; padding:6px 12px; border-radius:7px; white-space:nowrap; background:var(--accent); color:var(--ink); font-family:'Inter',sans-serif; font-size:12px; font-weight:700; letter-spacing:.04em; line-height:1; box-shadow:0 6px 21px rgba(0,0,0,.3); opacity:0; pointer-events:none; transition:opacity 210ms var(--ease-settle); }
+    .ag-sb__label.is-show{ opacity:1; pointer-events:auto; }
+    .ag-sb__label::after{ content:''; position:absolute; right:-4px; top:50%; width:8px; height:8px; background:inherit; transform:translateY(-50%) rotate(45deg); }
+    @media (hover:none),(pointer:coarse){ html{ scrollbar-width:auto; } .ag-sb{ display:none !important; } }
+    @media (prefers-reduced-motion:reduce){ .ag-sb,.ag-sb__thumb,.ag-sb__label,.ag-sb__tick{ transition:none; } }
+    </style>
+
+    <!-- curtain orchestrator (AG-CURTAIN, last) -->
+    <script>
+    (function () {
+      // DFY intro timeline: load -> brand swoosh -> watch(One Operating System) -> divide(Four Disciplines) -> reveal
+      var INTRO=[ [40,'load'], [750,'brand'] ];   // load + brand only; the hero plays the watch -> split itself
+      var INTRO_DONE_MS=2050;   // snappy: brand in fast, glare sweeps, reveal — total ~2s + fade
+      var MAX_TIMEOUT_MS=9000, CLEANUP_DELAY_MS=900;
+      var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+      var MIN_DISPLAY_MS=reduce?900:INTRO_DONE_MS;
+      var startTime=performance.now(), revealed=false;
+      var curtain=document.querySelector('.ag-curtain');
+      function setPhase(name){ if(curtain) curtain.setAttribute('data-phase',name); }
+      function runIntro(){ if(!curtain) return; if(reduce){ setPhase('brand'); return; } INTRO.forEach(function(p){ setTimeout(function(){ setPhase(p[1]); }, p[0]); }); }
+      function waitForReadiness(){ var s=[]; if(document.fonts&&document.fonts.ready) s.push(document.fonts.ready); if(document.readyState!=='complete') s.push(new Promise(function(r){ addEventListener('load',r,{once:true}); })); return Promise.all(s); }
+      function reveal(){ if(revealed) return; revealed=true; document.documentElement.classList.remove('is-loading'); document.documentElement.classList.add('is-ready'); dispatchEvent(new CustomEvent('ag:ready')); setTimeout(function(){ var c=document.querySelector('.ag-curtain'); if(c&&c.parentNode) c.parentNode.removeChild(c); }, CLEANUP_DELAY_MS); }
+      function boot(){ runIntro(); Promise.race([waitForReadiness(), new Promise(function(r){ setTimeout(r,MAX_TIMEOUT_MS); })]).catch(function(){}).then(function(){ var elapsed=performance.now()-startTime; setTimeout(reveal, Math.max(0, MIN_DISPLAY_MS-elapsed)); }); }
+      if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot, { once:true }); else boot();
+      window.AGCurtain={ reveal:reveal };
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+/* ============================================================ */
+/* Master Dental - Brand MOTION layer (loads after brand.css)   */
+/* Cinematic effects pass. LAYERS on top of the canonical ag-*  */
+/* primitives (reveal / scroll / cursor / curtain) - never      */
+/* edits them. Net-new reason: brief = amplify effects + motion */
+/* graphics beyond the baseline reveal system. Pairs with       */
+/* brand-motion.js (it adds the .is-split / data-* hooks).      */
+/* All durations multiples of 3 or 7 (AG DNA). Pointer effects   */
+/* gate on fine-pointer in JS; reduced-motion + <=900px kill     */
+/* blocks below disable everything heavy.                       */
+/* ============================================================ */
+
+/* ---- shared atmosphere token ---- */
+:root { --aurora-sky: var(--sky); }
+
+/* ============================================================ */
+/* 1. HERO - Ken Burns drift on the photo (img layer only, so   */
+/*    the wrapper stays free for JS scroll-parallax: no clash)  */
+/* ============================================================ */
+.hero__media { will-change: transform; }
+.hero__media img {
+  transform-origin: 68% 42%;
+  animation: md-kenburns 21s var(--ease-soft) infinite alternate;
+}
+@keyframes md-kenburns {
+  0%   { transform: scale(1.06) translate3d(0, 0, 0); }
+  100% { transform: scale(1.11) translate3d(-1.4%, -1.6%, 0); }
+}
+
+/* one-shot gold light sweep across the hero as the curtain lifts */
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(104deg, transparent 38%, rgb(var(--accent-rgb) / 0.16) 50%, transparent 62%);
+  transform: translateX(-120%); opacity: 0;
+}
+.hero.is-lit::before { animation: md-hero-sweep 2.1s var(--ease-satisfying) forwards; }
+@keyframes md-hero-sweep {
+  0%   { transform: translateX(-120%); opacity: 0; }
+  18%  { opacity: 1; }
+  82%  { opacity: 1; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+
+/* ============================================================ */
+/* 2. HERO headline - word mask-rise (premium signal)           */
+/*    Default state = fully visible (no-JS / reduced-motion      */
+/*    fallback). JS adds .is-split to arm, then .go to play.    */
+/* ============================================================ */
+.hero__title.is-split .w {
+  display: inline-block; overflow: hidden; vertical-align: top; padding: 0 0.04em;
+  margin: 0 -0.04em;
+}
+.hero__title.is-split .wi {
+  display: inline-block; transform: translateY(118%) rotate(4deg);
+  transform-origin: left bottom; will-change: transform;
+  transition: transform 0.9s var(--ease-satisfying);
+}
+.hero__title.is-split.go .wi { transform: none; }
+
+/* ============================================================ */
+/* 3. Depth parallax - framed media drifts against the copy.    */
+/*    JS writes --py; transform is owned here (no other rule     */
+/*    transforms .story__media / .spot, so no conflict).        */
+/* ============================================================ */
+.story__media, .spot { will-change: transform; }
+.story__media[data-parallax], .spot[data-parallax] {
+  transform: translate3d(0, var(--py, 0px), 0);
+}
+
+/* ============================================================ */
+/* 4. Cursor spotlight - a soft light tracks the pointer across  */
+/*    trust cards + service tiles. JS writes --mx/--my (px).    */
+/* ============================================================ */
+.tcard[data-spotlight], .svc[data-spotlight] { position: relative; }
+.tcard[data-spotlight]::after, .svc[data-spotlight]::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  border-radius: inherit; opacity: 0;
+  transition: opacity var(--duration-quick) var(--ease-soft);
+}
+/* trust card: warm gold pool, sits just above the white surface */
+.tcard[data-spotlight]::after {
+  z-index: 1;
+  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%),
+              rgb(var(--accent-rgb) / 0.13), transparent 60%);
+}
+/* service tile: white bloom UNDER the label (svc > * is z-index 1), so it
+   brightens the navy hover-fill instead of washing the text */
+.svc[data-spotlight]::after {
+  z-index: 0;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%),
+              rgba(255,255,255,0.18), transparent 58%);
+}
+@media (hover: hover) {
+  .tcard[data-spotlight]:hover::after, .svc[data-spotlight]:hover::after { opacity: 1; }
+}
+
+/* ============================================================ */
+/* 5. Statement band - slow aurora drift + gold underline draw   */
+/* ============================================================ */
+.statement::after { animation: md-aurora 21s ease-in-out infinite alternate; }
+.booking::before  { animation: md-aurora-2 14s ease-in-out infinite alternate; }
+@keyframes md-aurora   { from { transform: translate3d(0,0,0) scale(1); }   to { transform: translate3d(3%, 4%, 0) scale(1.12); } }
+@keyframes md-aurora-2 { from { transform: translate3d(0,0,0) scale(1); }   to { transform: translate3d(-4%, -3%, 0) scale(1.14); } }
+
+/* gold rule under the statement headline draws in on reveal */
+.statement h2::after { width: 0; transition: width 0.9s var(--ease-satisfying) 0.21s; }
+.statement h2.in-view::after { width: 56px; }
+
+/* ============================================================ */
+/* 6. Section eyebrow - the gold tick DRAWS in on reveal         */
+/*    Works whether the eyebrow itself carries .reveal or sits   */
+/*    inside a revealed ancestor (.section-head / stagger).      */
+/* ============================================================ */
+.eyebrow::before {
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform 0.6s var(--ease-satisfying) 0.12s;
+}
+.in-view .eyebrow::before, .eyebrow.in-view::before { transform: scaleX(1); }
+
+/* ============================================================ */
+/* 7. Icon lifts on card hover (trust trio + service tiles)      */
+/* ============================================================ */
+@media (hover: hover) {
+  .tcard__icon, .svc__icon { transition: transform var(--duration-quick) var(--ease-snap), background var(--duration-quick) var(--ease-soft), color var(--duration-quick) var(--ease-soft); }
+  .tcard:hover .tcard__icon { transform: translateY(-3px) scale(1.06); }
+  .svc:hover .svc__icon { transform: translateY(-3px) scale(1.06); }
+}
+
+/* ============================================================ */
+/* 8. Trust trio - DROPS DOWN into place on scroll-in (emerges   */
+/*    from under the hero) instead of the default rise-up. Start */
+/*    above the slot; settle to 0. Distance multiple of 7 (DNA), */
+/*    stagger + easing inherited from the .reveal-stagger recipe. */
+/* ============================================================ */
+.trust__grid.reveal-stagger > * { transform: translateY(-42px); }
+.trust__grid.reveal-stagger.in-view > * { transform: translateY(0); }
+
+/* ============================================================ */
+/* Reduced motion - kill ALL of the above (the floor stays AG)  */
+/* ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .hero__media img { animation: none; transform: scale(1.04); }
+  .hero::before { display: none; }
+  .hero__title.is-split .wi { transform: none !important; transition: none !important; }
+  .story__media[data-parallax], .spot[data-parallax] { transform: none !important; }
+  .tcard[data-spotlight]::after, .svc[data-spotlight]::after { display: none; }
+  .statement::after, .booking::before { animation: none; }
+  .statement h2::after { width: 56px; transition: none; }
+  .eyebrow::before { transition: none !important; transform: scaleX(1) !important; }
+  .tcard__icon, .svc__icon { transition: none !important; }
+}
+
+/* ============================================================ */
+/* <= 900px - drop heavy/pointer effects (AG mobile rule)       */
+/* ============================================================ */
+@media (max-width: 900px) {
+  .hero__media img { animation-duration: 28s; }
+  .story__media[data-parallax], .spot[data-parallax] { transform: none; }
+  .statement::after, .booking::before { animation: none; }
+  .hero::before { display: none; }
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muevelo Simplified — Style Tile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-primary:#000; --bg-secondary:#060606; --bg-tertiary:#0c0c0c;
+  --text-primary:#f5f5f5; --text-secondary:#d6d6db; --text-muted:#8e8e96;
+  --pink:#ff2b8a; --cyan:#00d8ff; --yellow:#ffcd00; --green:#5dd47a; --purple:#b154f5; --orange:#ff9933;
+  --gold:#c9a861;
+  --grad:linear-gradient(90deg,var(--pink) 0%,var(--yellow) 35%,var(--green) 60%,var(--cyan) 80%,var(--purple) 100%);
+  --font-display:'Anton',sans-serif; --font-sans:'Outfit',sans-serif; --font-body:'DM Sans',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-body);
+  padding:56px 63px;line-height:1.5;
+  background-image:radial-gradient(ellipse 80% 60% at 50% 0%,rgb(255 43 138/0.06),transparent 70%);}
+.tile-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--bg-tertiary);padding-bottom:28px;margin-bottom:42px}
+.eyebrow{font-family:var(--font-sans);font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold)}
+.tile-head h1{font-family:var(--font-display);font-size:49px;letter-spacing:0.01em;line-height:1;text-transform:uppercase}
+.tile-head h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.tile-head .feel{font-family:var(--font-sans);font-size:14px;color:var(--text-muted);max-width:280px;text-align:right}
+.grid{display:grid;grid-template-columns:1.2fr 1fr;gap:42px}
+.block{background:var(--bg-secondary);border:3px solid var(--bg-tertiary);border-radius:14px;padding:28px}
+.block h2{font-family:var(--font-sans);font-weight:700;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);margin-bottom:21px}
+/* palette */
+.swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.sw{height:84px;border-radius:7px;display:flex;align-items:flex-end;padding:7px 9px;font-family:var(--font-sans);font-size:11px;font-weight:600}
+.sw small{opacity:.85}
+.grad-bar{grid-column:1/-1;height:35px;border-radius:7px;background:var(--grad);margin-top:7px}
+.grad-cap{grid-column:1/-1;font-size:12px;color:var(--text-muted);font-family:var(--font-sans)}
+/* type */
+.spec-display{font-family:var(--font-display);font-size:56px;text-transform:uppercase;line-height:1;letter-spacing:.01em}
+.spec-sub{font-family:var(--font-sans);font-weight:700;font-size:21px;margin-top:14px;color:var(--text-secondary)}
+.spec-body{font-family:var(--font-body);font-size:15px;margin-top:14px;color:var(--text-muted);max-width:46ch}
+.spec-label{font-family:var(--font-sans);font-weight:500;font-size:14px;text-transform:none;color:var(--text-muted);margin-top:7px}
+.type-name{font-size:11px;color:var(--gold);font-family:var(--font-sans);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+/* dials */
+.dials{display:flex;flex-direction:column;gap:14px;margin-top:7px}
+.dial{display:grid;grid-template-columns:84px 1fr 42px;align-items:center;gap:14px}
+.dial .name{font-family:var(--font-sans);font-weight:600;font-size:13px}
+.track{height:9px;background:var(--bg-tertiary);border-radius:7px;overflow:hidden}
+.fill{height:100%;border-radius:7px;background:var(--grad)}
+.dial .val{font-family:var(--font-sans);font-weight:700;font-size:14px;text-align:right;color:var(--cyan)}
+.profile{font-family:var(--font-sans);font-weight:700;font-size:18px;margin-top:21px;letter-spacing:.04em;color:var(--text-secondary)}
+.profile b{color:var(--pink)}
+.full{grid-column:1/-1}
+.note{font-family:var(--font-sans);font-size:13px;color:var(--text-muted);margin-top:14px;line-height:1.6}
+.note b{color:var(--text-secondary);font-weight:600}
+</style>
+</head>
+<body>
+  <div class="tile-head">
+    <div>
+      <p class="eyebrow">Stage 3 · Direction Tile · Simplified Take</p>
+      <img src="assets/muevelo-logo.png" alt="Muevelo at Chico's logo" style="height:112px;width:auto;margin:14px 0 7px;display:block">
+      <h1 style="font-size:28px;color:var(--text-muted)">Founding Investor Circle</h1>
+    </div>
+    <p class="feel">Premium dark nightlife meets investor-grade clarity, tuned for an older audience: large type, maximum contrast, slow gentle motion, one idea per slide.</p>
+  </div>
+
+  <div class="grid">
+    <div class="block">
+      <h2>Palette — inherited brand kit</h2>
+      <div class="swatches">
+        <div class="sw" style="background:#000;color:#f5f5f5;border:1px solid #222">Base<br><small>#000</small></div>
+        <div class="sw" style="background:#0c0c0c;color:#f5f5f5;border:1px solid #222">Surface<br><small>#0c0c0c</small></div>
+        <div class="sw" style="background:#f5f5f5;color:#000">Text<br><small>#f5f5f5</small></div>
+        <div class="sw" style="background:#8e8e96;color:#000">Muted<br><small>#8e8e96</small></div>
+        <div class="sw" style="background:#ff2b8a;color:#000">Pink<br><small>#ff2b8a</small></div>
+        <div class="sw" style="background:#00d8ff;color:#000">Cyan<br><small>#00d8ff</small></div>
+        <div class="sw" style="background:#c9a861;color:#000">Gold<br><small>#c9a861</small></div>
+        <div class="sw" style="background:#b154f5;color:#000">Purple<br><small>#b154f5</small></div>
+        <div class="grad-bar"></div>
+        <div class="grad-cap">Signature gradient — used sparingly (cover + section dividers only). Simplified = pink + cyan + gold lead; full rainbow is punctuation, not wallpaper.</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>Type pairing — inherited</h2>
+      <p class="type-name">Anton · display</p>
+      <div class="spec-display">$600K RAISE</div>
+      <p class="type-name" style="margin-top:21px">Outfit · sub / labels</p>
+      <p class="spec-sub">Founding Investor Circle Opportunity</p>
+      <p class="type-name" style="margin-top:21px">DM Sans · body / data</p>
+      <p class="spec-body">Up to 20-year venue control. 49% Founding Investor Circle pool. 49 shares at $7,142.</p>
+    </div>
+
+    <div class="block full">
+      <h2>Six Creative Dials — simplified profile</h2>
+      <div class="dials">
+        <div class="dial"><span class="name">Motion</span><div class="track"><div class="fill" style="width:21%"></div></div><span class="val">21</span></div>
+        <div class="dial"><span class="name">Layout</span><div class="track"><div class="fill" style="width:30%"></div></div><span class="val">30</span></div>
+        <div class="dial"><span class="name">Type</span><div class="track"><div class="fill" style="width:55%"></div></div><span class="val">55</span></div>
+        <div class="dial"><span class="name">Darkness</span><div class="track"><div class="fill" style="width:80%"></div></div><span class="val">80</span></div>
+        <div class="dial"><span class="name">Density</span><div class="track"><div class="fill" style="width:25%"></div></div><span class="val">25</span></div>
+        <div class="dial"><span class="name">Interaction</span><div class="track"><div class="fill" style="width:15%"></div></div><span class="val">15</span></div>
+      </div>
+      <p class="profile">Profile: <b>M21 L30 T55 D80 N25 I15</b> &nbsp;·&nbsp; tuned for an older audience</p>
+      <p class="note"><b>Tailored for older viewers:</b> Type sizes UP (large headlines, body never below 21px) and Anton is headline-only, never body. Contrast is AAA: pure white on black (~19:1), and neon stays decorative, NEVER used as text. Motion 21 = slow gentle fades only, nothing fast, reduced-motion honored. Density 25 = one idea per slide, big numbers, generous breathing room. Interaction 15 = large obvious nav arrows (56px+), a visible slide counter, keyboard arrows, and click-anywhere-to-advance. Darkness 80 keeps the nightlife brand, held to maximum legibility.</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,318 @@
+/* =========================================================== */
+/* AG Footer v1.6 - CANONICAL DROP-IN                          */
+/* Source of truth: sectors/web/standards/AG-FOOTER-STANDARD.md (v1.6) */
+/* Extracted 2026-06-26, verbatim per-block, in this order:                  */
+/*   1. Section 13 Base Skeleton CSS (the consolidated base)                 */
+/*   2. Section "Universal centering at Mobile (≤900)" v1.6 - SUPERSEDES the */
+/*      base's mobile approach: it authors the centered/stacked state as the  */
+/*      BASE and gates the desktop multi-column layout behind min-width:901px. */
+/*      (The base's own @media(max-width:900) grid/order rules become inert    */
+/*      under the flex container and are kept only for verbatim fidelity.)     */
+/*   3. Section 19 watermark (OPTIONAL - business-name behind the footer)      */
+/*   4. Section 14 newsletter (OPTIONAL)                                       */
+/*   The watermark fit JS lives in ag-footer.js (only needed if §19 is used).  */
+/*                                                                            */
+/* REQUIRED MARKUP (Section 13 base skeleton, genericized):                   */
+/*   <footer class="ag-footer"><div class="ag-footer-inner">                  */
+/*     <div class="ag-footer-cols">                                          */
+/*       <div class="ag-footer-identity"> .ag-footer-logo + .ag-footer-tagline</div>*/
+/*       <div class="ag-footer-contact ag-contact__actions"> .ag-footer-col-label */
+/*         + [data-act] reveal buttons (AG Contact Standard) + .ag-footer-meta</div>*/
+/*       <nav class="ag-footer-pages"> .ag-footer-col-label + .ag-footer-link x N</nav>*/
+/*     </div>                                                                 */
+/*     <hr class="ag-footer-divider">                                        */
+/*     <div class="ag-footer-bottom"> .ag-footer-copyright (with <span data-current-year>)*/
+/*       + ul.ag-footer-social > li > a[aria-label] > svg.ag-footer-social-icon</div>*/
+/*   </div></footer>                                                          */
+/*                                                                            */
+/* TOKEN CONTRACT: --bg-footer --text-on-footer --text-muted-on-footer        */
+/*   --link-on-footer (footer slot, defaulted in :root below) · --ink --paper */
+/*   --neutral-400 --accent --logo-size --section-padding-inline --font-display*/
+/*   --font-body --text-sm --text-eyebrow --duration-quick --ease-settle.      */
+/*   NOTE: the §19 watermark block uses --section-pad-inline / --maxw /        */
+/*   --text-on-ink (slightly different token names than the base - a standard- */
+/*   level naming inconsistency carried verbatim; alias them in the brand kit). */
+/* =========================================================== */
+
+/* ---------- 1. Section 13 Base ---------- */
+/* AG FOOTER STANDARD v1.0 BASE */
+
+:root {
+  --bg-footer: var(--ink, #1A1A1A);
+  --text-on-footer: var(--paper, #FAF9F6);
+  --text-muted-on-footer: var(--neutral-400, #A8A8A8);
+  --link-on-footer: var(--text-on-footer);
+}
+
+.ag-footer {
+  padding-top: 42px; /* v1.2: was 84px, reduced to match Section v1.2 even-band rule */
+  padding-bottom: 0;
+  background: var(--bg-footer);
+  color: var(--text-on-footer);
+}
+
+/* v1.2: NO adjacent-collapse rule. Footer keeps its full 42px top padding regardless of what precedes it. */
+
+.ag-footer-inner {
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: var(--section-padding-inline, 84px);
+}
+
+.ag-footer-cols {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 42px;
+}
+
+/* v1.2: four columns; visual order matches DOM (Identity, Contact, Pages, Social), no CSS order swap */
+
+.ag-footer-logo {
+  font-size: var(--logo-size, 28px);
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-on-footer);
+}
+
+.ag-footer-logo a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ag-footer-tagline {
+  font-family: var(--font-body);
+  font-size: var(--text-sm, 14px);
+  color: var(--text-muted-on-footer);
+  margin: 21px 0 0 0;
+  max-width: 35ch;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.ag-footer-col-label {
+  font-family: var(--font-body);
+  font-size: var(--text-eyebrow, 12px);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted-on-footer);
+  margin: 0 0 21px 0;
+}
+
+.ag-footer-link {
+  font-family: var(--font-body);
+  font-size: var(--text-sm, 14px);
+  color: var(--link-on-footer);
+  text-decoration: none;
+  display: inline-block;
+  padding: 6px 0;
+  position: relative;
+  transition: transform var(--duration-quick, 0.3s) var(--ease-settle, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.ag-footer-link::after {
+  content: '→';
+  display: inline-block;
+  font-size: 1.1em; /* v1.2: matches Header v2.0 */
+  margin-left: 0.7em;
+  opacity: 0;
+  transform: translateX(-7px);
+  transition:
+    opacity var(--duration-quick, 0.3s) var(--ease-settle, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform var(--duration-quick, 0.3s) var(--ease-settle, cubic-bezier(0.22, 1, 0.36, 1));
+  vertical-align: middle;
+}
+
+.ag-footer-link:hover,
+.ag-footer-link:focus-visible {
+  transform: translateX(7px);
+}
+
+.ag-footer-link:hover::after,
+.ag-footer-link:focus-visible::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.ag-footer-link:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.ag-footer-meta {
+  font-family: var(--font-body);
+  font-size: var(--text-eyebrow, 12px);
+  color: var(--text-muted-on-footer);
+  margin: 14px 0 0 0;
+  line-height: 1.5;
+}
+
+.ag-footer-divider {
+  height: 3px;
+  background: var(--text-muted-on-footer);
+  border: 0;
+  margin: 42px 0;
+  opacity: 0.21;
+}
+
+.ag-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 21px;
+  flex-wrap: wrap;
+}
+
+.ag-footer-copyright {
+  font-family: var(--font-body);
+  font-size: var(--text-eyebrow, 12px);
+  color: var(--text-muted-on-footer);
+  margin: 0;
+}
+
+.ag-footer-social {
+  display: flex;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ag-footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 3px;
+  text-decoration: none;
+  color: var(--text-muted-on-footer);
+  transition: color var(--duration-quick, 0.3s) var(--ease-settle, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.ag-footer-social a:hover,
+.ag-footer-social a:focus-visible {
+  color: var(--text-on-footer);
+}
+
+.ag-footer-social a:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.ag-footer-social-icon {
+  width: 21px;
+  height: 21px;
+  stroke: currentColor;
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 900px) {
+  .ag-footer {
+    padding-top: 28px; /* matches Section v1.2 mobile (SEC-02); was a stale 63px */
+  }
+  .ag-footer-cols {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+  .ag-footer-identity { order: 1; }
+  .ag-footer-contact  { order: 2; }
+  .ag-footer-pages    { order: 3; }
+  .ag-footer-bottom {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 28px;
+  }
+}
+
+@media (hover: none) {
+  .ag-footer-link::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ag-footer-link,
+  .ag-footer-link::after,
+  .ag-footer-social a {
+    transition: none;
+  }
+  .ag-footer-link:hover,
+  .ag-footer-link:focus-visible {
+    transform: none;
+  }
+  .ag-footer-link::after {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- 2. Universal centering at Mobile (≤900) - LOCKED v1.6 (supersedes the base's mobile approach) ---------- */
+/* BASE (mobile-applies, ≤900 by default): centered single-column footer */
+.ag-footer-cols{display:flex;flex-direction:column;align-items:center;text-align:center;gap:clamp(28px,4vw,40px)}
+.ag-footer-tagline{margin-inline:auto}
+.ag-footer-social{justify-content:center}
+.ag-footer-discrow,.ag-footer-bottom{flex-direction:column;align-items:center;text-align:center}
+.ag-footer-policy{justify-content:center}
+
+/* ≤900 tap targets (AG 49px touch class) */
+@media(max-width:900px){
+  .ag-footer-link{min-height:49px;display:flex;align-items:center;justify-content:center}
+  .ag-footer-social a{width:49px;height:49px}
+}
+
+/* ≥901px ONLY: revert to the desktop left-aligned multi-column layout */
+@media(min-width:901px){
+  .ag-footer-cols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;align-items:start;text-align:left;gap:42px}
+  .ag-footer-tagline{margin-inline:0}
+  .ag-footer-social{justify-content:flex-start}
+  .ag-footer-discrow{flex-direction:row;justify-content:space-between;align-items:flex-end;text-align:left}
+  .ag-footer-bottom{flex-direction:row;justify-content:space-between;align-items:center;text-align:left}
+  .ag-footer-policy{justify-content:flex-start}
+}
+
+/* ---------- 3. Section 19 watermark (OPTIONAL - markup: <span class="ag-footer-bgname" aria-hidden="true">Business Name</span>) ---------- */
+/* image-in-text + pan variant shown - for a plain faint watermark, drop the background and use color:var(--text-on-ink);opacity:.08 */
+.ag-footer{position:relative;overflow:hidden}
+.ag-footer-bgname{
+  position:absolute;left:50%;bottom:-.14em;transform:translateX(-50%);z-index:0;
+  font-family:var(--font-display);font-style:italic;font-weight:600;
+  /* fallback size = footer content width * factor; JS converges this exactly */
+  font-size:calc(min(100vw - 2 * var(--section-pad-inline), var(--maxw)) * 0.141);
+  line-height:.82;white-space:nowrap;letter-spacing:.005em;
+  /* image-in-text variant: */
+  background:url("img/world-map.webp") 0 center/cover repeat-x;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;opacity:.85;
+  animation:ag-globe-pan 42s linear infinite;
+  pointer-events:none;-webkit-user-select:none;user-select:none;
+}
+/* mobile: stretch the single line vertically -> taller letters, SAME width (one line, in view) */
+@media(max-width:640px){.ag-footer-bgname{transform:translateX(-50%) scaleY(1.6);transform-origin:50% 100%}}
+@keyframes ag-globe-pan{from{background-position-x:0}to{background-position-x:var(--pan,-100%)}}
+@media(prefers-reduced-motion:reduce){.ag-footer-bgname{animation:none}}
+
+/* ---------- 4. Section 14 newsletter (OPTIONAL - inside .ag-footer-identity, below the tagline) ---------- */
+.ag-footer-newsletter {
+  margin-top: 28px;
+}
+
+.ag-footer-newsletter-copy {
+  font-family: var(--font-body);
+  font-size: var(--text-sm, 14px);
+  color: var(--text-muted-on-footer);
+  margin: 0 0 14px 0;
+  max-width: 35ch;
+  line-height: 1.6;
+}
+
+.ag-footer-newsletter-form {
+  display: flex;
+  gap: 7px;
+  max-width: 35ch;
+}

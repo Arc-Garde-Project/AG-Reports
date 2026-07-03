@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
 <title>The Tooth Place - Ad Testing (May 26 - May 29, 2026) (W8)</title>
-<meta name="description" content="The Tooth Place W8 4-day window (May 26-29, 2026). Two new May 26 creatives (4 and 10) split the window and carried all 6 leads at a $16.39 blended CPL. Spend eased to $98.36 while delivery sharpened: 7,512 impressions, CTR up to 5.96% from 4.04%, CPC down to $0.22, CPM down to $13.09, 115 LP views. LPV-to-lead held at 5.2%. Creative 3 wound down to $7.26.">
+<meta name="description" content="The Tooth Place W8 4-day window (May 26-29, 2026). 2 new May 26 creatives (4 and 10) split the window and carried all 6 leads at a $16.39 blended CPL. Spend eased to $98.36 while delivery sharpened: 7,512 impressions, CTR up to 5.96% from 4.04%, CPC down to $0.22, CPM down to $13.09, 115 LP views. LPV-to-lead held at 5.2%. Creative 3 wound down to $7.26.">
 <meta name="robots" content="noindex, nofollow">
 <meta property="og:title" content="The Tooth Place - Ad Testing (May 26 - May 29, 2026) (W8)">
-<meta property="og:description" content="W8 (May 26-29, 2026). Two new creatives (4 and 10) split the window and carried all 6 leads at $16.39 blended CPL. Spend eased to $98.36, delivery sharpened: 7,512 impressions, CTR up to 5.96%, CPC down to $0.22, CPM $13.09, 115 LP views. LPV-to-lead 5.2%.">
+<meta property="og:description" content="W8 (May 26-29, 2026). 2 new creatives (4 and 10) split the window and carried all 6 leads at $16.39 blended CPL. Spend eased to $98.36, delivery sharpened: 7,512 impressions, CTR up to 5.96%, CPC down to $0.22, CPM $13.09, 115 LP views. LPV-to-lead 5.2%.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
 <meta property="og:image:width" content="1200">
@@ -16,7 +16,7 @@
 <meta property="og:image:alt" content="Arc Garde">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Tooth Place - Ad Testing (May 26 - May 29, 2026) (W8)">
-<meta name="twitter:description" content="W8 (May 26-29): two new creatives (4 and 10) split the window, all 6 leads at $16.39 blended CPL. $98.36 spend, 7,512 impressions, 115 LP views. CTR up to 5.96%, CPC down to $0.22.">
+<meta name="twitter:description" content="W8 (May 26-29): 2 new creatives (4 and 10) split the window, all 6 leads at $16.39 blended CPL. $98.36 spend, 7,512 impressions, 115 LP views. CTR up to 5.96%, CPC down to $0.22.">
 <meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
 <meta name="theme-color" content="#0A0A0A">
 <link rel="canonical" href="https://ag-reports.vercel.app/reports/tooth-place/w8">
@@ -1244,13 +1244,22 @@ body { text-wrap: pretty; }
 .reveal {
   opacity: 0;
   transform: translateY(24px);
-  will-change: transform, opacity;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
+/* Compositor-driven reveal (no main-thread JS animation = no stutter under load) */
+.reveal.is-revealed { opacity: 1; transform: none; }
 
 .reveal--up { transform: translateY(60px); }
 .reveal--scale { transform: scale(0.9); }
 .reveal--left { transform: translateX(-60px); }
 .reveal--right { transform: translateX(60px); }
+
+/* ─── Lenis smooth-scroll required classes (prevents native/Lenis scroll fight + load glitch) ─── */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
 
 /* ─── Tags ─── */
 .tag {
@@ -1405,24 +1414,26 @@ body { text-wrap: pretty; }
 }
 .mission-verb {
   font-family: var(--font-display);
-  font-size: 21px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   color: var(--cream);
   text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(var(--accent-bright-rgb), 0.4);
 }
 .mission-body {
   font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 500;
   letter-spacing: 0.02em;
-  color: var(--cream70);
+  color: var(--cream);
   line-height: 1.5;
   text-wrap: pretty;
 }
 .mission-divider {
-  width: 1px;
-  background: linear-gradient(to bottom, transparent 0%, rgba(var(--cream-rgb), 0.18) 50%, transparent 100%);
+  width: 2px;
+  background: linear-gradient(to bottom, transparent 0%, rgba(var(--accent-bright-rgb), 0.6) 50%, transparent 100%);
+  box-shadow: 0 0 12px rgba(var(--accent-bright-rgb), 0.35);
   flex-shrink: 0;
 }
 @media (max-width: 768px) {
@@ -1430,12 +1441,13 @@ body { text-wrap: pretty; }
   .mission-grid { flex-direction: column; gap: 14px; }
   .mission-divider {
     width: 60%;
-    height: 1px;
-    background: linear-gradient(to right, transparent 0%, rgba(var(--cream-rgb), 0.18) 50%, transparent 100%);
+    height: 2px;
+    background: linear-gradient(to right, transparent 0%, rgba(var(--accent-bright-rgb), 0.6) 50%, transparent 100%);
+    box-shadow: 0 0 12px rgba(var(--accent-bright-rgb), 0.35);
     align-self: center;
   }
-  .mission-verb { font-size: 18px; }
-  .mission-body { font-size: 12px; }
+  .mission-verb { font-size: 21px; }
+  .mission-body { font-size: 13px; }
 }
 
 .stat {
@@ -1475,13 +1487,20 @@ body { text-wrap: pretty; }
 
 .stat-num {
   font-family: var(--font-display);
-  font-size: clamp(32px, 5.5vw, 49px);
+  font-size: clamp(28px, 5.5vw, 42px);
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--cream);
   display: block;
   line-height: 1;
   margin-bottom: 14px;
+  /* Fixed-width figures so the counting numbers don't change width per frame
+     (proportional digits = per-frame width jitter = container glitch). */
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  /* Never wrap a number onto a 2nd line (orphan). Capped font size above keeps
+     the widest value (e.g. $98.36) on one line within the stat card. */
+  white-space: nowrap;
 }
 
 .stat-lbl {
@@ -2949,6 +2968,22 @@ body { text-wrap: pretty; }
   text-align: center;
 }
 
+/* What's Next: keep the 2 cards as a centered pair under the title (not full 1280px).
+   minmax(0,1fr) stops the long-label cards from blowing the tracks past the grid
+   and overflowing to the right (1fr's default min is min-content). */
+/* What's Next: stack the 2 cards vertically (not side-by-side pillars), centered. */
+#whats-next .ab-grid {
+  grid-template-columns: 1fr;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 16px;
+}
+/* descriptive points: value over a wrapping label, one per row (no nowrap overflow) */
+#whats-next .ab-kpis { grid-template-columns: 1fr; gap: 16px; }
+#whats-next .ab-kpi { flex-direction: column; align-items: flex-start; gap: 5px; }
+#whats-next .ab-kpi-label { white-space: normal; text-align: left; line-height: 1.45; }
+
 .next-items { list-style: none; }
 
 .next-item {
@@ -4210,22 +4245,16 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     </div>
 
     <!-- Mission strip: 3 pillars under the stats hitting reach / honesty / next move -->
-    <div class="mission-strip reveal" aria-label="Our job this sprint">
-      <div class="mission-eyebrow">Our Job This Sprint</div>
+    <div class="mission-strip reveal" aria-label="Window summary">
       <div class="mission-grid">
         <div class="mission-pillar">
-          <span class="mission-verb">Launched</span>
-          <span class="mission-body">Two new creatives went live May 26 &middot; split the&nbsp;window</span>
+          <span class="mission-verb">Running</span>
+          <span class="mission-body">The Spanish + English winners &middot; creatives 4 and 10 split the&nbsp;window</span>
         </div>
         <div class="mission-divider" aria-hidden="true"></div>
         <div class="mission-pillar">
           <span class="mission-verb">Sharpened</span>
           <span class="mission-body">CPL fell to $16.39, down from $23.69 in&nbsp;W7</span>
-        </div>
-        <div class="mission-divider" aria-hidden="true"></div>
-        <div class="mission-pillar">
-          <span class="mission-verb">Acting</span>
-          <span class="mission-body">let 4 and 10 settle, watch the Friday lead&nbsp;lag</span>
         </div>
       </div>
     </div>
@@ -4238,13 +4267,13 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     <div class="grain" style="opacity: 0.015;"></div>
 
     <div class="eyebrow reveal">4-Day Window Story</div>
-    <p class="reveal" style="font-size: 16px; font-weight: 500; color: var(--text60); margin-bottom: 28px; max-width: 560px; text-align: center; text-wrap: pretty;">3 forces shaped the&nbsp;window.<span class="ag-break"></span>Two new creatives took over, efficiency&nbsp;jumped.</p>
+    <p class="reveal" style="font-size: 16px; font-weight: 500; color: var(--text60); margin-bottom: 28px; max-width: 560px; text-align: center; text-wrap: pretty;">3 forces shaped the&nbsp;window.<span class="ag-break"></span>2 new creatives took over, efficiency&nbsp;jumped.</p>
 
     <div class="diag-grid">
       <div class="diag-card reveal">
         <span class="diag-name">Force 1</span>
-        <span class="diag-val">Two New Creatives Took Over</span>
-        <span class="diag-what">Creatives 4 and 10 launched May 26 and split the&nbsp;window.<span class="ag-break"></span>$90.50 of the $98.36&nbsp;total.</span>
+        <span class="diag-val">2 New Creatives Took Over</span>
+        <span class="diag-what">Creatives 4 and 10 launched May 26 and split the&nbsp;window.<span class="ag-break"></span>$90.50 of the&nbsp;$98.36&nbsp;total.</span>
       </div>
       <div class="diag-card reveal">
         <span class="diag-name">Force 2</span>
@@ -4253,12 +4282,12 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
       </div>
       <div class="diag-card reveal">
         <span class="diag-name">Force 3</span>
-        <span class="diag-val">Six Leads, Lower Cost</span>
+        <span class="diag-val">6 Leads, Lower Cost</span>
         <span class="diag-what">115 LP views produced 6 leads at $16.39&nbsp;CPL.<span class="ag-break"></span>Down from $23.69 in&nbsp;W7.</span>
       </div>
     </div>
 
-    <p class="reveal" style="font-size: 16px; font-weight: 500; color: var(--text); margin-top: 28px; text-align: center; text-wrap: pretty;">6 leads at $16.39 blended CPL across two new&nbsp;creatives. <strong style="color: var(--accent);">Let 4 and 10 settle before crowning a&nbsp;winner.</strong></p>
+    <p class="reveal" style="font-size: 16px; font-weight: 500; color: var(--text); margin-top: 28px; text-align: center; text-wrap: pretty;">6 leads at $16.39 blended CPL across 2 new&nbsp;creatives. <strong style="color: var(--accent);">Let 4 and 10 settle before crowning a&nbsp;winner.</strong></p>
 
   </section>
 
@@ -4522,7 +4551,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
           <span class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--prev"></span>W7 (May 22-25)</span>
           <span class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--current" id="legend-current"></span>W8 (May 26-29)</span>
         </div>
-        <p class="chart-summary" id="chart-summary">$24.59/day&nbsp;avg.<span class="ag-break"></span>4 days &middot; $98.36&nbsp;total.</p>
+        <p class="chart-summary" id="chart-summary">$24.59/day&nbsp;avg.<span class="ag-break"></span>4 days &middot;&nbsp;$98.36&nbsp;total.</p>
       </div>
     </div>
 
@@ -4556,11 +4585,21 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   });
 
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
+
+  /* Recalculate trigger positions once charts/fonts/images settle, so above-the-fold
+     reveals don't fire at stale positions during load (prevents container jump/flicker). */
+  window.addEventListener('load', function(){ ScrollTrigger.refresh(); });
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ ScrollTrigger.refresh(); }); }
 
   lenis.on('scroll', ScrollTrigger.update);
 
-  gsap.ticker.add(function(time) { lenis.raf(time * 1000); });
-  gsap.ticker.lagSmoothing(0);
+  /* Drive Lenis on its own rAF (real frame time = smooth scroll) while leaving GSAP's
+     default lag-smoothing ON. With the old gsap.ticker + lagSmoothing(0) coupling, a
+     single dropped frame made the intro reveals JUMP on slower machines; this keeps the
+     entrance motion smooth there without changing scroll feel. */
+  function lenisRaf(time) { lenis.raf(time); requestAnimationFrame(lenisRaf); }
+  requestAnimationFrame(lenisRaf);
 
   /* ─── Reduced Motion Check ─── */
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -4656,28 +4695,25 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   }
 
 
-  /* ─── Scroll-Triggered Reveals ─── */
-  document.querySelectorAll('.reveal').forEach(function(el) {
-    if (prefersReduced) {
-      el.style.opacity = '1';
-      el.style.transform = 'none';
+  /* ─── Reveals: pure CSS transitions toggled by IntersectionObserver ───
+     Runs on the compositor, NOT the GSAP main-thread ticker, so heavy load work
+     (counters, Chart.js) can no longer drop reveal frames / cause container stutter. */
+  (function() {
+    var revealEls = document.querySelectorAll('.reveal');
+    if (prefersReduced || !('IntersectionObserver' in window)) {
+      revealEls.forEach(function(el) { el.classList.add('is-revealed'); });
       return;
     }
-
-    gsap.to(el, {
-      opacity: 1,
-      y: 0,
-      x: 0,
-      scale: 1,
-      duration: 0.9,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 85%',
-        toggleActions: 'play none none none'
-      }
-    });
-  });
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.01 });
+    revealEls.forEach(function(el) { io.observe(el); });
+  })();
 
   /* ─── Scan Line Effect ─── */
   if (!prefersReduced) {
@@ -4942,7 +4978,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
       color: rgba(brandBlueBrightRGB, 1),
       colorFill: rgba(brandBlueRGB, 0.2),
       glowColor: rgba(brandBlueRGB, 0.3),
-      summary: '$24.59/day&nbsp;avg.<span class="ag-break"></span>4 days &middot; $98.36&nbsp;total.'
+      summary: '$24.59/day&nbsp;avg.<span class="ag-break"></span>4 days &middot;&nbsp;$98.36&nbsp;total.'
     },
     ctr: {
       labels: ['Tue','Wed','Thu','Fri'],

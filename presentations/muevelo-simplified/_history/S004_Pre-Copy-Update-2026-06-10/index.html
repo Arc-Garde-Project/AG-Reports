@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<base href="/presentations/muevelo/simplified/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#000000">
+<title>Muevelo West | Founding Investor Circle Opportunity</title>
+<meta name="description" content="Muevelo West at Chico's Montebello. Founding Investor Circle opportunity: 600K capital raise, 49 percent investor pool, up to 20-year venue control.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://ag-reports.vercel.app/presentations/muevelo/simplified">
+<link rel="icon" type="image/png" href="assets/muevelo-logo.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Muevelo West | Founding Investor Circle">
+<meta property="og:description" content="Investor opportunity. Muevelo West at Chico's Montebello.">
+<meta property="og:image" content="https://ag-reports.vercel.app/presentations/muevelo/simplified/assets/muevelo-logo.png">
+<link rel="preload" as="image" href="assets/muevelo-logo.png" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet">
+<style>
+/* ===== AG RESPONSIVE PREVENTION LAYER ===== */
+*,*::before,*::after{box-sizing:border-box}
+html{overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overflow-wrap:break-word}
+img,video,svg{max-width:100%;height:auto;display:block}
+h1,h2,h3,h4{text-wrap:balance}
+p,li{text-wrap:pretty}
+
+/* ===== Reset + Defensive ===== */
+*,*::before,*::after{margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--bg-primary);color:var(--text-primary)}
+body{font-family:var(--font-body);font-size:var(--text-base);line-height:var(--lh-base);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation;font-family:inherit}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;border-radius:3px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+:root{
+  /* Fonts */
+  --font-display:'Anton',sans-serif;
+  --font-sans:'Outfit',system-ui,sans-serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+
+  /* Palette — inherited Muevelo brand kit */
+  --bg-primary:#000;
+  --bg-secondary:#070707;
+  --bg-tertiary:#101012;
+  --text-primary:#ffffff;
+  --text-secondary:#e4e4ea;
+  --text-muted:#a7a7b0;
+  --pink:#ff2b8a;  --cyan:#00d8ff;  --yellow:#ffcd00;
+  --green:#5dd47a; --purple:#b154f5; --orange:#ff9933;
+  --gold:#c9a861;
+  --grad:linear-gradient(90deg,var(--pink) 0%,var(--yellow) 32%,var(--green) 56%,var(--cyan) 78%,var(--purple) 100%);
+  --neon-rule:linear-gradient(90deg,transparent,var(--pink),var(--cyan),transparent);
+
+  /* Type scale — sized UP for an older audience (body never below 21px desktop) */
+  --text-display:clamp(2.75rem, 1.6rem + 5.1vw, 5.25rem);   /* 44 -> 84 */
+  --text-h1:clamp(2.1rem, 1.4rem + 3.1vw, 3.5rem);          /* 34 -> 56 */
+  --text-h2:clamp(1.75rem, 1.25rem + 2.2vw, 2.625rem);      /* 28 -> 42 */
+  --text-h3:clamp(1.3125rem, 1.05rem + 1.17vw, 1.75rem);    /* 21 -> 28 */
+  --text-lead:clamp(1.3125rem, 1.1rem + 0.93vw, 1.75rem);   /* 21 -> 28 */
+  --text-base:clamp(1.1875rem, 1.05rem + 0.6vw, 1.4375rem); /* 19 -> 23 */
+  --text-eyebrow:clamp(0.875rem, 0.8rem + 0.33vw, 1.0625rem);/* 14 -> 17 */
+  --num-hero:clamp(2.1rem, 1.55rem + 2.4vw, 3.5rem);        /* 34 -> 56 big stat */
+
+  --lh-base:1.55; --lh-tight:1.1;
+
+  /* Spacing (multiples of 7) */
+  --s-1:7px; --s-2:14px; --s-3:21px; --s-4:28px; --s-5:42px; --s-6:56px; --s-7:70px;
+  --pad-slide:clamp(28px, 4.5vw, 84px);
+  --maxw:1120px;
+
+  /* Motion — slow + gentle (older audience, M21) */
+  --dur:600ms; --dur-slow:900ms;
+  --ease:cubic-bezier(0.22,0.61,0.36,1);
+}
+
+/* ===== Deck shell ===== */
+.deck{position:fixed;inset:0;background:var(--bg-primary)}
+
+/* ===== Loading curtain ===== */
+.ag-curtain{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse 90% 60% at 50% 42%, rgb(177 84 245 / 0.12), transparent 70%), var(--bg-primary);
+  transition:opacity 700ms var(--ease)}
+.ag-curtain.is-hidden{opacity:0;pointer-events:none}
+.ag-curtain__inner{display:flex;flex-direction:column;align-items:center;gap:var(--s-6)}
+.ag-curtain__logo{width:min(320px,58vw);filter:drop-shadow(0 0 42px rgb(177 84 245 / 0.4));animation:ag-breathe 7s var(--ease) infinite}
+.ag-curtain__bar{width:min(266px,68vw);height:6px;border-radius:7px;background:rgb(255 255 255 / 0.08);overflow:hidden}
+.ag-curtain__bar i{display:block;height:100%;width:0;border-radius:7px;background:var(--grad);animation:ag-load 1400ms var(--ease) forwards}
+.ag-curtain__label{font-family:var(--font-sans);font-weight:600;font-size:var(--text-eyebrow);letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted)}
+@keyframes ag-load{from{width:0}to{width:100%}}
+
+/* progress bar */
+.progress{position:fixed;top:0;left:0;height:5px;width:0;z-index:60;background:var(--grad);transition:width var(--dur) var(--ease)}
+
+/* Slides */
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;text-align:center;
+  padding:var(--pad-slide);padding-top:clamp(35px,4.6vw,49px);padding-bottom:calc(var(--pad-slide) + 42px);
+  opacity:0;visibility:hidden;transform:translateY(14px);
+  transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease),visibility 0s linear var(--dur);
+  overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -5%, rgb(255 43 138 / 0.07), transparent 70%),
+    radial-gradient(ellipse 70% 50% at 100% 105%, rgb(0 216 255 / 0.05), transparent 70%),
+    var(--bg-primary);
+}
+.slide.is-active{opacity:1;visibility:visible;transform:none;transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease);z-index:2}
+.slide__inner{width:100%;max-width:var(--maxw);margin:auto}
+
+/* Hide the native scrollbar (mobile hides it anyway) — we draw a custom always-visible one */
+.slide{scrollbar-width:none}
+.slide::-webkit-scrollbar{display:none}
+
+/* Custom always-visible on-brand scroll indicator — shows whenever the active slide overflows */
+.ag-scrollbar{position:fixed;top:14px;right:7px;bottom:calc(98px + env(safe-area-inset-bottom));width:4px;z-index:55;
+  border-radius:7px;background:rgb(255 255 255 / 0.07);opacity:0;transition:opacity 300ms var(--ease);pointer-events:none}
+.ag-scrollbar.is-visible{opacity:1}
+.ag-scrollbar i{position:absolute;left:0;right:0;top:0;border-radius:7px;background:var(--pink);min-height:35px;
+  box-shadow:0 0 12px rgb(255 43 138 / 0.55)}
+
+/* Typography blocks */
+.slide .eyebrow{font-family:var(--font-sans);font-weight:600;font-size:var(--text-eyebrow);letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);max-width:62ch;margin:0 auto var(--s-4)}
+.slide h2{font-family:var(--font-display);font-weight:400;font-size:var(--text-h1);line-height:var(--lh-tight);text-transform:uppercase;letter-spacing:0.01em;margin-bottom:var(--s-5)}
+.slide h3{font-family:var(--font-sans);font-weight:700;font-size:var(--text-h3);margin:var(--s-5) 0 var(--s-2)}
+.slide p{font-size:var(--text-base);line-height:1.6;color:var(--text-secondary);max-width:62ch;margin:0 auto var(--s-2)}
+.lead{font-size:var(--text-lead)!important;font-weight:500;color:var(--text-primary)!important}
+.neon-rule{height:3px;width:140px;background:var(--neon-rule);border:0;margin:var(--s-2) auto var(--s-5)}
+.foot-note{font-size:var(--text-eyebrow)!important;color:var(--text-muted)!important;font-style:italic;margin-top:var(--s-5)!important}
+
+/* Lists */
+ul.points{list-style:none;display:flex;flex-direction:column;gap:var(--s-2);max-width:64ch;width:fit-content;margin:var(--s-5) auto;text-align:left}
+ul.points li{position:relative;padding-left:var(--s-4);font-size:var(--text-base);line-height:1.55;color:var(--text-secondary)}
+ul.points li::before{content:"";position:absolute;left:0;top:0.62em;width:12px;height:12px;border-radius:50%;
+  background:var(--cyan);box-shadow:0 0 12px rgb(0 216 255 / 0.7)}
+ul.points li:nth-child(even)::before{background:var(--pink);box-shadow:0 0 12px rgb(255 43 138 / 0.7)}
+
+/* Cover */
+.cover{align-items:center;justify-content:center;text-align:center}
+.cover .conf{font-family:var(--font-sans);font-weight:600;font-size:var(--text-eyebrow);letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--s-2)}
+.cover img.logo{width:min(360px,58vw);margin:0 auto var(--s-2);filter:drop-shadow(0 0 42px rgb(177 84 245 / 0.35))}
+.cover .venue{font-family:var(--font-display);font-size:var(--text-h2);text-transform:uppercase;letter-spacing:0.02em;line-height:1.05;margin-bottom:var(--s-2);
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.cover .tag{font-family:var(--font-sans);font-weight:600;font-size:var(--text-lead);color:var(--text-primary);letter-spacing:0.01em}
+
+/* Stat highlight — ONE per data slide */
+.stat{display:inline-flex;flex-direction:column;align-items:center;gap:var(--s-1);margin:var(--s-5) auto}
+.stat .num{font-family:var(--font-display);font-size:var(--num-hero);line-height:1;color:var(--cyan);text-shadow:0 0 28px rgb(0 216 255 / 0.45)}
+.stat .num.pink{color:var(--pink);text-shadow:0 0 28px rgb(255 43 138 / 0.45)}
+.stat .lbl{font-family:var(--font-sans);font-weight:600;font-size:var(--text-eyebrow);letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted)}
+
+/* Data tables */
+.dtable{width:100%;max-width:840px;border-collapse:collapse;margin:var(--s-5) auto;font-size:var(--text-base);text-align:left}
+.dtable caption{text-align:left;font-family:var(--font-sans);font-weight:600;font-size:var(--text-eyebrow);letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:var(--s-2)}
+.dtable th,.dtable td{text-align:left;padding:13px var(--s-3);border-bottom:1px solid #232327}
+.dtable thead th{font-family:var(--font-sans);font-weight:700;color:var(--text-primary);border-bottom:3px solid #34343a}
+.dtable td{color:var(--text-secondary)}
+.dtable td.val{font-family:var(--font-sans);font-weight:700;color:var(--text-primary);white-space:nowrap}
+.dtable tr.total td{border-top:3px solid var(--pink);border-bottom:0;color:var(--text-primary);font-weight:700;padding-top:var(--s-3)}
+.dtable tr.total td.val{color:var(--cyan)}
+
+/* Expense model — 2 columns so 15 line items fit one screen at large type */
+.exp-list{column-count:2;column-gap:var(--s-6);margin:var(--s-3) auto;max-width:920px;text-align:left}
+.exp-list .row{display:flex;justify-content:space-between;gap:var(--s-3);padding:9px 0;border-bottom:1px solid #232327;break-inside:avoid;font-size:clamp(1.0625rem,0.98rem + 0.42vw,1.25rem);line-height:1.35}
+.exp-list .row .l{color:var(--text-secondary)}
+.exp-list .row .v{font-family:var(--font-sans);font-weight:700;color:var(--text-primary);white-space:nowrap}
+.exp-total{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-3);max-width:920px;margin:var(--s-1) auto 0;border-top:3px solid var(--pink);padding-top:var(--s-2);text-align:left}
+.exp-total .l{font-family:var(--font-sans);font-weight:700;color:var(--text-primary);font-size:var(--text-lead)}
+.exp-total .v{font-family:var(--font-sans);font-weight:700;color:var(--cyan);font-size:var(--text-lead);white-space:nowrap}
+@media(max-width:900px){.exp-list{column-count:1}}
+
+/* two-column data grid (cards for scenario/highlight slides) */
+.cards{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--s-3);margin:var(--s-5) auto;max-width:var(--maxw)}
+.card{flex:1 1 240px;max-width:340px;background:var(--bg-secondary);border:1px solid #232327;border-radius:14px;padding:var(--s-3) var(--s-4)}
+.card .ct{font-family:var(--font-sans);font-weight:600;font-size:var(--text-eyebrow);letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--s-1)}
+.card .cn{font-family:var(--font-display);font-size:clamp(2rem,1.4rem + 2.4vw,3rem);line-height:1;color:var(--text-primary)}
+.card.hl{border-color:var(--cyan);box-shadow:0 0 0 1px var(--cyan),0 0 28px rgb(0 216 255 / 0.18)}
+.card.hl .cn{color:var(--cyan)}
+.card .sub{font-size:var(--text-eyebrow);color:var(--text-muted);margin-top:var(--s-1)}
+
+/* ===== Navigation (large, obvious — older audience) ===== */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;align-items:center;justify-content:center;
+  gap:var(--s-4);padding:var(--s-3) clamp(14px,3vw,42px);
+  background:linear-gradient(0deg, rgb(0 0 0 / 0.92), rgb(0 0 0 / 0.55) 70%, transparent);
+  padding-bottom:calc(var(--s-3) + env(safe-area-inset-bottom))}
+.nav__btn{display:inline-flex;align-items:center;justify-content:center;
+  width:56px;height:56px;min-width:56px;border-radius:50%;padding:0;cursor:pointer;
+  background:var(--bg-tertiary);border:2px solid #34343a;color:var(--text-primary);
+  transition:border-color var(--dur) var(--ease),color var(--dur) var(--ease),background var(--dur) var(--ease),box-shadow var(--dur) var(--ease),transform 120ms var(--ease)}
+.nav__btn .material-symbols-outlined{font-size:28px}
+.nav__btn:active{transform:scale(0.94)}
+.nav__btn[disabled]{opacity:0.3;cursor:not-allowed}
+.nav__counter{font-family:var(--font-sans);font-weight:700;font-size:var(--text-lead);letter-spacing:0.08em;color:var(--text-primary);min-width:90px;text-align:center}
+.nav__counter .sep{color:var(--text-muted);margin:0 7px}
+.nav__counter .cur{color:var(--cyan)}
+@media (hover:hover){.nav__btn:hover{border-color:var(--gold);color:var(--gold);background:#17171b;box-shadow:0 0 21px rgb(201 168 97 / 0.28)}}
+
+.hint{position:fixed;top:14px;right:14px;z-index:50;font-family:var(--font-sans);font-size:var(--text-eyebrow);
+  color:var(--text-muted);background:rgb(0 0 0 / 0.5);border:1px solid #232327;border-radius:21px;
+  padding:7px 16px;letter-spacing:0.04em;transition:opacity var(--dur) var(--ease)}
+.hint.hide{opacity:0;pointer-events:none}
+
+/* ===== Subtle polish ===== */
+/* 1. Tabular numerals — align all financial figures */
+.dtable,.exp-list,.exp-total,.stat,.card,.nav__counter{font-variant-numeric:tabular-nums}
+
+/* 2. Staggered element reveal within each slide */
+.slide__inner>*{opacity:0;transform:translateY(10px);transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease)}
+.slide.is-active .slide__inner>*{opacity:1;transform:none}
+.slide.is-active .slide__inner>*:nth-child(2){transition-delay:70ms}
+.slide.is-active .slide__inner>*:nth-child(3){transition-delay:140ms}
+.slide.is-active .slide__inner>*:nth-child(4){transition-delay:210ms}
+.slide.is-active .slide__inner>*:nth-child(5){transition-delay:280ms}
+.slide.is-active .slide__inner>*:nth-child(n+6){transition-delay:350ms}
+
+/* 3. Cover logo gentle breathe (scale property composes with the reveal transform) */
+@keyframes ag-breathe{0%,100%{scale:1;filter:drop-shadow(0 0 42px rgb(177 84 245 / 0.30))}50%{scale:1.02;filter:drop-shadow(0 0 60px rgb(177 84 245 / 0.5))}}
+.cover img.logo{animation:ag-breathe 7s var(--ease) infinite}
+
+/* 4. Divider + title depth, softer hairlines */
+.neon-rule{box-shadow:0 0 14px rgb(255 43 138 / 0.35)}
+.slide h2{text-shadow:0 2px 24px rgb(0 0 0 / 0.55)}
+.dtable th,.dtable td{border-bottom-color:rgba(255,255,255,0.07)}
+.exp-list .row{border-bottom-color:rgba(255,255,255,0.07)}
+
+/* 5. Gradient title glow (drop-shadow works on gradient-clipped text) */
+.cover .venue{filter:drop-shadow(0 3px 21px rgb(177 84 245 / 0.28))}
+
+/* 7. Film grain — very faint, soft-light, never crosses the nav */
+.deck::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:40;opacity:0.05;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* Fullscreen buttons (cover + closing slide) */
+.fs-btn{display:inline-flex;align-items:center;gap:var(--s-1);margin-top:var(--s-3);padding:14px 28px;border-radius:14px;cursor:pointer;
+  background:var(--bg-tertiary);border:2px solid var(--gold);color:var(--text-primary);
+  font-family:var(--font-sans);font-weight:700;font-size:var(--text-eyebrow);letter-spacing:0.08em;text-transform:uppercase;
+  transition:background var(--dur) var(--ease),box-shadow var(--dur) var(--ease),transform 120ms var(--ease)}
+.fs-btn .material-symbols-outlined{font-size:24px;color:var(--gold)}
+.fs-btn:active{transform:scale(0.97)}
+@media (hover:hover){.fs-btn:hover{background:#17171b;box-shadow:0 0 21px rgb(201 168 97 / 0.3)}}
+.fs-note{font-size:var(--text-eyebrow)!important;color:var(--text-muted)!important;letter-spacing:0.06em;margin-top:var(--s-2)!important}
+
+/* Responsive: tablet/mobile */
+@media (max-width:900px){
+  /* Slide scroll area ENDS above the fixed nav, so content never hides behind it */
+  .slide{bottom:calc(98px + env(safe-area-inset-bottom));padding-bottom:var(--s-3);padding-top:clamp(28px,7vw,49px);justify-content:flex-start}
+  .slide__inner{max-width:640px}
+  /* Tighten the doubled spacing on phones so slides fit without needing to scroll */
+  .slide h2{margin-bottom:var(--s-3)}
+  .neon-rule{margin:var(--s-1) auto var(--s-3)}
+  ul.points{margin:var(--s-3) auto}
+  .dtable{margin:var(--s-3) auto}
+  .exp-list{margin:var(--s-3) auto}
+  .cards{margin:var(--s-3) auto}
+  .stat{margin:var(--s-3) auto}
+  .foot-note{margin-top:var(--s-3)!important}
+}
+@media (max-width:560px){
+  .hint{display:none}
+  .dtable th,.dtable td{padding:var(--s-1) var(--s-2);font-size:var(--text-eyebrow)}
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion:reduce){
+  .slide{transition:opacity 1ms linear,visibility 0s}
+  .slide.is-active{transition:opacity 1ms linear}
+  .progress{transition:none}
+  .cover img.logo{animation:none}
+  .slide__inner>*{opacity:1;transform:none;transition:none}
+  .ag-curtain__logo{animation:none}
+  .ag-curtain__bar i{animation:none;width:100%}
+  .ag-curtain{transition:opacity 120ms linear}
+  *{scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<div class="ag-curtain" id="curtain" aria-hidden="true">
+  <div class="ag-curtain__inner">
+    <img class="ag-curtain__logo" src="assets/muevelo-logo.png" alt="">
+    <div class="ag-curtain__bar"><i></i></div>
+    <p class="ag-curtain__label">Loading</p>
+  </div>
+</div>
+<div class="progress" id="progress"></div>
+
+<main class="deck" id="deck" aria-label="Muevelo West investor presentation">
+
+  <!-- SLIDE 1 — COVER -->
+  <section class="slide cover is-active" aria-roledescription="slide" aria-label="1 of 21: Cover">
+    <div class="slide__inner">
+      <p class="conf">Privileged &amp; Confidential</p>
+      <img class="logo" src="assets/muevelo-logo.png" alt="Muevelo at Chico's logo" width="560" height="420">
+      <p class="venue">Muevelo West at Chico's Montebello</p>
+      <p class="tag">Founding Investor Circle Opportunity</p>
+      <button class="fs-btn" id="fsEnter"><span class="material-symbols-outlined" aria-hidden="true">fullscreen</span> Enter Full Screen</button>
+      <p class="fs-note">Press ESC to exit full screen</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 — EXECUTIVE SUMMARY -->
+  <section class="slide" aria-roledescription="slide" aria-label="2 of 21: Executive Summary">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Executive Summary</h2>
+      <hr class="neon-rule">
+      <p class="lead">Muevelo West represents the acquisition and transition of Chico's Montebello, an established nightlife venue with a proven operating history, into a more intentional and actively managed entertainment concept operated under the Muevelo brand.</p>
+      <p>Unlike a traditional startup venue, Muevelo West benefits from an established market presence, existing customer awareness, active licenses, venue infrastructure, and long-term lease control.</p>
+      <p>The opportunity consists of a $600,000 capital raise and a separate $130,000 seller carry note designed to support the transition and align ownership interests.</p>
+      <p>Management's objective is to create a long-term entertainment brand focused on operational consistency, customer experience, event programming, marketing execution, and sustainable profitability.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 — WHY THIS OPPORTUNITY EXISTS -->
+  <section class="slide" aria-roledescription="slide" aria-label="3 of 21: Why This Opportunity Exists">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Why This Opportunity Exists</h2>
+      <hr class="neon-rule">
+      <p>Most nightlife concepts begin with significant startup risk.</p>
+      <p class="lead">Muevelo West begins with:</p>
+      <ul class="points">
+        <li>Existing venue infrastructure</li>
+        <li>Existing customer recognition</li>
+        <li>Existing liquor licenses</li>
+        <li>Existing operating history</li>
+        <li>Existing market awareness</li>
+        <li>Existing vendor relationships</li>
+        <li>Existing employee knowledge</li>
+      </ul>
+      <p style="margin-top:var(--s-2)">This allows management to focus on growth and execution rather than building an operation from the ground up.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 — HISTORICAL VENUE PERFORMANCE -->
+  <section class="slide" aria-roledescription="slide" aria-label="4 of 21: Historical Venue Performance">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Historical Venue Performance</h2>
+      <hr class="neon-rule">
+      <table class="dtable">
+        <caption>Historical Chico's Revenue</caption>
+        <thead><tr><th scope="col">Year</th><th scope="col">Revenue</th></tr></thead>
+        <tbody>
+          <tr><td>2023</td><td class="val">$798,712</td></tr>
+          <tr><td>2024</td><td class="val">$789,781</td></tr>
+          <tr><td>2025</td><td class="val">$516,993</td></tr>
+        </tbody>
+      </table>
+      <p>The venue has historically demonstrated the ability to generate meaningful revenue within the Montebello market.</p>
+      <p>Historical results establish venue value, market presence, and operating viability.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 — UNDERSTANDING THE REVENUE DECLINE -->
+  <section class="slide" aria-roledescription="slide" aria-label="5 of 21: Understanding the Revenue Decline">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Understanding the Revenue Decline</h2>
+      <hr class="neon-rule">
+      <p class="lead">Management believes the decline in revenue during 2025 was influenced by several factors:</p>
+      <ul class="points">
+        <li>Increased concern surrounding immigration enforcement activity throughout Southern California</li>
+        <li>Reduced attendance within portions of the Hispanic community</li>
+        <li>Reduction in operating schedule from approximately 4 nights per week to approximately 2 nights per week</li>
+        <li>Reduced marketing activity</li>
+        <li>Ownership gradually winding down operations before transition</li>
+      </ul>
+      <p class="foot-note">Historical performance should be viewed as evidence of venue viability, not as a forecast of future Muevelo operations.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 6 — THE MUEVELO DIFFERENCE -->
+  <section class="slide" aria-roledescription="slide" aria-label="6 of 21: The Muevelo Difference">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>The Muevelo Difference</h2>
+      <hr class="neon-rule">
+      <p>Historical Chico's performance is important in establishing venue value and operating history.</p>
+      <p>However, Muevelo does not intend to operate the business in the same manner.</p>
+      <p class="lead">Management intends to implement:</p>
+      <ul class="points">
+        <li>Active management oversight</li>
+        <li>Consistent marketing campaigns</li>
+        <li>Strategic event programming</li>
+        <li>Community engagement initiatives</li>
+        <li>Influencer partnerships</li>
+        <li>Customer experience improvements</li>
+      </ul>
+      <p style="margin-top:var(--s-2)">The objective is not to replicate Chico's operations.</p>
+      <p>The objective is to maximize the potential of the venue through more intentional execution.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 7 — TRANSITION STRATEGY & CONTINUITY PLAN -->
+  <section class="slide" aria-roledescription="slide" aria-label="7 of 21: Transition Strategy and Continuity Plan">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Transition Strategy &amp; Continuity Plan</h2>
+      <hr class="neon-rule">
+      <p>Management has negotiated a transition structure designed to reduce operational risk.</p>
+      <p class="lead">As part of the acquisition:</p>
+      <ul class="points">
+        <li>Existing Chico's ownership is expected to remain involved for approximately 3 months following closing</li>
+        <li>Existing vendor relationships will be transferred</li>
+        <li>Existing operational knowledge will be shared</li>
+        <li>Existing customer awareness will be preserved</li>
+        <li>Existing staff relationships will be maintained where appropriate</li>
+      </ul>
+      <p style="margin-top:var(--s-2)">This transition period is intended to create continuity while Muevelo implements its operating strategy.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 8 — LICENSES, PERMITS & REGULATORY POSITION -->
+  <section class="slide" aria-roledescription="slide" aria-label="8 of 21: Licenses, Permits and Regulatory Position">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Licenses, Permits &amp; Regulatory Position</h2>
+      <hr class="neon-rule">
+      <p>A major benefit of the acquisition is the continuity of existing operational approvals.</p>
+      <p class="lead">Management expects to obtain and continue operating under the same licenses currently utilized by Chico's, including:</p>
+      <ul class="points">
+        <li>Type 48 On-Sale General Public Premises License</li>
+        <li>Cabaret Permit</li>
+        <li>Entertainment and Dance Permits</li>
+        <li>Existing Business Licenses</li>
+        <li>Other operational approvals required for venue operations</li>
+      </ul>
+      <p style="margin-top:var(--s-2)">This continuity significantly reduces startup risk and accelerates the transition process.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 9 — VENUE CONTROL & LONG TERM LEASE -->
+  <section class="slide" aria-roledescription="slide" aria-label="9 of 21: Venue Control and Long Term Lease Position">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Venue Control &amp; Long Term Lease Position</h2>
+      <hr class="neon-rule">
+      <p>The venue currently operates under an initial 5-year lease with three additional 5-year extension options.</p>
+      <div class="stat"><span class="num">20 Years</span><span class="lbl">Potential Control Period</span></div>
+      <h3>Strategic Advantages</h3>
+      <ul class="points">
+        <li>Long-term brand building</li>
+        <li>Reduced relocation risk</li>
+        <li>Stable operating environment</li>
+        <li>Increased enterprise value potential</li>
+        <li>Ability to confidently invest in improvements and marketing</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SLIDE 10 — OWNERSHIP STRUCTURE -->
+  <section class="slide" aria-roledescription="slide" aria-label="10 of 21: Ownership Structure and Investor Participation">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Ownership Structure &amp; Investor Participation</h2>
+      <hr class="neon-rule">
+      <table class="dtable">
+        <caption>Ownership Category</caption>
+        <tbody>
+          <tr><td>Mario &amp; Henry Trujillo</td><td class="val">51%</td></tr>
+          <tr><td>Founding Investor Circle</td><td class="val">49%</td></tr>
+          <tr><td>Total Shares Available</td><td class="val">49</td></tr>
+          <tr><td>Price Per Share</td><td class="val">$6,000</td></tr>
+          <tr><td>Minimum Investment</td><td class="val">5 Shares ($30,000)</td></tr>
+        </tbody>
+      </table>
+      <p>Investors participate proportionally within the Founding Investor Circle ownership pool.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 11 — CAPITAL RAISE & USE OF FUNDS -->
+  <section class="slide" aria-roledescription="slide" aria-label="11 of 21: Capital Raise and Use of Funds">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Capital Raise &amp; Use of Funds</h2>
+      <hr class="neon-rule">
+      <table class="dtable">
+        <thead><tr><th scope="col">Category</th><th scope="col">Amount</th></tr></thead>
+        <tbody>
+          <tr><td>Acquisition (Cash at Close)</td><td class="val">$500,000</td></tr>
+          <tr><td>Working Capital</td><td class="val">$100,000</td></tr>
+          <tr class="total"><td>Total Capital Raise</td><td class="val">$600,000</td></tr>
+        </tbody>
+      </table>
+      <div class="stat"><span class="num pink">$130,000</span><span class="lbl">Separate Seller Carry Note</span></div>
+      <p>The seller carry is separate from the investor raise and aligns ownership throughout the transition period.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 12 — OPERATING EXPENSE MODEL -->
+  <section class="slide" aria-roledescription="slide" aria-label="12 of 21: Operating Expense Model">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Operating Expense Model</h2>
+      <hr class="neon-rule">
+      <div class="exp-list">
+        <div class="row"><span class="l">Alcohol Cost of Goods (25%-30%)</span><span class="v">$20,000 - $24,000</span></div>
+        <div class="row"><span class="l">Payroll &amp; Staffing</span><span class="v">$9,500 - $11,500</span></div>
+        <div class="row"><span class="l">Henry / Mario GM Salary</span><span class="v">$6,000</span></div>
+        <div class="row"><span class="l">Henry Marketing &amp; Promotions</span><span class="v">$3,125</span></div>
+        <div class="row"><span class="l">Marketing Budget</span><span class="v">$5,000</span></div>
+        <div class="row"><span class="l">Entertainment / DJs / Talent</span><span class="v">$7,000 - $10,000</span></div>
+        <div class="row"><span class="l">Rent &amp; CAM</span><span class="v">$5,100</span></div>
+        <div class="row"><span class="l">Utilities</span><span class="v">$1,200</span></div>
+        <div class="row"><span class="l">Insurance &amp; Licensing</span><span class="v">$3,000</span></div>
+        <div class="row"><span class="l">Payment Processing Fees</span><span class="v">$3,169</span></div>
+        <div class="row"><span class="l">Sales Tax Liability</span><span class="v">$10,238</span></div>
+        <div class="row"><span class="l">Accounting &amp; Bookkeeping</span><span class="v">$500 - $1,000</span></div>
+        <div class="row"><span class="l">Repairs &amp; Maintenance</span><span class="v">$500 - $1,500</span></div>
+        <div class="row"><span class="l">Inventory Loss / Shrinkage</span><span class="v">$975</span></div>
+        <div class="row"><span class="l">Seller Carry Payment</span><span class="v">$3,650</span></div>
+      </div>
+      <div class="exp-total"><span class="l">Estimated Total Monthly Expenses</span><span class="v">$68,000 - $76,000</span></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 13 — REVENUE MODEL & ATTENDANCE -->
+  <section class="slide" aria-roledescription="slide" aria-label="13 of 21: Revenue Model and Attendance Assumptions">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Revenue Model &amp; Attendance Assumptions</h2>
+      <hr class="neon-rule">
+      <p class="lead">Average Operating Scenario</p>
+      <div class="cards">
+        <div class="card"><p class="ct">Friday</p><p class="cn">150</p><p class="sub">Guests</p></div>
+        <div class="card"><p class="ct">Saturday</p><p class="cn">180</p><p class="sub">Guests</p></div>
+        <div class="card"><p class="ct">Sunday</p><p class="cn">120</p><p class="sub">Guests</p></div>
+      </div>
+      <ul class="points">
+        <li>Average Guest Spend: $50</li>
+        <li>Operating Hours: 9 PM to 2 AM</li>
+        <li>Operating Nights: Friday to Sunday</li>
+      </ul>
+      <p class="foot-note">Revenue projections intentionally exclude significant contributions from private events, sponsorships, or expanded operating schedules.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 14 — REVENUE SCENARIOS -->
+  <section class="slide" aria-roledescription="slide" aria-label="14 of 21: Revenue Scenarios">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Revenue Scenarios</h2>
+      <hr class="neon-rule">
+      <div class="cards">
+        <div class="card"><p class="ct">Conservative</p><p class="cn">$71,500</p><p class="sub">per month</p></div>
+        <div class="card hl"><p class="ct">Average</p><p class="cn">$97,500</p><p class="sub">primary operating model</p></div>
+        <div class="card"><p class="ct">Strong</p><p class="cn">$110,000</p><p class="sub">per month</p></div>
+      </div>
+      <p>The average scenario is used as the primary operating model and reflects management's expected operating performance.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 15 — PROFITABILITY PROJECTIONS -->
+  <section class="slide" aria-roledescription="slide" aria-label="15 of 21: Profitability Projections">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Profitability Projections</h2>
+      <hr class="neon-rule">
+      <table class="dtable">
+        <thead><tr><th scope="col">Scenario</th><th scope="col">Year 1 Profit</th><th scope="col">Year 2 Profit</th></tr></thead>
+        <tbody>
+          <tr><td>Conservative</td><td class="val">$0K - $5K</td><td class="val">$5K - $10K</td></tr>
+          <tr><td>Average</td><td class="val">$15K - $20K</td><td class="val">$20K - $30K</td></tr>
+          <tr><td>Strong</td><td class="val">$25K - $35K</td><td class="val">$35K - $45K</td></tr>
+        </tbody>
+      </table>
+      <p>Year 1 reflects transition expenses, ramp-up costs, and seller carry repayment.</p>
+      <p>Year 2 reflects stabilized operations.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 16 — INVESTOR DISTRIBUTION STRUCTURE -->
+  <section class="slide" aria-roledescription="slide" aria-label="16 of 21: Investor Distribution Structure">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Investor Distribution Structure</h2>
+      <hr class="neon-rule">
+      <p class="lead">Investor distributions begin only after:</p>
+      <ul class="points">
+        <li>1. Operating expenses are satisfied</li>
+        <li>2. Seller carry obligations are satisfied</li>
+        <li>3. Adequate operating reserves are established</li>
+      </ul>
+      <p style="margin-top:var(--s-2)">Investors participate proportionally based upon ownership percentage.</p>
+      <p class="foot-note">Investor returns are dependent upon actual operating performance and are not guaranteed.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 17 — REVENUE EXPANSION OPPORTUNITIES -->
+  <section class="slide" aria-roledescription="slide" aria-label="17 of 21: Revenue Expansion Opportunities">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Revenue Expansion Opportunities</h2>
+      <hr class="neon-rule">
+      <p class="lead">Potential growth opportunities include:</p>
+      <ul class="points">
+        <li>Theme Nights</li>
+        <li>Guest DJs &amp; Performers</li>
+        <li>Private Events</li>
+        <li>Corporate Functions</li>
+        <li>Influencer Partnerships</li>
+        <li>Community Events</li>
+        <li>Beverage Sponsorships</li>
+        <li>Promotional Partnerships</li>
+      </ul>
+      <p style="margin-top:var(--s-2)">Management believes these initiatives provide meaningful upside beyond the base operating model.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 18 — LONG TERM GROWTH STRATEGY -->
+  <section class="slide" aria-roledescription="slide" aria-label="18 of 21: Long Term Growth Strategy">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Long Term Growth Strategy</h2>
+      <hr class="neon-rule">
+      <p>Management intends to operate and grow the venue long term.</p>
+      <p class="lead">Primary objectives include:</p>
+      <ul class="points">
+        <li>Brand expansion</li>
+        <li>Customer retention</li>
+        <li>Revenue growth</li>
+        <li>Community engagement</li>
+        <li>Operational excellence</li>
+        <li>Enterprise value creation</li>
+      </ul>
+      <p style="margin-top:var(--s-2)">The objective is to create a sustainable operating business rather than a short-term speculative investment.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 19 — RISK FACTORS -->
+  <section class="slide" aria-roledescription="slide" aria-label="19 of 21: Risk Factors and Investor Considerations">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Risk Factors &amp; Investor Considerations</h2>
+      <hr class="neon-rule">
+      <ul class="points">
+        <li>Economic conditions</li>
+        <li>Changes in consumer spending</li>
+        <li>Regulatory and licensing matters</li>
+        <li>Competition within the entertainment industry</li>
+        <li>Execution and management risk</li>
+        <li>Market and attendance fluctuations</li>
+      </ul>
+      <p style="margin-top:var(--s-2)">While management believes the opportunity is attractive, all investments involve risk and no returns are guaranteed.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 20 — IMPORTANT DISCLOSURES -->
+  <section class="slide" aria-roledescription="slide" aria-label="20 of 21: Important Disclosures">
+    <div class="slide__inner">
+      <p class="eyebrow">Privileged &amp; Confidential</p>
+      <h2>Important Disclosures</h2>
+      <hr class="neon-rule">
+      <p>Historical Chico's performance is presented to establish venue history, market presence, and support acquisition valuation.</p>
+      <p>Future Muevelo performance may differ materially due to changes in management, operating strategy, marketing efforts, customer demand, event programming, and economic conditions.</p>
+      <p>All financial projections are estimates and should not be interpreted as guarantees of future performance.</p>
+      <p>Participation in this opportunity should be based on independent evaluation and consultation with professional advisors.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 21 — THANK YOU -->
+  <section class="slide cover" aria-roledescription="slide" aria-label="21 of 21: Thank You">
+    <div class="slide__inner">
+      <img class="logo" src="assets/muevelo-logo.png" alt="Muevelo at Chico's logo" width="560" height="420">
+      <p class="venue">Thank You</p>
+      <p class="tag">Questions &amp; Discussion</p>
+      <p style="margin-top:var(--s-4);color:var(--text-secondary);font-size:var(--text-lead)">Mario Trujillo &nbsp;&middot;&nbsp; Henry Trujillo</p>
+      <button class="fs-btn" id="fsExit"><span class="material-symbols-outlined" aria-hidden="true">fullscreen_exit</span> Exit Full Screen</button>
+    </div>
+  </section>
+
+</main>
+
+<div class="hint" id="hint">Use the arrows, or your keyboard's left and right keys</div>
+
+<div class="ag-scrollbar" id="scrollbar" aria-hidden="true"><i></i></div>
+
+<nav class="nav" aria-label="Slide navigation">
+  <button class="nav__btn" id="prev" aria-label="Previous slide">
+    <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+  </button>
+  <p class="nav__counter" aria-live="polite"><span class="cur" id="cur">1</span><span class="sep">/</span><span id="total">21</span></p>
+  <button class="nav__btn" id="next" aria-label="Next slide">
+    <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+  </button>
+</nav>
+
+<script>
+// Loading curtain: honor a minimum display, then fade out and remove
+(function(){
+  var curtain = document.getElementById('curtain');
+  if(!curtain) return;
+  var done = false;
+  function hide(){ curtain.classList.add('is-hidden'); setTimeout(function(){ if(curtain.parentNode){ curtain.remove(); } }, 700); }
+  function go(){ if(done) return; done = true; setTimeout(hide, 1400); }
+  if(document.readyState === 'complete'){ go(); } else { window.addEventListener('load', go); }
+  setTimeout(function(){ if(!done){ done = true; hide(); } }, 6000); // fail-safe, never trap the viewer
+})();
+
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var i = 0;
+  var prevBtn = document.getElementById('prev');
+  var nextBtn = document.getElementById('next');
+  var cur = document.getElementById('cur');
+  var progress = document.getElementById('progress');
+  var hint = document.getElementById('hint');
+  document.getElementById('total').textContent = total;
+
+  function render(){
+    slides.forEach(function(s,idx){ s.classList.toggle('is-active', idx===i); });
+    cur.textContent = i+1;
+    progress.style.width = ((i)/(total-1)*100) + '%';
+    prevBtn.disabled = (i===0);
+    nextBtn.disabled = (i===total-1);
+    slides[i].scrollTop = 0;
+    if(window.__updateScrollbar){ window.__updateScrollbar(); }
+  }
+  function go(n){
+    var t = Math.max(0, Math.min(total-1, n));
+    if(t===i) return;
+    i = t; render();
+    if(hint){ hint.classList.add('hide'); }
+  }
+  function next(){ go(i+1); }
+  function prev(){ go(i-1); }
+
+  nextBtn.addEventListener('click', function(e){ e.stopPropagation(); next(); });
+  prevBtn.addEventListener('click', function(e){ e.stopPropagation(); prev(); });
+
+  // Fullscreen controls: enter on cover, exit on closing slide (ESC also exits natively)
+  var fsEnter = document.getElementById('fsEnter');
+  var fsExit = document.getElementById('fsExit');
+  if(fsEnter){ fsEnter.addEventListener('click', function(e){ e.stopPropagation(); var el=document.documentElement; if(el.requestFullscreen){ el.requestFullscreen(); } else if(el.webkitRequestFullscreen){ el.webkitRequestFullscreen(); } }); }
+  if(fsExit){ fsExit.addEventListener('click', function(e){ e.stopPropagation(); if(document.exitFullscreen){ document.exitFullscreen(); } else if(document.webkitExitFullscreen){ document.webkitExitFullscreen(); } }); }
+
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight' || e.key==='PageDown' || e.key===' '){ e.preventDefault(); next(); }
+    else if(e.key==='ArrowLeft' || e.key==='PageUp'){ e.preventDefault(); prev(); }
+    else if(e.key==='Home'){ go(0); }
+    else if(e.key==='End'){ go(total-1); }
+  });
+
+  // Click-to-advance: ONLY on fine-pointer (mouse) devices, so it never eats a
+  // touch scroll gesture. On touch, use the arrow buttons; slides scroll freely.
+  if(window.matchMedia && window.matchMedia('(pointer: fine)').matches){
+    document.getElementById('deck').addEventListener('click', function(e){
+      if(e.target.closest('a,button')) return;
+      var x = e.clientX / window.innerWidth;
+      if(x < 0.25){ prev(); } else { next(); }
+    });
+  }
+
+  render();
+})();
+
+// Custom always-visible scroll indicator: shows whenever the active slide overflows,
+// sized + positioned to the active slide's scroll. Critical on mobile where the native bar is hidden.
+(function(){
+  var sb = document.getElementById('scrollbar');
+  if(!sb) return;
+  var thumb = sb.querySelector('i');
+  function update(){
+    var s = document.querySelector('.slide.is-active');
+    if(!s){ sb.classList.remove('is-visible'); return; }
+    var sh = s.scrollHeight, ch = s.clientHeight;
+    if(sh <= ch + 3){ sb.classList.remove('is-visible'); return; }
+    sb.classList.add('is-visible');
+    var trackH = sb.clientHeight;
+    var th = Math.max(35, Math.round(trackH * ch / sh));
+    var maxTop = trackH - th;
+    var top = Math.round(maxTop * (s.scrollTop / (sh - ch)));
+    thumb.style.height = th + 'px';
+    thumb.style.transform = 'translateY(' + top + 'px)';
+  }
+  var raf = false;
+  function onScroll(){ if(raf) return; raf = true; requestAnimationFrame(function(){ raf = false; update(); }); }
+  Array.prototype.forEach.call(document.querySelectorAll('.slide'), function(s){ s.addEventListener('scroll', onScroll, {passive:true}); });
+  window.addEventListener('resize', update);
+  window.addEventListener('load', function(){ setTimeout(update, 1500); });
+  window.__updateScrollbar = update;
+  update();
+})();
+</script>
+</body>
+</html>

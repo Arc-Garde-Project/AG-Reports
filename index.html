@@ -1,24 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="is-loading">
 <head>
 <meta charset="UTF-8">
+<script>
+  /* Session flag (must run before any other script) - AG Curtain Standard */
+  (function(){try{if(!sessionStorage.getItem('ag_session')){sessionStorage.setItem('ag_session','1');document.documentElement.classList.add('is-first-visit');}else{document.documentElement.classList.add('is-subsequent-visit');}}catch(e){document.documentElement.classList.add('is-first-visit');}})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>AG Hub — Arc Garde</title>
+<meta name="robots" content="noindex, nofollow">
+<title>AG Hub | Arc Garde</title>
 <meta name="description" content="Arc Garde hub. Client presentations, campaign reports, and performance dashboards.">
-<meta property="og:title" content="AG Hub — Arc Garde">
+<meta property="og:title" content="AG Hub | Arc Garde">
 <meta property="og:description" content="Arc Garde hub. Client presentations, campaign reports, and performance dashboards.">
-<meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+<meta property="og:image" content="https://ag-reports.vercel.app/assets/og-hub.png">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+
+<!-- AG defensive layer (first stylesheet) -->
+<link rel="stylesheet" href="/ag-defensive.css">
+
+<!-- Critical inline curtain CSS (AG Curtain Standard - Horizon, AG-themed) -->
+<style>
+  html.is-loading { overflow: hidden; }
+  .ag-curtain { position: fixed; inset: 0; z-index: 99998;
+    background: #070605; display: flex; align-items: center; justify-content: center;
+    opacity: 1; pointer-events: auto; transition: opacity 700ms cubic-bezier(0.16,1,0.3,1); }
+  .ag-curtain-slot { position: relative; width: min(90vw, 600px); height: 210px;
+    display: flex; align-items: center; justify-content: center; }
+  html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
+  html.is-subsequent-visit .ag-curtain-slot { display: none; }
+  .ag-intro-horizon { position: relative; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center; }
+  .ag-intro-horizon__line { position: absolute; left: 50%; transform: translateX(-50%);
+    width: 0; height: 1px; background: #c9a861;
+    animation: ag-horizon-draw 900ms cubic-bezier(0.16,1,0.3,1) forwards; }
+  .ag-intro-horizon__mask { position: absolute; left: 50%; transform: translateX(-50%);
+    overflow: hidden; height: clamp(40px, 11vw, 78px);
+    top: calc(50% - clamp(40px, 11vw, 78px));
+    max-width: 100%; display: flex; align-items: flex-end; justify-content: center; }
+  .ag-intro-horizon__logo { font-family: 'Cinzel', serif; font-weight: 700;
+    font-size: clamp(40px, 11vw, 78px); letter-spacing: 0.02em; line-height: 1; white-space: nowrap;
+    background: linear-gradient(176deg,#fffdf9 0%,#fff 14%,#f1e9da 52%,#d4c6ac 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    transform: translateY(100%);
+    animation: ag-horizon-rise 900ms cubic-bezier(0.16,1,0.3,1) 700ms forwards; }
+  .ag-intro-horizon__subtag { position: absolute; left: 50%; transform: translateX(-50%);
+    top: calc(50% + 18px); font-family: 'Cinzel', serif; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.42em; text-transform: uppercase; color: #c9a861; opacity: 0; white-space: nowrap;
+    animation: ag-horizon-fade 600ms ease 1500ms forwards; }
+  @keyframes ag-horizon-draw { from { width: 0; } to { width: min(80%, 350px); } }
+  @keyframes ag-horizon-rise { to { transform: translateY(0); } }
+  @keyframes ag-horizon-fade { to { opacity: 1; transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .ag-curtain { transition: none; }
+    .ag-curtain-slot * { animation: none !important; }
+    .ag-intro-horizon__line { width: min(80%, 350px); }
+    .ag-intro-horizon__logo { transform: translateY(0); }
+    .ag-intro-horizon__subtag { opacity: 1; }
+  }
+</style>
+
 <style>
 :root {
   --void: #0C0B09;
   --void-warm: #141210;
   --void-cool: #111010;
+  --ink: #0a0a0a;
+  --paper: #fafafa;
   --accent: #C9A76C;
   --accent-bright: #E0C48A;
   --accent-glow: rgba(201, 167, 108, 0.25);
@@ -31,10 +83,22 @@
   --border-faint: rgba(250, 246, 241, 0.06);
   --ease-arc: cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+  /* AG Motion Standard v2.1 */
+  --duration-instant: 120ms; --duration-quick: 300ms; --duration-medium: 600ms; --duration-long: 900ms;
+  --ease-satisfying: cubic-bezier(0.16, 1, 0.3, 1); --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+  --dist-micro: 7px; --dist-base: 14px; --dist-lg: 21px;
+  /* Scrollbar surfaces (AG Scrollbar Standard) */
+  --bg-secondary: #141210; --brand-700: #a8884a;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: auto; }
+/* Lenis required CSS (v1.1.x) - without this, html scroll-behavior fights Lenis and smooth scroll breaks */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
 h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
 p, li { text-wrap: pretty; }
 body {
@@ -45,6 +109,125 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* AG Scrollbar Standard - gold rail */
+html { scrollbar-color: var(--accent) var(--bg-secondary); scrollbar-width: thin; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 7px; border: 2px solid var(--bg-secondary); }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-700); }
+
+/* AG Cursor Standard v2.1 - inverting arrow + hand morph */
+.ag-fine, .ag-fine *, .ag-fine *::before, .ag-fine *::after { cursor: none !important; }
+.ag-cursor__body, .ag-cursor__edge {
+  position: fixed; top: 0; left: 0; pointer-events: none; opacity: 0;
+  transition: opacity var(--duration-instant, 120ms) var(--ease-satisfying, cubic-bezier(0.22,1,0.36,1));
+  will-change: transform;
+}
+.ag-cursor__body { z-index: 2147483646; mix-blend-mode: difference; }
+.ag-cursor__edge { z-index: 2147483647; }
+.ag-cursor__body svg, .ag-cursor__edge svg { position: absolute; top: 0; left: 0; display: block; max-width: none; }
+.ag-cursor__body .ag-cursor__arrow, .ag-cursor__edge .ag-cursor__arrow { width: 13px; height: 20px; }
+.ag-cursor__edge .ag-cursor__hand { width: 18px; height: 18px; }
+.ag-cursor__body path { fill: #fff; }
+.ag-cursor__edge path { fill: none; stroke: var(--accent, #c9a861); stroke-linejoin: round; stroke-linecap: round; }
+.ag-cursor__edge .ag-cursor__arrow path { stroke-width: 0.8; }
+.ag-cursor__edge .ag-cursor__hand path { fill: var(--cur-fill, var(--ink, #0a0a0a)); stroke-width: 0.75; }
+.ag-cursor__arrow {
+  transform-origin: 0 0;
+  transition: opacity 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1)), transform 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1));
+}
+.ag-cursor__hand {
+  position: absolute; left: -8px; top: -2px;
+  opacity: 0; transform: scale(.7); transform-origin: 8px 2px;
+  transition: opacity 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1)), transform 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1));
+}
+.ag-cur-hover .ag-cursor__arrow { opacity: 0; transform: scale(.6); }
+.ag-cur-hover .ag-cursor__hand { opacity: 1; transform: scale(1); }
+.ag-cur-hover.ag-cur-press .ag-cursor__hand { transform: scale(.88); }
+.ag-cur-press:not(.ag-cur-hover) .ag-cursor__arrow { transform: scale(.88); }
+@media (hover: none), (pointer: coarse) { .ag-cursor__body, .ag-cursor__edge { display: none !important; } }
+@media (prefers-reduced-motion: reduce) { .ag-cursor__arrow, .ag-cursor__hand, .ag-cursor__body, .ag-cursor__edge { transition: none; } }
+
+/* AG Motion Standard - scroll reveal */
+.reveal { opacity: 0; transform: translateY(var(--dist-base));
+  transition: opacity var(--duration-medium) var(--ease-satisfying), transform var(--duration-medium) var(--ease-satisfying);
+  will-change: opacity, transform; }
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+.reveal-stagger > * { opacity: 0; transform: translateY(var(--dist-base));
+  transition: opacity var(--duration-medium) var(--ease-settle), transform var(--duration-medium) var(--ease-settle);
+  transition-delay: calc(var(--i, 0) * 81ms); }
+.reveal-stagger.in-view > * { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; }
+}
+
+/* ══════════════════════════════════════
+   NEXT PRESENTATION - coming-soon / skeletal loading card
+   ══════════════════════════════════════ */
+.hub-card.hub-card--coming {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; gap: 16px; cursor: default; min-height: 252px;
+  border: 1px dashed rgba(201,167,108,0.32);
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(201,167,108,0.06), transparent 60%),
+    var(--void-warm);
+}
+.hub-card.hub-card--coming:hover { transform: none; }
+.coming-loader { position: relative; width: 92px; height: 92px; display: grid; place-items: center; }
+/* faint full track the gold arc travels on */
+.coming-loader::before {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  border: 1.5px solid rgba(250,246,241,0.06);
+}
+/* smooth gold gradient arc (conic + radial mask = no choppy border seams) */
+.coming-ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(from 90deg,
+    rgba(201,167,108,0) 0deg, rgba(201,167,108,0) 80deg,
+    var(--accent) 250deg, var(--accent-bright) 344deg, rgba(201,167,108,0) 360deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+  animation: coming-spin 2.1s linear infinite;
+}
+.coming-mark {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  font-family: 'Cinzel', serif; font-weight: 700; font-size: 34px; letter-spacing: 0; line-height: 1;
+  background: linear-gradient(176deg,#fffdf9 0%,#fff 14%,#f1e9da 52%,#d4c6ac 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 12px rgba(201,167,108,0.35));
+}
+@keyframes coming-spin { to { transform: rotate(360deg); } }
+.coming-title { font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.05rem; color: var(--text-primary); letter-spacing: 0.5px; }
+.coming-sub {
+  font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.34em;
+  text-transform: uppercase; color: var(--accent);
+}
+@keyframes sk-shimmer { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .coming-ring { animation: none; }
+}
+
+/* Per-card skeleton load: cards resolve from a shimmer placeholder */
+.card-skel {
+  position: absolute; inset: 0; z-index: 4; border-radius: inherit;
+  background: var(--void-warm);
+  display: flex; flex-direction: column; justify-content: center; gap: 12px;
+  padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  opacity: 1; transition: opacity 0.42s var(--ease-satisfying);
+}
+.card-skel.is-out { opacity: 0; }
+.card-skel .skl {
+  border-radius: 5px;
+  background: linear-gradient(90deg, rgba(250,246,241,0.05) 25%, rgba(201,167,108,0.14) 37%, rgba(250,246,241,0.05) 63%);
+  background-size: 400% 100%;
+  animation: sk-shimmer 1.4s ease infinite;
+}
+.card-skel .skl--title { width: 66%; height: 14px; }
+.card-skel .skl--l1 { width: 100%; height: 9px; margin-top: 4px; }
+.card-skel .skl--l2 { width: 82%; height: 9px; }
+.card-skel .skl--tag { width: 38%; height: 18px; border-radius: 6px; margin-top: 8px; }
+@media (prefers-reduced-motion: reduce) { .card-skel .skl { animation: none; } }
 
 /* ══════════════════════════════════════
    LAYOUT
@@ -64,6 +247,29 @@ body {
   text-align: center;
   margin-bottom: clamp(4rem, 3.333rem + 2.667vw, 6rem);
   position: relative;
+}
+
+.hub-mark {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: clamp(3.4rem, 2.6rem + 3.4vw, 5rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  display: block;
+  text-align: center;
+  margin-bottom: 24px;
+  background: linear-gradient(176deg, #fffdf9 0%, #ffffff 14%, #f1e9da 52%, #d4c6ac 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter:
+    drop-shadow(0 0 7px rgba(255,246,228,0.32))
+    drop-shadow(0 0 22px rgba(201,167,108,0.30))
+    drop-shadow(0 0 48px rgba(201,167,108,0.16))
+    drop-shadow(0 10px 26px rgba(0,0,0,0.5));
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 0.7s var(--ease-entrance) forwards 0.1s;
 }
 
 .hub-eyebrow {
@@ -351,8 +557,19 @@ body {
 </head>
 <body>
 
+<div class="ag-curtain" aria-hidden="true">
+  <div class="ag-curtain-slot">
+    <div class="ag-intro-horizon">
+      <span class="ag-intro-horizon__line"></span>
+      <div class="ag-intro-horizon__mask"><span class="ag-intro-horizon__logo">AG</span></div>
+      <span class="ag-intro-horizon__subtag">Arc Garde</span>
+    </div>
+  </div>
+</div>
+
 <div class="hub">
   <header class="hub-header">
+    <div class="hub-mark">AG</div>
     <div class="hub-eyebrow">
       <span class="hub-eyebrow-line"></span>
       <span class="hub-eyebrow-text">Arc Garde</span>
@@ -364,16 +581,24 @@ body {
 
   <!-- PRESENTATIONS -->
   <section class="hub-section">
-    <div class="hub-section-header">
+    <div class="hub-section-header reveal">
       <div class="hub-section-icon">
         <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5"/>
         </svg>
       </div>
       <p class="hub-section-label">Presentations</p>
-      <span class="hub-section-count">24</span>
+      <span class="hub-section-count">33</span>
     </div>
     <div class="hub-cards">
+      <div class="hub-card hub-card--coming" role="status" aria-label="Next presentation, coming soon">
+        <div class="coming-loader">
+          <span class="coming-ring" aria-hidden="true"></span>
+          <span class="coming-mark">AG</span>
+        </div>
+        <p class="coming-title">Next Presentation</p>
+        <p class="coming-sub">Coming Soon</p>
+      </div>
       <a href="/presentations/ally-towne" class="hub-card">
         <p class="hub-card-name">Ally Towne - The Wedding Mentor</p>
         <p class="hub-card-desc">Targeted paid advertising to drive enrollment for The Wedding Mentor course.</p>
@@ -582,12 +807,68 @@ body {
         </div>
         <span class="hub-card-arrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></span>
       </a>
+      <a href="/presentations/mpwhite" class="hub-card">
+        <p class="hub-card-name">Mark Pivko - White-Label Pitch</p>
+        <p class="hub-card-desc">White-label growth pitch: full paid ads system (14 video ads per cycle), custom landing page, live reporting, plus daily organic content.</p>
+        <div class="hub-card-meta">
+          <span class="hub-card-tag hub-card-tag--type">White-Label Pitch</span>
+        </div>
+        <span class="hub-card-arrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></span>
+      </a>
+      <a href="/presentations/posh-n-polished" class="hub-card">
+        <p class="hub-card-name">Posh &amp; Polished (Juliana Laktineh)</p>
+        <p class="hub-card-desc">Managed paid ads plus a client-experience web app. Profiles, in-chair session pages, live add-ons.</p>
+        <div class="hub-card-meta">
+          <span class="hub-card-tag hub-card-tag--type">Paid Ads + Web App</span>
+        </div>
+        <span class="hub-card-arrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></span>
+      </a>
+      <a href="/presentations/clinic-of-angels" class="hub-card">
+        <p class="hub-card-name">Clinic of Angels</p>
+        <p class="hub-card-desc">Paid advertising system. Video ads, landing page, CRM, and full management.</p>
+        <div class="hub-card-meta">
+          <span class="hub-card-tag hub-card-tag--type">Paid Ads System</span>
+        </div>
+        <span class="hub-card-arrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></span>
+      </a>
+      <a href="/presentations/scaled-llc" class="hub-card">
+        <p class="hub-card-name">scaled.llc (Sawyer Vertz)</p>
+        <p class="hub-card-desc">Presented UI for the editing-pipeline dashboard. Fully interactive, front-end only.</p>
+        <div class="hub-card-meta">
+          <span class="hub-card-tag hub-card-tag--type">Product UI</span>
+        </div>
+        <span class="hub-card-arrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></span>
+      </a>
+      <a href="/presentations/casa-mate/Casa-Mate-Offering-Deck.pdf" class="hub-card">
+        <p class="hub-card-name">Casa Mate Tequila</p>
+        <p class="hub-card-desc">Investor offering deck (29 pages) with the corrected financial model.</p>
+        <div class="hub-card-meta">
+          <span class="hub-card-tag hub-card-tag--type">Offering Deck · PDF</span>
+        </div>
+        <span class="hub-card-arrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></span>
+      </a>
+      <a href="/reports/samir-proposal" class="hub-card">
+        <p class="hub-card-name">Samir Tarazi</p>
+        <p class="hub-card-desc">Growth partnership proposal.</p>
+        <div class="hub-card-meta">
+          <span class="hub-card-tag hub-card-tag--type">Proposal</span>
+        </div>
+        <span class="hub-card-arrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></span>
+      </a>
+      <a href="/reports/24hourfunding-proposal" class="hub-card">
+        <p class="hub-card-name">24HourFunding</p>
+        <p class="hub-card-desc">Performance-aligned growth partnership proposal. More leads, lower cost, full ownership of traffic and data.</p>
+        <div class="hub-card-meta">
+          <span class="hub-card-tag hub-card-tag--type">Proposal</span>
+        </div>
+        <span class="hub-card-arrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></span>
+      </a>
     </div>
   </section>
 
   <!-- REPORTS -->
   <section class="hub-section">
-    <div class="hub-section-header">
+    <div class="hub-section-header reveal">
       <div class="hub-section-icon">
         <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
@@ -670,6 +951,44 @@ body {
     <p>Arc Garde 2026</p>
   </footer>
 </div>
+
+<!-- AG component layer (ported from canonical ag-* primitives) -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" integrity="sha384-O55L/6rhHr9CFvrxqv5luxOCcmVaBmETbZbJDP+Do8T0pztTACsFBD/IXCNkj7DV" crossorigin="anonymous"></script>
+<script src="/ag-scroll.js"></script>
+<script src="/ag-cursor.js"></script>
+<script src="/ag-motion.js"></script>
+<script>
+  /* Skeleton load: every presentation/report card resolves from a shimmer
+     placeholder in a stagger, so content does not just pop in. */
+  (function () {
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    function run() {
+      var cards = document.querySelectorAll('.hub-cards .hub-card:not(.hub-card--coming)');
+      cards.forEach(function (card) {
+        if (getComputedStyle(card).position === 'static') card.style.position = 'relative';
+        var sk = document.createElement('div');
+        sk.className = 'card-skel';
+        sk.setAttribute('aria-hidden', 'true');
+        sk.innerHTML = '<span class="skl skl--title"></span><span class="skl skl--l1"></span><span class="skl skl--l2"></span><span class="skl skl--tag"></span>';
+        card.appendChild(sk);
+      });
+      cards.forEach(function (card, i) {
+        setTimeout(function () {
+          var sk = card.querySelector('.card-skel');
+          if (!sk) return;
+          sk.classList.add('is-out');
+          setTimeout(function () { if (sk.parentNode) sk.remove(); }, 462);
+        }, 378 + i * 42);
+      });
+    }
+    if (document.documentElement.classList.contains('is-loading')) {
+      window.addEventListener('ag:ready', run, { once: true });
+    } else if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', run, { once: true });
+    } else { run(); }
+  })();
+</script>
+<script src="/ag-curtain.js"></script>
 
 </body>
 </html>

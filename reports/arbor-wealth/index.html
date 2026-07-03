@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#0B0A07">
+<title>Arbor Wealth Strategies Reports</title>
+<meta name="description" content="Reports for Arbor Wealth Strategies. Organic content KPI dashboards.">
+<meta property="og:title" content="Arbor Wealth Strategies Reports">
+<meta property="og:description" content="Reports for Arbor Wealth Strategies. Organic content KPI dashboards.">
+<meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/x-icon" href="/assets/arbor-wealth/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/arbor-wealth/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/arbor-wealth/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/arbor-wealth/apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0B0A07;
+  --card: #16130C;
+  --border: #2A2414;
+  --text: #EFEAE0;
+  --muted: #8A7F6A;
+  --accent: #C9A962;
+  --accent-lt: #D4B86A;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(201,169,98,0.08) 0%, transparent 60%);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+  display: flex; align-items: center; justify-content: center;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+a{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+a:focus-visible{outline:2px solid var(--accent-lt);outline-offset:2px}
+.portal { text-align: center; padding: 60px 24px; max-width: 600px; width: 100%; }
+.logo-link { display: inline-block; margin-bottom: 12px; }
+.logo-link img { max-width: 240px; display: block; }
+.subtitle { font-size: 14px; color: var(--muted); font-weight: 400; letter-spacing: 1px; }
+.divider {
+  width: 140px; height: 2px; margin: 24px auto 32px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-lt));
+}
+.section-label {
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: #6A5E45; font-weight: 600; margin-bottom: 14px;
+}
+.reports { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.report-link {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 24px; border-radius: 14px; width: 100%; max-width: 400px;
+  border: 1px solid var(--border); background: rgba(255,255,255,0.02);
+  color: #B0A488; font-size: 15px; font-weight: 600; text-decoration: none;
+  transition: all 0.3s ease; min-height: 48px; position: relative; overflow: hidden;
+}
+.report-link::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-lt));
+  opacity: 0; transition: opacity 0.3s;
+}
+@media(hover:hover){
+  .report-link:hover { border-color: rgba(201,169,98,0.35); color: #fff; background: rgba(201,169,98,0.06); transform: translateY(-2px); }
+  .report-link:hover::before { opacity: 1; }
+}
+.report-link:active { background: rgba(201,169,98,0.08); }
+.report-badge {
+  font-size: 10px; color: #4ADE80; font-weight: 700; letter-spacing: 1px;
+  padding: 3px 8px; border-radius: 6px; background: rgba(74,222,128,0.08);
+  border: 1px solid rgba(74,222,128,0.12);
+}
+.report-date { font-size: 12px; color: #6A5E45; font-weight: 400; margin-top: 2px; }
+.footer { margin-top: 48px; }
+.footer a {
+  color: #6A5E45; font-size: 10px; letter-spacing: 3px; text-decoration: none;
+  text-transform: uppercase; transition: color 0.3s; font-weight: 600;
+}
+@media(hover:hover){.footer a:hover { color: var(--accent-lt); }}
+@media(max-width:480px){
+  .portal{padding:40px 16px}
+  .report-link{padding:16px 20px;font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important}}
+</style>
+</head>
+<body>
+<div class="portal">
+  <a href="https://www.arcgarde.com" target="_blank" class="logo-link">
+    <img src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Arbor%20Wealth%20Strategies/site-logo-hero.png" alt="Arbor Wealth Strategies">
+  </a>
+  <div class="subtitle">Reports</div>
+  <div class="divider"></div>
+  <div class="section-label">Monthly KPI Reports</div>
+  <div class="reports">
+    <a href="/reports/arbor-wealth/may-2026" class="report-link">
+      <div>May 2026<div class="report-date">Organic Content - 3 Platforms</div></div>
+      <span class="report-badge">LATEST</span>
+    </a>
+  </div>
+  <div class="footer">
+    <a href="https://www.arcgarde.com" target="_blank">Arc Garde</a>
+  </div>
+</div>
+</body>
+</html>

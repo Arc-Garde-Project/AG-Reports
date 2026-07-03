@@ -1,0 +1,2 @@
+:HL["/presentations/scaled-llc/_next/static/chunks/1ejjyh394o8-o.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"QOiLgNAyd39JtyGcTtaf2"}

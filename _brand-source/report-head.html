@@ -1,0 +1,34 @@
+<!-- ════════════════════════════════════════════════════════════════
+     AG WEB-REPORT BRAND HEAD (LOCKED 2026-06-18)
+     Paste into <head> of EVERY ag-reports page. Replace {{...}} tokens.
+     Pick the OG image by report type (see OG VARIANT below).
+     Assets are Vercel-local under /assets/ (NOT Supabase) — they version
+     with the deploy and survive any Supabase tier outage.
+═════════════════════════════════════════════════════════════════ -->
+<meta name="robots" content="noindex, nofollow">
+
+<title>{{CLIENT}} - {{REPORT TITLE}}</title>
+<meta name="description" content="{{1-2 sentence summary with the headline numbers}}">
+
+<meta property="og:title" content="{{CLIENT}} - {{REPORT TITLE}}">
+<meta property="og:description" content="{{short summary}}">
+<meta property="og:type" content="website">
+<!-- OG VARIANT — choose ONE by report type:
+     Ads / paid:            /assets/og-banner.png   (default; = Ads Report)
+     Website preview:       /assets/og-website.png
+     Organic content:       /assets/og-organic.png
+     Hub index:             /assets/og-hub.png -->
+<meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Arc Garde">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{CLIENT}} - {{REPORT TITLE}}">
+<meta name="twitter:description" content="{{short summary}}">
+<meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+
+<meta name="theme-color" content="#070605">
+<link rel="canonical" href="https://ag-reports.vercel.app/reports/{{client}}/{{slug}}">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">

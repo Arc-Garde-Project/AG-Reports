@@ -1,0 +1,55 @@
+/* =========================================================== */
+/* AG Cursor Standard v2.1  — CANONICAL DROP-IN                */
+/* Source of truth: sectors/web/standards/AG-CURSOR-STANDARD.md */
+/* Invert / Morph / Ignite: inverting white arrow body + gold  */
+/* edge; arrow->hand on hover; gold echo+ignite on click.      */
+/* Tokens (--ink, --paper, --accent) come from Palette Standard.*/
+/* DO NOT replace with a generic gsap smooth-lag dot cursor.   */
+/* Follow is PIXEL-LOCKED (no lerp, no transform transition).  */
+/* =========================================================== */
+
+.ag-fine, .ag-fine *, .ag-fine *::before, .ag-fine *::after { cursor: none !important; }
+
+.ag-cursor__body,
+.ag-cursor__edge {
+  position: fixed; top: 0; left: 0;
+  pointer-events: none;
+  opacity: 0;
+  /* v2.1: transform is pixel-locked (set on pointermove in JS). NO transform transition. */
+  transition: opacity var(--duration-instant, 120ms) var(--ease-satisfying, cubic-bezier(0.22,1,0.36,1));
+  will-change: transform;
+}
+.ag-cursor__body { z-index: 2147483646; mix-blend-mode: difference; }  /* inverting arrow */
+.ag-cursor__edge { z-index: 2147483647; }                              /* gold edge + solid hand */
+
+.ag-cursor__body svg,
+.ag-cursor__edge svg { position: absolute; top: 0; left: 0; display: block; max-width: none; }
+/* REQUIRED: the SVGs sit in a 0x0 fixed parent. A global img/svg { max-width:100%; height:auto }
+   media reset (e.g. AG ag-normalize.css) otherwise collapses them to 0x0 = invisible cursor.
+   max-width:none + the explicit sizes below (class beats the element reset, no !important) defeat it. */
+.ag-cursor__body .ag-cursor__arrow, .ag-cursor__edge .ag-cursor__arrow { width: 13px; height: 20px; }
+.ag-cursor__edge .ag-cursor__hand { width: 18px; height: 18px; }
+
+.ag-cursor__body path { fill: #fff; }
+.ag-cursor__edge path { fill: none; stroke: var(--accent, #c9a861); stroke-linejoin: round; stroke-linecap: round; }
+.ag-cursor__edge .ag-cursor__arrow path { stroke-width: 0.8; }
+.ag-cursor__edge .ag-cursor__hand  path { fill: var(--cur-fill, var(--ink, #0a0a0a)); stroke-width: 0.75; }
+
+.ag-cursor__arrow {
+  transform-origin: 0 0;
+  transition: opacity 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1)),
+              transform 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1));
+}
+.ag-cursor__hand {
+  position: absolute; left: -8px; top: -2px;   /* fingertip to hotspot */
+  opacity: 0; transform: scale(.7); transform-origin: 8px 2px;
+  transition: opacity 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1)),
+              transform 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1));
+}
+.ag-cur-hover .ag-cursor__arrow { opacity: 0; transform: scale(.6); }
+.ag-cur-hover .ag-cursor__hand  { opacity: 1; transform: scale(1); }
+.ag-cur-hover.ag-cur-press .ag-cursor__hand { transform: scale(.88); }
+.ag-cur-press:not(.ag-cur-hover) .ag-cursor__arrow { transform: scale(.88); }
+
+@media (hover: none), (pointer: coarse) { .ag-cursor__body, .ag-cursor__edge { display: none !important; } }
+@media (prefers-reduced-motion: reduce) { .ag-cursor__arrow, .ag-cursor__hand, .ag-cursor__body, .ag-cursor__edge { transition: none; } }

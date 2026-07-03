@@ -1,0 +1,34 @@
+MUEVELO PITCH DECK (SIMPLIFIED) - REVISIONS LOG
+================================================================
+
+HOW TO READ THIS FILE  (read before any audit / re-run)
+----------------------------------------------------------------
+- This is the SOURCE OF TRUTH for revisions to the build.
+- APPEND ONLY. Every new revision goes at the BOTTOM.
+- The LATEST (bottom-most) entry ALWAYS WINS on any conflict.
+  If an earlier revision (higher up) says one thing and a later revision
+  (lower down) says something different, the LOWER / LATER one is correct.
+- When a re-run or audit finds the LIVE BUILD differs from the intake form:
+  CHECK HERE FIRST. If a revision below explains the change, it is INTENTIONAL.
+  The revision is truth, the intake is the older state. Do NOT "fix" it back.
+  Only flag a mismatch if NOTHING in this file explains it.
+- Facts still come from the client. This file records DIRECTION/CHANGES only,
+  it never invents brand, claims, prices, dates, or testimonials.
+
+ENTRY FORMAT
+----------------------------------------------------------------
+[YYYY-MM-DD] (source: who) - area - the instruction (verbatim or close)
+
+================================================================
+REVISIONS  (append new ones below this line - newest at the BOTTOM)
+================================================================
+
+[2026-06-03] (source: Quinten) - scope - Simplified take of the Muevelo investor deck. Full version exists at ../muevelo/index.html; this is a leaner build from the same source.
+[2026-06-03] (source: Quinten) - intake - Source of truth = OneDrive\Desktop\Investor Deck - Google Docs.pdf (21 slides). Reuse logo from existing deck.
+[2026-06-03] (source: intake) - brand name - Source spells the brand "Muevelo" (file named "MUELVO" per Quinten). Deck content uses "Muevelo".
+[2026-06-03] (source: Quinten) - scope/content - "Whatever is on the pdf slides is what we got only." Deck contains ONLY what is on the 21 PDF slides. No added contact CTA (closes on the Trujillo principals / Thank You slide as source does). No venue photography. Both flagged gaps resolved by scope. Clean/typographic build.
+[2026-06-03] (source: Quinten) - direction/neon - Restrained accent (not full synthwave). Neon = punctuation only: full gradient wordmark on cover, thin neon divider rules, data slides are white-on-black with ONE cyan or pink stat highlight. Club soul, memo discipline. Creative Profile M40 L45 T60 D80 N40 I25.
+[2026-06-03] (source: Quinten) - direction/audience - "for older peoples sake tailor it for them." Re-tuned for an older investor audience: Profile now M21 L30 T55 D80 N25 I15. Large type (body never below 21px, Anton headline-only), AAA contrast (white-on-black ~19:1), neon NEVER as text (decorative only), slow gentle motion + reduced-motion honored, one idea per slide with big numbers, large obvious nav (56px+ arrows, slide counter, keyboard arrows, click-to-advance). Supersedes the M40 neon-profile line above for dial values.
+[2026-06-03] (source: Quinten) - asset/logo - Muevelo @ Chico logo copied into muevelo-simplified/assets/muevelo-logo.png and placed on the style tile. Logo is the rainbow synthwave wordmark, reads on dark.
+[2026-06-03] (source: Quinten) - direction/theme - Base theme = DARK (kept). Pure-white large text on black, ~19:1 contrast (above AAA), neon accent-only never as text. Nightlife brand intact, logo glows. Confirmed best for older audience over a light base.
+[2026-06-03] (source: Quinten) - source of truth - RESOLVED: "go back to the simplified, forget the other one." Source of truth = Google Docs PDF (Investor Deck - Google Docs.pdf, 21 slides: $600K raise, $130K seller carry, $7,142/share, $35,710 min). The v28 PowerPoint and the existing full deck are DROPPED, not a reference. Supersedes the earlier v28 selection. See reports/source-comparison-2026-06-03.md for the differences that were set aside.
