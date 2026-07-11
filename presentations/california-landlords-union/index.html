@@ -1,0 +1,1019 @@
+<!--
+  CALIFORNIA LANDLORDS UNION - GROWTH SYSTEM PROPOSAL
+  Arc Garde. Prepared for James Escudero.
+  Unique "Charter" identity (net-new visual composition).
+  AG Standards LIFTED from the Dominion library: AG Cursor v1.3 wedge (retinted CLLU blue),
+  Lenis, reveal/reveal-stagger IO, defensive baseline, fluid tokens, banner law.
+  No loading curtain (presentations load straight to the hero). July 2026
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no">
+  <base href="/presentations/california-landlords-union/">
+  <title>California Landlords Union | Growth System - Arc Garde</title>
+
+  <meta name="description" content="Growth system for the California Landlords Union. Paid ads, funnels, organic content, and an agent affiliate network, built and run by Arc Garde.">
+  <meta name="author" content="Arc Garde">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://ag-reports.vercel.app/presentations/california-landlords-union">
+
+  <link rel="icon" type="image/png" href="cllu-favicon.png">
+  <link rel="apple-touch-icon" href="cllu-favicon.png">
+
+  <meta property="og:title" content="California Landlords Union | Growth System - Arc Garde">
+  <meta property="og:description" content="Your union. Your movement. A system that scales both.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ag-reports.vercel.app/presentations/california-landlords-union">
+  <meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="California Landlords Union | Growth System - Arc Garde">
+  <meta name="twitter:description" content="Your union. Your movement. A system that scales both.">
+  <meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+  <meta name="theme-color" content="#F4F1E8">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Growth System",
+    "provider": { "@type": "Organization", "name": "Arc Garde", "url": "https://arcgarde.com" },
+    "serviceType": "Paid advertising, funnels, organic content distribution, and affiliate collateral",
+    "areaServed": "United States"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════
+       TOKENS - CLLU Charter palette (warm paper + navy ink + action blue)
+       ═══════════════════════════════════════════════════════ */
+    :root {
+      /* brand */
+      --navy: #16294A;
+      --navy-deep: #0F1F38;
+      --blue: #2575FC;
+      --blue-deep: #1B5AD6;
+      --blue-lift: #7EAAFF;          /* accent text on navy (legible) */
+
+      /* paper surfaces */
+      --paper: #F4F1E8;              /* warm ivory charter stock */
+      --paper-2: #FBFAF4;            /* lifted card */
+      --paper-3: #EDE9DC;            /* recessed */
+
+      /* ink */
+      --ink: #1B2B47;
+      --ink-title: #16294A;
+      --ink-soft: rgba(27, 43, 71, 0.72);
+      --ink-mute: rgba(27, 43, 71, 0.50);
+
+      /* rules */
+      --rule: rgba(22, 41, 74, 0.16);
+      --rule-2: rgba(22, 41, 74, 0.30);
+
+      /* on navy */
+      --on-navy: #F4F1E8;
+      --on-navy-soft: rgba(244, 241, 232, 0.74);
+      --on-navy-mute: rgba(244, 241, 232, 0.48);
+      --rule-on-navy: rgba(244, 241, 232, 0.18);
+
+      /* cursor uses --accent */
+      --accent: #2575FC;
+
+      /* motion (referenced by lifted cursor/curtain) */
+      --duration-quick: 300ms;
+      --duration-medium: 600ms;
+      --duration-long: 900ms;
+      --ease-satisfying: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-snap: cubic-bezier(0.34, 1.2, 0.64, 1);
+      --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+
+      /* type */
+      --font-display: 'Oswald', system-ui, sans-serif;
+      --font-body: 'Roboto', system-ui, sans-serif;
+
+      --t-hero: clamp(2.9rem, 1.5rem + 6vw, 6.2rem);
+      --t-h2: clamp(2rem, 1.3rem + 3vw, 3.6rem);
+      --t-article: clamp(1.5rem, 1.15rem + 1.5vw, 2.3rem);
+      --t-lead: clamp(1.12rem, 1rem + 0.5vw, 1.4rem);
+      --t-body: clamp(1rem, 0.95rem + 0.22vw, 1.1rem);
+      --t-small: clamp(0.82rem, 0.79rem + 0.13vw, 0.9rem);
+      --t-label: clamp(0.68rem, 0.64rem + 0.14vw, 0.78rem);
+      --t-numeral: clamp(3.4rem, 2rem + 6.5vw, 7.5rem);
+
+      --wrap: min(100% - clamp(2.2rem, 1rem + 5vw, 6rem), 1200px);
+      --wrap-tight: min(100% - clamp(2.2rem, 1rem + 5vw, 6rem), 940px);
+      --space-band: clamp(4.5rem, 3rem + 7vw, 8.5rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: clip; -webkit-text-size-adjust: 100%; background-color: var(--paper); }
+    body {
+      font-family: var(--font-body);
+      font-size: var(--t-body);
+      line-height: 1.68;
+      color: var(--ink);
+      background: var(--paper);
+      overflow-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+    h1, h2, h3 { text-wrap: balance; line-height: 1.04; }
+    p { text-wrap: pretty; }
+
+    .clu-skip {
+      position: absolute; left: -9999px; top: 0; z-index: 100;
+      background: var(--navy); color: var(--on-navy);
+      padding: 0.7em 1.2em; font-weight: 500; text-decoration: none;
+    }
+    .clu-skip:focus { left: 0; }
+
+    .wrap { width: var(--wrap); margin-inline: auto; }
+    .wrap-tight { width: var(--wrap-tight); margin-inline: auto; }
+
+    /* ── AG CURSOR v1.3 CSS (lifted) ── */
+    html.ag-cursor-active,
+    html.ag-cursor-active * { cursor: none !important; }
+    .ag-cursor {
+      position: fixed; top: 0; left: 0; pointer-events: none;
+      z-index: 99999; transform: translate(-100px, -100px); will-change: transform;
+    }
+    .ag-cursor__group { transform-origin: 9px 11px; transition: transform var(--duration-quick) var(--ease-snap); }
+    .ag-cursor__glow { transition: opacity var(--duration-quick) var(--ease-soft); }
+    .ag-cursor__fill-overlay { transition: height var(--duration-medium) var(--ease-satisfying); }
+    .ag-click-svg { position: fixed; pointer-events: none; z-index: 99998; width: 168px; height: 168px; }
+    .ag-click-svg path { fill: none; stroke: var(--accent); stroke-width: 1.4; stroke-linecap: round; }
+    @media (prefers-reduced-motion: reduce) {
+      .ag-click-svg { display: none; }
+      .ag-cursor__group, .ag-cursor__glow, .ag-cursor__fill-overlay { transition: none; }
+    }
+    @media (hover: none), (pointer: coarse) {
+      html.ag-cursor-active, html.ag-cursor-active * { cursor: auto !important; }
+      .ag-cursor { display: none; }
+    }
+
+    /* ── REVEAL (contract for lifted IO observer) ── */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s var(--ease-satisfying), transform 0.7s var(--ease-satisfying); }
+    .reveal.in-view { opacity: 1; transform: none; }
+    .reveal-stagger > * { opacity: 0; transform: translateY(26px); transition: opacity 0.6s var(--ease-satisfying), transform 0.6s var(--ease-satisfying); transition-delay: calc(var(--i, 0) * 90ms); }
+    .reveal-stagger.in-view > * { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       BANDS + shared type
+       ═══════════════════════════════════════════════════════ */
+    .band { position: relative; padding-block: var(--space-band); overflow: clip; }
+    .band-navy { background: var(--navy); color: var(--on-navy); }
+    .band-deep { background: var(--navy-deep); color: var(--on-navy); }
+
+    .clu-label {
+      font-family: var(--font-display); font-weight: 500;
+      font-size: var(--t-label); letter-spacing: 0.34em; text-transform: uppercase;
+      color: var(--blue-deep); display: inline-flex; align-items: center; gap: 0.85em;
+    }
+    .band-navy .clu-label, .band-deep .clu-label { color: var(--blue-lift); }
+    .clu-label::before { content: ""; width: 2.4em; height: 2px; background: currentColor; opacity: 0.8; }
+
+    .clu-h2 {
+      font-family: var(--font-display); font-weight: 600; text-transform: uppercase;
+      font-size: var(--t-h2); letter-spacing: 0.01em; color: var(--ink-title);
+      max-width: 20ch;
+    }
+    .band-navy .clu-h2, .band-deep .clu-h2 { color: var(--on-navy); }
+    .clu-sechead { display: grid; gap: 1rem; margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem); }
+    .clu-sechead .clu-lead { font-size: var(--t-lead); color: var(--ink-soft); max-width: 54ch; }
+    .band-navy .clu-lead, .band-deep .clu-lead { color: var(--on-navy-soft); }
+
+    /* double-rule divider, charter motif */
+    .clu-doublerule { height: 0; border-top: 2px solid var(--rule-2); border-bottom: 1px solid var(--rule); padding-top: 3px; }
+    .band-navy .clu-doublerule, .band-deep .clu-doublerule { border-top-color: var(--rule-on-navy); border-bottom-color: rgba(244,241,232,0.1); }
+
+    /* seal watermark */
+    .clu-seal-wm {
+      position: absolute; pointer-events: none; user-select: none;
+      opacity: 0.05; z-index: 0;
+    }
+    .band > .wrap, .band > .wrap-tight { position: relative; z-index: 1; }
+
+    /* ═══════════════════════════════════════════════════════
+       HERO MASTHEAD
+       ═══════════════════════════════════════════════════════ */
+    .clu-hero { background: var(--paper); padding-block: clamp(2.4rem, 1.5rem + 3vw, 3.6rem) clamp(4rem, 2.5rem + 5vw, 7rem); position: relative; overflow: clip; }
+    .clu-hero-seal-wm {
+      position: absolute; top: 46%; right: -8%; transform: translateY(-50%);
+      width: clamp(360px, 52vw, 760px); opacity: 0.06; z-index: 0; pointer-events: none;
+    }
+    .clu-masthead { position: relative; z-index: 1; }
+    .clu-dateline {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.6em 1.4em;
+      font-family: var(--font-display); font-weight: 500; font-size: var(--t-label);
+      letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-mute);
+      padding-bottom: 0.9rem;
+    }
+    .clu-dateline .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--blue); }
+    .clu-masthead-rule { margin-bottom: clamp(2rem, 1.2rem + 3vw, 3.4rem); }
+
+    .clu-lockup {
+      display: flex; align-items: center; justify-content: center;
+      gap: clamp(0.7rem, 0.5rem + 0.7vw, 1.15rem);
+      margin-bottom: clamp(1.6rem, 1rem + 2vw, 2.6rem);
+    }
+    .clu-lockup-seal { width: clamp(56px, 7vw, 92px); height: auto; flex-shrink: 0; }
+    .clu-lockup-word { width: clamp(200px, 27vw, 340px); height: auto; }
+
+    .clu-hero-title {
+      font-family: var(--font-display); font-weight: 600; text-transform: uppercase;
+      font-size: var(--t-hero); letter-spacing: 0.005em; color: var(--ink-title);
+      max-width: 15ch;
+    }
+    .clu-hero-title .accent { color: var(--blue); display: block; }
+    .clu-hero-stand {
+      margin-top: clamp(1.5rem, 1rem + 2vw, 2.4rem);
+      display: grid; gap: 0.55rem; max-width: 46ch;
+    }
+    .clu-hero-stand p { font-size: var(--t-lead); color: var(--ink-soft); }
+    .clu-hero-stand strong { color: var(--ink-title); font-weight: 500; }
+
+    /* credential seal-stamp */
+    .clu-credential {
+      margin-top: clamp(2rem, 1.4rem + 2vw, 3rem);
+      display: inline-flex; align-items: center; gap: 1.1rem;
+      background: var(--paper-2); border: 1px solid var(--rule);
+      border-left: 3px solid var(--blue);
+      padding: 1rem 1.4rem; max-width: 40rem;
+    }
+    .clu-credential-fig { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 1.4rem + 2.4vw, 3.1rem); color: var(--navy); line-height: 1; white-space: nowrap; }
+    .clu-credential-fig .u { color: var(--blue); }
+    .clu-credential-txt { font-size: var(--t-small); color: var(--ink-soft); }
+    .clu-credential-txt strong { color: var(--ink-title); font-weight: 500; }
+
+    /* hero offer stats */
+    .clu-hero-stats {
+      margin-top: clamp(2.4rem, 1.6rem + 2vw, 3.2rem);
+      display: grid; grid-template-columns: repeat(3, auto); gap: clamp(1.6rem, 1rem + 3vw, 4rem);
+      justify-content: start; align-items: end;
+      border-top: 1px solid var(--rule); padding-top: clamp(1.4rem, 1rem + 1.5vw, 2rem);
+      max-width: 44rem;
+    }
+    .clu-stat-fig { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.4rem, 1.6rem + 3vw, 4rem); color: var(--navy); line-height: 0.9; }
+    .clu-stat-fig .u { color: var(--blue); }
+    .clu-stat-lab { margin-top: 0.5rem; font-size: var(--t-label); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-mute); font-family: var(--font-display); font-weight: 500; }
+
+    /* ═══════════════════════════════════════════════════════
+       PRINCIPLES STRIP (navy)
+       ═══════════════════════════════════════════════════════ */
+    .clu-principles { padding-block: clamp(1.6rem, 1.1rem + 1.6vw, 2.4rem); }
+    .clu-principles .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(1rem, 0.6rem + 1.5vw, 2rem) clamp(2rem, 1rem + 3vw, 4.5rem); }
+    .clu-principle {
+      font-family: var(--font-display); font-weight: 500; text-transform: uppercase;
+      letter-spacing: 0.2em; font-size: clamp(0.95rem, 0.8rem + 0.7vw, 1.35rem);
+      color: var(--on-navy); display: inline-flex; align-items: center; gap: 1.6rem;
+    }
+    .clu-principle::after { content: ""; width: 6px; height: 6px; background: var(--blue-lift); border-radius: 50%; }
+    .clu-principle:last-child::after { display: none; }
+
+    /* ═══════════════════════════════════════════════════════
+       ARTICLES (what we build)
+       ═══════════════════════════════════════════════════════ */
+    .clu-articles { display: grid; }
+    .clu-article {
+      display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 2.1fr);
+      gap: clamp(1.5rem, 1rem + 3vw, 4rem);
+      padding-block: clamp(2.2rem, 1.5rem + 2.5vw, 3.4rem);
+      border-top: 1px solid var(--rule);
+    }
+    .clu-article:last-child { border-bottom: 1px solid var(--rule); }
+    .clu-article-mark { display: flex; align-items: baseline; gap: 1rem; }
+    .clu-article-num {
+      font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 1rem + 1vw, 1.9rem);
+      line-height: 0.9; color: transparent; -webkit-text-stroke: 1.2px var(--blue); letter-spacing: -0.02em;
+    }
+    .clu-article-kicker {
+      font-family: var(--font-display); font-weight: 500; font-size: clamp(0.85rem, 0.78rem + 0.22vw, 1rem);
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mute);
+      writing-mode: horizontal-tb; align-self: center;
+    }
+    .clu-article-title { font-family: var(--font-display); font-weight: 600; text-transform: uppercase; font-size: var(--t-article); color: var(--ink-title); letter-spacing: 0.01em; margin-bottom: 1rem; }
+    .clu-article-list { list-style: none; display: grid; gap: 0.7rem; max-width: 60ch; }
+    .clu-article-list li { position: relative; padding-left: 1.7em; color: var(--ink-soft); }
+    .clu-article-list li::before {
+      content: ""; position: absolute; left: 0; top: 0.62em;
+      width: 0.7em; height: 0.7em; border: 1.5px solid var(--blue);
+      background: rgba(37, 117, 252, 0.1);
+    }
+    .clu-article-list strong { color: var(--ink-title); font-weight: 500; }
+
+    /* ═══════════════════════════════════════════════════════
+       HOW IT RUNS (navy) - cadence ribbon
+       ═══════════════════════════════════════════════════════ */
+    .clu-cadence-wrap { display: grid; gap: clamp(2rem, 1.4rem + 2vw, 3rem); }
+    .clu-cadence-fig { background: rgba(244,241,232,0.04); border: 1px solid var(--rule-on-navy); padding: clamp(1.4rem, 1rem + 2vw, 2.4rem); }
+    .clu-cadence-cap { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.3rem; margin-bottom: 1.6rem; }
+    .clu-cadence-cap .l { font-family: var(--font-display); font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; font-size: var(--t-label); color: var(--blue-lift); }
+    .clu-cadence-cap .r { font-size: var(--t-small); color: var(--on-navy-mute); }
+    .clu-ribbon { width: 100%; height: auto; display: block; }
+
+    .clu-run-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 1rem + 2vw, 3rem); }
+    .clu-run-block h3 { font-family: var(--font-display); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; font-size: var(--t-article); color: var(--on-navy); margin-bottom: 1rem; }
+    .clu-run-list { list-style: none; display: grid; gap: 0.6rem; }
+    .clu-run-list li { position: relative; padding-left: 1.5em; color: var(--on-navy-soft); }
+    .clu-run-list li::before { content: ""; position: absolute; left: 0; top: 0.66em; width: 0.9em; height: 2px; background: var(--blue-lift); }
+    .clu-note { border-left: 3px solid var(--blue-lift); padding-left: 1.3rem; display: grid; gap: 0.5rem; }
+    .clu-note p { color: var(--on-navy-soft); }
+    .clu-note strong { color: var(--on-navy); font-weight: 500; }
+
+    /* ═══════════════════════════════════════════════════════
+       THE TERMS (price)
+       ═══════════════════════════════════════════════════════ */
+    .clu-terms { display: grid; gap: clamp(2.6rem, 1.8rem + 3vw, 4.4rem); }
+    .clu-price-head {
+      display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 1.5rem;
+      border-bottom: 2px solid var(--rule-2); padding-bottom: clamp(1.4rem, 1rem + 1.5vw, 2rem);
+    }
+    .clu-price-name { font-family: var(--font-display); font-weight: 600; text-transform: uppercase; font-size: var(--t-article); color: var(--ink-title); letter-spacing: 0.01em; }
+    .clu-price-sub { font-size: var(--t-small); color: var(--ink-mute); margin-top: 0.3rem; letter-spacing: 0.06em; text-transform: uppercase; font-family: var(--font-display); font-weight: 500; }
+    .clu-price-fig { font-family: var(--font-display); font-weight: 700; font-size: clamp(3rem, 2rem + 4.5vw, 6rem); color: var(--navy); line-height: 0.85; white-space: nowrap; }
+    .clu-price-fig .cur { color: var(--blue-deep); font-size: 0.5em; vertical-align: 0.55em; margin-right: 0.06em; }
+    .clu-price-duo { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(2rem, 1rem + 3.4vw, 4.8rem); border-bottom: 2px solid var(--rule-2); padding: clamp(0.4rem, 0.2rem + 0.6vw, 1rem) 0 clamp(2rem, 1.4rem + 2vw, 3.2rem); }
+    .clu-price-block { text-align: center; display: grid; gap: 0.65rem; }
+    .clu-price-label { font-family: var(--font-display); font-weight: 500; font-size: var(--t-label); letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue-deep); }
+    .clu-price-duo .clu-price-fig { font-size: clamp(2.5rem, 1.6rem + 3.4vw, 4.6rem); }
+    .clu-price-per { font-family: var(--font-display); font-weight: 500; font-size: 0.26em; color: var(--ink-mute); vertical-align: 0.7em; letter-spacing: 0.04em; margin-left: 0.1em; }
+    .clu-price-block .clu-price-cadence { text-align: center; margin-top: 0; }
+    .clu-price-then { font-family: var(--font-display); font-weight: 500; text-transform: uppercase; letter-spacing: 0.22em; font-size: var(--t-label); color: var(--ink-mute); align-self: center; }
+    @media (max-width: 600px) { .clu-price-duo { flex-direction: column; } }
+    /* two-item pass-through (Meta + GHL, paid direct) */
+    .clu-passthrough { display: block; text-align: center; }
+    .clu-pt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 1.2rem + 3vw, 4.2rem); max-width: 52rem; margin: clamp(1.8rem, 1.2rem + 1.6vw, 2.8rem) auto 0; }
+    .clu-pt-item { display: grid; gap: 0.6rem; align-content: start; }
+    .clu-pt-item .pt-name { font-family: var(--font-display); font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; font-size: var(--t-label); color: var(--blue-lift); }
+    .clu-pt-item .pt-fig { justify-self: center; }
+    .clu-pt-item .pt-per { font-family: var(--font-display); font-weight: 500; font-size: 0.3em; color: var(--on-navy-mute); vertical-align: 0.62em; margin-left: 0.06em; letter-spacing: 0.03em; }
+    .clu-pt-item .pt-desc { color: var(--on-navy-soft); font-size: var(--t-small); max-width: 34ch; margin-inline: auto; }
+    .clu-pt-item .pt-desc strong { color: var(--on-navy); font-weight: 600; }
+    .clu-passthrough .pt-note { margin-top: clamp(1.8rem, 1.2rem + 1.6vw, 2.8rem); padding-top: clamp(1.2rem, 0.9rem + 1vw, 1.8rem); border-top: 1px solid var(--rule-on-navy); color: var(--on-navy); font-size: var(--t-small); max-width: 52ch; margin-inline: auto; }
+    .clu-passthrough .pt-note strong { color: var(--on-navy); font-weight: 500; }
+    @media (max-width: 700px) { .clu-pt-grid { grid-template-columns: 1fr; } }
+    .clu-price-cadence { display: block; font-family: var(--font-display); font-weight: 500; font-size: var(--t-label); letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mute); text-align: right; margin-top: 0.5rem; }
+
+    .clu-ledger { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border: 1px solid var(--rule); }
+    @media (max-width: 640px) { .clu-ledger { grid-template-columns: 1fr; } }
+    .clu-ledger-row {
+      display: grid; grid-template-columns: auto 1fr; gap: 1.1rem 1.4rem; align-items: start;
+      padding: clamp(1.5rem, 1.1rem + 1.6vw, 2.3rem);
+      border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+      background: var(--paper-2);
+    }
+    .clu-ledger-num { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--blue-deep); letter-spacing: 0.05em; }
+    .clu-ledger-name { font-family: var(--font-display); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.05rem; color: var(--ink-title); margin-bottom: 0.5rem; }
+    .clu-ledger-tag { font-family: var(--font-display); font-weight: 500; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-deep); margin: -0.25rem 0 0.55rem; }
+    .clu-ledger-body { grid-column: 2; color: var(--ink-soft); font-size: var(--t-small); line-height: 1.6; }
+
+    .clu-passthrough {
+      display: grid; grid-template-columns: auto 1fr; gap: 0.6rem 1.6rem; align-items: baseline;
+      background: var(--navy); color: var(--on-navy); padding: clamp(2rem, 1.4rem + 2.6vw, 3.4rem);
+    }
+    .clu-passthrough .pt-tag { grid-column: 1 / -1; font-family: var(--font-display); font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; font-size: var(--t-label); color: var(--blue-lift); }
+    .clu-passthrough .pt-fig { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.8rem, 1.3rem + 2vw, 2.8rem); color: var(--on-navy); white-space: nowrap; }
+    .clu-passthrough .pt-fig .cur { color: var(--blue-lift); }
+    .clu-passthrough .pt-fig .to { font-size: 0.5em; color: var(--on-navy-mute); margin: 0 0.15em; vertical-align: 0.2em; }
+    .clu-passthrough .pt-body { color: var(--on-navy-soft); font-size: var(--t-small); }
+    .clu-passthrough .pt-body strong { color: var(--on-navy); font-weight: 500; }
+
+    /* ═══════════════════════════════════════════════════════
+       NEXT STEPS (deep navy)
+       ═══════════════════════════════════════════════════════ */
+    .clu-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--rule-on-navy); }
+    .clu-step { padding: clamp(1.6rem, 1.1rem + 2vw, 2.6rem) clamp(1.2rem, 0.8rem + 1.5vw, 2rem); border-right: 1px solid var(--rule-on-navy); display: grid; gap: 0.9rem; align-content: start; }
+    .clu-step:last-child { border-right: none; }
+    .clu-step-n { font-family: var(--font-display); font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; font-size: var(--t-label); color: var(--blue-lift); }
+    .clu-step h3 { font-family: var(--font-display); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; font-size: var(--t-article); color: var(--on-navy); }
+    .clu-step p { color: var(--on-navy-soft); font-size: var(--t-small); }
+    .clu-close {
+      margin-top: clamp(2.8rem, 2rem + 3vw, 4.5rem); text-align: center;
+      font-family: var(--font-display); font-weight: 500; text-transform: uppercase;
+      letter-spacing: 0.24em; font-size: clamp(1.1rem, 0.9rem + 1vw, 1.8rem); color: var(--on-navy);
+    }
+    .clu-close .stamp { color: var(--blue-lift); }
+
+    /* ═══════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════ */
+    .clu-footer { background: var(--navy-deep); color: var(--on-navy); padding-block: clamp(2rem, 1.4rem + 2vw, 3rem); }
+    .clu-footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.2rem; }
+    .clu-footer-brand { display: flex; align-items: center; gap: 1rem; }
+    .clu-footer-seal { width: 46px; height: 46px; opacity: 0.9; }
+    .clu-footer p { font-size: var(--t-small); color: var(--on-navy-mute); letter-spacing: 0.06em; }
+    .clu-footer .b { color: var(--on-navy); font-family: var(--font-display); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* ═══════════════════════════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .clu-article { grid-template-columns: 1fr; gap: 1rem; }
+      .clu-article-mark { gap: 0.8rem; }
+      .clu-run-grid { grid-template-columns: 1fr; }
+      .clu-steps { grid-template-columns: 1fr; }
+      .clu-step { border-right: none; border-bottom: 1px solid var(--rule-on-navy); }
+      .clu-step:last-child { border-bottom: none; }
+      .clu-price-head { grid-template-columns: 1fr; align-items: start; }
+      .clu-price-cadence, .clu-price-fig { text-align: left; }
+      .clu-passthrough { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .clu-hero-stats { grid-template-columns: 1fr; gap: 1.4rem; }
+      .clu-principle { gap: 1rem; }
+      .clu-principle::after { display: none; }
+    }
+  </style>
+
+  <style>
+    /* ═══════════════════════════════════════════════════════
+       CENTERED LAYOUT + ENGAGEMENT (override layer)
+       ═══════════════════════════════════════════════════════ */
+
+    /* centered hero masthead */
+    .clu-masthead { text-align: center; }
+    .clu-dateline { justify-content: center; }
+    .clu-wordmark { margin-inline: auto; }
+    .clu-hero-title { max-width: 18ch; margin-inline: auto; }
+    .clu-hero-stand { margin-inline: auto; text-align: center; }
+    .clu-credential { display: flex; width: fit-content; margin-inline: auto; text-align: left; }
+    .clu-hero-stats { justify-content: center; margin-inline: auto; }
+    .clu-hero-stats > [role="listitem"] { text-align: center; }
+
+    /* centered section heads */
+    .clu-sechead { justify-items: center; text-align: center; }
+    .clu-h2 { margin-inline: auto; }
+    .clu-sechead .clu-lead { margin-inline: auto; }
+
+    /* centered articles (monument column, text stays left inside) */
+    .clu-article { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 1.1rem; border-radius: 5px; transition: background var(--duration-quick) var(--ease-soft); }
+    .clu-article-mark { justify-content: center; align-items: center; }
+    .clu-article > div { max-width: 62ch; }
+    .clu-article-title { text-align: center; }
+    .clu-article-list { text-align: left; width: fit-content; margin-inline: auto; }
+    .clu-article-lead { color: var(--ink-soft); margin: 0 auto 0.2em; max-width: 40ch; }
+    .clu-iconrow { --g: clamp(0.9rem, 0.5rem + 1.4vw, 1.9rem); display: flex; flex-wrap: wrap; justify-content: center; gap: var(--g); max-width: 30rem; margin: 0.9em auto 0; }
+    .clu-plat { flex: 0 0 calc((100% - 3 * var(--g)) / 4); display: flex; align-items: center; justify-content: center; }
+    .clu-plat svg { width: clamp(30px, 1.4rem + 1.4vw, 42px); height: auto; fill: var(--navy); transition: transform 0.3s var(--ease-soft), fill 0.3s var(--ease-soft); }
+    .clu-plat:hover svg { fill: var(--blue); transform: translateY(-3px) scale(1.08); }
+    @media (max-width: 600px) { .clu-plat { flex: 0 0 calc((100% - 2 * var(--g)) / 3); } }
+
+    /* ── infinite word-strip marquee (principles) ── */
+    .clu-marquee {
+      overflow: hidden; width: 100%;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+              mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    }
+    .clu-marquee-track { display: flex; width: max-content; align-items: center; animation: cluMarquee 21s linear infinite; }
+    .clu-marquee-group { display: flex; align-items: center; flex-shrink: 0; }
+    .clu-mword {
+      font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+      font-size: clamp(1.6rem, 1rem + 2.1vw, 2.8rem); letter-spacing: 0.06em; white-space: nowrap;
+      padding: 0 clamp(0.7rem, 0.4rem + 1vw, 1.5rem);
+      color: transparent; -webkit-text-stroke: 1.6px rgba(244, 241, 232, 0.55);
+    }
+    .clu-mword--lit { -webkit-text-stroke: 1.8px var(--blue-lift); filter: drop-shadow(0 0 12px rgba(126, 170, 255, 0.32)); }
+    .clu-mdot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue-lift); flex-shrink: 0; }
+    @keyframes cluMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .clu-marquee-track { animation: none; } }
+
+    /* centered run + terms + steps + footer */
+    .clu-run-block { text-align: center; }
+    .clu-run-list { text-align: left; width: fit-content; margin-inline: auto; }
+    .clu-note { text-align: left; width: fit-content; max-width: 48ch; margin-inline: auto; }
+    .clu-price-head { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 0.9rem; }
+    .clu-price-cadence { text-align: center; }
+    .clu-passthrough { display: block; text-align: center; }
+    .clu-passthrough .pt-body { max-width: 60ch; margin-inline: auto; }
+    .clu-step { text-align: center; justify-items: center; }
+    .clu-footer .wrap { flex-direction: column; justify-content: center; text-align: center; gap: 0.8rem; }
+    .clu-footer-brand { justify-content: center; }
+
+    /* ── drawing underline under section h2 ── */
+    .clu-h2 { position: relative; padding-bottom: 0.34em; }
+    .clu-h2::after {
+      content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+      width: 0; height: 3px; background: var(--blue);
+      transition: width 0.9s var(--ease-satisfying) 0.3s;
+    }
+    .band-navy .clu-h2::after, .band-deep .clu-h2::after { background: var(--blue-lift); }
+    .reveal.in-view .clu-h2::after { width: 3.2rem; }
+
+    /* ── drawing underline accent on key phrases (replaced the marker block — looked cheap) ── */
+    .hl {
+      background-image: linear-gradient(var(--blue), var(--blue));
+      background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 2px;
+      transition: background-size 0.7s var(--ease-satisfying) 0.14s;
+      padding-bottom: 0.08em;
+    }
+    .band-navy .hl, .band-deep .hl { background-image: linear-gradient(var(--blue-lift), var(--blue-lift)); }
+    .reveal.in-view .hl { background-size: 100% 2px; }
+
+    /* ── masthead double-rule draws in from center ── */
+    .clu-doublerule.reveal { transform: scaleX(0); transform-origin: center; opacity: 1; }
+    .clu-doublerule.reveal.in-view { transform: scaleX(1); transition: transform 1.4s var(--ease-satisfying); }
+
+    /* ── article hover ── */
+    .clu-article:hover { background: rgba(37,117,252,0.045); }
+    .clu-article-num { transition: color var(--duration-quick) var(--ease-soft), -webkit-text-stroke-color var(--duration-quick) var(--ease-soft); }
+    .clu-article:hover .clu-article-num { color: var(--blue); -webkit-text-stroke-color: var(--blue); }
+    .clu-article-title { transition: color var(--duration-quick) var(--ease-soft); }
+    .clu-article:hover .clu-article-title { color: var(--blue-deep); }
+
+    /* ── ledger hover lift ── */
+    .clu-ledger-row { transition: background var(--duration-quick) var(--ease-soft), box-shadow var(--duration-quick) var(--ease-soft), transform var(--duration-quick) var(--ease-soft); position: relative; }
+    .clu-ledger-row:hover { background: var(--paper-2); box-shadow: 0 12px 32px rgba(22,41,74,0.12); transform: translateY(-3px); z-index: 1; }
+
+    /* ── principle hover underline ── */
+    .clu-principle { position: relative; }
+    .clu-principle::before {
+      content: ""; position: absolute; left: 0; bottom: -0.42em; height: 2px; width: 0;
+      background: var(--blue-lift); transition: width var(--duration-quick) var(--ease-soft);
+    }
+    .clu-principle:hover::before { width: calc(100% - 1.6rem); }
+    .clu-principle:last-child:hover::before { width: 100%; }
+
+    /* ── cadence bars grow + trend draws on scroll ── */
+    .clu-ribbon .bar { transform-box: fill-box; transform-origin: center bottom; transform: scaleY(0); transition: transform 0.9s var(--ease-satisfying); }
+    .clu-cadence-fig.lit .bar { transform: scaleY(1); }
+    .clu-ribbon .trend { stroke-dasharray: 950; stroke-dashoffset: 950; transition: stroke-dashoffset 1.4s var(--ease-satisfying) 0.3s; }
+    .clu-cadence-fig.lit .trend { stroke-dashoffset: 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .clu-h2::after { width: 3.2rem; transition: none; }
+      .hl { background-size: 100% 2px; transition: none; }
+      .clu-doublerule.reveal { transform: none; }
+      .clu-ribbon .bar { transform: none; transition: none; }
+      .clu-ribbon .trend { stroke-dashoffset: 0; transition: none; }
+    }
+
+    /* ── §6C: literal centering at <=900 (mobile centers everything) ── */
+    @media (max-width: 900px) {
+      .clu-article-list, .clu-run-list { width: auto; }
+      .clu-article-list li, .clu-run-list li { text-align: center; padding-left: 0; }
+      .clu-article-list li::before, .clu-run-list li::before { display: none; }
+      .clu-credential { flex-direction: column; align-items: center; text-align: center; border-left: none; border-top: 3px solid var(--blue); }
+      .clu-note { text-align: center; border-left: none; padding-left: 0; width: auto; max-width: none; }
+      .clu-ledger-row { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+      .clu-ledger-body { grid-column: auto; }
+      .clu-passthrough { grid-template-columns: 1fr; }
+      .clu-footer .wrap { text-align: center; }
+    }
+
+    /* how-it-runs redesign: legend + matching centered cards */
+    .clu-legend { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.8rem 2.2rem; margin-top: 1.5rem; }
+    .clu-leg { display: inline-flex; align-items: center; gap: 0.55em; font-size: var(--t-small); color: var(--on-navy-soft); }
+    .clu-leg-sw { width: 0.9em; height: 0.9em; border-radius: 2px; display: inline-block; flex-shrink: 0; }
+    .clu-run-grid { align-items: stretch; margin-top: clamp(1.6rem, 1.1rem + 2vw, 2.6rem); }
+    .clu-run-block { background: rgba(244,241,232,0.035); border: 1px solid var(--rule-on-navy); border-radius: 6px; padding: clamp(1.6rem, 1.1rem + 2vw, 2.4rem); text-align: center; }
+    .clu-run-block h3 { position: relative; padding-bottom: 0.6rem; margin-bottom: 1.1rem; }
+    .clu-run-block h3::after { content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 2.2rem; height: 2px; background: var(--blue-lift); }
+    .clu-run-list { list-style: none; display: block; text-align: center; width: auto; margin: 0; }
+    .clu-run-list li { text-align: center; padding: 0.62rem 0; padding-left: 0; border-bottom: 1px solid var(--rule-on-navy); color: var(--on-navy-soft); }
+    .clu-run-list li:last-child { border-bottom: none; padding-bottom: 0; }
+    .clu-run-list li::before { display: none; }
+    .clu-note { border-left: none; padding-left: 0; text-align: center; width: auto; max-width: none; margin: 0; display: grid; gap: 0.75rem; align-content: center; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="clu-skip">Skip to content</a>
+
+  <main id="main">
+
+    <!-- HERO MASTHEAD -->
+    <section class="clu-hero" id="hero">
+      <div class="wrap clu-masthead">
+        <p class="clu-dateline reveal">
+          Growth System Proposal <span class="dot" aria-hidden="true"></span>
+          Prepared for James Escudero <span class="dot" aria-hidden="true"></span>
+          July 2026
+        </p>
+        <div class="clu-doublerule clu-masthead-rule reveal" aria-hidden="true"></div>
+
+        <div class="clu-lockup reveal" data-ag-center-exempt>
+          <img src="cllu-seal.png" alt="" class="clu-lockup-seal" aria-hidden="true" data-ag-center-exempt>
+          <img src="cllu-wordmark.png" alt="California Landlords Union. Landlords Helping Landlords." class="clu-lockup-word" data-ag-center-exempt>
+        </div>
+
+        <h1 class="clu-hero-title reveal">
+          Your union, your movement,
+          <span class="accent">a system that scales both</span>
+        </h1>
+
+        <div class="clu-hero-stand reveal">
+          <p>You proved the&nbsp;demand</p>
+        </div>
+
+        <div class="clu-hero-stats reveal" role="list">
+          <div role="listitem">
+            <div class="clu-stat-fig"><span class="cu" data-count="14">0</span></div>
+            <div class="clu-stat-lab">Creatives per<br>testing cycle</div>
+          </div>
+          <div role="listitem">
+            <div class="clu-stat-fig"><span class="cu" data-count="4">0</span></div>
+            <div class="clu-stat-lab">Engines run as<br>1 system</div>
+          </div>
+          <div role="listitem">
+            <div class="clu-stat-fig">24/7</div>
+            <div class="clu-stat-lab">Managed, tracked<br>and optimized</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRINCIPLES STRIP (infinite word-strip marquee) -->
+    <section class="band band-navy clu-principles" aria-label="Protect. Advocate. Organize. Scale.">
+      <div class="clu-marquee" aria-hidden="true">
+        <div class="clu-marquee-track">
+          <div class="clu-marquee-group">
+            <span class="clu-mword">Protect</span><span class="clu-mdot"></span><span class="clu-mword clu-mword--lit">Advocate</span><span class="clu-mdot"></span><span class="clu-mword">Organize</span><span class="clu-mdot"></span><span class="clu-mword clu-mword--lit">Scale</span><span class="clu-mdot"></span>
+            <span class="clu-mword">Protect</span><span class="clu-mdot"></span><span class="clu-mword clu-mword--lit">Advocate</span><span class="clu-mdot"></span><span class="clu-mword">Organize</span><span class="clu-mdot"></span><span class="clu-mword clu-mword--lit">Scale</span><span class="clu-mdot"></span>
+            <span class="clu-mword">Protect</span><span class="clu-mdot"></span><span class="clu-mword clu-mword--lit">Advocate</span><span class="clu-mdot"></span><span class="clu-mword">Organize</span><span class="clu-mdot"></span><span class="clu-mword clu-mword--lit">Scale</span><span class="clu-mdot"></span>
+          </div>
+          <div class="clu-marquee-group">
+            <span class="clu-mword">Protect</span><span class="clu-mdot"></span><span class="clu-mword clu-mword--lit">Advocate</span><span class="clu-mdot"></span><span class="clu-mword">Organize</span><span class="clu-mdot"></span><span class="clu-mword clu-mword--lit">Scale</span><span class="clu-mdot"></span>
+            <span class="clu-mword">Protect</span><span class="clu-mdot"></span><span class="clu-mword clu-mword--lit">Advocate</span><span class="clu-mdot"></span><span class="clu-mword">Organize</span><span class="clu-mdot"></span><span class="clu-mword clu-mword--lit">Scale</span><span class="clu-mdot"></span>
+            <span class="clu-mword">Protect</span><span class="clu-mdot"></span><span class="clu-mword clu-mword--lit">Advocate</span><span class="clu-mdot"></span><span class="clu-mword">Organize</span><span class="clu-mdot"></span><span class="clu-mword clu-mword--lit">Scale</span><span class="clu-mdot"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT WE BUILD - ARTICLES -->
+    <section class="band" id="build">
+      <div class="wrap">
+        <div class="clu-articles">
+          <article class="clu-article reveal">
+            <div class="clu-article-mark">
+              <span class="clu-article-num">01</span>
+              <span class="clu-article-kicker">Creative &amp; Scripts</span>
+            </div>
+            <div>
+              <h3 class="clu-article-title">Paid Ads Engine</h3>
+              <ul class="clu-article-list">
+                <li>Ad scripts and copy, written word for word for every&nbsp;creative</li>
+                <li>14&nbsp;creatives per cycle, tested 2 at a time in 4-day head-to-head&nbsp;sprints</li>
+                <li>Full media buying and management, California statewide on Meta (Facebook +&nbsp;Instagram)</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="clu-article reveal">
+            <div class="clu-article-mark">
+              <span class="clu-article-num">02</span>
+              <span class="clu-article-kicker">Pages &amp; Routing</span>
+            </div>
+            <div>
+              <h3 class="clu-article-title">Funnels + Lead Capture</h3>
+              <ul class="clu-article-list">
+                <li>Dedicated sales pages per campaign, custom-coded, separate from your main&nbsp;site</li>
+                <li><strong>Decision-tree intake</strong> that routes every lead to the right department before the first&nbsp;call</li>
+                <li>Once your video team delivers the video sales letter, we embed it through the funnel so it educates while it&nbsp;converts</li>
+                <li>Every lead arrives pre-qualified and&nbsp;pre-sorted</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="clu-article reveal">
+            <div class="clu-article-mark">
+              <span class="clu-article-num">03</span>
+              <span class="clu-article-kicker">Upload &amp; Distribute</span>
+            </div>
+            <div>
+              <h3 class="clu-article-title">Organic Content Engine</h3>
+              <p class="clu-article-lead">Distribution handled for you, every day,&nbsp;across:</p>
+              <div class="clu-iconrow" role="list" aria-label="Distributed across Facebook, Instagram, TikTok, YouTube, Twitter, Threads, and LinkedIn">
+                <span class="clu-plat" role="listitem" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span>
+                <span class="clu-plat" role="listitem" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></span>
+                <span class="clu-plat" role="listitem" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></span>
+                <span class="clu-plat" role="listitem" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span>
+                <span class="clu-plat" role="listitem" aria-label="Twitter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></span>
+                <span class="clu-plat" role="listitem" aria-label="Threads"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.629 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.859 13.859 0 013.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32L7.734 7.847c.98-1.454 2.568-2.256 4.478-2.256h.044c3.194.02 5.097 1.975 5.287 5.388.108.046.216.094.321.142 1.49.7 2.58 1.761 3.154 3.07.797 1.82.871 4.79-1.548 7.158-1.85 1.81-4.094 2.628-7.277 2.65Z"/></svg></span>
+                <span class="clu-plat" role="listitem" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></span>
+              </div>
+            </div>
+          </article>
+
+          <article class="clu-article reveal">
+            <div class="clu-article-mark">
+              <span class="clu-article-num">04</span>
+              <span class="clu-article-kicker">Agents &amp; Attribution</span>
+            </div>
+            <div>
+              <h3 class="clu-article-title">Agent Affiliate Network</h3>
+              <ul class="clu-article-list">
+                <li>Personal QR codes and links for every agent, attributed automatically on the back&nbsp;end</li>
+                <li><strong>Presentation kits</strong>, banners, flyers and cards, ready for every event and office&nbsp;visit</li>
+                <li>Commissions tracked and paid without&nbsp;paperwork</li>
+                <li>Ready on day&nbsp;1 for your people in San Diego, San Francisco and&nbsp;Oakland</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT RUNS -->
+    <section class="band band-navy" id="run">
+      <div class="wrap">
+        <div class="clu-sechead reveal">
+          <span class="clu-label">How it runs</span>
+          <h2 class="clu-h2">Continuous testing, nothing left to opinion</h2>
+          <p class="clu-lead">Ads run in 28-day cycles. 14&nbsp;creatives, 2&nbsp;at a time, 4&nbsp;days a sprint. The data picks the winner, then we scale it.</p>
+        </div>
+
+        <div class="clu-cadence-wrap">
+          <div class="clu-cadence-fig reveal">
+            <div class="clu-cadence-cap">
+              <span class="l">A 28-day cycle</span>
+              <span class="r">7 sprints &middot; 4&nbsp;days each &middot; 2&nbsp;ads head-to-head</span>
+            </div>
+            <svg class="clu-ribbon" viewBox="0 0 960 200" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Across a 28-day cycle of seven 4-day sprints, two ads compete each sprint and the winning ad carries forward as performance climbs to a final champion.">
+              <line x1="40" y1="60" x2="920" y2="60" stroke="rgba(244,241,232,0.06)" stroke-width="1"/>
+              <line x1="40" y1="100" x2="920" y2="100" stroke="rgba(244,241,232,0.06)" stroke-width="1"/>
+              <line x1="40" y1="140" x2="920" y2="140" stroke="rgba(244,241,232,0.06)" stroke-width="1"/>
+              <line x1="40" y1="160" x2="920" y2="160" stroke="rgba(244,241,232,0.3)" stroke-width="1.5"/>
+              <polyline class="trend" points="112,136 240,126 368,114 496,102 624,86 752,68 880,44" fill="none" stroke="#7EAAFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+              <g font-family="Oswald, sans-serif" font-size="15" fill="rgba(244,241,232,0.5)" letter-spacing="1">
+                <rect class="bar" x="78" y="144" width="20" height="16" rx="2" fill="rgba(244,241,232,0.2)"/><rect class="bar" x="102" y="136" width="20" height="24" rx="2" fill="#2575FC"/><text x="100" y="182" text-anchor="middle">S1</text>
+                <rect class="bar" x="206" y="140" width="20" height="20" rx="2" fill="rgba(244,241,232,0.2)"/><rect class="bar" x="230" y="126" width="20" height="34" rx="2" fill="#2575FC"/><text x="228" y="182" text-anchor="middle">S2</text>
+                <rect class="bar" x="334" y="134" width="20" height="26" rx="2" fill="rgba(244,241,232,0.2)"/><rect class="bar" x="358" y="114" width="20" height="46" rx="2" fill="#2575FC"/><text x="356" y="182" text-anchor="middle">S3</text>
+                <rect class="bar" x="462" y="130" width="20" height="30" rx="2" fill="rgba(244,241,232,0.2)"/><rect class="bar" x="486" y="102" width="20" height="58" rx="2" fill="#2575FC"/><text x="484" y="182" text-anchor="middle">S4</text>
+                <rect class="bar" x="590" y="124" width="20" height="36" rx="2" fill="rgba(244,241,232,0.2)"/><rect class="bar" x="614" y="86" width="20" height="74" rx="2" fill="#2575FC"/><text x="612" y="182" text-anchor="middle">S5</text>
+                <rect class="bar" x="718" y="120" width="20" height="40" rx="2" fill="rgba(244,241,232,0.2)"/><rect class="bar" x="742" y="68" width="20" height="92" rx="2" fill="#2575FC"/><text x="740" y="182" text-anchor="middle">S6</text>
+                <rect class="bar" x="846" y="116" width="20" height="44" rx="2" fill="rgba(244,241,232,0.2)"/><rect class="bar" x="870" y="44" width="20" height="116" rx="2" fill="#7EAAFF"/><text x="868" y="182" text-anchor="middle" fill="#7EAAFF">S7</text>
+              </g>
+              <circle cx="880" cy="44" r="5" fill="#7EAAFF" stroke="#16294A" stroke-width="1.5"/>
+              <text x="880" y="26" text-anchor="middle" font-family="Oswald, sans-serif" font-size="14" letter-spacing="1.5" fill="#7EAAFF">WINNER</text>
+            </svg>
+            <div class="clu-legend">
+              <span class="clu-leg"><span class="clu-leg-sw" style="background:#2575FC;"></span>Winning ad, carried forward</span>
+              <span class="clu-leg"><span class="clu-leg-sw" style="background:rgba(244,241,232,0.28);"></span>Challenger</span>
+            </div>
+          </div>
+
+          <div class="clu-run-grid">
+            <div class="clu-run-block reveal">
+              <h3>What you see</h3>
+              <ul class="clu-run-list">
+                <li>Cost per lead, leads and members, tracked&nbsp;live</li>
+                <li>A KPI report after every 4-day&nbsp;sprint</li>
+                <li>A weekly report, made Wednesday, sent&nbsp;Thursday</li>
+                <li>Everything delivered to your&nbsp;email</li>
+                <li>Optimizations every Monday, Wednesday and&nbsp;Friday</li>
+              </ul>
+            </div>
+            <div class="clu-run-block reveal">
+              <h3>What we promise</h3>
+              <div class="clu-note">
+                <p>We never guess your numbers before the ads&nbsp;run.</p>
+                <p>No business like yours exists&nbsp;yet.</p>
+                <p><strong class="hl">Every dollar is tracked, every test is documented</strong>, so you always know what is working, in real&nbsp;time.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE TERMS -->
+    <section class="band" id="terms">
+      <div class="wrap">
+        <div class="clu-sechead reveal">
+          <span class="clu-label">The terms</span>
+          <h2 class="clu-h2">What it costs, what you get</h2>
+          <p class="clu-lead">A one-time build, then a month-to-month retainer once the ads go live. No long-term contract, and your ad spend <span class="hl">goes straight to the platform</span>.</p>
+        </div>
+
+        <div class="clu-terms">
+          <div class="clu-price-duo reveal">
+            <div class="clu-price-block">
+              <div class="clu-price-label">One-time setup</div>
+              <div class="clu-price-fig"><span class="cur">$</span><span class="cu" data-count="3500">0</span></div>
+              <div class="clu-price-cadence">To build the&nbsp;system</div>
+            </div>
+            <div class="clu-price-then" aria-hidden="true">then</div>
+            <div class="clu-price-block">
+              <div class="clu-price-label">Ongoing retainer</div>
+              <div class="clu-price-fig"><span class="cur">$</span><span class="cu" data-count="2800">0</span><span class="clu-price-per">/mo</span></div>
+              <div class="clu-price-cadence">Once ads are live and&nbsp;spending</div>
+            </div>
+          </div>
+
+          <div class="clu-ledger reveal-stagger">
+            <div class="clu-ledger-row">
+              <span class="clu-ledger-num">01</span>
+              <div><div class="clu-ledger-name">Paid Ads</div><div class="clu-ledger-tag">Development + Ongoing Management</div></div>
+              <p class="clu-ledger-body">Ad scripts written word for word, 14&nbsp;creatives per cycle tested in 4-day A/B sprints, with statewide media buying and Mon / Wed / Fri&nbsp;optimizations.</p>
+            </div>
+            <div class="clu-ledger-row">
+              <span class="clu-ledger-num">02</span>
+              <div><div class="clu-ledger-name">Full-Stack Funnels</div><div class="clu-ledger-tag">Development + Ongoing Management</div></div>
+              <p class="clu-ledger-body">Custom-coded sales pages per campaign and a decision-tree intake that routes every lead, with tracking on every&nbsp;step.</p>
+            </div>
+            <div class="clu-ledger-row">
+              <span class="clu-ledger-num">03</span>
+              <div><div class="clu-ledger-name">Organic</div><div class="clu-ledger-tag">Content Distribution</div></div>
+              <p class="clu-ledger-body">We upload and distribute your content for you, every day, across all 7&nbsp;platforms, and consult on organic ideas as&nbsp;needed.</p>
+            </div>
+            <div class="clu-ledger-row">
+              <span class="clu-ledger-num">04</span>
+              <div><div class="clu-ledger-name">Affiliates</div><div class="clu-ledger-tag">Development + Ongoing Management</div></div>
+              <p class="clu-ledger-body">QR-code and link attribution for your agent network, with presentation kits for every event and&nbsp;office.</p>
+            </div>
+            <div class="clu-ledger-row" style="background:var(--paper-3); grid-column: 1 / -1;">
+              <span class="clu-ledger-num" aria-hidden="true">+</span>
+              <div><div class="clu-ledger-name">All 4, 1 system</div><div class="clu-ledger-tag">Done for you</div></div>
+              <p class="clu-ledger-body">The engines feed each other. 1 team, 1 retainer, 1 line of&nbsp;accountability.</p>
+            </div>
+          </div>
+
+          <div class="clu-passthrough reveal">
+            <span class="pt-tag">Pass-through &middot; Paid straight to the platform, never through&nbsp;us</span>
+            <div class="clu-pt-grid">
+              <div class="clu-pt-item">
+                <div class="pt-name">Meta ad spend</div>
+                <div class="pt-fig"><span class="cur">$</span><span class="cu" data-count="75">0</span><span class="to">to</span><span class="cu" data-count="100">0</span><span class="pt-per">/day</span></div>
+                <p class="pt-desc"><strong>Paid straight to Meta</strong> on your card, for the ads. Statewide California targeting, visible live in Ads&nbsp;Manager.</p>
+              </div>
+              <div class="clu-pt-item">
+                <div class="pt-name">GoHighLevel &middot; CRM</div>
+                <div class="pt-fig"><span class="cur">$</span><span class="cu" data-count="97">0</span><span class="to">to</span><span class="cu" data-count="297">0</span><span class="pt-per">/mo</span></div>
+                <p class="pt-desc"><strong>Paid straight to GoHighLevel</strong>, for your CRM, funnels, and tracking. Depends on&nbsp;plan.</p>
+              </div>
+            </div>
+            <p class="pt-note"><strong>You pay Meta directly for ads, and GoHighLevel directly for GHL. We never touch, hold, or mark up either&nbsp;one.</strong></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="clu-footer">
+    <div class="wrap">
+      <div class="clu-footer-brand">
+        <img src="cllu-seal.png" alt="" class="clu-footer-seal" aria-hidden="true">
+        <p>Presentation made by <span class="b">Arc Garde</span></p>
+      </div>
+      <p>Prepared for James Escudero &nbsp;//&nbsp; California Landlords Union &nbsp;//&nbsp; July 2026</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js" defer></script>
+  <script>
+    /* ═══ AG CURSOR STANDARD v1.3 (lifted) ═══ */
+    (function () {
+      if (!window.matchMedia('(pointer: fine)').matches) return;
+      var NS = 'http://www.w3.org/2000/svg';
+      var WEDGE = 'M 3,3 L 3,18 L 9,14 L 16,16 Z';
+      var INTERACTIVE = 'a, button, [role="button"], input, select, textarea, label[for], summary, [tabindex]:not([tabindex="-1"])';
+      var BRAND_STROKE = '#2575FC';
+      function init() {
+        document.documentElement.classList.add('ag-cursor-active');
+        var cursor = document.createElementNS(NS, 'svg');
+        cursor.setAttribute('class', 'ag-cursor');
+        cursor.setAttribute('viewBox', '-40 -40 120 120');
+        cursor.style.width = '120px'; cursor.style.height = '120px';
+        var defs = document.createElementNS(NS, 'defs');
+        defs.innerHTML =
+          '<clipPath id="ag-wedge-clip"><path d="' + WEDGE + '"/></clipPath>' +
+          '<filter id="ag-glow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="10"/></filter>';
+        cursor.appendChild(defs);
+        var glow = document.createElementNS(NS, 'path');
+        glow.setAttribute('d', WEDGE); glow.setAttribute('fill', BRAND_STROKE);
+        glow.setAttribute('filter', 'url(#ag-glow)'); glow.setAttribute('class', 'ag-cursor__glow');
+        glow.style.opacity = '0'; cursor.appendChild(glow);
+        var group = document.createElementNS(NS, 'g'); group.setAttribute('class', 'ag-cursor__group');
+        var basePath = document.createElementNS(NS, 'path');
+        basePath.setAttribute('d', WEDGE); basePath.setAttribute('fill', '#16294A');
+        basePath.setAttribute('stroke', BRAND_STROKE); basePath.setAttribute('stroke-width', '1.6');
+        basePath.setAttribute('stroke-linejoin', 'round'); group.appendChild(basePath);
+        var fillOverlay = document.createElementNS(NS, 'rect');
+        fillOverlay.setAttribute('x', '-2'); fillOverlay.setAttribute('y', '0');
+        fillOverlay.setAttribute('width', '25'); fillOverlay.setAttribute('height', '0');
+        fillOverlay.setAttribute('fill', BRAND_STROKE); fillOverlay.setAttribute('clip-path', 'url(#ag-wedge-clip)');
+        fillOverlay.setAttribute('class', 'ag-cursor__fill-overlay'); group.appendChild(fillOverlay);
+        var strokeOverlay = document.createElementNS(NS, 'path');
+        strokeOverlay.setAttribute('d', WEDGE); strokeOverlay.setAttribute('fill', 'none');
+        strokeOverlay.setAttribute('stroke', BRAND_STROKE); strokeOverlay.setAttribute('stroke-width', '1.6');
+        strokeOverlay.setAttribute('stroke-linejoin', 'round'); group.appendChild(strokeOverlay);
+        cursor.appendChild(group); document.body.appendChild(cursor);
+        document.addEventListener('mousemove', function (e) {
+          cursor.style.transform = 'translate(' + (e.clientX - 40) + 'px, ' + (e.clientY - 40) + 'px)';
+        });
+        document.addEventListener('mouseleave', function () { cursor.style.transform = 'translate(-100px, -100px)'; });
+        var hoverActive = false;
+        document.addEventListener('mouseover', function (e) {
+          var t = e.target;
+          var interactive = t && t.matches && (t.matches(INTERACTIVE) || (t.closest && t.closest(INTERACTIVE)));
+          if (interactive && !hoverActive) { hoverActive = true; group.style.transform = 'scale(1.35)'; fillOverlay.setAttribute('height', '25'); glow.style.opacity = '0.8'; }
+          else if (!interactive && hoverActive) { hoverActive = false; group.style.transform = 'scale(1)'; fillOverlay.setAttribute('height', '0'); glow.style.opacity = '0'; }
+        });
+        document.addEventListener('click', function (e) { spawnStrings(e.clientX, e.clientY); });
+      }
+      function spawnStrings(x, y) {
+        var svg = document.createElementNS(NS, 'svg');
+        svg.setAttribute('class', 'ag-click-svg'); svg.setAttribute('viewBox', '-84 -84 168 168');
+        svg.style.left = (x - 84) + 'px'; svg.style.top = (y - 84) + 'px';
+        for (var i = 0; i < 9; i++) {
+          var angle = (i / 9) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
+          var distance = 38 + Math.random() * 15;
+          var ex = Math.cos(angle) * distance, ey = Math.sin(angle) * distance;
+          var curlSide = Math.random() > 0.5 ? 1 : -1; var curl = 18 + Math.random() * 12;
+          var cx = Math.cos(angle) * (distance * 0.5) + Math.cos(angle + Math.PI / 2) * curl * curlSide;
+          var cy = Math.sin(angle) * (distance * 0.5) + Math.sin(angle + Math.PI / 2) * curl * curlSide;
+          var path = document.createElementNS(NS, 'path');
+          path.setAttribute('d', 'M 0,0 Q ' + cx + ',' + cy + ' ' + ex + ',' + ey); svg.appendChild(path);
+          var len = path.getTotalLength(); var dur = 378 + Math.random() * 84;
+          path.style.strokeDasharray = '15.52 ' + (len + 15.52); path.style.strokeDashoffset = '15.52';
+          path.style.transition = 'stroke-dashoffset ' + dur + 'ms cubic-bezier(0.22, 1, 0.36, 1)';
+          (function (p, l) { requestAnimationFrame(function () { p.style.strokeDashoffset = '-' + l; }); })(path, len);
+        }
+        document.body.appendChild(svg);
+        setTimeout(function () { svg.parentNode && svg.parentNode.removeChild(svg); }, 525);
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+      else init();
+    })();
+
+    /* ═══ REVEAL OBSERVER (lifted) ═══ */
+    (function () {
+      var els = document.querySelectorAll('.reveal, .reveal-stagger');
+      document.querySelectorAll('.reveal-stagger').forEach(function (group) {
+        Array.prototype.forEach.call(group.children, function (child, i) { child.style.setProperty('--i', i); });
+      });
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('in-view'); }); return;
+      }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add('in-view'); obs.unobserve(entry.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      els.forEach(function (el) { obs.observe(el); });
+    })();
+
+    /* ═══ LENIS SMOOTH SCROLL (lifted) ═══ */
+    window.addEventListener('load', function () {
+      if (typeof Lenis === 'undefined') return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var lenis = new Lenis({ duration: 0.9, easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf); window.lenis = lenis;
+    });
+
+    /* ═══ ENGAGEMENT LAYER (net-new: count-up + cadence trigger) ═══ */
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function fmt(v) { return Math.round(v).toLocaleString('en-US'); }
+      function countUp(el) {
+        var target = parseFloat(el.getAttribute('data-count'));
+        if (reduce || isNaN(target)) { el.textContent = fmt(target || 0); return; }
+        var dur = 1400, start = null;
+        function step(ts) {
+          if (!start) start = ts;
+          var p = Math.min((ts - start) / dur, 1);
+          var e = 1 - Math.pow(1 - p, 3);
+          el.textContent = fmt(target * e);
+          if (p < 1) requestAnimationFrame(step); else el.textContent = fmt(target);
+        }
+        requestAnimationFrame(step);
+      }
+      var counters = document.querySelectorAll('.cu[data-count]');
+      if (!('IntersectionObserver' in window)) {
+        counters.forEach(countUp);
+      } else {
+        var cObs = new IntersectionObserver(function (es) {
+          es.forEach(function (en) { if (en.isIntersecting) { countUp(en.target); cObs.unobserve(en.target); } });
+        }, { threshold: 0.6 });
+        counters.forEach(function (c) { cObs.observe(c); });
+      }
+      var fig = document.querySelector('.clu-cadence-fig');
+      if (fig) {
+        if (reduce || !('IntersectionObserver' in window)) { fig.classList.add('lit'); }
+        else {
+          var fObs = new IntersectionObserver(function (es) {
+            es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('lit'); fObs.unobserve(en.target); } });
+          }, { threshold: 0.35 });
+          fObs.observe(fig);
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
