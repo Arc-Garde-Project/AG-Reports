@@ -1,0 +1,218 @@
+[
+  {
+    "slug": "imperial-clippers",
+    "name": "Imperial Clippers",
+    "tag": "Barbershop",
+    "url": "https://imperial-clippers.vercel.app",
+    "img": "assets/imperial-clippers.jpg",
+    "ok": true
+  },
+  {
+    "slug": "arcgarde",
+    "name": "Arc Garde",
+    "tag": "Agency",
+    "url": "https://arcgarde.com",
+    "img": "assets/arcgarde.jpg",
+    "ok": true
+  },
+  {
+    "slug": "spitz-pr",
+    "name": "Spitz PR",
+    "tag": "Public Relations",
+    "url": "https://spitz-pr.vercel.app",
+    "img": "assets/spitz-pr.jpg",
+    "ok": true
+  },
+  {
+    "slug": "wedding-mentor",
+    "name": "The Wedding Mentor",
+    "tag": "Coaching",
+    "url": "https://the-wedding-mentor.vercel.app",
+    "img": "assets/wedding-mentor.jpg",
+    "ok": true
+  },
+  {
+    "slug": "liminal-means",
+    "name": "Liminal Means",
+    "tag": "Therapy",
+    "url": "https://liminalmeans.com",
+    "img": "assets/liminal-means.jpg",
+    "ok": true
+  },
+  {
+    "slug": "elmira-architect",
+    "name": "Elmira Architect",
+    "tag": "Architecture",
+    "url": "https://elmiraarchitecture.ca",
+    "img": "assets/elmira-architect.jpg",
+    "ok": true
+  },
+  {
+    "slug": "keating-advisory",
+    "name": "Keating Advisory",
+    "tag": "Wealth Advisory",
+    "url": "https://keatingadvisory.com",
+    "img": "assets/keating-advisory.jpg",
+    "ok": true
+  },
+  {
+    "slug": "clearsight-growth",
+    "name": "ClearSight Growth",
+    "tag": "Consulting",
+    "url": "https://www.clearsightgrowth.ca",
+    "img": "assets/clearsight-growth.jpg",
+    "ok": true
+  },
+  {
+    "slug": "spine-doctor",
+    "name": "Advanced Spine Care",
+    "tag": "Medical",
+    "url": "https://ag-spine-doctor.vercel.app",
+    "img": "assets/spine-doctor.jpg",
+    "ok": true
+  },
+  {
+    "slug": "beauty-lounge",
+    "name": "Beauty Lounge",
+    "tag": "Beauty",
+    "url": "https://beauty-lounge-six.vercel.app",
+    "img": "assets/beauty-lounge.jpg",
+    "ok": true
+  },
+  {
+    "slug": "media-growth",
+    "name": "Media Growth",
+    "tag": "Media",
+    "url": "https://media-growth.vercel.app",
+    "img": "assets/media-growth.jpg",
+    "ok": true
+  },
+  {
+    "slug": "yoga-circle",
+    "name": "Yoga Circle",
+    "tag": "Wellness",
+    "url": "https://www.yogacirclela.com",
+    "img": "assets/yoga-circle.jpg",
+    "ok": true
+  },
+  {
+    "slug": "swedlund",
+    "name": "Swedlund Construction",
+    "tag": "Construction",
+    "url": "https://swedlund-construction.vercel.app",
+    "img": "assets/swedlund.jpg",
+    "ok": true
+  },
+  {
+    "slug": "lead-hunter",
+    "name": "Lead Hunter Media",
+    "tag": "Marketing",
+    "url": "https://www.leadhuntermedia.com",
+    "img": "assets/lead-hunter.jpg",
+    "ok": true
+  },
+  {
+    "slug": "tooth-place",
+    "name": "The Tooth Place",
+    "tag": "Dental",
+    "url": "https://www.toothplacedental.com",
+    "img": "assets/tooth-place.jpg",
+    "ok": true
+  },
+  {
+    "slug": "arbor-wealth",
+    "name": "Arbor Wealth",
+    "tag": "Wealth Management",
+    "url": "https://www.arborwealthstrategies.com",
+    "img": "assets/arbor-wealth.jpg",
+    "ok": true
+  },
+  {
+    "slug": "ellery-wolcott",
+    "name": "Ellery Wolcott",
+    "tag": "Real Estate",
+    "url": "https://ellerywolcott.vercel.app",
+    "img": "assets/ellery-wolcott.jpg",
+    "ok": true
+  },
+  {
+    "slug": "nexgen",
+    "name": "NexGen Truck Parts",
+    "tag": "Auto Parts",
+    "url": "https://nexgen-truck-parts.vercel.app",
+    "img": "assets/nexgen.jpg",
+    "ok": true
+  },
+  {
+    "slug": "clinic-of-angels",
+    "name": "Clinic of Angels",
+    "tag": "Medical",
+    "url": "https://clinic-of-angels.vercel.app",
+    "img": "assets/clinic-of-angels.jpg",
+    "ok": true
+  },
+  {
+    "slug": "voiced-by-curls",
+    "name": "Voiced by Curls",
+    "tag": "Voice Over",
+    "url": "https://voicedbycurlzvo.com",
+    "img": "assets/voiced-by-curls.jpg",
+    "ok": true
+  },
+  {
+    "slug": "suzuki-systems",
+    "name": "Suzuki Systems",
+    "tag": "Consulting",
+    "url": "https://suzuki-systems.vercel.app",
+    "img": "assets/suzuki-systems.jpg",
+    "ok": true
+  },
+  {
+    "slug": "owners-table",
+    "name": "The Owners' Table",
+    "tag": "Hospitality",
+    "url": "https://owners-table-international.vercel.app",
+    "img": "assets/owners-table.jpg",
+    "ok": true
+  },
+  {
+    "slug": "golden-touch",
+    "name": "Golden Touch Grooming",
+    "tag": "Pet Grooming",
+    "url": "https://golden-touch-dog-grooming.vercel.app",
+    "img": "assets/golden-touch.jpg",
+    "ok": true
+  },
+  {
+    "slug": "dnp-solar",
+    "name": "DNP Solar Care",
+    "tag": "Solar",
+    "url": "https://dnp-solar-care.vercel.app",
+    "img": "assets/dnp-solar.jpg",
+    "ok": true
+  },
+  {
+    "slug": "gants-autos",
+    "name": "Gant's Wholesale Autos",
+    "tag": "Automotive",
+    "url": "https://gantswholesaleautos.vercel.app",
+    "img": "assets/gants-autos.jpg",
+    "ok": true
+  },
+  {
+    "slug": "genigen",
+    "name": "Genigen Skin",
+    "tag": "Skincare",
+    "url": "https://genigenskin.vercel.app",
+    "img": "assets/genigen.jpg",
+    "ok": true
+  },
+  {
+    "slug": "harbor-bakery",
+    "name": "Harbor Street Bakery",
+    "tag": "Bakery",
+    "url": "https://harbor-street-bakery.vercel.app",
+    "img": "assets/harbor-bakery.jpg",
+    "ok": true
+  }
+]

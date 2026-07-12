@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en" class="is-loading">
+<head>
+<meta charset="UTF-8">
+<script>
+  (function(){try{if(!sessionStorage.getItem('ag_session')){sessionStorage.setItem('ag_session','1');document.documentElement.classList.add('is-first-visit');}else{document.documentElement.classList.add('is-subsequent-visit');}}catch(e){document.documentElement.classList.add('is-first-visit');}})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Website Showcase | Arc Garde</title>
+<meta name="description" content="Every website Arc Garde has built. A live, scrollable showcase.">
+<meta property="og:title" content="Website Showcase | Arc Garde">
+<meta property="og:description" content="Every website Arc Garde has built. A live, scrollable showcase.">
+<meta property="og:image" content="https://ag-reports.vercel.app/assets/og-hub.png">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/ag-defensive.css">
+
+<style>
+  html.is-loading { overflow: hidden; }
+  .ag-curtain { position: fixed; inset: 0; z-index: 99998; background: #070605; display: flex; align-items: center; justify-content: center; opacity: 1; pointer-events: auto; transition: opacity 700ms cubic-bezier(0.16,1,0.3,1); }
+  .ag-curtain-slot { position: relative; width: min(90vw, 600px); height: 210px; display: flex; align-items: center; justify-content: center; }
+  html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
+  html.is-subsequent-visit .ag-curtain-slot { display: none; }
+  .ag-intro-horizon { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  .ag-intro-horizon__line { position: absolute; left: 50%; transform: translateX(-50%); width: 0; height: 1px; background: #c9a861; animation: ag-horizon-draw 900ms cubic-bezier(0.16,1,0.3,1) forwards; }
+  .ag-intro-horizon__mask { position: absolute; left: 50%; transform: translateX(-50%); overflow: hidden; height: clamp(40px, 11vw, 78px); top: calc(50% - clamp(40px, 11vw, 78px)); max-width: 100%; display: flex; align-items: flex-end; justify-content: center; }
+  .ag-intro-horizon__logo { font-family: 'Cinzel', serif; font-weight: 700; font-size: clamp(40px, 11vw, 78px); letter-spacing: 0.02em; line-height: 1; white-space: nowrap; background: linear-gradient(176deg,#fffdf9 0%,#fff 14%,#f1e9da 52%,#d4c6ac 100%); -webkit-background-clip: text; background-clip: text; color: transparent; transform: translateY(100%); animation: ag-horizon-rise 900ms cubic-bezier(0.16,1,0.3,1) 700ms forwards; }
+  .ag-intro-horizon__subtag { position: absolute; left: 50%; transform: translateX(-50%); top: calc(50% + 18px); font-family: 'Cinzel', serif; font-size: 12px; font-weight: 600; letter-spacing: 0.42em; text-transform: uppercase; color: #c9a861; opacity: 0; white-space: nowrap; animation: ag-horizon-fade 600ms ease 1500ms forwards; }
+  @keyframes ag-horizon-draw { from { width: 0; } to { width: min(80%, 350px); } }
+  @keyframes ag-horizon-rise { to { transform: translateY(0); } }
+  @keyframes ag-horizon-fade { to { opacity: 1; transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .ag-curtain-slot * { animation: none !important; } .ag-intro-horizon__line{width:min(80%,350px);} .ag-intro-horizon__logo{transform:translateY(0);} .ag-intro-horizon__subtag{opacity:1;} }
+</style>
+
+<style>
+:root { --void:#0C0B09; --accent:#C9A76C; --accent-bright:#E0C48A; --text:#FAF6F1;
+  --text-2:rgba(250,246,241,.62); --text-3:rgba(250,246,241,.34); --line:rgba(250,246,241,.12);
+  --ease:cubic-bezier(.16,1,.3,1); }
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+h1,h2 { text-wrap:balance; }
+body { background:var(--void); color:var(--text); font-family:'Cormorant Garamond',Georgia,serif; -webkit-font-smoothing:antialiased; overflow:hidden; }
+
+.ag-fine, .ag-fine * { cursor:none !important; }
+.ag-cursor__body,.ag-cursor__edge { position:fixed; top:0; left:0; pointer-events:none; opacity:0; transition:opacity 120ms var(--ease); will-change:transform; }
+.ag-cursor__body { z-index:2147483646; mix-blend-mode:difference; } .ag-cursor__edge { z-index:2147483647; }
+.ag-cursor__body svg,.ag-cursor__edge svg { position:absolute; top:0; left:0; display:block; max-width:none; }
+.ag-cursor__body path { fill:#fff; }
+.ag-cursor__edge path { fill:none; stroke:var(--accent); stroke-linejoin:round; stroke-linecap:round; }
+.ag-cursor__edge .ag-cursor__arrow path { stroke-width:.8; }
+.ag-cursor__hand { position:absolute; left:-8px; top:-2px; opacity:0; transform:scale(.7); }
+.ag-cur-hover .ag-cursor__arrow { opacity:0; } .ag-cur-hover .ag-cursor__hand { opacity:1; transform:scale(1); }
+@media (hover:none),(pointer:coarse) { .ag-cursor__body,.ag-cursor__edge { display:none !important; } }
+
+.feed { height:100dvh; overflow-y:scroll; scroll-snap-type:y mandatory; scroll-behavior:smooth; scrollbar-width:none; }
+.feed::-webkit-scrollbar { display:none; }
+.reel { position:relative; height:100dvh; scroll-snap-align:start; scroll-snap-stop:always; display:grid; place-items:center; overflow:hidden; }
+
+.reel__bg { position:absolute; inset:-12%; background-size:cover; background-position:center top; filter:blur(58px) brightness(.30) saturate(1.2); transform:scale(1.16); z-index:0; }
+.reel::after { content:''; position:absolute; inset:0; z-index:1; background:radial-gradient(130% 90% at 50% 30%, transparent 38%, rgba(6,5,4,.7) 100%); }
+
+.reel__stage { position:relative; z-index:2; width:100%; height:100%; display:flex; align-items:center; justify-content:center; gap:clamp(30px,4.5vw,60px); padding:0 24px; }
+.reel__phone { position:relative; flex:none; height:min(84dvh,838px); aspect-ratio:390/844; border-radius:44px; overflow:hidden; background:#000;
+  border:2px solid rgba(255,255,255,.14); box-shadow:0 2px 0 rgba(255,255,255,.10) inset, 0 44px 96px -22px rgba(0,0,0,.82), 0 0 0 10px rgba(0,0,0,.32); }
+.reel__screen { position:absolute; inset:0; overflow:hidden; border-radius:inherit; background:#0b0b0d; }
+.reel__img { width:100%; height:auto; display:block; will-change:transform; animation:reelpan var(--dur,22s) ease-in-out infinite alternate; animation-play-state:paused; }
+.reel.is-active .reel__img { animation-play-state:running; }
+@keyframes reelpan { from { transform:translateY(0); } to { transform:translateY(calc(-1 * var(--pan,0px))); } }
+
+/* meta beside the phone (desktop) */
+.reel__meta { flex:0 1 336px; max-width:336px; display:flex; flex-direction:column; align-items:flex-start; gap:14px; }
+.reel__tag { font-family:'Cinzel',serif; font-size:10px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); border:1px solid rgba(201,167,108,.4); border-radius:100px; padding:6px 13px; background:rgba(201,167,108,.08); }
+.reel__name { font-family:'Cinzel',serif; font-weight:600; font-size:clamp(1.9rem,2.6vw,2.7rem); letter-spacing:.4px; line-height:1.06;
+  background:linear-gradient(176deg,#fffdf9,#fff 18%,#efe6d5 60%,#cdbea1); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.reel__rule { width:52px; height:1px; background:linear-gradient(90deg,var(--accent),transparent); margin:2px 0; }
+.reel__cta { display:inline-flex; align-items:center; gap:8px; margin-top:4px; text-decoration:none; font-family:'Cinzel',serif; font-size:12px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:#100d08; background:linear-gradient(180deg,var(--accent-bright),var(--accent)); padding:12px 20px; border-radius:100px; box-shadow:0 10px 26px -8px rgba(201,167,108,.6); transition:transform .3s var(--ease),box-shadow .3s var(--ease); }
+@media (hover:hover) { .reel__cta:hover { transform:translateY(-2px); box-shadow:0 16px 32px -8px rgba(201,167,108,.78); } }
+.reel__url { font-family:'Cinzel',serif; font-size:11px; letter-spacing:.06em; color:var(--text-3); margin-top:2px; }
+
+/* INTRO */
+.reel--intro { background:radial-gradient(140% 100% at 50% 0%, #17140f 0%, var(--void) 55%); }
+.intro { position:relative; z-index:2; text-align:center; padding:24px; max-width:760px; }
+.intro__eyebrow { display:inline-flex; align-items:center; gap:12px; font-family:'Cinzel',serif; font-size:12px; font-weight:600; letter-spacing:.34em; text-transform:uppercase; color:var(--accent); margin-bottom:22px; }
+.intro__eyebrow::before,.intro__eyebrow::after { content:''; width:34px; height:1px; background:linear-gradient(90deg,transparent,var(--accent)); }
+.intro__eyebrow::after { background:linear-gradient(90deg,var(--accent),transparent); }
+.intro h1 { font-family:'Cinzel',serif; font-weight:700; font-size:clamp(2.6rem,9vw,4.8rem); line-height:1.02; background:linear-gradient(176deg,#fffdf9,#fff 16%,#efe6d5 55%,#cbbc9f); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 26px rgba(201,167,108,.22)); }
+.intro__sub { font-size:clamp(1.15rem,3.4vw,1.5rem); font-style:italic; color:var(--text-2); margin-top:16px; }
+.intro__count { font-family:'Cinzel',serif; color:var(--accent); font-style:normal; font-weight:600; }
+.intro__rule { width:64px; height:1px; margin:26px auto 0; background:linear-gradient(90deg,transparent,rgba(201,167,108,.5),transparent); }
+.intro__cue { margin-top:40px; display:flex; flex-direction:column; align-items:center; gap:6px; font-family:'Cinzel',serif; font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:var(--text-3); }
+.intro__cue svg { animation:cue 1.8s var(--ease) infinite; }
+@keyframes cue { 0%,100%{transform:translateY(0);opacity:.5;} 50%{transform:translateY(6px);opacity:1;} }
+
+/* FIXED CHROME */
+.chrome { position:fixed; z-index:40; pointer-events:none; }
+.top { top:0; left:0; right:0; display:flex; align-items:center; justify-content:space-between; padding:clamp(14px,2.4vw,22px) clamp(16px,3vw,28px); background:linear-gradient(to bottom, rgba(6,5,4,.72), transparent); }
+.back { pointer-events:auto; text-decoration:none; display:inline-flex; align-items:center; gap:8px; font-family:'Cinzel',serif; font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--text); opacity:.9; text-shadow:0 1px 8px rgba(0,0,0,.7); transition:opacity .3s var(--ease),color .3s var(--ease); }
+.back:hover { opacity:1; color:var(--accent); }
+.brandline { font-family:'Cinzel',serif; font-size:11px; font-weight:600; letter-spacing:.28em; text-transform:uppercase; color:var(--text-3); text-shadow:0 1px 8px rgba(0,0,0,.7); }
+.counter { position:fixed; z-index:40; right:clamp(14px,2.6vw,26px); bottom:calc(env(safe-area-inset-bottom,0px) + 22px); font-family:'Cinzel',serif; font-size:13px; letter-spacing:.14em; color:var(--text); pointer-events:none; background:rgba(8,7,6,.5); border:1px solid var(--line); border-radius:100px; padding:7px 13px; backdrop-filter:blur(6px); }
+.counter b { color:var(--accent); font-weight:600; }
+.rail { position:fixed; z-index:40; right:10px; top:50%; transform:translateY(-50%); width:3px; height:min(46dvh,340px); background:rgba(250,246,241,.1); border-radius:100px; pointer-events:none; }
+.rail__fill { position:absolute; left:0; top:0; width:100%; border-radius:100px; background:linear-gradient(180deg,var(--accent-bright),var(--accent)); height:6%; transition:height .45s var(--ease); }
+
+/* MOBILE / narrow: full-bleed phone + reel caption overlay */
+@media (max-width:759px) {
+  .reel__stage { padding:0; display:block; }
+  .reel__phone { position:absolute; inset:0; height:100dvh; width:100vw; aspect-ratio:auto; border:0; border-radius:0; box-shadow:none; }
+  .reel__meta { position:absolute; left:0; right:0; bottom:0; z-index:3; max-width:none; padding:110px 22px calc(env(safe-area-inset-bottom,0px) + 30px);
+    background:linear-gradient(to top, rgba(4,4,6,.98) 14%, rgba(4,4,6,.92) 46%, rgba(4,4,6,.6) 72%, transparent 100%);
+    -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+    -webkit-mask:linear-gradient(to top, #000 60%, transparent 100%); mask:linear-gradient(to top, #000 60%, transparent 100%); }
+  .reel__name { font-size:clamp(1.6rem,7vw,2.1rem); }
+  .reel__url { display:none; }
+  .rail, .brandline { display:none; }
+  .top { background:linear-gradient(to bottom, rgba(6,5,4,.85) 30%, transparent); }
+}
+@media (prefers-reduced-motion:reduce) { .feed { scroll-behavior:auto; } .reel__img { animation:none !important; } .intro__cue svg { animation:none; } }
+</style>
+</head>
+<body>
+
+<div class="ag-curtain" aria-hidden="true">
+  <div class="ag-curtain-slot"><div class="ag-intro-horizon">
+    <span class="ag-intro-horizon__line"></span>
+    <div class="ag-intro-horizon__mask"><span class="ag-intro-horizon__logo">AG</span></div>
+    <span class="ag-intro-horizon__subtag">Arc Garde</span>
+  </div></div>
+</div>
+
+<div class="chrome top">
+  <a class="back" href="/"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Arc Garde Hub</a>
+  <span class="brandline">Selected Work</span>
+</div>
+<div class="rail"><div class="rail__fill" id="railFill"></div></div>
+<div class="counter" id="counter"><b>01</b> / 28</div>
+
+<main class="feed" id="feed">
+  <section class="reel reel--intro" data-i="0">
+    <div class="intro">
+      <span class="intro__eyebrow">Arc Garde</span>
+      <h1>The Work</h1>
+      <p class="intro__sub"><span class="intro__count">27</span> live websites, built and shipped. Swipe to explore each one.</p>
+      <div class="intro__rule"></div>
+      <div class="intro__cue">Swipe
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </div>
+  </section>
+
+    <section class="reel reel--site" data-i="1" aria-label="Imperial Clippers">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/imperial-clippers.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/imperial-clippers.jpg" alt="Imperial Clippers website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Barbershop</span>
+          <h2 class="reel__name">Imperial Clippers</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://imperial-clippers.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">imperial-clippers.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="2" aria-label="Arc Garde">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/arcgarde.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/arcgarde.jpg" alt="Arc Garde website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Agency</span>
+          <h2 class="reel__name">Arc Garde</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://arcgarde.com" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">arcgarde.com</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="3" aria-label="Spitz PR">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/spitz-pr.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/spitz-pr.jpg" alt="Spitz PR website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Public Relations</span>
+          <h2 class="reel__name">Spitz PR</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://spitz-pr.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">spitz-pr.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="4" aria-label="The Wedding Mentor">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/wedding-mentor.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/wedding-mentor.jpg" alt="The Wedding Mentor website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Coaching</span>
+          <h2 class="reel__name">The Wedding Mentor</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://the-wedding-mentor.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">the-wedding-mentor.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="5" aria-label="Liminal Means">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/liminal-means.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/liminal-means.jpg" alt="Liminal Means website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Therapy</span>
+          <h2 class="reel__name">Liminal Means</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://liminalmeans.com" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">liminalmeans.com</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="6" aria-label="Elmira Architect">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/elmira-architect.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/elmira-architect.jpg" alt="Elmira Architect website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Architecture</span>
+          <h2 class="reel__name">Elmira Architect</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://elmiraarchitecture.ca" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">elmiraarchitecture.ca</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="7" aria-label="Keating Advisory">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/keating-advisory.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/keating-advisory.jpg" alt="Keating Advisory website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Wealth Advisory</span>
+          <h2 class="reel__name">Keating Advisory</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://keatingadvisory.com" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">keatingadvisory.com</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="8" aria-label="ClearSight Growth">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/clearsight-growth.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/clearsight-growth.jpg" alt="ClearSight Growth website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Consulting</span>
+          <h2 class="reel__name">ClearSight Growth</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://www.clearsightgrowth.ca" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">www.clearsightgrowth.ca</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="9" aria-label="Advanced Spine Care">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/spine-doctor.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/spine-doctor.jpg" alt="Advanced Spine Care website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Medical</span>
+          <h2 class="reel__name">Advanced Spine Care</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://ag-spine-doctor.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">ag-spine-doctor.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="10" aria-label="Beauty Lounge">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/beauty-lounge.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/beauty-lounge.jpg" alt="Beauty Lounge website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Beauty</span>
+          <h2 class="reel__name">Beauty Lounge</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://beauty-lounge-six.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">beauty-lounge-six.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="11" aria-label="Media Growth">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/media-growth.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/media-growth.jpg" alt="Media Growth website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Media</span>
+          <h2 class="reel__name">Media Growth</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://media-growth.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">media-growth.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="12" aria-label="Yoga Circle">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/yoga-circle.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/yoga-circle.jpg" alt="Yoga Circle website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Wellness</span>
+          <h2 class="reel__name">Yoga Circle</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://www.yogacirclela.com" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">www.yogacirclela.com</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="13" aria-label="Swedlund Construction">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/swedlund.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/swedlund.jpg" alt="Swedlund Construction website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Construction</span>
+          <h2 class="reel__name">Swedlund Construction</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://swedlund-construction.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">swedlund-construction.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="14" aria-label="Lead Hunter Media">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/lead-hunter.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/lead-hunter.jpg" alt="Lead Hunter Media website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Marketing</span>
+          <h2 class="reel__name">Lead Hunter Media</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://www.leadhuntermedia.com" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">www.leadhuntermedia.com</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="15" aria-label="The Tooth Place">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/tooth-place.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/tooth-place.jpg" alt="The Tooth Place website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Dental</span>
+          <h2 class="reel__name">The Tooth Place</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://www.toothplacedental.com" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">www.toothplacedental.com</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="16" aria-label="Arbor Wealth">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/arbor-wealth.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/arbor-wealth.jpg" alt="Arbor Wealth website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Wealth Management</span>
+          <h2 class="reel__name">Arbor Wealth</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://www.arborwealthstrategies.com" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">www.arborwealthstrategies.com</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="17" aria-label="Ellery Wolcott">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/ellery-wolcott.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/ellery-wolcott.jpg" alt="Ellery Wolcott website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Real Estate</span>
+          <h2 class="reel__name">Ellery Wolcott</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://ellerywolcott.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">ellerywolcott.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="18" aria-label="NexGen Truck Parts">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/nexgen.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/nexgen.jpg" alt="NexGen Truck Parts website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Auto Parts</span>
+          <h2 class="reel__name">NexGen Truck Parts</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://nexgen-truck-parts.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">nexgen-truck-parts.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="19" aria-label="Clinic of Angels">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/clinic-of-angels.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/clinic-of-angels.jpg" alt="Clinic of Angels website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Medical</span>
+          <h2 class="reel__name">Clinic of Angels</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://clinic-of-angels.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">clinic-of-angels.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="20" aria-label="Voiced by Curls">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/voiced-by-curls.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/voiced-by-curls.jpg" alt="Voiced by Curls website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Voice Over</span>
+          <h2 class="reel__name">Voiced by Curls</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://voicedbycurlzvo.com" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">voicedbycurlzvo.com</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="21" aria-label="Suzuki Systems">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/suzuki-systems.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/suzuki-systems.jpg" alt="Suzuki Systems website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Consulting</span>
+          <h2 class="reel__name">Suzuki Systems</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://suzuki-systems.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">suzuki-systems.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="22" aria-label="The Owners&#x27; Table">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/owners-table.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/owners-table.jpg" alt="The Owners&#x27; Table website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Hospitality</span>
+          <h2 class="reel__name">The Owners&#x27; Table</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://owners-table-international.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">owners-table-international.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="23" aria-label="Golden Touch Grooming">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/golden-touch.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/golden-touch.jpg" alt="Golden Touch Grooming website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Pet Grooming</span>
+          <h2 class="reel__name">Golden Touch Grooming</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://golden-touch-dog-grooming.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">golden-touch-dog-grooming.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="24" aria-label="DNP Solar Care">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/dnp-solar.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/dnp-solar.jpg" alt="DNP Solar Care website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Solar</span>
+          <h2 class="reel__name">DNP Solar Care</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://dnp-solar-care.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">dnp-solar-care.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="25" aria-label="Gant&#x27;s Wholesale Autos">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/gants-autos.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/gants-autos.jpg" alt="Gant&#x27;s Wholesale Autos website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Automotive</span>
+          <h2 class="reel__name">Gant&#x27;s Wholesale Autos</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://gantswholesaleautos.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">gantswholesaleautos.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="26" aria-label="Genigen Skin">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/genigen.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/genigen.jpg" alt="Genigen Skin website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Skincare</span>
+          <h2 class="reel__name">Genigen Skin</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://genigenskin.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">genigenskin.vercel.app</span>
+        </div>
+      </div>
+    </section>
+    <section class="reel reel--site" data-i="27" aria-label="Harbor Street Bakery">
+      <div class="reel__bg" style="background-image:url('/showcase/assets/harbor-bakery.jpg')"></div>
+      <div class="reel__stage">
+        <div class="reel__phone">
+          <div class="reel__screen">
+            <img class="reel__img" src="/showcase/assets/harbor-bakery.jpg" alt="Harbor Street Bakery website" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="reel__meta">
+          <span class="reel__tag">Bakery</span>
+          <h2 class="reel__name">Harbor Street Bakery</h2>
+          <span class="reel__rule"></span>
+          <a class="reel__cta" href="https://harbor-street-bakery.vercel.app" target="_blank" rel="noopener">View Live Site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <span class="reel__url">harbor-street-bakery.vercel.app</span>
+        </div>
+      </div>
+    </section>
+</main>
+
+<script src="/ag-cursor.js"></script>
+<script src="/ag-curtain.js"></script>
+<script>
+(function(){
+  var feed=document.getElementById('feed');
+  var reels=[].slice.call(document.querySelectorAll('.reel'));
+  var total=reels.length;
+  var counter=document.getElementById('counter');
+  var railFill=document.getElementById('railFill');
+
+  function sizeImg(img){
+    var screen=img.closest('.reel__screen'); if(!screen) return;
+    var pan=Math.max(0, img.clientHeight - screen.clientHeight);
+    img.style.setProperty('--pan', pan+'px');
+    img.style.setProperty('--dur', Math.min(48, Math.max(16, pan/40))+'s');
+  }
+  function sizeAll(){ document.querySelectorAll('.reel__img').forEach(function(img){
+    if(img.complete && img.naturalWidth) sizeImg(img); else img.addEventListener('load',function(){sizeImg(img);},{once:true});
+  }); }
+
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting && e.intersectionRatio>0.55){
+        reels.forEach(function(r){r.classList.remove('is-active');});
+        e.target.classList.add('is-active');
+        var idx=reels.indexOf(e.target);
+        counter.innerHTML='<b>'+String(idx+1).padStart(2,'0')+'</b> / '+String(total).padStart(2,'0');
+        railFill.style.height=Math.max(6,((idx+1)/total)*100)+'%';
+      }
+    });
+  },{root:feed,threshold:[0.55,0.8]});
+  reels.forEach(function(r){io.observe(r);});
+
+  function go(dir){
+    var cur=reels.findIndex(function(r){return r.classList.contains('is-active');});
+    var next=Math.min(total-1,Math.max(0,(cur<0?0:cur)+dir));
+    reels[next].scrollIntoView({behavior:'smooth'});
+  }
+  window.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'||e.key==='PageDown'||(e.key===' '&&!e.shiftKey)){e.preventDefault();go(1);}
+    else if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();go(-1);}
+    else if(e.key==='Home'){e.preventDefault();reels[0].scrollIntoView({behavior:'smooth'});}
+    else if(e.key==='End'){e.preventDefault();reels[total-1].scrollIntoView({behavior:'smooth'});}
+  });
+
+  var rt; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(sizeAll,180);});
+  if(document.documentElement.classList.contains('is-loading')) window.addEventListener('ag:ready',sizeAll,{once:true});
+  window.addEventListener('load',sizeAll);
+  reels[0].classList.add('is-active');
+  sizeAll();
+})();
+</script>
+</body>
+</html>

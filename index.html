@@ -345,6 +345,68 @@ html { scrollbar-color: var(--accent) var(--bg-secondary); scrollbar-width: thin
    SECTIONS
    ══════════════════════════════════════ */
 
+/* ══════════════════════════════════════
+   WEBSITE SHOWCASE FEATURE CARD
+   ══════════════════════════════════════ */
+.hub-feature {
+  display: flex; align-items: center; gap: clamp(18px, 3vw, 32px);
+  margin-bottom: clamp(3rem, 2.667rem + 1.333vw, 4rem);
+  padding: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem) clamp(1.6rem, 1.3rem + 1.2vw, 2.3rem);
+  border-radius: 16px; text-decoration: none; position: relative; overflow: hidden;
+  border: 1px solid rgba(201,167,108,0.28);
+  background:
+    radial-gradient(130% 180% at 100% 0%, rgba(201,167,108,0.15), transparent 55%),
+    linear-gradient(180deg, var(--void-warm), var(--void));
+  opacity: 0; transform: translateY(14px);
+  animation: fadeUp 0.7s var(--ease-entrance) forwards 0.28s;
+  transition: border-color .4s var(--ease-arc), box-shadow .4s var(--ease-arc), transform .4s var(--ease-arc);
+}
+.hub-feature::after {
+  content: ''; position: absolute; top: 0; left: -45%; width: 40%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,247,230,0.09), transparent);
+  transform: skewX(-18deg); transition: left .85s var(--ease-arc); pointer-events: none;
+}
+.hub-feature__reels { flex: none; display: flex; gap: 5px; align-items: flex-end; height: 42px; }
+.hub-feature__reels i {
+  width: 11px; height: 100%; border-radius: 3px; display: block;
+  background: linear-gradient(180deg, rgba(201,167,108,0.5), rgba(201,167,108,0.14));
+  border: 1px solid rgba(201,167,108,0.3);
+}
+.hub-feature__reels i:nth-child(1) { height: 62%; }
+.hub-feature__reels i:nth-child(3) { height: 78%; }
+.hub-feature__text { flex: 1 1 auto; }
+.hub-feature__eyebrow {
+  font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; letter-spacing: 2.8px;
+  text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 8px;
+}
+.hub-feature__title {
+  font-family: 'Cinzel', serif; font-weight: 600; font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2rem);
+  color: var(--text-primary); line-height: 1.05; letter-spacing: 0.3px;
+}
+.hub-feature__sub {
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 1rem + 0.5vw, 1.28rem);
+  font-style: italic; color: var(--text-tertiary); margin-top: 6px;
+}
+.hub-feature__cta {
+  flex: none; display: inline-flex; align-items: center; gap: 9px; font-family: 'Cinzel', serif;
+  font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--accent);
+  border: 1px solid rgba(201,167,108,0.45); border-radius: 100px; padding: 13px 22px;
+  transition: background .3s var(--ease-arc), color .3s var(--ease-arc), border-color .3s var(--ease-arc);
+}
+.hub-feature__cta svg { transition: transform .3s var(--ease-arc); }
+@media (hover: hover) {
+  .hub-feature:hover { border-color: rgba(201,167,108,0.55); transform: translateY(-2px);
+    box-shadow: 0 22px 60px -26px rgba(0,0,0,.72), 0 0 0 1px rgba(201,167,108,.1) inset; }
+  .hub-feature:hover::after { left: 125%; }
+  .hub-feature:hover .hub-feature__cta { background: linear-gradient(180deg, var(--accent-bright), var(--accent)); color: #100d08; border-color: transparent; }
+  .hub-feature:hover .hub-feature__cta svg { transform: translateX(3px); }
+}
+@media (max-width: 560px) {
+  .hub-feature { flex-direction: column; align-items: flex-start; text-align: left; }
+  .hub-feature__reels { height: 34px; }
+}
+@media (prefers-reduced-motion: reduce) { .hub-feature { opacity: 1; transform: none; } }
+
 .hub-section {
   margin-bottom: clamp(3rem, 2.667rem + 1.333vw, 4rem);
   opacity: 0;
@@ -578,6 +640,19 @@ html { scrollbar-color: var(--accent) var(--bg-secondary); scrollbar-width: thin
     <h1 class="hub-title">Client Hub</h1>
     <p class="hub-subtitle">Presentations, reports, and dashboards</p>
   </header>
+
+  <!-- WEBSITE SHOWCASE FEATURE -->
+  <a href="/showcase" class="hub-feature" aria-label="Open the website showcase">
+    <span class="hub-feature__reels" aria-hidden="true"><i></i><i></i><i></i></span>
+    <div class="hub-feature__text">
+      <span class="hub-feature__eyebrow">Selected Work</span>
+      <h2 class="hub-feature__title">Website Showcase</h2>
+      <p class="hub-feature__sub">Every site we've built, in one scroll.</p>
+    </div>
+    <span class="hub-feature__cta">Enter Showcase
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+    </span>
+  </a>
 
   <!-- PRESENTATIONS -->
   <section class="hub-section">
