@@ -1,0 +1,700 @@
+<!--
+  COGENTIC x ARC GARDE - GROWTH PARTNERSHIP / SCOPE OF WORK
+  Prepared for Armaan Waels & Aymane Arfaoui (Cogentic, Inc.).
+  Technical-premium identity tuned to Cogentic (near-black + indigo-violet).
+  AG Standards LIFTED: AG Cursor v2.1 canonical, Lenis, reveal IO, count-up,
+  defensive baseline, fluid tokens, SHARED ag-reports banner/favicon (/assets/).
+  No curtain, no header, no CTA (presentation format). DRAFT pricing/KPIs flagged. July 2026
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no">
+  <base href="/presentations/cogentic/">
+  <title>Cogentic | Growth Partnership - Arc Garde</title>
+
+  <meta name="description" content="Scope of work: an organic-led growth system for Cogentic, engineered for long enterprise sales cycles. By Arc Garde.">
+  <meta name="author" content="Arc Garde">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://ag-reports.vercel.app/presentations/cogentic">
+
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+  <meta property="og:title" content="Cogentic | Growth Partnership - Arc Garde">
+  <meta property="og:description" content="An organic-led growth system, engineered for long enterprise cycles.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ag-reports.vercel.app/presentations/cogentic">
+  <meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cogentic | Growth Partnership - Arc Garde">
+  <meta name="twitter:description" content="An organic-led growth system, engineered for long enterprise cycles.">
+  <meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+  <meta name="theme-color" content="#0B0A12">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════
+       COGENTIC x ARC GARDE - art-directed color-block dossier
+       Surface theming: dark / paper / violet bands share tokens.
+       ═══════════════════════════════════════════════════════ */
+    :root {
+      --ink: #0B0A12;
+      --ink-2: #121020;
+      --ink-3: #17142a;
+      --paper: #F3F1F9;
+      --paper-soft: rgba(243, 241, 249, 0.66);
+      --paper-mute: rgba(243, 241, 249, 0.42);
+      --accent: #7C6BF7;
+      --accent-lift: #B3A6FF;
+      --accent-deep: #5B47D6;
+      --rule: rgba(243, 241, 249, 0.10);
+      --rule-2: rgba(243, 241, 249, 0.20);
+      --grid: rgba(243, 241, 249, 0.022);
+
+      --duration-instant: 0.14s;
+      --duration-quick: 0.3s;
+      --ease-satisfying: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+
+      --font-display: 'Sora', system-ui, sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+      --text-base: clamp(0.938rem, 0.909rem + 0.12vw, 1rem);
+      --t-display: clamp(2.5rem, 1.5rem + 4.6vw, 5rem);
+      --t-h2: clamp(1.7rem, 1.25rem + 2vw, 2.7rem);
+      --t-h3: clamp(1.2rem, 1rem + 0.9vw, 1.6rem);
+      --t-numeral: clamp(2.5rem, 1.8rem + 3.2vw, 4rem);
+      --t-lead: clamp(1.02rem, 0.96rem + 0.36vw, 1.24rem);
+      --t-body: clamp(1rem, 0.96rem + 0.2vw, 1.06rem);
+      --t-small: clamp(0.85rem, 0.82rem + 0.14vw, 0.92rem);
+      --t-label: clamp(0.66rem, 0.62rem + 0.14vw, 0.75rem);
+
+      --wrap: min(100% - clamp(2.2rem, 1rem + 5vw, 6rem), 1120px);
+      --wrap-tight: min(100% - clamp(2.2rem, 1rem + 5vw, 6rem), 820px);
+      --space-band: clamp(3.6rem, 2.4rem + 5vw, 7rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: clip; -webkit-text-size-adjust: 100%; background-color: var(--ink); scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body); font-size: var(--text-base); line-height: 1.62;
+      color: var(--paper); background: var(--ink); overflow-wrap: break-word;
+      -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+    h1, h2, h3 { text-wrap: balance; line-height: 1.08; }
+    p { text-wrap: pretty; }
+
+    .cog-skip { position: absolute; left: -9999px; top: 0; z-index: 100; background: var(--accent); color: #fff; padding: 0.7em 1.2em; font-weight: 600; text-decoration: none; }
+    .cog-skip:focus { left: 0; }
+    .wrap { width: var(--wrap); margin-inline: auto; }
+    .wrap-tight { width: var(--wrap-tight); margin-inline: auto; }
+
+    /* ── AG CURSOR v2.1 CSS (canonical drop-in, lifted) ── */
+    .ag-fine, .ag-fine *, .ag-fine *::before, .ag-fine *::after { cursor: none !important; }
+    .ag-cursor__body, .ag-cursor__edge { position: fixed; top: 0; left: 0; pointer-events: none; opacity: 0; transition: opacity var(--duration-instant, 120ms) var(--ease-satisfying, cubic-bezier(0.22,1,0.36,1)); will-change: transform; }
+    .ag-cursor__body { z-index: 2147483646; mix-blend-mode: difference; }
+    .ag-cursor__edge { z-index: 2147483647; }
+    .ag-cursor__body svg, .ag-cursor__edge svg { position: absolute; top: 0; left: 0; display: block; max-width: none; }
+    .ag-cursor__body .ag-cursor__arrow, .ag-cursor__edge .ag-cursor__arrow { width: 13px; height: 20px; }
+    .ag-cursor__edge .ag-cursor__hand { width: 18px; height: 18px; }
+    .ag-cursor__body path { fill: #fff; }
+    .ag-cursor__edge path { fill: none; stroke: var(--accent, #c9a861); stroke-linejoin: round; stroke-linecap: round; }
+    .ag-cursor__edge .ag-cursor__arrow path { stroke-width: 0.8; }
+    .ag-cursor__edge .ag-cursor__hand  path { fill: var(--cur-fill, var(--ink, #0a0a0a)); stroke-width: 0.75; }
+    .ag-cursor__arrow { transform-origin: 0 0; transition: opacity 0.21s var(--ease-settle), transform 0.21s var(--ease-settle); }
+    .ag-cursor__hand { position: absolute; left: -8px; top: -2px; opacity: 0; transform: scale(.7); transform-origin: 8px 2px; transition: opacity 0.21s var(--ease-settle), transform 0.21s var(--ease-settle); }
+    .ag-cur-hover .ag-cursor__arrow { opacity: 0; transform: scale(.6); }
+    .ag-cur-hover .ag-cursor__hand  { opacity: 1; transform: scale(1); }
+    .ag-cur-hover.ag-cur-press .ag-cursor__hand { transform: scale(.88); }
+    .ag-cur-press:not(.ag-cur-hover) .ag-cursor__arrow { transform: scale(.88); }
+    @media (hover: none), (pointer: coarse) { .ag-cursor__body, .ag-cursor__edge { display: none !important; } }
+    @media (prefers-reduced-motion: reduce) { .ag-cursor__arrow, .ag-cursor__hand, .ag-cursor__body, .ag-cursor__edge { transition: none; } }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s var(--ease-satisfying), transform 0.7s var(--ease-satisfying); }
+    .reveal.in-view { opacity: 1; transform: none; }
+    .reveal-stagger > * { opacity: 0; transform: translateY(22px); transition: opacity 0.6s var(--ease-satisfying), transform 0.6s var(--ease-satisfying); transition-delay: calc(var(--i, 0) * 80ms); }
+    .reveal-stagger.in-view > * { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; } }
+
+    /* ── ambient technical grid (shows through dark/transparent bands only) ── */
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(124, 107, 247, 0.05), transparent 18%),
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 100% 100%, 62px 62px, 62px 62px;
+    }
+    main, .cog-footer { position: relative; z-index: 1; }
+
+    /* ═══════════════════════════════════════════════════════
+       SURFACE THEMING — every band inherits a colour set
+       ═══════════════════════════════════════════════════════ */
+    main { counter-reset: cogsec; }
+    .band {
+      --s-bg: transparent; --s-ink: var(--paper); --s-soft: var(--paper-soft); --s-mute: var(--paper-mute);
+      --s-rule: var(--rule); --s-rule2: var(--rule-2); --s-card: var(--ink-2); --s-card-2: var(--ink-3);
+      --s-accent: var(--accent-lift); --s-accent-strong: var(--accent); --s-flag-bg: var(--accent); --s-flag-ink: #fff;
+      background: var(--s-bg); color: var(--s-ink); padding-block: var(--space-band); position: relative;
+    }
+    .band--paper {
+      --s-bg: #F1ECE2; --s-ink: #17132b; --s-soft: rgba(23,19,43,0.66); --s-mute: rgba(23,19,43,0.44);
+      --s-rule: rgba(23,19,43,0.12); --s-rule2: rgba(23,19,43,0.20); --s-card: #FBF9F3; --s-card-2: #F1ECFF;
+      --s-accent: #5B47D6; --s-accent-strong: #5B47D6; --s-flag-bg: #5B47D6; --s-flag-ink: #fff;
+    }
+    .band--violet {
+      --s-bg: #5B47D6; --s-ink: #ffffff; --s-soft: rgba(255,255,255,0.82); --s-mute: rgba(255,255,255,0.60);
+      --s-rule: rgba(255,255,255,0.20); --s-rule2: rgba(255,255,255,0.34); --s-card: rgba(255,255,255,0.07); --s-card-2: rgba(255,255,255,0.10);
+      --s-accent: #EDE9FF; --s-accent-strong: #ffffff; --s-flag-bg: #ffffff; --s-flag-ink: #5B47D6;
+    }
+
+    .cog-kicker { display: inline-flex; align-items: baseline; gap: 0.7em; font-family: var(--font-mono); font-weight: 500; font-size: var(--t-label); letter-spacing: 0.14em; text-transform: uppercase; color: var(--s-accent); }
+    .cog-kicker::before { counter-increment: cogsec; content: counter(cogsec, decimal-leading-zero); color: var(--s-accent-strong); font-weight: 600; }
+    .cog-h2 { font-family: var(--font-display); font-weight: 700; font-size: var(--t-h2); letter-spacing: -0.02em; color: var(--s-ink); margin-top: 0.9rem; }
+    .cog-sechead { text-align: center; margin-bottom: clamp(2.2rem, 1.5rem + 2.6vw, 3.6rem); }
+    .cog-sechead .cog-lead { color: var(--s-soft); font-size: var(--t-lead); margin-top: 1rem; max-width: 46ch; margin-inline: auto; }
+
+    /* ═══ HERO (always dark) ═══ */
+    .cog-hero { min-height: 82svh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding-block: clamp(3rem, 2rem + 4vw, 5.5rem); position: relative; }
+    .cog-mark { display: inline-flex; align-items: center; gap: 0.6em; font-family: var(--font-mono); font-weight: 500; font-size: var(--t-small); letter-spacing: 0.02em; color: var(--paper); border: 1px solid var(--rule-2); border-radius: 6px; padding: 0.5em 0.9em 0.5em 0.7em; margin-bottom: 1.9rem; }
+    .cog-mark .dot { width: 0.55em; height: 0.55em; border-radius: 50%; background: var(--accent); }
+    .cog-dateline { font-family: var(--font-mono); font-weight: 500; font-size: var(--t-label); letter-spacing: 0.18em; text-transform: uppercase; color: var(--paper-mute); display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5em 0.9em; }
+    .cog-dateline .sep { color: var(--accent); }
+    .cog-rule { width: clamp(2.2rem, 1.6rem + 2.6vw, 3.2rem); height: 2px; margin: 1.5rem auto 1.9rem; background: var(--accent); transform: scaleX(0); transform-origin: center; transition: transform 0.9s var(--ease-satisfying); }
+    .cog-rule.in-view { transform: scaleX(1); }
+    .cog-hero-title { font-family: var(--font-display); font-weight: 700; font-size: var(--t-display); letter-spacing: -0.025em; color: var(--paper); max-width: 16ch; margin-inline: auto; }
+    .cog-hero-title .accent { color: var(--accent-lift); }
+    .cog-hero-sub { font-family: var(--font-body); font-weight: 500; color: var(--paper-soft); font-size: var(--t-lead); margin-top: 1.4rem; max-width: 44ch; margin-inline: auto; }
+    .cog-scrollcue { position: absolute; left: 50%; bottom: clamp(1.2rem, 0.8rem + 1.5vw, 2.2rem); transform: translateX(-50%); width: 22px; height: 22px; color: var(--accent-lift); opacity: 0.55; animation: cogBob 2.1s var(--ease-soft) infinite; }
+    .cog-scrollcue svg { width: 100%; height: 100%; display: block; }
+    @keyframes cogBob { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 6px); } }
+    @media (prefers-reduced-motion: reduce) { .cog-scrollcue { animation: none; } }
+
+    /* ═══ grids (points / plats / engine / kpis share the 1px-gap pattern) ═══ */
+    .cog-points, .cog-plats, .cog-engine-grid, .cog-kpis { display: grid; gap: 1px; background: var(--s-rule); border: 1px solid var(--s-rule); }
+    .cog-points { grid-template-columns: repeat(3, 1fr); }
+    .cog-plats { grid-template-columns: repeat(3, 1fr); }
+    .cog-engine-grid { grid-template-columns: repeat(3, 1fr); text-align: center; }
+    .cog-kpis { grid-template-columns: repeat(4, 1fr); }
+    .cog-point, .cog-plat, .cog-engine-cell, .cog-kpi { background: var(--s-card); }
+
+    .cog-point { padding: clamp(1.6rem, 1.1rem + 2vw, 2.4rem); }
+    .cog-point-n { font-family: var(--font-mono); font-weight: 600; font-size: 0.95rem; color: var(--s-accent-strong); letter-spacing: 0.06em; }
+    .cog-point h3 { font-family: var(--font-display); font-weight: 600; font-size: var(--t-h3); color: var(--s-ink); margin: 0.9rem 0 0.6rem; }
+    .cog-point p { color: var(--s-soft); font-size: var(--t-body); }
+
+    .cog-plat { padding: clamp(1.4rem, 1rem + 1.6vw, 2rem); display: flex; flex-direction: column; gap: 0.5rem; }
+    .cog-plat-top { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
+    .cog-plat-name { font-family: var(--font-display); font-weight: 600; font-size: var(--t-h3); color: var(--s-ink); }
+    .cog-plat-tag { font-family: var(--font-mono); font-weight: 500; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--s-accent); border: 1px solid var(--s-rule2); border-radius: 3px; padding: 0.24em 0.55em; }
+    .cog-plat p { color: var(--s-soft); font-size: var(--t-small); }
+    .cog-plat--muted .cog-plat-name, .cog-plat--muted p, .cog-plat--muted .cog-plat-tag { color: var(--s-mute); }
+
+    .cog-loop { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem 0.45rem; margin-bottom: clamp(2rem, 1.4rem + 2vw, 3rem); }
+    .cog-loop-step { font-family: var(--font-mono); font-weight: 500; font-size: var(--t-small); color: var(--s-ink); background: var(--s-card); border: 1px solid var(--s-rule2); border-radius: 4px; padding: 0.55em 0.95em; }
+    .cog-loop-arrow { color: var(--s-accent-strong); font-size: 1em; font-family: var(--font-mono); }
+    .cog-engine-cell { padding: clamp(1.4rem, 1rem + 1.4vw, 2rem); }
+    .cog-engine-cell .k { font-family: var(--font-mono); font-weight: 500; font-size: var(--t-label); letter-spacing: 0.12em; text-transform: uppercase; color: var(--s-accent); }
+    .cog-engine-cell .v { color: var(--s-soft); font-size: var(--t-body); margin-top: 0.6rem; }
+
+    /* ═══ TIERS ═══ */
+    .cog-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 0.6rem + 1.6vw, 1.6rem); align-items: stretch; }
+    .cog-tier { display: flex; flex-direction: column; background: var(--s-card); border: 1px solid var(--s-rule2); border-radius: 10px; padding: clamp(1.7rem, 1.2rem + 2vw, 2.4rem); position: relative; transition: transform var(--duration-quick) var(--ease-soft), border-color var(--duration-quick) var(--ease-soft); }
+    .cog-tier--featured { background: var(--s-card-2); border-color: var(--s-accent-strong); }
+    .cog-tier--featured::before { content: ""; position: absolute; top: -1px; left: -1px; right: -1px; height: 3px; background: var(--s-accent-strong); border-radius: 10px 10px 0 0; }
+    .cog-tier-flag { position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); font-family: var(--font-mono); font-weight: 600; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--s-flag-ink); background: var(--s-flag-bg); border-radius: 4px; padding: 0.4em 0.9em; white-space: nowrap; }
+    .cog-tier-name { font-family: var(--font-display); font-weight: 700; font-size: var(--t-h3); color: var(--s-ink); }
+    .cog-tier-note { color: var(--s-mute); font-size: var(--t-small); margin-top: 0.4rem; min-height: 2.6em; }
+    .cog-tier-price { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 1.5rem + 2.2vw, 2.9rem); color: var(--s-ink); line-height: 0.95; margin: 1.2rem 0 0.2rem; letter-spacing: -0.01em; }
+    .cog-tier-price .cur { font-size: 0.5em; vertical-align: 0.5em; color: var(--s-accent); margin-right: 0.05em; font-family: var(--font-mono); font-weight: 500; }
+    .cog-tier-price .per { font-family: var(--font-mono); font-size: 0.28em; font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase; color: var(--s-mute); vertical-align: 0.5em; margin-left: 0.2em; }
+    .cog-draft { font-family: var(--font-mono); font-weight: 500; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--s-accent); border: 1px dashed var(--s-rule2); border-radius: 3px; padding: 0.22em 0.45em; vertical-align: middle; margin-left: 0.5em; }
+    .cog-tier-rule { height: 1px; background: var(--s-rule); margin: 1.3rem 0; }
+    .cog-tier-list { list-style: none; display: grid; gap: 0.7rem; }
+    .cog-tier-list li { position: relative; padding-left: 1.5rem; color: var(--s-soft); font-size: var(--t-small); }
+    .cog-tier-list li::before { content: "+"; position: absolute; left: 0; top: 0; font-family: var(--font-mono); color: var(--s-accent-strong); font-weight: 600; }
+    @media (hover: hover) { .cog-tier:hover { transform: translateY(-4px); border-color: var(--s-accent-strong); } }
+
+    /* ═══ KPIs ═══ */
+    .cog-kpi { text-align: center; padding: clamp(1.5rem, 1.1rem + 1.4vw, 2.1rem) 1rem; }
+    .cog-kpi-fig { font-family: var(--font-display); font-weight: 700; font-size: var(--t-numeral); line-height: 0.9; color: var(--s-accent); letter-spacing: -0.01em; }
+    .cog-kpi-fig .u { font-family: var(--font-mono); font-size: 0.32em; font-weight: 500; color: var(--s-soft); margin-left: 0.1em; }
+    .cog-kpi-lab { color: var(--s-soft); font-size: var(--t-small); margin-top: 0.7rem; }
+    .cog-kpi.is-draft .cog-kpi-fig { color: var(--s-ink); }
+    .cog-note-line { text-align: center; color: var(--s-soft); font-size: var(--t-body); margin-top: clamp(1.8rem, 1.2rem + 1.6vw, 2.6rem); max-width: 62ch; margin-inline: auto; }
+    .cog-note-line strong { color: var(--s-ink); font-weight: 600; }
+
+    /* ═══ SETTER + SCOPE ═══ */
+    .cog-addon { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(1.6rem, 1rem + 2.4vw, 3rem); align-items: center; background: var(--s-card); border: 1px solid var(--s-rule2); border-radius: 10px; padding: clamp(1.8rem, 1.2rem + 2.4vw, 3rem); }
+    .cog-addon > div:first-child { color: var(--s-soft); }
+    .cog-addon-list { list-style: none; display: grid; gap: 0.7rem; margin-top: 1.2rem; }
+    .cog-addon-list li { position: relative; padding-left: 1.4rem; color: var(--s-soft); font-size: var(--t-small); }
+    .cog-addon-list li::before { content: "+"; position: absolute; left: 0; top: 0; font-family: var(--font-mono); color: var(--s-accent-strong); font-weight: 600; }
+    .cog-addon-fig { text-align: center; border-left: 1px solid var(--s-rule); }
+    .cog-addon-fig .k { font-family: var(--font-mono); font-weight: 500; font-size: var(--t-label); letter-spacing: 0.12em; text-transform: uppercase; color: var(--s-accent); }
+    .cog-addon-fig .v { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem); color: var(--s-ink); line-height: 1; margin-top: 0.5rem; }
+    .cog-addon-fig .v .cur { font-size: 0.5em; vertical-align: 0.5em; color: var(--s-accent); font-family: var(--font-mono); font-weight: 500; }
+    .cog-addon-fig .sub { color: var(--s-mute); font-size: var(--t-small); margin-top: 0.6rem; }
+    .cog-scope { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 0.6rem + 1.6vw, 2rem); margin-top: clamp(2rem, 1.4rem + 2vw, 3rem); }
+    .cog-scope-cell { border-top: 1px solid var(--s-accent-strong); padding-top: 1.1rem; }
+    .cog-scope-cell .k { font-family: var(--font-mono); font-weight: 500; font-size: var(--t-label); letter-spacing: 0.12em; text-transform: uppercase; color: var(--s-accent); }
+    .cog-scope-cell .v { color: var(--s-soft); font-size: var(--t-small); margin-top: 0.5rem; }
+
+    /* ═══ FOOTER (dark) ═══ */
+    .cog-footer { border-top: 1px solid var(--rule); padding-block: clamp(2rem, 1.4rem + 2vw, 3rem); text-align: center; background: var(--ink); }
+    .cog-footer p { font-family: var(--font-mono); font-weight: 500; font-size: var(--t-small); letter-spacing: 0.06em; color: var(--paper-mute); text-transform: uppercase; }
+    .cog-footer .b { color: var(--accent-lift); }
+    .cog-footer .draftnote { text-transform: none; letter-spacing: 0; font-family: var(--font-body); font-weight: 400; margin-top: 0.9rem; color: var(--paper-mute); font-size: var(--t-small); }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 940px) {
+      .cog-points, .cog-plats, .cog-tiers, .cog-engine-grid { grid-template-columns: 1fr; }
+      .cog-kpis { grid-template-columns: repeat(2, 1fr); }
+      .cog-addon { grid-template-columns: 1fr; text-align: center; }
+      .cog-addon-fig { border-left: none; border-top: 1px solid var(--s-rule); padding-top: 1.4rem; }
+      .cog-addon-list { justify-items: center; }
+      .cog-addon-list li { padding-left: 0; }
+      .cog-addon-list li::before { display: none; }
+      .cog-scope { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 900px) {
+      .cog-hero, .band { text-align: center; }
+      .cog-h2, .cog-sechead, .cog-hero-title, .cog-hero-sub, .cog-point, .cog-tier, .cog-kpi, .cog-footer p { margin-inline: auto; }
+      .cog-tier-list, .cog-addon-list { justify-items: center; }
+      .cog-tier-list li, .cog-addon-list li { text-align: center; padding-left: 0; }
+      .cog-tier-list li::before, .cog-addon-list li::before { display: none; }
+      .cog-tier-note { min-height: 0; }
+      .cog-scope-cell { text-align: center; border-top: none; padding-top: 0; }
+      .cog-scope-cell .k { display: inline-block; border-top: 2px solid var(--s-accent-strong); padding-top: 0.6rem; }
+    }
+    @media (max-width: 560px) { .cog-kpis { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <a href="#main" class="cog-skip">Skip to content</a>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <header class="cog-hero">
+      <div class="wrap">
+        <div class="cog-mark reveal"><span class="dot" aria-hidden="true"></span>Cogentic &times; Arc Garde</div>
+        <p class="cog-dateline reveal">
+          Growth Partnership <span class="sep" aria-hidden="true">/</span>
+          Prepared for Armaan &amp; Aymane <span class="sep" aria-hidden="true">/</span>
+          July 2026
+        </p>
+        <div class="cog-rule reveal" aria-hidden="true"></div>
+        <h1 class="cog-hero-title reveal">Presence first, <span class="accent">precision second</span></h1>
+        <p class="cog-hero-sub reveal">An organic-led growth system, engineered for the long enterprise sales&nbsp;cycle.</p>
+      </div>
+      <div class="cog-scrollcue reveal" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+    </header>
+
+    <!-- THE APPROACH -->
+    <section class="band band--paper" aria-label="The approach">
+      <div class="wrap">
+        <div class="cog-sechead reveal">
+          <span class="cog-kicker">The approach</span>
+          <h2 class="cog-h2">Enterprise buyers don't fall through funnels</h2>
+          <p class="cog-lead">For a high-ticket, technical sale, ads don't convert the room. Presence and precision&nbsp;do.</p>
+        </div>
+        <div class="cog-points reveal-stagger">
+          <div class="cog-point">
+            <span class="cog-point-n">01</span>
+            <h3>They check you first</h3>
+            <p>Before a decision-maker replies, they open your profile. A sparse account ends the conversation before it starts, so we build a credible presence&nbsp;first.</p>
+          </div>
+          <div class="cog-point">
+            <span class="cog-point-n">02</span>
+            <h3>Then we snipe</h3>
+            <p>7 to 12 targeted LinkedIn connections a day to the exact decision-makers, opened with a real conversation, not a pitch. Skip-tracing finds the right person and&nbsp;department.</p>
+          </div>
+          <div class="cog-point">
+            <span class="cog-point-n">03</span>
+            <h3>Ads come later</h3>
+            <p>These buyers move through relationships and RFPs, not ad funnels. Paid only makes sense once you add a lower-ticket tier anyone can&nbsp;buy.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLATFORMS -->
+    <section class="band" aria-label="Platforms">
+      <div class="wrap">
+        <div class="cog-sechead reveal">
+          <span class="cog-kicker">Where we show up</span>
+          <h2 class="cog-h2">Omnipresent where it counts</h2>
+          <p class="cog-lead">Final platform mix confirmed after a short due-diligence pass on your&nbsp;audience.</p>
+        </div>
+        <div class="cog-plats reveal-stagger">
+          <div class="cog-plat">
+            <div class="cog-plat-top"><span class="cog-plat-name">LinkedIn</span><span class="cog-plat-tag">Primary</span></div>
+            <p>The room where decision-makers live, and where the sniper play&nbsp;runs.</p>
+          </div>
+          <div class="cog-plat">
+            <div class="cog-plat-top"><span class="cog-plat-name">YouTube</span></div>
+            <p>Talking-head authority, searchable and embeddable in DMs and&nbsp;RFPs.</p>
+          </div>
+          <div class="cog-plat">
+            <div class="cog-plat-top"><span class="cog-plat-name">Facebook</span></div>
+            <p>Presence and legitimacy, retargeting-ready when ads make&nbsp;sense.</p>
+          </div>
+          <div class="cog-plat">
+            <div class="cog-plat-top"><span class="cog-plat-name">Google Business</span></div>
+            <p>A trust signal that you exist and operate, even without a&nbsp;storefront.</p>
+          </div>
+          <div class="cog-plat">
+            <div class="cog-plat-top"><span class="cog-plat-name">Better Business Bureau</span></div>
+            <p>Credibility for enterprise and government-adjacent&nbsp;buyers.</p>
+          </div>
+          <div class="cog-plat cog-plat--muted">
+            <div class="cog-plat-top"><span class="cog-plat-name">TikTok</span><span class="cog-plat-tag">Skipped</span></div>
+            <p>Wrong room for this buyer. Deliberately left&nbsp;out.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE ENGINE -->
+    <section class="band band--paper" aria-label="The content engine">
+      <div class="wrap">
+        <div class="cog-sechead reveal">
+          <span class="cog-kicker">The content engine</span>
+          <h2 class="cog-h2">Done for you, end to end</h2>
+        </div>
+        <div class="cog-loop reveal-stagger">
+          <span class="cog-loop-step">Ideate</span><span class="cog-loop-arrow" aria-hidden="true">&rarr;</span>
+          <span class="cog-loop-step">Script &amp; write</span><span class="cog-loop-arrow" aria-hidden="true">&rarr;</span>
+          <span class="cog-loop-step">Angle</span><span class="cog-loop-arrow" aria-hidden="true">&rarr;</span>
+          <span class="cog-loop-step">Edit</span><span class="cog-loop-arrow" aria-hidden="true">&rarr;</span>
+          <span class="cog-loop-step">Post</span>
+        </div>
+        <div class="cog-engine-grid reveal-stagger">
+          <div class="cog-engine-cell">
+            <div class="k">Content mix</div>
+            <div class="v">Text posts, infographics and talking-head&nbsp;video</div>
+          </div>
+          <div class="cog-engine-cell">
+            <div class="k">Positioning</div>
+            <div class="v">Founder-led and premium, never salesy. We build the garden so buyers come to&nbsp;you</div>
+          </div>
+          <div class="cog-engine-cell">
+            <div class="k">Your part</div>
+            <div class="v">On camera as needed. We handle the&nbsp;rest</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE TIERS -->
+    <section class="band" aria-label="The options">
+      <div class="wrap">
+        <div class="cog-sechead reveal">
+          <span class="cog-kicker">Three ways in</span>
+          <h2 class="cog-h2">Pick your level of leverage</h2>
+          <p class="cog-lead">Same system, different volume. Month to month, no long-term&nbsp;lock.</p>
+        </div>
+        <div class="cog-tiers reveal-stagger">
+          <!-- Tier 1 -->
+          <div class="cog-tier">
+            <div class="cog-tier-name">Consulting</div>
+            <p class="cog-tier-note">Advisory. You execute, we steer.</p>
+            <div class="cog-tier-price"><span class="cur">$</span>1,500<span class="per">/mo</span><span class="cog-draft">Draft</span></div>
+            <div class="cog-tier-rule"></div>
+            <ul class="cog-tier-list">
+              <li>Strategy and angle ideation</li>
+              <li>Funnel and VSL guidance</li>
+              <li>SOPs, setter and closer training</li>
+              <li>Demo scripting</li>
+              <li>Sales collateral</li>
+            </ul>
+          </div>
+          <!-- Tier 2 (featured) -->
+          <div class="cog-tier cog-tier--featured">
+            <span class="cog-tier-flag">Recommended</span>
+            <div class="cog-tier-name">2&times;/day System</div>
+            <p class="cog-tier-note">Full done-for-you content, plus the consulting layer.</p>
+            <div class="cog-tier-price"><span class="cur">$</span>3,500<span class="per">/mo</span><span class="cog-draft">Draft</span></div>
+            <div class="cog-tier-rule"></div>
+            <ul class="cog-tier-list">
+              <li>Everything in Consulting</li>
+              <li>2 posts a day, ideated to posted</li>
+              <li>Across your confirmed platforms</li>
+              <li>LinkedIn sniper support (7 to 12 connects/day)</li>
+              <li>Monthly reporting</li>
+            </ul>
+          </div>
+          <!-- Tier 3 -->
+          <div class="cog-tier">
+            <div class="cog-tier-name">3&times;/day System</div>
+            <p class="cog-tier-note">Maximum volume and reach.</p>
+            <div class="cog-tier-price"><span class="cur">$</span>4,500<span class="per">/mo</span><span class="cog-draft">Draft</span></div>
+            <div class="cog-tier-rule"></div>
+            <ul class="cog-tier-list">
+              <li>Everything in 2&times;/day</li>
+              <li>3 posts a day for higher reach</li>
+              <li>Priority turnaround</li>
+              <li>Expanded angle testing</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KPIs -->
+    <section class="band band--violet" aria-label="Benchmarks">
+      <div class="wrap">
+        <div class="cog-sechead reveal">
+          <span class="cog-kicker">What you can hold us to</span>
+          <h2 class="cog-h2">Benchmarks, not empty promises</h2>
+        </div>
+        <div class="cog-kpis reveal-stagger">
+          <div class="cog-kpi">
+            <div class="cog-kpi-fig"><span class="cu" data-count="2">0</span>&ndash;<span class="cu" data-count="3">0</span></div>
+            <div class="cog-kpi-lab">Posts per day, by tier</div>
+          </div>
+          <div class="cog-kpi">
+            <div class="cog-kpi-fig"><span class="cu" data-count="7">0</span>&ndash;<span class="cu" data-count="12">0</span></div>
+            <div class="cog-kpi-lab">Targeted LinkedIn connects per day</div>
+          </div>
+          <div class="cog-kpi is-draft">
+            <div class="cog-kpi-fig">250K<span class="u">+</span></div>
+            <div class="cog-kpi-lab">Reach per month <span class="cog-draft">Draft</span></div>
+          </div>
+          <div class="cog-kpi is-draft">
+            <div class="cog-kpi-fig">15<span class="u">+</span></div>
+            <div class="cog-kpi-lab">Qualified conversations / mo <span class="cog-draft">Draft</span></div>
+          </div>
+        </div>
+        <p class="cog-note-line reveal"><strong>We guarantee the system, the activity, and the reach.</strong> Closing stays with you until you've built the volume to delegate it, so every lead is handled by someone who knows the product cold.</p>
+      </div>
+    </section>
+
+    <!-- SETTER ADD-ON + SCOPE -->
+    <section class="band band--paper" aria-label="Appointment setter add-on">
+      <div class="wrap">
+        <div class="cog-sechead reveal">
+          <span class="cog-kicker">Optional add-on</span>
+          <h2 class="cog-h2">A B2B setter, when you're ready</h2>
+        </div>
+        <div class="cog-addon reveal">
+          <div>
+            <p style="color: var(--paper-soft); font-size: var(--t-body);">We source a B2B-experienced appointment setter (not a closer) from our network. B2B and B2C are different skillsets, so we vet for the right&nbsp;one.</p>
+            <ul class="cog-addon-list">
+              <li>Standalone contract between you and them, separate from our retainer</li>
+              <li>We help with SOPs, training, demo scripting and sales collateral</li>
+              <li>Keep closing in-house until ~200 closes, then delegate from a documented playbook</li>
+            </ul>
+          </div>
+          <div class="cog-addon-fig">
+            <div class="k">Rough estimate</div>
+            <div class="v"><span class="cur">$</span>2,000<span style="font-size:0.4em; color:var(--paper-mute); font-weight:600;">/mo</span></div>
+            <div class="sub">Standalone, paid to the setter directly <span class="cog-draft">Draft</span></div>
+          </div>
+        </div>
+        <div class="cog-scope">
+          <div class="cog-scope-cell"><div class="k">Not included</div><div class="v">Ad spend, closing, and third-party tools (billed to you&nbsp;directly)</div></div>
+          <div class="cog-scope-cell"><div class="k">Term</div><div class="v">Month to month. No long-term&nbsp;lock-in</div></div>
+          <div class="cog-scope-cell"><div class="k">Kickoff</div><div class="v">A comprehensive intake form nails your ICP and&nbsp;messaging</div></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="cog-footer">
+    <div class="wrap">
+      <p>Prepared by <span class="b">Arc Garde</span> &nbsp;//&nbsp; Cogentic &nbsp;//&nbsp; July 2026</p>
+      <p class="draftnote">Pricing and KPI figures marked "Draft" are placeholders pending final confirmation.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js" defer></script>
+  <script>
+    /* ═══ AG CURSOR STANDARD v2.1 (canonical drop-in, lifted verbatim) ═══ */
+    (function () {
+      if (!window.matchMedia ||
+          !(matchMedia('(pointer: fine)').matches && matchMedia('(hover: hover)').matches)) return;
+      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var INTERACTIVE = 'a[href],button,[role="button"],input:not([type="hidden"]),select,textarea,label[for],summary,[data-cursor],.ag-clickable';
+      var NS = 'http://www.w3.org/2000/svg';
+      var ARROW = 'M0,0 L0,15 L4,11.5 L6.5,17 L8.5,16 L6,10.5 L10.5,10.5 Z';
+      var HAND  = 'M8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v5.34l-1.2.24a1.5 1.5 0 0 0-1.196 1.636l.345 3.106a2.5 2.5 0 0 0 .405 1.11l1.433 2.15A1.5 1.5 0 0 0 6.035 16h6.385a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.271-2.715a2 2 0 0 0-1.99-2.199h-.581a5 5 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.6 2.6 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046z';
+      function shape(type) {
+        var arrow = (type === 'arrow');
+        var s = document.createElementNS(NS, 'svg');
+        s.setAttribute('class', 'ag-cursor__' + type);
+        s.setAttribute('viewBox', arrow ? '0 0 11 17.5' : '0 0 16 16');
+        s.setAttribute('width',  arrow ? 13 : 18);
+        s.setAttribute('height', arrow ? 20 : 18);
+        var p = document.createElementNS(NS, 'path');
+        p.setAttribute('d', arrow ? ARROW : HAND);
+        s.appendChild(p);
+        return s;
+      }
+      var bodyL = document.createElement('div');
+      bodyL.className = 'ag-cursor__body'; bodyL.setAttribute('aria-hidden', 'true');
+      bodyL.appendChild(shape('arrow'));
+      var edgeL = document.createElement('div');
+      edgeL.className = 'ag-cursor__edge'; edgeL.setAttribute('aria-hidden', 'true');
+      edgeL.appendChild(shape('arrow'));
+      edgeL.appendChild(shape('hand'));
+      document.body.appendChild(bodyL);
+      document.body.appendChild(edgeL);
+      var root = document.documentElement;
+      root.classList.add('ag-fine');
+      var css = getComputedStyle(root);
+      var INK    = (css.getPropertyValue('--ink')    || '#0a0a0a').trim();
+      var PAPER  = (css.getPropertyValue('--paper')  || '#fafafa').trim();
+      var ACCENT = (css.getPropertyValue('--accent') || '#c9a861').trim();
+      var tx = innerWidth / 2, ty = innerHeight / 2, shown = false, frame = 0;
+      function isDarkBg(el) {
+        while (el && el !== document.documentElement) {
+          var bg = getComputedStyle(el).backgroundColor;
+          var m = bg.match(/rgba?\(([^)]+)\)/);
+          if (m) {
+            var p = m[1].split(',').map(parseFloat);
+            var a = (p[3] === undefined) ? 1 : p[3];
+            if (a > 0.1) { return (0.2126 * p[0] + 0.7152 * p[1] + 0.0722 * p[2]) / 255 < 0.5; }
+          }
+          el = el.parentElement;
+        }
+        return false;
+      }
+      function track(e) {
+        tx = e.clientX; ty = e.clientY;
+        var t = 'translate(' + tx + 'px,' + ty + 'px)';
+        bodyL.style.transform = t; edgeL.style.transform = t;
+        if (!shown) { shown = true; bodyL.style.opacity = '1'; edgeL.style.opacity = '1'; }
+      }
+      addEventListener('mousemove', track, { passive: true });
+      addEventListener('pointermove', function (e) { if (e.pointerType !== 'touch') track(e); }, { passive: true });
+      document.documentElement.addEventListener('mouseleave', function () {
+        shown = false; bodyL.style.opacity = '0'; edgeL.style.opacity = '0';
+      });
+      document.documentElement.addEventListener('mouseenter', function () {
+        shown = true; bodyL.style.opacity = '1'; edgeL.style.opacity = '1';
+      });
+      document.addEventListener('mouseover', function (e) {
+        if (e.target.closest && e.target.closest(INTERACTIVE)) root.classList.add('ag-cur-hover');
+      });
+      document.addEventListener('mouseout', function (e) {
+        var to = e.relatedTarget;
+        if (e.target.closest && e.target.closest(INTERACTIVE) &&
+            !(to && to.closest && to.closest(INTERACTIVE))) {
+          root.classList.remove('ag-cur-hover');
+        }
+      });
+      function clickBurst(x, y) {
+        if (reduce) return;
+        var hand = root.classList.contains('ag-cur-hover');
+        var d    = hand ? HAND : ARROW;
+        var vb   = hand ? '0 0 16 16' : '0 0 11 17.5';
+        var w    = hand ? 18 : 13;
+        var h    = hand ? 18 : 20;
+        var lx   = hand ? (x - 8) : x;
+        var ly   = hand ? (y - 2) : y;
+        var orig = hand ? '8px 2px' : '0 0';
+        function spawn(strokeW, glow) {
+          var el = document.createElement('div');
+          el.setAttribute('aria-hidden', 'true');
+          el.style.cssText = 'position:fixed;left:' + lx + 'px;top:' + ly + 'px;pointer-events:none;z-index:2147483645;transform-origin:' + orig + ';';
+          el.innerHTML = '<svg width="' + w + '" height="' + h + '" viewBox="' + vb + '" style="display:block;overflow:visible;">' +
+            '<path d="' + d + '" fill="none" stroke="' + ACCENT + '" stroke-width="' + strokeW + '" stroke-linejoin="round"' +
+            (glow ? ' style="filter:drop-shadow(0 0 4px ' + ACCENT + ');"' : '') + '/></svg>';
+          document.body.appendChild(el);
+          return el;
+        }
+        var echo = spawn(1, false);
+        echo.animate([{ transform: 'scale(1)', opacity: .85 }, { transform: 'scale(2.3)', opacity: 0 }],
+          { duration: 294, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'forwards' });
+        var ignite = spawn(2.2, true);
+        ignite.animate([{ opacity: 0 }, { opacity: .95, offset: .3 }, { opacity: 0 }],
+          { duration: 210, easing: 'cubic-bezier(0.16,1,0.3,1)', fill: 'forwards' });
+        setTimeout(function () { echo.remove(); ignite.remove(); }, 360);
+      }
+      document.addEventListener('mousedown', function () { root.classList.add('ag-cur-press'); });
+      document.addEventListener('mouseup', function (e) {
+        root.classList.remove('ag-cur-press');
+        clickBurst(e.clientX, e.clientY);
+      });
+      function tick() {
+        if ((frame++ % 4) === 0) {
+          var el = document.elementFromPoint(tx, ty);
+          if (el) edgeL.style.setProperty('--cur-fill', isDarkBg(el) ? PAPER : INK);
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+
+    /* ═══ REVEAL OBSERVER (lifted) ═══ */
+    (function () {
+      var els = document.querySelectorAll('.reveal, .reveal-stagger');
+      document.querySelectorAll('.reveal-stagger').forEach(function (group) {
+        Array.prototype.forEach.call(group.children, function (child, i) { child.style.setProperty('--i', i); });
+      });
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('in-view'); }); return;
+      }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add('in-view'); obs.unobserve(entry.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      els.forEach(function (el) { obs.observe(el); });
+    })();
+
+    /* ═══ LENIS SMOOTH SCROLL (lifted) ═══ */
+    window.addEventListener('load', function () {
+      if (typeof Lenis === 'undefined') return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var lenis = new Lenis({ duration: 0.9, easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf); window.lenis = lenis;
+    });
+
+    /* ═══ COUNT-UP (lifted) ═══ */
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function fmt(v) { return Math.round(v).toLocaleString('en-US'); }
+      function countUp(el) {
+        var target = parseFloat(el.getAttribute('data-count'));
+        if (reduce || isNaN(target)) { el.textContent = fmt(target || 0); return; }
+        var dur = 1400, start = null;
+        function step(ts) {
+          if (!start) start = ts;
+          var p = Math.min((ts - start) / dur, 1);
+          var e = 1 - Math.pow(1 - p, 3);
+          el.textContent = fmt(target * e);
+          if (p < 1) requestAnimationFrame(step); else el.textContent = fmt(target);
+        }
+        requestAnimationFrame(step);
+      }
+      var counters = document.querySelectorAll('.cu[data-count]');
+      if (!('IntersectionObserver' in window)) {
+        counters.forEach(countUp);
+      } else {
+        var cObs = new IntersectionObserver(function (es) {
+          es.forEach(function (en) { if (en.isIntersecting) { countUp(en.target); cObs.unobserve(en.target); } });
+        }, { threshold: 0.6 });
+        counters.forEach(function (c) { cObs.observe(c); });
+      }
+    })();
+  </script>
+</body>
+</html>
