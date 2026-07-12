@@ -24,14 +24,6 @@
     "ok": true
   },
   {
-    "slug": "wedding-mentor",
-    "name": "The Wedding Mentor",
-    "tag": "Coaching",
-    "url": "https://the-wedding-mentor.vercel.app",
-    "img": "assets/wedding-mentor.jpg",
-    "ok": true
-  },
-  {
     "slug": "liminal-means",
     "name": "Liminal Means",
     "tag": "Therapy",
@@ -69,22 +61,6 @@
     "tag": "Medical",
     "url": "https://ag-spine-doctor.vercel.app",
     "img": "assets/spine-doctor.jpg",
-    "ok": true
-  },
-  {
-    "slug": "beauty-lounge",
-    "name": "Beauty Lounge",
-    "tag": "Beauty",
-    "url": "https://beauty-lounge-six.vercel.app",
-    "img": "assets/beauty-lounge.jpg",
-    "ok": true
-  },
-  {
-    "slug": "media-growth",
-    "name": "Media Growth",
-    "tag": "Media",
-    "url": "https://media-growth.vercel.app",
-    "img": "assets/media-growth.jpg",
     "ok": true
   },
   {
@@ -144,14 +120,6 @@
     "ok": true
   },
   {
-    "slug": "nexgen",
-    "name": "NexGen Truck Parts",
-    "tag": "Auto Parts",
-    "url": "https://nexgen-truck-parts.vercel.app",
-    "img": "assets/nexgen.jpg",
-    "ok": true
-  },
-  {
     "slug": "clinic-of-angels",
     "name": "Clinic of Angels",
     "tag": "Medical",
@@ -192,35 +160,11 @@
     "ok": true
   },
   {
-    "slug": "dnp-solar",
-    "name": "DNP Solar Care",
-    "tag": "Solar",
-    "url": "https://dnp-solar-care.vercel.app",
-    "img": "assets/dnp-solar.jpg",
-    "ok": true
-  },
-  {
     "slug": "gants-autos",
     "name": "Gant's Wholesale Autos",
     "tag": "Automotive",
     "url": "https://gantswholesaleautos.vercel.app",
     "img": "assets/gants-autos.jpg",
-    "ok": true
-  },
-  {
-    "slug": "genigen",
-    "name": "Genigen Skin",
-    "tag": "Skincare",
-    "url": "https://genigenskin.vercel.app",
-    "img": "assets/genigen.jpg",
-    "ok": true
-  },
-  {
-    "slug": "harbor-bakery",
-    "name": "Harbor Street Bakery",
-    "tag": "Bakery",
-    "url": "https://harbor-street-bakery.vercel.app",
-    "img": "assets/harbor-bakery.jpg",
     "ok": true
   }
 ]
