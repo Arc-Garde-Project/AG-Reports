@@ -114,6 +114,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
 
 /* INTRO */
 .reel--intro { background:radial-gradient(140% 100% at 50% 0%, #17140f 0%, var(--void) 55%); }
+.reel--intro .reel__bg { filter:blur(48px) brightness(.26) saturate(1.1); }
 .intro { position:relative; z-index:2; text-align:center; padding:24px; max-width:760px; }
 .intro__eyebrow { display:inline-flex; align-items:center; gap:12px; font-family:'Cinzel',serif; font-size:12px; font-weight:600; letter-spacing:.34em; text-transform:uppercase; color:var(--accent); margin-bottom:22px; }
 .intro__eyebrow::before,.intro__eyebrow::after { content:''; width:34px; height:1px; background:linear-gradient(90deg,transparent,var(--accent)); }
@@ -172,14 +173,15 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
   <span class="brandline">Selected Work</span>
 </div>
 <div class="rail"><div class="rail__fill" id="railFill"></div></div>
-<div class="counter" id="counter"><b>01</b> / 22</div>
+<div class="counter" id="counter"><b>01</b> / 21</div>
 
 <main class="feed" id="feed">
   <section class="reel reel--intro" data-i="0">
+    <div class="reel__bg" style="background-image:url('/showcase/assets/intro-montage.jpg')"></div>
     <div class="intro">
       <span class="intro__eyebrow">Arc Garde</span>
       <h1>The Work</h1>
-      <p class="intro__sub"><span class="intro__count">21</span> live websites, built and shipped. Swipe to explore each one.</p>
+      <p class="intro__sub"><span class="intro__count">20</span> live websites, built and shipped. Swipe to explore each one.</p>
       <div class="intro__rule"></div>
       <div class="intro__cue">Swipe
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
@@ -232,52 +234,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="2" aria-label="Arc Garde">
-      <div class="reel__bg" style="background-image:url('/showcase/assets/arcgarde-hero.jpg')"></div>
-      <div class="reel__inner">
-        <header class="reel__head">
-          <span class="reel__tag">Agency</span>
-          <h2 class="reel__name">Arc Garde</h2>
-        </header>
-        <div class="reel__cols">
-          <div class="reel__phone">
-            <div class="reel__screen"><img class="reel__img" src="/showcase/assets/arcgarde.jpg" alt="Arc Garde website" loading="lazy" decoding="async"></div>
-            <div class="phone__top">
-              <div class="phone__status">
-                <span class="phone__time">7:42</span>
-                <span class="phone__ind">
-                  <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
-                  <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">91</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="16" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
-                </span>
-              </div>
-              <div class="phone__urlbar"><span class="phone__urlpill">
-                <svg class="ic-lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 10V7a3 3 0 016 0v3h1a1 1 0 011 1v7a1 1 0 01-1 1H7a1 1 0 01-1-1v-7a1 1 0 011-1h1zm2 0h2V7a1 1 0 00-2 0z"/></svg>
-                <span class="phone__host">arcgarde.com</span>
-              </span></div>
-            </div>
-            <div class="phone__island" aria-hidden="true"></div>
-            <div class="phone__bar" aria-hidden="true">
-              <svg class="tb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-              <svg class="tb tb-dim" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-              <svg class="tb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4m0 0L8.6 7.4M12 4l3.4 3.4"/><path d="M7 11H6a1 1 0 00-1 1v7a1 1 0 001 1h12a1 1 0 001-1v-7a1 1 0 00-1-1h-1"/></svg>
-              <svg class="tb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10a1 1 0 011 1v15l-6-3.2L6 20V5a1 1 0 011-1z"/></svg>
-              <svg class="tb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="12" height="12" rx="2"/><path d="M8 7V5a1 1 0 011-1h10a1 1 0 011 1v10a1 1 0 01-1 1h-2"/></svg>
-            </div>
-            <div class="phone__home" aria-hidden="true"></div>
-          </div>
-          <div class="reel__info">
-            <p class="reel__desc">Arc Garde&#x27;s own agency site.</p>
-            <ul class="reel__features"><li>AI watch hero that dismantles</li><li>GSAP + Lenis motion</li><li>Premium clock loader</li><li>Disciplines showcase</li></ul>
-            <a class="reel__cta" href="https://arcgarde.com" target="_blank" rel="noopener">View Live Site
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H8M17 7v9"/></svg>
-            </a>
-            <span class="reel__url">arcgarde.com</span>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="reel reel--site" data-i="3" aria-label="Spitz PR">
+    <section class="reel reel--site" data-i="2" aria-label="Spitz PR">
       <div class="reel__bg" style="background-image:url('/showcase/assets/spitz-pr-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -289,11 +246,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/spitz-pr.jpg" alt="Spitz PR website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">6:35</span>
+                <span class="phone__time">7:42</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">77</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="14" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">91</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="16" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -322,7 +279,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="4" aria-label="Liminal Means">
+    <section class="reel reel--site" data-i="3" aria-label="Liminal Means">
       <div class="reel__bg" style="background-image:url('/showcase/assets/liminal-means-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -334,11 +291,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/liminal-means.jpg" alt="Liminal Means website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">3:14</span>
+                <span class="phone__time">6:35</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">63</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="11" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">77</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="14" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -367,7 +324,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="5" aria-label="Elmira Architect">
+    <section class="reel reel--site" data-i="4" aria-label="Elmira Architect">
       <div class="reel__bg" style="background-image:url('/showcase/assets/elmira-architect-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -379,11 +336,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/elmira-architect.jpg" alt="Elmira Architect website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">12:49</span>
+                <span class="phone__time">3:14</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">96</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="17" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">63</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="11" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -412,7 +369,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="6" aria-label="Keating Advisory">
+    <section class="reel reel--site" data-i="5" aria-label="Keating Advisory">
       <div class="reel__bg" style="background-image:url('/showcase/assets/keating-advisory-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -424,11 +381,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/keating-advisory.jpg" alt="Keating Advisory website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">9:07</span>
+                <span class="phone__time">12:49</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">72</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="13" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">96</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="17" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -457,7 +414,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="7" aria-label="ClearSight Growth">
+    <section class="reel reel--site" data-i="6" aria-label="ClearSight Growth">
       <div class="reel__bg" style="background-image:url('/showcase/assets/clearsight-growth-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -469,11 +426,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/clearsight-growth.jpg" alt="ClearSight Growth website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">7:28</span>
+                <span class="phone__time">9:07</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">87</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="16" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">72</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="13" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -502,7 +459,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="8" aria-label="Advanced Spine Care">
+    <section class="reel reel--site" data-i="7" aria-label="Advanced Spine Care">
       <div class="reel__bg" style="background-image:url('/showcase/assets/spine-doctor-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -514,11 +471,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/spine-doctor.jpg" alt="Advanced Spine Care website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">6:21</span>
+                <span class="phone__time">7:28</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">93</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="17" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">87</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="16" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -547,7 +504,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="9" aria-label="Yoga Circle">
+    <section class="reel reel--site" data-i="8" aria-label="Yoga Circle">
       <div class="reel__bg" style="background-image:url('/showcase/assets/yoga-circle-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -559,11 +516,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/yoga-circle.jpg" alt="Yoga Circle website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">3:36</span>
+                <span class="phone__time">6:21</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">78</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="14" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">93</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="17" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -592,7 +549,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="10" aria-label="Swedlund Construction">
+    <section class="reel reel--site" data-i="9" aria-label="Swedlund Construction">
       <div class="reel__bg" style="background-image:url('/showcase/assets/swedlund-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -604,11 +561,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/swedlund.jpg" alt="Swedlund Construction website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">9:56</span>
+                <span class="phone__time">3:36</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">69</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="12" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">78</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="14" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -637,7 +594,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="11" aria-label="Lead Hunter Media">
+    <section class="reel reel--site" data-i="10" aria-label="Lead Hunter Media">
       <div class="reel__bg" style="background-image:url('/showcase/assets/lead-hunter-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -649,11 +606,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/lead-hunter.jpg" alt="Lead Hunter Media website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">7:14</span>
+                <span class="phone__time">9:56</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">81</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="15" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">69</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="12" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -682,7 +639,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="12" aria-label="The Tooth Place">
+    <section class="reel reel--site" data-i="11" aria-label="The Tooth Place">
       <div class="reel__bg" style="background-image:url('/showcase/assets/tooth-place-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -694,11 +651,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/tooth-place.jpg" alt="The Tooth Place website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">12:03</span>
+                <span class="phone__time">7:14</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">90</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="16" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">81</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="15" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -727,7 +684,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="13" aria-label="Arbor Wealth">
+    <section class="reel reel--site" data-i="12" aria-label="Arbor Wealth">
       <div class="reel__bg" style="background-image:url('/showcase/assets/arbor-wealth-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -739,11 +696,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/arbor-wealth.jpg" alt="Arbor Wealth website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">6:42</span>
+                <span class="phone__time">12:03</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">66</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="12" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">90</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="16" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -772,7 +729,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="14" aria-label="Trusted Network">
+    <section class="reel reel--site" data-i="13" aria-label="Trusted Network">
       <div class="reel__bg" style="background-image:url('/showcase/assets/trusted-network-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -784,11 +741,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/trusted-network.jpg" alt="Trusted Network website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">9:35</span>
+                <span class="phone__time">6:42</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">99</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="18" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">66</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="12" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -817,7 +774,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="15" aria-label="Ellery Wolcott">
+    <section class="reel reel--site" data-i="14" aria-label="Ellery Wolcott">
       <div class="reel__bg" style="background-image:url('/showcase/assets/ellery-wolcott-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -829,11 +786,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/ellery-wolcott.jpg" alt="Ellery Wolcott website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">3:21</span>
+                <span class="phone__time">9:35</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">75</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="14" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">99</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="18" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -862,7 +819,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="16" aria-label="Clinic of Angels">
+    <section class="reel reel--site" data-i="15" aria-label="Clinic of Angels">
       <div class="reel__bg" style="background-image:url('/showcase/assets/clinic-of-angels-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -874,11 +831,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/clinic-of-angels.jpg" alt="Clinic of Angels website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">7:49</span>
+                <span class="phone__time">3:21</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">42</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="8" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">75</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="14" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -907,7 +864,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="17" aria-label="Voiced by Curls">
+    <section class="reel reel--site" data-i="16" aria-label="Voiced by Curls">
       <div class="reel__bg" style="background-image:url('/showcase/assets/voiced-by-curls-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -919,11 +876,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/voiced-by-curls.jpg" alt="Voiced by Curls website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">6:09</span>
+                <span class="phone__time">7:49</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">56</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="10" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">42</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="8" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -952,7 +909,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="18" aria-label="Suzuki Systems">
+    <section class="reel reel--site" data-i="17" aria-label="Suzuki Systems">
       <div class="reel__bg" style="background-image:url('/showcase/assets/suzuki-systems-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -964,11 +921,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/suzuki-systems.jpg" alt="Suzuki Systems website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">9:42</span>
+                <span class="phone__time">6:09</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">60</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="11" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">56</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="10" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -997,7 +954,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="19" aria-label="The Owners&#x27; Table">
+    <section class="reel reel--site" data-i="18" aria-label="The Owners&#x27; Table">
       <div class="reel__bg" style="background-image:url('/showcase/assets/owners-table-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -1009,11 +966,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/owners-table.jpg" alt="The Owners&#x27; Table website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">12:28</span>
+                <span class="phone__time">9:42</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">54</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="10" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">60</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="11" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -1042,7 +999,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="20" aria-label="Golden Touch Grooming">
+    <section class="reel reel--site" data-i="19" aria-label="Golden Touch Grooming">
       <div class="reel__bg" style="background-image:url('/showcase/assets/golden-touch-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -1054,11 +1011,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/golden-touch.jpg" alt="Golden Touch Grooming website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">7:35</span>
+                <span class="phone__time">12:28</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">45</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="8" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">54</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="10" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">
@@ -1087,7 +1044,7 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
         </div>
       </div>
     </section>
-    <section class="reel reel--site" data-i="21" aria-label="Gant&#x27;s Wholesale Autos">
+    <section class="reel reel--site" data-i="20" aria-label="Gant&#x27;s Wholesale Autos">
       <div class="reel__bg" style="background-image:url('/showcase/assets/gants-autos-hero.jpg')"></div>
       <div class="reel__inner">
         <header class="reel__head">
@@ -1099,11 +1056,11 @@ body { background:var(--void); color:var(--text); font-family:'Cormorant Garamon
             <div class="reel__screen"><img class="reel__img" src="/showcase/assets/gants-autos.jpg" alt="Gant&#x27;s Wholesale Autos website" loading="lazy" decoding="async"></div>
             <div class="phone__top">
               <div class="phone__status">
-                <span class="phone__time">3:07</span>
+                <span class="phone__time">7:35</span>
                 <span class="phone__ind">
                   <svg class="ic ic-cell" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
                   <svg class="ic ic-wifi" viewBox="0 0 20 15" aria-hidden="true"><path d="M10 2.6c3.1 0 5.9 1.2 8 3.2l-1.7 1.8C14.6 5.9 12.4 5 10 5S5.4 5.9 3.7 7.6L2 5.8C4.1 3.8 6.9 2.6 10 2.6zm0 4.2c2 0 3.8.8 5.1 2.1l-1.8 1.8C12.5 9.9 11.3 9.4 10 9.4s-2.5.5-3.3 1.3L4.9 8.9C6.2 7.6 8 6.8 10 6.8zm0 4.2c.9 0 1.7.4 2.3 1L10 14l-2.3-2c.6-.6 1.4-1 2.3-1z"/></svg>
-                  <span class="phone__batt"><span class="phone__pct">48</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="9" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
+                  <span class="phone__batt"><span class="phone__pct">45</span><svg class="ic ic-batt" viewBox="0 0 28 13" aria-hidden="true"><rect class="b-shell" x="1" y="1" width="23" height="11" rx="3"/><rect class="b-fill" x="3" y="3" width="8" height="7" rx="1.5"/><path class="b-nub" d="M25.5 4.4c1 .35 1 3.85 0 4.2z"/></svg></span>
                 </span>
               </div>
               <div class="phone__urlbar"><span class="phone__urlpill">

@@ -8,14 +8,6 @@
     "ok": true
   },
   {
-    "slug": "arcgarde",
-    "name": "Arc Garde",
-    "tag": "Agency",
-    "url": "https://arcgarde.com",
-    "img": "assets/arcgarde.jpg",
-    "ok": true
-  },
-  {
     "slug": "spitz-pr",
     "name": "Spitz PR",
     "tag": "Public Relations",
