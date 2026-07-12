@@ -128,6 +128,14 @@
     "ok": true
   },
   {
+    "slug": "trusted-network",
+    "name": "Trusted Network",
+    "tag": "Arbor Wealth Project",
+    "url": "https://trusted-network.vercel.app",
+    "img": "assets/trusted-network.jpg",
+    "ok": true
+  },
+  {
     "slug": "ellery-wolcott",
     "name": "Ellery Wolcott",
     "tag": "Real Estate",
