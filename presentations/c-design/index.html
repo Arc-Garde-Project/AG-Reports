@@ -9,7 +9,7 @@
   No loading curtain (presentations load straight to the hero). July 2026
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="is-loading">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -52,7 +52,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Zilla+Slab:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     /* ═══════════════════════════════════════════════════════
@@ -152,6 +152,54 @@
       padding: 0.7em 1.2em; font-weight: 600; text-decoration: none;
     }
     .cd-skip:focus { left: 0; }
+
+    /* ===== AG CURTAIN (OCS report loader, lifted) ===== */
+    html.is-loading { overflow: hidden; }
+    .ag-curtain {
+      position: fixed; inset: 0; z-index: 2147483645;
+      background: var(--leather-deep, #070605);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 1; pointer-events: auto;
+      transition: opacity 700ms cubic-bezier(0.16,1,0.3,1);
+    }
+    html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
+    .ag-curtain::after { content:''; position:absolute; inset:0; pointer-events:none; z-index:5; opacity:0.05; mix-blend-mode:overlay; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    .ld-layer { position:absolute; inset:0; display:grid; place-items:center; opacity:0; transition:opacity 600ms cubic-bezier(0.16,1,0.3,1); pointer-events:none; }
+    .ag-curtain[data-phase="load"]  .ld-boot  { opacity:1; }
+    .ag-curtain[data-phase="brand"] .ld-brand { opacity:1; }
+    .ld-gold { background:linear-gradient(100deg,#b9965a 0%,#e3c489 26%,#fffdf6 48%,#e3c489 70%,#b9965a 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .ld-boot__in { display:flex; flex-direction:column; align-items:center; gap:clamp(20px,3.4vh,30px); transition:opacity 600ms cubic-bezier(0.16,1,0.3,1), transform 600ms cubic-bezier(0.16,1,0.3,1), filter 600ms ease; }
+    .ag-curtain:not([data-phase="load"]) .ld-boot__in { opacity:0; transform:translateX(-26px) scale(0.96); filter:blur(4px); }
+    .ld-mono { font-family:'Cinzel',serif; font-weight:600; font-size:clamp(2.6rem,8vw,4rem); letter-spacing:0.16em; padding-left:0.16em; line-height:1; animation:ld-mono-pulse 2.1s ease-in-out infinite; }
+    @keyframes ld-mono-pulse { 0%,100%{ filter:drop-shadow(0 0 20px rgba(201,168,97,0.22)); } 50%{ filter:drop-shadow(0 0 34px rgba(201,168,97,0.44)); } }
+    .ld-bar { width:clamp(150px,30vw,230px); height:2px; background:rgba(201,168,97,0.16); border-radius:2px; overflow:hidden; }
+    .ld-bar i { display:block; height:100%; width:6%; border-radius:2px; background:linear-gradient(90deg,#b9965a,#fffdf6,#b9965a); animation:ld-fill 1.4s cubic-bezier(0.45,0.02,0.18,1) 0.15s forwards; }
+    @keyframes ld-fill { to { width:100%; } }
+    .ld-dots { display:flex; gap:9px; }
+    .ld-dots b { width:6px; height:6px; border-radius:50%; background:#c9a861; opacity:0.3; animation:ld-dot 1.2s ease-in-out infinite; }
+    .ld-dots b:nth-child(2){ animation-delay:0.16s; }
+    .ld-dots b:nth-child(3){ animation-delay:0.32s; }
+    @keyframes ld-dot { 0%,100%{ opacity:0.25; transform:translateY(0); } 50%{ opacity:1; transform:translateY(-4px); } }
+    .ld-brand__in { display:flex; flex-direction:column; align-items:center; gap:clamp(11px,1.9vh,17px); }
+    .ld-wm { position:relative; font-family:'Cinzel',serif; font-weight:600; font-size:clamp(2.1rem,9vw,4.6rem); letter-spacing:0.14em; margin-right:-0.14em; line-height:1; white-space:nowrap; }
+    .ag-curtain[data-phase="brand"] .ld-wm { animation:ld-swoosh 900ms cubic-bezier(0.16,1,0.3,1) 0s both, ld-glare 1000ms linear 0.1s both; }
+    @keyframes ld-swoosh { 0%{ opacity:0; transform:translateY(10px); filter:blur(8px); } 60%{ opacity:1; } 100%{ opacity:1; transform:translateY(0); filter:blur(0); } }
+    .ld-wm.ld-gold { background-image:linear-gradient(100deg,transparent 28%,rgba(255,255,255,0.7) 40%,#ffffff 47%,#ffffff 53%,rgba(255,255,255,0.7) 60%,transparent 72%),linear-gradient(100deg,#b9965a 0%,#d8b06e 28%,#f2d9a0 50%,#d8b06e 72%,#b9965a 100%); background-repeat:no-repeat,no-repeat; background-size:220% 100%,100% 100%; background-position:-120% 0,0 0; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; }
+    @keyframes ld-glare { 0%{ background-position:-120% 0,0 0; } 100%{ background-position:220% 0,0 0; } }
+    .ld-rule { width:0; height:1px; background:linear-gradient(90deg, transparent, #c9a861, transparent); }
+    .ag-curtain[data-phase="brand"] .ld-rule { animation:ld-rule-draw 700ms cubic-bezier(0.16,1,0.3,1) 260ms both; }
+    @keyframes ld-rule-draw { from{ width:0; } to{ width:clamp(120px,26vw,200px); } }
+    .ld-sub { font-family:'Inter',sans-serif; font-weight:500; font-size:clamp(0.7rem,1.7vw,0.84rem); letter-spacing:0.44em; text-transform:uppercase; color:#c9a861; padding-left:0.44em; opacity:0; }
+    .ag-curtain[data-phase="brand"] .ld-sub { animation:ld-sub-in 700ms cubic-bezier(0.16,1,0.3,1) 380ms both; }
+    @keyframes ld-sub-in { from{ opacity:0; transform:translateY(6px); } to{ opacity:0.92; transform:translateY(0); } }
+    @media (prefers-reduced-motion:reduce){
+      .ag-curtain{ transition:none; }
+      .ld-layer{ transition:none; }
+      .ld-bar i{ width:100%!important; animation:none!important; }
+      .ld-wm,.ld-mono{ animation:none!important; }
+      .ld-rule{ width:clamp(120px,26vw,200px)!important; animation:none!important; }
+      .ld-sub{ opacity:0.92!important; animation:none!important; }
+    }
 
     .wrap { width: var(--wrap); margin-inline: auto; }
     .wrap-tight { width: var(--wrap-tight); margin-inline: auto; }
@@ -602,9 +650,48 @@
       .cd-ledger-body { grid-column: auto; }
     }
   </style>
+  <noscript><style>.ag-curtain{display:none!important} html.is-loading{overflow:auto!important}</style></noscript>
 </head>
 <body>
   <a href="#main" class="cd-skip">Skip to content</a>
+
+  <!-- AG CURTAIN (OCS report loader, lifted) — first child of body -->
+  <div class="ag-curtain" data-phase="load" aria-hidden="true">
+    <div class="ld-layer ld-boot">
+      <div class="ld-boot__in">
+        <div class="ld-mono ld-gold">AG</div>
+        <div class="ld-bar"><i></i></div>
+        <div class="ld-dots"><b></b><b></b><b></b></div>
+      </div>
+    </div>
+    <div class="ld-layer ld-brand">
+      <div class="ld-brand__in">
+        <div class="ld-wm ld-gold">ARC&nbsp;GARDE</div>
+        <div class="ld-rule"></div>
+        <div class="ld-sub">Presents</div>
+      </div>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var C = document.querySelector('.ag-curtain'), root = document.documentElement;
+    if (!C) { root.classList.remove('is-loading'); return; }
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var MIN = 2520, BRAND_AT = 1400, CLEANUP = 900, MAX = 6000, start = performance.now(), done = false;
+    function lift(){
+      if (done) return; done = true;
+      root.classList.remove('is-loading'); root.classList.add('is-ready');
+      window.dispatchEvent(new CustomEvent('ag:ready'));
+      setTimeout(function(){ if (C.parentNode) C.parentNode.removeChild(C); }, CLEANUP);
+    }
+    if (reduce) { lift(); return; }
+    setTimeout(function(){ C.setAttribute('data-phase','brand'); }, BRAND_AT);
+    function schedule(){ setTimeout(lift, Math.max(0, MIN - (performance.now() - start))); }
+    if (document.readyState === 'complete') schedule();
+    else window.addEventListener('load', schedule, { once:true });
+    setTimeout(lift, MAX); // fail-open
+  })();
+  </script>
 
   <main id="main">
 
@@ -1076,25 +1163,30 @@
         }
         requestAnimationFrame(step);
       }
-      var counters = document.querySelectorAll('.cu[data-count]');
-      if (!('IntersectionObserver' in window)) {
-        counters.forEach(countUp);
-      } else {
-        var cObs = new IntersectionObserver(function (es) {
-          es.forEach(function (en) { if (en.isIntersecting) { countUp(en.target); cObs.unobserve(en.target); } });
-        }, { threshold: 0.6 });
-        counters.forEach(function (c) { cObs.observe(c); });
-      }
-      var fig = document.querySelector('.cd-chart-fig');
-      if (fig) {
-        if (reduce || !('IntersectionObserver' in window)) { fig.classList.add('lit'); }
-        else {
-          var fObs = new IntersectionObserver(function (es) {
-            es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('lit'); fObs.unobserve(en.target); } });
-          }, { threshold: 0.35 });
-          fObs.observe(fig);
+      function start() {
+        var counters = document.querySelectorAll('.cu[data-count]');
+        if (!('IntersectionObserver' in window)) {
+          counters.forEach(countUp);
+        } else {
+          var cObs = new IntersectionObserver(function (es) {
+            es.forEach(function (en) { if (en.isIntersecting) { countUp(en.target); cObs.unobserve(en.target); } });
+          }, { threshold: 0.6 });
+          counters.forEach(function (c) { cObs.observe(c); });
+        }
+        var fig = document.querySelector('.cd-chart-fig');
+        if (fig) {
+          if (reduce || !('IntersectionObserver' in window)) { fig.classList.add('lit'); }
+          else {
+            var fObs = new IntersectionObserver(function (es) {
+              es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('lit'); fObs.unobserve(en.target); } });
+            }, { threshold: 0.35 });
+            fObs.observe(fig);
+          }
         }
       }
+      // hold count-ups until the loading curtain lifts, so the numbers are seen (not hidden)
+      if (document.documentElement.classList.contains('is-loading')) window.addEventListener('ag:ready', start, { once: true });
+      else start();
     })();
 
     /* ═══ HOW-IT-WORKS DRAGGABLE FLOW SCRUBBER (net-new) ═══ */
