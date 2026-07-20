@@ -1,0 +1,1172 @@
+<!--
+  C DESIGN - SCOPE OF WORK
+  Arc Garde. Prepared for C Design (Cristina) - apparel line.
+  Shopify Store Build + Meta Ad Testing.
+  Unique "Modern Vaquero" identity (net-new): premium modern-Western + Latino heritage,
+  grounded in the discovery call (Cristina's Vaquero reference, apparel + heritage).
+  AG Standards LIFTED from the Dominion library: AG Cursor v2.1 (canonical drop-in, rust thread),
+  Lenis, reveal/reveal-stagger IO, count-up engine, defensive baseline, fluid tokens, banner law.
+  No loading curtain (presentations load straight to the hero). July 2026
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no">
+  <base href="/presentations/c-design/">
+  <title>C Design | Shopify Store + Meta Ad Testing - Arc Garde</title>
+
+  <meta name="description" content="Scope of work for C Design. A branded Shopify store you own, plus 60 to 90 static and UGC test ads on Meta, built and run by Arc Garde.">
+  <meta name="author" content="Arc Garde">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://ag-reports.vercel.app/presentations/c-design">
+
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+  <meta property="og:title" content="C Design | Shopify Store + Meta Ad Testing - Arc Garde">
+  <meta property="og:description" content="A store you own. Ads that find your winners.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ag-reports.vercel.app/presentations/c-design">
+  <meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Arc Garde">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="C Design | Shopify Store + Meta Ad Testing - Arc Garde">
+  <meta name="twitter:description" content="A store you own. Ads that find your winners.">
+  <meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+  <meta name="theme-color" content="#070605">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Shopify Store Build and Meta Ad Testing",
+    "provider": { "@type": "Organization", "name": "Arc Garde", "url": "https://arcgarde.com" },
+    "serviceType": "Ecommerce store build and paid advertising",
+    "areaServed": "United States"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════
+       TOKENS - C Design "Modern Vaquero" (bone + leather + rust)
+       ═══════════════════════════════════════════════════════ */
+    :root {
+      /* brand */
+      --rust: #B5462B;               /* primary accent (terracotta / rust) */
+      --rust-lift: #D2683F;          /* accent on dark leather */
+      --saddle: #8A5A2B;             /* leather brown (secondary) */
+      --tan: #C9A15C;                /* warm buckle tan (tertiary) */
+
+      /* paper (light-first) */
+      --paper: #F3EAD8;              /* bone / cream page (hero) */
+      --band-light: #EBDDC4;         /* kraft band behind cards (deeper than card fill) */
+      --paper-2: #FCF7EE;            /* lifted card fill - clearly brighter than any band */
+      --paper-3: #E2D2B6;            /* recessed / deep */
+      --card-hover: #FFFBF3;         /* near-white card hover */
+
+      /* leather (dark bands) */
+      --leather: #2A1D12;            /* espresso dark band */
+      --leather-deep: #1F1509;       /* deepest (footer) */
+
+      /* ink/paper - v2.1 cursor luminance convention: --ink dark, --paper light */
+      --ink: #2A1D12;               /* main text on cream (also cursor dark-fill) */
+      --ink-soft: rgba(42, 29, 18, 0.74);
+      --ink-mute: rgba(42, 29, 18, 0.50);
+
+      /* on dark leather */
+      --on-dark: #F3EAD8;
+      --on-dark-soft: rgba(243, 234, 216, 0.76);
+      --on-dark-mute: rgba(243, 234, 216, 0.50);
+
+      /* rules */
+      --rule: rgba(42, 29, 18, 0.16);
+      --rule-2: rgba(42, 29, 18, 0.28);
+      --rule-stitch: rgba(138, 90, 43, 0.55);   /* saddle stitch */
+      --rule-on-dark: rgba(243, 234, 216, 0.18);
+
+      /* surfaces (on cream) */
+      --surface: rgba(138, 90, 43, 0.06);
+      --surface-2: rgba(138, 90, 43, 0.11);
+      /* surfaces (on leather) - solid lifted browns so cards read as objects, not cutouts */
+      --surface-dark: #38271A;
+      --surface-dark-2: #45311F;
+      --rule-card-dark: rgba(201, 161, 92, 0.24);
+
+      /* cursor uses --accent */
+      --accent: #B5462B;
+
+      /* motion */
+      --duration-quick: 300ms;
+      --duration-medium: 600ms;
+      --duration-long: 900ms;
+      --ease-satisfying: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-snap: cubic-bezier(0.34, 1.2, 0.64, 1);
+
+      /* type */
+      --font-display: 'Zilla Slab', Georgia, 'Times New Roman', serif;
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+      --t-hero: clamp(2.9rem, 1.5rem + 6vw, 6rem);
+      --t-h2: clamp(2rem, 1.3rem + 3vw, 3.5rem);
+      --t-article: clamp(1.5rem, 1.15rem + 1.5vw, 2.2rem);
+      --t-lead: clamp(1.1rem, 1rem + 0.5vw, 1.38rem);
+      --t-body: clamp(1rem, 0.95rem + 0.22vw, 1.1rem);
+      --t-small: clamp(0.84rem, 0.8rem + 0.14vw, 0.92rem);
+      --t-label: clamp(0.68rem, 0.64rem + 0.14vw, 0.78rem);
+      --t-numeral: clamp(3rem, 2rem + 5vw, 6rem);
+
+      --wrap: min(100% - clamp(2.2rem, 1rem + 5vw, 6rem), 1180px);
+      --wrap-tight: min(100% - clamp(2.2rem, 1rem + 5vw, 6rem), 940px);
+      --space-band: clamp(4.5rem, 3rem + 7vw, 8.5rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: clip; -webkit-text-size-adjust: 100%; background-color: var(--paper); scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      font-size: var(--t-body);
+      line-height: 1.68;
+      color: var(--ink);
+      background: var(--paper);
+      overflow-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+    h1, h2, h3 { text-wrap: balance; line-height: 1.05; }
+    p { text-wrap: pretty; }
+
+    .cd-skip {
+      position: absolute; left: -9999px; top: 0; z-index: 100;
+      background: var(--rust); color: var(--paper);
+      padding: 0.7em 1.2em; font-weight: 600; text-decoration: none;
+    }
+    .cd-skip:focus { left: 0; }
+
+    .wrap { width: var(--wrap); margin-inline: auto; }
+    .wrap-tight { width: var(--wrap-tight); margin-inline: auto; }
+
+    /* ── AG Cursor Standard v2.1 (CANONICAL DROP-IN, ag-cursor.css) ── */
+    .ag-fine, .ag-fine *, .ag-fine *::before, .ag-fine *::after { cursor: none !important; }
+    .ag-cursor__body,
+    .ag-cursor__edge {
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity var(--duration-instant, 120ms) var(--ease-satisfying, cubic-bezier(0.22,1,0.36,1));
+      will-change: transform;
+    }
+    .ag-cursor__body { z-index: 2147483646; mix-blend-mode: difference; }
+    .ag-cursor__edge { z-index: 2147483647; }
+    .ag-cursor__body svg,
+    .ag-cursor__edge svg { position: absolute; top: 0; left: 0; display: block; max-width: none; }
+    .ag-cursor__body .ag-cursor__arrow, .ag-cursor__edge .ag-cursor__arrow { width: 13px; height: 20px; }
+    .ag-cursor__edge .ag-cursor__hand { width: 18px; height: 18px; }
+    .ag-cursor__body path { fill: #fff; }
+    .ag-cursor__edge path { fill: none; stroke: var(--accent, #c9a861); stroke-linejoin: round; stroke-linecap: round; }
+    .ag-cursor__edge .ag-cursor__arrow path { stroke-width: 0.8; }
+    .ag-cursor__edge .ag-cursor__hand  path { fill: var(--cur-fill, var(--ink, #0a0a0a)); stroke-width: 0.75; }
+    .ag-cursor__arrow {
+      transform-origin: 0 0;
+      transition: opacity 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1)),
+                  transform 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1));
+    }
+    .ag-cursor__hand {
+      position: absolute; left: -8px; top: -2px;
+      opacity: 0; transform: scale(.7); transform-origin: 8px 2px;
+      transition: opacity 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1)),
+                  transform 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1));
+    }
+    .ag-cur-hover .ag-cursor__arrow { opacity: 0; transform: scale(.6); }
+    .ag-cur-hover .ag-cursor__hand  { opacity: 1; transform: scale(1); }
+    .ag-cur-hover.ag-cur-press .ag-cursor__hand { transform: scale(.88); }
+    .ag-cur-press:not(.ag-cur-hover) .ag-cursor__arrow { transform: scale(.88); }
+    @media (hover: none), (pointer: coarse) { .ag-cursor__body, .ag-cursor__edge { display: none !important; } }
+    @media (prefers-reduced-motion: reduce) { .ag-cursor__arrow, .ag-cursor__hand, .ag-cursor__body, .ag-cursor__edge { transition: none; } }
+
+    /* ── REVEAL (contract for lifted IO observer) ── */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s var(--ease-satisfying), transform 0.7s var(--ease-satisfying); }
+    .reveal.in-view { opacity: 1; transform: none; }
+    .reveal-stagger > * { opacity: 0; transform: translateY(26px); transition: opacity 0.6s var(--ease-satisfying), transform 0.6s var(--ease-satisfying); transition-delay: calc(var(--i, 0) * 90ms); }
+    .reveal-stagger.in-view > * { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       BANDS + shared type
+       ═══════════════════════════════════════════════════════ */
+    .band { position: relative; padding-block: var(--space-band); overflow: clip; }
+    .band-2 { background: var(--band-light); border-block: 1px solid var(--rule); }
+    .band-dark { background: var(--leather); color: var(--on-dark); }
+    .band > .wrap, .band > .wrap-tight { position: relative; z-index: 1; }
+
+    .cd-label {
+      font-family: var(--font-body); font-weight: 700;
+      font-size: var(--t-label); letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--rust); display: inline-flex; align-items: center; gap: 0.7em;
+    }
+    .cd-label::before { content: "\2726"; color: var(--saddle); font-size: 0.9em; }
+    .band-dark .cd-label { color: var(--rust-lift); }
+    .band-dark .cd-label::before { color: var(--tan); }
+
+    .cd-h2 {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: var(--t-h2); letter-spacing: -0.005em; color: var(--ink);
+      max-width: 22ch;
+    }
+    .band-dark .cd-h2 { color: var(--on-dark); }
+    .cd-sechead { display: grid; gap: 1.1rem; margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem); justify-items: center; text-align: center; }
+    .cd-sechead .cd-lead { font-size: var(--t-lead); color: var(--ink-soft); max-width: 56ch; margin-inline: auto; }
+    .band-dark .cd-sechead .cd-lead { color: var(--on-dark-soft); }
+
+    /* ═══════════════════════════════════════════════════════
+       HERO MASTHEAD
+       ═══════════════════════════════════════════════════════ */
+    .cd-hero {
+      background:
+        radial-gradient(120% 90% at 50% -10%, rgba(181,70,43,0.10), transparent 55%),
+        var(--paper);
+      padding-block: clamp(3rem, 2rem + 4vw, 5.5rem) clamp(4rem, 2.5rem + 5vw, 7rem);
+      position: relative; overflow: clip;
+    }
+    .cd-hero::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+      background-image: linear-gradient(90deg, var(--rule-stitch) 60%, transparent 60%);
+      background-size: 12px 2px;
+    }
+    .cd-masthead { position: relative; z-index: 1; text-align: center; }
+    .cd-dateline {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5em 1.1em;
+      font-family: var(--font-body); font-weight: 600; font-size: var(--t-label);
+      letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-mute);
+      padding-bottom: 1rem;
+    }
+    .cd-dateline .star { color: var(--rust); font-size: 0.9em; }
+    .cd-masthead-rule {
+      height: 2px; margin: 0 auto clamp(2rem, 1.2rem + 3vw, 3.2rem); max-width: 620px;
+      background-image: linear-gradient(90deg, var(--rule-stitch) 55%, transparent 55%);
+      background-size: 14px 2px;
+    }
+
+    /* monogram lockup */
+    .cd-lockup {
+      display: inline-flex; flex-direction: column; align-items: center;
+      gap: 0.5rem; margin-bottom: clamp(1.6rem, 1rem + 2vw, 2.6rem);
+    }
+    .cd-lockup-row { display: inline-flex; align-items: center; gap: clamp(0.8rem, 0.6rem + 0.7vw, 1.2rem); }
+    .cd-monogram {
+      width: clamp(52px, 6vw, 74px); height: clamp(52px, 6vw, 74px); flex-shrink: 0;
+      border: 2px solid var(--saddle); border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: var(--font-display); font-weight: 700; color: var(--rust);
+      font-size: clamp(1.7rem, 1.1rem + 1.6vw, 2.4rem); line-height: 1;
+      box-shadow: inset 0 0 0 4px var(--paper), inset 0 0 0 5px rgba(138,90,43,0.35);
+    }
+    .cd-wordmark {
+      font-family: var(--font-display); font-weight: 700; color: var(--ink);
+      font-size: clamp(1.5rem, 1rem + 1.6vw, 2.3rem); letter-spacing: 0.02em; text-transform: uppercase;
+    }
+    .cd-byline {
+      font-family: var(--font-body); font-weight: 600; font-size: var(--t-label);
+      letter-spacing: 0.24em; text-transform: uppercase; color: var(--saddle);
+      display: inline-flex; align-items: center; gap: 0.6em;
+    }
+    .cd-byline::before, .cd-byline::after { content: "\2726"; color: var(--rust); font-size: 0.85em; }
+
+    .cd-hero-title {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: var(--t-hero); letter-spacing: -0.01em; color: var(--ink);
+      max-width: 16ch; margin-inline: auto;
+    }
+    .cd-hero-title .accent { color: var(--rust); display: block; }
+    .cd-hero-stand {
+      margin: clamp(1.5rem, 1rem + 2vw, 2.4rem) auto 0;
+      display: grid; gap: 0.55rem; max-width: 52ch;
+    }
+    .cd-hero-stand p { font-size: var(--t-lead); color: var(--ink-soft); }
+    .cd-hero-stand strong { color: var(--ink); font-weight: 600; }
+
+    /* hero offer stats */
+    .cd-hero-stats {
+      margin: clamp(2.6rem, 1.8rem + 2vw, 3.6rem) auto 0;
+      display: grid; grid-template-columns: repeat(3, auto); gap: clamp(1.6rem, 1rem + 3vw, 4.2rem);
+      justify-content: center; align-items: end;
+      border-top: 2px solid var(--rule); padding-top: clamp(1.6rem, 1rem + 1.6vw, 2.2rem);
+      width: fit-content; max-width: 100%;
+    }
+    .cd-hero-stats > [role="listitem"] { text-align: center; }
+    .cd-stat-fig { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.4rem, 1.6rem + 3vw, 4rem); color: var(--ink); line-height: 0.9; }
+    .cd-stat-fig .u { color: var(--rust); }
+    .cd-stat-lab { margin-top: 0.6rem; font-size: var(--t-label); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); font-weight: 600; }
+
+    /* ═══════════════════════════════════════════════════════
+       SCOPE MARQUEE (leather strip)
+       ═══════════════════════════════════════════════════════ */
+    .cd-marquee-band { padding-block: clamp(1.4rem, 1rem + 1.4vw, 2.2rem); background: var(--leather); }
+    .cd-marquee {
+      overflow: hidden; width: 100%;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+              mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    .cd-marquee-track { display: flex; width: max-content; align-items: center; animation: cdMarquee 21s linear infinite; }
+    .cd-marquee-group { display: flex; align-items: center; flex-shrink: 0; }
+    .cd-mword {
+      font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+      font-size: clamp(1.3rem, 0.9rem + 1.7vw, 2.2rem); letter-spacing: 0.04em; white-space: nowrap;
+      padding: 0 clamp(0.7rem, 0.4rem + 1vw, 1.4rem); color: var(--on-dark);
+    }
+    .cd-mword--lit { color: var(--rust-lift); }
+    .cd-mdot { width: 8px; height: 8px; background: var(--tan); flex-shrink: 0; transform: rotate(45deg); }
+    @keyframes cdMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .cd-marquee-track { animation: none; } }
+
+    /* ═══════════════════════════════════════════════════════
+       WHAT YOU GET - offer cards (stitched leather goods)
+       ═══════════════════════════════════════════════════════ */
+    .cd-offer { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.4rem, 1rem + 2vw, 2.4rem); }
+    @media (max-width: 820px) { .cd-offer { grid-template-columns: 1fr; } }
+    .cd-card {
+      position: relative;
+      background: var(--paper-2); border: 1px solid var(--rule-2); border-radius: 8px;
+      padding: clamp(1.8rem, 1.3rem + 2.2vw, 3rem);
+      display: grid; gap: 1.1rem; align-content: start; text-align: center;
+      box-shadow: 0 14px 34px rgba(42,29,18,0.12);
+      transition: background var(--duration-quick) var(--ease-soft), border-color var(--duration-quick) var(--ease-soft), transform var(--duration-quick) var(--ease-soft), box-shadow var(--duration-quick) var(--ease-soft);
+    }
+    .cd-card::before { content: ""; position: absolute; inset: 7px; border: 1.5px dashed var(--rule-stitch); border-radius: 5px; pointer-events: none; }
+    .cd-card:hover { border-color: var(--rust); transform: translateY(-5px); box-shadow: 0 24px 52px rgba(42,29,18,0.22); }
+    .cd-card-icon { width: clamp(44px, 3rem + 1.5vw, 58px); height: auto; margin: 0 auto; color: var(--rust); }
+    .cd-card-icon svg { width: 100%; height: auto; display: block; fill: currentColor; stroke: none; }
+    .cd-card-icon--shopify { color: #5E8E3E; }
+    .cd-card-icon--meta { color: #0866FF; }
+    .cd-card-kicker { font-family: var(--font-body); font-weight: 700; font-size: var(--t-label); letter-spacing: 0.18em; text-transform: uppercase; color: var(--saddle); }
+    .cd-card-title { font-family: var(--font-display); font-weight: 600; font-size: var(--t-article); color: var(--ink); letter-spacing: -0.005em; }
+    .cd-card-list { list-style: none; display: grid; gap: 0.75rem; width: fit-content; margin-inline: auto; text-align: left; }
+    .cd-card-list li { position: relative; padding-left: 1.7em; color: var(--ink-soft); }
+    .cd-card-list li::before {
+      content: "\2726"; position: absolute; left: 0; top: 0.15em;
+      color: var(--rust); font-size: 0.85em;
+    }
+    .cd-card-list strong { color: var(--ink); font-weight: 600; }
+
+    /* ═══════════════════════════════════════════════════════
+       HOW IT WORKS - stages + signature chart (on leather)
+       ═══════════════════════════════════════════════════════ */
+    .cd-chart-fig { background: var(--surface-dark); border: 1px solid var(--rule-card-dark); border-radius: 8px; padding: clamp(1.5rem, 1rem + 2vw, 2.6rem); margin-bottom: clamp(2.2rem, 1.5rem + 2.5vw, 3.6rem); box-shadow: 0 18px 44px rgba(0,0,0,0.34), inset 0 1px 0 rgba(243,234,216,0.05); }
+    .cd-chart-cap { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.3rem; margin-bottom: 1.5rem; }
+    .cd-chart-cap .l { font-family: var(--font-body); font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; font-size: var(--t-label); color: var(--rust-lift); }
+    .cd-chart-cap .r { font-size: var(--t-small); color: var(--on-dark-mute); }
+    .cd-chart { width: 100%; height: auto; display: block; }
+
+    /* ── HOW IT WORKS: draggable horizontal flow ── */
+    .cd-flow { position: relative; }
+    .cd-flow-track {
+      display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory;
+      width: 100vw; margin-inline: calc(50% - 50vw);
+      padding-block: 1.4rem 1.8rem;
+      scrollbar-width: none; -ms-overflow-style: none; cursor: grab;
+    }
+    .cd-flow-track::-webkit-scrollbar { display: none; }
+    .cd-flow-track:focus-visible { outline: 2px solid var(--tan); outline-offset: -4px; }
+    .cd-flow-track.is-grabbing { cursor: grabbing; scroll-snap-type: none; scroll-behavior: auto; }
+    /* one full-bleed slide at a time; cards scroll off the screen edge */
+    .cd-flow-slide { position: relative; flex: 0 0 100%; scroll-snap-align: start; scroll-snap-stop: always; display: grid; place-items: center; padding-inline: clamp(1.2rem, 6vw, 5rem); }
+    /* continuous stitched rail linking every stage - alive, flowing forward */
+    .cd-flow-slide::before {
+      content: ""; position: absolute; top: 50%; left: 0; right: 0; height: 2px; transform: translateY(-1px);
+      z-index: 0; pointer-events: none;
+      background-image: repeating-linear-gradient(90deg, rgba(201, 161, 92, 0.6) 0 8px, transparent 8px 18px);
+      background-size: 18px 2px;
+      animation: cdRailFlow 0.9s linear infinite;
+    }
+    @keyframes cdRailFlow { to { background-position-x: 18px; } }
+    .cd-flow-card {
+      width: min(560px, 100%);
+      background: var(--surface-dark); border: 1px solid var(--rule-card-dark); border-radius: 10px;
+      padding: clamp(2rem, 1.5rem + 2.5vw, 3.2rem); text-align: center;
+      display: grid; gap: 1rem; align-content: start; position: relative; z-index: 1;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.32), inset 0 1px 0 rgba(243,234,216,0.05);
+      transition: border-color var(--duration-quick) var(--ease-soft), transform var(--duration-quick) var(--ease-soft);
+    }
+    .cd-flow-card:hover { border-color: var(--rust-lift); transform: translateY(-4px); }
+    /* node markers pinning each card to the rail on both sides */
+    .cd-flow-card::before, .cd-flow-card::after {
+      content: ""; position: absolute; top: 50%; width: 12px; height: 12px;
+      background: var(--tan); border: 2px solid var(--leather); border-radius: 2px;
+      transform: translateY(-50%) rotate(45deg); z-index: 2; pointer-events: none;
+    }
+    .cd-flow-card::before { left: -6px; }
+    .cd-flow-card::after { right: -6px; }
+    /* no rail dangling before the first card or after the last */
+    .cd-flow-slide:first-child::before { left: 50%; }
+    .cd-flow-slide:last-child::before { right: 50%; }
+    .cd-flow-slide:first-child .cd-flow-card::before { display: none; }
+    .cd-flow-slide:last-child .cd-flow-card::after { display: none; }
+    .cd-stage-n {
+      width: 3rem; height: 3rem; margin: 0 auto; border-radius: 50%;
+      border: 1.5px solid var(--tan); display: grid; place-items: center;
+      font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: var(--tan);
+      transition: background var(--duration-quick) var(--ease-soft), color var(--duration-quick) var(--ease-soft), border-color var(--duration-quick) var(--ease-soft);
+    }
+    .cd-flow-card:hover .cd-stage-n { background: var(--rust); border-color: var(--rust); color: var(--on-dark); }
+    .cd-flow-card h3 { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.7rem, 1.3rem + 1.5vw, 2.4rem); color: var(--on-dark); letter-spacing: -0.005em; }
+    .cd-flow-card p { color: var(--on-dark-soft); font-size: var(--t-body); max-width: 42ch; margin-inline: auto; }
+    /* custom draggable scrubber nav */
+    .cd-flow-nav {
+      position: relative; height: 14px; margin-top: clamp(1.2rem, 0.9rem + 1vw, 2rem);
+      border-radius: 999px; background: rgba(243,234,216,0.07); border: 1px solid var(--rule-on-dark);
+      touch-action: none; user-select: none; -webkit-user-select: none;
+    }
+    .cd-flow-thumb {
+      position: absolute; top: 50%; left: 0; transform: translateY(-50%);
+      height: 20px; width: 96px; min-width: 48px; border-radius: 999px;
+      background: linear-gradient(180deg, var(--tan), var(--saddle));
+      box-shadow: 0 3px 10px rgba(0,0,0,0.35); cursor: grab;
+      display: grid; place-items: center;
+    }
+    .cd-flow-thumb::before {
+      content: ""; width: 16px; height: 9px;
+      background: repeating-linear-gradient(90deg, rgba(42,29,18,0.5) 0 2px, transparent 2px 5px);
+    }
+    .cd-flow-thumb.is-grabbing { cursor: grabbing; }
+    .cd-flow-hint {
+      text-align: center; margin-top: 0.9rem;
+      font-family: var(--font-body); font-weight: 700; font-size: var(--t-label);
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--on-dark-mute);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       THE PRICE
+       ═══════════════════════════════════════════════════════ */
+    .cd-terms { display: grid; gap: clamp(2.4rem, 1.6rem + 3vw, 4rem); }
+    .cd-price-duo {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+      gap: clamp(2rem, 1rem + 3.4vw, 4.8rem);
+      border-block: 2px solid var(--rule); padding-block: clamp(2rem, 1.4rem + 2vw, 3.2rem);
+    }
+    .cd-price-block { text-align: center; display: grid; gap: 0.65rem; }
+    .cd-price-label { font-family: var(--font-body); font-weight: 700; font-size: var(--t-label); letter-spacing: 0.16em; text-transform: uppercase; color: var(--saddle); }
+    .cd-price-fig { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.6rem, 1.7rem + 3.6vw, 4.8rem); color: var(--ink); line-height: 0.85; white-space: nowrap; }
+    .cd-price-fig .cur { color: var(--rust); font-size: 0.5em; vertical-align: 0.55em; margin-right: 0.04em; }
+    .cd-price-per { font-family: var(--font-body); font-weight: 600; font-size: 0.26em; color: var(--ink-mute); vertical-align: 0.72em; letter-spacing: 0.04em; margin-left: 0.12em; }
+    .cd-price-cadence { font-size: var(--t-small); color: var(--ink-mute); }
+    .cd-price-then { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.1rem, 0.9rem + 0.7vw, 1.5rem); color: var(--rust); align-self: center; text-transform: uppercase; letter-spacing: 0.1em; }
+    @media (max-width: 620px) { .cd-price-duo { flex-direction: column; } }
+
+    /* ── THE BUILD MANIFEST (priced deliverables as one leather work-order) ── */
+    .cd-manifest {
+      max-width: 62rem; margin-inline: auto;
+      background: var(--paper-2); border: 1px solid var(--rule-2); border-radius: 10px;
+      box-shadow: 0 20px 48px rgba(42,29,18,0.15); overflow: hidden;
+    }
+    .cd-manifest-head { text-align: center; padding: clamp(1.1rem, 0.9rem + 0.8vw, 1.6rem); border-bottom: 1.5px dashed var(--rule-stitch); }
+    .cd-manifest-title { font-family: var(--font-body); font-weight: 700; font-size: var(--t-label); letter-spacing: 0.26em; text-transform: uppercase; color: var(--saddle); }
+    .cd-manifest-title::before, .cd-manifest-title::after { content: "\2726"; color: var(--rust); margin: 0 0.8em; font-size: 0.9em; }
+    .cd-manifest-list { list-style: none; }
+    .cd-manifest-item {
+      display: grid; grid-template-columns: auto 1fr; gap: clamp(1rem, 0.6rem + 1.5vw, 2.2rem); align-items: center;
+      padding: clamp(1.3rem, 1rem + 1.4vw, 1.9rem) clamp(1.5rem, 1rem + 1.8vw, 2.6rem);
+      transition: background var(--duration-quick) var(--ease-soft);
+    }
+    .cd-manifest-item + .cd-manifest-item { border-top: 1.5px dashed var(--rule-stitch); }
+    .cd-manifest-item:hover { background: var(--card-hover); }
+    .cd-manifest-num {
+      font-family: var(--font-display); font-weight: 700; line-height: 0.78; letter-spacing: -0.02em;
+      font-size: clamp(2.6rem, 1.8rem + 3vw, 4.2rem);
+      color: transparent; -webkit-text-stroke: 1.5px var(--saddle);
+      transition: -webkit-text-stroke-color var(--duration-quick) var(--ease-soft);
+    }
+    .cd-manifest-item:hover .cd-manifest-num { -webkit-text-stroke-color: var(--rust); }
+    .cd-manifest-copy { text-align: left; }
+    .cd-manifest-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 0.9rem; margin-bottom: 0.45rem; }
+    .cd-manifest-name { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.2rem, 1rem + 0.7vw, 1.6rem); color: var(--ink); }
+    .cd-manifest-pill { font-family: var(--font-body); font-weight: 700; font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--saddle); border: 1px solid var(--rule-2); border-radius: 999px; padding: 0.3em 0.75em; }
+    .cd-manifest-body { color: var(--ink-soft); font-size: var(--t-small); line-height: 1.6; max-width: 54ch; }
+    .cd-manifest-cap {
+      display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.7rem 1.5rem; text-align: center;
+      background: var(--leather); color: var(--on-dark);
+      padding: clamp(1.4rem, 1.1rem + 1.4vw, 2.1rem) clamp(1.5rem, 1rem + 1.8vw, 2.6rem);
+    }
+    .cd-cap-seal { width: 2.5rem; height: 2.5rem; flex-shrink: 0; border-radius: 50%; border: 1.5px solid var(--tan); display: grid; place-items: center; color: var(--tan); font-size: 1.05rem; }
+    .cd-cap-name { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem); color: var(--on-dark); }
+    .cd-cap-body { color: var(--on-dark-soft); font-size: var(--t-small); }
+    .cd-cap-badge { font-family: var(--font-body); font-weight: 700; font-size: var(--t-label); letter-spacing: 0.16em; text-transform: uppercase; color: var(--tan); border: 1px solid var(--rule-card-dark); border-radius: 999px; padding: 0.45em 1em; }
+    @media (max-width: 640px) {
+      .cd-manifest-item { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 0.5rem; }
+      .cd-manifest-copy { text-align: center; }
+      .cd-manifest-row { justify-content: center; }
+      .cd-manifest-body { margin-inline: auto; }
+    }
+
+    .cd-passthrough {
+      display: block; text-align: center;
+      background: var(--leather); color: var(--on-dark); border-radius: 8px;
+      border: 1px solid var(--rule-card-dark);
+      box-shadow: 0 18px 44px rgba(42,29,18,0.22);
+      padding: clamp(2rem, 1.4rem + 2.6vw, 3.2rem);
+    }
+    .cd-pt-tag { font-family: var(--font-body); font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; font-size: var(--t-label); color: var(--tan); }
+    .cd-pt-fig { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 1.4rem + 2.2vw, 3rem); color: var(--on-dark); white-space: nowrap; margin: 0.7rem 0 0.5rem; text-transform: uppercase; letter-spacing: 0.02em; }
+    .cd-pt-desc { color: var(--on-dark-soft); font-size: var(--t-small); max-width: 46ch; margin: 0 auto; }
+    .cd-pt-desc strong { color: var(--on-dark); font-weight: 600; }
+    .cd-pt-note { margin-top: clamp(1.4rem, 1rem + 1.2vw, 2rem); padding-top: clamp(1.2rem, 0.9rem + 1vw, 1.6rem); border-top: 1px solid var(--rule-on-dark); color: var(--on-dark); font-size: var(--t-small); max-width: 54ch; margin-inline: auto; }
+
+    /* ═══════════════════════════════════════════════════════
+       WHAT HAPPENS NEXT (leather)
+       ═══════════════════════════════════════════════════════ */
+    .cd-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--rule-card-dark); border-radius: 8px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+    @media (max-width: 860px) { .cd-steps { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .cd-steps { grid-template-columns: 1fr; } }
+    .cd-step {
+      padding: clamp(1.6rem, 1.1rem + 2vw, 2.4rem) clamp(1.2rem, 0.8rem + 1.5vw, 1.8rem);
+      border-right: 1px solid var(--rule-on-dark); border-bottom: 1px solid var(--rule-on-dark);
+      display: grid; gap: 0.8rem; align-content: start; text-align: center; justify-items: center;
+      background: var(--surface-dark);
+      transition: background var(--duration-quick) var(--ease-soft);
+    }
+    .cd-step:hover { background: var(--surface-dark-2); }
+    .cd-step-n { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; color: var(--rust-lift); line-height: 1; }
+    .cd-step h3 { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem); color: var(--on-dark); }
+    .cd-step p { color: var(--on-dark-soft); font-size: var(--t-small); }
+
+    /* ── drawing underline under section h2 ── */
+    .cd-h2 { position: relative; padding-bottom: 0.34em; margin-inline: auto; }
+    .cd-h2::after {
+      content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+      width: 0; height: 3px; background: var(--rust);
+      transition: width 0.9s var(--ease-satisfying) 0.3s;
+    }
+    .band-dark .cd-h2::after { background: var(--rust-lift); }
+    .reveal.in-view .cd-h2::after { width: 3.2rem; }
+
+    /* ── drawing underline accent on key phrases ── */
+    .hl {
+      background-image: linear-gradient(var(--rust), var(--rust));
+      background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 2px;
+      transition: background-size 0.7s var(--ease-satisfying) 0.14s;
+      padding-bottom: 0.06em; color: var(--ink);
+    }
+    .band-dark .hl { background-image: linear-gradient(var(--rust-lift), var(--rust-lift)); color: var(--on-dark); }
+    .reveal.in-view .hl { background-size: 100% 2px; }
+
+    /* ── chart bars grow + trend draws on scroll ── */
+    .cd-chart .bar { transform-box: fill-box; transform-origin: center bottom; transform: scaleY(0); transition: transform 0.9s var(--ease-satisfying); }
+    .cd-chart-fig.lit .bar { transform: scaleY(1); }
+    .cd-chart .trend { stroke-dasharray: 950; stroke-dashoffset: 950; transition: stroke-dashoffset 1.4s var(--ease-satisfying) 0.3s; }
+    .cd-chart-fig.lit .trend { stroke-dashoffset: 0; }
+    .cd-chart .winner-dot, .cd-chart .winner-tag { opacity: 0; transition: opacity 0.6s var(--ease-soft) 1.4s; }
+    .cd-chart-fig.lit .winner-dot, .cd-chart-fig.lit .winner-tag { opacity: 1; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cd-h2::after { width: 3.2rem; transition: none; }
+      .hl { background-size: 100% 2px; transition: none; }
+      .cd-chart .bar { transform: none; transition: none; }
+      .cd-chart .trend { stroke-dashoffset: 0; transition: none; }
+      .cd-chart .winner-dot, .cd-chart .winner-tag { opacity: 1; transition: none; }
+      .cd-flow-slide::before { animation: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════ */
+    .cd-footer { background: var(--leather-deep); color: var(--on-dark); padding-block: clamp(2.2rem, 1.6rem + 2vw, 3.2rem); }
+    .cd-footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.8rem 1.6rem; text-align: center; flex-direction: column; }
+    .cd-footer-brand { display: flex; align-items: center; justify-content: center; gap: 0.8rem; }
+    .cd-footer-mono {
+      width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--tan);
+      display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; color: var(--tan); font-size: 1rem;
+    }
+    .cd-footer p { font-size: var(--t-small); color: var(--on-dark-mute); letter-spacing: 0.04em; }
+    .cd-footer .b { color: var(--on-dark); font-family: var(--font-display); font-weight: 700; letter-spacing: 0.02em; }
+    .cd-footer a.b { text-decoration: none; transition: color var(--duration-quick) var(--ease-soft); }
+    .cd-footer a.b:hover { color: var(--tan); }
+
+    /* ── §6C: literal centering at <=900 ── */
+    @media (max-width: 900px) {
+      .cd-card-list { width: auto; }
+      .cd-card-list li { text-align: center; padding-left: 0; }
+      .cd-card-list li::before { display: none; }
+      .cd-ledger-row { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+      .cd-ledger-body { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="cd-skip">Skip to content</a>
+
+  <main id="main">
+
+    <!-- HERO MASTHEAD -->
+    <section class="cd-hero" id="hero">
+      <div class="wrap cd-masthead">
+        <div class="cd-lockup reveal">
+          <div class="cd-lockup-row">
+            <span class="cd-monogram" aria-hidden="true">C</span>
+            <span class="cd-wordmark">C Design</span>
+          </div>
+          <span class="cd-byline">by Cristina</span>
+        </div>
+
+        <h1 class="cd-hero-title reveal">
+          A store you own.
+          <span class="accent">Ads that find your winners.</span>
+        </h1>
+
+        <div class="cd-hero-stand reveal">
+          <p>A branded Shopify store, plus 60&nbsp;to&nbsp;90 static and UGC test ads, built to find what&nbsp;sells.</p>
+        </div>
+
+        <div class="cd-hero-stats reveal" role="list">
+          <div role="listitem">
+            <div class="cd-stat-fig">60<span class="u">-</span>90</div>
+            <div class="cd-stat-lab">Test ads,<br>static + UGC</div>
+          </div>
+          <div role="listitem">
+            <div class="cd-stat-fig"><span class="cu" data-count="4">0</span></div>
+            <div class="cd-stat-lab">Stages,<br>build to scale</div>
+          </div>
+          <div role="listitem">
+            <div class="cd-stat-fig">24/7</div>
+            <div class="cd-stat-lab">Orders on<br>autopilot</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE MARQUEE -->
+    <section class="cd-marquee-band" aria-label="Shopify Store, Meta Ads, Static and UGC, CBO Testing, TikTok Shop">
+      <div class="cd-marquee" aria-hidden="true">
+        <div class="cd-marquee-track">
+          <div class="cd-marquee-group">
+            <span class="cd-mword">Shopify Store</span><span class="cd-mdot"></span><span class="cd-mword cd-mword--lit">Meta Ads</span><span class="cd-mdot"></span><span class="cd-mword">Static + UGC</span><span class="cd-mdot"></span><span class="cd-mword cd-mword--lit">CBO Testing</span><span class="cd-mdot"></span><span class="cd-mword">TikTok Shop</span><span class="cd-mdot"></span>
+            <span class="cd-mword">Shopify Store</span><span class="cd-mdot"></span><span class="cd-mword cd-mword--lit">Meta Ads</span><span class="cd-mdot"></span><span class="cd-mword">Static + UGC</span><span class="cd-mdot"></span><span class="cd-mword cd-mword--lit">CBO Testing</span><span class="cd-mdot"></span><span class="cd-mword">TikTok Shop</span><span class="cd-mdot"></span>
+          </div>
+          <div class="cd-marquee-group">
+            <span class="cd-mword">Shopify Store</span><span class="cd-mdot"></span><span class="cd-mword cd-mword--lit">Meta Ads</span><span class="cd-mdot"></span><span class="cd-mword">Static + UGC</span><span class="cd-mdot"></span><span class="cd-mword cd-mword--lit">CBO Testing</span><span class="cd-mdot"></span><span class="cd-mword">TikTok Shop</span><span class="cd-mdot"></span>
+            <span class="cd-mword">Shopify Store</span><span class="cd-mdot"></span><span class="cd-mword cd-mword--lit">Meta Ads</span><span class="cd-mdot"></span><span class="cd-mword">Static + UGC</span><span class="cd-mdot"></span><span class="cd-mword cd-mword--lit">CBO Testing</span><span class="cd-mdot"></span><span class="cd-mword">TikTok Shop</span><span class="cd-mdot"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT YOU GET -->
+    <section class="band band-2" id="what">
+      <div class="wrap">
+        <div class="cd-sechead reveal">
+          <span class="cd-label">What you get</span>
+          <h2 class="cd-h2">Everything you sell, and everything that&nbsp;sells&nbsp;it.</h2>
+          <p class="cd-lead">One store you own, and a testing machine built to find your winners&nbsp;fast.</p>
+        </div>
+
+        <div class="cd-offer">
+          <article class="cd-card reveal">
+            <div class="cd-card-icon cd-card-icon--shopify" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-label="Shopify"><path d="M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.73c-.018-.116-.114-.192-.211-.192s-1.929-.136-1.929-.136-1.275-1.274-1.439-1.411c-.045-.037-.075-.057-.121-.074l-.914 21.104h.023zM11.71 11.305s-.81-.424-1.774-.424c-1.447 0-1.504.906-1.504 1.141 0 1.232 3.24 1.715 3.24 4.629 0 2.295-1.44 3.76-3.406 3.76-2.354 0-3.54-1.465-3.54-1.465l.646-2.086s1.245 1.066 2.28 1.066c.675 0 .975-.545.975-.932 0-1.619-2.654-1.694-2.654-4.359-.034-2.237 1.571-4.416 4.827-4.416 1.257 0 1.875.361 1.875.361l-.945 2.715-.02.01zM11.17.83c.136 0 .271.038.405.135-.984.465-2.064 1.639-2.508 3.992-.656.213-1.293.405-1.889.578C7.697 3.75 8.951.84 11.17.84V.83zm1.235 2.949v.135c-.754.232-1.583.484-2.394.736.466-1.777 1.333-2.645 2.085-2.971.193.501.309 1.176.309 2.1zm.539-2.234c.694.074 1.141.867 1.429 1.755-.349.114-.735.231-1.158.366v-.252c0-.752-.096-1.371-.271-1.871v.002zm2.992 1.289c-.02 0-.06.021-.078.021s-.289.075-.714.21c-.423-1.233-1.176-2.37-2.508-2.37h-.115C12.135.209 11.669 0 11.265 0 8.159 0 6.675 3.877 6.21 5.846c-1.194.365-2.063.636-2.16.674-.675.213-.694.232-.772.87-.075.462-1.83 14.063-1.83 14.063L15.009 24l.927-21.166z"/></svg>
+            </div>
+            <div class="cd-card-kicker">Own it end to end</div>
+            <h3 class="cd-card-title">Shopify Store</h3>
+            <ul class="cd-card-list">
+              <li>A <strong>branded store you own</strong>, not rented.</li>
+              <li>Products, checkout, and shipping, all&nbsp;connected.</li>
+              <li>Orders run on <strong>autopilot</strong>, nothing&nbsp;manual.</li>
+            </ul>
+          </article>
+
+          <article class="cd-card reveal">
+            <div class="cd-card-icon cd-card-icon--meta" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" aria-label="Meta"><path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg>
+            </div>
+            <div class="cd-card-kicker">Find your winners</div>
+            <h3 class="cd-card-title">Meta Ads</h3>
+            <ul class="cd-card-list">
+              <li>Campaigns across <strong>Facebook and Instagram</strong>.</li>
+              <li>60&nbsp;to&nbsp;90 static and UGC test&nbsp;ads.</li>
+              <li>Built to <strong>find your winners fast</strong>.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="band band-dark" id="how">
+      <div class="wrap">
+        <div class="cd-sechead reveal">
+          <span class="cd-label">How it works</span>
+          <h2 class="cd-h2">4 stages, from build to&nbsp;scale.</h2>
+          <p class="cd-lead">The store goes up, the ads go out, and <span class="hl">Meta pushes budget to the best-performing&nbsp;ads</span>.</p>
+        </div>
+
+        <div class="cd-chart-fig reveal">
+          <div class="cd-chart-cap">
+            <span class="l">Budget follows performance</span>
+            <span class="r">60 to 90 ads launch &middot; winners scale &middot; the rest get&nbsp;cut</span>
+          </div>
+          <svg class="cd-chart" viewBox="0 0 960 210" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Across the testing window, dozens of ads launch and spend spreads evenly, then Meta concentrates budget on the ads that perform while the rest are cut, so performance climbs to a clear winner.">
+            <line x1="40" y1="60" x2="920" y2="60" stroke="rgba(243,234,216,0.08)" stroke-width="1"/>
+            <line x1="40" y1="100" x2="920" y2="100" stroke="rgba(243,234,216,0.08)" stroke-width="1"/>
+            <line x1="40" y1="140" x2="920" y2="140" stroke="rgba(243,234,216,0.08)" stroke-width="1"/>
+            <line x1="40" y1="170" x2="920" y2="170" stroke="rgba(243,234,216,0.3)" stroke-width="1.5"/>
+            <polyline class="trend" points="118,150 264,140 410,120 556,96 702,66 848,40" fill="none" stroke="#D2683F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <g font-family="Inter, sans-serif" font-size="14" fill="rgba(243,234,216,0.55)" letter-spacing="1">
+              <rect class="bar" x="96" y="150" width="18" height="20" rx="2" fill="rgba(243,234,216,0.2)"/><rect class="bar" x="118" y="146" width="18" height="24" rx="2" fill="rgba(201,161,92,0.55)"/><text x="118" y="192" text-anchor="middle">LAUNCH</text>
+              <rect class="bar" x="242" y="148" width="18" height="22" rx="2" fill="rgba(243,234,216,0.2)"/><rect class="bar" x="264" y="138" width="18" height="32" rx="2" fill="rgba(201,161,92,0.7)"/><text x="264" y="192" text-anchor="middle">TEST</text>
+              <rect class="bar" x="388" y="152" width="18" height="18" rx="2" fill="rgba(243,234,216,0.16)"/><rect class="bar" x="410" y="120" width="18" height="50" rx="2" fill="#C9A15C"/><text x="410" y="192" text-anchor="middle">READ</text>
+              <rect class="bar" x="534" y="156" width="18" height="14" rx="2" fill="rgba(243,234,216,0.14)"/><rect class="bar" x="556" y="96" width="18" height="74" rx="2" fill="#B5462B"/><text x="556" y="192" text-anchor="middle">CUT</text>
+              <rect class="bar" x="680" y="158" width="18" height="12" rx="2" fill="rgba(243,234,216,0.12)"/><rect class="bar" x="702" y="66" width="18" height="104" rx="2" fill="#B5462B"/><text x="702" y="192" text-anchor="middle">SCALE</text>
+              <rect class="bar" x="826" y="160" width="18" height="10" rx="2" fill="rgba(243,234,216,0.1)"/><rect class="bar" x="848" y="40" width="18" height="130" rx="2" fill="#D2683F"/><text x="848" y="192" text-anchor="middle" fill="#D2683F">WINNER</text>
+            </g>
+            <circle class="winner-dot" cx="848" cy="40" r="5" fill="#D2683F" stroke="#2A1D12" stroke-width="1.5"/>
+            <text class="winner-tag" x="848" y="24" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" letter-spacing="1.5" fill="#D2683F">TOP AD</text>
+          </svg>
+        </div>
+
+        <div class="cd-flow reveal">
+          <div class="cd-flow-track" id="cdFlowTrack" tabindex="0" role="group" aria-label="The 4 stages, scroll horizontally">
+            <div class="cd-flow-slide">
+              <div class="cd-flow-card">
+                <span class="cd-stage-n">01</span>
+                <h3>Build</h3>
+                <p>Store goes up, tracking gets installed, and ad creative gets&nbsp;made.</p>
+              </div>
+            </div>
+            <div class="cd-flow-slide">
+              <div class="cd-flow-card">
+                <span class="cd-stage-n">02</span>
+                <h3>Test</h3>
+                <p>60&nbsp;to&nbsp;90 ads launch in CBO campaigns, and Meta pushes budget to the best-performing&nbsp;ads.</p>
+              </div>
+            </div>
+            <div class="cd-flow-slide">
+              <div class="cd-flow-card">
+                <span class="cd-stage-n">03</span>
+                <h3>Scale</h3>
+                <p>Winning ads get the budget, and the rest get&nbsp;cut.</p>
+              </div>
+            </div>
+            <div class="cd-flow-slide">
+              <div class="cd-flow-card">
+                <span class="cd-stage-n">04</span>
+                <h3>Expand</h3>
+                <p>Proven angles roll onto TikTok&nbsp;Shop&nbsp;next.</p>
+              </div>
+            </div>
+          </div>
+          <div class="cd-flow-nav" id="cdFlowNav" role="scrollbar" aria-orientation="horizontal" aria-controls="cdFlowTrack" aria-label="Drag to scroll the stages" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="cd-flow-thumb ag-clickable" id="cdFlowThumb" aria-hidden="true"></div>
+          </div>
+          <p class="cd-flow-hint" aria-hidden="true">&#8592;&nbsp; Drag to explore &nbsp;&#8594;</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE PRICE -->
+    <section class="band band-2" id="price">
+      <div class="wrap">
+        <div class="cd-sechead reveal">
+          <span class="cd-label">The price</span>
+          <h2 class="cd-h2">What it costs, what you&nbsp;get.</h2>
+          <p class="cd-lead">A one-time build, then month to month once the ads are live, and your ad spend <span class="hl">goes straight to&nbsp;Meta</span>.</p>
+        </div>
+
+        <div class="cd-terms">
+          <div class="cd-price-duo reveal">
+            <div class="cd-price-block">
+              <div class="cd-price-label">One-time setup</div>
+              <div class="cd-price-fig"><span class="cur">$</span><span class="cu" data-count="2850">0</span></div>
+              <div class="cd-price-cadence">Covers the full store build and&nbsp;launch.</div>
+            </div>
+            <div class="cd-price-then" aria-hidden="true">then</div>
+            <div class="cd-price-block">
+              <div class="cd-price-label">Ad management</div>
+              <div class="cd-price-fig"><span class="cur">$</span><span class="cu" data-count="1400">0</span><span class="cd-price-per">/mo</span></div>
+              <div class="cd-price-cadence">Testing, optimization, and&nbsp;reporting.</div>
+            </div>
+          </div>
+
+          <div class="cd-manifest reveal">
+            <div class="cd-manifest-head"><span class="cd-manifest-title">The build, itemized</span></div>
+            <ol class="cd-manifest-list">
+              <li class="cd-manifest-item">
+                <span class="cd-manifest-num" aria-hidden="true">01</span>
+                <div class="cd-manifest-copy">
+                  <div class="cd-manifest-row"><span class="cd-manifest-name">Store Build</span><span class="cd-manifest-pill">One-time setup</span></div>
+                  <p class="cd-manifest-body">A Shopify store with products, checkout, shipping, and tracking&nbsp;installed.</p>
+                </div>
+              </li>
+              <li class="cd-manifest-item">
+                <span class="cd-manifest-num" aria-hidden="true">02</span>
+                <div class="cd-manifest-copy">
+                  <div class="cd-manifest-row"><span class="cd-manifest-name">Ad Creative</span><span class="cd-manifest-pill">Produced for you</span></div>
+                  <p class="cd-manifest-body">60&nbsp;to&nbsp;90 static and UGC test ads, shot and built to&nbsp;convert.</p>
+                </div>
+              </li>
+              <li class="cd-manifest-item">
+                <span class="cd-manifest-num" aria-hidden="true">03</span>
+                <div class="cd-manifest-copy">
+                  <div class="cd-manifest-row"><span class="cd-manifest-name">Campaign Management</span><span class="cd-manifest-pill">Ongoing</span></div>
+                  <p class="cd-manifest-body">CBO testing, optimization, and scaling across Facebook and&nbsp;Instagram.</p>
+                </div>
+              </li>
+              <li class="cd-manifest-item">
+                <span class="cd-manifest-num" aria-hidden="true">04</span>
+                <div class="cd-manifest-copy">
+                  <div class="cd-manifest-row"><span class="cd-manifest-name">Reporting</span><span class="cd-manifest-pill">Ongoing</span></div>
+                  <p class="cd-manifest-body">Clear reporting on what is working, and what gets&nbsp;cut.</p>
+                </div>
+              </li>
+            </ol>
+            <div class="cd-manifest-cap">
+              <span class="cd-cap-seal" aria-hidden="true">&#10038;</span>
+              <div class="cd-cap-copy">
+                <div class="cd-cap-name">All of it, one&nbsp;team</div>
+                <p class="cd-cap-body">One build, one retainer, one line of&nbsp;accountability.</p>
+              </div>
+              <span class="cd-cap-badge">Done for you</span>
+            </div>
+          </div>
+
+          <div class="cd-passthrough reveal">
+            <span class="cd-pt-tag">Pass-through &middot; Paid straight to the platform, never through&nbsp;us</span>
+            <div class="cd-pt-fig">Ad&nbsp;spend</div>
+            <p class="cd-pt-desc"><strong>Paid straight to Meta on your card</strong>, for the ads. Not included in the&nbsp;retainer.</p>
+            <p class="cd-pt-note">Your ad spend goes directly to Meta. We never touch, hold, or mark&nbsp;it&nbsp;up.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT HAPPENS NEXT -->
+    <section class="band band-dark" id="next">
+      <div class="wrap">
+        <div class="cd-sechead reveal">
+          <span class="cd-label">What happens next</span>
+          <h2 class="cd-h2">4 steps to&nbsp;live.</h2>
+        </div>
+
+        <div class="cd-steps reveal-stagger">
+          <div class="cd-step">
+            <span class="cd-step-n">01</span>
+            <h3>Forms</h3>
+            <p>You send the forms&nbsp;back.</p>
+          </div>
+          <div class="cd-step">
+            <span class="cd-step-n">02</span>
+            <h3>Film day</h3>
+            <p>We shoot the&nbsp;content.</p>
+          </div>
+          <div class="cd-step">
+            <span class="cd-step-n">03</span>
+            <h3>Approve + build</h3>
+            <p>You approve the mockups, and we&nbsp;build.</p>
+          </div>
+          <div class="cd-step">
+            <span class="cd-step-n">04</span>
+            <h3>Launch</h3>
+            <p>Ads go&nbsp;live.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="cd-footer">
+    <div class="wrap">
+      <div class="cd-footer-brand">
+        <span class="cd-footer-mono" aria-hidden="true">C</span>
+        <p>Presentation made by <a class="b" href="https://arcgarde.com" target="_blank" rel="noopener">Arc Garde</a></p>
+      </div>
+      <p>Prepared for C Design &nbsp;//&nbsp; Shopify Store Build + Meta Ad Testing &nbsp;//&nbsp; July 2026</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js" defer></script>
+  <script>
+    /* ═══ AG Cursor Standard v2.1 (CANONICAL DROP-IN, ag-cursor.js) ═══ */
+    (function () {
+      if (!window.matchMedia ||
+          !(matchMedia('(pointer: fine)').matches && matchMedia('(hover: hover)').matches)) return;
+
+      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var INTERACTIVE = 'a[href],button,[role="button"],input:not([type="hidden"]),' +
+                        'select,textarea,label[for],summary,[data-cursor],.ag-clickable';
+
+      var NS = 'http://www.w3.org/2000/svg';
+      var ARROW = 'M0,0 L0,15 L4,11.5 L6.5,17 L8.5,16 L6,10.5 L10.5,10.5 Z';
+      var HAND  = 'M8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v5.34l-1.2.24a1.5 1.5 0 0 0-1.196 1.636l.345 3.106a2.5 2.5 0 0 0 .405 1.11l1.433 2.15A1.5 1.5 0 0 0 6.035 16h6.385a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.271-2.715a2 2 0 0 0-1.99-2.199h-.581a5 5 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.6 2.6 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046z';
+
+      function shape(type) {
+        var arrow = (type === 'arrow');
+        var s = document.createElementNS(NS, 'svg');
+        s.setAttribute('class', 'ag-cursor__' + type);
+        s.setAttribute('viewBox', arrow ? '0 0 11 17.5' : '0 0 16 16');
+        s.setAttribute('width',  arrow ? 13 : 18);
+        s.setAttribute('height', arrow ? 20 : 18);
+        var p = document.createElementNS(NS, 'path');
+        p.setAttribute('d', arrow ? ARROW : HAND);
+        s.appendChild(p);
+        return s;
+      }
+
+      var bodyL = document.createElement('div');
+      bodyL.className = 'ag-cursor__body'; bodyL.setAttribute('aria-hidden', 'true');
+      bodyL.appendChild(shape('arrow'));
+
+      var edgeL = document.createElement('div');
+      edgeL.className = 'ag-cursor__edge'; edgeL.setAttribute('aria-hidden', 'true');
+      edgeL.appendChild(shape('arrow'));
+      edgeL.appendChild(shape('hand'));
+
+      document.body.appendChild(bodyL);
+      document.body.appendChild(edgeL);
+
+      var root = document.documentElement;
+      root.classList.add('ag-fine');
+
+      var css = getComputedStyle(root);
+      var INK    = (css.getPropertyValue('--ink')    || '#0a0a0a').trim();
+      var PAPER  = (css.getPropertyValue('--paper')  || '#fafafa').trim();
+      var ACCENT = (css.getPropertyValue('--accent') || '#c9a861').trim();
+
+      var tx = innerWidth / 2, ty = innerHeight / 2, shown = false, frame = 0;
+
+      function isDarkBg(el) {
+        while (el && el !== document.documentElement) {
+          var bg = getComputedStyle(el).backgroundColor;
+          var m = bg.match(/rgba?\(([^)]+)\)/);
+          if (m) {
+            var p = m[1].split(',').map(parseFloat);
+            var a = (p[3] === undefined) ? 1 : p[3];
+            if (a > 0.1) { return (0.2126 * p[0] + 0.7152 * p[1] + 0.0722 * p[2]) / 255 < 0.5; }
+          }
+          el = el.parentElement;
+        }
+        return false;
+      }
+
+      function track(e) {
+        tx = e.clientX; ty = e.clientY;
+        var t = 'translate(' + tx + 'px,' + ty + 'px)';
+        bodyL.style.transform = t; edgeL.style.transform = t;
+        if (!shown) { shown = true; bodyL.style.opacity = '1'; edgeL.style.opacity = '1'; }
+      }
+      addEventListener('mousemove', track, { passive: true });
+      addEventListener('pointermove', function (e) { if (e.pointerType !== 'touch') track(e); }, { passive: true });
+
+      document.documentElement.addEventListener('mouseleave', function () {
+        shown = false; bodyL.style.opacity = '0'; edgeL.style.opacity = '0';
+      });
+      document.documentElement.addEventListener('mouseenter', function () {
+        shown = true; bodyL.style.opacity = '1'; edgeL.style.opacity = '1';
+      });
+
+      document.addEventListener('mouseover', function (e) {
+        if (e.target.closest && e.target.closest(INTERACTIVE)) root.classList.add('ag-cur-hover');
+      });
+      document.addEventListener('mouseout', function (e) {
+        var to = e.relatedTarget;
+        if (e.target.closest && e.target.closest(INTERACTIVE) &&
+            !(to && to.closest && to.closest(INTERACTIVE))) {
+          root.classList.remove('ag-cur-hover');
+        }
+      });
+
+      function clickBurst(x, y) {
+        if (reduce) return;
+        var hand = root.classList.contains('ag-cur-hover');
+        var d    = hand ? HAND : ARROW;
+        var vb   = hand ? '0 0 16 16' : '0 0 11 17.5';
+        var w    = hand ? 18 : 13;
+        var h    = hand ? 18 : 20;
+        var lx   = hand ? (x - 8) : x;
+        var ly   = hand ? (y - 2) : y;
+        var orig = hand ? '8px 2px' : '0 0';
+
+        function spawn(strokeW, glow) {
+          var el = document.createElement('div');
+          el.setAttribute('aria-hidden', 'true');
+          el.style.cssText = 'position:fixed;left:' + lx + 'px;top:' + ly + 'px;pointer-events:none;z-index:2147483645;transform-origin:' + orig + ';';
+          el.innerHTML = '<svg width="' + w + '" height="' + h + '" viewBox="' + vb + '" style="display:block;overflow:visible;">' +
+            '<path d="' + d + '" fill="none" stroke="' + ACCENT + '" stroke-width="' + strokeW + '" stroke-linejoin="round"' +
+            (glow ? ' style="filter:drop-shadow(0 0 4px ' + ACCENT + ');"' : '') + '/></svg>';
+          document.body.appendChild(el);
+          return el;
+        }
+
+        var echo = spawn(1, false);
+        echo.animate([{ transform: 'scale(1)', opacity: .85 }, { transform: 'scale(2.3)', opacity: 0 }],
+          { duration: 294, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'forwards' });
+
+        var ignite = spawn(2.2, true);
+        ignite.animate([{ opacity: 0 }, { opacity: .95, offset: .3 }, { opacity: 0 }],
+          { duration: 210, easing: 'cubic-bezier(0.16,1,0.3,1)', fill: 'forwards' });
+
+        setTimeout(function () { echo.remove(); ignite.remove(); }, 360);
+      }
+
+      document.addEventListener('mousedown', function () { root.classList.add('ag-cur-press'); });
+      document.addEventListener('mouseup', function (e) {
+        root.classList.remove('ag-cur-press');
+        clickBurst(e.clientX, e.clientY);
+      });
+
+      function tick() {
+        if ((frame++ % 4) === 0) {
+          var el = document.elementFromPoint(tx, ty);
+          if (el) edgeL.style.setProperty('--cur-fill', isDarkBg(el) ? PAPER : INK);
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+
+    /* ═══ REVEAL OBSERVER (lifted) ═══ */
+    (function () {
+      var els = document.querySelectorAll('.reveal, .reveal-stagger');
+      document.querySelectorAll('.reveal-stagger').forEach(function (group) {
+        Array.prototype.forEach.call(group.children, function (child, i) { child.style.setProperty('--i', i); });
+      });
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('in-view'); }); return;
+      }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add('in-view'); obs.unobserve(entry.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      els.forEach(function (el) { obs.observe(el); });
+    })();
+
+    /* ═══ LENIS SMOOTH SCROLL (lifted) ═══ */
+    window.addEventListener('load', function () {
+      if (typeof Lenis === 'undefined') return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var lenis = new Lenis({ duration: 0.9, easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf); window.lenis = lenis;
+    });
+
+    /* ═══ ENGAGEMENT LAYER (count-up + chart trigger) ═══ */
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function fmt(v) { return Math.round(v).toLocaleString('en-US'); }
+      function countUp(el) {
+        var target = parseFloat(el.getAttribute('data-count'));
+        if (reduce || isNaN(target)) { el.textContent = fmt(target || 0); return; }
+        var dur = 1400, start = null;
+        function step(ts) {
+          if (!start) start = ts;
+          var p = Math.min((ts - start) / dur, 1);
+          var e = 1 - Math.pow(1 - p, 3);
+          el.textContent = fmt(target * e);
+          if (p < 1) requestAnimationFrame(step); else el.textContent = fmt(target);
+        }
+        requestAnimationFrame(step);
+      }
+      var counters = document.querySelectorAll('.cu[data-count]');
+      if (!('IntersectionObserver' in window)) {
+        counters.forEach(countUp);
+      } else {
+        var cObs = new IntersectionObserver(function (es) {
+          es.forEach(function (en) { if (en.isIntersecting) { countUp(en.target); cObs.unobserve(en.target); } });
+        }, { threshold: 0.6 });
+        counters.forEach(function (c) { cObs.observe(c); });
+      }
+      var fig = document.querySelector('.cd-chart-fig');
+      if (fig) {
+        if (reduce || !('IntersectionObserver' in window)) { fig.classList.add('lit'); }
+        else {
+          var fObs = new IntersectionObserver(function (es) {
+            es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('lit'); fObs.unobserve(en.target); } });
+          }, { threshold: 0.35 });
+          fObs.observe(fig);
+        }
+      }
+    })();
+
+    /* ═══ HOW-IT-WORKS DRAGGABLE FLOW SCRUBBER (net-new) ═══ */
+    (function () {
+      var track = document.getElementById('cdFlowTrack');
+      var nav = document.getElementById('cdFlowNav');
+      var thumb = document.getElementById('cdFlowThumb');
+      var hint = document.querySelector('.cd-flow-hint');
+      if (!track || !nav || !thumb) return;
+      var dragging = false, startX = 0, startLeft = 0;
+
+      function maxScroll() { return Math.max(0, track.scrollWidth - track.clientWidth); }
+      function sync() {
+        var ms = maxScroll(), navW = nav.clientWidth, tw = thumb.offsetWidth;
+        var p = ms > 0 ? track.scrollLeft / ms : 0;
+        thumb.style.left = Math.round(p * (navW - tw)) + 'px';
+        nav.setAttribute('aria-valuenow', Math.round(p * 100));
+      }
+      function layout() {
+        // fixed-width handle (a grabbable nav bar, not a proportional scrollbar) - width set in CSS
+        var scrollable = maxScroll() > 2;
+        nav.style.display = scrollable ? '' : 'none';
+        if (hint) hint.style.display = scrollable ? '' : 'none';
+        sync();
+      }
+
+      track.addEventListener('scroll', function () { if (!dragging) sync(); }, { passive: true });
+      window.addEventListener('resize', layout);
+      window.addEventListener('load', layout);
+
+      thumb.addEventListener('pointerdown', function (e) {
+        dragging = true; thumb.classList.add('is-grabbing'); track.classList.add('is-grabbing');
+        startX = e.clientX; startLeft = thumb.offsetLeft;
+        if (thumb.setPointerCapture) thumb.setPointerCapture(e.pointerId);
+        e.preventDefault();
+      });
+      thumb.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        var navW = nav.clientWidth, tw = thumb.offsetWidth, range = navW - tw;
+        var nl = Math.max(0, Math.min(range, startLeft + (e.clientX - startX)));
+        var p = range > 0 ? nl / range : 0;
+        track.scrollLeft = p * maxScroll();
+        thumb.style.left = nl + 'px';
+        nav.setAttribute('aria-valuenow', Math.round(p * 100));
+      });
+      function endThumb() { dragging = false; thumb.classList.remove('is-grabbing'); track.classList.remove('is-grabbing'); }
+      thumb.addEventListener('pointerup', endThumb);
+      thumb.addEventListener('pointercancel', endThumb);
+
+      nav.addEventListener('pointerdown', function (e) {
+        if (e.target === thumb || dragging) return;
+        var r = nav.getBoundingClientRect(), tw = thumb.offsetWidth, range = nav.clientWidth - tw;
+        var nl = Math.max(0, Math.min(range, (e.clientX - r.left) - tw / 2));
+        var p = range > 0 ? nl / range : 0;
+        track.scrollLeft = p * maxScroll();
+      });
+
+      var cd = false, csx = 0, csl = 0;
+      track.addEventListener('pointerdown', function (e) {
+        if (e.pointerType === 'touch') return;
+        cd = true; csx = e.clientX; csl = track.scrollLeft; track.classList.add('is-grabbing');
+      });
+      track.addEventListener('pointermove', function (e) {
+        if (!cd) return; track.scrollLeft = csl - (e.clientX - csx); e.preventDefault();
+      });
+      function endCard() { cd = false; track.classList.remove('is-grabbing'); }
+      track.addEventListener('pointerup', endCard);
+      track.addEventListener('pointerleave', endCard);
+      track.addEventListener('pointercancel', endCard);
+
+      layout();
+    })();
+  </script>
+</body>
+</html>
