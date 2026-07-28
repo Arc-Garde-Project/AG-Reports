@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="is-loading">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
 <title>Americana Tax Planning | Organic Launch Report (May 22-31, 2026)</title>
-<meta name="description" content="Organic content launch report for Americana Tax Planning. 16,984 views, 326 engagements, +24 net followers across 5 platforms in the 10-day launch window (May 22-31, 2026) - 170% of the view floor.">
+<meta name="description" content="Organic content launch report for Americana Tax Planning. 16,984 views, 326 engagements, +24 new followers (to 2,551 total) across 5 platforms in the 10-day launch window (May 22-31, 2026) - 170% of the view floor.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#030810">
 <link rel="canonical" href="https://ag-reports.vercel.app/reports/americana-tax/organic-launch">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Americana Tax Planning | Organic Launch Report (May 22-31, 2026)">
-<meta property="og:description" content="16,984 views, 326 engagements, +24 net followers across 5 platforms in the 10-day launch window - 170% of the view floor.">
+<meta property="og:description" content="16,984 views, 326 engagements, +24 new followers (to 2,551 total) across 5 platforms in the 10-day launch window - 170% of the view floor.">
 <meta property="og:url" content="https://ag-reports.vercel.app/reports/americana-tax/organic-launch">
 <meta property="og:image" content="https://ag-reports.vercel.app/assets/og-organic.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Americana Tax Planning | Organic Launch Report (May 22-31, 2026)">
-<meta name="twitter:description" content="16,984 views, 326 engagements, +24 net followers across 5 platforms in the 10-day launch window - 170% of the view floor.">
+<meta name="twitter:description" content="16,984 views, 326 engagements, +24 new followers (to 2,551 total) across 5 platforms in the 10-day launch window - 170% of the view floor.">
 <meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-organic.png">
-<link rel="icon" type="image/png" href="/assets/favicon.png">
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/assets/americana-tax/favicon.png">
+<link rel="apple-touch-icon" href="/assets/americana-tax/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@500;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --font-display: 'Playfair Display', system-ui, sans-serif;
@@ -64,6 +64,41 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===== AG REPORT CURTAIN (loading screen) ===== */
+html.is-loading { overflow: hidden; }
+.ag-curtain { position: fixed; inset: 0; z-index: 2147483645; background: var(--dark, #070605); display: flex; align-items: center; justify-content: center; opacity: 1; pointer-events: auto; transition: opacity 700ms cubic-bezier(0.16,1,0.3,1); }
+html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
+.ag-curtain::after { content:''; position:absolute; inset:0; pointer-events:none; z-index:5; opacity:0.05; mix-blend-mode:overlay; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.ld-layer { position:absolute; inset:0; display:grid; place-items:center; opacity:0; transition:opacity 600ms cubic-bezier(0.16,1,0.3,1); pointer-events:none; }
+.ag-curtain[data-phase="load"]  .ld-boot  { opacity:1; }
+.ag-curtain[data-phase="brand"] .ld-brand { opacity:1; }
+.ld-gold { background:linear-gradient(100deg,#b9965a 0%,#e3c489 26%,#fffdf6 48%,#e3c489 70%,#b9965a 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.ld-boot__in { display:flex; flex-direction:column; align-items:center; gap:clamp(20px,3.4vh,30px); transition:opacity 600ms cubic-bezier(0.16,1,0.3,1), transform 600ms cubic-bezier(0.16,1,0.3,1), filter 600ms ease; }
+.ag-curtain:not([data-phase="load"]) .ld-boot__in { opacity:0; transform:translateX(-26px) scale(0.96); filter:blur(4px); }
+.ld-mono { font-family:'Cinzel',serif; font-weight:600; font-size:clamp(2.6rem,8vw,4rem); letter-spacing:0.16em; padding-left:0.16em; line-height:1; animation:ld-mono-pulse 2.1s ease-in-out infinite; }
+@keyframes ld-mono-pulse { 0%,100%{ filter:drop-shadow(0 0 20px rgba(201,168,97,0.22)); } 50%{ filter:drop-shadow(0 0 34px rgba(201,168,97,0.44)); } }
+.ld-bar { width:clamp(150px,30vw,230px); height:2px; background:rgba(201,168,97,0.16); border-radius:2px; overflow:hidden; }
+.ld-bar i { display:block; height:100%; width:6%; border-radius:2px; background:linear-gradient(90deg,#b9965a,#fffdf6,#b9965a); animation:ld-fill 1.4s cubic-bezier(0.45,0.02,0.18,1) 0.15s forwards; }
+@keyframes ld-fill { to { width:100%; } }
+.ld-dots { display:flex; gap:9px; }
+.ld-dots b { width:6px; height:6px; border-radius:50%; background:#c9a861; opacity:0.3; animation:ld-dot 1.2s ease-in-out infinite; }
+.ld-dots b:nth-child(2){ animation-delay:0.16s; }
+.ld-dots b:nth-child(3){ animation-delay:0.32s; }
+@keyframes ld-dot { 0%,100%{ opacity:0.25; transform:translateY(0); } 50%{ opacity:1; transform:translateY(-4px); } }
+.ld-brand__in { display:flex; flex-direction:column; align-items:center; gap:clamp(11px,1.9vh,17px); }
+.ld-wm { position:relative; font-family:'Cinzel',serif; font-weight:600; font-size:clamp(2.1rem,9vw,4.6rem); letter-spacing:0.14em; margin-right:-0.14em; line-height:1; white-space:nowrap; }
+.ag-curtain[data-phase="brand"] .ld-wm { animation:ld-swoosh 900ms cubic-bezier(0.16,1,0.3,1) 0s both, ld-glare 1000ms linear 0.1s both; }
+@keyframes ld-swoosh { 0%{ opacity:0; transform:translateY(10px); filter:blur(8px); } 60%{ opacity:1; } 100%{ opacity:1; transform:translateY(0); filter:blur(0); } }
+.ld-wm.ld-gold { background-image:linear-gradient(100deg,transparent 28%,rgba(255,255,255,0.7) 40%,#ffffff 47%,#ffffff 53%,rgba(255,255,255,0.7) 60%,transparent 72%),linear-gradient(100deg,#b9965a 0%,#d8b06e 28%,#f2d9a0 50%,#d8b06e 72%,#b9965a 100%); background-repeat:no-repeat,no-repeat; background-size:220% 100%,100% 100%; background-position:-120% 0,0 0; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; }
+@keyframes ld-glare { 0%{ background-position:-120% 0,0 0; } 100%{ background-position:220% 0,0 0; } }
+.ld-rule { width:0; height:1px; background:linear-gradient(90deg, transparent, #c9a861, transparent); }
+.ag-curtain[data-phase="brand"] .ld-rule { animation:ld-rule-draw 700ms cubic-bezier(0.16,1,0.3,1) 260ms both; }
+@keyframes ld-rule-draw { from{ width:0; } to{ width:clamp(120px,26vw,200px); } }
+.ld-sub { font-family:'Inter',sans-serif; font-weight:500; font-size:clamp(0.7rem,1.7vw,0.84rem); letter-spacing:0.44em; text-transform:uppercase; color:#c9a861; padding-left:0.44em; opacity:0; }
+.ag-curtain[data-phase="brand"] .ld-sub { animation:ld-sub-in 700ms cubic-bezier(0.16,1,0.3,1) 380ms both; }
+@keyframes ld-sub-in { from{ opacity:0; transform:translateY(6px); } to{ opacity:0.92; transform:translateY(0); } }
+@media (prefers-reduced-motion:reduce){ .ag-curtain{ transition:none; } .ld-layer{ transition:none; } .ld-bar i{ width:100%!important; animation:none!important; } .ld-wm,.ld-mono{ animation:none!important; } .ld-rule{ width:clamp(120px,26vw,200px)!important; animation:none!important; } .ld-sub{ opacity:0.92!important; animation:none!important; } }
 
 .skip-link {
   position: absolute; top: -100%; left: 16px; z-index: 10000;
@@ -900,6 +935,10 @@ button, a {
   font-size: 9px; letter-spacing: 0.2em;
   color: var(--cream35);
 }
+.ag-report-footer { text-align: center; padding: 40px 24px calc(40px + env(safe-area-inset-bottom)); background: var(--dark); border-top: 1px solid rgba(255,255,255,0.06); font-family: var(--font-body); font-size: 13px; letter-spacing: 0.06em; color: rgba(var(--cream-rgb), 0.42); }
+.ag-report-footer a { color: var(--accent-bright); font-weight: 600; text-decoration: none; transition: color 0.3s; }
+@media (hover: hover) { .ag-report-footer a:hover { color: #fff; } }
+.ag-report-disclaimer { font-size: 11px; line-height: 1.5; letter-spacing: 0.03em; max-width: 560px; margin: 0 auto 14px; opacity: 0.8; }
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
@@ -957,6 +996,43 @@ main.fading { opacity: 0.18; }
 </style>
 </head>
 <body>
+<!-- AG REPORT CURTAIN — first child of body (paints before everything) -->
+<div class="ag-curtain" data-phase="load" aria-hidden="true">
+  <div class="ld-layer ld-boot">
+    <div class="ld-boot__in">
+      <div class="ld-mono ld-gold">AG</div>
+      <div class="ld-bar"><i></i></div>
+      <div class="ld-dots"><b></b><b></b><b></b></div>
+    </div>
+  </div>
+  <div class="ld-layer ld-brand">
+    <div class="ld-brand__in">
+      <div class="ld-wm ld-gold">ARC&nbsp;GARDE</div>
+      <div class="ld-rule"></div>
+      <div class="ld-sub">Report</div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var C = document.querySelector('.ag-curtain'), root = document.documentElement;
+  if (!C) { root.classList.remove('is-loading'); return; }
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var MIN = 2520, BRAND_AT = 1400, CLEANUP = 900, MAX = 6000, start = performance.now(), done = false;
+  function lift(){
+    if (done) return; done = true;
+    root.classList.remove('is-loading'); root.classList.add('is-ready');
+    window.dispatchEvent(new CustomEvent('ag:ready'));
+    setTimeout(function(){ if (C.parentNode) C.parentNode.removeChild(C); }, CLEANUP);
+  }
+  if (reduce) { lift(); return; }
+  setTimeout(function(){ C.setAttribute('data-phase','brand'); }, BRAND_AT);
+  function schedule(){ setTimeout(lift, Math.max(0, MIN - (performance.now() - start))); }
+  if (document.readyState === 'complete') schedule();
+  else window.addEventListener('load', schedule, { once:true });
+  setTimeout(lift, MAX); // fail-open
+})();
+</script>
 
 <a class="skip-link" href="#cover">Skip to content</a>
 <div class="scroll-progress" id="scroll-progress"></div>
@@ -975,6 +1051,7 @@ main.fading { opacity: 0.18; }
   <div class="reports-modal-body" data-lenis-prevent>
     <div class="reports-nav-group">Organic Content</div>
     <a href="/reports/americana-tax/organic-launch" class="reports-nav-link active">Launch Report<span>May 22-31</span></a>
+    <a href="/reports/americana-tax/jun-2026" class="reports-nav-link">June 2026<span>Jun 1 – 30, 2026</span></a>
     <div class="reports-nav-divider"></div>
     <a href="/reports/americana-tax" class="reports-nav-link">All Reports<span>Index</span></a>
   </div>
@@ -995,7 +1072,7 @@ main.fading { opacity: 0.18; }
   <header class="cover-block">
     <p class="brand-label reveal">Arc Garde Organic Content</p>
     <div class="logo-row reveal">
-      <img src="https://americanataxplanning.com/wp-content/uploads/2020/03/americana-tax-planning-logo.png" alt="Americana Tax Planning" class="cover-logo" id="logo-rp" style="filter: drop-shadow(0 6px 24px rgba(0,0,0,0.45));">
+      <img src="/assets/americana-tax/logo.png" alt="Americana Tax Planning" class="cover-logo" id="logo-rp" style="filter: drop-shadow(0 6px 24px rgba(0,0,0,0.45));">
     </div>
     <h1 class="cover-sub reveal" style="font-family: var(--font-body); font-weight: 400;">Organic Launch Report &middot; May 22-31, 2026</h1>
     <div class="cover-divider reveal"></div>
@@ -1018,8 +1095,8 @@ main.fading { opacity: 0.18; }
       <span class="stat-lbl">Total Engagement</span>
     </div>
     <div class="stat reveal">
-      <span class="stat-num" id="s-fol">+24</span>
-      <span class="stat-lbl">Net Followers</span>
+      <span class="stat-num" id="s-fol">2,551</span>
+      <span class="stat-lbl">Total Followers</span>
     </div>
     <div class="stat reveal">
       <span class="stat-num" id="s-top">11,722</span>
@@ -1038,21 +1115,21 @@ main.fading { opacity: 0.18; }
 
   <p class="eyebrow reveal">Before &amp; After</p>
   <p class="reveal" style="font-size: 16px; font-style: italic; color: var(--text60); margin-bottom: 36px; max-width: 700px;">
-    Where the accounts stood at launch on May 22, and where they sat 10 days later.
+    Their total follower base before AG launched on May 22, and where it stood when the 10-day window closed on May 31.
   </p>
 
   <div class="ba-wrap">
     <div class="ba-grid">
       <div class="ba-col reveal--left reveal" style="background: rgba(var(--text-rgb), 0.04); border-color: rgba(var(--text-rgb), 0.08);">
-        <p class="ba-period" style="color: var(--text35);">May 22, 2026</p>
+        <p class="ba-period" style="color: var(--text35);">Before AG (May 22, 2026)</p>
         <p class="ba-num" style="color: var(--text);" id="ba-before"></p>
-        <p class="ba-meta" style="color: var(--text60);">followers at launch</p>
+        <p class="ba-meta" style="color: var(--text60);">total followers, before launch</p>
       </div>
       <div class="ba-arrow reveal" style="color: var(--accent-deep);">&rsaquo;&rsaquo;&rsaquo;</div>
       <div class="ba-col reveal--right reveal" style="background: rgba(var(--accent-rgb), 0.06); border-color: rgba(var(--accent-rgb), 0.18);">
-        <p class="ba-period" style="color: var(--accent-deep);">May 31, 2026</p>
+        <p class="ba-period" style="color: var(--accent-deep);">End of launch (May 31, 2026)</p>
         <p class="ba-num" style="color: var(--text);" id="ba-after"></p>
-        <p class="ba-meta" style="color: var(--text60);">followers, window close</p>
+        <p class="ba-meta" style="color: var(--text60);">total followers, window close</p>
       </div>
     </div>
 
@@ -1077,7 +1154,7 @@ main.fading { opacity: 0.18; }
     <div class="kpi-toggles">
       <button class="kpi-toggle active" data-metric="views">Views</button>
       <button class="kpi-toggle" data-metric="eng">Engagement</button>
-      <button class="kpi-toggle" data-metric="fol">Follower Change</button>
+      <button class="kpi-toggle" data-metric="fol">New Followers</button>
     </div>
     <div class="chart-box">
       <p class="chart-title" id="chart-title">Cumulative Views Delivered</p>
@@ -1130,7 +1207,7 @@ main.fading { opacity: 0.18; }
       <div class="compare-stat-row" style="border-color: rgba(29, 78, 216, 0.25);"><span class="compare-stat-lbl" style="color: rgba(91, 127, 224, 0.85);">Basis</span><span class="compare-stat-val" style="color: #fff;">200 views / account / day</span></div>
       <div class="compare-stat-row" style="border-color: rgba(29, 78, 216, 0.25);"><span class="compare-stat-lbl" style="color: rgba(91, 127, 224, 0.85);">Window</span><span class="compare-stat-val" style="color: #fff;">10 days</span></div>
       <div class="compare-stat-row" style="border-color: rgba(29, 78, 216, 0.25);"><span class="compare-stat-lbl" style="color: rgba(91, 127, 224, 0.85);">Reporting Platforms</span><span class="compare-stat-val" style="color: #fff;">5</span></div>
-      <div class="compare-stat-row" style="border-color: rgba(29, 78, 216, 0.25);"><span class="compare-stat-lbl" style="color: rgba(91, 127, 224, 0.85);">Starting Followers</span><span class="compare-stat-val" style="color: #fff;">0</span></div>
+      <div class="compare-stat-row" style="border-color: rgba(29, 78, 216, 0.25);"><span class="compare-stat-lbl" style="color: rgba(91, 127, 224, 0.85);">Followers Before AG</span><span class="compare-stat-val" style="color: #fff;">2,527</span></div>
     </div>
 
     <div class="compare-col compare-col--current reveal--right reveal" style="background: linear-gradient(135deg, #0A1228 0%, #1B3367 50%, #2563EB 100%); border: 1px solid rgba(59, 130, 246, 0.5); color: #fff; box-shadow: 0 16px 48px rgba(29, 78, 216, 0.4);">
@@ -1138,17 +1215,22 @@ main.fading { opacity: 0.18; }
       <div class="compare-stat-row" style="border-color: rgba(147, 180, 250, 0.22);"><span class="compare-stat-lbl" style="color: rgba(147, 180, 250, 0.85);">Total Views</span><span class="compare-stat-val" style="color: #fff;">16,984</span></div>
       <div class="compare-stat-row" style="border-color: rgba(147, 180, 250, 0.22);"><span class="compare-stat-lbl" style="color: rgba(147, 180, 250, 0.85);">Floor Performance</span><span class="compare-stat-val" style="color: #fff;">170%</span></div>
       <div class="compare-stat-row" style="border-color: rgba(147, 180, 250, 0.22);"><span class="compare-stat-lbl" style="color: rgba(147, 180, 250, 0.85);">Engagement</span><span class="compare-stat-val" style="color: #fff;">326</span></div>
-      <div class="compare-stat-row" style="border-color: rgba(147, 180, 250, 0.22);"><span class="compare-stat-lbl" style="color: rgba(147, 180, 250, 0.85);">Net Followers</span><span class="compare-stat-val" style="color: #fff;">+24</span></div>
+      <div class="compare-stat-row" style="border-color: rgba(147, 180, 250, 0.22);"><span class="compare-stat-lbl" style="color: rgba(147, 180, 250, 0.85);">New Followers</span><span class="compare-stat-val" style="color: #fff;">+24</span></div>
       <div class="compare-stat-row" style="border-color: rgba(147, 180, 250, 0.22);"><span class="compare-stat-lbl" style="color: rgba(147, 180, 250, 0.85);">Top Platform Views</span><span class="compare-stat-val" style="color: #fff;">Instagram 11,722</span></div>
     </div>
   </div>
 
   <p class="reveal" style="font-size: 14px; font-style: italic; color: var(--text60); margin-top: 24px; max-width: 720px;">
-    The launch cleared the floor with 70% to spare in 10 days &mdash; with LinkedIn, Threads, and Google Maps still to come online.
+    The launch cleared the floor with 70% to spare in 10 days, with LinkedIn, Threads, and Google Maps still to come online.
   </p>
 </section>
 
 </main>
+
+<footer class="ag-report-footer">
+  <p class="ag-report-disclaimer">Figures are compiled from each platform&rsquo;s native analytics and may carry a margin of error of up to &plusmn;3%.</p>
+  Powered by <a href="https://www.arcgarde.com" target="_blank" rel="noopener">Arc Garde</a>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
@@ -1193,10 +1275,10 @@ main.fading { opacity: 0.18; }
         eng:   [326],
         fol:   [24]
       },
-      totals: {views:16984, eng:326, folBefore:0, folAfter:24, folNet:24},
+      totals: {views:16984, eng:326, folBefore:2527, folAfter:2551, folNet:24},
       topPlat: 'Instagram', topPlatVal: '11,722',
       heroContext: 'Total <strong>views delivered</strong> across 5 platforms in the 10-day launch window.<br><strong>16,984</strong> total views, from a standing start.<br><strong>170%</strong> of the 10,000 view floor.',
-      baSummary: 'Launch window: <strong>16,984 views</strong>, <strong>326 engagements</strong>, <strong class="g">+24 net followers</strong>.<br>Across 5 platforms, from a standing start of 0.<br>Instagram led on reach and engagement; YouTube cleared 1,756 views on 7 shorts.'
+      baSummary: 'Launch window: <strong>16,984 views</strong>, <strong>326 engagements</strong>, <strong class="g">+24 new followers</strong> (2,527 &rarr; 2,551).<br>Across 5 platforms.<br>Instagram led on reach and engagement; YouTube cleared 1,756 views on 7 shorts.'
     }
   };
 
@@ -1330,7 +1412,7 @@ main.fading { opacity: 0.18; }
     document.getElementById('hero-context').innerHTML = b.heroContext;
     document.getElementById('s-views').textContent = fmt(b.totals.views);
     document.getElementById('s-eng').textContent = fmt(b.totals.eng);
-    document.getElementById('s-fol').textContent = fmtSigned(b.totals.folNet);
+    document.getElementById('s-fol').textContent = fmt(b.totals.folAfter);
     /* Top Platform stat: big views number with brand icon + name in the label */
     const tpColor = platColors[b.topPlat] || 'var(--accent)';
     const tpSVG = platSVGs[b.topPlat] || '';
@@ -1429,11 +1511,11 @@ main.fading { opacity: 0.18; }
   }
 
   function updateChartTitles() {
-    const titles = {views: 'Cumulative Views Delivered', eng: 'Cumulative Engagement Delivered', fol: 'Cumulative Follower Change'};
+    const titles = {views: 'Cumulative Views Delivered', eng: 'Cumulative Engagement Delivered', fol: 'New Followers Gained'};
     const descs = {
       views: 'Total views built up from zero, May 22 through May 31, 2026',
       eng: 'Total interactions built up from zero, May 22 through May 31, 2026',
-      fol: 'Net follower change across the launch window, May 22 through May 31, 2026'
+      fol: 'New followers gained across the launch window, May 22 through May 31, 2026'
     };
     document.getElementById('chart-title').textContent = titles[metric];
     document.getElementById('chart-desc').textContent = descs[metric];
