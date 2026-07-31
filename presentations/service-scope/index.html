@@ -189,6 +189,79 @@ body.is-locked { overflow: hidden; position: fixed; width: 100%; top: calc(-1 * 
 @media (prefers-reduced-motion: reduce) { .ag-cursor__arrow, .ag-cursor__hand, .ag-cursor__body, .ag-cursor__edge { transition: none; } }
 
 /* =========================================================== */
+/* MOTION PASS - AG-MOTION-STANDARD v2.5                        */
+/*                                                              */
+/* Choreography and variety, NOT more motion. Dopamine Killer   */
+/* #5: uniform fade-ups become white noise by the third screen. */
+/*                                                              */
+/* Deliberately NOT used, both banned by the same standard:     */
+/*   - parallax on decorative elements (Dopamine Killer #2; §9  */
+/*     calls the marquee "the sanctioned exception to the       */
+/*     parallax ban"). The older feedback_scroll_animations     */
+/*     memory still lists it and is stale.                      */
+/*   - horizontal / directional reveals (Dopamine Killer #1;    */
+/*     §8's own table scopes them to multi-section landing and  */
+/*     story flows, not editorial single-column content).       */
+/* =========================================================== */
+
+/* --- First-Paint Sequence (§First-Paint Sequence, delay ladder verbatim).
+       Hard Rule 10: this is the ONE hero animation on the page. --- */
+.hero-arrive {
+  opacity: 0;
+  transform: translateY(var(--dist-base));
+  animation: heroArrive var(--duration-long) var(--ease-satisfying) forwards;
+  animation-delay: var(--hero-delay, 0ms);
+}
+.hero-arrive--title { transform: translateY(var(--dist-lg)) scale(0.98); }
+.hero-d0 { --hero-delay: 0ms; }
+.hero-d1 { --hero-delay: 120ms; }   /* 3 x 40  */
+.hero-d2 { --hero-delay: 280ms; }   /* 7 x 40  */
+.hero-d3 { --hero-delay: 441ms; }   /* 3x7x21  */
+.hero-d4 { --hero-delay: 560ms; }   /* 7 x 80  */
+@keyframes heroArrive { to { opacity: 1; transform: translateY(0) scale(1); } }
+
+/* --- Stagger cap. 9 rows x 81ms left the last row waiting 648ms, which reads
+       as lag rather than rhythm. Clamped at index 5. Hard Rule 7 (63-126ms). --- */
+.reveal-stagger > *:nth-child(n+6) { transition-delay: 405ms; }
+
+/* --- Section rule: draws in, then a gold highlight sweeps it once. --- */
+.sec-rule { position: relative; overflow: hidden; }
+.sec-rule::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 0%, var(--gold-light) 50%, transparent 100%);
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.sec-rule.in-view::after {
+  animation: ruleSweep var(--duration-long) var(--ease-soft) 300ms forwards;
+}
+@keyframes ruleSweep {
+  0%   { transform: translateX(-100%); opacity: 0; }
+  30%  { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+/* --- Count-up: fixed width so the row does not reflow while digits change.
+       Animating layout is Hard Rule 5. --- */
+.cnt { font-variant-numeric: tabular-nums lining-nums; }
+
+/* --- The close: the combined price gets one gold breath on arrival. --- */
+.total-v { transition: text-shadow var(--duration-long) var(--ease-soft); }
+.total .in-view .total-v,
+.total.in-view .total-v { animation: goldBreath var(--duration-long) var(--ease-soft) 420ms; }
+@keyframes goldBreath {
+  0%   { text-shadow: 0 0 0 rgba(201,163,106,0); }
+  50%  { text-shadow: 0 0 21px rgba(201,163,106,0.45); }
+  100% { text-shadow: 0 0 0 rgba(201,163,106,0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-arrive { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .sec-rule.in-view::after,
+  .total.in-view .total-v { animation: none !important; }
+}
+
+/* =========================================================== */
 /* AG FLUID TOKENS - mandatory :root block (.claude/rules/web-css.md) */
 /* =========================================================== */
 :root {
@@ -251,51 +324,78 @@ body {
 }
 
 /* ── HERO ──────────────────────────────────────────────── */
-.hero {
+/* Two-stage hero. Stage 1 holds the brand lockup alone at first paint; stage 2
+   brings the document title in on scroll. No pin or scrub needed: stage 1 is a
+   full viewport, so the title simply is not on screen until you move. */
+.hero { position: relative; }
+
+.hero-stage {
   position: relative;
-  /* Sized to the composition, not to the screen. A full 100dvh box left the
-     content floating in ~260px of void top and bottom at 1440x900; capping it
-     also lets section 1 peek, which invites the scroll. */
-  min-height: min(82svh, 720px);
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center;
-  padding-block: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
   overflow: hidden;
 }
-.hero::before {
+.hero-stage--brand {
+  min-height: 100dvh;                 /* MOB-20: dvh for a hero seen before scroll */
+  padding-block: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
+}
+.hero-stage--title {
+  min-height: min(78svh, 680px);      /* svh: this one is seen DURING scroll */
+  padding-block: clamp(3rem, 2rem + 3vw, 5rem);
+}
+/* Static warm glow. Deliberately NOT pointer-tracking: the flashlight effect
+   was tried and cut. */
+.hero-stage::before {
   content: ""; position: absolute; inset: 0; z-index: 0;
   background: radial-gradient(56% 42% at 50% 46%,
               rgba(212,161,92,0.17) 0%, rgba(212,161,92,0.05) 44%, rgba(212,161,92,0) 74%);
   pointer-events: none;
 }
-.hero > * { position: relative; z-index: 1; }
+.hero-stage--title::before { opacity: 0.62; }
+.hero-stage > * { position: relative; z-index: 1; }
+
+/* Title stage entrance: h1 rises and settles, sub follows a beat later.
+   Same language as the hero ladder, triggered by the observer instead of load. */
+.reveal-title {
+  opacity: 0;
+  transform: translateY(var(--dist-lg)) scale(0.98);
+  transition: opacity var(--duration-long) var(--ease-satisfying),
+              transform var(--duration-long) var(--ease-satisfying);
+  will-change: opacity, transform;
+}
+.reveal-title--sub {
+  transform: translateY(var(--dist-base));
+  transition-delay: 120ms;            /* 3 x 40 */
+}
+.reveal-title.in-view { opacity: 1; transform: translateY(0) scale(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-title {
+    transition: none !important; opacity: 1 !important; transform: none !important;
+  }
+}
 
 .mast-brand {
   font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(1.125rem, 0.85rem + 1.18vw, 1.75rem);
-  letter-spacing: 0.42em; text-indent: 0.42em;
+  /* The wordmark now leads the hero. Tracking eases 0.42em -> 0.3em because
+     display sizes need less of it, and 0.42em at this scale overflowed 390px. */
+  font-size: clamp(2.125rem, 1.25rem + 4.2vw, 5.5rem);
+  letter-spacing: 0.3em; text-indent: 0.3em;
   text-transform: uppercase; color: var(--ink);
-}
-.mast-rule {
-  width: 74px; height: 1.6px; background: var(--gold);
-  margin: 0.85rem auto 0;
+  line-height: 1.05;
 }
 .mast-tag {
-  margin-top: 0.75rem;
-  font-size: 0.75rem; letter-spacing: 0.28em; text-indent: 0.28em;
+  /* Sits tight under the wordmark now that the gold rule between them is gone. */
+  margin-top: clamp(0.5rem, 0.35rem + 0.4vw, 0.9rem);
+  font-size: clamp(0.6875rem, 0.63rem + 0.24vw, 0.8125rem);
+  letter-spacing: 0.28em; text-indent: 0.28em;
   text-transform: uppercase; color: var(--ink-faint); font-weight: 400;
 }
 
-.hero-kicker {
-  /* Was clamp(3rem, 1.5rem + 6vw, 6rem) = 96px at 1440, which split the
-     masthead and the title into two unrelated blocks. */
-  margin-top: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem);
-  font-size: 0.75rem; letter-spacing: 0.36em; text-indent: 0.36em;
-  text-transform: uppercase; color: var(--gold); font-weight: 600;
-}
 .hero h1 {
-  margin-top: 1.1rem;
+  /* Carries the block separation the removed kicker used to provide. */
+  margin-top: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem);
   font-family: var(--font-display); font-weight: 600;
   font-size: var(--text-hero); line-height: 1.06;
   letter-spacing: 0.06em; text-indent: 0.06em;
@@ -309,11 +409,12 @@ body {
   color: var(--ink-soft); text-wrap: balance;
 }
 
-/* In flow, not pinned to the hero floor. Absolutely positioning it while the
-   content is centred forced a ~180px gap between the sub and the chevron that
-   no amount of hero-height tuning could close. */
+/* Pinned to the bottom of stage 1. It sat in flow while the hero was a short
+   single block (centring it there opened a ~180px hole); now that stage 1 is a
+   full viewport, the bottom edge is where a scroll cue belongs. */
 .chev {
-  margin-top: clamp(2.25rem, 1.5rem + 2.2vw, 3.5rem);
+  position: absolute; left: 50%; bottom: clamp(1.75rem, 3.5vh, 3rem);
+  transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 4px;
   z-index: 1;
 }
@@ -421,6 +522,15 @@ body {
   .led-row:hover { background: rgba(201, 163, 106, 0.05); }
   .led-row:hover::before { transform: scaleY(1); }
   .led-row:hover .led-v { color: var(--ink); }
+  /* .led-v is INSIDE the stagger child, not the child itself, so a hover
+     transform here cannot be clobbered by reveal-stagger
+     (feedback_reveal_stagger_clobbers_hover). 3px per the Cards rule. */
+  .led-k, .led-v { transition: transform var(--duration-quick) var(--ease-satisfying),
+                               color var(--duration-quick) var(--ease-soft); }
+  .led-row:hover .led-k, .led-row:hover .led-v { transform: translateX(3px); }
+}
+@media (max-width: 900px) {
+  .led-row:hover .led-k, .led-row:hover .led-v { transform: none; }
 }
 
 /* ── COST BAND ─────────────────────────────────────────── */
@@ -558,16 +668,22 @@ body {
 
 <!-- ═══ HERO - no header bar, no loading curtain (presentation law) ═══ -->
 <header class="hero">
-  <div class="shell reveal-hero">
-    <div class="mast-brand">Arc Garde</div>
-    <div class="mast-rule"></div>
-    <div class="mast-tag">Strategic Growth Partners</div>
-
-    <p class="hero-kicker">Services &middot; Scope &middot; Pricing</p>
-    <h1>Service Scope</h1>
-    <p class="hero-sub">What each service includes, and what it costs.</p>
+  <!-- Stage 1: the brand lockup is ALL that is on screen at first paint. -->
+  <div class="hero-stage hero-stage--brand">
+    <div class="shell">
+      <div class="mast-brand hero-arrive hero-d0">Arc Garde</div>
+      <div class="mast-tag hero-arrive hero-d1">Strategic Growth Partners</div>
+    </div>
+    <div class="chev hero-arrive hero-d2" aria-hidden="true"><span></span><span></span></div>
   </div>
-  <div class="chev" aria-hidden="true"><span></span><span></span></div>
+
+  <!-- Stage 2: the document title arrives on scroll. -->
+  <div class="hero-stage hero-stage--title">
+    <div class="shell">
+      <h1 class="reveal-title">Service Scope</h1>
+      <p class="hero-sub reveal-title reveal-title--sub">What each service includes, and what it costs.</p>
+    </div>
+  </div>
 </header>
 
 <main id="main">
@@ -575,14 +691,14 @@ body {
   <!-- ═══ 1 · PAID ADS ═══ -->
   <section class="sec" aria-labelledby="sec-1">
     <div class="shell">
-      <div class="reveal">
-        <div class="sec-head">
+      <div>
+        <div class="sec-head reveal-stagger">
           <span class="sec-num num">1</span>
           <h2 class="sec-title" id="sec-1">Paid Ads</h2>
-          <span class="sec-price">$2,800&nbsp;/&nbsp;month</span>
+          <span class="sec-price">$<span class="cnt" data-to="2800">2,800</span>&nbsp;/&nbsp;month</span>
         </div>
         <div class="sec-rule"></div>
-        <p class="sec-note">Meta only (Facebook and Instagram). Other platforms by exception.</p>
+        <p class="sec-note reveal">Meta only (Facebook and Instagram). Other platforms by exception.</p>
       </div>
 
       <div class="ledger reveal-stagger">
@@ -616,14 +732,14 @@ body {
   <!-- ═══ 2 · CRM AND AUTOMATION ═══ -->
   <section class="sec sec--band" aria-labelledby="sec-2">
     <div class="shell">
-      <div class="reveal">
-        <div class="sec-head">
+      <div>
+        <div class="sec-head reveal-stagger">
           <span class="sec-num num">2</span>
           <h2 class="sec-title" id="sec-2">CRM and Automation</h2>
           <span class="sec-price sec-price--soft">Client pays the platform</span>
         </div>
         <div class="sec-rule"></div>
-        <p class="sec-note">The account is theirs, in their name, paid direct. We build and run everything inside it.</p>
+        <p class="sec-note reveal">The account is theirs, in their name, paid direct. We build and run everything inside it.</p>
       </div>
 
       <div class="ledger reveal-stagger">
@@ -654,14 +770,14 @@ body {
   <!-- ═══ 3 · ORGANIC, 2X A DAY ═══ -->
   <section class="sec" aria-labelledby="sec-3">
     <div class="shell">
-      <div class="reveal">
-        <div class="sec-head">
+      <div>
+        <div class="sec-head reveal-stagger">
           <span class="sec-num num">3</span>
           <h2 class="sec-title" id="sec-3">Organic, 2x a Day</h2>
-          <span class="sec-price">$2,300&nbsp;/&nbsp;month</span>
+          <span class="sec-price">$<span class="cnt" data-to="2300">2,300</span>&nbsp;/&nbsp;month</span>
         </div>
         <div class="sec-rule"></div>
-        <p class="sec-note">7 platforms: Facebook, Instagram, TikTok, YouTube, LinkedIn, X, Threads.</p>
+        <p class="sec-note reveal">7 platforms: Facebook, Instagram, TikTok, YouTube, LinkedIn, X, Threads.</p>
       </div>
 
       <div class="ledger reveal-stagger">
@@ -680,14 +796,14 @@ body {
   <!-- ═══ 4 · ORGANIC, 3X A DAY ═══ -->
   <section class="sec sec--band" aria-labelledby="sec-4">
     <div class="shell">
-      <div class="reveal">
-        <div class="sec-head">
+      <div>
+        <div class="sec-head reveal-stagger">
           <span class="sec-num num">4</span>
           <h2 class="sec-title" id="sec-4">Organic, 3x a Day</h2>
-          <span class="sec-price">$3,100&nbsp;/&nbsp;month</span>
+          <span class="sec-price">$<span class="cnt" data-to="3100">3,100</span>&nbsp;/&nbsp;month</span>
         </div>
         <div class="sec-rule"></div>
-        <p class="sec-note">Same system, same platforms, more volume. Everything in Section 3 still applies.</p>
+        <p class="sec-note reveal">Same system, same platforms, more volume. Everything in Section 3 still applies.</p>
       </div>
 
       <div class="ledger reveal-stagger">
@@ -701,8 +817,8 @@ body {
   <!-- ═══ 5 · TOGETHER ═══ -->
   <section class="sec" aria-labelledby="sec-5">
     <div class="shell">
-      <div class="reveal">
-        <div class="sec-head">
+      <div>
+        <div class="sec-head reveal-stagger">
           <span class="sec-num num">5</span>
           <h2 class="sec-title" id="sec-5">Together</h2>
         </div>
@@ -710,8 +826,8 @@ body {
       </div>
 
       <div class="total reveal">
-        <div class="total-row"><span class="total-k">Organic 2x a day plus paid ads</span><span class="total-v">$5,100&nbsp;/&nbsp;month</span></div>
-        <div class="total-row"><span class="total-k">Organic 3x a day plus paid ads</span><span class="total-v">$5,900&nbsp;/&nbsp;month</span></div>
+        <div class="total-row"><span class="total-k">Organic 2x a day plus paid ads</span><span class="total-v">$<span class="cnt" data-to="5100">5,100</span>&nbsp;/&nbsp;month</span></div>
+        <div class="total-row"><span class="total-k">Organic 3x a day plus paid ads</span><span class="total-v">$<span class="cnt" data-to="5900">5,900</span>&nbsp;/&nbsp;month</span></div>
         <div class="total-row"><span class="total-k">Ad spend and CRM, every time</span><span class="total-v total-v--soft">Separate, paid direct</span></div>
       </div>
     </div>
@@ -830,7 +946,7 @@ body {
 /* AG Motion v2.5 - ag-motion.js - lifted verbatim, plus .sec-rule in the selector
    so the drawing underline is driven by the same single IntersectionObserver. */
 (function () {
-  const REVEAL_SELECTOR = '.reveal, .reveal-hero, .reveal-stagger, .reveal-cinematic, .sec-rule';
+  const REVEAL_SELECTOR = '.reveal, .reveal-hero, .reveal-stagger, .reveal-cinematic, .sec-rule, .reveal-title';
   const REVEAL_THRESHOLD = 0.15;
   const REVEAL_ROOT_MARGIN = '0px 0px -10% 0px';
 
@@ -853,6 +969,49 @@ body {
   });
 
   document.querySelectorAll(REVEAL_SELECTOR).forEach(el => { observer.observe(el); });
+})();
+</script>
+
+<script>
+/* Count-up on the prices. The final figure is already in the HTML, so this is
+   pure enhancement: if the script never runs, the right number is on screen. */
+(function () {
+  var els = document.querySelectorAll('.cnt');
+  if (!els.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var fmt = function (n) { return n.toLocaleString('en-US'); };
+
+  var run = function (el) {
+    var to = parseInt(el.getAttribute('data-to'), 10);
+    if (!isFinite(to)) return;
+
+    /* Lock the box at its FINAL width before counting. Digit count changes as
+       it climbs, and a reflowing row would violate Hard Rule 5. */
+    el.style.display = 'inline-block';
+    el.style.minWidth = el.getBoundingClientRect().width + 'px';
+    el.style.textAlign = 'right';
+
+    var DUR = 900;                                   /* --duration-long */
+    var start = null;
+    var step = function (ts) {
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / DUR, 1);
+      var eased = (p === 1) ? 1 : 1 - Math.pow(2, -10 * p);   /* easeOutExpo */
+      el.textContent = fmt(Math.round(to * eased));
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = fmt(to);                 /* always land exact */
+    };
+    requestAnimationFrame(step);
+  };
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { run(e.target); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.6 });
+
+  els.forEach(function (el) { io.observe(el); });
 })();
 </script>
 
