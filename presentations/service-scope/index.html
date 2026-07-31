@@ -253,11 +253,14 @@ body {
 /* ── HERO ──────────────────────────────────────────────── */
 .hero {
   position: relative;
-  min-height: 100dvh;
+  /* Sized to the composition, not to the screen. A full 100dvh box left the
+     content floating in ~260px of void top and bottom at 1440x900; capping it
+     also lets section 1 peek, which invites the scroll. */
+  min-height: min(82svh, 720px);
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center;
-  padding-block: var(--space-section);
+  padding-block: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
   overflow: hidden;
 }
 .hero::before {
@@ -276,21 +279,23 @@ body {
 }
 .mast-rule {
   width: 74px; height: 1.6px; background: var(--gold);
-  margin: 1.05rem auto 0;
+  margin: 0.85rem auto 0;
 }
 .mast-tag {
-  margin-top: 0.9rem;
+  margin-top: 0.75rem;
   font-size: 0.75rem; letter-spacing: 0.28em; text-indent: 0.28em;
   text-transform: uppercase; color: var(--ink-faint); font-weight: 400;
 }
 
 .hero-kicker {
-  margin-top: clamp(3rem, 1.5rem + 6vw, 6rem);
+  /* Was clamp(3rem, 1.5rem + 6vw, 6rem) = 96px at 1440, which split the
+     masthead and the title into two unrelated blocks. */
+  margin-top: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem);
   font-size: 0.75rem; letter-spacing: 0.36em; text-indent: 0.36em;
   text-transform: uppercase; color: var(--gold); font-weight: 600;
 }
 .hero h1 {
-  margin-top: 1.4rem;
+  margin-top: 1.1rem;
   font-family: var(--font-display); font-weight: 600;
   font-size: var(--text-hero); line-height: 1.06;
   letter-spacing: 0.06em; text-indent: 0.06em;
@@ -299,14 +304,16 @@ body {
 .hero-sub {
   /* 46ch holds the full sentence on one line at desktop. At 30ch it broke as
      "...and what / it costs." - a two-word orphan (feedback_no_orphans_ever). */
-  margin: 1.6rem auto 0; max-width: 46ch;
+  margin: 1.2rem auto 0; max-width: 46ch;
   font-size: var(--text-lg); font-weight: 300; line-height: 1.6;
   color: var(--ink-soft); text-wrap: balance;
 }
 
+/* In flow, not pinned to the hero floor. Absolutely positioning it while the
+   content is centred forced a ~180px gap between the sub and the chevron that
+   no amount of hero-height tuning could close. */
 .chev {
-  position: absolute; left: 50%; bottom: clamp(1.5rem, 3vh, 2.6rem);
-  transform: translateX(-50%);
+  margin-top: clamp(2.25rem, 1.5rem + 2.2vw, 3.5rem);
   display: flex; flex-direction: column; align-items: center; gap: 4px;
   z-index: 1;
 }
@@ -581,12 +588,12 @@ body {
       <div class="ledger reveal-stagger">
         <div class="led-row"><span class="led-k">Funnel</span><span class="led-v">Landing page and booking flow, custom coded. No separate build fee.</span></div>
         <div class="led-row"><span class="led-k">CRM</span><span class="led-v">Leads land in the CRM live. Every step tracked.</span></div>
-        <div class="led-row"><span class="led-k">Creative</span><span class="led-v">14 ads per cycle, filmed on location.</span></div>
+        <div class="led-row"><span class="led-k">Creative</span><span class="led-v">14 ads per cycle.</span></div>
         <div class="led-row"><span class="led-k">Copy</span><span class="led-v">Scripts written word for word for every ad.</span></div>
         <div class="led-row"><span class="led-k">Testing</span><span class="led-v">2 ads head to head, 4 days per sprint, 7 sprints per cycle.</span></div>
-        <div class="led-row"><span class="led-k">Management</span><span class="led-v">Watched daily. Optimized Monday, Wednesday, Friday.</span></div>
+        <div class="led-row"><span class="led-k">Management</span><span class="led-v">In depth daily tracking.</span></div>
         <div class="led-row"><span class="led-k">Reporting</span><span class="led-v">Every 4 days while testing. Every 7 days once there is a winner.</span></div>
-        <div class="led-row"><span class="led-k">Attribution</span><span class="led-v">Tracked from ad to booked appointment, not just clicks.</span></div>
+        <div class="led-row"><span class="led-k">Attribution</span><span class="led-v">Know which ads your leads are coming in from.</span></div>
         <div class="led-row"><span class="led-k">Sales help</span><span class="led-v">Coaching the team on speed to lead and follow up.</span></div>
       </div>
 
