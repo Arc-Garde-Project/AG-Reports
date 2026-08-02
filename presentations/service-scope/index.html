@@ -265,7 +265,10 @@ body.is-locked { overflow: hidden; position: fixed; width: 100%; top: calc(-1 * 
 /* AG FLUID TOKENS - mandatory :root block (.claude/rules/web-css.md) */
 /* =========================================================== */
 :root {
-  --text-hero:  clamp(2.25rem, 1.647rem + 2.57vw, 3.938rem);
+  /* Slope retuned 2026-08-02: the old floor computed 36px at 350px, over the
+     ceiling F <= M/9 (measure 314px -> 34.9px), so "SERVICE SCOPE" broke one
+     word per line. Same 63px at 1400px, 32px at 350px. */
+  --text-hero:  clamp(2rem, 1.354rem + 2.95vw, 3.938rem);
   --text-h1:    clamp(1.875rem, 1.357rem + 2.21vw, 3rem);
   --text-h2:    clamp(1.5rem, 1.155rem + 1.47vw, 2.25rem);
   --text-h3:    clamp(1.313rem, 1.054rem + 1.1vw, 1.875rem);
@@ -695,7 +698,7 @@ body {
         <div class="sec-head reveal-stagger">
           <span class="sec-num num">1</span>
           <h2 class="sec-title" id="sec-1">Paid Ads</h2>
-          <span class="sec-price">$<span class="cnt" data-to="2800">2,800</span>&nbsp;/&nbsp;month</span>
+          <span class="sec-price">$<span class="cnt" data-to="2800">2,800</span> to $<span class="cnt" data-to="4760">4,760</span>&nbsp;/&nbsp;month</span>
         </div>
         <div class="sec-rule"></div>
         <p class="sec-note reveal">Meta only (Facebook and Instagram). Other platforms by exception.</p>
@@ -706,7 +709,7 @@ body {
         <div class="led-row"><span class="led-k">CRM</span><span class="led-v">Leads land in the CRM live. Every step tracked.</span></div>
         <div class="led-row"><span class="led-k">Creative</span><span class="led-v">14 ads per testing cycle.</span></div>
         <div class="led-row"><span class="led-k">Copy</span><span class="led-v">Scripts written word for word for every ad.</span></div>
-        <div class="led-row"><span class="led-k">Testing</span><span class="led-v">2 ads head to head, 4 days per sprint, 7 sprints per testing cycle. 14 creatives tested over 28&nbsp;days time.</span></div>
+        <div class="led-row"><span class="led-k">Testing</span><span class="led-v">2&nbsp;ads head to head, 4&nbsp;days per sprint, 7&nbsp;sprints per testing cycle. 14&nbsp;creatives tested over 28&nbsp;days time.</span></div>
         <div class="led-row"><span class="led-k">Management</span><span class="led-v">In depth daily tracking.</span></div>
         <div class="led-row"><span class="led-k">Reporting</span><span class="led-v">Every 4 days while testing. Every 7 days once there is a winner.</span></div>
         <div class="led-row"><span class="led-k">Attribution</span><span class="led-v">Know which ads your leads are coming in from.</span></div>
@@ -715,7 +718,7 @@ body {
 
       <div class="band reveal">
         <div class="band-label">Cost</div>
-        <div class="band-row"><span class="band-k">Management, flat</span><span class="band-v">$2,800&nbsp;/&nbsp;month</span></div>
+        <div class="band-row"><span class="band-k">Management fee</span><span class="band-v">$2,800 to $4,760&nbsp;/&nbsp;month</span></div>
         <div class="band-row"><span class="band-k">Ad spend, paid straight to Meta</span><span class="band-v">To be determined</span></div>
         <div class="band-row"><span class="band-k">CRM subscription, paid by the client</span><span class="band-v">Their cost</span></div>
       </div>
@@ -760,7 +763,7 @@ body {
       </div>
 
       <div class="note reveal">
-        <b>Legal pages: we build them, nothing more.</b>
+        <b>Legal pages: we build them, nothing&nbsp;more.</b>
         <p>We are not lawyers, and we are not responsible for what the pages say or whether they are compliant. A qualified lawyer has to review and approve them before they go live.</p>
       </div>
     </div>
@@ -773,7 +776,7 @@ body {
         <div class="sec-head reveal-stagger">
           <span class="sec-num num">3</span>
           <h2 class="sec-title" id="sec-3">Organic, 2x a Day</h2>
-          <span class="sec-price">$<span class="cnt" data-to="2300">2,300</span>&nbsp;/&nbsp;month</span>
+          <span class="sec-price">$<span class="cnt" data-to="2300">2,300</span> to $<span class="cnt" data-to="3910">3,910</span>&nbsp;/&nbsp;month</span>
         </div>
         <div class="sec-rule"></div>
         <p class="sec-note reveal">7 platforms: Facebook, Instagram, TikTok, YouTube, LinkedIn, X, Threads.</p>
@@ -782,7 +785,7 @@ body {
       <div class="ledger reveal-stagger">
         <div class="led-row"><span class="led-k">Output</span><span class="led-v">2 pieces a day. 60 a month.</span></div>
         <div class="led-row"><span class="led-k">Mix</span><span class="led-v">40 videos and 20 image posts a month.</span></div>
-        <div class="led-row"><span class="led-k">Reach</span><span class="led-v">Every piece goes on all 7 platforms. 420 posts a month.</span></div>
+        <div class="led-row"><span class="led-k">Reach</span><span class="led-v">Every piece goes on all 7&nbsp;platforms. 420&nbsp;posts a month.</span></div>
         <div class="led-row"><span class="led-k">We do</span><span class="led-v">Ideas, scripting, design, editing, captions, and the posting itself.</span></div>
         <div class="led-row"><span class="led-k">Setup</span><span class="led-v">All 7 profiles matched and verified before anything goes live.</span></div>
         <div class="led-row"><span class="led-k">Reports</span><span class="led-v">Monthly per platform, plus a 4 month growth report.</span></div>
@@ -799,7 +802,7 @@ body {
         <div class="sec-head reveal-stagger">
           <span class="sec-num num">4</span>
           <h2 class="sec-title" id="sec-4">Organic, 3x a Day</h2>
-          <span class="sec-price">$<span class="cnt" data-to="3100">3,100</span>&nbsp;/&nbsp;month</span>
+          <span class="sec-price">$<span class="cnt" data-to="3100">3,100</span> to $<span class="cnt" data-to="5270">5,270</span>&nbsp;/&nbsp;month</span>
         </div>
         <div class="sec-rule"></div>
         <p class="sec-note reveal">Same system, same platforms, more volume. Everything in Section 3 still applies.</p>
@@ -825,8 +828,8 @@ body {
       </div>
 
       <div class="total reveal">
-        <div class="total-row"><span class="total-k">Organic 2x a day plus paid ads</span><span class="total-v">$<span class="cnt" data-to="5100">5,100</span>&nbsp;/&nbsp;month</span></div>
-        <div class="total-row"><span class="total-k">Organic 3x a day plus paid ads</span><span class="total-v">$<span class="cnt" data-to="5900">5,900</span>&nbsp;/&nbsp;month</span></div>
+        <div class="total-row"><span class="total-k">Organic 2x a day plus paid ads</span><span class="total-v">$<span class="cnt" data-to="5100">5,100</span> to $<span class="cnt" data-to="8670">8,670</span>&nbsp;/&nbsp;month</span></div>
+        <div class="total-row"><span class="total-k">Organic 3x a day plus paid ads</span><span class="total-v">$<span class="cnt" data-to="5900">5,900</span> to $<span class="cnt" data-to="10030">10,030</span>&nbsp;/&nbsp;month</span></div>
         <div class="total-row"><span class="total-k">Ad spend and CRM, every time</span><span class="total-v total-v--soft">Separate, paid direct</span></div>
       </div>
     </div>
