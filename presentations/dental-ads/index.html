@@ -1,0 +1,1660 @@
+<!--
+  ╔═══════════════════════════════════════════════════════════════════════════════╗
+  ║  ARC GARDE - PAID ADS FOR DENTAL PRACTICES                                    ║
+  ║  Private outreach offer page. One link, sent to one practice at a time.        ║
+  ║                                                                               ║
+  ║  ASSEMBLED per the FIND gate. Lifted verbatim from                            ║
+  ║  sectors/web/library/ag-components/ via presentations/service-scope :          ║
+  ║  ag-defensive v1.0, ag-motion v2.5, ag-scroll v1.2 (Lenis lerp 0.07),          ║
+  ║  ag-cursor v2.1, AG fluid tokens, and the section/ledger/band furniture.       ║
+  ║  NOT carried, per feedback_presentation_format_locked: curtain (no loading     ║
+  ║  screen on presentations), header bar, site footer, CTA band.                  ║
+  ║                                                                               ║
+  ║  BESPOKE to this page: single-stage hero (a cold reader should not have to     ║
+  ║  scroll past a full viewport of wordmark), and the proof block - the           ║
+  ║  case-study data-viz that is this page's signature.                            ║
+  ║                                                                               ║
+  ║  DATA LAW. Every figure in the proof block comes from                          ║
+  ║  Arc Garde Clients/The Tooth Place/ads/reports/best-case-study-window-         ║
+  ║  2026-07-31.md, audited 144/144 PASS. Meta = spend/impressions/clicks.         ║
+  ║  GHL = sole source of truth for leads. Do not edit a figure here; correct      ║
+  ║  the source report and re-derive.                                              ║
+  ║                                                                               ║
+  ║  COPY LAW. Every [[SLOT]] marker is client-facing persuasive copy and is       ║
+  ║  written by Claude UI, never here. Spec:                                       ║
+  ║  outreach/dental-offer/ag-dental-ads-offer-copy-prompt-2026-08-04.md            ║
+  ║                                                                               ║
+  ║  Type note: Cinzel sets titles and section numerals ONLY. Every figure is      ║
+  ║  Inter with tabular lining numerals - Cinzel's "1" reads as a Roman "I" and    ║
+  ║  turns $1,500 into $I,500 (Learning Log 2026-07-31).                           ║
+  ╚═══════════════════════════════════════════════════════════════════════════════╝
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0A0908">
+
+<title>Arc Garde | Paid Ads for Dental Practices</title>
+<meta name="description" content="What Arc Garde builds and runs for a dental practice on Meta, how the testing and reporting works, and what it costs.">
+
+<meta property="og:title" content="Arc Garde | Paid Ads for Dental Practices">
+<meta property="og:description" content="What we build, how it runs, and what it costs.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ag-reports.vercel.app/presentations/dental-ads">
+<meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Arc Garde">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Arc Garde | Paid Ads for Dental Practices">
+<meta name="twitter:description" content="What we build, how it runs, and what it costs.">
+<meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+
+<!-- No trailing slash: vercel.json sets trailingSlash:false, so the slashed
+     form 308s. Canonical must name the final URL, not the redirect. -->
+<link rel="canonical" href="https://ag-reports.vercel.app/presentations/dental-ads">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================== */
+/* AG Defensive v1.0 - first stylesheet (CANONICAL DROP-IN)    */
+/* sectors/web/library/ag-components/ag-defensive.css - verbatim */
+/* =========================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  min-height: 100svh;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.5;
+  background: var(--paper, #fafafa);
+  color: var(--text-primary, #0a0a0a);
+  font-family: var(--font-body, system-ui, sans-serif);
+}
+img, picture, video, canvas, svg { display: block; max-width: 100%; height: auto; }
+input, button, textarea, select { font: inherit; color: inherit; }
+h1, h2, h3, h4, h5, h6 { text-wrap: balance; line-height: 1.1; }
+p, li, blockquote, figcaption { text-wrap: pretty; }
+a, button, [role="button"], input, label[for], select, summary { touch-action: manipulation; }
+a { color: inherit; text-decoration: none; }
+button { background: none; border: 0; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--accent, #c9a861); outline-offset: 3px; }
+.ag-skip-link {
+  position: absolute; left: 7px; top: -100px; z-index: 2147483647;
+  padding: 10px 18px; border-radius: 8px;
+  background: var(--ink, #0a0a0a); color: var(--paper, #fafafa);
+  transition: top var(--duration-quick, 0.3s) var(--ease-satisfying, cubic-bezier(0.16, 1, 0.3, 1));
+}
+.ag-skip-link:focus-visible { top: 7px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =========================================================== */
+/* AG Motion v2.5 - tokens + reveal recipes (CANONICAL DROP-IN)*/
+/* ag-motion.css - verbatim (Recipe 4 cinematic omitted, no imagery) */
+/* =========================================================== */
+:root {
+  --duration-instant: 120ms;
+  --duration-quick:   300ms;
+  --duration-medium:  600ms;
+  --duration-long:    900ms;
+  --duration-cinematic: 1400ms;
+  --ease-satisfying: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft:       cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-snap:       cubic-bezier(0.34, 1.2, 0.64, 1);
+  --ease-settle:     cubic-bezier(0.22, 1, 0.36, 1);
+  --dist-micro: 7px;
+  --dist-base:  14px;
+  --dist-lg:    21px;
+}
+.reveal {
+  opacity: 0; transform: translateY(var(--dist-base));
+  transition: opacity var(--duration-medium) var(--ease-satisfying),
+              transform var(--duration-medium) var(--ease-satisfying);
+  will-change: opacity, transform;
+}
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+.reveal-hero {
+  opacity: 0; transform: translateY(var(--dist-lg)) scale(0.98);
+  transition: opacity var(--duration-long) var(--ease-satisfying),
+              transform var(--duration-long) var(--ease-satisfying);
+  will-change: opacity, transform;
+}
+.reveal-hero.in-view { opacity: 1; transform: translateY(0) scale(1); }
+.reveal-stagger > * {
+  opacity: 0; transform: translateY(var(--dist-base));
+  transition: opacity var(--duration-medium) var(--ease-settle),
+              transform var(--duration-medium) var(--ease-settle);
+  transition-delay: calc(var(--i, 0) * 81ms);
+}
+.reveal-stagger.in-view > * { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-hero, .reveal-stagger > * {
+    transition: none !important; opacity: 1 !important; transform: none !important;
+  }
+}
+
+/* =========================================================== */
+/* AG Scroll v1.2 - required CSS infrastructure (DROP-IN)      */
+/* ag-scroll.css - verbatim                                    */
+/* =========================================================== */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }
+body.is-locked { overflow: hidden; position: fixed; width: 100%; top: calc(-1 * var(--scroll-y, 0px)); }
+
+/* =========================================================== */
+/* AG Cursor v2.1 - CANONICAL DROP-IN (ag-cursor.css verbatim) */
+/* =========================================================== */
+.ag-fine, .ag-fine *, .ag-fine *::before, .ag-fine *::after { cursor: none !important; }
+.ag-cursor__body, .ag-cursor__edge {
+  position: fixed; top: 0; left: 0; pointer-events: none; opacity: 0;
+  transition: opacity var(--duration-instant, 120ms) var(--ease-satisfying, cubic-bezier(0.22,1,0.36,1));
+  will-change: transform;
+}
+.ag-cursor__body { z-index: 2147483646; mix-blend-mode: difference; }
+.ag-cursor__edge { z-index: 2147483647; }
+.ag-cursor__body svg, .ag-cursor__edge svg { position: absolute; top: 0; left: 0; display: block; max-width: none; }
+.ag-cursor__body .ag-cursor__arrow, .ag-cursor__edge .ag-cursor__arrow { width: 13px; height: 20px; }
+.ag-cursor__edge .ag-cursor__hand { width: 18px; height: 18px; }
+.ag-cursor__body path { fill: #fff; }
+.ag-cursor__edge path { fill: none; stroke: var(--accent, #c9a861); stroke-linejoin: round; stroke-linecap: round; }
+.ag-cursor__edge .ag-cursor__arrow path { stroke-width: 0.8; }
+.ag-cursor__edge .ag-cursor__hand  path { fill: var(--cur-fill, var(--ink, #0a0a0a)); stroke-width: 0.75; }
+.ag-cursor__arrow {
+  transform-origin: 0 0;
+  transition: opacity 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1)),
+              transform 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1));
+}
+.ag-cursor__hand {
+  position: absolute; left: -8px; top: -2px;
+  opacity: 0; transform: scale(.7); transform-origin: 8px 2px;
+  transition: opacity 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1)),
+              transform 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1));
+}
+.ag-cur-hover .ag-cursor__arrow { opacity: 0; transform: scale(.6); }
+.ag-cur-hover .ag-cursor__hand  { opacity: 1; transform: scale(1); }
+.ag-cur-hover.ag-cur-press .ag-cursor__hand { transform: scale(.88); }
+.ag-cur-press:not(.ag-cur-hover) .ag-cursor__arrow { transform: scale(.88); }
+@media (hover: none), (pointer: coarse) { .ag-cursor__body, .ag-cursor__edge { display: none !important; } }
+@media (prefers-reduced-motion: reduce) { .ag-cursor__arrow, .ag-cursor__hand, .ag-cursor__body, .ag-cursor__edge { transition: none; } }
+
+/* =========================================================== */
+/* MOTION PASS - AG-MOTION-STANDARD v2.5                        */
+/*                                                              */
+/* Choreography and variety, NOT more motion. Dopamine Killer   */
+/* #5: uniform fade-ups become white noise by the third screen. */
+/*                                                              */
+/* Deliberately NOT used, both banned by the same standard:     */
+/*   - parallax on decorative elements (Dopamine Killer #2; §9  */
+/*     calls the marquee "the sanctioned exception to the       */
+/*     parallax ban"). The older feedback_scroll_animations     */
+/*     memory still lists it and is stale.                      */
+/*   - horizontal / directional reveals (Dopamine Killer #1;    */
+/*     §8's own table scopes them to multi-section landing and  */
+/*     story flows, not editorial single-column content).       */
+/* =========================================================== */
+
+/* --- First-Paint Sequence (§First-Paint Sequence, delay ladder verbatim).
+       Hard Rule 10: this is the ONE hero animation on the page. --- */
+.hero-arrive {
+  opacity: 0;
+  transform: translateY(var(--dist-base));
+  animation: heroArrive var(--duration-long) var(--ease-satisfying) forwards;
+  animation-delay: var(--hero-delay, 0ms);
+}
+.hero-arrive--title { transform: translateY(var(--dist-lg)) scale(0.98); }
+.hero-d0 { --hero-delay: 0ms; }
+.hero-d1 { --hero-delay: 120ms; }   /* 3 x 40  */
+.hero-d2 { --hero-delay: 280ms; }   /* 7 x 40  */
+.hero-d3 { --hero-delay: 441ms; }   /* 3x7x21  */
+.hero-d4 { --hero-delay: 560ms; }   /* 7 x 80  */
+@keyframes heroArrive { to { opacity: 1; transform: translateY(0) scale(1); } }
+
+/* --- Stagger cap. 9 rows x 81ms left the last row waiting 648ms, which reads
+       as lag rather than rhythm. Clamped at index 5. Hard Rule 7 (63-126ms). --- */
+.reveal-stagger > *:nth-child(n+6) { transition-delay: 405ms; }
+
+/* --- Section rule: draws in, then a gold highlight sweeps it once. --- */
+.sec-rule { position: relative; overflow: hidden; }
+.sec-rule::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 0%, var(--gold-light) 50%, transparent 100%);
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.sec-rule.in-view::after {
+  animation: ruleSweep var(--duration-long) var(--ease-soft) 300ms forwards;
+}
+@keyframes ruleSweep {
+  0%   { transform: translateX(-100%); opacity: 0; }
+  30%  { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+/* --- Count-up: fixed width so the row does not reflow while digits change.
+       Animating layout is Hard Rule 5. --- */
+.cnt { font-variant-numeric: tabular-nums lining-nums; }
+
+/* --- The close: the combined price gets one gold breath on arrival. --- */
+.total-v { transition: text-shadow var(--duration-long) var(--ease-soft); }
+.total .in-view .total-v,
+.total.in-view .total-v { animation: goldBreath var(--duration-long) var(--ease-soft) 420ms; }
+@keyframes goldBreath {
+  0%   { text-shadow: 0 0 0 rgba(201,163,106,0); }
+  50%  { text-shadow: 0 0 21px rgba(201,163,106,0.45); }
+  100% { text-shadow: 0 0 0 rgba(201,163,106,0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-arrive { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .sec-rule.in-view::after,
+  .total.in-view .total-v { animation: none !important; }
+}
+
+/* =========================================================== */
+/* AG FLUID TOKENS - mandatory :root block (.claude/rules/web-css.md) */
+/* =========================================================== */
+:root {
+  /* Slope retuned 2026-08-02: the old floor computed 36px at 350px, over the
+     ceiling F <= M/9 (measure 314px -> 34.9px), so "SERVICE SCOPE" broke one
+     word per line. Same 63px at 1400px, 32px at 350px. */
+  --text-hero:  clamp(2rem, 1.354rem + 2.95vw, 3.938rem);
+  --text-h1:    clamp(1.875rem, 1.357rem + 2.21vw, 3rem);
+  --text-h2:    clamp(1.5rem, 1.155rem + 1.47vw, 2.25rem);
+  --text-h3:    clamp(1.313rem, 1.054rem + 1.1vw, 1.875rem);
+  --text-h4:    clamp(1.125rem, 0.952rem + 0.74vw, 1.5rem);
+  --text-lg:    clamp(1rem, 0.943rem + 0.24vw, 1.125rem);
+  --text-base:  clamp(0.938rem, 0.909rem + 0.12vw, 1rem);
+  --space-section:   clamp(3rem, 1.619rem + 5.89vw, 6rem);
+  --space-container: clamp(1.125rem, 0.262rem + 3.68vw, 3rem);
+}
+
+/* =========================================================== */
+/* ARC GARDE BRAND - from Brandkit/BRANDKIT.md (live foundation.css) */
+/* Dark mode is primary. Gold is the signature.                */
+/* =========================================================== */
+:root {
+  --bg:         #0A0908;
+  --bg-2:       #0F0D0B;
+  --bg-band:    #14110C;
+  --ink:        #F2E4C9;   /* IVORY */
+  --ink-soft:   rgba(242, 228, 201, 0.70);
+  --ink-faint:  rgba(242, 228, 201, 0.46);
+  --gold:       #C9A36A;   /* ACCENT */
+  --gold-light: #E5C185;
+  --gold-deep:  #8B6A3D;
+  --line:       rgba(201, 163, 106, 0.20);
+  --line-soft:  rgba(242, 228, 201, 0.09);
+  --glow-warm:  rgba(212, 161, 92, 0.35);
+
+  /* ag-cursor.js reads these three off :root */
+  --paper:  #F2E4C9;
+  --accent: #C9A36A;
+
+  --font-display: 'Cinzel', Georgia, serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+  --shell: 1080px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+}
+
+/* Figures NEVER in Cinzel. Its "1" reads as a Roman "I". */
+.num {
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.shell {
+  width: 100%; max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--space-container);
+}
+
+/* --text-hero RETUNED 2026-08-04, from measurement not taste. The headline
+   "Paid Ads for Dental Practices" towered to 3 lines at 1.67 words/line with
+   "Practices" stranded at 350-400px (orphan sweep WIDOW + TOWER). TOWER is a
+   SIZING defect and the standard forbids fixing it with glue
+   (reference_orphan_interior_is_a_sizing_defect).
+   Measured in the browser at 350px, measure = 314px: 32px and 30px both break
+   to 3 lines, 28px is the first that holds 2 lines at 2.5 words/line (widest
+   line 310px). Floor set to 27px for headroom, slope re-solved to land on the
+   same 63px at 1400px, so desktop is untouched.
+   Ceiling check, AG-TYPOGRAPHY Hard Rule 13 (F <= M/9): 314/9 = 34.9px, and
+   27px clears it. Only .hero h1 consumes this token. */
+:root {
+  --text-hero: clamp(1.6875rem, 0.9375rem + 3.43vw, 3.938rem);
+}
+
+/* ── HERO (BESPOKE) ────────────────────────────────────── */
+/* Single stage, deliberately NOT the two-stage service-scope hero. This link is
+   sent cold: making a stranger scroll a full viewport of wordmark before the
+   offer appears is the wrong trade for an outreach asset. The wordmark rides
+   above the title in the same block instead.
+   The .hero-arrive ladder itself is NOT redefined here - it is the AG Motion
+   v2.5 First-Paint Sequence already declared above, delays d0-d4 verbatim.
+   NO figures in the hero: client KPIs live only in the case study
+   (feedback_client_kpis_case_studies_only). */
+.hero {
+  position: relative;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  min-height: 100dvh;                 /* MOB-20: dvh, seen before scroll */
+  padding-block: clamp(4rem, 3rem + 3.5vw, 6.5rem);
+  overflow: hidden;
+}
+/* Static warm glow, lifted from the house hero. Deliberately not pointer-tracking. */
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(56% 44% at 50% 44%,
+              rgba(212,161,92,0.18) 0%, rgba(212,161,92,0.05) 45%, rgba(212,161,92,0) 75%);
+  pointer-events: none;
+}
+/* The one gold hairline in the hero, drawn last in the first-paint ladder.
+   Animation, not a JS class toggle, so it survives a script failure. */
+.hero::after {
+  content: ""; position: absolute; left: 50%; bottom: 0; z-index: 0;
+  width: min(72%, 620px); height: 1px;
+  background: linear-gradient(90deg,
+              rgba(201,163,106,0) 0%, rgba(201,163,106,0.45) 50%, rgba(201,163,106,0) 100%);
+  transform: translateX(-50%) scaleX(0);
+  animation: heroRule var(--duration-long) var(--ease-satisfying) 700ms forwards;
+}
+@keyframes heroRule { to { transform: translateX(-50%) scaleX(1); } }
+.hero > * { position: relative; z-index: 1; }
+
+.mast-brand {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(1.125rem, 0.95rem + 0.75vw, 1.5rem);
+  letter-spacing: 0.34em; text-indent: 0.34em;
+  text-transform: uppercase; color: var(--ink);
+  line-height: 1.05;
+}
+.mast-tag {
+  margin-top: clamp(0.45rem, 0.35rem + 0.3vw, 0.7rem);
+  font-size: clamp(0.625rem, 0.59rem + 0.15vw, 0.75rem);
+  letter-spacing: 0.26em; text-indent: 0.26em;
+  text-transform: uppercase; color: var(--ink-faint); font-weight: 400;
+}
+
+.hero h1 {
+  margin-top: clamp(2.25rem, 1.5rem + 2.2vw, 3.5rem);
+  font-family: var(--font-display); font-weight: 600;
+  font-size: var(--text-hero); line-height: 1.06;
+  letter-spacing: 0.06em; text-indent: 0.06em;
+  text-transform: uppercase; color: #FFFFFF;
+  text-wrap: balance;
+}
+.hero-sub {
+  /* 44ch: wide enough to hold the sentence without a two-word last line at
+     desktop, narrow enough not to outrun the title (feedback_no_orphans_ever). */
+  margin: 1.25rem auto 0; max-width: 44ch;
+  font-size: var(--text-lg); font-weight: 300; line-height: 1.6;
+  color: var(--ink-soft); text-wrap: balance;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero::after { animation: none; transform: translateX(-50%) scaleX(1); }
+}
+
+/* Pinned to the bottom edge: a full-viewport hero needs the cue where the
+   viewport ends, not in flow. */
+.chev {
+  position: absolute; left: 50%; bottom: clamp(1.75rem, 3.5vh, 3rem);
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  z-index: 1;
+}
+.chev span {
+  display: block; width: 13px; height: 13px;
+  border-right: 1.4px solid var(--gold); border-bottom: 1.4px solid var(--gold);
+  transform: rotate(45deg);
+  animation: chev-fall 2.1s var(--ease-soft) infinite;
+  opacity: 0;
+}
+.chev span:nth-child(2) { animation-delay: 0.3s; }
+@keyframes chev-fall {
+  0%   { opacity: 0; transform: rotate(45deg) translate(-4px, -4px); }
+  50%  { opacity: 0.9; }
+  100% { opacity: 0; transform: rotate(45deg) translate(4px, 4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chev span { animation: none; opacity: 0.7; }
+}
+/* .chev is animated by .hero-arrive AND chev-fall on its children, so the two
+   never collide. Below 900 the hero grows past the viewport on small phones,
+   so the cue stops being pinned to a fold that no longer exists. */
+@media (max-width: 900px) {
+  .hero { min-height: auto; padding-block: clamp(5rem, 4rem + 6vw, 7rem); }
+  .chev { position: static; transform: none; margin-top: clamp(2.5rem, 6vh, 3.5rem); }
+}
+/* ── SECTIONS ──────────────────────────────────────────── */
+.sec { padding-block: var(--space-section); }
+.sec + .sec { border-top: 1px solid var(--line-soft); }
+.sec--band { background: var(--bg-2); }
+
+.sec-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  column-gap: clamp(0.9rem, 0.5rem + 1.4vw, 1.5rem);
+}
+.sec-num {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+  line-height: 1; color: var(--gold);
+}
+.sec-title {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: var(--text-h3);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink);
+}
+.sec-price {
+  font-family: var(--font-body); font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: var(--text-h4); color: var(--gold);
+  white-space: nowrap;
+}
+.sec-price--soft {
+  font-size: var(--text-base); font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-faint); white-space: normal;
+}
+
+/* The drawing underline: scales in from the left on reveal. */
+.sec-rule {
+  height: 1.6px; background: var(--gold); margin-top: 1rem;
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform var(--duration-long) var(--ease-satisfying);
+}
+.in-view .sec-rule, .sec-rule.in-view { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) { .sec-rule { transform: scaleX(1); } }
+
+.sec-note {
+  margin-top: 1.1rem;
+  font-size: var(--text-base); color: var(--ink-soft);
+}
+
+/* ── LEDGER ROWS ───────────────────────────────────────── */
+.ledger { margin-top: clamp(1.75rem, 1rem + 2.4vw, 2.75rem); }
+.led-row {
+  display: grid;
+  grid-template-columns: 12.5rem 1fr;
+  column-gap: clamp(1.25rem, 0.6rem + 2vw, 2.25rem);
+  align-items: baseline;
+  padding: 1.05rem 0 1.05rem 1.1rem;
+  border-bottom: 1px solid var(--line-soft);
+  position: relative;
+}
+.led-row:last-child { border-bottom: none; }
+/* Hover paints a gold bar. NEVER a transform: reveal-stagger already owns
+   transform on these children and would clobber it (feedback_reveal_stagger_clobbers_hover). */
+.led-row::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: var(--gold);
+  transform: scaleY(0); transform-origin: center top;
+  transition: transform var(--duration-quick) var(--ease-settle);
+}
+.led-k {
+  font-size: 0.8125rem; font-weight: 600;
+  letter-spacing: 0.11em; text-transform: uppercase;
+  color: var(--ink);
+}
+/* text-wrap:pretty explicitly: ag-defensive only applies it to p/li/blockquote,
+   and these values are spans, so they were orphaning a single word onto the
+   last line at mobile widths (feedback_no_one_word_per_line). */
+.led-v {
+  font-size: var(--text-base); color: var(--ink-soft); line-height: 1.6;
+  text-wrap: pretty;
+}
+.band-k, .band-v, .total-k { text-wrap: pretty; }
+
+@media (hover: hover) {
+  .led-row { transition: background var(--duration-quick) var(--ease-soft); }
+  .led-row:hover { background: rgba(201, 163, 106, 0.05); }
+  .led-row:hover::before { transform: scaleY(1); }
+  .led-row:hover .led-v { color: var(--ink); }
+  /* .led-v is INSIDE the stagger child, not the child itself, so a hover
+     transform here cannot be clobbered by reveal-stagger
+     (feedback_reveal_stagger_clobbers_hover). 3px per the Cards rule. */
+  .led-k, .led-v { transition: transform var(--duration-quick) var(--ease-satisfying),
+                               color var(--duration-quick) var(--ease-soft); }
+  .led-row:hover .led-k, .led-row:hover .led-v { transform: translateX(3px); }
+}
+@media (max-width: 900px) {
+  .led-row:hover .led-k, .led-row:hover .led-v { transform: none; }
+}
+
+/* ── COST BAND ─────────────────────────────────────────── */
+.band {
+  margin-top: clamp(1.75rem, 1rem + 2.4vw, 2.75rem);
+  background: var(--bg-band);
+  border: 1px solid var(--line-soft);
+  border-top: 2px solid var(--gold);
+  padding: clamp(1.25rem, 0.8rem + 1.4vw, 1.85rem) clamp(1.25rem, 0.7rem + 1.7vw, 2rem);
+}
+.band-label {
+  font-size: 0.6875rem; letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--gold-light); font-weight: 700; margin-bottom: 1rem;
+}
+.band-row {
+  display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem;
+  align-items: baseline; justify-content: space-between;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.band-row:last-child { border-bottom: none; }
+.band-k { font-size: var(--text-base); color: var(--ink-soft); }
+.band-v {
+  font-family: var(--font-body); font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: var(--text-base); color: var(--ink); white-space: nowrap;
+}
+
+/* ── BUILD-AND-RUN GRID ────────────────────────────────── */
+.runs {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem clamp(1.25rem, 0.6rem + 2vw, 2.25rem);
+}
+.runs li {
+  position: relative; padding: 0.5rem 0 0.5rem 1.15rem;
+  font-size: var(--text-base); color: var(--ink-soft);
+}
+.runs li::before {
+  content: ""; position: absolute; left: 0; top: 1.05em;
+  width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg);
+}
+
+/* ── NOTE ──────────────────────────────────────────────── */
+.note {
+  margin-top: clamp(1.75rem, 1rem + 2.4vw, 2.75rem);
+  background: var(--bg-band);
+  border: 1px solid var(--line-soft);
+  border-left: 3px solid var(--gold);
+  padding: clamp(1.25rem, 0.8rem + 1.4vw, 1.85rem) clamp(1.25rem, 0.7rem + 1.7vw, 2rem);
+}
+.note b {
+  display: block; margin-bottom: 0.6rem; color: var(--ink);
+  font-size: 0.8125rem; font-weight: 700;
+  letter-spacing: 0.11em; text-transform: uppercase;
+}
+.note p { font-size: var(--text-base); color: var(--ink-soft); line-height: 1.65; }
+
+/* ── TOGETHER (the close) ──────────────────────────────── */
+.total {
+  /* No border-top here: the section's own .sec-rule already draws a gold line
+     directly above, and the two together read as a doubled rule. */
+  margin-top: clamp(1.75rem, 1rem + 2.4vw, 2.75rem);
+  background: linear-gradient(180deg, rgba(201,163,106,0.09) 0%, rgba(201,163,106,0) 68%);
+  padding: clamp(1.5rem, 0.9rem + 1.9vw, 2.4rem) clamp(1.25rem, 0.7rem + 1.7vw, 2rem);
+}
+.total-row {
+  display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem;
+  align-items: baseline; justify-content: space-between;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.total-row:last-child { border-bottom: none; }
+.total-k { font-size: var(--text-lg); color: var(--ink-soft); }
+.total-v {
+  font-family: var(--font-body); font-weight: 700;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: var(--text-h4); color: var(--gold); white-space: nowrap;
+}
+.total-v--soft { font-size: var(--text-lg); color: var(--gold-deep); }
+
+/* ── PAGE FOOT (one quiet line, no CTA band) ───────────── */
+.pagefoot {
+  border-top: 1px solid var(--line-soft);
+  padding-block: clamp(2rem, 1.2rem + 2.6vw, 3.25rem);
+  text-align: center;
+}
+.pagefoot p {
+  font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.pagefoot b { color: var(--gold); font-weight: 600; }
+
+/* ═══ TABLET 900-1200 ═══════════════════════════════════ */
+@media (max-width: 1200px) {
+  .led-row { grid-template-columns: 10.5rem 1fr; }
+}
+
+/* ═══ MOBILE 350-900 - everything centers (AG-MOBILE §6C) ═══ */
+@media (max-width: 900px) {
+  .sec { text-align: center; }
+
+  .sec-head {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    row-gap: 0.5rem;
+  }
+  .sec-rule { margin-inline: auto; }
+  .sec-note { margin-inline: auto; max-width: 46ch; }
+
+  /* Single column, never a collapsed grid track
+     (feedback_mobile_net_collapses_grid_items). */
+  .led-row {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    row-gap: 0.35rem;
+    padding-left: 0; padding-right: 0;
+  }
+  .led-row::before { display: none; }
+  .led-v { max-width: 46ch; margin-inline: auto; }
+
+  .band-row, .total-row { justify-content: center; text-align: center; }
+
+  .runs { grid-template-columns: 1fr; justify-items: center; }
+  .runs li { padding-left: 0; padding-right: 0; }
+  .runs li::before { display: none; }
+
+  .note { border-left: 0; border-top: 3px solid var(--gold); }
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* BESPOKE - THE PROOF BLOCK. This page's signature data-viz.  */
+/* Every figure: The Tooth Place, Apr 19 - May 18 2026,        */
+/* best-case-study-window-2026-07-31.md, audited 144/144.      */
+/* ═══════════════════════════════════════════════════════════ */
+
+/* The identifier. A case study that does not name the practice and date the
+   window is not a case study, it is a claim. This line is not optional and it
+   is not decoration. */
+.proof-id {
+  margin-top: clamp(1.75rem, 1rem + 2.4vw, 2.75rem);
+  display: flex; flex-wrap: wrap;
+  align-items: baseline; justify-content: center;
+  gap: 0.5rem 1.1rem;
+  text-align: center;
+}
+.proof-id-name {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: var(--text-h4);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink);
+}
+.proof-id-meta {
+  font-size: 0.75rem; font-weight: 500;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: 0.17em; text-transform: uppercase;
+  color: var(--gold-light);
+  white-space: nowrap;
+}
+.proof-id-sep { color: var(--line); }
+@media (max-width: 560px) { .proof-id-sep { display: none; } }
+
+/* ═══ THE FUNNEL ═══════════════════════════════════════════
+   A real tapering funnel. The left column carries the SHAPE, the right column
+   carries the NUMBERS. That split is deliberate: the true ratios are
+   87 = 100%, 20 = 22.989%, 9 = 10.345%, and a 10% spout physically cannot hold
+   a number. Widening it so it could would be a lie told with geometry, so the
+   shape stays honest and the text moves out of it.
+   Geometry, centered, derived from the ratios above:
+     band 1  100%    -> 22.989%   edges 38.506% .. 61.494%
+     band 2  22.989% -> 10.345%   edges 44.828% .. 55.172%
+     band 3  10.345% straight (the spout)
+   ═════════════════════════════════════════════════════════ */
+.fnl { margin-top: clamp(1.5rem, 0.9rem + 1.9vw, 2.25rem); }
+
+/* What goes IN, sitting above the mouth of the funnel. */
+.fnl-in {
+  text-align: center;
+  padding-bottom: clamp(0.9rem, 0.7rem + 0.8vw, 1.35rem);
+  border-top: 1px solid var(--line);
+  box-shadow: inset 0 1px 0 rgba(255, 245, 225, 0.045);
+  padding-top: clamp(1.1rem, 0.85rem + 1vw, 1.6rem);
+}
+.fnl-in-fig {
+  display: block;
+  font-family: var(--font-body); font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  font-size: clamp(1.5rem, 0.95rem + 2.2vw, 2.5rem);
+  line-height: 1; letter-spacing: -0.025em; color: var(--ink);
+}
+.fnl-in-lab {
+  display: block; margin-top: 0.55rem;
+  font-size: 0.6875rem; font-weight: 500;
+  letter-spacing: 0.24em; text-indent: 0.24em; text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* row-gap MUST stay 0 or the funnel breaks into disconnected slabs. */
+.fnl-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  column-gap: clamp(1rem, 0.4rem + 1.9vw, 2.25rem);
+  row-gap: 0;
+  align-items: stretch;
+}
+
+.fnl-band {
+  min-height: clamp(64px, 42px + 5.5vw, 104px);
+  background:
+    linear-gradient(178deg, rgba(201,163,106,0.05) 0%, rgba(201,163,106,0) 60%),
+    linear-gradient(100deg, #F0DBAE 0%, #D9B57A 34%, #C9A36A 58%, #E8CE9B 100%);
+}
+/* Each band tapers INTO the next, so the three read as one continuous vessel. */
+.fnl-b1 { clip-path: polygon(0% 0%, 100% 0%, 61.494% 100%, 38.506% 100%); }
+.fnl-b2 { clip-path: polygon(38.506% 0%, 61.494% 0%, 55.172% 100%, 44.828% 100%); opacity: 0.82; }
+.fnl-b3 { clip-path: polygon(44.828% 0%, 55.172% 0%, 55.172% 100%, 44.828% 100%); opacity: 0.66; }
+
+/* Pour: the funnel fills from the mouth down when it scrolls into view. */
+@media (prefers-reduced-motion: no-preference) {
+  .fnl-band { clip-path: inset(0 50% 100% 50%); transition: none; }
+  .fnl.in-view .fnl-b1 {
+    animation: pour1 var(--duration-long) var(--ease-satisfying) 120ms forwards;
+  }
+  .fnl.in-view .fnl-b2 {
+    animation: pour2 var(--duration-long) var(--ease-satisfying) 300ms forwards;
+  }
+  .fnl.in-view .fnl-b3 {
+    animation: pour3 var(--duration-long) var(--ease-satisfying) 480ms forwards;
+  }
+  @keyframes pour1 {
+    from { clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%); }
+    to   { clip-path: polygon(0% 0%, 100% 0%, 61.494% 100%, 38.506% 100%); }
+  }
+  @keyframes pour2 {
+    from { clip-path: polygon(38.506% 0%, 61.494% 0%, 61.494% 0%, 38.506% 0%); }
+    to   { clip-path: polygon(38.506% 0%, 61.494% 0%, 55.172% 100%, 44.828% 100%); }
+  }
+  @keyframes pour3 {
+    from { clip-path: polygon(44.828% 0%, 55.172% 0%, 55.172% 0%, 44.828% 0%); }
+    to   { clip-path: polygon(44.828% 0%, 55.172% 0%, 55.172% 100%, 44.828% 100%); }
+  }
+}
+
+.fnl-leg {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(0.8rem, 0.6rem + 0.7vw, 1.15rem) 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.fnl-grid .fnl-leg:last-of-type { border-bottom: none; }
+
+.fnl-n {
+  font-family: var(--font-body); font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  font-size: clamp(1.625rem, 1rem + 2.5vw, 2.875rem);
+  line-height: 1; letter-spacing: -0.025em;
+  color: var(--ink-soft);
+}
+/* The lead count is the product. It gets the size and the foil. */
+.fnl-leg--lead .fnl-n {
+  font-size: clamp(2rem, 1.2rem + 3.2vw, 3.625rem);
+  color: var(--gold);
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .fnl-leg--lead .fnl-n, .roi-fig--x {
+    background-image: linear-gradient(158deg,
+      #FDF3DC 0%, #F0DBAE 26%, #E0BE84 50%, #D8B478 68%, #F5E4BC 88%, #FDF3DC 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+  }
+}
+.fnl-k {
+  margin-top: clamp(0.4rem, 0.3rem + 0.35vw, 0.6rem);
+  font-size: 0.6875rem; font-weight: 500;
+  letter-spacing: 0.24em; text-indent: 0.24em; text-transform: uppercase;
+  color: var(--ink-faint); text-wrap: balance;
+}
+.fnl-leg--lead .fnl-k { color: var(--gold-light); }
+.fnl-v {
+  margin-top: 0.4rem;
+  font-size: 0.8125rem; font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--ink-soft);
+}
+
+/* THE PAYOFF. The one figure a practice owner actually decides on. It is a
+   lifetime-value estimate, never cash collected, and .roi-basis says so
+   directly underneath rather than in a footnote nobody reads. */
+.roi {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  /* end, not center: the two blocks are different heights (the multiple is set
+     larger than the dollar figure) and centering them put the two labels on
+     different baselines. */
+  align-items: end;
+  gap: clamp(1rem, 0.5rem + 1.6vw, 2rem);
+  position: relative;
+  border-top: 2px solid var(--gold);
+  background:
+    radial-gradient(58% 130% at 88% 52%, rgba(201,163,106,0.16) 0%, rgba(201,163,106,0) 70%),
+    linear-gradient(180deg, rgba(201,163,106,0.12) 0%, rgba(201,163,106,0) 82%);
+  box-shadow: inset 0 1px 0 rgba(255, 245, 225, 0.07);
+  padding: clamp(1.7rem, 1.2rem + 1.8vw, 2.6rem) clamp(1.25rem, 0.8rem + 1.6vw, 2.25rem);
+}
+/* Inset hairline frame. Double-rule is a bookbinding move and it is the
+   cheapest way to make a flat panel read as a made object. */
+.roi::after {
+  content: ""; position: absolute;
+  inset: 7px 7px 7px 7px;
+  border: 1px solid rgba(201, 163, 106, 0.16);
+  border-top: none;
+  pointer-events: none;
+}
+.roi-main, .roi-x { text-align: left; }
+.roi-x { text-align: right; }
+.roi-fig {
+  font-family: var(--font-body); font-weight: 700;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  font-size: clamp(1.5rem, 0.95rem + 2.2vw, 2.5rem);
+  line-height: 1; color: var(--ink); letter-spacing: -0.015em;
+}
+.roi-fig--x {
+  color: var(--gold);
+  font-weight: 600;
+  font-size: clamp(2.125rem, 1.2rem + 3.7vw, 4rem);
+  letter-spacing: -0.03em;
+}
+.roi-lab {
+  margin-top: 0.5rem;
+  font-size: 0.6875rem; font-weight: 600;
+  letter-spacing: 0.17em; text-transform: uppercase;
+  color: var(--ink-faint); text-wrap: balance;
+}
+.roi-x .roi-lab { color: var(--gold-light); }
+.roi-basis {
+  margin-top: 0.9rem;
+  font-size: 0.75rem; line-height: 1.6;
+  color: var(--ink-faint); text-wrap: pretty;
+}
+.roi-basis .num { color: var(--ink-soft); font-weight: 600; white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* No pour. The bands are already at their final clip-path because the
+     animation only exists inside a no-preference query. */
+}
+
+/* The disclosure. Reads as a footnote because that is what it is, but it is
+   load-bearing: without it the window reads as a standing claim. */
+.proof-foot {
+  margin-top: clamp(1.25rem, 0.9rem + 1.1vw, 1.75rem);
+  /* COLUMN, not row-wrap. As a wrapping row these three sentences flowed
+     inline and shared lines (measured: sentences 1 and 2 both landed on the
+     same line). One sentence per line is the standard, and it has to be
+     structural rather than left to where the text happens to wrap. */
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0.5em;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.75rem; line-height: 1.6;
+  color: var(--ink-faint);
+  text-align: center;
+}
+/* nowrap: the ISO date 2026-07-31 broke at its own hyphen at 400px
+   (HYPHEN-BREAK blocker, orphan sweep 2026-08-04). Covers the figures in this
+   block too, which stops a NUMBER-SPLIT before it happens. */
+.proof-foot .num { color: var(--ink-soft); font-weight: 600; white-space: nowrap; }
+
+/* ONE SENTENCE PER LINE. AG-COPYWRITING-STANDARD line 101 is the canonical
+   one-<p>-per-sentence rule; .ag-break (v1.1, lines 137-158) is the sanctioned
+   inline form for multiple sentences inside a single block element, which is
+   what every prose block on this page is. Missed on the first build: prose was
+   shipping as welded blocks. Verbatim from the standard. */
+.ag-break { display: block; height: 0.5em; line-height: 0; }
+
+/* Mobile Proof Gate WARNs, 2026-08-04. Skip link was 143x43 against the LOCKED
+   49x49 minimum. html had no background-color, so overscroll flashed the
+   browser default above the header (§6D chrome tint). */
+.ag-skip-link { min-height: 49px; display: inline-flex; align-items: center; }
+html { background-color: #0A0908; }
+
+/* ── HOW IT RUNS - the step ledger ─────────────────────── */
+/* Reuses .led-row geometry rather than inventing a card grid: the page already
+   has one row rhythm and a second would fight it. The numeral is the only
+   addition. */
+.steps { margin-top: clamp(1.75rem, 1rem + 2.4vw, 2.75rem); counter-reset: step; }
+.step-row {
+  display: grid;
+  grid-template-columns: auto 12.5rem 1fr;
+  column-gap: clamp(1rem, 0.5rem + 1.6vw, 1.75rem);
+  align-items: baseline;
+  padding: 1.15rem 0 1.15rem 1.1rem;
+  border-bottom: 1px solid var(--line-soft);
+  position: relative;
+}
+.step-row:last-child { border-bottom: none; }
+.step-row::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: var(--gold);
+  transform: scaleY(0); transform-origin: center top;
+  transition: transform var(--duration-quick) var(--ease-settle);
+}
+/* INTER, not Cinzel. Rendered and looked at 2026-08-04: Cinzel set "01" as a
+   serifed vertical that reads "0I" beside an unambiguous "02"/"03"/"04". These
+   are a sequence the reader parses, not a standalone display numeral, so the
+   titling face does not get to set them (reference_cinzel_numerals_break_prices).
+   The large .sec-num stays Cinzel - checked at 52px, it reads as a 1. */
+.step-n {
+  font-family: var(--font-body); font-weight: 700;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  font-size: var(--text-h4); line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--gold-deep);
+  min-width: 1.75rem;
+}
+.step-k {
+  font-size: 0.8125rem; font-weight: 600;
+  letter-spacing: 0.11em; text-transform: uppercase;
+  color: var(--ink);
+}
+.step-v {
+  font-size: var(--text-base); color: var(--ink-soft); line-height: 1.6;
+  text-wrap: pretty;
+}
+@media (hover: hover) {
+  .step-row { transition: background var(--duration-quick) var(--ease-soft); }
+  .step-row:hover { background: rgba(201, 163, 106, 0.05); }
+  .step-row:hover::before { transform: scaleY(1); }
+  .step-row:hover .step-n { color: var(--gold); }
+  .step-k, .step-v, .step-n { transition: transform var(--duration-quick) var(--ease-satisfying),
+                                          color var(--duration-quick) var(--ease-soft); }
+  .step-row:hover .step-k, .step-row:hover .step-v { transform: translateX(3px); }
+}
+
+/* ── NEXT STEPS ────────────────────────────────────────── */
+.nexts { margin-top: clamp(1.75rem, 1rem + 2.4vw, 2.75rem); }
+.next-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: clamp(1rem, 0.5rem + 1.6vw, 1.75rem);
+  align-items: baseline;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.next-row:last-child { border-bottom: none; }
+/* Inter for the same reason as .step-n. */
+.next-n {
+  font-family: var(--font-body); font-weight: 700;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  font-size: var(--text-h4); line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--gold);
+}
+.next-v { font-size: var(--text-lg); color: var(--ink-soft); line-height: 1.6; text-wrap: pretty; }
+.next-close {
+  margin-top: clamp(2rem, 1.4rem + 2vw, 3rem);
+  text-align: center;
+  font-family: var(--font-display); font-weight: 500;
+  font-size: var(--text-h4);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* The build-time .slot chip rule was removed 2026-08-04 when the copy landed.
+   All 24 slots are filled; a dead rule for markers that no longer exist is
+   just a thing for the next reader to wonder about. */
+
+/* ═══ MOBILE 350-900 - everything centers (AG-MOBILE §6C) ═══ */
+@media (max-width: 1200px) {
+  .step-row { grid-template-columns: auto 10.5rem 1fr; }
+}
+
+/* The old 4-up tile row needed a label size fix here. The funnel puts labels in
+   their own column, so the squeeze that caused it no longer exists. */
+@media (max-width: 900px) {
+  /* THE FUNNEL STACKS AND CENTERS on mobile. Keeping the two columns was wrong:
+     the shape jammed against the left gutter and the legend sat left-aligned
+     while every other block on the page centers, so the whole section read as
+     misaligned against the page. AG-MOBILE §6C is literal centering at <=900,
+     and it applies to this block like everything else.
+     DOM order is band, legend, band, legend, band, legend, so a single column
+     stacks each band directly above the numbers it belongs to. The clip-path
+     carves a CENTERED trapezoid out of a full-width element, so each band stays
+     exactly proportional and lands centered with no extra work. */
+  .fnl-grid { grid-template-columns: 1fr; }
+  .fnl-band {
+    min-height: clamp(38px, 26px + 3.4vw, 58px);   /* shorter: 3 bands + 3 legends is a tall stack */
+    width: 100%;
+  }
+  .fnl-leg {
+    text-align: center;
+    align-items: center;
+    padding: clamp(0.7rem, 0.55rem + 0.6vw, 1rem) 0 clamp(1rem, 0.8rem + 0.9vw, 1.5rem);
+  }
+  .fnl-k, .fnl-v { text-align: center; }
+  .fnl-k { font-size: 0.625rem; letter-spacing: 0.15em; text-indent: 0.15em; }
+  /* The legend column is ~180px at 350px, and "Booked an appointment" at
+     0.24em tracking stranded its last word there (WIDOW). Sizing fix, per
+     reference_orphan_interior_is_a_sizing_defect: gluing a tracked-out label
+     only relocates the strand. Tracking eases too, since 0.24em is a desktop
+     luxury that costs ~18% of the line at phone widths. */
+  .fnl-k { font-size: 0.625rem; letter-spacing: 0.15em; text-indent: 0.15em; }
+  .roi {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    row-gap: 1.25rem;
+    text-align: center;
+  }
+  .roi-main, .roi-x { text-align: center; }
+  .roi-basis { text-align: center; max-width: 46ch; margin-inline: auto; }
+
+  .step-row, .next-row {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    row-gap: 0.4rem;
+    padding-left: 0; padding-right: 0;
+    text-align: center;
+  }
+  .step-row::before { display: none; }
+  .step-v, .next-v { max-width: 46ch; margin-inline: auto; }
+}
+</style>
+</head>
+<body>
+
+<a class="ag-skip-link" href="#main">Skip to content</a>
+
+<!-- ═══ HERO - no header bar, no loading curtain (presentation law) ═══ -->
+<header class="hero">
+  <div class="shell">
+    <div class="mast-brand hero-arrive hero-d0">Arc Garde</div>
+    <div class="mast-tag hero-arrive hero-d1">Strategic Growth Partners</div>
+
+    <h1 class="hero-arrive hero-d2">Paid Ads for Dental Practices</h1>
+    <p class="hero-sub hero-arrive hero-d3">A private offer document from Arc Garde for your practice.</p>
+  </div>
+  <div class="chev hero-arrive hero-d4" aria-hidden="true"><span></span><span></span></div>
+</header>
+
+<main id="main">
+
+  <!-- ═══ 1 · THE PROOF ═══════════════════════════════════════════════════
+       DATA LAW: every figure below is from
+       The Tooth Place/ads/reports/best-case-study-window-2026-07-31.md
+       (audited 144/144 PASS, 0 unverified). Leads are GHL, the sole source of
+       truth on this account; Meta conversions are 0 forever there and were
+       never read. Do NOT edit a figure here. Correct the source and re-derive.
+  ══════════════════════════════════════════════════════════════════════ -->
+  <section class="sec" aria-labelledby="sec-1">
+    <div class="shell">
+      <div>
+        <div class="sec-head reveal-stagger">
+          <span class="sec-num num">1</span>
+          <h2 class="sec-title" id="sec-1">One Window</h2>
+        </div>
+        <div class="sec-rule"></div>
+        <p class="sec-note reveal">The Tooth Place, a general dental practice in Lynwood,&nbsp;CA.<span class="ag-break"></span>April&nbsp;19 to May&nbsp;18,&nbsp;2026.</p>
+      </div>
+
+      <div class="proof-id reveal">
+        <span class="proof-id-name">The Tooth Place</span>
+        <span class="proof-id-sep" aria-hidden="true">/</span>
+        <span class="proof-id-meta num">Lynwood,&nbsp;CA</span>
+        <span class="proof-id-sep" aria-hidden="true">/</span>
+        <span class="proof-id-meta num">April&nbsp;19 to May&nbsp;18,&nbsp;2026</span>
+        <span class="proof-id-sep" aria-hidden="true">/</span>
+        <span class="proof-id-meta num">30&nbsp;days</span>
+      </div>
+
+      <!-- THE FUNNEL. A real tapering funnel, not a row of tiles.
+           Band widths are the TRUE ratios: 87 leads = 100%, 20 booked =
+           22.989%, 9 attended = 10.345%. Nothing is floored or rounded up to
+           look better, which is why the numbers sit BESIDE the shape instead of
+           inside it: a 10% spout cannot hold text, and widening it so it could
+           would be a lie told with geometry. -->
+      <div class="fnl reveal">
+        <div class="fnl-in">
+          <span class="fnl-in-fig">$<span class="cnt" data-to="945.03" data-dec="2">945.03</span></span>
+          <span class="fnl-in-lab">Ad spend, 30&nbsp;days</span>
+        </div>
+
+        <div class="fnl-grid">
+          <div class="fnl-band fnl-b1" aria-hidden="true"></div>
+          <div class="fnl-leg fnl-leg--lead">
+            <span class="fnl-n"><span class="cnt" data-to="87">87</span></span>
+            <span class="fnl-k">New patient leads</span>
+            <span class="fnl-v">$<span class="num">10.86</span> each</span>
+          </div>
+
+          <div class="fnl-band fnl-b2" aria-hidden="true"></div>
+          <div class="fnl-leg">
+            <span class="fnl-n"><span class="cnt" data-to="20">20</span></span>
+            <span class="fnl-k">Booked an appointment</span>
+            <span class="fnl-v">$<span class="num">47.25</span> each &middot; <span class="num">23%</span> of leads</span>
+          </div>
+
+          <div class="fnl-band fnl-b3" aria-hidden="true"></div>
+          <div class="fnl-leg">
+            <span class="fnl-n"><span class="cnt" data-to="9">9</span></span>
+            <span class="fnl-k">Sat in the chair</span>
+            <span class="fnl-v">$<span class="num">105.00</span> each &middot; <span class="num">10%</span> of leads</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- The payoff. 9 x $1,500 = $13,500; $13,500 / $945.03 = 14.3x. Both
+           re-derived 2026-08-04. $1,500 is the PRACTICE'S OWN lifetime value
+           estimate, deliberately the conservative one: AG's ICP research puts
+           this market at $4,570 to $10,000. Labeled as lifetime value, never
+           as cash collected, because lifetime value realizes over years. -->
+      <div class="roi reveal">
+        <div class="roi-main">
+          <div class="roi-fig">$<span class="cnt" data-to="13500">13,500</span></div>
+          <div class="roi-lab">Estimated lifetime value of those <span class="num">9</span> patients</div>
+        </div>
+        <div class="roi-x">
+          <div class="roi-fig roi-fig--x"><span class="cnt" data-to="14.3" data-dec="1">14.3</span>x</div>
+          <div class="roi-lab">Return on the ad spend</div>
+        </div>
+      </div>
+      <p class="roi-basis reveal">
+        Calculated on the practice's own <span class="num">$1,500</span> patient lifetime value, not ours.<span class="ag-break"></span>Our research puts this market at <span class="num">$4,570</span> to <span class="num">$10,000</span>.
+      </p>
+
+      <!-- Disclosure. Load-bearing, not decoration: without it this window
+           reads as a standing claim about every account. Required by
+           best-case-study-window-2026-07-31.md "What you must disclose". -->
+      <p class="proof-foot reveal">
+        <span>One 30&nbsp;day window from one account, not a projection and not an average.</span>
+        <span>Across the full life of that account to date, <span class="num">158</span>&nbsp;leads at <span class="num">$20.21</span>&nbsp;each.</span>
+        <span>Booked and attended are pipeline outcomes counted to <span class="num">2026-07-31</span>, not events inside the window.</span>
+      </p>
+
+      <div class="note reveal">
+        <b>The verdict</b>
+        <p>One account.<span class="ag-break"></span>One 30&nbsp;day window.<span class="ag-break"></span>The cost per lead is what we control.<span class="ag-break"></span>The number of leads that become patients depends on how fast your front desk picks up the phone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 2 · WHAT WE DO ══════════════════════════════════════════════════
+       CANON. These rows are lifted verbatim from the published AG Service
+       Scope (presentations/service-scope, source AG-SERVICE-SCOPE-2026-07-30
+       .pdf). They are approved contract language, not net-new copy. Change
+       them at the source document or not at all (feedback_copy_doc_is_canon).
+  ══════════════════════════════════════════════════════════════════════ -->
+  <section class="sec sec--band" aria-labelledby="sec-2">
+    <div class="shell">
+      <div>
+        <div class="sec-head reveal-stagger">
+          <span class="sec-num num">2</span>
+          <h2 class="sec-title" id="sec-2">What We Do</h2>
+          <span class="sec-price--soft sec-price">Meta only</span>
+        </div>
+        <div class="sec-rule"></div>
+        <p class="sec-note reveal">Everything below is included in the monthly management fee.</p>
+      </div>
+
+      <div class="ledger reveal-stagger">
+        <div class="led-row"><span class="led-k">Funnel</span><span class="led-v">Landing page and booking flow, custom coded. No separate build fee.</span></div>
+        <div class="led-row"><span class="led-k">CRM</span><span class="led-v">Leads land in the CRM live. Every step tracked.</span></div>
+        <div class="led-row"><span class="led-k">Creative</span><span class="led-v">14 ads per testing cycle.</span></div>
+        <div class="led-row"><span class="led-k">Copy</span><span class="led-v">Scripts written word for word for every ad.</span></div>
+        <div class="led-row"><span class="led-k">Testing</span><span class="led-v">2&nbsp;ads head to head, 4&nbsp;days per sprint, 7&nbsp;sprints per testing cycle. 14&nbsp;creatives tested over 28&nbsp;days time.</span></div>
+        <div class="led-row"><span class="led-k">Management</span><span class="led-v">In depth daily tracking.</span></div>
+        <div class="led-row"><span class="led-k">Reporting</span><span class="led-v">Every 4 days while testing. Every 7 days once there is a winner.</span></div>
+        <div class="led-row"><span class="led-k">Attribution</span><span class="led-v">Know which ads your leads are coming in from.</span></div>
+        <div class="led-row"><span class="led-k">Sales help</span><span class="led-v">Coaching the team on speed to lead and follow up.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 3 · HOW IT RUNS ═══ -->
+  <section class="sec" aria-labelledby="sec-3">
+    <div class="shell">
+      <div>
+        <div class="sec-head reveal-stagger">
+          <span class="sec-num num">3</span>
+          <h2 class="sec-title" id="sec-3">How It Runs</h2>
+        </div>
+        <div class="sec-rule"></div>
+        <p class="sec-note reveal">Every dollar is tracked from the ad to the chair.</p>
+      </div>
+
+      <div class="steps reveal-stagger">
+        <div class="step-row">
+          <span class="step-n num">01</span>
+          <span class="step-k">Build</span>
+          <span class="step-v">The offer, the audience, the landing page, and the CRM are built and tested before a dollar of ad spend goes live.</span>
+        </div>
+        <div class="step-row">
+          <span class="step-n num">02</span>
+          <span class="step-k">Test</span>
+          <span class="step-v">2&nbsp;ads run head to head for 4&nbsp;days. The loser is cut. A new challenger takes its place. Same budget, repeated.</span>
+        </div>
+        <div class="step-row">
+          <span class="step-n num">03</span>
+          <span class="step-k">Attribution</span>
+          <span class="step-v">Every lead is tracked to the specific ad that produced it, through the CRM instead of the ad platform's own reporting.</span>
+        </div>
+        <div class="step-row">
+          <span class="step-n num">04</span>
+          <span class="step-k">Reporting</span>
+          <span class="step-v">A written report every 4&nbsp;days during testing, every 7&nbsp;days once a winner is holding. Numbers only.</span>
+        </div>
+      </div>
+
+      <!-- Canon, per the Service Scope reporting row and the AG no-projections
+           rule carried on every presentation. -->
+      <div class="note reveal">
+        <b>No projections</b>
+        <p>Every report says what happened, on real spend, in a dated window.<span class="ag-break"></span>We do not model a forecast and we do not put a number on a slide that has not already been paid for.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 4 · WHAT IT COSTS ═══════════════════════════════════════════════
+       PRICE: $1,500 / month. CONFIRMED by Quinten 2026-08-04 after being
+       flagged, so this is a decision, not an oversight. It sits deliberately
+       below the published AG standard paid ads range of $2,800 to $4,760
+       (reference_ag_service_pricing, live on presentations/service-scope), and
+       the full standard deliverable ledger in section 2 holds at this price.
+       Do NOT "correct" this figure up to match the scope page.
+  ══════════════════════════════════════════════════════════════════════ -->
+  <section class="sec sec--band" aria-labelledby="sec-4">
+    <div class="shell">
+      <div>
+        <div class="sec-head reveal-stagger">
+          <span class="sec-num num">4</span>
+          <h2 class="sec-title" id="sec-4">What It Costs</h2>
+          <span class="sec-price">$<span class="cnt" data-to="1500">1,500</span>&nbsp;/&nbsp;month</span>
+        </div>
+        <div class="sec-rule"></div>
+        <p class="sec-note reveal">The management fee is fixed.<span class="ag-break"></span>Ad spend is separate and paid by your practice directly to Meta.</p>
+      </div>
+
+      <div class="band reveal">
+        <div class="band-label">Cost</div>
+        <div class="band-row"><span class="band-k">Management fee</span><span class="band-v">$1,500&nbsp;/&nbsp;month</span></div>
+        <div class="band-row"><span class="band-k">Ad spend, paid straight to Meta</span><span class="band-v">Their cost</span></div>
+        <div class="band-row"><span class="band-k">CRM subscription, paid by the practice</span><span class="band-v">Their cost</span></div>
+      </div>
+
+      <div class="ledger reveal-stagger">
+        <div class="led-row"><span class="led-k">Not included</span><span class="led-v">Ad spend. CRM subscription. Website work outside the funnel.</span></div>
+        <div class="led-row"><span class="led-k">You give us</span><span class="led-v">Ad account access, CRM access, one filming day, offer sign off, one person to call leads.</span></div>
+        <div class="led-row"><span class="led-k">Minimum term</span><span class="led-v">3 months.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 5 · NEXT STEPS - closes on a quiet line, NO button ═══ -->
+  <section class="sec" aria-labelledby="sec-5">
+    <div class="shell">
+      <div>
+        <div class="sec-head reveal-stagger">
+          <span class="sec-num num">5</span>
+          <h2 class="sec-title" id="sec-5">Next Steps</h2>
+        </div>
+        <div class="sec-rule"></div>
+      </div>
+
+      <div class="nexts reveal-stagger">
+        <div class="next-row"><span class="next-n num">01</span><span class="next-v">A short call to confirm the offer fits your practice and answer questions.</span></div>
+        <div class="next-row"><span class="next-n num">02</span><span class="next-v">You grant ad account and CRM access. We build the landing page, the ads, and the automations.</span></div>
+        <div class="next-row"><span class="next-n num">03</span><span class="next-v">Ads go live. Reporting starts on day&nbsp;1.</span></div>
+      </div>
+
+      <p class="next-close reveal">Arc Garde. Long&nbsp;Beach,&nbsp;CA.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pagefoot">
+  <div class="shell">
+    <p><b>Arc Garde</b> &nbsp;&middot;&nbsp; Paid Ads for Dental&nbsp;Practices &nbsp;&middot;&nbsp; August&nbsp;2026</p>
+  </div>
+</footer>
+<!-- ═══ AG SCROLL (Lenis) + AG MOTION + AG CURSOR - CANONICAL DROP-INS ═══ -->
+<!-- Version PINNED + Subresource Integrity. The other 15 decks load a floating
+     `lenis@1`, which silently accepts whatever 1.x jsDelivr serves and cannot be
+     SRI-checked. Hash verified against two independent downloads of 1.3.25. -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.min.js"
+        integrity="sha384-ClD7pCgIUz5M81HT8aZmMxCsWmfsycmBiwL5gy1pUbdWHvICIbea22N9sTtAFotA"
+        crossorigin="anonymous"></script>
+<script>
+/* AG Scroll v1.2 - ag-scroll.js - lifted verbatim */
+(function () {
+  'use strict';
+  var lenis = null;
+  var hasFinePointer = window.matchMedia('(pointer: fine)').matches
+                    && window.matchMedia('(hover: hover)').matches;
+  var reducedMotion  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (window.Lenis && hasFinePointer && !reducedMotion) {
+    lenis = new window.Lenis({
+      lerp: 0.07,
+      smoothWheel: true,
+      smoothTouch: false,
+      touchMultiplier: 2,
+      infinite: false,
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      wheelMultiplier: 1,
+    });
+    var raf = function (time) { lenis.raf(time); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
+    window.lenis = lenis;
+  }
+
+  var AGScroll = (function () {
+    let lastScrollY = 0;
+    let scrollDirection = 'down';
+    let accumulatedDelta = 0;
+    const THRESHOLD = 14;
+    function onScroll() {
+      const currentY = window.scrollY;
+      const delta = currentY - lastScrollY;
+      if (Math.sign(delta) !== Math.sign(accumulatedDelta)) { accumulatedDelta = 0; }
+      accumulatedDelta += delta;
+      if (Math.abs(accumulatedDelta) >= THRESHOLD) {
+        const newDirection = accumulatedDelta > 0 ? 'down' : 'up';
+        if (newDirection !== scrollDirection) {
+          scrollDirection = newDirection;
+          window.dispatchEvent(new CustomEvent('ag:scroll-direction', {
+            detail: { direction: scrollDirection, scrollY: currentY }
+          }));
+        }
+        accumulatedDelta = 0;
+      }
+      lastScrollY = currentY;
+    }
+    if (window.lenis) { lenis.on('scroll', onScroll); }
+    else { window.addEventListener('scroll', onScroll, { passive: true }); }
+    return {
+      getDirection: () => scrollDirection,
+      getScrollY: () => lastScrollY,
+      direction: () => scrollDirection,
+      scrollY: () => lastScrollY,
+    };
+  })();
+  window.AGScroll = AGScroll;
+
+  AGScroll.lock = function () {
+    const scrollY = window.scrollY;
+    document.documentElement.style.setProperty('--scroll-y', scrollY + 'px');
+    if (window.lenis) { lenis.stop(); }
+    document.body.classList.add('is-locked');
+  };
+  AGScroll.unlock = function () {
+    document.body.classList.remove('is-locked');
+    const scrollY = parseInt(
+      getComputedStyle(document.documentElement).getPropertyValue('--scroll-y') || '0'
+    );
+    document.documentElement.style.removeProperty('--scroll-y');
+    window.scrollTo(0, scrollY);
+    if (window.lenis) { lenis.start(); }
+  };
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      const targetId = anchor.getAttribute('href');
+      const target = document.querySelector(targetId);
+      if (!target) return;
+      e.preventDefault();
+      if (window.lenis) {
+        lenis.scrollTo(target, {
+          offset: 0,
+          duration: 0.7,
+          easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
+        });
+      } else {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+})();
+</script>
+
+<script>
+/* AG Motion v2.5 - ag-motion.js - lifted verbatim, plus .sec-rule in the selector
+   so the drawing underline is driven by the same single IntersectionObserver. */
+(function () {
+  const REVEAL_SELECTOR = '.reveal, .reveal-hero, .reveal-stagger, .reveal-cinematic, .sec-rule, .reveal-title';
+  const REVEAL_THRESHOLD = 0.15;
+  const REVEAL_ROOT_MARGIN = '0px 0px -10% 0px';
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll(REVEAL_SELECTOR).forEach(el => { el.classList.add('in-view'); });
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: REVEAL_THRESHOLD, rootMargin: REVEAL_ROOT_MARGIN });
+
+  document.querySelectorAll('.reveal-stagger').forEach(group => {
+    Array.from(group.children).forEach((child, i) => { child.style.setProperty('--i', i); });
+  });
+
+  document.querySelectorAll(REVEAL_SELECTOR).forEach(el => { observer.observe(el); });
+})();
+</script>
+<script>
+/* Count-up on the figures. The final figure is already in the HTML, so this is
+   pure enhancement: if the script never runs, the right number is on screen.
+   EXTENDED from the service-scope original to carry decimals - this page counts
+   $945.03 and $10.86, and the integer-only version rendered them as 945 and 11.
+   data-dec="2" fixes the places; absent, it counts as an integer exactly as before. */
+(function () {
+  var els = document.querySelectorAll('.cnt');
+  if (!els.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var fmt = function (n, dec) {
+    return n.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+  };
+
+  var run = function (el) {
+    var to  = parseFloat(el.getAttribute('data-to'));
+    var dec = parseInt(el.getAttribute('data-dec'), 10);
+    if (!isFinite(to)) return;
+    if (!isFinite(dec)) dec = 0;
+
+    /* Lock the box at its FINAL width before counting. Digit count changes as
+       it climbs, and a reflowing row would violate Hard Rule 5. */
+    el.style.display = 'inline-block';
+    el.style.minWidth = el.getBoundingClientRect().width + 'px';
+    el.style.textAlign = 'right';
+
+    var DUR = 900;                                   /* --duration-long */
+    var start = null;
+    var step = function (ts) {
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / DUR, 1);
+      var eased = (p === 1) ? 1 : 1 - Math.pow(2, -10 * p);   /* easeOutExpo */
+      el.textContent = fmt(to * eased, dec);
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = fmt(to, dec);            /* always land exact */
+    };
+    requestAnimationFrame(step);
+  };
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { run(e.target); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.6 });
+
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+<script>
+/* AG Cursor v2.1 - ag-cursor.js - lifted verbatim. Mounts at <body>. */
+(function () {
+  if (!window.matchMedia ||
+      !(matchMedia('(pointer: fine)').matches && matchMedia('(hover: hover)').matches)) return;
+
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var INTERACTIVE = 'a[href],button,[role="button"],input:not([type="hidden"]),' +
+                    'select,textarea,label[for],summary,[data-cursor],.ag-clickable';
+
+  var NS = 'http://www.w3.org/2000/svg';
+  var ARROW = 'M0,0 L0,15 L4,11.5 L6.5,17 L8.5,16 L6,10.5 L10.5,10.5 Z';
+  var HAND  = 'M8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v5.34l-1.2.24a1.5 1.5 0 0 0-1.196 1.636l.345 3.106a2.5 2.5 0 0 0 .405 1.11l1.433 2.15A1.5 1.5 0 0 0 6.035 16h6.385a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.271-2.715a2 2 0 0 0-1.99-2.199h-.581a5 5 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.6 2.6 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046z';
+
+  function shape(type) {
+    var arrow = (type === 'arrow');
+    var s = document.createElementNS(NS, 'svg');
+    s.setAttribute('class', 'ag-cursor__' + type);
+    s.setAttribute('viewBox', arrow ? '0 0 11 17.5' : '0 0 16 16');
+    s.setAttribute('width',  arrow ? 13 : 18);
+    s.setAttribute('height', arrow ? 20 : 18);
+    var p = document.createElementNS(NS, 'path');
+    p.setAttribute('d', arrow ? ARROW : HAND);
+    s.appendChild(p);
+    return s;
+  }
+
+  var bodyL = document.createElement('div');
+  bodyL.className = 'ag-cursor__body'; bodyL.setAttribute('aria-hidden', 'true');
+  bodyL.appendChild(shape('arrow'));
+
+  var edgeL = document.createElement('div');
+  edgeL.className = 'ag-cursor__edge'; edgeL.setAttribute('aria-hidden', 'true');
+  edgeL.appendChild(shape('arrow'));
+  edgeL.appendChild(shape('hand'));
+
+  document.body.appendChild(bodyL);
+  document.body.appendChild(edgeL);
+
+  var root = document.documentElement;
+  root.classList.add('ag-fine');
+
+  var css = getComputedStyle(root);
+  var INK    = (css.getPropertyValue('--ink')    || '#0a0a0a').trim();
+  var PAPER  = (css.getPropertyValue('--paper')  || '#fafafa').trim();
+  var ACCENT = (css.getPropertyValue('--accent') || '#c9a861').trim();
+
+  var tx = innerWidth / 2, ty = innerHeight / 2, shown = false, frame = 0;
+
+  function isDarkBg(el) {
+    while (el && el !== document.documentElement) {
+      var bg = getComputedStyle(el).backgroundColor;
+      var m = bg.match(/rgba?\(([^)]+)\)/);
+      if (m) {
+        var p = m[1].split(',').map(parseFloat);
+        var a = (p[3] === undefined) ? 1 : p[3];
+        if (a > 0.1) { return (0.2126 * p[0] + 0.7152 * p[1] + 0.0722 * p[2]) / 255 < 0.5; }
+      }
+      el = el.parentElement;
+    }
+    return false;
+  }
+
+  function track(e) {
+    tx = e.clientX; ty = e.clientY;
+    var t = 'translate(' + tx + 'px,' + ty + 'px)';
+    bodyL.style.transform = t; edgeL.style.transform = t;
+    if (!shown) { shown = true; bodyL.style.opacity = '1'; edgeL.style.opacity = '1'; }
+  }
+  addEventListener('mousemove', track, { passive: true });
+  addEventListener('pointermove', function (e) { if (e.pointerType !== 'touch') track(e); }, { passive: true });
+
+  document.documentElement.addEventListener('mouseleave', function () {
+    shown = false; bodyL.style.opacity = '0'; edgeL.style.opacity = '0';
+  });
+  document.documentElement.addEventListener('mouseenter', function () {
+    shown = true; bodyL.style.opacity = '1'; edgeL.style.opacity = '1';
+  });
+
+  document.addEventListener('mouseover', function (e) {
+    if (e.target.closest && e.target.closest(INTERACTIVE)) root.classList.add('ag-cur-hover');
+  });
+  document.addEventListener('mouseout', function (e) {
+    var to = e.relatedTarget;
+    if (e.target.closest && e.target.closest(INTERACTIVE) &&
+        !(to && to.closest && to.closest(INTERACTIVE))) {
+      root.classList.remove('ag-cur-hover');
+    }
+  });
+
+  function clickBurst(x, y) {
+    if (reduce) return;
+    var hand = root.classList.contains('ag-cur-hover');
+    var d    = hand ? HAND : ARROW;
+    var vb   = hand ? '0 0 16 16' : '0 0 11 17.5';
+    var w    = hand ? 18 : 13;
+    var h    = hand ? 18 : 20;
+    var lx   = hand ? (x - 8) : x;
+    var ly   = hand ? (y - 2) : y;
+    var orig = hand ? '8px 2px' : '0 0';
+
+    function spawn(strokeW, glow) {
+      var el = document.createElement('div');
+      el.setAttribute('aria-hidden', 'true');
+      el.style.cssText = 'position:fixed;left:' + lx + 'px;top:' + ly + 'px;pointer-events:none;z-index:2147483645;transform-origin:' + orig + ';';
+      el.innerHTML = '<svg width="' + w + '" height="' + h + '" viewBox="' + vb + '" style="display:block;overflow:visible;">' +
+        '<path d="' + d + '" fill="none" stroke="' + ACCENT + '" stroke-width="' + strokeW + '" stroke-linejoin="round"' +
+        (glow ? ' style="filter:drop-shadow(0 0 4px ' + ACCENT + ');"' : '') + '/></svg>';
+      document.body.appendChild(el);
+      return el;
+    }
+
+    var echo = spawn(1, false);
+    echo.animate([{ transform: 'scale(1)', opacity: .85 }, { transform: 'scale(2.3)', opacity: 0 }],
+      { duration: 294, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'forwards' });
+
+    var ignite = spawn(2.2, true);
+    ignite.animate([{ opacity: 0 }, { opacity: .95, offset: .3 }, { opacity: 0 }],
+      { duration: 210, easing: 'cubic-bezier(0.16,1,0.3,1)', fill: 'forwards' });
+
+    setTimeout(function () { echo.remove(); ignite.remove(); }, 360);
+  }
+
+  document.addEventListener('mousedown', function () { root.classList.add('ag-cur-press'); });
+  document.addEventListener('mouseup', function (e) {
+    root.classList.remove('ag-cur-press');
+    clickBurst(e.clientX, e.clientY);
+  });
+
+  function tick() {
+    if ((frame++ % 4) === 0) {
+      var el = document.elementFromPoint(tx, ty);
+      if (el) edgeL.style.setProperty('--cur-fill', isDarkBg(el) ? PAPER : INK);
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+
+</body>
+</html>
