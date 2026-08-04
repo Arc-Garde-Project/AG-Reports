@@ -752,53 +752,42 @@ body {
   color: var(--ink-faint);
 }
 
-/* row-gap MUST stay 0 or the funnel breaks into disconnected slabs. */
+/* Column 1 holds the funnel and spans all three legend rows, so the vessel is
+   one continuous object instead of three stacked slabs. */
 .fnl-grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-  column-gap: clamp(1rem, 0.4rem + 1.9vw, 2.25rem);
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  column-gap: clamp(1.25rem, 0.5rem + 2.2vw, 2.75rem);
   row-gap: 0;
   align-items: stretch;
 }
-
-.fnl-band {
-  min-height: clamp(64px, 42px + 5.5vw, 104px);
-  background:
-    linear-gradient(178deg, rgba(201,163,106,0.05) 0%, rgba(201,163,106,0) 60%),
-    linear-gradient(100deg, #F0DBAE 0%, #D9B57A 34%, #C9A36A 58%, #E8CE9B 100%);
+.fnl-shape {
+  grid-column: 1;
+  grid-row: 1 / 4;
+  display: flex; align-items: center; justify-content: center;
+  padding-block: clamp(0.5rem, 0.3rem + 0.8vw, 1rem);
+  min-height: 0;
 }
-/* Each band tapers INTO the next, so the three read as one continuous vessel. */
-.fnl-b1 { clip-path: polygon(0% 0%, 100% 0%, 61.494% 100%, 38.506% 100%); }
-.fnl-b2 { clip-path: polygon(38.506% 0%, 61.494% 0%, 55.172% 100%, 44.828% 100%); opacity: 0.82; }
-.fnl-b3 { clip-path: polygon(44.828% 0%, 55.172% 0%, 55.172% 100%, 44.828% 100%); opacity: 0.66; }
+.fnl-shape svg {
+  width: 100%; height: 100%;
+  max-height: clamp(180px, 120px + 14vw, 320px);
+  display: block;
+  filter: drop-shadow(0 10px 26px rgba(0, 0, 0, 0.45));
+}
 
-/* Pour: the funnel fills from the mouth down when it scrolls into view. */
-@media (prefers-reduced-motion: no-preference) {
-  .fnl-band { clip-path: inset(0 50% 100% 50%); transition: none; }
-  .fnl.in-view .fnl-b1 {
-    animation: pour1 var(--duration-long) var(--ease-satisfying) 120ms forwards;
-  }
-  .fnl.in-view .fnl-b2 {
-    animation: pour2 var(--duration-long) var(--ease-satisfying) 300ms forwards;
-  }
-  .fnl.in-view .fnl-b3 {
-    animation: pour3 var(--duration-long) var(--ease-satisfying) 480ms forwards;
-  }
-  @keyframes pour1 {
-    from { clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%); }
-    to   { clip-path: polygon(0% 0%, 100% 0%, 61.494% 100%, 38.506% 100%); }
-  }
-  @keyframes pour2 {
-    from { clip-path: polygon(38.506% 0%, 61.494% 0%, 61.494% 0%, 38.506% 0%); }
-    to   { clip-path: polygon(38.506% 0%, 61.494% 0%, 55.172% 100%, 44.828% 100%); }
-  }
-  @keyframes pour3 {
-    from { clip-path: polygon(44.828% 0%, 55.172% 0%, 55.172% 0%, 44.828% 0%); }
-    to   { clip-path: polygon(44.828% 0%, 55.172% 0%, 55.172% 100%, 44.828% 100%); }
-  }
+/* Pour: the vessel fills from the rim down when it scrolls into view. */
+.fnl-vessel, .fnl-shape svg > path + path {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 900ms var(--ease-satisfying) 180ms;
+}
+.fnl.in-view .fnl-vessel,
+.fnl.in-view .fnl-shape svg > path + path { clip-path: inset(0 0 0% 0); }
+@media (prefers-reduced-motion: reduce) {
+  .fnl-vessel, .fnl-shape svg > path + path { transition: none; clip-path: inset(0 0 0% 0); }
 }
 
 .fnl-leg {
+  grid-column: 2;
   display: flex; flex-direction: column; justify-content: center;
   padding: clamp(0.8rem, 0.6rem + 0.7vw, 1.15rem) 0;
   border-bottom: 1px solid var(--line-soft);
@@ -1043,10 +1032,14 @@ html { background-color: #0A0908; }
      carves a CENTERED trapezoid out of a full-width element, so each band stays
      exactly proportional and lands centered with no extra work. */
   .fnl-grid { grid-template-columns: 1fr; }
-  .fnl-band {
-    min-height: clamp(38px, 26px + 3.4vw, 58px);   /* shorter: 3 bands + 3 legends is a tall stack */
-    width: 100%;
+  /* Vessel on top, centered, then the three legend rows centered beneath it.
+     Everything on one axis, everything centered (AG-MOBILE §6C). */
+  .fnl-shape {
+    grid-column: 1; grid-row: 1;
+    padding-bottom: clamp(1rem, 0.8rem + 0.9vw, 1.5rem);
   }
+  .fnl-shape svg { max-height: clamp(150px, 110px + 12vw, 210px); }
+  .fnl-leg { grid-column: 1; }
   .fnl-leg {
     text-align: center;
     align-items: center;
@@ -1140,27 +1133,63 @@ html { background-color: #0A0908; }
         </div>
 
         <div class="fnl-grid">
-          <div class="fnl-band fnl-b1" aria-hidden="true"></div>
+          <!-- One clean funnel. The SHAPE is a vessel, not a chart: the ratios
+               are carried by the numbers beside it, which state them exactly
+               (23% and 10%). An earlier version forced each band's width to
+               encode its ratio, and an honest 87 -> 20 drop made a violently
+               steep cone over a needle stem that read as a broken glass. A
+               funnel that looks like a funnel is the honest presentation; a
+               malformed one just looks like a mistake. -->
+          <div class="fnl-shape" aria-hidden="true">
+            <svg viewBox="0 0 240 300" preserveAspectRatio="xMidYMid meet" focusable="false">
+              <defs>
+                <linearGradient id="fnlBody" x1="0" y1="0" x2="0.85" y2="1">
+                  <stop offset="0%"   stop-color="#F7E7C2"/>
+                  <stop offset="30%"  stop-color="#E4C58C"/>
+                  <stop offset="62%"  stop-color="#C9A36A"/>
+                  <stop offset="100%" stop-color="#E2C592"/>
+                </linearGradient>
+                <linearGradient id="fnlRim" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%"   stop-color="#D8B67F"/>
+                  <stop offset="22%"  stop-color="#FBF0D6"/>
+                  <stop offset="58%"  stop-color="#E0BE84"/>
+                  <stop offset="100%" stop-color="#F3E1B6"/>
+                </linearGradient>
+                <linearGradient id="fnlShade" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%"   stop-color="#FFF6E2" stop-opacity="0.42"/>
+                  <stop offset="26%"  stop-color="#FFF6E2" stop-opacity="0"/>
+                  <stop offset="78%"  stop-color="#6B4A1F" stop-opacity="0"/>
+                  <stop offset="100%" stop-color="#6B4A1F" stop-opacity="0.30"/>
+                </linearGradient>
+              </defs>
+              <!-- cone into stem -->
+              <path class="fnl-vessel"
+                    d="M4 16 H236 L136 178 V288 H104 V178 Z"
+                    fill="url(#fnlBody)"/>
+              <!-- form shading: light on the left, roll-off on the right -->
+              <path d="M4 16 H236 L136 178 V288 H104 V178 Z" fill="url(#fnlShade)"/>
+              <!-- rim -->
+              <rect x="0" y="0" width="240" height="17" rx="8.5" fill="url(#fnlRim)"/>
+            </svg>
+          </div>
+
           <div class="fnl-leg fnl-leg--lead">
             <span class="fnl-n"><span class="cnt" data-to="87">87</span></span>
             <span class="fnl-k">New patient leads</span>
             <span class="fnl-v">$<span class="num">10.86</span> each</span>
           </div>
 
-          <div class="fnl-band fnl-b2" aria-hidden="true"></div>
           <div class="fnl-leg">
             <span class="fnl-n"><span class="cnt" data-to="20">20</span></span>
             <span class="fnl-k">Booked an appointment</span>
             <span class="fnl-v">$<span class="num">47.25</span> each &middot; <span class="num">23%</span> of leads</span>
           </div>
 
-          <div class="fnl-band fnl-b3" aria-hidden="true"></div>
           <div class="fnl-leg">
             <span class="fnl-n"><span class="cnt" data-to="9">9</span></span>
             <span class="fnl-k">Sat in the chair</span>
             <span class="fnl-v">$<span class="num">105.00</span> each &middot; <span class="num">10%</span> of leads</span>
           </div>
-        </div>
       </div>
 
       <!-- The payoff. 9 x $1,500 = $13,500; $13,500 / $945.03 = 14.3x. Both
