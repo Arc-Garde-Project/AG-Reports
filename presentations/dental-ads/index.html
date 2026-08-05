@@ -717,15 +717,15 @@ body {
 @media (max-width: 560px) { .proof-id-sep { display: none; } }
 
 /* ═══ THE FUNNEL ═══════════════════════════════════════════
-   A real tapering funnel. The left column carries the SHAPE, the right column
-   carries the NUMBERS. That split is deliberate: the true ratios are
-   87 = 100%, 20 = 22.989%, 9 = 10.345%, and a 10% spout physically cannot hold
-   a number. Widening it so it could would be a lie told with geometry, so the
-   shape stays honest and the text moves out of it.
-   Geometry, centered, derived from the ratios above:
-     band 1  100%    -> 22.989%   edges 38.506% .. 61.494%
-     band 2  22.989% -> 10.345%   edges 44.828% .. 55.172%
-     band 3  10.345% straight (the spout)
+   One clean SVG vessel: cone, rim, stem. The SHAPE does not encode the stage
+   ratios and is not trying to. The legend beside it states them exactly (23%
+   and 10%), which is where a number belongs.
+   An earlier version drove each band's WIDTH from its ratio via clip-path
+   trapezoids. That is defensible on paper and was wrong in practice: an honest
+   87 -> 20 drop is 77%, so it rendered a violently steep cone over a needle
+   stem and read as a broken martini glass. A malformed funnel does not look
+   rigorous, it looks like a mistake, and it undercuts the very numbers it was
+   built to carry. Retired 2026-08-04.
    ═════════════════════════════════════════════════════════ */
 .fnl { margin-top: clamp(1.5rem, 0.9rem + 1.9vw, 2.25rem); }
 
