@@ -727,15 +727,15 @@ body {
    rigorous, it looks like a mistake, and it undercuts the very numbers it was
    built to carry. Retired 2026-08-04.
    ═════════════════════════════════════════════════════════ */
-.fnl { margin-top: clamp(1.5rem, 0.9rem + 1.9vw, 2.25rem); }
+.fnl { margin-top: clamp(1.1rem, 0.75rem + 1.2vw, 1.7rem); }
 
 /* What goes IN, sitting above the mouth of the funnel. */
 .fnl-in {
   text-align: center;
-  padding-bottom: clamp(0.9rem, 0.7rem + 0.8vw, 1.35rem);
+  padding-bottom: clamp(0.6rem, 0.45rem + 0.6vw, 0.95rem);
   border-top: 1px solid var(--line);
   box-shadow: inset 0 1px 0 rgba(255, 245, 225, 0.045);
-  padding-top: clamp(1.1rem, 0.85rem + 1vw, 1.6rem);
+  padding-top: clamp(0.85rem, 0.65rem + 0.8vw, 1.25rem);
 }
 .fnl-in-fig {
   display: block;
@@ -765,7 +765,7 @@ body {
   grid-column: 1;
   grid-row: 1 / 4;
   display: flex; align-items: center; justify-content: center;
-  padding-block: clamp(0.5rem, 0.3rem + 0.8vw, 1rem);
+  padding-block: clamp(0.3rem, 0.2rem + 0.5vw, 0.65rem);
   min-height: 0;
 }
 .fnl-shape svg {
@@ -788,10 +788,33 @@ body {
 
 .fnl-leg {
   grid-column: 2;
-  display: flex; flex-direction: column; justify-content: center;
-  padding: clamp(0.8rem, 0.6rem + 0.7vw, 1.15rem) 0;
+  /* Number LEFT of the text, not above it. Column 1 is the figure spanning both
+     rows; column 2 stacks the label over its unit cost. minmax floor keeps the
+     three figures in one optical column even though 87 / 20 / 9 differ in
+     width, so the labels start on a single left edge. */
+  display: grid;
+  /* FIXED number track, not minmax(...auto). Each legend row is its own grid,
+     so an auto track sized to its own figure and the three labels started on
+     three different left edges (87 is wider than 9, and the lead figure is set
+     larger). A fixed track is the only thing that makes independent grids share
+     an optical column. */
+  grid-template-columns: clamp(3.5rem, 2.4rem + 4.2vw, 5.5rem) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: clamp(0.85rem, 0.6rem + 0.7vw, 1.35rem);
+  row-gap: 0.2rem;
+  align-items: center;
+  align-content: center;
+  padding: clamp(0.62rem, 0.5rem + 0.5vw, 0.9rem) 0;
   border-bottom: 1px solid var(--line-soft);
 }
+.fnl-n { grid-column: 1; grid-row: 1 / 3; align-self: center; }
+/* Baseline the label with the figure rather than centering it against a tall
+   one, so the label sits ON the number's shoulder instead of floating. */
+.fnl-leg { align-items: end; }
+.fnl-k { align-self: end; padding-bottom: 0.1em; }
+.fnl-v { align-self: start; }
+.fnl-k { grid-column: 2; grid-row: 1; }
+.fnl-v { grid-column: 2; grid-row: 2; }
 .fnl-grid .fnl-leg:last-of-type { border-bottom: none; }
 
 .fnl-n {
@@ -816,14 +839,12 @@ body {
   }
 }
 .fnl-k {
-  margin-top: clamp(0.4rem, 0.3rem + 0.35vw, 0.6rem);
   font-size: 0.6875rem; font-weight: 500;
   letter-spacing: 0.24em; text-indent: 0.24em; text-transform: uppercase;
   color: var(--ink-faint); text-wrap: balance;
 }
 .fnl-leg--lead .fnl-k { color: var(--gold-light); }
 .fnl-v {
-  margin-top: 0.4rem;
   font-size: 0.8125rem; font-weight: 600;
   font-variant-numeric: tabular-nums lining-nums;
   color: var(--ink-soft);
@@ -846,7 +867,7 @@ body {
     radial-gradient(58% 130% at 88% 52%, rgba(201,163,106,0.16) 0%, rgba(201,163,106,0) 70%),
     linear-gradient(180deg, rgba(201,163,106,0.12) 0%, rgba(201,163,106,0) 82%);
   box-shadow: inset 0 1px 0 rgba(255, 245, 225, 0.07);
-  padding: clamp(1.7rem, 1.2rem + 1.8vw, 2.6rem) clamp(1.25rem, 0.8rem + 1.6vw, 2.25rem);
+  padding: clamp(1.25rem, 0.95rem + 1.2vw, 1.9rem) clamp(1.25rem, 0.8rem + 1.6vw, 2.25rem);
 }
 /* Inset hairline frame. Double-rule is a bookbinding move and it is the
    cheapest way to make a flat panel read as a made object. */
@@ -1039,19 +1060,28 @@ html { background-color: #0A0908; }
     padding-bottom: clamp(1rem, 0.8rem + 0.9vw, 1.5rem);
   }
   .fnl-shape svg { max-height: clamp(150px, 110px + 12vw, 210px); }
-  .fnl-leg { grid-column: 1; }
+  /* Number LEFT of its text. The BLOCK centers; its contents do not.
+     A fixed width plus margin auto is what makes three independent grids share
+     one left edge. `justify-content: center` with auto tracks does NOT: each
+     row then centers on its own content width and the numbers drift apart,
+     which is what shipped in the first pass. §6C wants the block landed
+     centered, not its internal alignment shredded.
+     Superseded a stale duplicate .fnl-leg block that re-centered the text two
+     lines after it was set left. */
   .fnl-leg {
-    text-align: center;
-    align-items: center;
-    padding: clamp(0.7rem, 0.55rem + 0.6vw, 1rem) 0 clamp(1rem, 0.8rem + 0.9vw, 1.5rem);
+    grid-column: 1;
+    width: min(100%, 19.5rem);
+    margin-inline: auto;
+    grid-template-columns: clamp(2.75rem, 2rem + 3.2vw, 3.75rem) minmax(0, 1fr);
+    align-items: end;
+    text-align: left;
+    padding: clamp(0.55rem, 0.45rem + 0.45vw, 0.8rem) 0;
   }
-  .fnl-k, .fnl-v { text-align: center; }
-  .fnl-k { font-size: 0.625rem; letter-spacing: 0.15em; text-indent: 0.15em; }
-  /* The legend column is ~180px at 350px, and "Booked an appointment" at
-     0.24em tracking stranded its last word there (WIDOW). Sizing fix, per
-     reference_orphan_interior_is_a_sizing_defect: gluing a tracked-out label
-     only relocates the strand. Tracking eases too, since 0.24em is a desktop
-     luxury that costs ~18% of the line at phone widths. */
+  .fnl-k, .fnl-v { text-align: left; }
+  /* 0.24em tracking is a desktop luxury that costs ~18% of the line at phone
+     widths, where it stranded the last word of "Booked an appointment". Sizing
+     fix per reference_orphan_interior_is_a_sizing_defect: gluing a tracked-out
+     label only relocates the strand. */
   .fnl-k { font-size: 0.625rem; letter-spacing: 0.15em; text-indent: 0.15em; }
   .roi {
     grid-template-columns: 1fr;
