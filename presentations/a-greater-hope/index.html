@@ -511,49 +511,6 @@ h1, h2, h3, .disp {
   overflow: hidden;
 }
 
-/* THE HEART. Still drawn, but soft: a thicker rounded stroke in baby
-   blue, a wash that blooms in behind it, and a slow living breath
-   once it has settled. v1 drew it as a 0.8px construction line, which
-   is precise and cold. */
-.hero-heart {
-  position: absolute;
-  top: 50%; left: 50%;
-  translate: -50% -52%;
-  width: min(94vw, 1010px);
-  pointer-events: none;
-  filter: drop-shadow(0 18px 50px rgba(0, 118, 187, 0.12));
-  animation: heartBreath 6300ms var(--ease-soft) 3500ms infinite;
-}
-.hero-heart path {
-  fill: none;
-  stroke: var(--sky-300);
-  stroke-width: 1.6;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  stroke-dasharray: 640;
-  stroke-dashoffset: 640;
-  animation: heartDraw 2100ms var(--ease-soft) 300ms forwards;
-}
-.hero-heart .heart-fill {
-  fill: var(--sky-200);
-  stroke: none;
-  opacity: 0;
-  animation: heartWarm 1400ms var(--ease-soft) 2100ms forwards;
-}
-@keyframes heartDraw { to { stroke-dashoffset: 0; } }
-@keyframes heartWarm { to { opacity: 0.34; } }
-/* The breath. 1.5 percent over 6.3s. Below the threshold of noticing
-   it move, above the threshold of feeling it alive. */
-@keyframes heartBreath {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.015); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-heart { animation: none; }
-  .hero-heart path { animation: none; stroke-dashoffset: 0; }
-  .hero-heart .heart-fill { animation: none; opacity: 0.34; }
-}
-
 .mast-brand {
   font-family: var(--font-body);
   font-weight: 700;
@@ -1125,37 +1082,28 @@ h1, h2, h3, .disp {
 @media (max-width: 900px) {
   .eng { grid-template-columns: 1fr; }
 
-  /* MOBILE HERO. A heart tall enough to contain the full mobile
-     column would need to be ~740px wide on a 393px screen, so the
-     mark anchors to the top and wraps the wordmark and title only;
-     the card clears its bottom point on clean ground. */
+  /* MOBILE HERO. Every number in this block used to exist to clear the
+     drawn heart: the tall top padding pushed the wordmark below the
+     cleft, and the card's large top margin cleared the bottom point.
+     With the mark removed both were just dead space, so the hero goes
+     back to a normal centered column. */
   .hero {
-    display: block;
-    min-height: auto;
-    padding-top: clamp(7rem, 24vw, 9rem);
-    padding-bottom: clamp(5rem, 16vw, 6.5rem);
+    display: grid;
+    place-items: center;
+    /* align-content packs the two rows together in the middle. Without it
+       the grid distributes them across 100dvh and drops a dead band
+       between the subline and the card, because on mobile the card is a
+       static grid child rather than absolutely positioned. */
+    align-content: center;
+    min-height: 100dvh;
+    padding-block: clamp(4.5rem, 14vw, 6.5rem);
   }
   .hero .shell { text-align: center; }
-  .hero-heart {
-    top: clamp(2rem, 7vw, 3rem);
-    translate: -50% 0;
-    width: min(80vw, 450px);
-    /* The ground is more blue-tinted on a narrow viewport because the
-       background blooms fill more of the frame, so the 0.34 wash that
-       reads clearly on desktop nearly disappears here. Lifted on mobile
-       only, so the mark stays a filled shape rather than an outline. */
-  }
-  .hero-heart .heart-fill { animation-name: heartWarmMobile; }
-  @keyframes heartWarmMobile { to { opacity: 0.55; } }
 
   .hellocard {
     position: static;
     width: min(286px, 84vw);
-    /* Was clamp(8rem, 30vw, 11rem), tuned for the larger blueprint-era
-       heart. With the mark reduced it left roughly 120px of dead space
-       under the copy slot that read as a layout error rather than as
-       breathing room. Retuned to clear the heart's point by a few px. */
-    margin: clamp(5rem, 19vw, 7rem) auto 0;
+    margin: clamp(2.25rem, 7vw, 3.25rem) auto 0;
   }
 
   .sec-head { justify-content: center; text-align: center; }
@@ -1213,10 +1161,6 @@ h1, h2, h3, .disp {
 <header class="hero">
   <!-- THE HEART. Drawn, not placed. 2100ms stroke, then a 4.5% warm fill.
        Their own mark, built on the blueprint grid behind the type. -->
-  <svg class="hero-heart" viewBox="0 0 200 190" aria-hidden="true" focusable="false">
-    <path class="heart-fill" d="M100,180 C40,130 10,95 10,62 C10,32 32,12 58,12 C76,12 92,22 100,38 C108,22 124,12 142,12 C168,12 190,32 190,62 C190,95 160,130 100,180 Z"/>
-    <path d="M100,180 C40,130 10,95 10,62 C10,32 32,12 58,12 C76,12 92,22 100,38 C108,22 124,12 142,12 C168,12 190,32 190,62 C190,95 160,130 100,180 Z"/>
-  </svg>
 
 <!-- WARM PASS: the dimension line and the four corner registration marks
      were removed with the grid. They were the same drawing language and
