@@ -351,44 +351,47 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
 
    Content sits on the SAME cream scrim used on plates 1-3, measured at 7.52:1.
    Before this it was bare ink on a bright sky and it washed out. */
-/* THE SKY EXTENDS PAST THE SECTION, rather than the footer being dragged up
-   into it. The first attempt pulled the credit line up with a negative margin,
-   which meant the lift had to equal the footer's own height. That height
-   changes as the line wraps (39px at 1440, 83px at 350), so a clamp that fit
-   nine widths broke the tenth. --foot-h is measured from the live element, so
-   the geometry stops being a guess.
-   overflow:hidden moved off the section and onto .cost-sky, which is what
-   actually needs to clip the scaled video. */
-.sec--cream { position: relative; isolation: isolate;
-  background: var(--cream); padding-top: clamp(3rem, 8vw, 5.5rem);
-  padding-bottom: clamp(3.5rem, 8vw, 6rem); }
-
-/* the sky rises into frame off the back of Plate 3 */
-.cost-sky { position: absolute; left: 0; right: 0; top: 0;
-  bottom: calc(-1 * var(--foot-h, 0px)); z-index: 0; overflow: hidden;
-  /* The clouds have to meet Plate 3 at the seam. A long transparent lead-in
-     left a white gap that read as a gap, not a bridge.
-     The tail used to fade to transparent at 88-100% so the section could blend
-     into the paper footer beneath it. That footer is now ON the sky, so the
-     fade is gone and the footage holds all the way to the bottom edge. */
-  -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.55) 0, #000 4%, #000 100%);
-          mask-image: linear-gradient(180deg, rgba(0,0,0,0.55) 0, #000 4%, #000 100%); }
-/* phone / reduced-motion fallback: one still, no video */
-.sec--cream[data-film="still"] .cost-sky {
-  background: url("cost-sky-mobile.jpg") center/cover no-repeat; }
-.sec--cream[data-film="still"] .cost-film { display: none; }
+/* THE SKY IS PINNED, THE CONTENT TRAVELS OVER IT.
+   It used to be an absolutely positioned layer stretched to whatever height the
+   section happened to be, with a parallax translate on the video. Two problems:
+   the footage was scaled to a box that had nothing to do with its own 16:9, so
+   it read as stretched, and the section was a video playing behind text rather
+   than anything you could scroll THROUGH.
+   Now .cost-sky is a sticky full-viewport layer inside .sky-scope, which spans
+   the section and the credit line. It holds one viewport of footage at its own
+   aspect and stays put while the containers move across it. The negative margin
+   is what pulls the content back up over the pinned layer.
+   --foot-h is gone with it: the scope contains the footer, so there is no
+   overhang left to measure. */
+.sky-scope { position: relative; }
+.cost-sky {
+  position: sticky; top: 0; z-index: 0;
+  height: 100svh; margin-bottom: -100svh;
+  overflow: hidden;
+}
 .cost-film { width: 100%; height: 100%; object-fit: cover; opacity: 0;
-  transform: translateY(var(--sky-y, 0px)) scale(1.08);
   transition: opacity 0.9s ease; }
-.sec--cream[data-film="on"] .cost-film { opacity: 1; }
+/* phone / reduced-motion fallback: one still, no video */
+.sky-scope[data-film="still"] .cost-sky {
+  background: url("cost-sky-mobile.jpg") center/cover no-repeat; }
+.sky-scope[data-film="still"] .cost-film { display: none; }
+.sky-scope[data-film="on"] .cost-film { opacity: 1; }
 
-/* a soft warm wash so the type has something to sit on even at the brightest
-   part of the footage */
-.sec--cream::after { content: ""; position: absolute; left: 0; right: 0; top: 0;
-  bottom: calc(-1 * var(--foot-h, 0px)); z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(253,248,242,0.30) 0%, rgba(253,248,242,0.10) 30%,
-                                       rgba(253,248,242,0.10) 70%, rgba(253,248,242,0.55) 100%); }
+/* the warm wash rides WITH the pinned sky, so the type sits on a consistent
+   ground instead of one that slides as the section scrolls */
+.cost-sky::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(253,248,242,0.34) 0%, rgba(253,248,242,0.12) 26%,
+                                       rgba(253,248,242,0.12) 68%, rgba(253,248,242,0.42) 100%); }
+
+/* a short bridge at the very top so the clouds arrive off the back of Plate 3
+   rather than cutting in. This one is NOT sticky: it scrolls away. */
+.sky-scope::before { content: ""; position: absolute; left: 0; right: 0; top: 0;
+  height: clamp(90px, 14vh, 190px); z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(253,248,242,0.55) 0%, rgba(253,248,242,0) 100%); }
+
+.sec--cream { position: relative; z-index: 2; background: transparent;
+  padding-top: clamp(3rem, 8vw, 5.5rem);
+  padding-bottom: clamp(3.5rem, 8vw, 6rem); }
 
 .sec--cream .shell { position: relative; z-index: 2; }
 
@@ -559,7 +562,7 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
      aria-label="A Greater Hope paid media presentation, scroll to advance">
 
   <!-- ── REST A · Plate 1 · THE HERO ─────────────────────────────────────── -->
-  <section class="hseg" data-segment='{"kind":"rest","videoBase":"loops/agh-fg1-restA-loop","dwellPx":300}'>
+  <section class="hseg" data-sun data-segment='{"kind":"rest","videoBase":"loops/agh-fg1-restA-loop","dwellPx":300}'>
     <video muted loop playsinline preload="auto" aria-hidden="true"></video>
     <div class="hseg-text" data-seg-text>
       <div>
@@ -677,16 +680,23 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   <div class="hstage-rail" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
 </div>
 
+<!-- THE CLOUDS ARE A FIXED BACKDROP, NOT A CLIP THAT PLAYS.
+     .cost-sky is a sticky full-viewport layer pinned across this whole scope,
+     and the section plus the credit line scroll over it. That is what stops the
+     footage being stretched to whatever height the content happens to be, and
+     it turns the last section into a scroll effect rather than a video playing
+     behind text (Quinten, 2026-08-18).
+     The wrapper is a plain <div> on purpose: it is not sectioning content, so
+     the <footer> inside it still maps to the page's contentinfo landmark. -->
+<div class="sky-scope">
+  <div class="cost-sky" aria-hidden="true">
+    <video class="cost-film" muted loop playsinline preload="none"></video>
+  </div>
+
 <main id="main">
 
   <!-- ═══ 3 · WHAT IT COSTS ═════════════════════════════════════════════════ -->
   <section class="sec sec--cream" aria-labelledby="sec-3">
-    <!-- Plate 4 slots in here once it exists. Muted/loop/playsinline to match
-         the rest loops; hidden until data-film="on" so the section is complete
-         without it. -->
-    <div class="cost-sky" aria-hidden="true">
-      <video class="cost-film" muted loop playsinline preload="none"></video>
-    </div>
     <div class="shell">
       <div class="sec-head rise">
         <span class="sec-num num">3</span>
@@ -743,6 +753,7 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
     <p><span class="foot-chip">Presentation made by <b>Arc Garde</b> &nbsp;&middot;&nbsp; Prepared for A&nbsp;Greater&nbsp;Hope &nbsp;&middot;&nbsp; August&nbsp;2026</span></p>
   </div>
 </footer>
+</div><!-- /.sky-scope -->
 
 <script>
 /* Page scroll is suppressed while the stage owns input, and handed back the
@@ -812,22 +823,10 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
     }, 120);
   }, { once: true });
 
-  /* THE SKY REACHES BEHIND THE CREDIT LINE. Its height is whatever the footer
-     actually measures, which changes as the line wraps: one line on a desktop,
-     three at 350px. Hard-coding that number is what broke this at 600px, so it
-     is measured instead. Falls back to 0, which simply leaves the sky ending at
-     the section edge as it did before. */
-  (function () {
-    var foot = document.querySelector('.pagefoot');
-    var sec = document.querySelector('.sec--cream');
-    if (!foot || !sec) return;
-    function sync() { sec.style.setProperty('--foot-h', foot.offsetHeight + 'px'); }
-    sync();
-    if (window.ResizeObserver) new ResizeObserver(sync).observe(foot);
-    else window.addEventListener('resize', sync);
-    window.addEventListener('load', sync);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
-  })();
+  /* The --foot-h measuring block that used to sit here is gone. It existed to
+     stretch an absolutely positioned sky far enough down to cover the credit
+     line. The sky is now a sticky layer inside .sky-scope, and that scope
+     already contains the footer, so there is no overhang left to measure. */
 })();
 
 /* ═══ ASCENT — What It Costs ══════════════════════════════════════════════
@@ -840,22 +839,9 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var narrow  = window.matchMedia('(max-width: 900px)').matches;
 
-  if (!reduced) {
-    var ticking = false;
-    function place() {
-      ticking = false;
-      var r = sec.getBoundingClientRect(), vh = window.innerHeight;
-      if (r.bottom < -300 || r.top > vh + 300) return;
-      var t = Math.max(0, Math.min(1, (vh - r.top) / (vh + r.height)));
-      sec.style.setProperty('--sky-y', ((t - 0.5) * 120).toFixed(1) + 'px');
-      sec.dataset.ascent = t.toFixed(3);
-    }
-    function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(place); } }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    if (window.lenis && window.lenis.on) window.lenis.on('scroll', onScroll);
-    place();
-  }
+  /* The --sky-y parallax that used to live here is gone. The sky is pinned by
+     CSS position:sticky now, so translating it per scroll frame would fight the
+     pin and was the thing making the footage look like it was being dragged. */
 
   var ups = sec.querySelectorAll('.rise');
   if ('IntersectionObserver' in window) {
@@ -881,12 +867,16 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   /* Phones get a single cloud still instead of the loop. The video is 254KB
      against a locked 1400KB budget that is already at 1292; the still is a
      fraction of that and the section still reads as sky rather than blank cream. */
+  /* data-film moved from the section to .sky-scope, because the pinned sky is
+     now a sibling of the section rather than a child of it. */
+  var scope = document.querySelector('.sky-scope');
+  if (!scope) return;
   if (narrow || reduced) {
-    sec.dataset.film = 'still';
+    scope.dataset.film = 'still';
     return;
   }
   var tier = (window.innerWidth * (window.devicePixelRatio || 1)) <= 1280 ? '720' : '1080';
-  var v = sec.querySelector('.cost-film');
+  var v = scope.querySelector('.cost-film');
   if (v) {
     var srcEl = document.createElement('source');
     srcEl.src = 'loops/agh-fg6-restD-loop-' + tier + 'p.mp4';
@@ -895,11 +885,11 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
     v.preload = 'auto';
     v.load();
     v.addEventListener('canplay', function () {
-      sec.dataset.film = 'on';
+      scope.dataset.film = 'on';
       var pr = v.play(); if (pr && pr.catch) pr.catch(function () {});
     }, { once: true });
     // if the video stalls, fall back to the still rather than show blank cream
-    setTimeout(function () { if (sec.dataset.film !== 'on') sec.dataset.film = 'still'; }, 6000);
+    setTimeout(function () { if (scope.dataset.film !== 'on') scope.dataset.film = 'still'; }, 6000);
   }
 })();
 

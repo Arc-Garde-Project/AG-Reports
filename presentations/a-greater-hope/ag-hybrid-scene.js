@@ -461,6 +461,23 @@
       }
 
       enter(0, false);
+
+      /* EVERY REMAINING SCRUB STARTS STREAMING NOW.
+         Boot only awaited segment 1, and the header claimed "the rest streams
+         in while the hero is already up" while nothing actually started it.
+         The second transition only began loading when warm() fired on arrival
+         at Plate 2, which leaves a few seconds to fetch ~10MB of frames. It
+         never made it: measured on the live site, the Plate 2 -> Plate 3 scrub
+         rendered exactly ONE distinct image at both 3Mbps and 8Mbps, so the
+         reader scrolled through a frozen picture and saw no transition at all.
+         Starting here gives it the whole hero dwell plus the first transition,
+         and loadScrub already batches 12 at a time and yields between batches.
+         Skipped on narrow: mobile removes scrub segments entirely
+         (.hseg:has(canvas){display:none}), so fetching them is pure weight. */
+      if (!isNarrow) {
+        segs.forEach(s => { if (s.kind === 'scrub' && !s.frames) loadScrub(s, false); });
+      }
+
       window.dispatchEvent(new CustomEvent('ag:hybrid-ready', {
         detail: {
           stageId: stage.id, mode: 'interactive', tier,

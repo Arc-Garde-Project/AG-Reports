@@ -61,6 +61,25 @@ html[data-stage-locked="true"] body {
   z-index: 0;
 }
 
+/* PLATE 1: THE SUN LINES UP WITH THE LOGO.
+   The mark on the hero is dead center. The sun is not: measured across five
+   frames of the rest loop it sits at 52.4% of frame width, a consistent +2.4%
+   right of center, so the two never agreed.
+   object-position cannot fix it. At a 16:9 viewport cover leaves ZERO
+   horizontal overflow, so there is nothing for object-position to move within,
+   and at other shapes the correction would have to change with the overflow.
+   A transform shifts the plate itself by the same amount at every width. The
+   1.08 scale is headroom: without it a 2.4% nudge would pull an edge into
+   frame. Only the hero carries it, so the dock corrections on plates 2 and 3
+   are untouched. */
+.hseg[data-sun] video {
+  transform: scale(1.08) translateX(-2.4%);
+  transform-origin: center center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hseg[data-sun] video { transform: none; }
+}
+
 /* Text layer. Never blocks input: the stage needs every wheel and touch event. */
 .hseg-text {
   position: relative;
@@ -209,6 +228,10 @@ html[data-stage-locked="true"] body {
     padding-block: clamp(1.25rem, 5vw, 2rem);
   }
   .hseg-text > * { opacity: 1 !important; transform: none !important; }
+  /* The sun nudge is a desktop concern only. Mobile unstacks, so the mark sits
+     BELOW the video rather than over it, there is nothing to line up, and a
+     1.08 scale would just spill past the block's rounded corners. */
+  .hseg[data-sun] video { transform: none; }
   /* §6C literal centering. Unstacking put these blocks back into normal flow,
      where their desktop max-widths left them hugging the left edge. */
   .hseg-text .lead,
