@@ -369,11 +369,18 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   height: 100svh; margin-bottom: -100svh;
   overflow: hidden;
 }
-.cost-film { width: 100%; height: 100%; object-fit: cover; opacity: 1; }
-/* phone / reduced-motion fallback: one still, no video */
+/* THE CLOUDS ARE SCRUBBED BY SCROLL, not played. It was an autoplaying loop
+   behind the containers, which meant the last section had no scroll effect of
+   its own: the footage ran on its own clock whatever the reader did. It is now
+   a frame sequence on a canvas driven by position through this scope, so the
+   ascent through the cloud deck happens because you scroll, exactly like the
+   two transitions above it. */
+.cost-scrub { width: 100%; height: 100%; object-fit: cover; display: block;
+  background: #876F58; }
+/* phone / reduced-motion fallback: one still, no sequence */
 .sky-scope[data-film="still"] .cost-sky {
   background: url("cost-sky-mobile.webp") center/cover no-repeat; }
-.sky-scope[data-film="still"] .cost-film { display: none; }
+.sky-scope[data-film="still"] .cost-scrub { display: none; }
 
 /* the warm wash rides WITH the pinned sky, so the type sits on a consistent
    ground instead of one that slides as the section scrolls */
@@ -383,9 +390,49 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
 
 /* a short bridge at the very top so the clouds arrive off the back of Plate 3
    rather than cutting in. This one is NOT sticky: it scrolls away. */
-.sky-scope::before { content: ""; position: absolute; left: 0; right: 0; top: 0;
-  height: clamp(90px, 14vh, 190px); z-index: 1; pointer-events: none;
-  background: linear-gradient(180deg, rgba(253,248,242,0.55) 0%, rgba(253,248,242,0) 100%); }
+/* THE SEAM INTO THE CLOUDS IS CLOUD, NOT A CUT.
+   Plate 3 ends on water and the cost section begins in sky, and the join was a
+   hard horizontal line with a band of haze under it. This is a bank of cloud
+   tops STRADDLING that line instead: the box is pulled up so half of it sits
+   over the plate, and overlapping radial gradients at different sizes build a
+   billowed edge that swells up over the dock rather than cutting across it.
+   Two layers at different scales drifting opposite ways, which is what keeps
+   it from reading as a repeat. All gradients, so no bytes and no decode. */
+.sky-scope::before { content: ""; position: absolute; left: -12%; right: -12%;
+  top: calc(-1 * clamp(150px, 21vh, 300px));
+  height: clamp(330px, 46vh, 640px); z-index: 3; pointer-events: none;
+  background:
+    radial-gradient(30% 40% at  8% 58%, rgba(253,248,242,0.98) 0 38%, rgba(253,248,242,0) 70%),
+    radial-gradient(24% 34% at 22% 66%, rgba(253,248,242,0.96) 0 40%, rgba(253,248,242,0) 72%),
+    radial-gradient(34% 46% at 37% 56%, rgba(253,248,242,0.99) 0 36%, rgba(253,248,242,0) 68%),
+    radial-gradient(26% 36% at 52% 64%, rgba(253,248,242,0.97) 0 40%, rgba(253,248,242,0) 72%),
+    radial-gradient(32% 44% at 66% 57%, rgba(253,248,242,0.98) 0 37%, rgba(253,248,242,0) 69%),
+    radial-gradient(24% 34% at 80% 65%, rgba(253,248,242,0.96) 0 40%, rgba(253,248,242,0) 72%),
+    radial-gradient(30% 42% at 94% 59%, rgba(253,248,242,0.98) 0 38%, rgba(253,248,242,0) 70%),
+    linear-gradient(180deg, rgba(253,248,242,0) 0%, rgba(253,248,242,0) 44%,
+                            rgba(253,248,242,0.72) 62%, rgba(253,248,242,0.30) 82%,
+                            rgba(253,248,242,0) 100%);
+  animation: cloud-drift-a 42s ease-in-out infinite alternate;
+}
+/* a finer bank sitting slightly lower and drifting the other way, so the edge
+   has depth rather than one silhouette */
+.sky-scope::after { content: ""; position: absolute; left: -10%; right: -10%;
+  top: calc(-1 * clamp(70px, 10vh, 150px));
+  height: clamp(240px, 32vh, 460px); z-index: 3; pointer-events: none;
+  background:
+    radial-gradient(20% 30% at 15% 60%, rgba(253,248,242,0.86) 0 40%, rgba(253,248,242,0) 74%),
+    radial-gradient(16% 24% at 31% 68%, rgba(253,248,242,0.80) 0 42%, rgba(253,248,242,0) 76%),
+    radial-gradient(22% 32% at 47% 58%, rgba(253,248,242,0.88) 0 40%, rgba(253,248,242,0) 74%),
+    radial-gradient(17% 26% at 63% 67%, rgba(253,248,242,0.82) 0 42%, rgba(253,248,242,0) 76%),
+    radial-gradient(21% 31% at 79% 59%, rgba(253,248,242,0.86) 0 40%, rgba(253,248,242,0) 74%);
+  animation: cloud-drift-b 63s ease-in-out infinite alternate;
+}
+@keyframes cloud-drift-a { from { transform: translate3d(-2.2%,0,0); } to { transform: translate3d(2.2%,0,0); } }
+@keyframes cloud-drift-b { from { transform: translate3d(3.0%,0,0); } to { transform: translate3d(-3.0%,0,0); } }
+@media (prefers-reduced-motion: reduce) {
+  .sky-scope::before, .sky-scope::after { animation: none; }
+}
+}
 
 .sec--cream { position: relative; z-index: 2; background: transparent;
   padding-top: clamp(3rem, 8vw, 5.5rem);
@@ -459,7 +506,6 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
 
 @media (prefers-reduced-motion: reduce) {
   .rise { opacity: 1; transform: none; filter: none; transition: none; }
-  .cost-film { transform: none; }
 }
 
 /* THE CREDIT LINE SITS ON THE FOOTAGE. It used to be a separate band on plain
@@ -688,7 +734,7 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
      the <footer> inside it still maps to the page's contentinfo landmark. -->
 <div class="sky-scope">
   <div class="cost-sky" aria-hidden="true">
-    <video class="cost-film" muted loop playsinline preload="none"></video>
+    <canvas class="cost-scrub" width="1280" height="720"></canvas>
   </div>
 
 <main id="main">
@@ -862,20 +908,17 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
     });
   }, 700);
 
-  /* Phones get a single cloud still instead of the loop. The video is 254KB
-     against a locked 1400KB budget that is already at 1292; the still is a
-     fraction of that and the section still reads as sky rather than blank cream. */
-  /* data-film moved from the section to .sky-scope, because the pinned sky is
-     now a sibling of the section rather than a child of it. */
-  /* data-film moved from the section to .sky-scope, because the pinned sky is
-     now a sibling of the section rather than a child of it. */
+  /* Phones and reduced motion get a single cloud still. The frame set is 5.4MB
+     against a LOCKED 1400KB mobile budget, and there is no scroll-scrub on
+     touch anyway, so the section reads as sky from one image. */
   var scope = document.querySelector('.sky-scope');
   if (!scope) return;
 
-  /* THE CLOUD LOOP IS PART OF THE LOADING GUARANTEE. It announces ag:cost-ready
-     when it can play through, and the curtain will not lift without it, so the
-     last section is never reached before its footage exists. The still and
-     reduced-motion paths announce immediately: there is nothing to wait for. */
+  /* THE CLOUD SEQUENCE IS PART OF THE LOADING GUARANTEE. It announces
+     ag:cost-ready only once every frame is decoded, and the curtain will not
+     lift without it, so the last section is never reached before its footage
+     exists. The still and reduced-motion paths announce at once: nothing to
+     wait for. */
   function announce() { window.dispatchEvent(new CustomEvent('ag:cost-ready')); }
 
   if (narrow || reduced) {
@@ -883,65 +926,87 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
     announce();
     return;
   }
-  var tier = (window.innerWidth * (window.devicePixelRatio || 1)) <= 1280 ? '720' : '1080';
-  var v = scope.querySelector('.cost-film');
-  if (!v) { announce(); return; }
 
-  /* The poster is the loop's own first frame. Without it this element is
-     empty until ~5MB of cloud footage arrives, and an empty video shows its
-     background rather than sky. Set here rather than in the markup so a
-     phone, which never reaches this branch, does not fetch it. */
-  v.poster = 'poster-fg6-restD.webp';
-  v.preload = 'none';
+  var cv = scope.querySelector('.cost-scrub');
+  if (!cv) { announce(); return; }
+  var ctx = cv.getContext('2d', { alpha: false });
+  ctx.fillStyle = '#876F58';
+  ctx.fillRect(0, 0, cv.width, cv.height);
 
-  /* FETCHED IN FULL, not preloaded. preload="auto" is only a hint and a paused
-     <video> stops buffering once the browser thinks it has enough: measured,
-     the loops plateaued around 80% and never completed, so "wait until it is
-     fully buffered" could never be satisfied. Downloading the file with fetch()
-     and handing over a blob: URL is the only way to KNOW it is all here, and it
-     makes the reported percentage exact bytes instead of a heuristic. */
-  var url = 'loops/agh-fg6-restD-loop-' + tier + 'p.mp4';
-  var got = 0, total = 0, retried = false;
-  var costTick = setInterval(function () {
-    window.dispatchEvent(new CustomEvent('ag:cost-progress',
-      { detail: { pct: total ? Math.min(0.99, got / total) : 0 } }));
-  }, 300);
+  /* THE CLOUDS ARE SCRUBBED BY SCROLL. This was an autoplaying loop, so the
+     last section had no scroll effect of its own: the footage ran on its own
+     clock no matter what the reader did. 141 frames, the forward half of the
+     cloud loop decimated 4:1, drive off position through .sky-scope, so the
+     ascent happens because you scroll. */
+  var COUNT = 141, frames = new Array(COUNT), got = 0, failed = 0;
 
-  function ready(blob) {
-    clearInterval(costTick);
-    if (blob) v.src = URL.createObjectURL(blob); else v.src = url;
-    v.load();
-    scope.dataset.film = 'on';
-    var pr = v.play(); if (pr && pr.catch) pr.catch(function () {});
-    window.dispatchEvent(new CustomEvent('ag:cost-progress', { detail: { pct: 1 } }));
-    announce();
-  }
-
-  function grab() {
-    fetch(url).then(function (res) {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      total = +res.headers.get('content-length') || 0;
-      if (!res.body || !total) return res.blob();
-      var reader = res.body.getReader(), chunks = [];
-      return (function pump() {
-        return reader.read().then(function (r) {
-          if (r.done) return new Blob(chunks, { type: 'video/mp4' });
-          chunks.push(r.value); got += r.value.length;
-          return pump();
-        });
-      })();
-    }).then(ready).catch(function (err) {
-      console.error('AG cost film: fetch failed — ' + err.message);
-      if (!retried) { retried = true; got = 0; return grab(); }
-      /* Cannot be fetched: fall back to the still rather than hold the deck
-         shut. The section still reads as sky. */
-      clearInterval(costTick);
-      scope.dataset.film = 'still';
-      window.dispatchEvent(new CustomEvent('ag:cost-progress', { detail: { pct: 1 } }));
-      announce();
+  function grab(i, attempt) {
+    return new Promise(function (res) {
+      var img = new Image(), done = false;
+      var finish = function (ok) {
+        if (done) return; done = true; clearTimeout(t);
+        if (ok) return res(true);
+        if (attempt < 3) return res(grab(i, attempt + 1));
+        res(false);
+      };
+      var t = setTimeout(function () { img.src = ''; finish(false); }, 12000);
+      img.decoding = 'async';
+      img.onload = async function () {
+        try { frames[i] = await createImageBitmap(img); } catch (e) { frames[i] = img; }
+        finish(true);
+      };
+      img.onerror = function () { finish(false); };
+      img.src = 'frames-cloud/frame_' + String(i + 1).padStart(4, '0') + '.webp';
     });
   }
-  grab();
+
+  var tick = setInterval(function () {
+    window.dispatchEvent(new CustomEvent('ag:cost-progress',
+      { detail: { pct: Math.min(0.99, (got + failed) / COUNT) } }));
+  }, 300);
+
+  (async function load() {
+    for (var start = 0; start < COUNT; start += 12) {
+      var slice = [];
+      for (var i = start; i < Math.min(start + 12, COUNT); i++) {
+        slice.push(grab(i, 0).then(function (ok) { ok ? got++ : failed++; }));
+      }
+      await Promise.all(slice);
+      if (frames[0] && !cv.dataset.painted) { cv.dataset.painted = '1'; paint(0); }
+      await new Promise(function (r) { setTimeout(r, 0); });
+    }
+    clearInterval(tick);
+    if (failed) console.error('AG cost clouds: lost ' + failed + ' of ' + COUNT + ' frames.');
+    scope.dataset.film = 'on';
+    window.dispatchEvent(new CustomEvent('ag:cost-progress', { detail: { pct: 1 } }));
+    place();
+    announce();
+  })();
+
+  function paint(idx) {
+    var i = Math.max(0, Math.min(COUNT - 1, Math.round(idx)));
+    var f = frames[i];
+    if (!f) { for (var k = i; k >= 0; k--) { if (frames[k]) { f = frames[k]; break; } } }
+    if (!f) return;
+    ctx.drawImage(f, 0, 0, cv.width, cv.height);
+  }
+
+  /* Position through the scope, 0 at its top edge meeting the stage and 1 when
+     its foot reaches the bottom of the viewport. The sticky sky is pinned for
+     exactly this range, so the mapping is 1:1 with what is on screen. */
+  var raf = 0;
+  function place() {
+    raf = 0;
+    var r = scope.getBoundingClientRect(), vh = window.innerHeight;
+    var span = r.height - vh;
+    if (span <= 0) return paint(0);
+    var t = Math.max(0, Math.min(1, -r.top / span));
+    paint(t * (COUNT - 1));
+  }
+  function onScroll() { if (!raf) raf = requestAnimationFrame(place); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  if (window.lenis && window.lenis.on) window.lenis.on('scroll', onScroll);
 })();
 
 /* ===== AG Motion v2.5 — reveal on intersect, static sections only ======== */
