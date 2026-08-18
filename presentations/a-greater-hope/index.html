@@ -892,34 +892,56 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
      background rather than sky. Set here rather than in the markup so a
      phone, which never reaches this branch, does not fetch it. */
   v.poster = 'poster-fg6-restD.webp';
-  var srcEl = document.createElement('source');
-  srcEl.src = 'loops/agh-fg6-restD-loop-' + tier + 'p.mp4';
-  srcEl.type = 'video/mp4';
-  v.appendChild(srcEl);
-  v.preload = 'auto';
-  v.load();
-  /* report buffering so the curtain's percentage covers this loop too, rather
-     than reaching 100 while 5MB of cloud is still arriving */
+  v.preload = 'none';
+
+  /* FETCHED IN FULL, not preloaded. preload="auto" is only a hint and a paused
+     <video> stops buffering once the browser thinks it has enough: measured,
+     the loops plateaued around 80% and never completed, so "wait until it is
+     fully buffered" could never be satisfied. Downloading the file with fetch()
+     and handing over a blob: URL is the only way to KNOW it is all here, and it
+     makes the reported percentage exact bytes instead of a heuristic. */
+  var url = 'loops/agh-fg6-restD-loop-' + tier + 'p.mp4';
+  var got = 0, total = 0, retried = false;
   var costTick = setInterval(function () {
-    var f = 0;
-    if (v.readyState >= 4) f = 1;
-    else if (v.duration && v.buffered && v.buffered.length) {
-      f = Math.min(1, v.buffered.end(v.buffered.length - 1) / v.duration);
-    }
-    window.dispatchEvent(new CustomEvent('ag:cost-progress', { detail: { pct: f } }));
-    if (f >= 1) clearInterval(costTick);
+    window.dispatchEvent(new CustomEvent('ag:cost-progress',
+      { detail: { pct: total ? Math.min(0.99, got / total) : 0 } }));
   }, 300);
-  v.addEventListener('canplaythrough', function () {
+
+  function ready(blob) {
     clearInterval(costTick);
+    if (blob) v.src = URL.createObjectURL(blob); else v.src = url;
+    v.load();
     scope.dataset.film = 'on';
     var pr = v.play(); if (pr && pr.catch) pr.catch(function () {});
+    window.dispatchEvent(new CustomEvent('ag:cost-progress', { detail: { pct: 1 } }));
     announce();
-  }, { once: true });
-  // a loop that will not buffer must not hold the deck shut forever
-  setTimeout(function () {
-    if (scope.dataset.film !== 'on') scope.dataset.film = 'still';
-    announce();
-  }, 45000);
+  }
+
+  function grab() {
+    fetch(url).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      total = +res.headers.get('content-length') || 0;
+      if (!res.body || !total) return res.blob();
+      var reader = res.body.getReader(), chunks = [];
+      return (function pump() {
+        return reader.read().then(function (r) {
+          if (r.done) return new Blob(chunks, { type: 'video/mp4' });
+          chunks.push(r.value); got += r.value.length;
+          return pump();
+        });
+      })();
+    }).then(ready).catch(function (err) {
+      console.error('AG cost film: fetch failed — ' + err.message);
+      if (!retried) { retried = true; got = 0; return grab(); }
+      /* Cannot be fetched: fall back to the still rather than hold the deck
+         shut. The section still reads as sky. */
+      clearInterval(costTick);
+      scope.dataset.film = 'still';
+      window.dispatchEvent(new CustomEvent('ag:cost-progress', { detail: { pct: 1 } }));
+      announce();
+    });
+  }
+  grab();
 })();
 
 /* ===== AG Motion v2.5 — reveal on intersect, static sections only ======== */

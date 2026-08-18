@@ -103,11 +103,9 @@
       }
       // h264 only. VP9 was built first and measured 5.2MB against h264's 2.5MB
       // on this footage, so offering it first cost bytes rather than saving
-      // them. Listing a format that is not on disk 404s on every rest state.
-      const src = document.createElement('source');
-      src.src = `${base}-${tier}p.mp4`;
-      src.type = 'video/mp4';
-      s.video.appendChild(src);
+      // them. The URL is recorded rather than attached as a <source>: boot
+      // fetches the file itself so completion is knowable, see fetchVideo.
+      s.videoUrl = `${base}-${tier}p.mp4`;
       /* A POSTER, SO A PLATE IS NEVER AN EMPTY BOX.
          The rest videos other than the opener carry preload="none" and only
          begin fetching when warm() fires, so arriving at Plate 2 or Plate 3
@@ -120,10 +118,7 @@
          1377 of 1400KB, and the phone tier is 360p where the wait is short. */
       if (!isNarrow && s.cfg.poster) s.video.poster = s.cfg.poster;
 
-      // Only the opening loop is fetched up front. Loading all three cost 2.6MB
-      // before a single interaction and blew the mobile budget on its own.
-      if (s.i === 0) { s.video.preload = 'auto'; s.video.load(); }
-      else { s.video.preload = 'none'; }
+      s.video.preload = 'none';   // nothing streams; boot fetches the whole file
     });
 
     // ---- Frame loading for scrub segments (lifted from ag-sequence) ---------
@@ -152,7 +147,7 @@
           if (done) return; done = true;
           clearTimeout(timer);
           if (ok) return res(true);
-          if (!attempt) return res(loadFrame(url, arr, idx, 1));  // one retry
+          if (attempt < 3) return res(loadFrame(url, arr, idx, attempt + 1));
           res(false);
         };
         const timer = setTimeout(() => { img.src = ''; finish(false); }, 12000);
@@ -183,6 +178,76 @@
        averaged: frame sets by frames loaded, videos by how much of their
        duration has buffered. Nothing here is invented — every term is read off
        the asset itself. */
+    /* THE LOOPS ARE FETCHED, NOT PRELOADED.
+       preload="auto" is only a HINT. A <video> that is not playing stops
+       buffering once the browser decides it has enough, and measurement proved
+       it: waiting on buffered.end() covering the duration, the three loops
+       plateaued at 79.6%, 82.4% and 100% and never finished, so a rule of
+       "nothing opens until everything is in" could never be satisfied that way.
+       Each loop is downloaded in full with fetch(), held as a Blob and handed
+       to the element as a blob: URL. That is the only way to KNOW the whole
+       file is present, and it makes the percentage exact bytes rather than a
+       buffering heuristic. */
+    function fetchVideo(s, url) {
+      s.bytesTotal = 0; s.bytesLoaded = 0; s.videoReady = false;
+      return fetch(url).then(res => {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const len = +res.headers.get('content-length') || 0;
+        s.bytesTotal = len;
+        if (!res.body || !len) return res.blob();          // no streaming: still correct
+        const reader = res.body.getReader();
+        const chunks = [];
+        return (function pump() {
+          return reader.read().then(({ done, value }) => {
+            if (done) return new Blob(chunks, { type: 'video/mp4' });
+            chunks.push(value);
+            s.bytesLoaded += value.length;
+            return pump();
+          });
+        })();
+      }).then(blob => {
+        s.bytesTotal = s.bytesTotal || blob.size;
+        s.bytesLoaded = s.bytesTotal;
+        s.video.src = URL.createObjectURL(blob);
+        s.video.load();
+        s.videoReady = true;
+      }).catch(err => {
+        /* One retry, then fall back to letting the element stream it itself.
+           A loop that cannot be fetched must not hold the deck shut forever,
+           and the element can still play a partially buffered file. */
+        console.error('AG Hybrid: loop fetch failed for ' + url + ' — ' + err.message);
+        if (!s.videoRetried) { s.videoRetried = true; return fetchVideo(s, url); }
+        s.video.src = url; s.video.load(); s.videoReady = true;
+      });
+    }
+
+    function videoComplete(v) {
+      const s = segs.find(x => x.video === v);
+      return !!(s && s.videoReady);
+    }
+
+    function assetsComplete() {
+      return segs.every(s => {
+        if (s.kind === 'scrub') {
+          if (isNarrow) return true;              // not rendered on a phone
+          return !!s.count && ((s.loaded || 0) + (s.failed || 0)) >= s.count;
+        }
+        if (s.kind === 'rest' && s.video && !s.skipVideo) return !!s.videoReady;
+        return true;
+      });
+    }
+
+    // only used when the hard ceiling trips, so the console says what was missing
+    function assetReport() {
+      return segs.map(s => {
+        if (s.kind === 'scrub') return `scrub${s.i}:${s.loaded || 0}/${s.count || 0}`;
+        if (s.kind === 'rest' && s.video && !s.skipVideo) {
+          return `video${s.i}:${s.videoReady ? 'ok' : (s.bytesLoaded || 0) + '/' + (s.bytesTotal || '?')}`;
+        }
+        return `seg${s.i}:skipped`;
+      }).join(' ');
+    }
+
     function overallProgress() {
       const parts = [];
       segs.forEach(x => {
@@ -190,12 +255,9 @@
           parts.push(Math.min(1, (x.loaded || 0) / x.count));
         }
         if (x.kind === 'rest' && x.video && !x.skipVideo) {
-          const v = x.video;
           let f = 0;
-          if (v.readyState >= 4) f = 1;
-          else if (v.duration && v.buffered && v.buffered.length) {
-            f = Math.min(1, v.buffered.end(v.buffered.length - 1) / v.duration);
-          }
+          if (x.videoReady) f = 1;
+          else if (x.bytesTotal) f = Math.min(0.99, (x.bytesLoaded || 0) / x.bytesTotal);
           parts.push(f);
         }
       });
@@ -280,13 +342,14 @@
       let doneResolve;
       s.donePromise = new Promise(r => { doneResolve = r; });
 
+      s.failed = 0;
       (async () => {
         let failed = 0;
         for (let start = 0; start < s.count; start += BATCH) {
           const slice = [];
           for (let i = start; i < Math.min(start + BATCH, s.count); i++) {
             slice.push(loadFrame(expand(src.framesPath, i), s.frames, i, 0)
-              .then(ok => { if (ok) s.loaded++; else failed++; }));
+              .then(ok => { if (ok) s.loaded++; else { failed++; s.failed++; } }));
           }
           await Promise.all(slice);
           reportProgress();
@@ -405,7 +468,12 @@
       [i - 1, i + 1].forEach(k => {
         const s = segs[k];
         if (!s) return;
-        if (s.kind === 'scrub') loadScrub(s, false);
+        /* Never on a phone. Scrub segments are removed from the DOM at <=900px
+           (.hseg:has(canvas){display:none}) so their frames can never be seen,
+           and warm() was still pulling the decimated set for them: measured at
+           a 390px viewport, ~40 frames of frames-scrub1-mobile downloading for
+           a segment that does not render. */
+        if (s.kind === 'scrub') { if (!isNarrow) loadScrub(s, false); }
         else if (s.video && !s.skipVideo && s.video.preload === 'none') {
           s.video.preload = 'auto';
           s.video.load();
@@ -577,34 +645,52 @@
       // the stage opens even if a full set is still settling
       if (!isNarrow) segs.forEach(s => { if (s.kind === 'scrub') loadProxy(s); });
 
-      // every rest loop, fetched now rather than on arrival
+      // every rest loop, downloaded in full before anything opens
       segs.forEach(s => {
-        if (s.kind === 'rest' && s.video && !s.skipVideo && s.video.preload !== 'auto') {
-          s.video.preload = 'auto';
-          s.video.load();
-        }
+        if (s.kind === 'rest' && s.video && !s.skipVideo && s.videoUrl) fetchVideo(s, s.videoUrl);
       });
-
-      const videoWaits = segs
-        .filter(s => s.kind === 'rest' && s.video && !s.skipVideo)
-        .map(s => new Promise(r => {
-          const v = s.video;
-          if (v.readyState >= 4) return r();
-          const ok = () => r();
-          v.addEventListener('canplaythrough', ok, { once: true });
-          // a loop that will not buffer must not hold the whole deck hostage
-          setTimeout(r, 45000);
-        }));
 
       /* Scrub sets are skipped entirely on a phone: those segments are removed
          from the DOM there, so fetching them would be pure weight and would
          make the wait longer for nothing. */
-      const scrubWaits = isNarrow ? [] : segs
-        .filter(s => s.kind === 'scrub')
-        .map(s => { loadScrub(s, false); return s.donePromise; });
+      if (!isNarrow) segs.forEach(s => { if (s.kind === 'scrub') loadScrub(s, false); });
 
       progressTicker();
-      await Promise.all([...videoWaits, ...scrubWaits]);
+
+      /* NOBODY GETS PAST THE CURTAIN UNTIL EVERY ASSET IS ACTUALLY IN.
+         Quinten, 2026-08-18, stated twice.
+
+         This waits on FULL BUFFERING, not on canplaythrough. That event is the
+         browser's ESTIMATE that it could play to the end without stalling, not
+         a statement that the file has arrived, so waiting on it could still
+         hand over a deck that had to fetch mid-scroll. buffered.end() against
+         duration is the real thing.
+
+         There is no routine timeout here any more. Both the video wait and the
+         frame wait used to give up after 45s and release a half-loaded page,
+         which is exactly what the loading screen exists to prevent. A stalled
+         video is RE-KICKED instead, every 8 seconds, until it completes.
+
+         The only ceiling left is HARD_CEILING, and it is a genuine last resort
+         against a permanently broken asset: reaching it is a defect and it says
+         so in the console. */
+      const HARD_CEILING = 240000;
+      const t0 = performance.now();
+      let ceilingHit = false;
+
+      await new Promise(resolve => {
+        (function check() {
+          if (assetsComplete()) return resolve();
+          if (performance.now() - t0 > HARD_CEILING) {
+            ceilingHit = true;
+            console.error('AG Hybrid: assets did not finish within ' +
+              (HARD_CEILING / 1000) + 's; opening anyway. ' + assetReport());
+            return resolve();
+          }
+          setTimeout(check, 250);
+        })();
+      });
+      if (!ceilingHit) reportProgress();
 
       if (prefersReduced) {
         /* No jacking, no autoplay, no hidden content. Every segment is shown in

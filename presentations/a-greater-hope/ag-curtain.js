@@ -23,14 +23,14 @@
   if (!C) { root.classList.remove('is-loading'); return; }
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  /* MAX was 14000. The curtain now waits for the WHOLE deck, every loop and
-     every frame set, because the loading screen is meant to be the guarantee
-     that the presentation is ready rather than a head start (Quinten,
-     2026-08-18). A 14s ceiling would have fired routinely and handed over a
-     half-loaded page, which is the thing it exists to prevent. It is a genuine
-     last resort now: the engine and the cloud loop each carry their own 45s
-     escape, so this only ever fires if one of them never reports at all. */
-  var MIN = 2520, BRAND_AT = 1400, CLEANUP = 900, MAX = 60000;
+  /* MAX was 14000, then 60000. NOBODY GETS PAST THIS UNTIL EVERY ASSET IS IN
+     (Quinten, 2026-08-18, stated twice). The engine and the cloud loop each
+     wait on FULL BUFFERING now and re-kick a stalled fetch rather than giving
+     up, and each carries its own 240s last-resort ceiling that logs an error.
+     This one sits ABOVE both of those so it can never be the thing that
+     releases a half-loaded deck: if it ever fires, both reporters have failed
+     to report at all, which is a defect and says so. */
+  var MIN = 2520, BRAND_AT = 1400, CLEANUP = 900, MAX = 300000;
   var start = performance.now(), done = false;
 
   function lift() {
@@ -125,5 +125,13 @@
     setTimeout(lift, Math.max(0, MIN - (performance.now() - start)));
   });
 
-  setTimeout(lift, MAX);   /* fail open: never trap the reader behind the curtain */
+  /* Last resort only. Reaching this means neither the stage nor the cloud loop
+     reported within five minutes, which is a defect worth seeing rather than
+     hiding. */
+  setTimeout(function () {
+    if (done) return;
+    console.error('AG curtain: nothing reported ready within ' + (MAX / 1000) +
+      's; opening anyway. The deck may be incomplete.');
+    lift();
+  }, MAX);
 })();
