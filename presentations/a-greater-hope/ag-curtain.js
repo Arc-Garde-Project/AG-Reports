@@ -23,7 +23,14 @@
   if (!C) { root.classList.remove('is-loading'); return; }
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var MIN = 2520, BRAND_AT = 1400, CLEANUP = 900, MAX = 14000;
+  /* MAX was 14000. The curtain now waits for the WHOLE deck, every loop and
+     every frame set, because the loading screen is meant to be the guarantee
+     that the presentation is ready rather than a head start (Quinten,
+     2026-08-18). A 14s ceiling would have fired routinely and handed over a
+     half-loaded page, which is the thing it exists to prevent. It is a genuine
+     last resort now: the engine and the cloud loop each carry their own 45s
+     escape, so this only ever fires if one of them never reports at all. */
+  var MIN = 2520, BRAND_AT = 1400, CLEANUP = 900, MAX = 60000;
   var start = performance.now(), done = false;
 
   function lift() {
@@ -57,10 +64,27 @@
      the MAX fail-open below still overrides it. */
   var counted = new Promise(function (res) { finish = res; });
 
+  /* Two reporters, because the cloud loop on the last section is not part of
+     the stage. They are blended by rough byte share, stage ~35MB against the
+     cloud loop's ~5MB, so the number tracks the whole wait rather than the
+     larger half of it. The weights are an approximation and are stated as one;
+     everything else about the readout is measured. */
+  var STAGE_W = 0.87, COST_W = 0.13;
+  var stagePct = 0, costPct = 0;
+  function blend() {
+    target = Math.max(target, Math.min(1, stagePct * STAGE_W + costPct * COST_W));
+  }
   window.addEventListener('ag:hybrid-progress', function (e) {
     var p = e && e.detail && typeof e.detail.pct === 'number' ? e.detail.pct : 0;
-    target = Math.max(target, Math.max(0, Math.min(1, p)));
+    stagePct = Math.max(stagePct, Math.max(0, Math.min(1, p)));
+    blend();
   });
+  window.addEventListener('ag:cost-progress', function (e) {
+    var p = e && e.detail && typeof e.detail.pct === 'number' ? e.detail.pct : 0;
+    costPct = Math.max(costPct, Math.max(0, Math.min(1, p)));
+    blend();
+  });
+  window.addEventListener('ag:cost-ready', function () { costPct = 1; blend(); });
   window.addEventListener('ag:hybrid-ready', function () { ready = true; target = 1; }, { once: true });
 
   function tick() {
@@ -88,6 +112,12 @@
   }));
   signals.push(new Promise(function (res) {
     window.addEventListener('ag:hybrid-ready', res, { once: true });
+  }));
+  /* The cost section's cloud loop is not part of the stage, so it reports
+     separately. Without this the curtain could lift while the last section
+     still had no footage. */
+  signals.push(new Promise(function (res) {
+    window.addEventListener('ag:cost-ready', res, { once: true });
   }));
   signals.push(counted);   /* let the number finish counting, see above */
 

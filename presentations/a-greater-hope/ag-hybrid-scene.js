@@ -85,6 +85,22 @@
       // Built as DOM nodes rather than innerHTML. The value is author-supplied,
       // but a video element is the wrong place to ever parse a string as markup.
       while (s.video.firstChild) s.video.removeChild(s.video.firstChild);
+
+      /* ON A PHONE, ONLY THE HERO IS FOOTAGE. The three loops together are
+         1067KB of the LOCKED 1400KB mobile budget, and loading them all to
+         honor the "everything before the curtain lifts" rule measured 1931KB,
+         a hard breach. Phones get the opening loop and a still for the other
+         two, which is the same trade already made for the scrub segments and
+         the cost section. The still is the loop's own first frame, so the plate
+         is the real image rather than an empty box, and nothing beige can show.
+         The full-motion deck is the desktop deck. */
+      if (isNarrow && s.i !== 0) {
+        if (s.cfg.posterMobile) s.video.poster = s.cfg.posterMobile;
+        s.video.removeAttribute('autoplay');
+        s.video.preload = 'none';
+        s.skipVideo = true;
+        return;
+      }
       // h264 only. VP9 was built first and measured 5.2MB against h264's 2.5MB
       // on this footage, so offering it first cost bytes rather than saving
       // them. Listing a format that is not on disk 404s on every rest state.
@@ -92,6 +108,18 @@
       src.src = `${base}-${tier}p.mp4`;
       src.type = 'video/mp4';
       s.video.appendChild(src);
+      /* A POSTER, SO A PLATE IS NEVER AN EMPTY BOX.
+         The rest videos other than the opener carry preload="none" and only
+         begin fetching when warm() fires, so arriving at Plate 2 or Plate 3
+         before its 6-8MB has landed showed the <video> element's own
+         background and nothing else. That is what the beige screen was: the
+         same defect that used to read as a black screen, just repainted.
+         The poster is the loop's own first frame at 854px, 16-28KB, so the
+         plate is THERE instantly and the video takes over when it can play.
+         Desktop only: on a phone this would add ~70KB to a budget already at
+         1377 of 1400KB, and the phone tier is 360p where the wait is short. */
+      if (!isNarrow && s.cfg.poster) s.video.poster = s.cfg.poster;
+
       // Only the opening loop is fetched up front. Loading all three cost 2.6MB
       // before a single interaction and blew the mobile budget on its own.
       if (s.i === 0) { s.video.preload = 'auto'; s.video.load(); }
@@ -148,11 +176,48 @@
        curtain gets a real percentage instead of an indeterminate bar. */
     const BATCH = 12;                     // concurrent decodes, keeps the main thread breathing
 
+    /* PROGRESS COVERS EVERY ASSET THE CURTAIN NOW WAITS FOR, not just the
+       frames. It used to report the scrub gate alone, which was a fraction of
+       the real wait, so the bar could sit at 100% while three videos were still
+       arriving. Each asset contributes its own completion fraction and they are
+       averaged: frame sets by frames loaded, videos by how much of their
+       duration has buffered. Nothing here is invented — every term is read off
+       the asset itself. */
+    function overallProgress() {
+      const parts = [];
+      segs.forEach(x => {
+        if (x.kind === 'scrub' && !isNarrow && x.count) {
+          parts.push(Math.min(1, (x.loaded || 0) / x.count));
+        }
+        if (x.kind === 'rest' && x.video && !x.skipVideo) {
+          const v = x.video;
+          let f = 0;
+          if (v.readyState >= 4) f = 1;
+          else if (v.duration && v.buffered && v.buffered.length) {
+            f = Math.min(1, v.buffered.end(v.buffered.length - 1) / v.duration);
+          }
+          parts.push(f);
+        }
+      });
+      if (!parts.length) return 0;
+      return parts.reduce((a, b) => a + b, 0) / parts.length;
+    }
+
     function reportProgress() {
-      let want = 0, have = 0;
-      segs.forEach(x => { if (x.kind === 'scrub' && x.count) { want += x.gateCount || x.count; have += x.loaded || 0; } });
-      const pct = want ? Math.min(1, have / want) : 0;
-      window.dispatchEvent(new CustomEvent('ag:hybrid-progress', { detail: { pct } }));
+      window.dispatchEvent(new CustomEvent('ag:hybrid-progress',
+        { detail: { pct: overallProgress() } }));
+    }
+
+    /* Videos buffer without firing anything useful per chunk, so the readout
+       would stall between frame batches. A slow tick keeps it honest and stops
+       once the stage is up. */
+    let tickerId = 0;
+    function progressTicker() {
+      if (tickerId) return;
+      tickerId = setInterval(() => {
+        reportProgress();
+        if (overallProgress() >= 1) { clearInterval(tickerId); tickerId = 0; }
+      }, 300);
     }
 
     /* A LOW-RESOLUTION PROXY, LOADED AHEAD OF EVERYTHING ELSE, so a transition
@@ -341,7 +406,7 @@
         const s = segs[k];
         if (!s) return;
         if (s.kind === 'scrub') loadScrub(s, false);
-        else if (s.video && s.video.preload === 'none') {
+        else if (s.video && !s.skipVideo && s.video.preload === 'none') {
           s.video.preload = 'auto';
           s.video.load();
         }
@@ -498,22 +563,48 @@
 
     // ---- Boot ----------------------------------------------------------------
     (async function boot() {
-      /* Wait on the opening video and a leading slice of the first transition,
-         not on every byte. The rest streams in while the hero is already up. */
-      const opener = segs[0] && segs[0].video;
-      const videoReady = opener ? new Promise(r => {
-        if (opener.readyState >= 3) return r();
-        opener.addEventListener('canplay', r, { once: true });
-        setTimeout(r, 8000);                       // never hang on a stalled video
-      }) : Promise.resolve();
+      /* EVERYTHING IS IN BEFORE THE CURTAIN LIFTS. Quinten, 2026-08-18.
+         This used to wait on the opening video and a 28% slice of the first
+         transition, and let the rest stream in behind the hero. That is why a
+         reader could arrive at a plate whose video had not started, or a scrub
+         whose frames had not landed, and get a flat color instead of footage.
+         The loading screen exists to be the guarantee, so it now holds until
+         every rest loop can play through and every frame set is complete.
+         The cost is a longer wait, which is exactly what the percentage on the
+         curtain is there to show. */
 
-      /* Proxies first, for every scrub, before a single full frame is asked
-         for. They are small and they are what guarantees the transitions move
-         at all on a slow connection. Desktop only: phones drop scrub segments
-         from the DOM entirely, and there the decimated set IS the source. */
+      // proxies first: small, and they make the transitions usable the instant
+      // the stage opens even if a full set is still settling
       if (!isNarrow) segs.forEach(s => { if (s.kind === 'scrub') loadProxy(s); });
 
-      await Promise.all([videoReady, loadScrub(segs[1], true)]);
+      // every rest loop, fetched now rather than on arrival
+      segs.forEach(s => {
+        if (s.kind === 'rest' && s.video && !s.skipVideo && s.video.preload !== 'auto') {
+          s.video.preload = 'auto';
+          s.video.load();
+        }
+      });
+
+      const videoWaits = segs
+        .filter(s => s.kind === 'rest' && s.video && !s.skipVideo)
+        .map(s => new Promise(r => {
+          const v = s.video;
+          if (v.readyState >= 4) return r();
+          const ok = () => r();
+          v.addEventListener('canplaythrough', ok, { once: true });
+          // a loop that will not buffer must not hold the whole deck hostage
+          setTimeout(r, 45000);
+        }));
+
+      /* Scrub sets are skipped entirely on a phone: those segments are removed
+         from the DOM there, so fetching them would be pure weight and would
+         make the wait longer for nothing. */
+      const scrubWaits = isNarrow ? [] : segs
+        .filter(s => s.kind === 'scrub')
+        .map(s => { loadScrub(s, false); return s.donePromise; });
+
+      progressTicker();
+      await Promise.all([...videoWaits, ...scrubWaits]);
 
       if (prefersReduced) {
         /* No jacking, no autoplay, no hidden content. Every segment is shown in
@@ -534,21 +625,9 @@
 
       enter(0, false);
 
-      /* EVERY REMAINING SCRUB STARTS STREAMING NOW.
-         Boot only awaited segment 1, and the header claimed "the rest streams
-         in while the hero is already up" while nothing actually started it.
-         The second transition only began loading when warm() fired on arrival
-         at Plate 2, which leaves a few seconds to fetch ~10MB of frames. It
-         never made it: measured on the live site, the Plate 2 -> Plate 3 scrub
-         rendered exactly ONE distinct image at both 3Mbps and 8Mbps, so the
-         reader scrolled through a frozen picture and saw no transition at all.
-         Starting here gives it the whole hero dwell plus the first transition,
-         and loadScrub already batches 12 at a time and yields between batches.
-         Skipped on narrow: mobile removes scrub segments entirely
-         (.hseg:has(canvas){display:none}), so fetching them is pure weight. */
-      if (!isNarrow) {
-        segs.forEach(s => { if (s.kind === 'scrub' && !s.frames) loadScrub(s, false); });
-      }
+      /* Nothing is prefetched here any more. Boot above does not resolve until
+         every video can play through and every frame set is complete, so by the
+         time this line runs there is nothing left to fetch. */
 
       window.dispatchEvent(new CustomEvent('ag:hybrid-ready', {
         detail: {
