@@ -418,16 +418,32 @@
     let easeRaf = null;
     function startEase(s) {
       if (easeRaf) return;
+      /* 0.14 -> 0.12, paired with stepPx 900 -> 1800.
+         The transitions were too fast and read as the footage being cut rather
+         than traveled through. stepPx is what actually controls that: at 900
+         across 298 frames a single 100px notch jumped 33 frames, a third of a
+         second of footage per wheel event. At 1800 it moves 17, so the input is
+         twice as fine. The softer lerp smooths what is left.
+         Measured cost, notches to cross the whole stage: 35 before, 71 now,
+         with each transition going from ~10 notches to 29. Chosen off a sweep:
+         2100/0.09 gave 14 frames per notch but 81 notches total, and 1500/0.12
+         gave 20 and 61. This is the middle. */
       const tick = () => {
         const d = s.target - s.pos;
         if (Math.abs(d) < 0.1) {
           s.pos = s.target;
           draw(s, s.pos);
           easeRaf = null;
+          if (s.exitOnSettle > 0 && s.pos >= s.count - 1.5 && segs[s.i + 1]) {
+            s.exitOnSettle = 0; enter(s.i + 1, false); return;
+          }
+          if (s.exitOnSettle < 0 && s.pos <= 0.5 && segs[s.i - 1]) {
+            s.exitOnSettle = 0; enter(s.i - 1, true); return;
+          }
           armSettle();
           return;
         }
-        s.pos += d * 0.14;
+        s.pos += d * 0.12;
         draw(s, s.pos);
         easeRaf = requestAnimationFrame(tick);
       };
@@ -491,6 +507,19 @@
         stopEase();
         s.pos = atEnd ? Math.max(0, (s.count || 1) - 1) : 0;
         s.target = s.pos;
+        /* ENTERING A TRANSITION COSTS SCROLL, SO LEAVING IT THE SAME WAY MUST
+           TOO. Entering cost a full rest dwell, six notches, while backing out
+           through the same edge cost ONE, so scrolling up six and back down six
+           did not return you where you started: it bounced out of the scrub
+           instantly and then spent the rest of the push entering the NEXT
+           transition. That asymmetry is what read as the deck skipping ahead
+           and ignoring the transition.
+           This is the toll for going back out the way you came in. Pushing
+           INWARD clears it immediately, so it never gets in the way of actually
+           traveling the scrub. */
+        s.edgeHold = opts.edgeHoldPx || 300;
+        s.edgeFrom = atEnd ? 1 : -1;
+        s.exitOnSettle = 0;
         draw(s, s.pos);
       }
       show(i);
@@ -588,17 +617,39 @@
          footage per event. The frames were never the problem. Easing turns
          those discrete jumps into continuous motion. */
       const perFrame = opts.stepPx / (s.count - 1);
-      const before = s.target;
       s.target = Math.max(0, Math.min(s.count - 1, s.target + dy / perFrame));
       startEase(s);
 
-      /* Advance the moment the transition is spent and the push continues.
-         Waiting for the settle debounce here left anyone scrolling steadily
-         parked on the last frame until they happened to stop, which reads as
-         the page having jammed. The frames were all drawn on the way, so the
-         scrub has genuinely been seen by the time this fires. */
-      if (dy > 0 && before >= s.count - 1 && segs[cur + 1]) { enter(cur + 1, false); return true; }
-      if (dy < 0 && before <= 0 && segs[cur - 1]) { enter(cur - 1, true); return true; }
+      /* THE TRANSITION HAS TO ACTUALLY FINISH BEFORE IT HANDS OVER.
+         This used to test `before`, the TARGET, which the delta moves
+         instantly. The drawn position eases toward that target at a fraction
+         per frame, so the target hits the end long before the picture does and
+         the segment was handed on with the tail of the scrub never shown.
+         Measured: scrolling up into this scrub and back down, it jumped to the
+         next state with the drawn frame at 271 of 297. Twenty-six frames of
+         the transition, discarded, every time.
+         The exit now waits for the DRAWN position, so the last frame a reader
+         sees is the last frame of the transition. Pushing harder meanwhile is
+         not lost: the target stays pinned at the edge and the ease keeps
+         running, so it costs a beat, not a jam. */
+      if (s.edgeHold > 0) {
+        const backOut = (s.edgeFrom > 0 && dy > 0) || (s.edgeFrom < 0 && dy < 0);
+        if (backOut) { s.edgeHold -= Math.abs(dy); return true; }
+        s.edgeHold = 0;                 // moved inward: the toll is spent
+      }
+
+      const atEnd   = s.pos >= s.count - 1.5 && s.target >= s.count - 1;
+      const atStart = s.pos <= 0.5 && s.target <= 0;
+      if (dy > 0 && atEnd && segs[cur + 1]) { enter(cur + 1, false); return true; }
+      if (dy < 0 && atStart && segs[cur - 1]) { enter(cur - 1, true); return true; }
+
+      /* Pushed past the end while the picture is still catching up. Remember
+         it, so the advance fires the moment the ease lands rather than making
+         the reader nudge again to unstick a transition that has visibly
+         finished. */
+      if (dy > 0 && s.target >= s.count - 1 && segs[cur + 1]) s.exitOnSettle = 1;
+      else if (dy < 0 && s.target <= 0 && segs[cur - 1]) s.exitOnSettle = -1;
+      else s.exitOnSettle = 0;
 
       return true;    // consumed: the page must not scroll while scrubbing
     }
