@@ -1,0 +1,144 @@
+/* =========================================================== */
+/* AG Curtain v2.5 — CANONICAL DROP-IN (Curtain Standard)       */
+/* Source of truth: sectors/web/standards/AG-CURTAIN-STANDARD.md */
+/* Sanctioned intro: "Sweep-Reveal (Self-Drawing Emblem)".      */
+/* SYSTEM (locked): shell, orchestrator, generic emblem draw-on,*/
+/* gold sweep, logo clip-reveal, loading bar, timing ladder.    */
+/* PER-BRAND SLOT (the ONLY client-specific part): the emblem   */
+/* SVG markup + the logo image + the subtag/label text. Drop a  */
+/* line-art SVG into .ag-curtain-emblem and it self-draws.      */
+/* Tokens: --accent (gold) + --ink/--paper from Palette Standard.*/
+/* =========================================================== */
+
+:root {
+  --curtain-bg: var(--ink, #0a0a0a);            /* brand may override (e.g. brand navy) */
+  --curtain-on: var(--accent, #c9a861);         /* strokes / sweep / accents */
+  --curtain-on-soft: #e9d9a8;                   /* secondary accent (pale dots) */
+}
+
+html.is-loading { overflow: hidden; }
+
+.ag-curtain {
+  position: fixed; inset: 0; z-index: 2147483645;   /* below cursor (…46/47), above scrollbar (…40) */
+  background: var(--curtain-bg);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 1; pointer-events: auto; will-change: opacity, transform;
+  transition: opacity 700ms var(--ease-satisfying, cubic-bezier(.16,1,.3,1)),
+              transform 700ms var(--ease-satisfying, cubic-bezier(.16,1,.3,1));
+}
+html.is-ready .ag-curtain { opacity: 0; transform: translateY(-6vh); pointer-events: none; }
+
+.ag-curtain-slot { position: relative; width: min(86vw, 460px); height: 260px; display: block; overflow: hidden; }
+
+/* ---- emblem: per-brand centerpiece; self-draws, then wipes out on reveal ---- */
+.ag-curtain-emblem {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  clip-path: inset(0 0 0 0);
+  animation: ag-emblem-wipe 900ms cubic-bezier(.42,0,.58,1) 1260ms forwards;
+}
+.ag-curtain-emblem svg { width: 116px; height: auto; overflow: visible; }
+
+/* ---- raster-mark variant -------------------------------------------------
+   The generic slot self-draws a stroked SVG. A Greater Hope's badge is a
+   gradient disc with knockout line art, so it cannot be drawn stroke by
+   stroke. It gets the equivalent entrance instead: an iris opening from the
+   center with a short settle, on the same clock as the stroke draw (140ms in,
+   900ms long) so the curtain's rhythm is unchanged. */
+.ag-curtain-emblem--mark img { display: block; width: 132px; height: auto; }
+.ag-curtain-emblem--mark picture {
+  display: block;
+  animation: ag-mark-iris 900ms cubic-bezier(.22,1,.36,1) 140ms both;
+}
+@keyframes ag-mark-iris {
+  from { clip-path: circle(0% at 50% 50%); opacity: 0; transform: scale(0.94); }
+  60%  { opacity: 1; }
+  to   { clip-path: circle(72% at 50% 50%); opacity: 1; transform: scale(1); }
+}
+/* generic self-draw: any stroked <path> draws on, staggered by document order */
+.ag-curtain-emblem svg path {
+  fill: none; stroke: var(--curtain-on); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+  animation: ag-draw 630ms cubic-bezier(.22,1,.36,1) both;
+}
+.ag-curtain-emblem svg path:nth-of-type(1) { animation-delay: 140ms; }
+.ag-curtain-emblem svg path:nth-of-type(2) { animation-delay: 560ms; animation-duration: 560ms; }
+.ag-curtain-emblem svg path:nth-of-type(3) { animation-delay: 770ms; animation-duration: 560ms; }
+.ag-curtain-emblem svg path:nth-of-type(4) { animation-delay: 980ms; animation-duration: 490ms; }
+.ag-curtain-emblem svg path:nth-of-type(n+5) { animation-delay: 1080ms; animation-duration: 420ms; }
+/* dot/leaf/node accents pop after the lines (alternating accent / soft) */
+.ag-curtain-emblem svg circle {
+  opacity: 0; transform: scale(0); transform-box: fill-box; transform-origin: center;
+  fill: var(--curtain-on);
+  animation: ag-pop 420ms cubic-bezier(.34,1.4,.64,1) both;
+}
+.ag-curtain-emblem svg circle:nth-of-type(even) { fill: var(--curtain-on-soft); }
+.ag-curtain-emblem svg circle:nth-of-type(1) { animation-delay: 1020ms; }
+.ag-curtain-emblem svg circle:nth-of-type(2) { animation-delay: 1090ms; }
+.ag-curtain-emblem svg circle:nth-of-type(3) { animation-delay: 1140ms; }
+.ag-curtain-emblem svg circle:nth-of-type(4) { animation-delay: 1140ms; }
+.ag-curtain-emblem svg circle:nth-of-type(5) { animation-delay: 1200ms; }
+.ag-curtain-emblem svg circle:nth-of-type(n+6) { animation-delay: 1250ms; }
+
+/* ---- loading indicator (slim indeterminate gold bar + label) ---- */
+.ag-curtain-load {
+  position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 12px; z-index: 3;
+}
+/* The stock rule faded this out at 1160ms, which hid the progress bar while the
+   assets were still arriving. It stays until the curtain itself lifts. */
+html.is-ready .ag-curtain-load { animation: ag-load-out 280ms ease forwards; }
+/* was rgba(233,217,168,.72), the AG gold, hardcoded past the token. The
+   brandkit wins, so this is the AGH tint the rest of the curtain uses. */
+.ag-curtain-load__label { font-family: var(--font-body, 'Inter', sans-serif); font-size: .62rem;
+  letter-spacing: .26em; text-transform: uppercase; white-space: nowrap;
+  color: color-mix(in srgb, var(--curtain-on-soft) 78%, transparent); }
+.ag-curtain-load__bar { position: relative; width: 168px; height: 2px; border-radius: 2px;
+  background-color: color-mix(in srgb, var(--curtain-on) 18%, transparent); overflow: hidden; }
+.ag-curtain-load__bar i { position: absolute; top: 0; left: 0; height: 100%; width: 40%; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--curtain-on), transparent);
+  animation: ag-load-slide 1.4s ease-in-out infinite; }
+/* Determinate mode: once the engine reports real progress the bar stops
+   sliding and fills. An indeterminate bar in front of a 25MB stage reads as a
+   hang rather than as loading. */
+.ag-curtain-load__bar.is-determinate i {
+  animation: none; left: 0; width: 0%;
+  background: var(--curtain-on);
+  transition: width 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+
+/* ---- logo, revealed by the sweep ----
+   FULL-SLOT clip container so its reveal edge tracks the bar 1:1 (same slot
+   coordinate space as the sweep + emblem); the logo image is centered inside.
+   This is what keeps the reveal locked to the swoosh. ---- */
+.ag-curtain-logo { position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  clip-path: inset(0 100% 0 0);
+  animation: ag-logo-reveal 900ms cubic-bezier(.42,0,.58,1) 1260ms forwards; }
+.ag-curtain-logo > img { width: min(78%, 340px); height: auto; display: block; }
+.ag-curtain-logo--invert { filter: brightness(0) invert(1); }   /* dark logo on dark curtain -> white */
+
+/* ---- sweep that travels across at the reveal ----
+   The stock trailing edge was #b8923f, the AG gold, hardcoded past the token.
+   It now carries A Greater Hope's own sweep top to bottom, so the bar that
+   crosses the screen at the reveal IS the mark's gradient. */
+.ag-curtain-sweep { position: absolute; top: 0; bottom: 0; left: 0; width: 14px; z-index: 4;
+  background: linear-gradient(180deg, #674084 0%, #4E5195 24%, #1A68AC 48%, #288C98 72%, #7EBB46 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 70%);
+          mask-image: linear-gradient(to right, transparent, #000 70%);
+  box-shadow: 0 0 21px 5px color-mix(in srgb, var(--curtain-on) 50%, transparent);
+  opacity: 0; animation: ag-sweep 900ms cubic-bezier(.42,0,.58,1) 1260ms forwards; }
+
+@keyframes ag-draw { to { stroke-dashoffset: 0; } }
+@keyframes ag-pop { to { opacity: 1; transform: scale(1); } }
+@keyframes ag-emblem-wipe { to { clip-path: inset(0 0 0 100%); } }
+@keyframes ag-logo-reveal { to { clip-path: inset(0 0 0 0); } }
+@keyframes ag-sweep { 0%{opacity:0;transform:translateX(0)} 12%{opacity:1} 88%{opacity:1} 100%{opacity:0;transform:translateX(calc(min(86vw,460px) - 14px))} }
+@keyframes ag-load-slide { 0%{left:-40%} 100%{left:100%} }
+@keyframes ag-load-out { to { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ag-curtain { transition: opacity 200ms linear; }
+  html.is-ready .ag-curtain { transform: none; }
+  .ag-curtain-emblem, .ag-curtain-load, .ag-curtain-sweep { display: none; }
+  .ag-curtain-logo { animation: none; clip-path: inset(0 0 0 0); }
+}

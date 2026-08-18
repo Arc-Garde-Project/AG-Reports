@@ -1,1349 +1,644 @@
 <!--
-  ╔═══════════════════════════════════════════════════════════════════════════════╗
-  ║  ARC GARDE - PAID MEDIA FOR A GREATER HOPE                                    ║
-  ║  Private proposal page. One link, sent to one organization.                    ║
-  ║  Slug: /presentations/a-greater-hope                                           ║
-  ║                                                                               ║
-  ║  ASSEMBLED per the FIND gate. Lifted VERBATIM from                            ║
-  ║  sectors/web/library/ag-components/ via presentations/dental-ads:              ║
-  ║    ag-defensive v1.0, ag-motion v2.5, ag-scroll v1.2 (Lenis 1.3.25 SRI,        ║
-  ║    lerp 0.07), ag-cursor v2.1, AG fluid tokens, count-up IO,                   ║
-  ║    and the section / band / ledger / nexts furniture.                          ║
-  ║  NOT carried, per feedback_presentation_format_locked: loading curtain,        ║
-  ║    header bar, site footer, CTA band, closing button.                          ║
-  ║                                                                               ║
-  ║  BESPOKE to this page, and deliberately NOT the dark-and-gold look of every    ║
-  ║  other AG deck:                                                               ║
-  ║    - LIGHT blueprint ground. A child welfare agency is not a luxury advisory.  ║
-  ║    - Their real palette (feedback_brandkit_colors_win_over_gold_thread):       ║
-  ║      #0076BB primary, #80BD42 secondary, #37509A accent, pulled live from      ║
-  ║      aghope.org 2026-08-14, extraction confidence 0.90.                        ║
-  ║    - Their heading face, Fira Sans Condensed. Google Fonts only (AG DNA).      ║
-  ║    - THE HEART. Their logo mark is a heart and the careers page says so in     ║
-  ║      words. Here it is drawn as a hairline construction on the blueprint       ║
-  ║      grid, stroke-drawn once over 2100ms, then reduced to a faint section      ║
-  ║      glyph. Their symbol rendered as engineering, not as decoration.           ║
-  ║    - THE FOOTPRINT ledger: their 5 real offices, 4 counties, 2 states.         ║
-  ║      No borrowed case study. We have no foster-care result to show and         ║
-  ║      showing a dental one here would be off-realm.                             ║
-  ║  The AG cursor keeps its GOLD thread (#C9A36A). One thread of AG identity on   ║
-  ║  an otherwise client-native page, per the /pitch convention.                   ║
-  ║                                                                               ║
-  ║  PRICE LAW. $3,700/month fixed, $0 setup, $2,500/month MINIMUM media paid by   ║
-  ║  A Greater Hope directly to the platforms. AG never passes media through       ║
-  ║  (reference_ag_service_pricing: AG PRODUCTS ONLY, never pass-through).         ║
-  ║                                                                               ║
-  ║  DATA LAW. Every organizational figure on this page is sourced in              ║
-  ║  Arc Garde System/_intake/A Greater Hope/                                      ║
-  ║    a-greater-hope-org-dossier-2026-08-14.md                                    ║
-  ║  Do NOT edit a figure here. Correct the dossier and re-derive.                 ║
-  ║  DELIBERATELY ABSENT: any "children served per year" figure. Their own pages   ║
-  ║  say both "over 1,000" and "over 3,000". Ask them, do not guess.               ║
-  ║  The $10,000 Google Ad Grant figure is Google's published program ceiling,     ║
-  ║  not a claim that A Greater Hope holds one. Their grant status is UNVERIFIED   ║
-  ║  and the page says so on its face.                                             ║
-  ║                                                                               ║
-  ║  COPY LAW (feedback_no_copy_or_engagement_letters_in_claude_code).             ║
-  ║  Every [[SLOT]] is client-facing persuasive copy and is written by Claude UI,  ║
-  ║  never here. Slots render as a visible dashed marker so nothing ships blank    ║
-  ║  by accident. Search this file for "SLOT" to find all of them.                 ║
-  ║                                                                               ║
-  ║  TYPE NOTE. Fira Sans Condensed sets titles and section numerals ONLY.         ║
-  ║  Every figure is Inter with tabular lining numerals (.num).                    ║
-  ╚═══════════════════════════════════════════════════════════════════════════════╝
+  A GREATER HOPE — PAID MEDIA PRESENTATION (hybrid rest/scrub build)
+  ============================================================================
+  ARCHITECTURE. Five ordered states on one full-viewport stage:
+
+    REST A (Plate 1 loop, the hero)
+      -> SCRUB 1 (Plate 1 -> Plate 2, canvas, scroll-driven)
+    REST B (Plate 2 loop, What We Do)
+      -> SCRUB 2 (Plate 2 -> Plate 3, canvas, scroll-driven)
+    REST C (Plate 3 loop, the echo)
+      -> releases the page to the static sections below
+
+  This SUPERSEDES the single continuous pinned scroll at
+  agh-paid-media-presentation.html. That build is left intact, not deleted; its
+  23/110/141 thresholds do not carry over because they describe beats along one
+  continuous scrub and there is no longer one continuous scrub.
+
+  THE SEAM DEFECT IS GONE, for free. The 4x camera-speed jump only ever existed
+  because the two source clips were concatenated. Here each clip IS a scrub
+  segment and a rest state sits between them, so there is no join to be rough.
+
+  Clip direction was established by MEASUREMENT, not filename: each clip's first
+  and last frame were matched against all three plates. Chat history had them
+  backwards. pullback-v3 = Plate 1 -> Plate 2. calm-v4 = Plate 2 -> Plate 3.
+
+  ASSEMBLED. ag-defensive v1.0, ag-typography v1.0, ag-motion v2.5 (static
+  sections), ag-scroll v1.2 (Lenis, off the stage), ag-cursor v2.1, ag-curtain
+  v2.5, plus ag-hybrid-scene v1.0 whose loader/draw path is lifted from
+  ag-sequence v1.0. NOT used: ag-header, ag-button (presentation law forbids a
+  header bar and a CTA). ag-curtain IS used, by Quinten's explicit override on
+  2026-08-18: a video-led stage that pops in half-loaded is worse than the rule.
+
+  COPY WALL. Every client-facing line is lifted verbatim from the approved deck.
+  Nothing here was written in Claude Code.
+
+  PALETTE. Read off "AGH Updated Logo.png" on 2026-08-18, see the token block.
+  The mark is a purple-to-green gradient on a 135deg axis, and it replaced the
+  flat #0076BB the deck used to carry.
+
+  CONTRAST. Measured against the delivered frames: ink on film is 3.23:1, so it
+  carries display type only; body copy sits on a cream scrim at 7.52:1. White on
+  this film is 1.04:1 and is never used. Every accent is a solved twin, verified
+  from rendered pixels at 5.15:1 worst on plate and 6.14:1 worst on the price
+  section, not from the derivation alone.
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="is-loading">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#FFFFFF">
-
-<title>Arc Garde | Paid Media for A Greater Hope</title>
-<meta name="description" content="What Arc Garde builds and runs for A Greater Hope on Meta, how the testing and reporting works, and what it costs.">
-
-<meta property="og:title" content="Arc Garde | Paid Media for A Greater Hope">
-<meta property="og:description" content="What we build, how it runs, and what it costs.">
+<!-- the curtain is what opens the page, so the browser chrome matches its ground -->
+<meta name="theme-color" content="#2B2C3F">
+<!-- favicon.ico alone: it already carries 16/32/48, and every extra <link rel=icon>
+     is another real fetch against the LOCKED 1400KB phone budget. -->
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="preload" as="image" href="agh-logo-256.webp" type="image/webp" fetchpriority="high">
+<title>Paid Media for A Greater Hope | Arc Garde</title>
+<meta name="description" content="Arc Garde paid media presentation for A Greater Hope. Four engines, a 28 day testing cycle, and one fixed monthly fee.">
+<link rel="canonical" href="https://ag-reports.vercel.app/presentations/a-greater-hope/">
+<!-- The link gets pasted into an email or a chat, so it needs a card. URL taken
+     from core/DEPLOY-REGISTRY.md, not assumed. -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://ag-reports.vercel.app/presentations/a-greater-hope">
-<meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Arc Garde">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Arc Garde | Paid Media for A Greater Hope">
-<meta name="twitter:description" content="What we build, how it runs, and what it costs.">
-<meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
-
-<!-- No trailing slash: vercel.json sets trailingSlash:false, so the slashed
-     form 308s. Canonical must name the final URL, not the redirect. -->
-<link rel="canonical" href="https://ag-reports.vercel.app/presentations/a-greater-hope">
-<link rel="icon" type="image/png" href="/assets/favicon.png">
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-
+<meta property="og:title" content="Paid Media for A Greater Hope">
+<meta property="og:description" content="Four engines, a 28 day testing cycle, and one clear answer for where every dollar lands.">
+<meta property="og:url" content="https://ag-reports.vercel.app/presentations/a-greater-hope/">
+<meta property="og:image" content="https://ag-reports.vercel.app/presentations/a-greater-hope/agh-logo-512.png">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- WARM PASS 2026-08-14. Fira Sans Condensed was their real heading face,
-     but condensed type is efficient, not warm, and it fought the brief.
-     Fraunces carries SOFT and WONK axes so the terminals can be rounded
-     off; Nunito Sans has open apertures and rounded shoulders. Both are
-     Google Fonts, per AG DNA. -->
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,SOFT,WONK,wght@9..144,0..100,0..1,300..600&family=Nunito+Sans:opsz,wght@6..12,300..800&display=swap" rel="stylesheet">
-
+<link rel="stylesheet" href="ag-cursor.css">
+<link rel="stylesheet" href="ag-scroll.css">
+<link rel="stylesheet" href="ag-curtain.css">
+<link rel="stylesheet" href="ag-hybrid-scene.css">
 <style>
-/* =========================================================== */
-/* AG Defensive v1.0 - first stylesheet (CANONICAL DROP-IN)    */
-/* ag-components/ag-defensive.css - verbatim                    */
-/* =========================================================== */
+/* ===== AG Defensive v1.0 — first stylesheet, verbatim ===================== */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
-html {
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  overflow-x: hidden;
-  -webkit-tap-highlight-color: transparent;
-}
-body {
-  min-height: 100svh;
-  overflow-wrap: break-word;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  line-height: 1.5;
-  background: var(--paper, #F7F6F3);
-  color: var(--ink, #101418);
-  font-family: var(--font-body, system-ui, sans-serif);
-}
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; overflow-x: hidden; -webkit-tap-highlight-color: transparent; background-color: #FFFFFF; }
+body { min-height: 100svh; overflow-wrap: break-word; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; line-height: 1.5; }
 img, picture, video, canvas, svg { display: block; max-width: 100%; height: auto; }
 input, button, textarea, select { font: inherit; color: inherit; }
-h1, h2, h3, h4, h5, h6 { text-wrap: balance; line-height: 1.1; }
-p, li, blockquote, figcaption { text-wrap: pretty; }
-a, button, [role="button"], input, label[for], select, summary { touch-action: manipulation; }
+h1, h2, h3 { text-wrap: balance; line-height: 1.1; }
+p, li { text-wrap: pretty; }
+a, button, [role="button"], label[for] { touch-action: manipulation; }
 a { color: inherit; text-decoration: none; }
 button { background: none; border: 0; cursor: pointer; }
-:focus-visible { outline: 3px solid var(--blue, #0076BB); outline-offset: 3px; }
-.ag-skip-link {
-  position: absolute; left: 7px; top: -100px; z-index: 2147483647;
-  padding: 10px 18px; border-radius: 2px;
-  background: var(--ink, #101418); color: var(--paper, #F7F6F3);
-  transition: top var(--duration-quick, 0.3s) var(--ease-satisfying, cubic-bezier(0.16, 1, 0.3, 1));
-}
-.ag-skip-link:focus-visible { top: 7px; }
+:focus-visible { outline: 3px solid #1A68AC; outline-offset: 3px; }
+.skip { position: absolute; left: 7px; top: -100px; z-index: 99; padding: 14px 20px; min-height: 49px; display: inline-flex; align-items: center; border-radius: 8px; background: #22303A; color: #FFF; transition: top 0.3s cubic-bezier(0.16,1,0.3,1); }
+.skip:focus-visible { top: 7px; }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
 
-/* =========================================================== */
-/* AG Motion v2.5 - tokens + reveal recipes (CANONICAL DROP-IN)*/
-/* ag-motion.css - verbatim                                     */
-/* =========================================================== */
+/* ===== AGH palette, read off the logo ====================================
+   Source: "AGH Updated Logo.png", 4219x4219. The badge is a circle (bbox fill
+   78.6% against a perfect circle's 78.5%) carrying a CONTINUOUS gradient, not a
+   set of spot colors: sampling hue around the ring and fitting an axis gives
+   135deg at |r| = 0.986. Purple sits upper-left and runs through indigo, blue
+   and teal to green at the lower-right.
+
+   The five anchors, sampled on the ring at 0.86r, white lettering excluded:
+     purple #674084   indigo #4E5195   blue #1A68AC   teal #288C98   green #7EBB46
+
+   Those are the brand and they drive the gradient thread. They are NOT all
+   usable as ink. Measured on cream: purple 7.52, indigo 6.78, blue 5.49, but
+   teal 3.76 and green 2.19, the last two below the 4.5 floor. So every anchor
+   carries two solved twins at its own hue and saturation with only lightness
+   moved: an -ink twin at 4.5:1 on cream, and a -plate twin at 5.0:1 on the 72%
+   scrim over the DARKEST film measured under the text band (p5 #504A3D across
+   18 sampled frames of all three loops). Raw anchors are kept only for the
+   gradient, where nothing is read off them. */
 :root {
-  --duration-instant: 120ms;
-  --duration-quick:   300ms;
-  --duration-medium:  600ms;
-  --duration-long:    900ms;
-  --duration-cinematic: 1400ms;
-  --ease-satisfying: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-soft:       cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-snap:       cubic-bezier(0.34, 1.2, 0.64, 1);
-  --ease-settle:     cubic-bezier(0.22, 1, 0.36, 1);
-  --dist-micro: 7px;
-  --dist-base:  14px;
-  --dist-lg:    21px;
-}
-.reveal {
-  opacity: 0; transform: translateY(var(--dist-base));
-  transition: opacity var(--duration-medium) var(--ease-satisfying),
-              transform var(--duration-medium) var(--ease-satisfying);
-  will-change: opacity, transform;
-}
-.reveal.in-view { opacity: 1; transform: translateY(0); }
-.reveal-hero {
-  opacity: 0; transform: translateY(var(--dist-lg)) scale(0.98);
-  transition: opacity var(--duration-long) var(--ease-satisfying),
-              transform var(--duration-long) var(--ease-satisfying);
-  will-change: opacity, transform;
-}
-.reveal-hero.in-view { opacity: 1; transform: translateY(0) scale(1); }
-.reveal-stagger > * {
-  opacity: 0; transform: translateY(var(--dist-base));
-  transition: opacity var(--duration-medium) var(--ease-settle),
-              transform var(--duration-medium) var(--ease-settle);
-  transition-delay: calc(var(--i, 0) * 81ms);
-}
-.reveal-stagger.in-view > * { opacity: 1; transform: translateY(0); }
-@media (prefers-reduced-motion: reduce) {
-  .reveal, .reveal-hero, .reveal-stagger > * {
-    transition: none !important; opacity: 1 !important; transform: none !important;
-  }
-}
+  --white: #FFFFFF; --paper: #FFFFFF;
+  --cream: #FDF8F2; --cream-deep: #F7EFE3;
 
-/* =========================================================== */
-/* AG Scroll v1.2 - required CSS infrastructure (DROP-IN)      */
-/* ag-scroll.css - verbatim                                    */
-/* =========================================================== */
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: clip; }
-.lenis.lenis-scrolling iframe { pointer-events: none; }
-body.is-locked { overflow: hidden; position: fixed; width: 100%; top: calc(-1 * var(--scroll-y, 0px)); }
+  /* raw logo anchors, gradient use only */
+  --lg-purple: #674084; --lg-indigo: #4E5195; --lg-blue: #1A68AC;
+  --lg-teal: #288C98;   --lg-green: #7EBB46;
 
-/* =========================================================== */
-/* AG Cursor v2.1 - CANONICAL DROP-IN (ag-cursor.css verbatim) */
-/* Gold thread retained on a client-native page, per /pitch.    */
-/* =========================================================== */
-.ag-fine, .ag-fine *, .ag-fine *::before, .ag-fine *::after { cursor: none !important; }
-.ag-cursor__body, .ag-cursor__edge {
-  position: fixed; top: 0; left: 0; pointer-events: none; opacity: 0;
-  transition: opacity var(--duration-instant, 120ms) var(--ease-satisfying, cubic-bezier(0.22,1,0.36,1));
-  will-change: transform;
-}
-.ag-cursor__body { z-index: 2147483646; mix-blend-mode: difference; }
-.ag-cursor__edge { z-index: 2147483647; }
-.ag-cursor__body svg, .ag-cursor__edge svg { position: absolute; top: 0; left: 0; display: block; max-width: none; }
-.ag-cursor__body .ag-cursor__arrow, .ag-cursor__edge .ag-cursor__arrow { width: 13px; height: 20px; }
-.ag-cursor__edge .ag-cursor__hand { width: 18px; height: 18px; }
-.ag-cursor__body path { fill: #fff; }
-.ag-cursor__edge path { fill: none; stroke: var(--accent, #C9A36A); stroke-linejoin: round; stroke-linecap: round; }
-.ag-cursor__edge .ag-cursor__arrow path { stroke-width: 0.8; }
-.ag-cursor__edge .ag-cursor__hand  path { fill: var(--cur-fill, var(--ink, #101418)); stroke-width: 0.75; }
-.ag-cursor__arrow {
-  transform-origin: 0 0;
-  transition: opacity 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1)),
-              transform 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1));
-}
-.ag-cursor__hand {
-  position: absolute; left: -8px; top: -2px;
-  opacity: 0; transform: scale(.7); transform-origin: 8px 2px;
-  transition: opacity 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1)),
-              transform 210ms var(--ease-settle, cubic-bezier(.22,1,.36,1));
-}
-.ag-cur-hover .ag-cursor__arrow { opacity: 0; transform: scale(.6); }
-.ag-cur-hover .ag-cursor__hand  { opacity: 1; transform: scale(1); }
-.ag-cur-hover.ag-cur-press .ag-cursor__hand { transform: scale(.88); }
-.ag-cur-press:not(.ag-cur-hover) .ag-cursor__arrow { transform: scale(.88); }
-@media (hover: none), (pointer: coarse) { .ag-cursor__body, .ag-cursor__edge { display: none !important; } }
-@media (prefers-reduced-motion: reduce) { .ag-cursor__arrow, .ag-cursor__hand, .ag-cursor__body, .ag-cursor__edge { transition: none; } }
+  /* the mark's own sweep, at the mark's own angle */
+  --grad-brand: linear-gradient(135deg, #674084 0%, #4E5195 24%, #1A68AC 48%,
+                                #288C98 72%, #7EBB46 100%);
 
-/* =========================================================== */
-/* MOTION PASS - AG-MOTION-STANDARD v2.5                        */
-/* Choreography and variety, NOT more motion.                   */
-/* Deliberately NOT used: decorative parallax, directional      */
-/* reveals. Both banned by the standard for editorial content.  */
-/* =========================================================== */
+  /* solved for cream grounds, 4.5:1 */
+  --purple-ink: #674084; --indigo-ink: #4E5195; --blue-ink: #1A68AC;
+  --teal-ink: #247E89;   --green-ink: #557E2E;
 
-/* First-Paint Sequence, delay ladder verbatim. Hard Rule 10:
-   this is the ONE hero animation family on the page. */
-.hero-arrive {
-  opacity: 0;
-  transform: translateY(var(--dist-base));
-  animation: heroArrive var(--duration-long) var(--ease-satisfying) forwards;
-  animation-delay: var(--hero-delay, 0ms);
-}
-.hero-arrive--title { transform: translateY(var(--dist-lg)) scale(0.98); }
-.hero-d0 { --hero-delay: 0ms; }
-.hero-d1 { --hero-delay: 120ms; }   /* 3 x 40  */
-.hero-d2 { --hero-delay: 280ms; }   /* 7 x 40  */
-.hero-d3 { --hero-delay: 441ms; }   /* 3x7x21  */
-.hero-d4 { --hero-delay: 560ms; }   /* 7 x 80  */
-@keyframes heroArrive { to { opacity: 1; transform: translateY(0) scale(1); } }
+  /* solved for the scrims over film, 5.0:1 on the 72% worst case */
+  --purple-plate: #633D7F; --indigo-plate: #454884; --blue-plate: #145084;
+  --teal-plate: #18555D;   --green-plate: #39551F;
 
-/* Stagger cap at index 5. Hard Rule 7 (63-126ms). */
-.reveal-stagger > *:nth-child(n+6) { transition-delay: 405ms; }
+  /* tint ramp, rebuilt as tints of the logo blue (hue 208) rather than the old
+     hue-202 sky, so the light rules belong to the mark too */
+  --sky-50: #F5F8FB; --sky-200: #D7E5F1; --sky-300: #B2CEE6;
+  --sky-400: #80ACD3; --sky-500: #548CBD;
+  --teal-tint: #B8DCE0; --green-tint: #CBDCBC; --purple-tint: #CEC0D8;
 
-/* Section rule draws in, then one highlight sweep. */
-.sec-rule { position: relative; overflow: hidden; }
-.sec-rule::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent 0%, var(--blue-light) 50%, transparent 100%);
-  transform: translateX(-100%);
-  opacity: 0;
-}
-.sec-rule.in-view::after {
-  animation: ruleSweep var(--duration-long) var(--ease-soft) 300ms forwards;
-}
-@keyframes ruleSweep {
-  0%   { transform: translateX(-100%); opacity: 0; }
-  30%  { opacity: 1; }
-  100% { transform: translateX(100%); opacity: 0; }
-}
-
-/* Count-up: tabular figures so the row cannot reflow mid-count. */
-.cnt { font-variant-numeric: tabular-nums lining-nums; }
-
-/* The close: the fee gets one blue breath on arrival. */
-.total-v { transition: text-shadow var(--duration-long) var(--ease-soft); }
-.total.in-view .total-v { animation: blueBreath var(--duration-long) var(--ease-soft) 420ms; }
-@keyframes blueBreath {
-  0%   { text-shadow: 0 0 0 rgba(0, 118, 187, 0); }
-  50%  { text-shadow: 0 0 21px rgba(0, 118, 187, 0.40); }
-  100% { text-shadow: 0 0 0 rgba(0, 118, 187, 0); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-arrive { animation: none !important; opacity: 1 !important; transform: none !important; }
-  .sec-rule.in-view::after,
-  .total.in-view .total-v { animation: none !important; }
-}
-
-/* =========================================================== */
-/* AG FLUID TOKENS - mandatory :root block (.claude/rules/web-css.md) */
-/* =========================================================== */
-:root {
-  /* Hero slope re-solved 2026-08-14 so the ceiling has real presence at
-     desktop without touching the 350px floor, which is fixed by the orphan
-     sizing ceiling (AG-TYPOGRAPHY Hard Rule 13, F <= M/9: measure 314px
-     gives 34.9px, and 27px clears it).
-       350px  ->  9.333 + 0.05048*350 = 27.0px   (= the 1.6875rem floor)
-       1400px ->  9.333 + 0.05048*1400 = 80.0px  (= the 5rem ceiling)
-     Only .hero h1 consumes this token. Re-swept after the change. */
-  --text-hero:  clamp(1.6875rem, 0.5833rem + 5.048vw, 5rem);
-  --text-h1:    clamp(1.875rem, 1.357rem + 2.21vw, 3rem);
-  --text-h2:    clamp(1.5rem, 1.155rem + 1.47vw, 2.25rem);
-  --text-h3:    clamp(1.313rem, 1.054rem + 1.1vw, 1.875rem);
-  --text-h4:    clamp(1.125rem, 0.952rem + 0.74vw, 1.5rem);
-  --text-lg:    clamp(1rem, 0.943rem + 0.24vw, 1.125rem);
-  --text-base:  clamp(0.938rem, 0.909rem + 0.12vw, 1rem);
-  --space-section:   clamp(3rem, 1.619rem + 5.89vw, 6rem);
-  --space-container: clamp(1.125rem, 0.262rem + 3.68vw, 3rem);
-}
-
-/* =========================================================== */
-/* =========================================================== */
-/* A GREATER HOPE IDENTITY v2, WARM PASS 2026-08-14             */
-/*                                                              */
-/* Quinten redirected the whole visual direction:               */
-/*   "more welcoming, not as bold, but more caring, loving,     */
-/*    baby blue with a white background feels safe, we want     */
-/*    warmth ... remove the grid ... a nonprofit is quite easy" */
-/*                                                              */
-/* v1 was a blueprint: hairline plan grid, registration marks,  */
-/* dimension line, architect's title block, square corners,     */
-/* condensed type. That reads PRECISE. It does not read SAFE.   */
-/* Everything structural about it is removed here, not softened.*/
-/*                                                              */
-/* The seven levers used to buy warmth, in order of effect:     */
-/*   1. Light instead of structure. Three huge diffuse blooms   */
-/*      replace the ruled grid. The page is lit, not measured.  */
-/*   2. Shadows instead of borders. A hairline is a boundary,   */
-/*      a soft shadow is a lift.                                */
-/*   3. Round everything. 0px corners were pulled from their    */
-/*      own site and they read clinical at this scale.          */
-/*   4. A soft serif. Condensed sans is efficient; Fraunces at  */
-/*      SOFT 70 is human.                                       */
-/*   5. Warm the darks. Near black to a warm slate.             */
-/*   6. Cream. Pure white plus baby blue is COOL. One cream     */
-/*      band is what makes the palette warm rather than icy.    */
-/*   7. Slower motion, softer landings, and one living breath.  */
-/* =========================================================== */
-:root {
-  /* Ground. He asked for white, so white it is. */
-  --white:      #FFFFFF;
-  --paper:      #FFFFFF;   /* ag-cursor.js reads this off :root */
-  --cream:      #FDF8F2;   /* the warmth. one band, not everywhere */
-  --cream-deep: #F7EFE3;
-
-  /* Baby blue scale, derived from their #0076BB by holding hue 202
-     and walking lightness up. Saturation eased off in the pale steps
-     so the tints read soft rather than electric. */
-  --sky-50:   #F5FAFE;
-  --sky-100:  #E8F4FC;
-  --sky-200:  #D3E9F8;
-  --sky-300:  #AAD4EE;
-  --sky-400:  #74B6E0;   /* decorative strokes ONLY. 2.21:1, never text */
-  --sky-500:  #4795CA;   /* the palest tone allowed to carry large text */
-  --blue:     #0076BB;   /* their brand. accents only, never a field */
-  --blue-deep:#005E96;
-
-  /* Warm slate, not near black. #0a0a0a on white is a stark contrast
-     edge; this keeps the page from feeling severe.
-     ALPHAS ARE MEASURED, NOT CHOSEN. The first warm pass shipped
-     --ink-faint at 0.46, which computes to 2.65:1 on white and fails
-     AA on every small uppercase label on the page. Softening a palette
-     is not a license to drop below the floor.
-       0.78 -> 6.65:1 white / 6.33 sky-50 / 6.30 cream
-       0.68 -> 4.90:1 white / 4.67 sky-50 / 4.64 cream  */
-  --ink:       #22303A;
-  --ink-soft:  rgba(34, 48, 58, 0.78);
-  --ink-faint: rgba(34, 48, 58, 0.68);
-
-  /* Their secondary green, eased warmer and lighter. */
-  --sage:      #8CC15C;
-  --sage-deep: #5E9129;
-
-  --line:      rgba(0, 118, 187, 0.14);
-  --line-soft: rgba(34, 48, 58, 0.07);
-
-  /* The AG gold thread survives on the cursor only, per /pitch. */
-  --accent: #C9A36A;
-
-  --r-sm: 10px;
-  --r-md: 18px;
-  --r-lg: 28px;
-  --r-xl: clamp(28px, 5vw, 56px);
-
-  /* Layered and low opacity. One hard shadow undoes the whole pass. */
-  --sh-1: 0 1px 2px rgba(34,48,58,0.04), 0 6px 16px rgba(34,48,58,0.05);
-  --sh-2: 0 2px 6px rgba(34,48,58,0.04), 0 16px 40px rgba(34,48,58,0.07);
-  --sh-3: 0 4px 10px rgba(34,48,58,0.05), 0 28px 64px rgba(34,48,58,0.09);
-  --sh-sky: 0 14px 44px rgba(0, 118, 187, 0.11);
-
+  /* --blue / --blue-deep stay as names so nothing downstream breaks, but they
+     now hold the logo's blue rather than the old #0076BB. That old value was a
+     100%-saturation hue-202 blue that failed every scrim it touched. */
+  --blue: #1A68AC;
+  --blue-deep: #145084;
+  /* ag-cursor and ag-curtain both fall back to the AG gold #c9a861 when
+     --accent is undefined, which is how a gold edge was still riding on this
+     page. The brandkit wins, so --accent is the mark's own blue. */
+  --accent: #1A68AC;
+  --ink: #22303A;
+  --ink-soft: rgba(34,48,58,0.78);
+  --ink-faint: rgba(34,48,58,0.68);
+  --hairline: rgba(34,48,58,0.14);
   --font-display: 'Fraunces', Georgia, serif;
-  --font-body:    'Nunito Sans', system-ui, sans-serif;
-  --shell: 1080px;
-}
+  --font-body: 'Nunito Sans', system-ui, sans-serif;
+  --scrim: rgba(253,248,242,0.72);
+  --scrim-firm: rgba(253,248,242,0.86);
+  --text-hero: clamp(2rem, 1.25rem + 3.3vw, 4rem);
+  --text-h2: clamp(1.6rem, 1.15rem + 2vw, 2.7rem);
+  --text-h3: clamp(1.05rem, 0.8rem + 1.1vw, 1.5rem);
+  --text-base: clamp(0.95rem, 0.92rem + 0.16vw, 1.06rem);
+  --text-micro: clamp(0.66rem, 0.64rem + 0.1vw, 0.73rem);
+  --pad: clamp(1.125rem, 0.262rem + 3.68vw, 3rem);
+  --gap: clamp(1rem, 0.5rem + 2vw, 2rem);
 
-/* §6D Browser Chrome Tint. <html> must carry the ground color explicitly:
-   with only <body> painted, iOS overscroll flashes the browser default. */
-html { background-color: var(--white); }
+  /* Curtain, brand-tokened. ag-curtain defaults to the AG gold thread; the
+     brandkit wins. The ground is the logo's indigo taken down to the same
+     luminance the old neutral slate sat at (0.0264 against 0.0276), so it
+     reads as the mark's dark end rather than a generic charcoal. White on it
+     measures 13.74:1. */
+  --curtain-bg: #2B2C3F;
+  --curtain-on: #B2CEE6;
+  --curtain-on-soft: #D7E5F1;
+}
+body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: var(--text-base); }
+.shell { max-width: 1180px; margin-inline: auto; padding-inline: var(--pad); }
+.num { font-variant-numeric: tabular-nums lining-nums; }
 
-body {
-  background: var(--white);
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  letter-spacing: 0.004em;
-}
+/* ===== Overlay type, from the measured patterns ========================== */
+.eyebrow-chip { display: inline-block; padding: 0.34rem 0.72rem; border-radius: 999px; background: var(--scrim-firm); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.5); font-size: var(--text-micro); font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.9rem; }
+.lead { font-family: var(--font-display); font-weight: 400; font-size: var(--text-hero); letter-spacing: -0.022em; color: var(--ink); text-shadow: 0 0 20px rgba(255,255,255,0.92), 0 0 46px rgba(255,255,255,0.7); max-width: 21ch; }
+.lead-sub { margin-top: 0.35rem; font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(1.15rem,0.95rem + 0.9vw,1.9rem); letter-spacing: -0.015em; color: var(--ink);
+  text-shadow: 0 0 20px rgba(255,255,255,0.92), 0 0 46px rgba(255,255,255,0.7); }
+.sub-card { margin-top: clamp(1.1rem,2.5vw,1.6rem); display: block; width: fit-content; max-width: 34rem; padding: clamp(0.9rem,2vw,1.25rem) clamp(1.1rem,2.4vw,1.5rem); border-radius: 14px; background: var(--scrim); backdrop-filter: blur(16px) saturate(115%); -webkit-backdrop-filter: blur(16px) saturate(115%); border: 1px solid rgba(255,255,255,0.55); color: var(--ink-soft); font-size: clamp(1rem,0.92rem + 0.4vw,1.18rem); }
+.hc { margin-top: clamp(1.1rem,2.5vw,1.5rem); display: block; width: fit-content; text-align: left; background: var(--scrim-firm); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.55); border-radius: 14px; padding: 0.9rem 1.25rem; }
+.hc-row { display: flex; justify-content: space-between; gap: 1.5rem; padding: 0.34rem 0; }
+.hc-row + .hc-row { border-top: 1px solid var(--hairline); }
+.hc-k { font-size: var(--text-micro); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; }
+.hc-v { font-weight: 600; }
+.hc-v.blue { color: var(--blue-plate); }
+.mast { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.05rem,0.95rem + 0.5vw,1.35rem); }
+/* The mark on the hero plate. It carries a soft white halo for the same reason
+   .lead does: the film underneath swings from #504A3D to #FCEECF across the
+   loop, and a disc with no separation disappears into the bright end. */
+.hero-mark { display: block; width: fit-content; margin: 0 auto clamp(0.7rem,1.8vw,1.05rem); }
+.hero-mark img { display: block; width: clamp(58px, 4.6vw + 40px, 86px); height: auto;
+  border-radius: 50%; box-shadow: 0 0 0 6px rgba(255,255,255,0.42), 0 6px 24px rgba(34,48,58,0.22); }
 
-/* Skip link measured under the LOCKED 49px minimum by the mobile gate. */
-.ag-skip-link {
-  padding: 14px 20px; min-height: 49px; border-radius: var(--r-sm);
-  display: inline-flex; align-items: center;
-}
+/* CENTERED THROUGHOUT, all widths (Quinten 2026-08-18). Overlay text used to be
+   left aligned above 900px and only centered below it. */
+.hseg-text { text-align: center; }
+.hseg-text .lead,
+.hseg-text .sub-card,
+.hseg-text .hc { margin-inline: auto; }
+.hseg-text .hc { text-align: left; }          /* a key/value card still reads as rows */
 
-/* ── ELEMENT 1: THE GROUND ─────────────────────────────────────
-   The blueprint grid is GONE. Not faded, removed.
-   In its place: soft light. Three enormous, very diffuse blooms,
-   fixed behind everything. Baby blue upper left and lower center,
-   cream on the right so the page has a warm side and a cool side
-   the way a room lit by one window does.
-   Static on purpose. Drifting or breathing background shapes are
-   decorative parallax, which AG-MOTION-STANDARD bans outright. */
-body::before {
-  content: "";
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(1150px 950px at 10% -8%,   rgba(116, 182, 224, 0.20), transparent 62%),
-    radial-gradient(1000px 850px at 96% 18%,   rgba(247, 226, 197, 0.42), transparent 60%),
-    radial-gradient(1200px 950px at 48% 106%,  rgba(170, 212, 238, 0.24), transparent 62%);
-}
-body > * { position: relative; z-index: 1; }
+.eng-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--gap); margin-top: clamp(1.25rem,3vw,1.9rem); max-width: 52rem; margin-inline: auto; text-align: left; }
 
-/* Figures never in the display face. Tabular lining numerals only. */
-.num {
-  font-family: var(--font-body);
-  font-variant-numeric: tabular-nums lining-nums;
-  font-feature-settings: "tnum" 1, "lnum" 1;
-}
+/* ---- 2 How It Runs, on Plate 3 ------------------------------------------ */
+.run-panel { margin: clamp(1.1rem,2.6vw,1.6rem) auto 0; max-width: 54rem;
+  padding: clamp(1rem,2.4vw,1.5rem) clamp(1.1rem,2.6vw,1.75rem); border-radius: 16px;
+  background: var(--scrim); backdrop-filter: blur(18px) saturate(115%);
+  -webkit-backdrop-filter: blur(18px) saturate(115%); border: 1px solid rgba(255,255,255,0.55); }
+.run-panel .ladder { margin-top: 0; }
+.run-panel .lad-sprint { background: rgba(255,255,255,0.55); }
+.run-panel .lad-pair i { background: var(--lad); }
+.run-panel .lad-pair i:nth-child(2) { background: var(--lad); opacity: 0.42; }
+.run-panel .fig { background: rgba(255,255,255,0.55); padding: clamp(0.6rem,1.6vw,0.9rem) 0.4rem; }
+.run-panel .fig-n { font-size: clamp(1.5rem,1.1rem + 1.6vw,2.3rem); color: var(--blue-plate); }
+.run-panel .figs { margin-top: clamp(0.9rem,2.2vw,1.35rem); }
+.run-panel .rhythm { margin-top: clamp(0.7rem,1.8vw,1.05rem); }
+/* the border-top SHORTHAND here used to hardcode --sky-300, which silently
+   reset the per-cell color set above it. It takes --rh like everything else. */
+.run-panel .rh-cell { background: rgba(255,255,255,0.55); border-left: 0; border-top: 3px solid var(--rh);
+  border-radius: 0 0 10px 10px; text-align: center; padding: clamp(0.6rem,1.6vw,0.9rem) 0.75rem; }
+.honest-line { margin-top: clamp(0.9rem,2.2vw,1.3rem); font-family: var(--font-display);
+  font-size: clamp(0.95rem,0.88rem + 0.4vw,1.15rem); line-height: 1.45; color: var(--ink); }
+.honest-line b { font-weight: 600; }
+.eng-card { position: relative; overflow: hidden; padding: clamp(0.95rem,2.2vw,1.4rem) clamp(1.05rem,2.4vw,1.55rem); border-radius: 14px; background: var(--scrim); backdrop-filter: blur(16px) saturate(115%); -webkit-backdrop-filter: blur(16px) saturate(115%); border: 1px solid rgba(255,255,255,0.55); }
+/* THE FOUR ENGINES TAKE FOUR STOPS OFF THE MARK. Four cards, four points on a
+   five-stop gradient, so the sweep is spent on real content rather than
+   sprinkled as decoration. Each card's own stop is set on --eg below and drives
+   both the numeral and the edge rule; the -plate twins are used because these
+   sit on a scrim over film. */
+.eng-card { --eg: var(--blue-plate); }
+.eng-card:nth-child(1) { --eg: var(--purple-plate); }
+.eng-card:nth-child(2) { --eg: var(--indigo-plate); }
+.eng-card:nth-child(3) { --eg: var(--teal-plate); }
+.eng-card:nth-child(4) { --eg: var(--green-plate); }
+.eng-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--eg); }
+.eng-card .n { display: block; font-family: var(--font-display); font-weight: 500; font-size: clamp(1rem,0.9rem + 0.5vw,1.3rem); color: var(--eg); line-height: 1; }
+.eng-card h3 { margin-top: 0.42rem; font-family: var(--font-display); font-weight: 400; font-size: var(--text-h3); letter-spacing: -0.012em; }
+.eng-card .geo { margin-top: 0.3rem; font-size: var(--text-micro); letter-spacing: 0.14em; text-transform: uppercase; color: var(--eg); font-weight: 700; }
+.eng-card .one { margin-top: 0.45rem; color: var(--ink-soft); font-size: 0.96rem; }
 
-.shell {
-  width: 100%; max-width: var(--shell);
-  margin-inline: auto;
-  padding-inline: var(--space-container);
-}
+.cue-lab { font-size: var(--text-micro); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); font-weight: 800; background: var(--scrim-firm); padding: 0.4rem 0.8rem; border-radius: 999px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 
-/* One sentence per line (feedback_no_lazy_ai_constructions). */
-.ag-break { display: block; height: 0; }
-
-/* Atomic token guard. Browsers treat ")" as a break opportunity, so
-   "501(c)(3)" splits across lines at 450px and the sweep records it as
-   a WORD-BREAK blocker. An atomic token takes nowrap, never glue, the
-   same way a phone number or a button does. */
-.nb { white-space: nowrap; }
-
-/* ── COPY SLOT ─────────────────────────────────────────────────
-   Client-facing persuasive copy is written by Claude UI, never here
-   (feedback_no_copy_or_engagement_letters_in_claude_code). Renders
-   VISIBLY so nothing can ship blank by accident.
-
-   RETAINED ON PURPOSE with zero current usage. The last slot was
-   filled with approved copy on 2026-08-15, so this is technically
-   dead CSS. It stays because more sections are coming, and without
-   the class the next unwritten line renders as ordinary prose with
-   no visible marker, which is the exact failure the class exists to
-   catch. Twenty lines is a cheap insurance premium. */
-.slot {
-  display: inline-block;
-  padding: 0.4em 0.95em;
-  border: 1px dashed var(--sky-400);
-  border-radius: 999px;
-  background: var(--sky-50);
-  color: var(--blue-deep);
-  font-family: var(--font-body);
-  font-size: 0.82em;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  line-height: 1.4;
-}
-.slot::before { content: "COPY SLOT "; opacity: 0.5; }
-.slot--block { display: block; max-width: 58ch; margin-inline: auto; }
-
-/* ── ELEMENT 3: TYPE ───────────────────────────────────────────
-   Fraunces carries SOFT and WONK axes. SOFT rounds the terminals,
-   WONK relaxes the italic-ish letterforms. Set once, inherited by
-   every display element. Weight caps at 600, never 700: he asked
-   for "not as bold". */
-h1, h2, h3, .disp {
-  font-family: var(--font-display);
-  font-variation-settings: "SOFT" 70, "WONK" 1;
-  font-weight: 500;
-  letter-spacing: -0.008em;
-}
-
-/* ── ELEMENT 4: HERO ───────────────────────────────────────────
-   Registration marks, dimension line and the architect's title
-   block are all removed with the grid; they were the same language.
-   What remains is the mark, the name, and one soft card. */
-.hero {
-  position: relative;
-  min-height: 100dvh;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding-block: clamp(4rem, 10vw, 7rem);
-  overflow: hidden;
-}
-
-.mast-brand {
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 0.82rem;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  color: var(--blue);
-}
-.mast-tag {
-  margin-top: 0.6rem;
-  font-size: 0.68rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-.hero h1 {
-  margin-top: clamp(1.75rem, 4vw, 2.75rem);
-  font-size: var(--text-hero);
-  color: var(--ink);
-  line-height: 1.06;
-}
-
-/* The approved subline. Replaced the dashed COPY SLOT pill on 2026-08-15.
-   Body face, not the display face: it sits directly under a Fraunces
-   headline and a second serif line would compete with it rather than
-   support it. Measure capped so the sentence breaks where the eye
-   expects, and the sizing is checked against the orphan sweep. */
-.hero-sub {
-  margin-top: clamp(1.1rem, 2.6vw, 1.6rem);
-  margin-inline: auto;
-  max-width: 34ch;
-  font-family: var(--font-body);
-  font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.375rem);
-  font-weight: 300;
-  line-height: 1.55;
-  letter-spacing: 0.004em;
-  color: var(--ink-soft);
-}
-
-/* The title block became a soft card. Five rows became three: a
-   proposal does not need a sheet count. */
-.hellocard {
-  position: absolute;
-  right: clamp(0.75rem, 3vw, 2.5rem);
-  bottom: clamp(3rem, 7vw, 4.5rem);
-  width: min(286px, 78vw);
-  background: rgba(255, 255, 255, 0.86);
-  backdrop-filter: blur(8px);
-  border-radius: var(--r-md);
-  box-shadow: var(--sh-2);
-  padding: 0.4rem 0.25rem;
-  text-align: left;
-}
-.hc-row {
-  display: grid; grid-template-columns: 92px 1fr;
-  gap: 0.7rem;
-  padding: 0.55rem 1rem;
-  font-size: 0.72rem;
-  line-height: 1.4;
-}
-.hc-k { letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap; }
-.hc-v { color: var(--ink); font-weight: 600; }
-.hc-v.blue { color: var(--blue); }
-
-/* Runway indicator, HER-20..28: a labeled scroll cue, 3 chevrons
-   small to big, sequenced. Softened to baby blue. */
-.chev {
-  position: absolute; bottom: clamp(0.9rem, 2.2vw, 1.4rem);
-  left: 50%; translate: -50% 0;
-  display: grid; justify-items: center; gap: 0.5rem;
-}
-.chev-lab {
-  font-size: 0.6rem; letter-spacing: 0.3em;
-  text-transform: uppercase; color: var(--ink-faint);
-}
-.chev-stack { display: grid; justify-items: center; gap: 3px; }
-.chev-stack i {
-  display: block; border-style: solid; border-color: var(--sky-400);
-  border-width: 0 1.5px 1.5px 0;
-  border-radius: 1px;
-  transform: rotate(45deg);
-  opacity: 0;
-  animation: chevPulse 2100ms var(--ease-soft) infinite;
-}
-.chev-stack i:nth-child(1) { width: 5px;  height: 5px;  animation-delay: 0ms;   }
-.chev-stack i:nth-child(2) { width: 8px;  height: 8px;  animation-delay: 700ms; }
-.chev-stack i:nth-child(3) { width: 11px; height: 11px; animation-delay: 1400ms;}
-@keyframes chevPulse { 0%,100% { opacity: 0.18; } 40% { opacity: 0.85; } }
-@media (prefers-reduced-motion: reduce) { .chev-stack i { animation: none; opacity: 0.5; } }
-
-/* ── ELEMENT 5: SECTION FURNITURE ──────────────────────────────
-   Band sections are no longer full bleed strips with hairline
-   borders top and bottom. They are inset rounded panels floating
-   on the white. That single change does most of the softening. */
-.sec { padding-block: var(--space-section); }
-.sec--band,
-.sec--cream {
-  border: 0;
-  border-radius: var(--r-xl);
-  margin-inline: clamp(0.6rem, 2.6vw, 2.25rem);
-  padding-block: calc(var(--space-section) * 0.92);
-}
-.sec--band  { background: var(--sky-50); }
+/* ===== Static sections (unchanged from the approved deck) ================ */
+.sec { padding: clamp(3.5rem,9vw,7rem) 0; }
+.sec--band { background: var(--sky-50); }
 .sec--cream { background: var(--cream); }
+/* LAST SECTION CENTERED at every width, not only below 900px. */
+.sec-head { display: flex; align-items: baseline; gap: clamp(0.75rem,2vw,1.25rem); flex-wrap: wrap; justify-content: center; text-align: center; }
+.sec--cream .shell { text-align: center; }
+.sec--cream .sec-note { margin-inline: auto; }
+.sec--cream .deliv-row,
+.sec--cream .led-row,
+.sec--cream .band-row { grid-template-columns: 1fr; gap: 0.15rem; text-align: center; }
+.sec--cream .deliv, .sec--cream .band { max-width: 46rem; margin-inline: auto; }
+.sec--cream .sec-price { margin-left: 0; }
+.sec-num { font-family: var(--font-display); font-weight: 300; font-size: clamp(2.2rem,1.5rem + 3vw,4rem); color: var(--sky-500); line-height: 0.9; }
+.sec-title { font-family: var(--font-display); font-weight: 400; font-size: var(--text-h2); letter-spacing: -0.02em; }
+.sec-price { margin-left: auto; font-family: var(--font-display); font-weight: 500; font-size: clamp(1.1rem,0.9rem + 0.9vw,1.6rem); color: var(--blue); }
+.sec-rule { height: 1px; background: var(--hairline); margin: clamp(1.1rem,2.5vw,1.6rem) 0 clamp(1rem,2.2vw,1.4rem); }
+.sec-note { color: var(--ink-soft); max-width: 56ch; font-size: clamp(1rem,0.94rem + 0.3vw,1.15rem); }
+.ag-break { display: block; height: 0.35rem; }
+.ladder { margin-top: clamp(2rem,5vw,3rem); }
+.lad-scale { display: flex; justify-content: space-between; font-size: var(--text-micro); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; margin-bottom: 0.6rem; }
+.lad-track { display: grid; grid-template-columns: repeat(7,1fr); gap: clamp(0.4rem,1.2vw,0.85rem); }
+.lad-sprint { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: clamp(0.7rem,1.6vw,1rem) 0; border-radius: 10px; background: var(--white); border: 1px solid var(--hairline); }
+.lad-pair { display: flex; gap: 5px; }
+/* THE SPRINT LADDER WALKS THE MARK. Seven sprints, seven samples along the same
+   135deg sweep the logo runs, so the ladder reads as a progression in the
+   brand's own color rather than seven identical blue pips. The lighter second
+   pip in each pair is the same stop at 42%, which keeps the pair relationship
+   the original design had. */
+.lad-sprint:nth-child(1) { --lad: var(--purple-ink); --ladp: var(--purple-plate); }
+.lad-sprint:nth-child(2) { --lad: #59489C; --ladp: #4A4788; }
+.lad-sprint:nth-child(3) { --lad: var(--indigo-ink); --ladp: var(--indigo-plate); }
+.lad-sprint:nth-child(4) { --lad: var(--blue-ink);   --ladp: var(--blue-plate); }
+.lad-sprint:nth-child(5) { --lad: #1F7A9E; --ladp: #17536B; }
+.lad-sprint:nth-child(6) { --lad: var(--teal-ink);   --ladp: var(--teal-plate); }
+.lad-sprint:nth-child(7) { --lad: var(--green-ink);  --ladp: var(--green-plate); }
+.lad-pair i { display: block; width: 9px; height: 22px; border-radius: 3px; background: var(--lad, var(--blue)); }
+.lad-pair i:nth-child(2) { opacity: 0.42; }
+.run-panel .lad-sprint { --lad: var(--ladp); }
+.lad-lab { font-size: var(--text-micro); color: var(--ink-faint); font-weight: 700; }
+.lad-note { margin-top: 0.9rem; color: var(--ink-soft); font-size: 0.95rem; }
+.figs { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--gap); margin-top: clamp(2rem,5vw,3rem); }
+.fig { text-align: center; padding: clamp(1rem,2.4vw,1.5rem) 0.5rem; background: var(--white); border: 1px solid var(--hairline); border-radius: 12px; }
+.fig-n { display: block; font-family: var(--font-display); font-weight: 500; font-size: clamp(1.9rem,1.3rem + 2.4vw,3.1rem); color: var(--blue); line-height: 1; }
+.fig-l { display: block; margin-top: 0.45rem; font-size: var(--text-micro); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; }
+.rhythm { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--gap); margin-top: var(--gap); }
+/* Daily / every 4 / every 7 is a cadence that loosens as it goes, so it takes
+   three consecutive stops off the mark rather than three identical rules. */
+.rh-cell { --rh: var(--blue-ink); padding: clamp(0.9rem,2.2vw,1.35rem) clamp(1rem,2.4vw,1.5rem); border-left: 3px solid var(--rh); background: var(--white); border-radius: 0 10px 10px 0; }
+.rh-cell:nth-child(1) { --rh: var(--blue-ink); }
+.rh-cell:nth-child(2) { --rh: var(--teal-ink); }
+.rh-cell:nth-child(3) { --rh: var(--green-ink); }
+.run-panel .rh-cell:nth-child(1) { --rh: var(--blue-plate); }
+.run-panel .rh-cell:nth-child(2) { --rh: var(--teal-plate); }
+.run-panel .rh-cell:nth-child(3) { --rh: var(--green-plate); }
+.rh-when { font-weight: 800; font-size: 0.95rem; }
+.rh-what { margin-top: 0.25rem; color: var(--ink-soft); font-size: 0.92rem; }
+/* `.honest` used to be a bordered callout block here. The markup now carries
+   `.honest-line` instead and no element has the `.honest` class, so its rules
+   were removed rather than left computing against nothing. */
+.deliv { margin-top: clamp(2rem,5vw,3rem); }
+.deliv-h { font-size: var(--text-micro); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint); font-weight: 800; margin-bottom: 0.75rem; }
+.deliv-row, .led-row, .band-row { display: grid; grid-template-columns: minmax(8.5rem,15rem) 1fr; gap: clamp(0.6rem,2vw,1.5rem); padding: 0.8rem 0; border-top: 1px solid var(--hairline); }
+.deliv-k, .led-k, .band-k { font-weight: 700; }
+.deliv-v, .led-v, .band-v { color: var(--ink-soft); }
+.band { margin-top: clamp(2rem,5vw,3rem); background: var(--white); border: 1px solid var(--hairline); border-radius: 14px; padding: clamp(1.1rem,2.6vw,1.7rem) clamp(1.25rem,3vw,2rem); }
+.band-label { font-size: var(--text-micro); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint); font-weight: 800; }
+.band-row:first-of-type { border-top: 0; }
+/* The total is the line that matters most on the page, so it gets the mark's
+   full sweep as its rule instead of a flat 2px. */
+.band-total { position: relative; border-top: 0; margin-top: 0.35rem; padding-top: 1rem; }
+.band-total::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; border-radius: 2px; background: var(--grad-brand); }
+.band-total .band-k { font-weight: 800; }
+.band-total .band-v { font-family: var(--font-display); font-weight: 600; color: var(--blue);
+  font-size: clamp(1.05rem,0.9rem + 0.7vw,1.45rem); }
+.band-row.total .band-v { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.05rem,0.9rem + 0.7vw,1.45rem); color: var(--blue); }
+.closemark { margin-top: clamp(2.5rem,6vw,4rem); text-align: center; }
+.closemark svg { width: clamp(30px,5vw,42px); height: auto; margin-inline: auto; fill: var(--sky-300); }
+/* ═══ ASCENDING SECTION — What It Costs ═══════════════════════════════════
+   Plate 4's real cloud footage IS the transition and the ground. The drawn SVG
+   clouds that used to live here were built before Plate 4 existed and, sat next
+   to photographic clouds, read as a sticker on a photograph. They are gone.
 
-.sec-head {
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.75rem 1.15rem;
-}
-/* The numeral is a soft solid tint now, not a stroked outline.
-   An outline is a technical drawing convention. */
-.sec-num {
-  font-family: var(--font-body);
-  font-variant-numeric: tabular-nums lining-nums;
-  font-size: clamp(2.25rem, 1.3rem + 3.9vw, 3.9rem);
-  font-weight: 300;
-  line-height: 0.8;
-  color: var(--sky-500);
-  -webkit-text-stroke: 0;
-}
-.sec-title {
-  font-size: var(--text-h2);
-  color: var(--ink);
-}
-.sec-price {
-  margin-left: auto;
-  font-family: var(--font-body);
-  font-variant-numeric: tabular-nums lining-nums;
-  font-size: var(--text-h4);
-  font-weight: 700;
-  color: var(--blue);
-  white-space: nowrap;
-}
-/* A short soft rule that fades out, not a full width hairline with a
-   sweep animation. The sweep was blueprint theater. */
-.sec-rule {
-  height: 3px; margin-top: 1.25rem; border-radius: 999px;
-  background: linear-gradient(90deg, var(--sky-300) 0%, var(--sky-200) 34%, transparent 78%);
-  transform-origin: left;
-  transform: scaleX(0);
-  transition: transform 1400ms var(--ease-satisfying);
-}
-.sec-rule.in-view { transform: scaleX(1); }
-.sec-note {
-  margin-top: 1.4rem; max-width: 60ch;
-  color: var(--ink-soft); font-size: var(--text-lg);
-  line-height: 1.66;
-}
+   Content sits on the SAME cream scrim used on plates 1-3, measured at 7.52:1.
+   Before this it was bare ink on a bright sky and it washed out. */
+.sec--cream { position: relative; overflow: hidden; isolation: isolate;
+  background: var(--cream); padding-top: clamp(3rem, 8vw, 5.5rem); }
 
-/* ── ELEMENT 7: THE FOUR ENGINES ───────────────────────────────
-   Was a 1px hairline grid with a hard 3px spine on each card.
-   Now four soft cards with a rounded accent bar that grows in. */
-.eng {
-  margin-top: clamp(2rem, 5vw, 3rem);
-  display: grid; grid-template-columns: repeat(2, 1fr);
-  gap: clamp(0.8rem, 2vw, 1.25rem);
-}
-.eng-card {
-  position: relative;
-  background: var(--white);
-  border-radius: var(--r-md);
-  box-shadow: var(--sh-1);
-  padding: clamp(1.5rem, 3.2vw, 2.1rem);
-  overflow: hidden;
-  transition: box-shadow 600ms var(--ease-soft), transform 600ms var(--ease-settle);
-}
-.eng-card::before {
-  content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 4px;
-  border-radius: 0 999px 999px 0;
-  background: var(--sky-300);
-  transform: scaleY(0); transform-origin: top;
-  transition: transform 900ms var(--ease-satisfying),
-              background 600ms var(--ease-soft);
-}
-.eng-card.in-view::before { transform: scaleY(1); }
-.eng-card:hover { box-shadow: var(--sh-sky); transform: translateY(-3px); }
-.eng-card:hover::before { background: var(--sage); }
-/* The engine index moved from a 0.68rem label above the heading to a large
-   editorial numeral in the top right corner. Section 1 was four inert
-   boxes with no visual anchor, and it is the first thing read after the
-   hero. Set in sky-500, the palest tone that clears 3:1 for large text,
-   so it stays decorative without failing contrast. */
-.eng-n {
-  display: block; text-align: right; margin-bottom: 0.15rem;
-  font-family: var(--font-body);
-  font-variant-numeric: tabular-nums lining-nums;
-  font-size: clamp(1.9rem, 1.1rem + 2.4vw, 2.9rem);
-  font-weight: 200; line-height: 1; letter-spacing: -0.02em;
-  color: var(--sky-500);
-}
-/* .eng-h carries its own measured size instead of --text-h3.
-   The type swap to Fraunces broke this heading: "Management" measured
-   52% / 49% / 47% of the card measure at 350 / 950 / 1000px against the
-   45% ceiling in reference_orphan_glue_relocates_not_fixes. Gluing
-   "Care Management" turned the WIDOW into an INTERIOR, which is the
-   documented failure mode: glue relocates, it does not fix. An INTERIOR
-   is a SIZING defect, so the size is what changed.
-   Slope solved from the measurements, then eased again: the first
-   solve landed on exactly 45.0% at 350 and 950px, which is zero
-   headroom and breaks on the next font metric shift. Retuned to sit
-   near 42% at every width.
-     350px  -> 16.8px, longest word 42%
-     950px  -> 23.5px, longest word 42%
-     1400px -> 28.6px, longest word 42%
-   The tight band is 950 to 1000px, where the grid is 2-up but the
-   page is still narrow. */
-.eng-h {
-  margin-top: 0;
-  font-size: clamp(1.05rem, 0.804rem + 1.124vw, 1.7875rem);
-  color: var(--ink);
-}
-.eng-geo {
-  margin-top: 0.45rem;
-  font-size: 0.66rem; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--ink-faint);
-}
-.eng-one {
-  margin-top: 1rem; padding-top: 1rem;
-  border-top: 1px solid var(--line-soft);
-  font-size: 0.98rem; color: var(--ink-soft); line-height: 1.6;
-}
+/* the sky rises into frame off the back of Plate 3 */
+.cost-sky { position: absolute; inset: 0; z-index: 0; overflow: hidden;
+  /* The clouds have to meet Plate 3 at the seam. A long transparent lead-in
+     left a white gap that read as a gap, not a bridge. */
+  -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.55) 0, #000 4%, #000 88%, transparent 100%);
+          mask-image: linear-gradient(180deg, rgba(0,0,0,0.55) 0, #000 4%, #000 88%, transparent 100%); }
+/* phone / reduced-motion fallback: one still, no video */
+.sec--cream[data-film="still"] .cost-sky {
+  background: url("cost-sky-mobile.jpg") center/cover no-repeat; }
+.sec--cream[data-film="still"] .cost-film { display: none; }
+.cost-film { width: 100%; height: 100%; object-fit: cover; opacity: 0;
+  transform: translateY(var(--sky-y, 0px)) scale(1.08);
+  transition: opacity 0.9s ease; }
+.sec--cream[data-film="on"] .cost-film { opacity: 1; }
 
-/* ── THE SPRINT LADDER (SIGNATURE, NET-NEW 2026-08-15) ─────────
-   Nothing in ag-components draws a cadence, so this is net-new with a
-   written reason. Everything else on this page is lifted.
+/* a soft warm wash so the type has something to sit on even at the brightest
+   part of the footage */
+.sec--cream::after { content: ""; position: absolute; inset: 0; z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(253,248,242,0.30) 0%, rgba(253,248,242,0.10) 30%,
+                                       rgba(253,248,242,0.10) 70%, rgba(253,248,242,0.55) 100%); }
 
-   Why it exists: "How It Runs" is the actual product and it was three
-   small boxes carrying 0.95rem gray text. The mechanic is a SHAPE, and
-   drawing it says in one glance what four sentences could not:
-     7 groups           = 7 sprints
-     2 marks per group  = 2 ads head to head
-     14 marks total     = 14 creatives
-     the track          = 28 days
-   Every number in it is Service Scope Section 1, verbatim. */
-.ladder {
-  margin-top: clamp(2.25rem, 5vw, 3.25rem);
-  /* Dot size and top pad are tokens so the rail can be positioned at the
-     exact dot center line rather than guessed. */
-  --dot: 13px;
-  --lad-pad: clamp(1.5rem, 3vw, 2.1rem);
-}
-.lad-scale {
-  display: flex; justify-content: space-between;
-  font-size: 0.64rem; letter-spacing: 0.22em;
-  text-transform: uppercase; color: var(--ink-faint);
-  margin-bottom: 0.9rem;
-}
-.lad-track {
-  position: relative;
-  display: grid; grid-template-columns: repeat(7, 1fr);
-  padding-top: var(--lad-pad);
-  padding-bottom: 0.3rem;
-}
-/* The 28 day rail, drawn THROUGH the dot centers. Sitting the marks above
-   the line made them read as 14 loose dots with a rule underneath; on the
-   line they read as sprints landing on a timeline. */
-.lad-track::before {
-  content: ""; position: absolute; left: 0; right: 0;
-  top: calc(var(--lad-pad) + (var(--dot) / 2));
-  height: 2px; border-radius: 999px;
-  background: linear-gradient(90deg, var(--sky-200), var(--sky-300) 50%, var(--sky-200));
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 1400ms var(--ease-satisfying);
-}
-.ladder.in-view .lad-track::before { transform: scaleX(1); }
+.sec--cream .shell { position: relative; z-index: 2; }
 
-.lad-sprint {
-  position: relative; display: grid; justify-items: center; gap: 0.55rem;
+/* every block on the cream scrim, same as the plates */
+.sec--cream .sec-head,
+.sec--cream .sec-note,
+.sec--cream .deliv,
+.sec--cream .band,
+.sec--cream .terms-wrap {
+  background: var(--scrim); backdrop-filter: blur(16px) saturate(115%);
+  -webkit-backdrop-filter: blur(16px) saturate(115%);
+  border: 1px solid rgba(255,255,255,0.55); border-radius: 16px;
+  padding: clamp(1rem,2.4vw,1.6rem) clamp(1.15rem,2.8vw,2rem);
+  max-width: 46rem; margin-inline: auto;
 }
-.lad-pair { display: flex; gap: 7px; }
-.lad-pair i {
-  display: block; width: var(--dot); height: var(--dot); border-radius: 50%;
-  background: var(--sky-400);
-  box-shadow: 0 0 0 4px var(--white);
-  opacity: 0; transform: scale(0.4);
-  transition: opacity 600ms var(--ease-settle), transform 600ms var(--ease-snap);
-}
-.sec--band .lad-pair i { box-shadow: 0 0 0 4px var(--sky-50); }
-/* Pairs land left to right, one sprint at a time, after the track draws.
-   7 x 126ms = 882ms, inside the AG stagger band. */
-.ladder.in-view .lad-pair i { opacity: 1; transform: scale(1); }
-.lad-sprint:nth-child(1) .lad-pair i { transition-delay: 300ms; }
-.lad-sprint:nth-child(2) .lad-pair i { transition-delay: 426ms; }
-.lad-sprint:nth-child(3) .lad-pair i { transition-delay: 552ms; }
-.lad-sprint:nth-child(4) .lad-pair i { transition-delay: 678ms; }
-.lad-sprint:nth-child(5) .lad-pair i { transition-delay: 804ms; }
-.lad-sprint:nth-child(6) .lad-pair i { transition-delay: 930ms; }
-.lad-sprint:nth-child(7) .lad-pair i { transition-delay: 1056ms; }
-.lad-lab {
-  font-family: var(--font-body);
-  font-variant-numeric: tabular-nums lining-nums;
-  font-size: 0.62rem; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--ink-faint);
-}
-.lad-note {
-  margin-top: 0.6rem; text-align: center;
-  font-size: 0.64rem; letter-spacing: 0.22em;
-  text-transform: uppercase; color: var(--ink-faint);
-}
+/* THIS SECTION IS NO LONGER ON PLAIN CREAM. It moved onto Plate 4's sky on
+   2026-08-18 and its panels are scrims, so it takes the -plate twins, not the
+   -ink ones. The color it used to carry, #0076BB, measured 2.64:1 against
+   these scrims, which is below even the 3.0 large-text floor. */
+.sec--cream .sec-head { position: relative; padding-bottom: 0.9rem; border-bottom: 0; }
+.sec--cream .sec-head::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 2px; background: var(--grad-brand); }
+.sec--cream .sec-num { color: var(--blue-plate); }
+.sec--cream .sec-price { color: var(--blue-plate); font-weight: 600; }
+.sec--cream .deliv-h { color: var(--blue-plate); letter-spacing: 0.22em; }
+.sec--cream .deliv-k, .sec--cream .led-k, .sec--cream .band-k { color: var(--blue-plate); }
+.sec--cream .deliv-row, .sec--cream .led-row { border-top-color: rgba(20,80,132,0.20); }
+/* the number they are actually buying */
+.sec--cream .band-total .band-v { color: var(--blue-plate); }
+.sec--cream .band-row.total .band-v { color: var(--blue-plate); }
+.sec--cream .sec-note { margin-top: 0.9rem; }
+.sec--cream .deliv, .sec--cream .band { margin-top: clamp(1rem,2.4vw,1.5rem); }
+.sec--cream .terms-wrap { margin-top: clamp(1rem,2.4vw,1.5rem); }
+.sec--cream .sec-rule { display: none; }
 
-/* THE FIGURES. These are the proof and they were set at 0.95rem inside
-   boxes. Now they carry the same weight as the price. */
-.figs {
-  margin-top: clamp(2rem, 4.5vw, 3rem);
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: clamp(0.7rem, 1.8vw, 1.1rem);
+.rise {
+  opacity: 0;
+  transform: translateY(90px) scale(0.94);
+  filter: blur(10px);
+  transition: opacity 1.4s cubic-bezier(0.16,1,0.3,1),
+              transform 1.4s cubic-bezier(0.16,1,0.3,1),
+              filter 1.4s cubic-bezier(0.16,1,0.3,1);
 }
-.fig {
-  background: var(--white);
-  border-radius: var(--r-md);
-  box-shadow: var(--sh-1);
-  padding: clamp(1.3rem, 2.8vw, 1.8rem) clamp(0.9rem, 2vw, 1.3rem);
-  text-align: center;
-}
-.fig-n {
-  display: block;
-  font-family: var(--font-body);
-  font-variant-numeric: tabular-nums lining-nums;
-  font-size: clamp(2.9rem, 1.6rem + 5vw, 4.75rem);
-  font-weight: 200; line-height: 0.94; letter-spacing: -0.03em;
-  color: var(--blue);
-}
-.fig-l {
-  display: block; margin-top: 0.65rem;
-  font-size: 0.68rem; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--ink-faint);
-}
+.rise.is-up { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+/* each block lands after the one above it, so the section assembles upward */
+.rise:nth-of-type(1).is-up { transition-delay: 0s; }
+.rise:nth-of-type(2).is-up { transition-delay: 0.14s; }
+.rise:nth-of-type(3).is-up { transition-delay: 0.21s; }
+.rise:nth-of-type(4).is-up { transition-delay: 0.3s; }
+.rise:nth-of-type(5).is-up { transition-delay: 0.3s; }
 
-/* ── THE CLOSING MARK ──────────────────────────────────────────
-   The page used to end on "Minimum term, 3 months" and then stop.
-   Their own mark returns once, quietly, so the deck closes instead
-   of running out. */
-.closemark { margin-top: clamp(3rem, 8vw, 5rem); text-align: center; }
-.closemark svg { width: 54px; margin-inline: auto; }
-.closemark path {
-  fill: none; stroke: var(--sky-300); stroke-width: 5;
-  stroke-linejoin: round; stroke-linecap: round;
-  stroke-dasharray: 640; stroke-dashoffset: 640;
-  transition: stroke-dashoffset 2100ms var(--ease-soft);
+/* the rows inside each panel come in behind it, so the panel does not arrive
+   as one flat slab */
+.rise .deliv-row, .rise .band-row, .rise .led-row {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+              transform 0.7s cubic-bezier(0.16,1,0.3,1);
 }
-.closemark.in-view path { stroke-dashoffset: 0; }
+.rise.is-up .deliv-row, .rise.is-up .band-row, .rise.is-up .led-row {
+  opacity: 1; transform: translateY(0);
+}
+.rise.is-up .deliv-row:nth-child(2), .rise.is-up .band-row:nth-child(2), .rise.is-up .led-row:nth-child(2) { transition-delay: 0.21s; }
+.rise.is-up .deliv-row:nth-child(3), .rise.is-up .band-row:nth-child(3), .rise.is-up .led-row:nth-child(3) { transition-delay: 0.3s; }
+.rise.is-up .deliv-row:nth-child(4), .rise.is-up .band-row:nth-child(4), .rise.is-up .led-row:nth-child(4) { transition-delay: 0.42s; }
+.rise.is-up .deliv-row:nth-child(5), .rise.is-up .band-row:nth-child(5), .rise.is-up .led-row:nth-child(5) { transition-delay: 0.6s; }
+.rise.is-up .deliv-row:nth-child(6), .rise.is-up .band-row:nth-child(6) { transition-delay: 0.7s; }
+.rise.is-up .deliv-row:nth-child(7), .rise.is-up .band-row:nth-child(7) { transition-delay: 0.9s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .ladder.in-view .lad-track::before { transition: none; transform: scaleX(1); }
-  .ladder .lad-pair i { transition: none !important; opacity: 1; transform: none; }
-  .closemark path { transition: none; stroke-dashoffset: 0; }
+  .rise { opacity: 1; transform: none; filter: none; transition: none; }
+  .cost-film { transform: none; }
 }
 
-/* ── ELEMENT 9: THE RHYTHM ─────────────────────────────────────
-   Reporting cadence, AG ADS-DNA section 8. Four soft cards. */
-.rhythm {
-  margin-top: clamp(1.6rem, 3.5vw, 2.2rem);
-  /* 3 up, not 4. The Service Scope states three reporting rhythms. */
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: clamp(0.7rem, 1.8vw, 1.05rem);
-}
-.rh-cell {
-  background: var(--white);
-  border-radius: var(--r-md);
-  box-shadow: var(--sh-1);
-  padding: clamp(1.05rem, 2.4vw, 1.45rem);
-}
-.rh-when {
-  font-family: var(--font-display);
-  font-variation-settings: "SOFT" 70, "WONK" 1;
-  font-weight: 500; font-size: var(--text-h4); color: var(--blue);
-}
-.rh-what { margin-top: 0.45rem; font-size: 0.9rem; color: var(--ink-soft); }
+.pagefoot { padding: clamp(2.5rem,6vw,4rem) 0 clamp(3rem,7vw,5rem); text-align: center; color: var(--ink-faint); font-size: 0.88rem; }
+.pagefoot svg { width: 14px; fill: var(--sky-400); }
 
-.honest {
-  margin-top: clamp(2rem, 5vw, 3rem);
-  padding: clamp(1.2rem, 3vw, 1.7rem) clamp(1.3rem, 3vw, 1.9rem);
-  border-radius: var(--r-md);
-  background: var(--sky-50);
-  box-shadow: inset 4px 0 0 var(--sky-300);
-  color: var(--ink-soft);
-  font-size: 0.96rem; line-height: 1.66;
-  max-width: 66ch;
-}
-.sec--band .honest { background: var(--white); }
-.honest b { color: var(--ink); font-weight: 700; }
+/* ===== AG Motion v2.5 ==================================================== */
+.reveal, .reveal-stagger > * { opacity: 0; transform: translateY(21px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+.reveal.is-in, .reveal-stagger.is-in > * { opacity: 1; transform: translateY(0); }
+.reveal-stagger.is-in > *:nth-child(2) { transition-delay: 0.09s; }
+.reveal-stagger.is-in > *:nth-child(3) { transition-delay: 0.18s; }
+.reveal-stagger.is-in > *:nth-child(4) { transition-delay: 0.27s; }
+.reveal-stagger.is-in > *:nth-child(5) { transition-delay: 0.36s; }
+.reveal-stagger.is-in > *:nth-child(6) { transition-delay: 0.45s; }
+.reveal-stagger.is-in > *:nth-child(7) { transition-delay: 0.54s; }
+@media (prefers-reduced-motion: reduce) { .reveal, .reveal-stagger > * { opacity: 1; transform: none; } }
 
-/* ── ELEMENT 10: WHAT WE BUILD, AND WHAT IT COSTS ──────────────
-   Ledgers keep their hairline row separators because a list of
-   rows genuinely is a list of rows, but the containers around
-   them are soft. */
-.deliv { margin-top: clamp(2rem, 5vw, 3rem); }
-.deliv-h {
-  font-size: 0.66rem; letter-spacing: 0.24em;
-  text-transform: uppercase; color: var(--ink-faint);
-  padding-bottom: 0.85rem;
-}
-.deliv-row {
-  display: grid; grid-template-columns: 1fr 1.6fr;
-  gap: 0.35rem 1.5rem;
-  padding: 1rem 1.1rem;
-  border-radius: var(--r-sm);
-  transition: background 400ms var(--ease-soft);
-}
-.deliv-row + .deliv-row { box-shadow: inset 0 1px 0 var(--line-soft); }
-.deliv-row:hover { background: var(--sky-50); }
-.sec--cream .deliv-row:hover { background: var(--cream-deep); }
-.deliv-k { font-weight: 700; font-size: 0.94rem; color: var(--ink); }
-.deliv-v { color: var(--ink-soft); font-size: 0.93rem; line-height: 1.6; }
-
-.band {
-  margin-top: clamp(2rem, 5vw, 3rem);
-  border-radius: var(--r-lg);
-  background: var(--white);
-  box-shadow: var(--sh-2);
-  overflow: hidden;
-}
-.band-label {
-  padding: 0.85rem 1.4rem;
-  font-size: 0.64rem; letter-spacing: 0.24em;
-  text-transform: uppercase; color: var(--ink-faint);
-  box-shadow: inset 0 -1px 0 var(--line-soft);
-}
-.band-row {
-  display: flex; flex-wrap: wrap; align-items: baseline;
-  justify-content: space-between; gap: 0.4rem 1.5rem;
-  padding: 1.05rem 1.4rem;
-}
-.band-row + .band-row { box-shadow: inset 0 1px 0 var(--line-soft); }
-.band-k { font-size: 0.95rem; }
-.band-v {
-  font-family: var(--font-body);
-  font-variant-numeric: tabular-nums lining-nums;
-  font-weight: 700; text-align: right;
-}
-.band-row.total {
-  background: linear-gradient(180deg, var(--sky-50), var(--white));
-  padding-block: clamp(1.4rem, 3vw, 2.1rem);
-}
-.band-row.total .band-k { font-weight: 700; font-size: var(--text-lg); }
-.total-v {
-  color: var(--blue);
-  font-size: clamp(1.8rem, 1rem + 3.1vw, 3.35rem);
-  font-weight: 200;
-  letter-spacing: -0.028em;
-  line-height: 1;
-}
-
-.grant {
-  margin-top: clamp(1.6rem, 4vw, 2.2rem);
-  border-radius: var(--r-lg);
-  background: rgba(140, 193, 92, 0.10);
-  box-shadow: inset 4px 0 0 var(--sage);
-  padding: clamp(1.3rem, 3vw, 1.9rem) clamp(1.4rem, 3vw, 2rem);
-}
-.grant-h {
-  font-family: var(--font-display);
-  font-variation-settings: "SOFT" 70, "WONK" 1;
-  font-weight: 500; font-size: var(--text-h4); color: var(--ink);
-}
-.grant-fig {
-  display: block; margin-top: 0.55rem;
-  font-family: var(--font-body);
-  font-variant-numeric: tabular-nums lining-nums;
-  font-size: clamp(1.7rem, 1rem + 2.6vw, 2.7rem);
-  font-weight: 200; line-height: 1; letter-spacing: -0.02em;
-  color: var(--sage-deep);
-}
-.grant-v { margin-top: 0.9rem; color: var(--ink-soft); font-size: 0.95rem; max-width: 62ch; line-height: 1.66; }
-.grant-note {
-  margin-top: 1rem; padding-top: 1rem;
-  box-shadow: inset 0 1px 0 rgba(94, 145, 41, 0.22);
-  font-size: 0.85rem; color: var(--ink-faint); max-width: 62ch; line-height: 1.6;
-}
-
-/* The terms ledger now MIRRORS the Included list exactly: same grid, same
-   key weight, same hover, same separators. It previously used tiny faint
-   uppercase keys, which made the bottom third of the section read as a
-   footnote hanging off the page instead of as the sibling of the list
-   above it. Matching column ratios also means the two lists align down
-   the page, so the Cost card sits between two identical rails. */
-.ledger { margin-top: clamp(2rem, 5vw, 3rem); }
-.led-row {
-  display: grid; grid-template-columns: 1fr 1.6fr;
-  gap: 0.35rem 1.5rem;
-  padding: 1rem 1.1rem;
-  border-radius: var(--r-sm);
-  transition: background 400ms var(--ease-soft);
-}
-.led-row + .led-row { box-shadow: inset 0 1px 0 var(--line-soft); }
-.led-row:hover { background: var(--sky-50); }
-.sec--cream .led-row:hover { background: var(--cream-deep); }
-.led-k { font-weight: 700; font-size: 0.94rem; color: var(--ink); }
-.led-v { color: var(--ink-soft); font-size: 0.93rem; line-height: 1.6; }
-
-.pagefoot {
-  margin-top: clamp(2rem, 5vw, 3rem);
-  padding-block: clamp(2rem, 5vw, 2.75rem);
-  text-align: center;
-}
-.pagefoot p {
-  font-size: 0.68rem; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--ink-faint);
-}
-.pagefoot b { color: var(--blue); font-weight: 700; }
-.sec-glyph { width: 15px; opacity: 0.7; }
-.sec-glyph path { fill: none; stroke: var(--sky-300); stroke-width: 11; }
-
-/* ── ELEMENT 12: MOTION ────────────────────────────────────────
-   The v1 reveal was a 600ms 14px fade-up on an ease-satisfying
-   curve. Correct, and slightly brisk. Warmth here means arriving
-   more slowly and landing more softly, not moving further.
-     duration  600 -> 900ms   (both legal AG DNA values)
-     distance   14 -> 10px    plus a 0.99 scale, so things settle
-                              rather than slide
-     stagger    81 -> 126ms   the top of the legal 63-126ms band
-   These override the canonical ag-motion v2.5 declarations above
-   on purpose, and only the timing values. The recipes, the class
-   names and the single IntersectionObserver are untouched. */
-.reveal {
-  transform: translateY(10px) scale(0.99);
-  transition: opacity 900ms var(--ease-satisfying),
-              transform 900ms var(--ease-satisfying);
-}
-.reveal.in-view { transform: translateY(0) scale(1); }
-.reveal-stagger > * {
-  transform: translateY(10px) scale(0.99);
-  transition: opacity 900ms var(--ease-settle),
-              transform 900ms var(--ease-settle);
-  transition-delay: calc(var(--i, 0) * 126ms);
-}
-.reveal-stagger.in-view > * { transform: translateY(0) scale(1); }
-.reveal-stagger > *:nth-child(n+6) { transition-delay: 630ms; }
-
-/* Cards bloom their shadow in rather than appearing with it. */
-.eng-card, .fig, .rh-cell { box-shadow: 0 0 0 rgba(34,48,58,0); }
-.reveal-stagger.in-view .rh-cell,
-.eng-card.in-view,
-.reveal-stagger.in-view .fig { box-shadow: var(--sh-1); }
-.rh-cell, .fig {
-  transition: box-shadow 1400ms var(--ease-soft), transform 600ms var(--ease-settle);
-}
-.eng-card { transition: box-shadow 1400ms var(--ease-soft), transform 600ms var(--ease-settle); }
-
-/* The fee arrives with one soft blue glow, slower and wider than
-   the v1 gold-style breath. */
-.total-v { transition: text-shadow 1400ms var(--ease-soft); }
-.band.in-view .total-v { animation: skyBreath 2100ms var(--ease-soft) 630ms; }
-@keyframes skyBreath {
-  0%   { text-shadow: 0 0 0 rgba(0, 118, 187, 0); }
-  45%  { text-shadow: 0 6px 34px rgba(0, 118, 187, 0.30); }
-  100% { text-shadow: 0 0 0 rgba(0, 118, 187, 0); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal, .reveal-stagger > * { transition: none !important; transform: none !important; opacity: 1 !important; }
-  .sec-rule { transition: none !important; transform: scaleX(1) !important; }
-  .band.in-view .total-v { animation: none !important; }
-  .eng-card, .fig, .rh-cell { box-shadow: var(--sh-1) !important; }
-}
-
-/* ── RESPONSIVE. Desktop-first, 2 breakpoints, fluid clamp above.
-      §6C literal centering at <=900. ─────────────────────────── */
-@media (max-width: 1000px) {
-  /* The ladder keeps its 7 columns all the way down: the shape IS the
-     information and stacking it destroys the point. Marks and labels
-     shrink instead. */
-  .lad-pair { gap: 4px; }
-  .ladder { --dot: 9px; }
-  .lad-pair i { box-shadow: 0 0 0 3px var(--white); }
-  .lad-lab { font-size: 0.54rem; letter-spacing: 0.08em; }
-  .figs { grid-template-columns: repeat(3, 1fr); }
-  .rhythm { grid-template-columns: repeat(2, 1fr); }
+/* At 350px the chip's 0.2em tracking pushed "Arc Garde . Strategic Growth
+   Partners" onto two lines and widowed "Partners". Gluing would have overflowed
+   the pill (a chip is exactly the tight container glue breaks), so the measure
+   is fixed instead: less tracking and tighter padding buy the ~40px needed. */
+@media (max-width: 620px) {
+  .eyebrow-chip { letter-spacing: 0.1em; padding-inline: 0.55rem; }
 }
 @media (max-width: 900px) {
-  .eng { grid-template-columns: 1fr; }
-
-  /* MOBILE HERO. Every number in this block used to exist to clear the
-     drawn heart: the tall top padding pushed the wordmark below the
-     cleft, and the card's large top margin cleared the bottom point.
-     With the mark removed both were just dead space, so the hero goes
-     back to a normal centered column. */
-  .hero {
-    display: grid;
-    place-items: center;
-    /* align-content packs the two rows together in the middle. Without it
-       the grid distributes them across 100dvh and drops a dead band
-       between the subline and the card, because on mobile the card is a
-       static grid child rather than absolutely positioned. */
-    align-content: center;
-    min-height: 100dvh;
-    padding-block: clamp(4.5rem, 14vw, 6.5rem);
-  }
-  .hero .shell { text-align: center; }
-
-  .hellocard {
-    position: static;
-    width: min(286px, 84vw);
-    margin: clamp(2.25rem, 7vw, 3.25rem) auto 0;
-  }
-
+  .sub-card, .hc { margin-inline: auto; }
+  .eng-grid { grid-template-columns: 1fr; max-width: 30rem; }
+  .run-panel .figs, .run-panel .rhythm { grid-template-columns: 1fr; }
+  .figs, .rhythm { grid-template-columns: 1fr; }
+  .lad-track { grid-template-columns: repeat(4,1fr); row-gap: 0.6rem; }
+  .lad-note { text-align: center; }
   .sec-head { justify-content: center; text-align: center; }
-  .sec-price { margin-left: 0; width: 100%; text-align: center; }
-  .sec-rule { transform-origin: center; }
+  .sec-price { margin-left: 0; width: 100%; }
   .sec-note { margin-inline: auto; text-align: center; }
-  .honest {
-    margin-inline: auto; text-align: center;
-    box-shadow: inset 0 4px 0 var(--sky-300);
-  }
-
-  .deliv-row, .led-row {
-    grid-template-columns: 1fr;
-    justify-items: center; text-align: center;
-  }
-
-  /* Cost rows stack and center like everything else at <=900. Left as a
-     space-between flex they behaved differently per row: short values sat
-     inline, long ones wrapped and right-aligned, stranding "to Meta" on
-     its own line. */
-  .band-row {
-    flex-direction: column; align-items: center;
-    text-align: center; gap: 0.3rem;
-  }
-  .band-v { text-align: center; }
-
-  .eng-card { text-align: center; }
-  .eng-n { text-align: center; margin-bottom: 0.35rem; }
-  .eng-card::before {
-    top: 0; left: 14px; right: 14px; bottom: auto; width: auto; height: 4px;
-    border-radius: 0 0 999px 999px;
-    transform: scaleX(0); transform-origin: left;
-  }
-  .eng-card.in-view::before { transform: scaleX(1); }
-
-  /* §6C literal centering for the process components. */
-  .rh-cell, .fig { text-align: center; }
-  .rh-what { margin-inline: auto; max-width: 40ch; }
-  .grant {
-    text-align: center;
-    box-shadow: inset 0 4px 0 var(--sage);
-  }
-  .grant-v, .grant-note { margin-inline: auto; }
-}
-@media (max-width: 520px) {
-  .sec--band, .sec--cream { border-radius: var(--r-lg); }
+  /* the card rule flips from the left edge to the top */
+  .eng-card::before { inset: 0 0 auto 0; width: auto; height: 3px; }
+  .rh-cell { border-left: 0; border-top: 3px solid var(--rh); border-radius: 0 0 10px 10px; text-align: center; }
+  .deliv-row, .led-row, .band-row { grid-template-columns: 1fr; gap: 0.2rem; text-align: center; }
 }
 </style>
 </head>
 <body>
 
-<a class="ag-skip-link" href="#main">Skip to content</a>
-
-<!-- ═══ HERO - no header bar, no loading curtain (presentation law) ═══ -->
-<header class="hero">
-  <!-- THE HEART. Drawn, not placed. 2100ms stroke, then a 4.5% warm fill.
-       Their own mark, built on the blueprint grid behind the type. -->
-
-<!-- WARM PASS: the dimension line and the four corner registration marks
-     were removed with the grid. They were the same drawing language and
-     keeping them would have left the page half blueprint. -->
-
-  <div class="shell">
-    <div class="mast-brand hero-arrive hero-d0">Arc Garde</div>
-    <div class="mast-tag hero-arrive hero-d1">Strategic Growth Partners</div>
-
-    <h1 class="hero-arrive hero-d2">Paid Media for A&nbsp;Greater&nbsp;Hope</h1>
-
-    <!-- APPROVED COPY, dropped in 2026-08-15. Written in Claude UI and
-         supplied by Quinten, per the copy wall
-         (feedback_no_copy_or_engagement_letters_in_claude_code).
-         The nbsp glue on "dollar lands" came with the approved line. -->
-    <p class="hero-sub hero-arrive hero-d3">One clear answer for where every dollar&nbsp;lands.</p>
-
+<!-- AG Curtain v2.5, lifted from ag-components. Present by exception: the
+     presentation format law says no loading screen, and Quinten overrode it on
+     2026-08-18 because a video-led stage that pops in half-loaded is worse.
+     The emblem slot carries A Greater Hope's own heart mark. -->
+<div class="ag-curtain" role="status" aria-live="polite" aria-label="Loading the presentation">
+  <div class="ag-curtain-slot">
+    <!-- The real mark, not a stand-in. The slot was carrying a generic heart
+         path drawn from the stock line-art pattern; this is A Greater Hope's
+         own badge, cut off its black plate to a transparent alpha (the source
+         is RGB, so the black had to be removed or it would have shown as a
+         square on the curtain ground). -->
+    <div class="ag-curtain-emblem ag-curtain-emblem--mark">
+      <picture>
+        <source srcset="agh-logo-256.webp" type="image/webp">
+        <img src="agh-logo-256.png" alt="" width="256" height="256" decoding="async" fetchpriority="high">
+      </picture>
+    </div>
+    <div class="ag-curtain-sweep" aria-hidden="true"></div>
+    <div class="ag-curtain-load">
+      <span class="ag-curtain-load__label">Loading</span>
+      <span class="ag-curtain-load__bar" aria-hidden="true"><i></i></span>
+    </div>
   </div>
+</div>
 
-  <!-- Was an architect's title block with five rows including a sheet
-       count. Now a soft card with three. A proposal does not need a
-       sheet count, and "say the least amount of things" applies here too. -->
-  <div class="hellocard hero-arrive hero-d4">
-    <div class="hc-row"><span class="hc-k">For</span><span class="hc-v blue">A Greater&nbsp;Hope</span></div>
-    <div class="hc-row"><span class="hc-k">From</span><span class="hc-v">Arc Garde, Long&nbsp;Beach&nbsp;CA</span></div>
-    <div class="hc-row"><span class="hc-k">Date</span><span class="hc-v num">August 2026</span></div>
-  </div>
+<a class="skip" href="#main">Skip to content</a>
 
-  <div class="chev hero-arrive hero-d4" aria-hidden="true">
-    <span class="chev-lab">Scroll</span>
-    <span class="chev-stack"><i></i><i></i><i></i></span>
-  </div>
-</header>
+<!-- No header bar. Presentation law. -->
+
+<div class="hybrid-stage" id="stage" data-hybrid-stage
+     data-stage-config='{"stepPx":900,"restStepPx":300,"settleMs":140,"textDuringScrub":false}'
+     aria-label="A Greater Hope paid media presentation, scroll to advance">
+
+  <!-- ── REST A · Plate 1 · THE HERO ─────────────────────────────────────── -->
+  <section class="hseg" data-segment='{"kind":"rest","videoBase":"loops/agh-fg1-restA-loop","dwellPx":300}'>
+    <video muted loop playsinline preload="auto" aria-hidden="true"></video>
+    <div class="hseg-text" data-seg-text>
+      <div>
+        <!-- Their mark, on their presentation. Not a header bar: it sits inside
+             the hero content block, which presentation law leaves alone. -->
+        <picture class="hero-mark">
+          <source srcset="agh-logo-256.webp" type="image/webp">
+          <img src="agh-logo-256.png" alt="A Greater Hope" width="256" height="256" decoding="async">
+        </picture>
+        <span class="eyebrow-chip">Arc Garde &middot; Strategic Growth Partners</span>
+        <h1 class="lead">Paid Media For A&nbsp;Greater&nbsp;Hope</h1>
+        <p class="sub-card">One clear answer for where every dollar&nbsp;lands.</p>
+        <div class="hc">
+          <div class="hc-row"><span class="hc-k">For</span><span class="hc-v blue">A Greater&nbsp;Hope</span></div>
+          <div class="hc-row"><span class="hc-k">From</span><span class="hc-v">Arc Garde, Long&nbsp;Beach&nbsp;CA</span></div>
+          <div class="hc-row"><span class="hc-k">Date</span><span class="hc-v num">August 2026</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SCRUB 1 · Plate 1 → Plate 2 ─────────────────────────────────────── -->
+  <section class="hseg" style="--ox:53%" data-segment='{"kind":"scrub","framesPath":"frames-scrub1/frame_%04d.webp","count":298,"width":1280,"height":720,"mobile":{"framesPath":"frames-scrub1-mobile/frame_%04d.webp","count":43,"width":640,"height":360}}'>
+    <canvas aria-hidden="true"></canvas>
+  </section>
+
+  <!-- ── REST B · Plate 2 · WHAT WE DO ───────────────────────────────────── -->
+  <section class="hseg" style="--ox:56%" data-segment='{"kind":"rest","videoBase":"loops/agh-fg3-restB-loop","dwellPx":500}'>
+    <video muted loop playsinline preload="auto" aria-hidden="true"></video>
+    <div class="hseg-text" data-seg-text>
+      <div>
+        <span class="eyebrow-chip">1 &middot; What We Do</span>
+        <p class="lead">4 Engines</p>
+        <div class="eng-grid">
+          <div class="eng-card">
+            <span class="n num">01</span>
+            <h3>Enhanced Care Management</h3>
+            <p class="geo">Riverside and San Bernardino</p>
+            <p class="one">Free care navigation for Medi&#8209;Cal members. English and&nbsp;Spanish.</p>
+          </div>
+          <div class="eng-card">
+            <span class="n num">02</span>
+            <h3>Resource and Adoptive Families</h3>
+            <p class="geo">California and Clark County</p>
+            <p class="one">Recruitment built for a long decision, not a same&#8209;day&nbsp;click.</p>
+          </div>
+          <div class="eng-card">
+            <span class="n num">03</span>
+            <h3>Hiring and Internships</h3>
+            <p class="geo">4 offices</p>
+            <p class="one">1 tracked destination per&nbsp;role.</p>
+          </div>
+          <div class="eng-card">
+            <span class="n num">04</span>
+            <h3>Giving and Events</h3>
+            <p class="geo">7 events a year</p>
+            <p class="one">Built around the calendar you already&nbsp;run.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SCRUB 2 · Plate 2 → Plate 3 ─────────────────────────────────────── -->
+  <section class="hseg" style="--ox:56%" data-segment='{"kind":"scrub","framesPath":"frames-scrub2/frame_%04d.webp","count":298,"width":1280,"height":720,"mobile":{"framesPath":"frames-scrub2-mobile/frame_%04d.webp","count":43,"width":640,"height":360}}'>
+    <canvas aria-hidden="true"></canvas>
+  </section>
+
+  <!-- ── REST C · Plate 3 · 2 HOW IT RUNS ────────────────────────────────
+       Moved onto the plate 2026-08-18. Plate 3 is the calmest frame in the set,
+       which is the right bed for the densest block of content. The echo line
+       that used to sit here is gone: the hero already carries it, and a second
+       showing was costing a state that section 2 needs more. ─────────────── -->
+  <section class="hseg" style="--ox:56%" data-segment='{"kind":"rest","videoBase":"loops/agh-fg5-restC-loop","dwellPx":700}'>
+    <video muted loop playsinline preload="auto" aria-hidden="true"></video>
+    <div class="hseg-text" data-seg-text>
+      <div>
+        <span class="eyebrow-chip">2 &middot; How It Runs</span>
+        <p class="lead">This Is The Engine</p>
+        <p class="lead-sub">It does not&nbsp;stop.</p>
+
+        <div class="run-panel">
+          <div class="ladder">
+            <div class="lad-scale" aria-hidden="true"><span>Day 1</span><span>Day 28</span></div>
+            <div class="lad-track" role="img" aria-label="Seven sprints of two ads head to head across twenty eight days, fourteen creatives in total">
+              <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">1</span></div>
+              <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">2</span></div>
+              <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">3</span></div>
+              <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">4</span></div>
+              <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">5</span></div>
+              <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">6</span></div>
+              <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">7</span></div>
+            </div>
+            <p class="lad-note">2 ads head to head, every sprint. Then it repeats.</p>
+          </div>
+
+          <div class="figs">
+            <div class="fig"><span class="fig-n num">14</span><span class="fig-l">Creatives</span></div>
+            <div class="fig"><span class="fig-n num">7</span><span class="fig-l">Sprints</span></div>
+            <div class="fig"><span class="fig-n num">28</span><span class="fig-l">Days</span></div>
+          </div>
+
+          <div class="rhythm">
+            <div class="rh-cell"><div class="rh-when">Daily</div><p class="rh-what">In depth&nbsp;tracking</p></div>
+            <div class="rh-cell"><div class="rh-when">Every 4 Days</div><p class="rh-what">While&nbsp;testing</p></div>
+            <div class="rh-cell"><div class="rh-when">Every 7 Days</div><p class="rh-what">Once there is a&nbsp;winner</p></div>
+          </div>
+
+          <p class="honest-line"><b>We do not forecast results.</b> Any number quoted before launch is a guess wearing a decimal&nbsp;point.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hstage-rail" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+</div>
 
 <main id="main">
 
-
-  <!-- ═══ 1 · WHAT WE DO ═══════════════════════════════════════════════════
-       Presentation law: WHAT we do, never the prospect's problem.
-       Four engines, mapped to four real A Greater Hope programs.
-  ═══════════════════════════════════════════════════════════════════════ -->
-  <section class="sec sec--band" aria-labelledby="sec-1">
-    <div class="shell">
-      <div>
-        <div class="sec-head reveal-stagger">
-          <span class="sec-num num">1</span>
-          <h2 class="sec-title" id="sec-1">What We Do</h2>
-        </div>
-        <div class="sec-rule"></div>
-        <p class="sec-note reveal">4 engines.<span class="ag-break"></span>Separate campaign, separate page, separate line on the report.</p>
-      </div>
-
-      <!-- 2026-08-14 PROCESS PASS. Was 4 cards x 4 bullets = 16 bullets.
-           Quinten: "say the least amount of things". One line each now.
-           The detail did not get deleted, it moved into the process sections
-           below, where it is shown as a mechanic instead of listed as a claim. -->
-      <div class="eng">
-        <div class="eng-card reveal">
-          <span class="eng-n num">01</span>
-          <h3 class="eng-h">Enhanced Care Management</h3>
-          <p class="eng-geo">Riverside and San Bernardino</p>
-          <p class="eng-one">Free care navigation for Medi&#8209;Cal members. English and&nbsp;Spanish.</p>
-        </div>
-
-        <div class="eng-card reveal">
-          <span class="eng-n num">02</span>
-          <h3 class="eng-h">Resource and Adoptive Families</h3>
-          <p class="eng-geo">California and Clark County</p>
-          <p class="eng-one">Recruitment built for a long decision, not a same&#8209;day&nbsp;click.</p>
-        </div>
-
-        <div class="eng-card reveal">
-          <span class="eng-n num">03</span>
-          <h3 class="eng-h">Hiring and Internships</h3>
-          <p class="eng-geo">4 offices</p>
-          <p class="eng-one">1 tracked destination per&nbsp;role.</p>
-        </div>
-
-        <div class="eng-card reveal">
-          <span class="eng-n num">04</span>
-          <h3 class="eng-h">Giving and Events</h3>
-          <p class="eng-geo">7 events a year</p>
-          <p class="eng-one">Built around the calendar you already&nbsp;run.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ 2 · HOW IT RUNS ══════════════════════════════════════════════════ -->
-  <section class="sec" aria-labelledby="sec-2">
-    <div class="shell">
-      <div>
-        <div class="sec-head reveal-stagger">
-          <span class="sec-num num">2</span>
-          <h2 class="sec-title" id="sec-2">How It Runs</h2>
-        </div>
-        <div class="sec-rule"></div>
-        <p class="sec-note reveal">This is the engine.<span class="ag-break"></span>It does not stop.</p>
-      </div>
-
-      <!-- THE LOOP. The AG creative testing protocol, drawn.
-           SOURCE CORRECTED 2026-08-15. This previously carried the internal
-           media-buying protocol from AG ADS-DNA section 5 (25 to 30 ads at
-           launch, 1 to 3 winners). That is not the service AG sells. The
-           ruling source is the Arc Garde Service Scope, July 2026, Section 1,
-           supplied verbatim by Quinten. Every figure below is his wording:
-             Creative: "14 ads per testing cycle."
-             Testing:  "2 ads head to head, 4 days per sprint, 7 sprints per
-                        testing cycle. 14 creatives tested over 28 days time."
-           Nothing here is paraphrased and nothing is inferred. In particular
-           the deck no longer claims what happens to a winning ad, because
-           the Service Scope does not say. -->
-      <!-- THE SPRINT LADDER. Replaced three text boxes on 2026-08-15.
-           7 groups of 2 marks on a 28 day track. Every number is Service
-           Scope Section 1. The shape carries the mechanic; the figures
-           below state it. -->
-      <div class="ladder reveal">
-        <div class="lad-scale" aria-hidden="true"><span>Day 1</span><span>Day 28</span></div>
-        <div class="lad-track" role="img" aria-label="Seven sprints of two ads head to head across twenty eight days, fourteen creatives in total">
-          <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">1</span></div>
-          <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">2</span></div>
-          <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">3</span></div>
-          <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">4</span></div>
-          <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">5</span></div>
-          <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">6</span></div>
-          <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">7</span></div>
-        </div>
-        <p class="lad-note">2 ads head to head, every sprint. Then it repeats.</p>
-      </div>
-
-      <div class="figs reveal-stagger">
-        <div class="fig"><span class="fig-n num"><span class="cnt" data-to="14">14</span></span><span class="fig-l">Creatives</span></div>
-        <div class="fig"><span class="fig-n num"><span class="cnt" data-to="7">7</span></span><span class="fig-l">Sprints</span></div>
-        <div class="fig"><span class="fig-n num"><span class="cnt" data-to="28">28</span></span><span class="fig-l">Days</span></div>
-      </div>
-
-      <!-- The bench block was removed 2026-08-15. "10 to 15 ads always on
-           the bench" comes from AG ADS-DNA, not from the Service Scope, so
-           it is not part of what Arc Garde sells and does not belong on a
-           priced page. -->
-
-      <!-- Reporting cadence, verbatim from Service Scope Section 1:
-           Management: "In depth daily tracking."
-           Reporting:  "Every 4 days while testing. Every 7 days once there
-                        is a winner."
-           Four cells became three because the source states three. -->
-      <div class="rhythm reveal-stagger">
-        <div class="rh-cell"><div class="rh-when">Daily</div><p class="rh-what">In depth&nbsp;tracking</p></div>
-        <div class="rh-cell"><div class="rh-when">Every 4 Days</div><p class="rh-what">While&nbsp;testing</p></div>
-        <div class="rh-cell"><div class="rh-when">Every 7 Days</div><p class="rh-what">Once there is a&nbsp;winner</p></div>
-      </div>
-
-      <div class="honest reveal">
-        <b>We do not forecast results.</b><span class="ag-break"></span>Any number quoted before launch is a guess wearing a decimal&nbsp;point.
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ 3 · WHAT IT COSTS ════════════════════════════════════════════════
-       PRICE LAW. Fixed by Quinten 2026-08-14:
-         $3,700 / month management, $0 setup, $2,500 / month MINIMUM media
-         paid by A Greater Hope directly to Meta.
-       AG never passes media spend through its own accounts.
-  ═══════════════════════════════════════════════════════════════════════ -->
-  <!-- Section 4 runs on the CREAM band, not the sky band. Pure white
-       plus baby blue is a cool palette; one warm band is what stops the
-       page reading icy, and the money page is the right place for it. -->
+  <!-- ═══ 3 · WHAT IT COSTS ═════════════════════════════════════════════════ -->
   <section class="sec sec--cream" aria-labelledby="sec-3">
+    <!-- Plate 4 slots in here once it exists. Muted/loop/playsinline to match
+         the rest loops; hidden until data-film="on" so the section is complete
+         without it. -->
+    <div class="cost-sky" aria-hidden="true">
+      <video class="cost-film" muted loop playsinline preload="none"></video>
+    </div>
     <div class="shell">
-      <div>
-        <div class="sec-head reveal-stagger">
-          <span class="sec-num num">3</span>
-          <h2 class="sec-title" id="sec-3">What It Costs</h2>
-          <span class="sec-price">$<span class="cnt" data-to="3700">3,700</span>&nbsp;/&nbsp;month</span>
-        </div>
-        <div class="sec-rule"></div>
-        <p class="sec-note reveal">1 fixed fee.<span class="ag-break"></span>No setup fee.<span class="ag-break"></span>Ad spend goes straight to Meta, never through&nbsp;us.</p>
+      <div class="sec-head rise">
+        <span class="sec-num num">3</span>
+        <h2 class="sec-title" id="sec-3">What It Costs</h2>
+        <span class="sec-price num">$3,700 management&nbsp;+&nbsp;$2,500 ad&nbsp;spend</span>
       </div>
+      <div class="sec-rule"></div>
+      <p class="sec-note rise">1 fixed fee.<span class="ag-break"></span>No setup fee.<span class="ag-break"></span>Ad spend goes straight to Meta, never through&nbsp;us.</p>
 
-      <!-- 2026-08-14 PROCESS PASS: the seven row "Included Every Month" ledger
-           moved here from section 2 and was cut to six short rows. It belongs
-           beside the price, not beside the engines. -->
-      <div class="deliv reveal-stagger">
+      <div class="deliv rise">
         <div class="deliv-h">Included</div>
         <div class="deliv-row"><span class="deliv-k">Meta</span><span class="deliv-v">Facebook and Instagram. Built, run and optimized&nbsp;daily.</span></div>
         <div class="deliv-row"><span class="deliv-k">Funnel</span><span class="deliv-v">A landing page per engine. Your site is not&nbsp;touched.</span></div>
@@ -1354,45 +649,37 @@ h1, h2, h3, .disp {
         <div class="deliv-row"><span class="deliv-k">Speed to lead</span><span class="deliv-v">We coach whoever answers the&nbsp;phone.</span></div>
       </div>
 
-      <div class="band reveal total">
+      <div class="band rise">
         <div class="band-label">Cost</div>
-        <div class="band-row total"><span class="band-k">Management fee</span><span class="band-v total-v">$3,700&nbsp;/&nbsp;month</span></div>
+        <div class="band-row total"><span class="band-k">Management fee</span><span class="band-v num">$3,700&nbsp;/&nbsp;month</span></div>
         <div class="band-row"><span class="band-k">Setup fee</span><span class="band-v">Waived</span></div>
-        <div class="band-row"><span class="band-k">Ad spend</span><span class="band-v">$2,500&nbsp;/&nbsp;month minimum, paid straight to&nbsp;Meta</span></div>
+        <div class="band-row"><span class="band-k">Ad spend</span><span class="band-v num">$2,500&nbsp;/&nbsp;month minimum, paid straight to&nbsp;Meta</span></div>
         <div class="band-row"><span class="band-k">CRM subscription</span><span class="band-v">Paid directly to the CRM, not&nbsp;us</span></div>
+        <div class="band-row band-total"><span class="band-k">Total monthly</span><span class="band-v num">$6,200&nbsp;/&nbsp;month minimum</span></div>
       </div>
 
-      <!-- The Google Ad Grant block was removed 2026-08-15 on Quinten's
-           instruction: "REmove Google, only meta ads." The Service Scope is
-           Meta only, so selling Google here was an exception with no service
-           definition behind it. The grant is still a real and large lever for
-           a 501(c)(3) and stays documented in AGR-2026-006-AGH section 15 for
-           whenever it becomes its own conversation. -->
-      <div class="deliv-h reveal" style="margin-top:clamp(2rem,5vw,3rem)">Terms</div>
-      <div class="ledger reveal-stagger" style="margin-top:0">
+      <div class="terms-wrap rise">
+        <div class="deliv-h">Terms</div>
         <div class="led-row"><span class="led-k">The CRM</span><span class="led-v">GoHighLevel. The account is yours, in your name, paid direct. We build and run everything inside&nbsp;it.</span></div>
         <div class="led-row"><span class="led-k">You give us</span><span class="led-v">Ad account access, CRM access, 1&nbsp;filming day, sign off, and 1&nbsp;person who answers&nbsp;inquiries.</span></div>
         <div class="led-row"><span class="led-k">You keep</span><span class="led-v">Every account, pixel, page and file. In your name from day&nbsp;1.</span></div>
         <div class="led-row"><span class="led-k">Minimum term</span><span class="led-v">3&nbsp;months.</span></div>
       </div>
 
-      <!-- The closing mark. The page ended on "3 months" and stopped.
-           Their own heart returns once, drawn, so the deck closes. -->
-      <div class="closemark reveal" aria-hidden="true">
+      <div class="closemark rise" aria-hidden="true">
         <svg viewBox="0 0 200 190" focusable="false">
           <path d="M100,180 C40,130 10,95 10,62 C10,32 32,12 58,12 C76,12 92,22 100,38 C108,22 124,12 142,12 C168,12 190,32 190,62 C190,95 160,130 100,180 Z"/>
         </svg>
       </div>
-    </div>
   </section>
 
-
+  <!-- No CTA band. Presentation law. -->
 </main>
 
 <footer class="pagefoot">
   <div class="shell">
     <p>
-      <svg class="sec-glyph" viewBox="0 0 200 190" aria-hidden="true" focusable="false" style="display:inline-block;vertical-align:-2px;margin-right:0.5rem">
+      <svg viewBox="0 0 200 190" aria-hidden="true" focusable="false" style="display:inline-block;vertical-align:-2px;margin-right:0.5rem">
         <path d="M100,180 C40,130 10,95 10,62 C10,32 32,12 58,12 C76,12 92,22 100,38 C108,22 124,12 142,12 C168,12 190,32 190,62 C190,95 160,130 100,180 Z"/>
       </svg>
       Presentation made by <b>Arc Garde</b> &nbsp;&middot;&nbsp; Prepared for A&nbsp;Greater&nbsp;Hope &nbsp;&middot;&nbsp; August&nbsp;2026
@@ -1400,323 +687,157 @@ h1, h2, h3, .disp {
   </div>
 </footer>
 
-<!-- ═══ AG SCROLL (Lenis) + AG MOTION + AG CURSOR - CANONICAL DROP-INS ═══ -->
-<!-- Version PINNED + Subresource Integrity, matching presentations/dental-ads.
-     A floating lenis@1 silently accepts whatever 1.x jsDelivr serves and cannot
-     be SRI-checked. -->
+<script>
+/* Page scroll is suppressed while the stage owns input, and handed back the
+   moment the last rest state is passed. Reduced motion never locks at all.
+
+   LENIS IS HELD OFF THE PLATES. The stage is delta-driven: it reads raw wheel
+   and touch deltas itself. Leaving Lenis running underneath means two things
+   interpreting the same gesture, and its smoothing lands on a surface that
+   does not scroll. It is stopped for the whole stage and started only when the
+   stage releases, so it drives the last section and nothing else.
+
+   lenis.stop()/start() directly rather than AGScroll.lock(), because lock()
+   also pins the body via .is-locked, which would break the stage's own layout.
+   Only the Lenis half of that API is wanted here. */
+(function () {
+  'use strict';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Narrow viewports never enter the delta-driven stage: the engine unstacks and
+  // autoplays instead, so the page must scroll normally. Locking here froze
+  // every phone on the hero.
+  var narrow = window.matchMedia('(max-width: 900px)').matches;
+  var stage = document.getElementById('stage');
+  var rail = stage.querySelectorAll('.hstage-rail i');
+
+  if (!reduced && !narrow) document.documentElement.dataset.stageLocked = 'true';
+
+  function holdLenis() {
+    if (window.lenis && typeof window.lenis.stop === 'function') window.lenis.stop();
+  }
+  function releaseLenis() {
+    if (window.lenis && typeof window.lenis.start === 'function') window.lenis.start();
+  }
+
+  if (!reduced && !narrow) {
+    holdLenis();
+    // ag-scroll boots on DOMContentLoaded; make sure the hold survives it.
+    window.addEventListener('ag:ready', holdLenis);
+    setTimeout(holdLenis, 0);
+  }
+
+  window.addEventListener('ag:hybrid-state', function (e) {
+    rail.forEach(function (el, i) { el.dataset.on = String(i <= e.detail.index); });
+  });
+
+  new MutationObserver(function () {
+    if (stage.dataset.released === 'true') {
+      document.documentElement.dataset.stageLocked = 'false';
+      releaseLenis();
+    }
+  }).observe(stage, { attributes: true, attributeFilter: ['data-released'] });
+})();
+
+/* ═══ ASCENT — What It Costs ══════════════════════════════════════════════
+   The sky drifts DOWN as the section scrolls up, which is what reads as rising
+   through it. Driven off Lenis, the one place on this page it runs. */
+(function () {
+  'use strict';
+  var sec = document.querySelector('.sec--cream');
+  if (!sec) return;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var narrow  = window.matchMedia('(max-width: 900px)').matches;
+
+  if (!reduced) {
+    var ticking = false;
+    function place() {
+      ticking = false;
+      var r = sec.getBoundingClientRect(), vh = window.innerHeight;
+      if (r.bottom < -300 || r.top > vh + 300) return;
+      var t = Math.max(0, Math.min(1, (vh - r.top) / (vh + r.height)));
+      sec.style.setProperty('--sky-y', ((t - 0.5) * 120).toFixed(1) + 'px');
+      sec.dataset.ascent = t.toFixed(3);
+    }
+    function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(place); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    if (window.lenis && window.lenis.on) window.lenis.on('scroll', onScroll);
+    place();
+  }
+
+  var ups = sec.querySelectorAll('.rise');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-up'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    [].forEach.call(ups, function (el) { io.observe(el); });
+  } else {
+    [].forEach.call(ups, function (el) { el.classList.add('is-up'); });
+  }
+  /* Safety net, scoped. Only reveals blocks ACTUALLY in view: a block below the
+     fold keeps its observer and still gets its entrance. The unscoped version
+     of this revealed everything at 2.1s, so by the time anyone scrolled down
+     the animation had already played to an empty room. */
+  setInterval(function () {
+    [].forEach.call(ups, function (el) {
+      if (el.classList.contains('is-up')) return;
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.95 && r.bottom > 0) el.classList.add('is-up');
+    });
+  }, 700);
+
+  /* Phones get a single cloud still instead of the loop. The video is 254KB
+     against a locked 1400KB budget that is already at 1292; the still is a
+     fraction of that and the section still reads as sky rather than blank cream. */
+  if (narrow || reduced) {
+    sec.dataset.film = 'still';
+    return;
+  }
+  var tier = (window.innerWidth * (window.devicePixelRatio || 1)) <= 1280 ? '720' : '1080';
+  var v = sec.querySelector('.cost-film');
+  if (v) {
+    var srcEl = document.createElement('source');
+    srcEl.src = 'loops/agh-fg6-restD-loop-' + tier + 'p.mp4';
+    srcEl.type = 'video/mp4';
+    v.appendChild(srcEl);
+    v.preload = 'auto';
+    v.load();
+    v.addEventListener('canplay', function () {
+      sec.dataset.film = 'on';
+      var pr = v.play(); if (pr && pr.catch) pr.catch(function () {});
+    }, { once: true });
+    // if the video stalls, fall back to the still rather than show blank cream
+    setTimeout(function () { if (sec.dataset.film !== 'on') sec.dataset.film = 'still'; }, 6000);
+  }
+})();
+
+/* ===== AG Motion v2.5 — reveal on intersect, static sections only ======== */
+(function () {
+  'use strict';
+  var targets = document.querySelectorAll('.reveal, .reveal-stagger');
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach(function (el) { el.classList.add('is-in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('is-in');
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.18, rootMargin: '0px 0px -7% 0px' });
+  targets.forEach(function (el) { io.observe(el); });
+})();
+</script>
+<!-- Lenis pinned + SRI, matching the approved deck. AG Scroll v1.2 consumes it
+     at the LOCKED lerp 0.07 and drives the static sections below the stage.
+     It was missing entirely from the first pass of this build. -->
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.min.js"
         integrity="sha384-ClD7pCgIUz5M81HT8aZmMxCsWmfsycmBiwL5gy1pUbdWHvICIbea22N9sTtAFotA"
         crossorigin="anonymous"></script>
-<script>
-/* AG Scroll v1.2 - ag-scroll.js - lifted verbatim */
-(function () {
-  'use strict';
-  var lenis = null;
-  var hasFinePointer = window.matchMedia('(pointer: fine)').matches
-                    && window.matchMedia('(hover: hover)').matches;
-  var reducedMotion  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (window.Lenis && hasFinePointer && !reducedMotion) {
-    lenis = new window.Lenis({
-      lerp: 0.07,
-      smoothWheel: true,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      wheelMultiplier: 1,
-    });
-    var raf = function (time) { lenis.raf(time); requestAnimationFrame(raf); };
-    requestAnimationFrame(raf);
-    window.lenis = lenis;
-  }
-
-  var AGScroll = (function () {
-    let lastScrollY = 0;
-    let scrollDirection = 'down';
-    let accumulatedDelta = 0;
-    const THRESHOLD = 14;
-    function onScroll() {
-      const currentY = window.scrollY;
-      const delta = currentY - lastScrollY;
-      if (Math.sign(delta) !== Math.sign(accumulatedDelta)) { accumulatedDelta = 0; }
-      accumulatedDelta += delta;
-      if (Math.abs(accumulatedDelta) >= THRESHOLD) {
-        const newDirection = accumulatedDelta > 0 ? 'down' : 'up';
-        if (newDirection !== scrollDirection) {
-          scrollDirection = newDirection;
-          window.dispatchEvent(new CustomEvent('ag:scroll-direction', {
-            detail: { direction: scrollDirection, scrollY: currentY }
-          }));
-        }
-        accumulatedDelta = 0;
-      }
-      lastScrollY = currentY;
-    }
-    if (window.lenis) { lenis.on('scroll', onScroll); }
-    else { window.addEventListener('scroll', onScroll, { passive: true }); }
-    return {
-      getDirection: () => scrollDirection,
-      getScrollY: () => lastScrollY,
-      direction: () => scrollDirection,
-      scrollY: () => lastScrollY,
-    };
-  })();
-  window.AGScroll = AGScroll;
-
-  AGScroll.lock = function () {
-    const scrollY = window.scrollY;
-    document.documentElement.style.setProperty('--scroll-y', scrollY + 'px');
-    if (window.lenis) { lenis.stop(); }
-    document.body.classList.add('is-locked');
-  };
-  AGScroll.unlock = function () {
-    document.body.classList.remove('is-locked');
-    const scrollY = parseInt(
-      getComputedStyle(document.documentElement).getPropertyValue('--scroll-y') || '0'
-    );
-    document.documentElement.style.removeProperty('--scroll-y');
-    window.scrollTo(0, scrollY);
-    if (window.lenis) { lenis.start(); }
-  };
-
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', (e) => {
-      const targetId = anchor.getAttribute('href');
-      const target = document.querySelector(targetId);
-      if (!target) return;
-      e.preventDefault();
-      if (window.lenis) {
-        lenis.scrollTo(target, {
-          offset: 0,
-          duration: 0.7,
-          easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
-        });
-      } else {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
-})();
-</script>
-
-<script>
-/* AG Motion v2.5 - ag-motion.js - lifted verbatim, plus .sec-rule and .eng-card
-   in the selector so the drawing rule and the engine spines are driven by the
-   same single IntersectionObserver. */
-(function () {
-  const REVEAL_SELECTOR = '.reveal, .reveal-hero, .reveal-stagger, .reveal-cinematic, .sec-rule, .reveal-title, .eng-card';
-  const REVEAL_THRESHOLD = 0.15;
-  const REVEAL_ROOT_MARGIN = '0px 0px -10% 0px';
-
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll(REVEAL_SELECTOR).forEach(el => { el.classList.add('in-view'); });
-    return;
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: REVEAL_THRESHOLD, rootMargin: REVEAL_ROOT_MARGIN });
-
-  document.querySelectorAll('.reveal-stagger').forEach(group => {
-    Array.from(group.children).forEach((child, i) => { child.style.setProperty('--i', i); });
-  });
-
-  document.querySelectorAll(REVEAL_SELECTOR).forEach(el => { observer.observe(el); });
-})();
-</script>
-<script>
-/* Count-up on the figures. The final figure is already in the HTML, so this is
-   pure enhancement: if the script never runs, the right number is on screen.
-   data-dec fixes decimal places; absent, it counts as an integer. */
-(function () {
-  var els = document.querySelectorAll('.cnt');
-  if (!els.length) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var fmt = function (n, dec) {
-    return n.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
-  };
-
-  var run = function (el) {
-    var to  = parseFloat(el.getAttribute('data-to'));
-    var dec = parseInt(el.getAttribute('data-dec'), 10);
-    if (!isFinite(to)) return;
-    if (!isFinite(dec)) dec = 0;
-
-    /* Lock the box at its FINAL width before counting. Digit count changes as
-       it climbs, and a reflowing row would violate Hard Rule 5. */
-    el.style.display = 'inline-block';
-    el.style.minWidth = el.getBoundingClientRect().width + 'px';
-    el.style.textAlign = 'right';
-
-    var DUR = 900;                                   /* --duration-long */
-    var start = null;
-    var step = function (ts) {
-      if (start === null) start = ts;
-      var p = Math.min((ts - start) / DUR, 1);
-      var eased = (p === 1) ? 1 : 1 - Math.pow(2, -10 * p);   /* easeOutExpo */
-      el.textContent = fmt(to * eased, dec);
-      if (p < 1) requestAnimationFrame(step);
-      else el.textContent = fmt(to, dec);            /* always land exact */
-    };
-    requestAnimationFrame(step);
-  };
-
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) { run(e.target); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.6 });
-
-  els.forEach(function (el) { io.observe(el); });
-})();
-</script>
-<script>
-/* AG Cursor v2.1 - ag-cursor.js - lifted verbatim. Mounts at <body>. */
-(function () {
-  if (!window.matchMedia ||
-      !(matchMedia('(pointer: fine)').matches && matchMedia('(hover: hover)').matches)) return;
-
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var INTERACTIVE = 'a[href],button,[role="button"],input:not([type="hidden"]),' +
-                    'select,textarea,label[for],summary,[data-cursor],.ag-clickable';
-
-  var NS = 'http://www.w3.org/2000/svg';
-  var ARROW = 'M0,0 L0,15 L4,11.5 L6.5,17 L8.5,16 L6,10.5 L10.5,10.5 Z';
-  var HAND  = 'M8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v5.34l-1.2.24a1.5 1.5 0 0 0-1.196 1.636l.345 3.106a2.5 2.5 0 0 0 .405 1.11l1.433 2.15A1.5 1.5 0 0 0 6.035 16h6.385a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.271-2.715a2 2 0 0 0-1.99-2.199h-.581a5 5 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.6 2.6 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046z';
-
-  function shape(type) {
-    var arrow = (type === 'arrow');
-    var s = document.createElementNS(NS, 'svg');
-    s.setAttribute('class', 'ag-cursor__' + type);
-    s.setAttribute('viewBox', arrow ? '0 0 11 17.5' : '0 0 16 16');
-    s.setAttribute('width',  arrow ? 13 : 18);
-    s.setAttribute('height', arrow ? 20 : 18);
-    var p = document.createElementNS(NS, 'path');
-    p.setAttribute('d', arrow ? ARROW : HAND);
-    s.appendChild(p);
-    return s;
-  }
-
-  var bodyL = document.createElement('div');
-  bodyL.className = 'ag-cursor__body'; bodyL.setAttribute('aria-hidden', 'true');
-  bodyL.appendChild(shape('arrow'));
-
-  var edgeL = document.createElement('div');
-  edgeL.className = 'ag-cursor__edge'; edgeL.setAttribute('aria-hidden', 'true');
-  edgeL.appendChild(shape('arrow'));
-  edgeL.appendChild(shape('hand'));
-
-  document.body.appendChild(bodyL);
-  document.body.appendChild(edgeL);
-
-  var root = document.documentElement;
-  root.classList.add('ag-fine');
-
-  var css = getComputedStyle(root);
-  var INK    = (css.getPropertyValue('--ink')    || '#101418').trim();
-  var PAPER  = (css.getPropertyValue('--paper')  || '#F7F6F3').trim();
-  var ACCENT = (css.getPropertyValue('--accent') || '#C9A36A').trim();
-
-  var tx = innerWidth / 2, ty = innerHeight / 2, shown = false, frame = 0;
-
-  function isDarkBg(el) {
-    while (el && el !== document.documentElement) {
-      var bg = getComputedStyle(el).backgroundColor;
-      var m = bg.match(/rgba?\(([^)]+)\)/);
-      if (m) {
-        var p = m[1].split(',').map(parseFloat);
-        var a = (p[3] === undefined) ? 1 : p[3];
-        if (a > 0.1) { return (0.2126 * p[0] + 0.7152 * p[1] + 0.0722 * p[2]) / 255 < 0.5; }
-      }
-      el = el.parentElement;
-    }
-    return false;
-  }
-
-  function track(e) {
-    tx = e.clientX; ty = e.clientY;
-    var t = 'translate(' + tx + 'px,' + ty + 'px)';
-    bodyL.style.transform = t; edgeL.style.transform = t;
-    if (!shown) { shown = true; bodyL.style.opacity = '1'; edgeL.style.opacity = '1'; }
-  }
-  addEventListener('mousemove', track, { passive: true });
-  addEventListener('pointermove', function (e) { if (e.pointerType !== 'touch') track(e); }, { passive: true });
-
-  document.documentElement.addEventListener('mouseleave', function () {
-    shown = false; bodyL.style.opacity = '0'; edgeL.style.opacity = '0';
-  });
-  document.documentElement.addEventListener('mouseenter', function () {
-    shown = true; bodyL.style.opacity = '1'; edgeL.style.opacity = '1';
-  });
-
-  document.addEventListener('mouseover', function (e) {
-    if (e.target.closest && e.target.closest(INTERACTIVE)) root.classList.add('ag-cur-hover');
-  });
-  document.addEventListener('mouseout', function (e) {
-    var to = e.relatedTarget;
-    if (e.target.closest && e.target.closest(INTERACTIVE) &&
-        !(to && to.closest && to.closest(INTERACTIVE))) {
-      root.classList.remove('ag-cur-hover');
-    }
-  });
-
-  function clickBurst(x, y) {
-    if (reduce) return;
-    var hand = root.classList.contains('ag-cur-hover');
-    var d    = hand ? HAND : ARROW;
-    var vb   = hand ? '0 0 16 16' : '0 0 11 17.5';
-    var w    = hand ? 18 : 13;
-    var h    = hand ? 18 : 20;
-    var lx   = hand ? (x - 8) : x;
-    var ly   = hand ? (y - 2) : y;
-    var orig = hand ? '8px 2px' : '0 0';
-
-    function spawn(strokeW, glow) {
-      var el = document.createElement('div');
-      el.setAttribute('aria-hidden', 'true');
-      el.style.cssText = 'position:fixed;left:' + lx + 'px;top:' + ly + 'px;pointer-events:none;z-index:2147483645;transform-origin:' + orig + ';';
-      el.innerHTML = '<svg width="' + w + '" height="' + h + '" viewBox="' + vb + '" style="display:block;overflow:visible;">' +
-        '<path d="' + d + '" fill="none" stroke="' + ACCENT + '" stroke-width="' + strokeW + '" stroke-linejoin="round"' +
-        (glow ? ' style="filter:drop-shadow(0 0 4px ' + ACCENT + ');"' : '') + '/></svg>';
-      document.body.appendChild(el);
-      return el;
-    }
-
-    var echo = spawn(1, false);
-    echo.animate([{ transform: 'scale(1)', opacity: .85 }, { transform: 'scale(2.3)', opacity: 0 }],
-      { duration: 294, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'forwards' });
-
-    var ignite = spawn(2.2, true);
-    ignite.animate([{ opacity: 0 }, { opacity: .95, offset: .3 }, { opacity: 0 }],
-      { duration: 210, easing: 'cubic-bezier(0.16,1,0.3,1)', fill: 'forwards' });
-
-    setTimeout(function () { echo.remove(); ignite.remove(); }, 360);
-  }
-
-  document.addEventListener('mousedown', function () { root.classList.add('ag-cur-press'); });
-  document.addEventListener('mouseup', function (e) {
-    root.classList.remove('ag-cur-press');
-    clickBurst(e.clientX, e.clientY);
-  });
-
-  function tick() {
-    if ((frame++ % 4) === 0) {
-      var el = document.elementFromPoint(tx, ty);
-      if (el) edgeL.style.setProperty('--cur-fill', isDarkBg(el) ? PAPER : INK);
-    }
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-})();
-</script>
-
+<script src="ag-scroll.js"></script>
+<script src="ag-cursor.js"></script>
+<script src="ag-hybrid-scene.js"></script>
+<script src="ag-curtain.js"></script>
 </body>
 </html>

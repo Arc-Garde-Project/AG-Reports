@@ -1,0 +1,226 @@
+/* ============================================================================
+   AG HYBRID SCENE v1.0 — styles
+   ----------------------------------------------------------------------------
+   One full-viewport stage holding five stacked segments. Only one is active at
+   a time; they cross-fade rather than cut, which is what covers the handoff
+   between a scrub's last frame and a rest loop's own first frame (those are
+   different generations and will never match pixel for pixel).
+   ========================================================================== */
+
+.hybrid-stage {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  background: #0B1418;
+  outline: none;
+}
+
+/* Page scroll is suppressed while the stage owns input, then handed back once
+   the last rest state is passed. Reduced motion never enters this state. */
+html[data-stage-locked="true"],
+html[data-stage-locked="true"] body {
+  overflow: hidden;
+  height: 100%;
+}
+
+.hseg {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s linear, visibility 0s linear 0.3s;
+}
+.hseg[data-active="true"] {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s linear, visibility 0s;
+}
+
+.hseg video,
+.hseg canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* DOCK CENTERING. Measured on the source plates: the dock sits +5.9px right of
+     frame center on plate 2 and +46.2px on plate 3, the latter being 4.5% of the
+     width. object-fit:cover crops the sides on a narrow viewport, which
+     amplifies that offset until the dock visibly leans right on a phone. Each
+     segment declares its own correction so the dock reads centered at every
+     width. Vertical stays centered. */
+  object-position: var(--ox, 50%) center;
+  z-index: 0;
+}
+
+/* Text layer. Never blocks input: the stage needs every wheel and touch event. */
+.hseg-text {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: grid;
+  align-content: center;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: var(--pad, clamp(1.125rem, 0.262rem + 3.68vw, 3rem));
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(21px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hseg-text[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* DWELL RESPONSE. --dwell is 0..1, set by the engine from scroll accumulated on
+   a rest state, and already eased per frame there. It is applied to the INNER
+   wrapper, not to .hseg-text itself: that element owns the 0.6s entry ease, and
+   putting a per-frame value on the same property would fight it and lag the
+   wheel. Capped at 0.34 opacity and 26px so stopping halfway still reads as a
+   deliberate state rather than a glitch. */
+.hseg-text { --dwell: 0; }
+.hseg-text > * {
+  opacity: calc(1 - (var(--dwell) * 0.34));
+  transform: translateY(calc(var(--dwell) * -26px));
+  transition: none;
+  will-change: opacity, transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hseg-text > * { opacity: 1; transform: none; }
+}
+
+/* Segment counter. Reads as position in a sequence, not as a loading bar. */
+.hstage-rail {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1rem, 3vh, 2rem);
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  gap: 8px;
+  pointer-events: none;
+}
+.hstage-rail i {
+  display: block;
+  width: 28px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(34, 48, 58, 0.28);
+  transition: background 0.3s ease;
+}
+/* Five segments, five stops off the logo's own 135deg sweep, so moving through
+   the stage walks the mark from its purple end to its green one. The inactive
+   state stays the same neutral it always was; only the lit one carries color,
+   which is what keeps this a counter rather than a rainbow. */
+.hstage-rail i[data-on="true"] { background: var(--blue, #1A68AC); }
+.hstage-rail i:nth-child(1)[data-on="true"] { background: var(--purple-ink, #674084); }
+.hstage-rail i:nth-child(2)[data-on="true"] { background: var(--indigo-ink, #4E5195); }
+.hstage-rail i:nth-child(3)[data-on="true"] { background: var(--blue-ink,   #1A68AC); }
+.hstage-rail i:nth-child(4)[data-on="true"] { background: var(--teal-ink,   #247E89); }
+.hstage-rail i:nth-child(5)[data-on="true"] { background: var(--green-ink,  #557E2E); }
+
+/* The scroll cue only makes sense while the stage still owns the input. */
+.hstage-cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(2.5rem, 7vh, 4rem);
+  transform: translateX(-50%);
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.hybrid-stage[data-released="true"] .hstage-cue { opacity: 0; }
+
+/* ---- Reduced motion: no stage, no jacking, nothing hidden -----------------
+   Every segment becomes a normal stacked block in document order with its text
+   shown. Scrub canvases hold one settled frame. Rest videos do not autoplay.
+   Nothing here is reachable only through an interaction that is switched off. */
+@media (prefers-reduced-motion: reduce) {
+  .hybrid-stage { height: auto; overflow: visible; background: transparent; }
+  html[data-stage-locked="true"],
+  html[data-stage-locked="true"] body { overflow: auto; height: auto; }
+  .hseg {
+    position: relative;
+    inset: auto;
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+  .hseg video,
+  .hseg canvas {
+    position: relative;
+    inset: auto;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+  }
+  .hseg-text {
+    height: auto;
+    opacity: 1;
+    transform: none;
+    transition: none;
+    padding-block: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  .hstage-rail, .hstage-cue { display: none; }
+}
+
+@media (max-width: 900px) {
+  /* MOBILE UNSTACKS. There is no scrub on touch, so a stacked layer would leave
+     every segment but the active one invisible and unreachable: the page showed
+     the hero, then nothing, then the footer. The equivalent rule existed only in
+     ag-sequence.css, the previous engine's file, and was never carried across.
+     Same principle as reduced motion: when nothing can be scrubbed back, nothing
+     may be hidden behind a scrub. */
+  .hybrid-stage { height: auto; overflow: visible; background: transparent; }
+  .hseg {
+    position: relative;
+    inset: auto;
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+    margin-bottom: clamp(2rem, 6vw, 3.5rem);
+  }
+  .hseg video,
+  .hseg canvas {
+    position: relative;
+    inset: auto;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+  }
+  .hseg-text {
+    position: relative;
+    height: auto;
+    opacity: 1;
+    transform: none;
+    transition: none;
+    text-align: center;
+    padding-block: clamp(1.25rem, 5vw, 2rem);
+  }
+  .hseg-text > * { opacity: 1 !important; transform: none !important; }
+  /* §6C literal centering. Unstacking put these blocks back into normal flow,
+     where their desktop max-widths left them hugging the left edge. */
+  .hseg-text .lead,
+  .hseg-text .lead-sub,
+  .hseg-text .sub-card,
+  .hseg-text .hc,
+  .hseg-text .eng-grid,
+  .hseg-text .run-panel { margin-inline: auto; }
+  .hseg-text .eng-grid { grid-template-columns: 1fr; max-width: 26rem; text-align: center; }
+  /* the cards carry text-align:left from the desktop rule; §6C overrides it */
+  .hseg-text .eng-card,
+  .hseg-text .eng-card h3,
+  .hseg-text .eng-card .geo,
+  .hseg-text .eng-card .one { text-align: center; }
+  .hseg-text .run-panel .figs,
+  .hseg-text .run-panel .rhythm { grid-template-columns: 1fr; }
+  .hseg-text .run-panel .lad-track { grid-template-columns: repeat(4,1fr); row-gap: 0.5rem; }
+  /* A scrub segment has nothing to scrub on touch and paints black until its
+     frames arrive. It is a black box and dead weight on a phone, so it is
+     removed rather than left to load. */
+  .hseg:has(canvas) { display: none; }
+  .hstage-rail { display: none; }
+}
