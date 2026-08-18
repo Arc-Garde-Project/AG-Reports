@@ -144,6 +144,14 @@
       s.ctx = s.canvas.getContext('2d', { alpha: false });
       s.canvas.width = src.width;
       s.canvas.height = src.height;
+      /* alpha:false means the backing store is OPAQUE and starts BLACK, so a
+         canvas that has not been drawn to yet is a black slab and no CSS
+         background behind it can show through. That is what produced the pure
+         black on the second scrub, which is entered long before its frames
+         arrive. Priming it with the footage's own ground means the worst case
+         is haze the color of the plates instead of a hole. */
+      s.ctx.fillStyle = '#876F58';
+      s.ctx.fillRect(0, 0, s.canvas.width, s.canvas.height);
 
       // How much has to exist before this segment is considered startable.
       s.gateCount = gate ? Math.min(s.count, Math.ceil(s.count * 0.28)) : 0;
@@ -176,15 +184,32 @@
       return s.gatePromise;
     }
 
+    /* THE CANVAS MUST NEVER BE LEFT UNPAINTED.
+       This used to `return` when the requested frame had not arrived yet, which
+       left the canvas blank and showed the stage's own background through it.
+       Measured on the live site: 10 of 20 samples taken across the two scrubs
+       rendered at mean luminance 0, i.e. pure black. Frames load in batches of
+       12 behind a 28% gate, so scrolling faster than the network outruns them
+       every time, and the reader gets a black slab mid-transition instead of
+       the footage.
+       Now a missing frame falls back to the nearest EARLIER frame that has
+       actually arrived, and failing that to whatever was last painted. The
+       transition holds on an image rather than dropping out. */
     function draw(s, idx) {
       if (!s.frames || !s.ctx || !s.count) return;
       const c = Math.max(0, Math.min(s.count - 1, idx));
-      const a = Math.floor(c), b = Math.min(a + 1, s.count - 1), t = c - a;
-      const fa = s.frames[a];
-      if (!fa) return;
+      const want = Math.floor(c), b = Math.min(want + 1, s.count - 1), t = c - want;
+      let a = want, fa = s.frames[a];
+      if (!fa) {
+        for (let k = want - 1; k >= 0; k--) { if (s.frames[k]) { fa = s.frames[k]; a = k; break; } }
+      }
+      if (!fa) fa = s.lastFrame;          // nothing behind it yet: hold the last painted image
+      if (!fa) return;                    // genuinely nothing has arrived, leave the warm ground
       s.ctx.globalAlpha = 1;
       s.ctx.drawImage(fa, 0, 0, s.canvas.width, s.canvas.height);
-      if (t > 0 && a !== b && s.frames[b]) {
+      s.lastFrame = fa;
+      // only blend toward the next frame when the exact one was available
+      if (a === want && t > 0 && a !== b && s.frames[b]) {
         s.ctx.globalAlpha = t;
         s.ctx.drawImage(s.frames[b], 0, 0, s.canvas.width, s.canvas.height);
         s.ctx.globalAlpha = 1;

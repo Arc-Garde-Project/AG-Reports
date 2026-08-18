@@ -11,9 +11,17 @@
   position: relative;
   height: 100svh;
   overflow: hidden;
-  background: #0B1418;
+  /* Was #0B1418, a near-black. Anything that shows through a video or canvas
+     before it paints is THIS color, and against golden-hour footage a black
+     slab reads as a fault rather than a gap. Sampled from the delivered frame
+     sets (scrub 1 mean #A78E76, scrub 2 mean #AF8F70) and taken down to 78%
+     lightness so overlay scrims still sit on it. A gap now reads as haze. */
+  background: #876F58;
   outline: none;
 }
+/* the same ground under each surface, so a slow frame or a buffering video
+   never exposes anything colder than the footage itself */
+.hseg video, .hseg canvas { background: #876F58; }
 
 /* Page scroll is suppressed while the stage owns input, then handed back once
    the last rest state is passed. Reduced motion never enters this state. */
