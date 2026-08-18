@@ -205,6 +205,15 @@ h1,h2,h3,h4,p,li,a,button,label,
   background:radial-gradient(112% 88% at 50% 46%, transparent 52%, rgba(0,0,0,0.42) 100%);
 }
 
+
+/* ---- DEPTH OF FIELD ----
+   The panel sits over the rail, and two sharp planes fighting for the same
+   pixels reads as a mistake rather than a layer. The rail drops focus just
+   BEFORE the panel arrives and pulls back to sharp as it slides away, so the
+   overlap looks intended: one plane in front, one behind. */
+#world{ filter:blur(0px); }
+#world[data-focus="back"]{ filter:blur(5px); }
+
 /* ---------- progress rail ---------- */
 .rail{
   position:fixed; top:0; left:0; width:100%; height:2px;
@@ -477,8 +486,9 @@ h1,h2,h3,h4,p,li,a,button,label,
   width:2400px; height:600px;
   transform-origin:0 0;
   transition:transform var(--duration-fly) var(--ease-fly),
-             --s var(--duration-fly) var(--ease-fly);
-  will-change:transform;
+             --s var(--duration-fly) var(--ease-fly),
+             filter var(--duration-medium) var(--ease-soft);
+  will-change:transform, filter;
 }
 
 .world .trunk{
@@ -1249,6 +1259,16 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
 .ag-curtain[data-phase="brand"] .ld-sub { animation:ld-sub-in 700ms cubic-bezier(0.16,1,0.3,1) 380ms both; }
 @keyframes ld-sub-in { from{ opacity:0; transform:translateY(6px); } to{ opacity:0.92; transform:translateY(0); } }
 
+
+/* ---- NARROW: THE ROADMAP SLIDE LOSES ITS MASTHEAD ----
+   Below 900 the logo and "THE ROADMAP" eyebrow cost a band of vertical space
+   the six circles need, and the cover has already established the brand one
+   slide earlier. The roadmap keeps its title, its two lines and the rail.
+   The phase eyebrows stay: those name the phase, they are not a masthead. */
+@media (max-width:900px){
+  .roadmap .eyebrow{ display:none; }
+}
+
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after{
@@ -1269,7 +1289,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
   .slide .card{ transform:none !important; opacity:1 !important; }
   .ghost{ transform:none !important; opacity:0.28 !important; }
   .w > i{ transform:none !important; }
-  .curtain-rule::after{ animation:none !important; }
+  #world{ filter:none !important; }
   .phase[data-stage="intro"] .phase-head{ min-height:0 !important; }
   .phase[data-stage="intro"] .card{ transform:none !important; opacity:1 !important; }
 }
@@ -1747,6 +1767,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
 
   var wasWorld = false;
   var stageTimer = null;
+  var focusTimer = null;
 
   /* Beat 1 holds while the camera flies and the title owns the frame.
      Beat 2 hands that height to the panel. Every other phase resets to
@@ -1763,9 +1784,14 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
         s.dataset.stage = 'intro';
       }
     });
-    if (!slide || !slide.classList.contains('phase')) { checkFit(); return; }
-    if (REDUCED){ slide.dataset.stage = 'detail'; checkFit(); return; }
+    clearTimeout(focusTimer);
+    if (!slide || !slide.classList.contains('phase')) { world.dataset.focus = 'front'; checkFit(); return; }
+    if (REDUCED){ slide.dataset.stage = 'detail'; world.dataset.focus = 'back'; checkFit(); return; }
     slide.dataset.stage = 'intro';
+    world.dataset.focus = 'front';
+    /* 250ms ahead of the panel, so the rail has already softened by the time
+       the two planes overlap rather than blurring under it */
+    focusTimer = setTimeout(function(){ world.dataset.focus = 'back'; }, 1150);
     stageTimer = setTimeout(function(){
       slide.dataset.stage = 'detail';
       setTimeout(checkFit, 1400);
@@ -1785,6 +1811,9 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
     var outgoing = slides[current];
     slides.forEach(function(s){ s.classList.remove('leaving'); });
     outgoing.classList.add('leaving');
+    /* panel is on its way out: pull the rail back into focus with it */
+    clearTimeout(focusTimer);
+    world.dataset.focus = 'front';
     clearTimeout(leaveTimer);
     leaveTimer = setTimeout(function(){
       outgoing.classList.remove('leaving');
