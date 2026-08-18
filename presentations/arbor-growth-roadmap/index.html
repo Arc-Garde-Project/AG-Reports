@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#091422">
+<meta name="format-detection" content="telephone=no">
+
+<title>Arbor Wealth | Growth Program Roadmap</title>
+<meta name="description" content="The Arc Garde growth program for Arbor Wealth Strategies: six phases from accounts and tooling through paid launch, with the timeline for each, what has to clear compliance first, and the items still open before the scope locks.">
+
+<meta property="og:title" content="Arbor Wealth | Growth Program Roadmap">
+<meta property="og:description" content="Six phases from accounts and tooling through paid launch, with timelines, dependencies and open items.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ag-reports.vercel.app/presentations/arbor-growth-roadmap">
+<meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Arc Garde">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Arbor Wealth | Growth Program Roadmap">
+<meta name="twitter:description" content="Six phases from accounts and tooling through paid launch, with timelines, dependencies and open items.">
+<meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+
+<!-- No trailing slash: vercel.json sets trailingSlash:false, so the slashed
+     form 308s. Canonical must name the final URL, not the redirect. -->
+<link rel="canonical" href="https://ag-reports.vercel.app/presentations/arbor-growth-roadmap">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===========================================================
+   ARBOR WEALTH — GROWTH PROGRAM ROADMAP
+   Assembled from AG primitives:
+     ag-defensive.css   -> defensive base
+     ag-typography.css  -> measure contract + display ceiling F <= M/9
+     ag-motion.css      -> duration / easing / distance tokens + reveals
+     snap-deck standard -> runtime fit guard (measure, never model)
+   Brand locked from Brandkit/BRANDKIT.md.
+   =========================================================== */
+
+/* --s carries the camera scale so world text can counter-scale and stay at
+   its designed size. A plain custom property is not interpolable, so it
+   would jump to the destination value while the transform was still flying,
+   sizing every label for a distance the camera had not reached yet.
+   Registering it with a type makes it animate alongside the transform. */
+@property --s{ syntax:'<number>'; initial-value:1; inherits:true; }
+
+:root{
+  /* ---- BRAND (locked) ---- */
+  --gold:        #C9A962;
+  --gold-light:  #D4B86A;
+  --gold-deep:   #8A6D2F;
+  --navy:        #0A1628;
+  --navy-mid:    #0D1F35;
+  --navy-deep:   #0B1829;
+  --navy-deepest:#091422;
+  --paper:       #F8F7F4;
+  --border:      #E5E2DC;
+  --ink:         #132038;
+  --ink-soft:    #4A5568;
+
+  /* Derived translucents — every alpha lives here, never inline */
+  --gold-a08: rgba(201,169,98,0.08);
+  --gold-a14: rgba(201,169,98,0.14);
+  --gold-a24: rgba(201,169,98,0.24);
+  --gold-a40: rgba(201,169,98,0.40);
+  --gold-a60: rgba(201,169,98,0.60);
+  --paper-a45: rgba(248,247,244,0.45);
+  --paper-a60: rgba(248,247,244,0.60);
+  --paper-a75: rgba(248,247,244,0.75);
+  --shadow-lift: 0 -18px 46px rgba(0,0,0,0.32);
+
+  /* ---- FLUID TYPE (web-css rule, mandatory) ---- */
+  --text-hero:  clamp(2.25rem, 1.647rem + 2.57vw, 3.938rem);
+  --text-h1:    clamp(1.875rem, 1.357rem + 2.21vw, 3rem);
+  --text-h2:    clamp(1.5rem, 1.155rem + 1.47vw, 2.25rem);
+  --text-h3:    clamp(1.313rem, 1.054rem + 1.1vw, 1.875rem);
+  --text-h4:    clamp(1.125rem, 0.952rem + 0.74vw, 1.5rem);
+  --text-lg:    clamp(1rem, 0.943rem + 0.24vw, 1.125rem);
+  --text-base:  clamp(0.938rem, 0.909rem + 0.12vw, 1rem);
+  --text-micro: clamp(0.66rem, 0.63rem + 0.13vw, 0.74rem);
+
+  /* ---- SPACE. Vertical tokens capped against viewport HEIGHT:
+     AG spacing is width-fluid, but a deck's binding constraint is height,
+     so on a short wide laptop the gaps sit near maximum while the space
+     holding them is smallest. (snap-deck standard) ---- */
+  --space-container: clamp(1.125rem, 0.262rem + 3.68vw, 3rem);
+  --pad-x: clamp(1.5rem, 0.5rem + 5vw, 6rem);
+  --v-sm: min(clamp(0.5rem, 0.3rem + 0.9vw, 1rem), 1.8vh);
+  --v-md: min(clamp(1rem, 0.6rem + 1.6vw, 1.75rem), 3vh);
+  --v-lg: min(clamp(1.5rem, 0.9rem + 2.6vw, 2.75rem), 4.4vh);
+
+  /* ---- MEASURE (ag-typography) ---- */
+  --measure-body: 65ch;
+  --measure-tight: 46ch;
+  --measure-display: clamp(320px, 46vw, 760px);
+  --measure-statement: clamp(320px, 62vw, 980px);
+  /* Timeline label width, shared by the box AND its type ceiling so the
+     two can never drift apart. */
+  --label-w: clamp(96px, 13vw, 156px);
+  /* Floating card: inset from the frame edge, and the gap of navy left
+     beneath it. Both are viewport-height aware so a short laptop does not
+     spend its scarce vertical space on margin. */
+  --card-inset:  clamp(10px, 1.7vw, 30px);
+  --card-bottom: min(clamp(14px, 2.4vw, 40px), 5vh);
+  /* Display ceiling divisor. The contract says F <= M/9 from an average
+     glyph of ~half the font-size. Playfair Display at 600 runs wider than
+     that, exactly as Fraunces does (snap-deck standard note 2), and /9 left
+     six INTERIOR blockers on this deck. /11 clears them and is tighter than
+     the contract asks, so it satisfies F <= M/9 and then some. */
+  --display-div: 11;
+
+  /* ---- MOTION (ag-motion tokens, all multiples of 3 or 7) ---- */
+  --duration-instant: 120ms;
+  --duration-quick:   300ms;
+  --duration-medium:  600ms;
+  --duration-long:    900ms;
+  --duration-cinematic: 1400ms;
+  --duration-fly: 2100ms;                      /* 7 x 300, the camera move */
+  --ease-fly: cubic-bezier(0.62, 0.02, 0.16, 1); /* pulls away, lands soft */
+  --ease-satisfying: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft:       cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-snap:       cubic-bezier(0.34, 1.2, 0.64, 1);
+  --ease-settle:     cubic-bezier(0.22, 1, 0.36, 1);
+  --dist-micro: 7px;
+  --dist-base:  14px;
+  --dist-lg:    21px;
+}
+
+/* ---------- ag-defensive base ---------- */
+*, *::before, *::after{ box-sizing:border-box; }
+*{ margin:0; }
+
+html{
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+  overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+  height:100%;
+}
+body{
+  height:100%;
+  overflow:hidden;
+  overflow-wrap:break-word;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  line-height:1.5;
+  font-family:'Inter', system-ui, sans-serif;
+  font-size:var(--text-base);
+  color:var(--paper);
+  background:var(--navy-deepest);
+}
+img, svg, video{ display:block; max-width:100%; height:auto; }
+button{ background:none; border:0; cursor:pointer; font:inherit; color:inherit; }
+a{ color:inherit; text-decoration:none; }
+a, button, [role="button"]{ touch-action:manipulation; }
+:focus-visible{ outline:3px solid var(--gold); outline-offset:3px; }
+
+h1,h2,h3,h4{
+  font-family:'Playfair Display', Georgia, serif;
+  font-weight:600;
+  letter-spacing:-0.015em;
+  line-height:1.06;
+  text-wrap:balance;
+}
+p, li{ text-wrap:pretty; }
+
+/* Never break a word (ag-typography). Named beyond the tag list so copy
+   in a span/div cannot fall through into overflow-wrap: break-word. */
+h1,h2,h3,h4,p,li,a,button,label,
+.eyebrow,.nm,.wk,.ph,.pill,.tagpill,.meta,.sub,.note-body{
+  hyphens:none; -webkit-hyphens:none; word-break:normal;
+}
+
+.skip-link{
+  position:absolute; left:7px; top:-100px; z-index:2147483647;
+  padding:10px 18px; border-radius:8px;
+  background:var(--paper); color:var(--navy);
+  transition:top var(--duration-quick) var(--ease-satisfying);
+}
+.skip-link:focus-visible{ top:7px; }
+
+/* ---------- ground: layered depth, not a flat radial ---------- */
+.ground{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(120% 90% at 18% 12%, var(--navy-mid) 0%, transparent 58%),
+    radial-gradient(100% 80% at 88% 88%, var(--navy-deep) 0%, transparent 62%),
+    linear-gradient(160deg, var(--navy) 0%, var(--navy-deepest) 100%);
+}
+/* Grain plate — self-contained SVG turbulence, no external host */
+.grain{
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  opacity:0.055; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+}
+/* Vignette gives the frame weight */
+.vignette{
+  position:fixed; inset:0; z-index:2; pointer-events:none;
+  background:radial-gradient(112% 88% at 50% 46%, transparent 52%, rgba(0,0,0,0.42) 100%);
+}
+
+/* ---------- progress rail ---------- */
+.rail{
+  position:fixed; top:0; left:0; width:100%; height:2px;
+  background:var(--gold-a14); z-index:50;
+}
+.rail-fill{
+  height:100%; width:0;
+  background:linear-gradient(90deg, var(--gold-deep), var(--gold) 40%, var(--gold-light));
+  box-shadow:0 0 12px var(--gold-a40);
+  transition:width var(--duration-long) var(--ease-satisfying);
+}
+
+/* ---------- deck + slides ---------- */
+#deck{ position:relative; width:100%; height:100%; z-index:3; }
+
+/* Direction-aware cinematic transition. The incoming slide arrives from the
+   side you are travelling toward, slightly scaled back and defocused; the
+   outgoing one leaves the opposite way. A cross-fade reads flat at this
+   size, and the parallax is what gives the deck its sense of travel. */
+.slide{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column;
+  opacity:0; visibility:hidden;
+  pointer-events:none;
+  z-index:1;
+  transform:translate3d(var(--sx, 0px), 0, 0) scale(0.966);
+  filter:blur(7px);
+  transition:opacity var(--duration-long) var(--ease-satisfying),
+             transform var(--duration-long) var(--ease-satisfying),
+             filter var(--duration-long) var(--ease-satisfying),
+             visibility 0s linear var(--duration-long);
+}
+.slide.active{
+  opacity:1; visibility:visible; pointer-events:auto;
+  z-index:2;
+  transform:translate3d(0, 0, 0) scale(1);
+  filter:blur(0);
+  transition:opacity var(--duration-long) var(--ease-satisfying),
+             transform var(--duration-long) var(--ease-satisfying),
+             filter var(--duration-long) var(--ease-satisfying),
+             visibility 0s;
+}
+/* the outgoing slide stays painted while it travels out */
+.slide.leaving{ visibility:visible; z-index:1; transition-delay:0s; }
+
+#deck[data-dir="fwd"]  .slide          { --sx:  clamp(40px, 5vw, 84px); }
+#deck[data-dir="fwd"]  .slide.leaving  { --sx: calc(-1 * clamp(40px, 5vw, 84px)); }
+#deck[data-dir="back"] .slide          { --sx: calc(-1 * clamp(40px, 5vw, 84px)); }
+#deck[data-dir="back"] .slide.leaving  { --sx:  clamp(40px, 5vw, 84px); }
+
+/* ---------- word-by-word display reveal ----------
+   Each word rides up out of its own clipped box. Built by JS AFTER the
+   typography glue has run, so the non-breaking characters it inserted are
+   preserved as single tokens and the reveal cannot re-break a glued pair. */
+.w{ display:inline-block; overflow:hidden; vertical-align:bottom; }
+.w > i{
+  display:inline-block;
+  font-style:inherit;
+  transform:translateY(105%);
+  transition:transform var(--duration-long) var(--ease-satisfying);
+  transition-delay:calc(var(--wi, 0) * 63ms);
+}
+.slide.active .w > i{ transform:translateY(0); }
+
+/* Staggered arrival (ag-motion Recipe 3). Children animate only on the
+   active slide, so every slide replays as you land on it. */
+.stagger > *{
+  opacity:0;
+  transform:translateY(var(--dist-base));
+  transition:opacity var(--duration-medium) var(--ease-settle),
+             transform var(--duration-medium) var(--ease-settle);
+  transition-delay:calc(600ms + var(--i, 0) * 81ms);
+}
+.slide.active .stagger > *{ opacity:1; transform:translateY(0); }
+
+.eyebrow{
+  display:flex; align-items:center; gap:10px;
+  font-size:var(--text-micro);
+  font-weight:600;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--gold-light);
+}
+.mark{ color:var(--gold); flex-shrink:0; }
+/* the arbor mark draws itself in */
+.slide.active .mark path,
+.slide.active .mark circle{
+  stroke-dasharray:44; stroke-dashoffset:0;
+  transition:stroke-dashoffset var(--duration-cinematic) var(--ease-satisfying) 300ms;
+}
+.mark path, .mark circle{ stroke-dasharray:44; stroke-dashoffset:44; }
+
+.rule{
+  width:0; height:2px;
+  background:linear-gradient(90deg, var(--gold), var(--gold-a24));
+  transition:width var(--duration-cinematic) var(--ease-satisfying) 480ms;
+}
+.slide.active .rule{ width:clamp(56px, 7vw, 96px); }
+
+/* ---------- cover ---------- */
+.cover{
+  justify-content:center; align-items:flex-start;
+  padding:var(--v-lg) var(--pad-x);
+}
+.cover h1{
+  /* display ceiling: F <= M/9 (ag-typography INTERIOR fix) */
+  font-size:min(var(--text-hero), calc(var(--measure-display) / var(--display-div)));
+  max-width:min(var(--measure-display), 100%);
+  margin-top:var(--v-md);
+  color:var(--paper);
+}
+.cover .sub{
+  margin-top:var(--v-sm);
+  font-size:var(--text-h4);
+  color:var(--gold-light);
+  font-weight:500;
+  max-width:min(46ch, 100%);
+}
+.cover .meta{
+  margin-top:var(--v-md);
+  font-size:var(--text-base);
+  color:var(--paper-a45);
+  letter-spacing:0.04em;
+}
+.cover .rule{ margin-top:var(--v-md); }
+
+/* ---------- roadmap overview ---------- */
+.roadmap{
+  justify-content:flex-start;
+  padding:var(--v-lg) var(--pad-x);
+}
+.roadmap h2{
+  font-size:min(var(--text-h1), calc(var(--measure-display) / var(--display-div)));
+  max-width:min(var(--measure-display), 100%);
+  color:var(--paper);
+  margin-top:var(--v-sm);
+}
+.roadmap .sub{
+  margin-top:var(--v-sm);
+  color:var(--paper-a60);
+  font-size:var(--text-lg);
+  max-width:min(56ch, 100%);
+}
+
+.track{
+  position:relative;
+  width:100%;
+  flex:1;
+  min-height:0;
+  display:flex;
+  align-items:center;
+  margin-top:var(--v-md);
+}
+/* Trunk spans first dot to last dot, not edge to edge. Six nodes each
+   flex:1, so dot centres sit at (i + 0.5)/6 -> 8.333% and 91.667%. */
+.trunk{
+  position:absolute; left:8.333%; right:8.333%; top:50%;
+  height:1px;
+  transform:translateY(-0.5px) scaleX(0);
+  transform-origin:left center;
+  background:linear-gradient(90deg, var(--gold-a40), var(--gold) 12%, var(--gold) 88%, var(--gold-a40));
+  transition:transform var(--duration-cinematic) var(--ease-satisfying) 180ms;
+}
+.slide.active .trunk{ transform:translateY(-0.5px) scaleX(1); }
+
+/* A light runs the length of the trunk once it has drawn, so the eye is
+   led along the timeline in the direction the work actually travels. */
+.trunk::after{
+  content:"";
+  position:absolute; top:-2px; bottom:-2px;
+  width:clamp(70px, 12vw, 168px);
+  background:linear-gradient(90deg, transparent, var(--gold-light), transparent);
+  opacity:0; filter:blur(1px);
+}
+
+/* travel stops where the trunk stops, so the light never runs off the end */
+@keyframes runline{
+  0%   { left:0; opacity:0; }
+  12%  { opacity:0.9; }
+  80%  { opacity:0.9; }
+  100% { left:calc(100% - clamp(70px, 12vw, 168px)); opacity:0; }
+}
+
+.nodes{ position:relative; width:100%; display:flex; }
+.node{ position:relative; flex:1; display:flex; justify-content:center; }
+
+.dot{
+  position:relative; width:11px; height:11px; border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 0 5px var(--gold-a14), 0 0 18px var(--gold-a40);
+  transform:scale(0);
+  transition:transform var(--duration-medium) var(--ease-snap);
+  transition-delay:calc(560ms + var(--n) * 90ms);
+}
+.slide.active .dot{ transform:scale(1); }
+
+.branch{
+  position:absolute; left:50%; width:1px;
+  background:linear-gradient(var(--gold-a60), var(--gold-a14));
+  transform:scaleY(0);
+  transition:transform var(--duration-quick) var(--ease-satisfying);
+  transition-delay:calc(680ms + var(--n) * 90ms);
+}
+.node.up .branch{ bottom:6px; height:clamp(28px, 5vh, 46px); transform-origin:bottom; }
+.node.down .branch{ top:6px; height:clamp(28px, 5vh, 46px); transform-origin:top; }
+.slide.active .branch{ transform:scaleY(1); }
+
+.label{
+  position:absolute; left:50%;
+  width:var(--label-w);
+  text-align:center;
+  transform:translateX(-50%) translateY(var(--dist-micro));
+  opacity:0;
+  transition:opacity var(--duration-medium) var(--ease-settle),
+             transform var(--duration-medium) var(--ease-settle);
+  transition-delay:calc(760ms + var(--n) * 90ms);
+}
+.slide.active .label{ opacity:1; transform:translateX(-50%) translateY(0); }
+.node.up .label{ bottom:calc(clamp(28px, 5vh, 46px) + 16px); }
+.node.down .label{ top:calc(clamp(28px, 5vh, 46px) + 16px); }
+
+.label .ph{
+  font-size:var(--text-micro);
+  font-weight:700; letter-spacing:0.12em;
+  color:var(--gold); text-transform:uppercase;
+}
+.label .nm{
+  font-family:'Playfair Display', Georgia, serif;
+  font-size:min(var(--text-lg), calc(var(--label-w) / var(--display-div)));
+  color:var(--paper);
+  margin-top:4px; line-height:1.18;
+}
+.label .wk{
+  font-size:var(--text-micro);
+  color:var(--paper-a45);
+  margin-top:4px;
+  font-variant-numeric:tabular-nums;
+}
+
+
+/* ===========================================================
+   THE WORLD, AND THE CAMERA THAT FLIES OVER IT
+
+   The timeline is no longer a picture on one slide. It is a fixed
+   2400x600 world laid out in design coordinates, and every view of the
+   deck is a camera position over it: the cover sits far back, the
+   roadmap frames the whole rail, and each phase flies in to its own
+   node. Navigation therefore reads as travel along one continuous
+   thing, instead of nine unrelated cards.
+
+   The camera is one transform on .world, set in JS because it needs the
+   live viewport to place a world point at a chosen fraction of the
+   screen. Text inside the world is counter-scaled by --s so it stays
+   at its designed size however far in the camera is.
+   =========================================================== */
+.stage{
+  position:fixed; inset:0; z-index:3;
+  overflow:hidden; pointer-events:none;
+}
+
+/* The camera world belongs to the phases only. The cover and the roadmap
+   keep the motion they had before the zoom existed: the roadmap draws its
+   own timeline inside the slide. Two timelines never show at once, so the
+   labels can no longer appear to vanish on the way in. */
+.stage{ opacity:0; transition:opacity var(--duration-long) var(--ease-soft); }
+.stage[data-on="true"]{ opacity:1; }
+
+.world{
+  position:absolute; top:0; left:0;
+  width:2400px; height:600px;
+  transform-origin:0 0;
+  transition:transform var(--duration-fly) var(--ease-fly),
+             --s var(--duration-fly) var(--ease-fly);
+  will-change:transform;
+}
+
+.world .trunk{
+  position:absolute; left:200px; right:200px; top:300px;
+  height:2px; margin-top:-1px;
+  transform:none;
+  background:linear-gradient(90deg, var(--gold-a40), var(--gold) 8%, var(--gold) 92%, var(--gold-a40));
+}
+.world .nodes{ position:static; display:block; width:auto; }
+.world .node{
+  position:absolute; top:300px;
+  width:0; flex:none; display:block;
+  transform:translateY(-50%);
+}
+.world .dot{
+  position:absolute; left:0; top:0;
+  transform:translate(-50%, -50%) scale(1);
+  transition:box-shadow var(--duration-long) var(--ease-soft),
+             background-color var(--duration-long) var(--ease-soft);
+}
+/* the node you have flown to gets the light */
+.world .node[data-active="true"] .dot{
+  box-shadow:0 0 0 6px var(--gold-a24), 0 0 44px var(--gold);
+}
+.world .branch{
+  position:absolute; left:0; width:1px; transform:scaleY(1);
+  background:linear-gradient(var(--gold-a60), var(--gold-a14));
+}
+.world .node.up .branch{ bottom:6px; top:auto; height:54px; }
+.world .node.down .branch{ top:6px; bottom:auto; height:54px; }
+
+/* Counter-scaled so labels never inflate with the zoom. */
+.world .label{
+  position:absolute; left:0;
+  width:190px; text-align:center;
+  opacity:1;
+  transform:translateX(-50%) scale(calc(1 / var(--s, 1)));
+  transition:opacity var(--duration-long) var(--ease-soft);
+}
+.world .node.up .label{ bottom:66px; top:auto; transform-origin:50% 100%; }
+.world .node.down .label{ top:66px; bottom:auto; transform-origin:50% 0; }
+
+/* Flying into a phase hands the naming job to the overlay, so the world
+   labels step back rather than compete with the heading. */
+/* Flown in, only the station you arrived at keeps its label. Hiding ALL of
+   them was what read as the text disappearing; showing all of them instead
+   clipped the neighbours against the frame edge and cluttered the rail. The
+   active one also drops BELOW the rail here, because above it is where the
+   paper panel sits. */
+/* Labels stay loaded at every camera distance. Removing them on the way in
+   was the thing that read as the text disappearing; they simply travel with
+   the rail and fall off the edge of frame the way a map does. */
+
+
+/* ---- THE WORLD RE-LAID FOR NARROW ----
+   Six labels cannot sit across 390px, and counter-scaling makes it worse:
+   they stay full size while the rail compresses, so they collide and clip.
+   Below 900 the same world is re-laid as a vertical rail with the labels
+   beside it. Same nodes, same camera, different geography. */
+@media (max-width:900px){
+  .world{ width:600px; height:2400px; }
+  .world .trunk{
+    left:120px; right:auto; top:200px; bottom:200px;
+    width:2px; height:auto; margin-top:0; margin-left:-1px;
+    background:linear-gradient(180deg, var(--gold-a40), var(--gold) 8%, var(--gold) 92%, var(--gold-a40));
+  }
+  .world .node{
+    left:120px !important;
+    top:calc(200px + var(--n) * 400px);
+    transform:translate(-50%, -50%);
+  }
+  .world .branch{ display:none; }
+  .world .label{
+    left:34px; right:auto; top:50%; bottom:auto;
+    width:300px; text-align:left;
+    transform:translateY(-50%) scale(calc(1 / var(--s, 1)));
+    transform-origin:0 50%;
+  }
+  .world .node.up .label,
+  .world .node.down .label{ top:50%; bottom:auto; transform-origin:0 50%; }
+  /* Flown in on narrow, the label is dropped altogether. There is no room
+     for it under the node without landing on the pager, and it would only
+     repeat the phase heading sitting directly above it. On desktop it earns
+     its place because the heading is far away at the top of the frame. */
+  #world[data-mode="phase"] .node[data-active="true"] .label{ opacity:0; }
+}
+
+
+/* ---- TWO-BEAT PHASE ENTRANCE (restored) ----
+   Beat 1: the camera flies to the node while the title owns the whole
+   screen. Beat 2: the title gives up the height and the panel rises into
+   it. The zoom replaced this entrance when it went in; it reads better
+   with both, so the flight and the title beat now run together.
+
+   min-height carries it because a percentage animates against the flex
+   parent, where height:auto is not interpolable. */
+.phase[data-stage="intro"]:not(.leaving) .phase-head{ min-height:100%; }
+
+
+/* ---- TICKS ALWAYS UP WHEN FLOWN INTO ----
+   On a phase the rail sits low in the frame, so a downward tick runs off
+   the bottom edge and collides with the pager. Alternating up and down is
+   a MAP affordance, where the rail is centred and both directions have
+   room; close in, every tick points up. */
+#world[data-mode="phase"] .node.down .branch{
+  bottom:6px; top:auto;
+  transform-origin:bottom;
+}
+
+
+/* ---- THE WORLD'S ARRIVAL ----
+   The roadmap now reads off the world rather than a copy of it, so the
+   draw-in that used to live on the slide lives here. It fires once, when
+   the rail first comes on screen, and NOT on the move from the roadmap
+   into a phase: that one has to stay continuous, which is the whole point
+   of sharing one timeline between the two views. */
+#world[data-draw="1"] .trunk{
+  transform-origin:left center;
+  animation:wTrunk var(--duration-cinematic) var(--ease-satisfying) 180ms both;
+}
+#world[data-draw="1"] .dot{
+  animation:wDot var(--duration-medium) var(--ease-snap) both;
+  animation-delay:calc(560ms + var(--n) * 90ms);
+}
+#world[data-draw="1"] .branch{
+  animation:wBranch var(--duration-quick) var(--ease-satisfying) both;
+  animation-delay:calc(680ms + var(--n) * 90ms);
+}
+#world[data-draw="1"] .label{
+  animation:wFade var(--duration-medium) var(--ease-settle) both;
+  animation-delay:calc(760ms + var(--n) * 90ms);
+}
+#world[data-draw="1"] .trunk::after{
+  animation:runline 2.1s var(--ease-soft) 1.4s 1 forwards;
+}
+@keyframes wTrunk{ from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
+@keyframes wDot{ from{ transform:translate(-50%,-50%) scale(0); } to{ transform:translate(-50%,-50%) scale(1); } }
+@keyframes wBranch{ from{ transform:scaleY(0); } to{ transform:scaleY(1); } }
+@keyframes wFade{ from{ opacity:0; } to{ opacity:1; } }
+
+.world .node.up .branch{ transform-origin:bottom; }
+.world .node.down .branch{ transform-origin:top; }
+
+/* ---------- phase slides ---------- */
+.phase{ height:100%; }
+
+/* ---- TWO-BEAT PHASE ENTRANCE ----
+   Beat 1: the phase title owns the whole screen.
+   Beat 2: it gives up the height, and the paper panel rises into the space.
+
+   Driven by min-height rather than height, because a percentage min-height
+   animates against the flex parent while `height:auto` is not interpolable.
+   The stage is a data attribute set by the controller, so the two beats can
+   never desync from navigation. */
+.phase-head{
+  position:relative;
+  flex-shrink:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:var(--v-lg) var(--pad-x) calc(var(--v-lg) + 18px);
+  overflow:hidden;
+  min-height:0;
+  transition:min-height var(--duration-cinematic) var(--ease-satisfying);
+}
+
+/* ghost numeral: depth without noise */
+.ghost{
+  position:absolute;
+  right:var(--pad-x);
+  bottom:26px;             /* clears the card lip, which overlaps by 18px */
+  font-family:'Playfair Display', Georgia, serif;
+  font-weight:700;
+  font-size:clamp(4.5rem, 13vh, 9rem);
+  line-height:0.78;
+  color:transparent;
+  -webkit-text-stroke:1px var(--gold);
+  opacity:0.28;
+  pointer-events:none;
+  user-select:none;
+  font-variant-numeric:tabular-nums;
+  /* drifts in behind the type, slower than everything else */
+  transform:translateX(28px);
+  opacity:0;
+  transition:transform var(--duration-cinematic) var(--ease-satisfying) 300ms,
+             opacity var(--duration-cinematic) var(--ease-soft) 300ms;
+}
+.slide.active .ghost{ transform:translateX(0); opacity:0.28; }
+/* Phase titles run longer than the other display type ("Creative
+   Production: Round 1" is 28 characters), so they get the wider statement
+   measure. At the display measure it wrapped, and `balance` then split it
+   1-and-3, stranding "Creative" alone. Balance evens line LENGTHS, which is
+   the wrong objective once words are wrapped in inline-block boxes; pretty
+   optimises the last line instead and does not strand the first. */
+.phase-head h2{
+  font-size:min(var(--text-h1), calc(var(--measure-statement) / var(--display-div)));
+  max-width:min(var(--measure-statement), 100%);
+  color:var(--paper);
+  margin-top:var(--v-sm);
+  position:relative;
+  text-wrap:pretty;
+}
+.pill{
+  display:inline-block;
+  width:fit-content;
+  margin-top:var(--v-sm);
+  padding:6px 15px;
+  border:1px solid var(--gold-a40);
+  border-radius:999px;
+  font-size:var(--text-micro);
+  letter-spacing:0.06em;
+  color:var(--gold-light);
+  background:var(--gold-a08);
+  position:relative;
+}
+
+/* The card is now a floating panel sized to its content, not a sheet that
+   fills the frame, so the navy reads as the ground rather than a header
+   band. `flex: 0 1 auto` keeps it content-height but still lets it shrink
+   and scroll when the copy is genuinely taller than the slide.
+
+   The horizontal inset and the internal padding are complements: the panel
+   sits `--card-inset` from the edge and pads by the remainder, so its text
+   lands on exactly the same left rule as the h2 above it. Insetting without
+   that subtraction would push the body copy out of alignment with its own
+   heading, which is the usual tell of a floated panel done carelessly. */
+.card{
+  flex:0 1 auto;
+  min-height:0;
+  /* SCROLL CUE.
+     Where the copy is genuinely taller than the frame (three slides at
+     390px), the panel scrolls. With a flat fill it just ended mid-sentence
+     and read as though it had not finished loading. These are the classic
+     background-attachment scroll shadows: the `local` layers ride with the
+     content and mask the shadow at each end, the `scroll` layers stay put,
+     so a soft edge appears ONLY while there is more to reach and fades out
+     when you get there. No JS, and nothing to keep in sync. */
+  background:
+    linear-gradient(var(--paper) 34%, rgba(248,247,244,0)) top    / 100% 26px no-repeat local,
+    linear-gradient(rgba(248,247,244,0), var(--paper) 66%) bottom / 100% 34px no-repeat local,
+    radial-gradient(farthest-side at 50% 0,   rgba(19,32,56,0.13), rgba(19,32,56,0)) top    / 100% 13px no-repeat scroll,
+    radial-gradient(farthest-side at 50% 100%, rgba(19,32,56,0.16), rgba(19,32,56,0)) bottom / 100% 15px no-repeat scroll,
+    var(--paper);
+  border-radius:26px;
+  margin:-18px var(--card-inset) var(--card-bottom);
+  padding:var(--v-lg) calc(var(--pad-x) - var(--card-inset));
+  box-shadow:var(--shadow-lift), 0 26px 60px rgba(0,0,0,0.30);
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  color:var(--ink);
+  position:relative;
+  display:grid;
+  align-content:start;
+}
+/* When the content genuinely fits, centre it so the card does not sit on
+   a pool of dead paper. Measured at runtime by checkFit(), never guessed
+   from a breakpoint. */
+.slide[data-overflow="false"] .card{ align-content:center; }
+/* The paper panel waits out beat 1, then rises into the space the head
+   gives up. It stays out of the tab order and off the a11y tree until it
+   is actually on screen. */
+/* The panel is fully rendered and fully opaque from the start. It is not
+   faded or floated in: fading a block of body copy up from nothing is what
+   reads as a loading state rather than a designed move. What actually
+   reveals it is the head above it giving up its height, so the panel is
+   uncovered rather than assembled. */
+.slide .card{ transform:none; opacity:1; transition:none; }
+.slide.leaving .phase-head{ transition:none; }
+
+
+
+.ghost{
+  transition:transform var(--duration-cinematic) var(--ease-satisfying) 300ms,
+             opacity var(--duration-cinematic) var(--ease-soft) 300ms,
+             font-size var(--duration-cinematic) var(--ease-satisfying);
+}
+
+/* hairline of gold along the card lip */
+.card::before{
+  content:"";
+  position:absolute; top:0; left:26px; right:26px; height:1px;
+  background:linear-gradient(90deg, transparent, var(--gold-a60) 18%, var(--gold-a60) 82%, transparent);
+}
+
+/* Two-column card at desktop. A single measure column left the right
+   45% of every card as empty paper, which read as unfinished rather
+   than airy. List takes the wide column, the note becomes a right rail.
+   A list with no note spans both and centres, so the slides without a
+   note stay composed instead of hugging the left edge. */
+.card > .stagger{
+  display:grid;
+  grid-template-columns:minmax(0, 1.35fr) minmax(0, 0.9fr);
+  gap:var(--v-md) clamp(1.5rem, 3vw, 3.25rem);
+  align-items:start;
+}
+.card > .stagger > ul:only-child{
+  grid-column:1 / -1;
+  max-width:min(72ch, 100%);
+  /* left rule, not centred: a note-less phase should still hang its body
+     copy off the same edge as the heading above it. Centring it left the
+     bullets floating in the middle of a very wide panel. */
+  margin-inline:0;
+}
+.card > .stagger.items-list{
+  display:block;
+  max-width:min(84ch, 100%);
+  margin-inline:auto;
+}
+
+.card ul{ list-style:none; max-width:min(60ch, 100%); padding-left:0; }
+.card ul li{
+  position:relative;
+  padding-left:26px;
+  margin-bottom:var(--v-sm);
+  font-size:var(--text-lg);
+  color:var(--ink);
+  line-height:1.55;
+}
+.card ul li::before{
+  content:"";
+  position:absolute; left:0; top:0.62em;
+  width:7px; height:7px; border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 0 3px var(--gold-a14);
+}
+.card ul li b{ color:var(--navy); font-weight:600; }
+
+.note{
+  margin-top:0;
+  max-width:min(52ch, 100%);
+  border-left:3px solid var(--gold);
+  background:var(--gold-a08);
+  padding:16px 22px;
+  border-radius:0 10px 10px 0;
+  position:sticky; top:0;
+}
+.note .tag{
+  font-size:var(--text-micro);
+  font-weight:700; letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--gold-deep);
+}
+.note-body{
+  margin-top:6px;
+  font-size:var(--text-base);
+  color:var(--ink);
+  line-height:1.55;
+}
+
+/* ---------- open items ---------- */
+.items-list{ max-width:min(84ch, 100%); }
+.item-row{
+  display:flex; gap:20px; align-items:flex-start;
+  padding:15px 0;
+  border-bottom:1px solid var(--border);
+}
+.item-row:last-child{ border-bottom:none; }
+.tagpill{
+  flex-shrink:0;
+  width:clamp(88px, 11vw, 122px);
+  padding:5px 0;
+  text-align:center;
+  border:1px solid var(--gold);
+  border-radius:999px;
+  font-size:var(--text-micro);
+  font-weight:700; letter-spacing:0.09em;
+  color:var(--navy);
+  text-transform:uppercase;
+  background:var(--gold-a08);
+}
+.item-row p{
+  font-size:var(--text-lg);
+  color:var(--ink);
+  line-height:1.55;
+  padding-top:2px;
+}
+
+
+/* ===========================================================
+   LOGO, DESCENDERS, AND A CENTRED AXIS
+   =========================================================== */
+
+/* The real lockup, whited the way arborwealthstrategies.com does it: the
+   hosted PNG is the navy-on-light version, and the site turns it white with
+   brightness(0) invert(1) rather than shipping a second file. Same asset,
+   same treatment, so the deck cannot drift from the site. */
+.mark-logo{
+  height:clamp(26px, 2.6vw, 38px);
+  width:auto;
+  filter:brightness(0) invert(1);
+  opacity:0.96;
+  flex-shrink:0;
+}
+.cover .mark-logo{ height:clamp(46px, 5.6vw, 78px); opacity:1; }
+
+/* DESCENDER CLIP.
+   Each word rides up out of its own clipped box, and headings run at
+   line-height 1.06, so the box was shorter than the face's descender and
+   sheared the tail off a g, y or p ("Program" lost its g). The box is
+   grown downward and pulled back by the same amount, so the clip clears
+   the descender without moving the baseline. */
+.w{
+  padding-bottom:0.24em;
+  margin-bottom:-0.24em;
+}
+
+/* ---- CENTRED AXIS ---- */
+.cover{ align-items:center; text-align:center; }
+.cover .stagger{ display:flex; flex-direction:column; align-items:center; width:100%; }
+.cover .eyebrow{ flex-direction:column; gap:16px; justify-content:center; }
+.cover .sub, .cover .meta, .cover h1{ margin-inline:auto; }
+.rule{ margin-inline:auto; }
+
+.roadmap{ align-items:center; text-align:center; }
+.roadmap .stagger{ display:flex; flex-direction:column; align-items:center; width:100%; }
+.roadmap .eyebrow{ justify-content:center; }
+.roadmap h2, .roadmap .sub{ margin-inline:auto; }
+
+.phase-head{ align-items:center; text-align:center; }
+.phase-head .stagger{ display:flex; flex-direction:column; align-items:center; width:100%; }
+.phase-head .eyebrow{ justify-content:center; }
+.phase-head h2{ margin-inline:auto; }
+.pill{ margin-inline:auto; }
+
+/* The panel centres as a block. Bullet text itself stays ranged left:
+   centred body copy on multi-line items gives a ragged left edge that is
+   materially harder to read, and these are working notes, not a title. */
+.card > .stagger{ justify-content:center; }
+.card > .stagger > ul:only-child{ margin-inline:auto; }
+.card ul{ margin-inline:auto; }
+.note{ margin-inline:auto; }
+.items-list{ margin-inline:auto; }
+.item-row{ justify-content:center; }
+
+/* ---------- chrome ---------- */
+.navbtn{
+  position:fixed; top:50%;
+  transform:translateY(-50%);
+  width:46px; height:46px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:50%;
+  background:rgba(10,22,40,0.55);
+  border:1px solid var(--gold-a40);
+  color:var(--gold-light);
+  font-size:1.15rem;
+  z-index:60;
+  backdrop-filter:blur(3px);
+  -webkit-backdrop-filter:blur(3px);
+  transition:opacity var(--duration-quick) var(--ease-soft),
+             transform var(--duration-quick) var(--ease-snap),
+             border-color var(--duration-quick) var(--ease-soft);
+}
+.navbtn.disabled{ opacity:0.2; pointer-events:none; }
+#prev{ left:clamp(10px, 1.6vw, 24px); }
+#next{ right:clamp(10px, 1.6vw, 24px); }
+
+.counter{
+  position:fixed; top:20px; right:clamp(16px, 2.4vw, 30px);
+  font-size:var(--text-micro);
+  letter-spacing:0.12em;
+  color:var(--gold-light);
+  z-index:60;
+  font-variant-numeric:tabular-nums;
+}
+.counter .sep{ color:var(--paper-a45); margin:0 3px; }
+
+.dots{
+  position:fixed; bottom:18px; left:50%;
+  transform:translateX(-50%);
+  display:flex; gap:9px; z-index:60;
+}
+.dots button{
+  width:7px; height:7px; padding:0;
+  border-radius:999px;
+  border:1px solid var(--gold-a60);
+  background:transparent;
+  transition:width var(--duration-quick) var(--ease-satisfying),
+             background-color var(--duration-quick) var(--ease-soft);
+}
+.dots button.active{ width:22px; background:var(--gold); border-color:var(--gold); }
+
+.hint{
+  position:fixed; bottom:16px; left:clamp(16px, 2.4vw, 30px);
+  font-size:var(--text-micro);
+  letter-spacing:0.1em;
+  color:var(--paper-a45);
+  z-index:60;
+  transition:opacity var(--duration-long) var(--ease-soft);
+}
+.hint.gone{ opacity:0; }
+
+/* ---------- curtain (first paint) ---------- */
+.curtain{
+  position:fixed; inset:0; z-index:200;
+  background:var(--navy-deepest);
+  display:flex; align-items:center; justify-content:center;
+  transition:opacity var(--duration-long) var(--ease-satisfying),
+             visibility 0s linear var(--duration-long);
+}
+.curtain.lifted{ opacity:0; visibility:hidden; pointer-events:none; }
+.curtain-rule{
+  width:clamp(120px, 20vw, 260px); height:1px;
+  background:var(--gold-a24);
+  position:relative; overflow:hidden;
+}
+.curtain-rule::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform:translateX(-100%);
+  animation:sweep 1.4s var(--ease-soft) infinite;
+}
+@keyframes sweep{ to{ transform:translateX(100%); } }
+
+/* ---------- hover only where hover exists ---------- */
+@media (hover: hover){
+  .navbtn:hover{
+    transform:translateY(-50%) scale(1.07);
+    border-color:var(--gold);
+  }
+  .dots button:hover{ background:var(--gold-a60); }
+}
+
+/* ---------- layout-only breakpoints (350 / 900 / 1200) ---------- */
+@media (max-width:1200px){
+  .label{ width:clamp(88px, 12vw, 130px); }
+  /* one column below desktop: the note returns to a block under the list */
+  .card > .stagger{ grid-template-columns:minmax(0, 1fr); }
+  .card ul{ max-width:min(72ch, 100%); }
+  .note{ max-width:min(72ch, 100%); position:static; }
+}
+@media (max-width:900px){
+  .navbtn{ width:40px; height:40px; }
+  /* On narrow the panel runs nearly full height, so the band underneath has
+     to hold BOTH the rail you flew to and the pager. 38px held the pager
+     only: the rail ended up behind the panel, and the last row of a long
+     list reached the dots. This reserves the whole band. */
+  /* NOTE: this must live in a rule. Written as a bare declaration inside the
+     media block it is invalid CSS and silently dropped, which is exactly how
+     the narrow band went missing while appearing to be set. */
+  :root{ --card-bottom: min(clamp(66px, 13vw, 86px), 12vh); }
+  /* the horizontal rail cannot hold six labelled nodes on a phone:
+     rotate the whole track to a vertical ladder */
+  .track{ align-items:stretch; margin-top:var(--v-md); overflow-y:auto; }
+  .trunk{
+    left:14px; right:auto; top:0; bottom:0; width:1px; height:auto;
+    transform:scaleY(0); transform-origin:top center;
+    background:linear-gradient(180deg, transparent, var(--gold) 6%, var(--gold) 94%, transparent);
+  }
+  .slide.active .trunk{ transform:scaleY(1); }
+  .nodes{ flex-direction:column; gap:var(--v-md); padding-left:0; }
+  .node{ justify-content:flex-start; padding-left:0; }
+  .branch{ display:none; }
+  .dot{ margin-left:9px; margin-top:6px; flex-shrink:0; }
+  .label{
+    position:static;
+    transform:translateY(var(--dist-micro));
+    width:auto; text-align:left;
+    margin-left:18px;
+  }
+  .slide.active .label{ transform:translateY(0); }
+  .node.up .label, .node.down .label{ bottom:auto; top:auto; }
+  .item-row{ flex-direction:column; gap:8px; align-items:flex-start; }
+}
+@media (max-width:420px){
+  .card ul li{ font-size:var(--text-base); }
+}
+@media (max-width:560px){
+  .ghost{ display:none; }
+  .hint{ display:none; }
+}
+
+/* ---------- print / PDF ---------- */
+@media print{
+  @page{ size:A4 landscape; margin:0; }
+  html, body{ height:auto; overflow:visible; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .rail, .navbtn, .dots, .counter, .hint, .curtain, .vignette{ display:none !important; }
+  #deck{ height:auto; }
+  .slide{
+    position:relative; inset:auto;
+    opacity:1 !important; visibility:visible !important;
+    break-after:page; page-break-after:always;
+    min-height:100vh;
+  }
+  .stagger > *{ opacity:1 !important; transform:none !important; }
+  .trunk, .dot, .branch, .label, .rule{ transform:none !important; opacity:1 !important; width:auto; }
+  .trunk::after{ display:none !important; }
+  .slide .card{ transform:none !important; opacity:1 !important; }
+  .ghost{ transform:none !important; opacity:0.28 !important; }
+  .w > i{ transform:none !important; }
+  .phase[data-stage="intro"] .phase-head{ min-height:0 !important; }
+  .phase[data-stage="intro"] .card{ transform:none !important; opacity:1 !important; }
+  .card{ overflow:visible; }
+}
+
+
+/* ---- CASCADE ORDER MATTERS ----
+   The desktop rule that reveals the flown-to label is declared after the
+   narrow media block, so at equal specificity it was winning on phones too
+   and putting the label back on the pager. Restated here, last, where the
+   narrow case can actually take effect. */
+@media (max-width:900px){
+  /* kept, but held to a width that cannot run past the frame */
+  #world .label{ width:min(240px, 56vw); }
+}
+
+
+/* ---- ONE NAVIGATION CLUSTER ----
+   The arrows used to float at the vertical centre of each edge while the
+   pager sat at the bottom, so the controls for one job lived in two places.
+   They are one control now. */
+.pager{
+  position:fixed; left:50%; bottom:18px;
+  transform:translateX(-50%);
+  display:flex; align-items:center; gap:clamp(12px, 2vw, 22px);
+  z-index:60;
+  /* The rail and its labels now stay loaded through the zoom and travel
+     under this cluster, so the cluster carries its own ground rather than
+     letting label text muddy the controls. */
+  padding:8px clamp(12px, 1.6vw, 18px);
+  border-radius:999px;
+  background:rgba(9,20,34,0.72);
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
+}
+.pager .navbtn{
+  position:static; transform:none;
+  width:34px; height:34px; font-size:1rem;
+}
+.pager .dots{ position:static; transform:none; }
+@media (hover: hover){
+  .pager .navbtn:hover{ transform:scale(1.08); border-color:var(--gold); }
+}
+@media (max-width:900px){
+  .pager{ bottom:14px; gap:14px; }
+  .pager .navbtn{ width:32px; height:32px; }
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  .stagger > *{ opacity:1 !important; transform:none !important; }
+  .trunk{ transform:scaleX(1) !important; }
+  .trunk::after{ animation:none !important; opacity:0 !important; }
+  .dot{ transform:scale(1) !important; }
+  .branch{ transform:scaleY(1) !important; }
+  .label{ opacity:1 !important; }
+  .mark path, .mark circle{ stroke-dashoffset:0 !important; }
+  .rule{ width:clamp(56px, 7vw, 96px) !important; }
+  .slide{ transform:none !important; filter:none !important; }
+  .slide .card{ transform:none !important; opacity:1 !important; }
+  .ghost{ transform:none !important; opacity:0.28 !important; }
+  .w > i{ transform:none !important; }
+  .curtain-rule::after{ animation:none !important; }
+  .phase[data-stage="intro"] .phase-head{ min-height:0 !important; }
+  .phase[data-stage="intro"] .card{ transform:none !important; opacity:1 !important; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#deck">Skip to content</a>
+
+<div class="ground" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+
+<div class="curtain" id="curtain" aria-hidden="true"><div class="curtain-rule"></div></div>
+
+<div class="rail" aria-hidden="true"><div class="rail-fill" id="railFill"></div></div>
+<div class="counter" id="counter" aria-live="polite" aria-atomic="true">01<span class="sep">/</span>09</div>
+
+<div class="stage" aria-hidden="true">
+  <div class="world" id="world">
+    <div class="trunk"></div>
+    <div class="nodes">
+      <div class="node up" data-node="0" style="--n:0; left:200px">
+        <div class="branch"></div><div class="dot"></div>
+        <div class="label"><div class="ph">Phase 0</div><div class="nm">Accounts&nbsp;&amp; Tooling</div><div class="wk">Week 1–2</div></div>
+      </div>
+      <div class="node down" data-node="1" style="--n:1; left:600px">
+        <div class="branch"></div><div class="dot"></div>
+        <div class="label"><div class="ph">Phase 1</div><div class="nm">Research&nbsp;&amp; Strategy</div><div class="wk">Week 1–3</div></div>
+      </div>
+      <div class="node up" data-node="2" style="--n:2; left:1000px">
+        <div class="branch"></div><div class="dot"></div>
+        <div class="label"><div class="ph">Phase 2</div><div class="nm">Lead Sourcing</div><div class="wk">Week 2–4</div></div>
+      </div>
+      <div class="node down" data-node="3" style="--n:3; left:1400px">
+        <div class="branch"></div><div class="dot"></div>
+        <div class="label"><div class="ph">Phase 3</div><div class="nm">Creative Production</div><div class="wk">Week 3–7+</div></div>
+      </div>
+      <div class="node up" data-node="4" style="--n:4; left:1800px">
+        <div class="branch"></div><div class="dot"></div>
+        <div class="label"><div class="ph">Phase 4</div><div class="nm">Outbound Execution</div><div class="wk">Ongoing</div></div>
+      </div>
+      <div class="node down" data-node="5" style="--n:5; left:2200px">
+        <div class="branch"></div><div class="dot"></div>
+        <div class="label"><div class="ph">Phase 5</div><div class="nm">Paid Launch</div><div class="wk">Week 6–8+</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main id="deck" aria-label="Growth program roadmap">
+
+  <!-- 0: COVER -->
+  <section class="slide cover active" aria-label="Cover">
+    <div class="stagger">
+      <div class="eyebrow" style="--i:0">
+        <img class="mark-logo" src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Arbor%20Wealth%20Strategies/site-logo-hero.png" alt="Arbor Wealth Strategies">
+        Arc Garde × Arbor Wealth
+      </div>
+      <h1 style="--i:1">Growth Program</h1>
+      <div class="sub" style="--i:2">Outbound + Paid Launch: Detailed Scope of Work&nbsp;&amp;&nbsp;Timeline</div>
+      <div class="rule" style="--i:3"></div>
+      <div class="meta" style="--i:4">6 phases · Weeks 1 through 8 and&nbsp;ongoing</div>
+    </div>
+  </section>
+
+  <!-- 1: ROADMAP OVERVIEW -->
+  <section class="slide roadmap" aria-label="Roadmap overview">
+    <div class="stagger">
+      <div class="eyebrow" style="--i:0">
+        <img class="mark-logo" src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Arbor%20Wealth%20Strategies/site-logo-hero.png" alt="Arbor Wealth Strategies">
+        The Roadmap
+      </div>
+      <h2 style="--i:1">Six phases, start to launch</h2>
+      <div class="sub" style="--i:2">Where each phase begins, and roughly when.<br>Full detail on the following slides.</div>
+    </div>
+
+
+  </section>
+
+  <!-- 2: PHASE 0 -->
+  <section class="slide phase" data-stage="intro" aria-label="Phase 0, Accounts and Tooling">
+    <div class="phase-head">
+      <div class="stagger">
+        <div class="eyebrow" style="--i:0">Phase 0</div>
+        <h2 style="--i:1">Accounts &amp; Tooling</h2>
+        <div class="pill" style="--i:2">Week 1–2</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="stagger">
+        <ul style="--i:0">
+          <li>New Facebook Business Page under <b>Frank@arborwealthstrategies.com</b>.<br>The old page is tied to his New York Life days and can't be recovered or reused</li>
+          <li>Connect that page to <b>Proofpoint</b> before any finance content runs on it.<br>Hard precondition, not a nice-to-have</li>
+          <li><b>GoHighLevel</b> account creation and setup.<br>Greenlit, build the lead routing here</li>
+          <li>Start <b>A2P/10DLC verification</b> for SMS early.<br>Carrier-side queues are easy to underestimate</li>
+          <li>Stand up the master lead-tracking sheet</li>
+        </ul>
+        <div class="note" style="--i:1">
+          <div class="tag">Note</div>
+          <p class="note-body">GHL was previously flagged as not compliance‑approved for this account.<br>Since it's been greenlit, worth getting that confirmation in writing and updating the internal conflicts register so it's on record.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3: PHASE 1 -->
+  <section class="slide phase" data-stage="intro" aria-label="Phase 1, Research and Strategy">
+    <div class="phase-head">
+      <div class="stagger">
+        <div class="eyebrow" style="--i:0">Phase 1</div>
+        <h2 style="--i:1">Research &amp; Strategy</h2>
+        <div class="pill" style="--i:2">Week 1–3 · runs parallel to Phase 0</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="stagger">
+        <ul style="--i:0">
+          <li>Market, outlier and avatar research</li>
+          <li>Angle ideation</li>
+          <li>Copywriting framework</li>
+          <li>Offer crystallization.<br>Keep it <b>"complimentary consultation,"</b> never "free"</li>
+          <li>Three dedicated funnels built: business, medical, athlete</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4: PHASE 2 -->
+  <section class="slide phase" data-stage="intro" aria-label="Phase 2, Lead Sourcing">
+    <div class="phase-head">
+      <div class="stagger">
+        <div class="eyebrow" style="--i:0">Phase 2</div>
+        <h2 style="--i:1">Lead Sourcing</h2>
+        <div class="pill" style="--i:2">Week 2–4</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="stagger">
+        <ul style="--i:0">
+          <li>Scrape <b>1,500 leads</b>: 500 business owners, 500 medical professionals, 500 professional athletes</li>
+          <li>Leads load into the master tracking sheet</li>
+        </ul>
+        <div class="note" style="--i:1">
+          <div class="tag">Note</div>
+          <p class="note-body">Qualifiers for the 1,500 leads are still "to be determined by Arbor Wealth."<br>This phase can't fully start, or the list can't be trusted, until Frank or Bryan defines them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5: PHASE 3 -->
+  <section class="slide phase" data-stage="intro" aria-label="Phase 3, Creative Production Round 1">
+    <div class="phase-head">
+      <div class="stagger">
+        <div class="eyebrow" style="--i:0">Phase 3</div>
+        <h2 style="--i:1">Creative Production: Round&nbsp;1</h2>
+        <div class="pill" style="--i:2">Week 3–7+</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="stagger">
+        <ul style="--i:0">
+          <li>Script writing + description writing: <b>14 videos, 14 static creatives</b></li>
+          <li>Monday internal review with Bryan, then WestPac / Guardian compliance</li>
+          <li>Filming begins only after that greenlight lands</li>
+          <li>Editing, then revision rounds</li>
+        </ul>
+        <div class="note" style="--i:1">
+          <div class="tag">Note</div>
+          <p class="note-body">Compliance turnaround runs up to two weeks and is currently slower on staffing.<br>Budget 2–3 weeks per batch, and don't schedule filming dates until a batch is actually cleared.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6: PHASE 4 -->
+  <section class="slide phase" data-stage="intro" aria-label="Phase 4, Outbound Execution">
+    <div class="phase-head">
+      <div class="stagger">
+        <div class="eyebrow" style="--i:0">Phase 4</div>
+        <h2 style="--i:1">Outbound Execution</h2>
+        <div class="pill" style="--i:2">Ongoing, once Phase 2 qualifiers land</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="stagger">
+        <ul style="--i:0">
+          <li>10 connection requests per day, sent one by one from Frank's account</li>
+          <li>Accepted connections messaged Monday through Friday</li>
+        </ul>
+        <div class="note" style="--i:1">
+          <div class="tag">Note</div>
+          <p class="note-body">At 10 requests a day, reaching all 1,500 leads once takes roughly 30 weeks, about seven months, before any follow-up messaging.<br>Worth confirming that pace is deliberate rather than a resourcing gap.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7: PHASE 5 -->
+  <section class="slide phase" data-stage="intro" aria-label="Phase 5, Paid Launch">
+    <div class="phase-head">
+      <div class="stagger">
+        <div class="eyebrow" style="--i:0">Phase 5</div>
+        <h2 style="--i:1">Paid Launch</h2>
+        <div class="pill" style="--i:2">Week 6–8+</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="stagger">
+        <ul style="--i:0">
+          <li>Ad concepts to Bailey and Rich for compliance pre-review before any spend</li>
+          <li>Media buying begins once the page, Proofpoint and creative are all live</li>
+          <li>4-day A/B sprints, run back to back</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8: OPEN ITEMS -->
+  <section class="slide phase" data-stage="intro" aria-label="Open items before this locks">
+    <div class="phase-head">
+      <div class="stagger">
+        <div class="eyebrow" style="--i:0">Still To Confirm</div>
+        <h2 style="--i:1">Open Items Before This Locks</h2>
+      </div>
+    </div>
+    <div class="card">
+      <div class="items-list stagger">
+        <div class="item-row" style="--i:0"><div class="tagpill">Ops</div><p>GHL greenlight.<br>Get it in writing and update the conflicts register</p></div>
+        <div class="item-row" style="--i:1"><div class="tagpill">Budget</div><p>Ad spend and platform costs aren't covered by either retainer tier and aren't budgeted here</p></div>
+        <div class="item-row" style="--i:2"><div class="tagpill">Strategy</div><p>Three avatars running in parallel vs. the "stay in one niche" guidance for organic.<br>Confirm it's intentional</p></div>
+        <div class="item-row" style="--i:3"><div class="tagpill">Compliance</div><p>Cold LinkedIn outreach isn't addressed by the current channel compliance rules.<br>Open question, not assumed either way</p></div>
+        <div class="item-row" style="--i:4"><div class="tagpill">Ops</div><p>Handoff timing from the lead sheet into Smart Office isn't defined</p></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<nav class="pager" aria-label="Slides">
+  <button class="navbtn disabled" id="prev" aria-label="Previous slide">‹</button>
+  <div class="dots" id="dots" role="tablist" aria-label="Slides"></div>
+  <button class="navbtn" id="next" aria-label="Next slide">›</button>
+</nav>
+<div class="hint" id="hint">← → or swipe</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var slides  = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total   = slides.length;
+  var current = 0;
+
+  var dotsWrap = document.getElementById('dots');
+  var prevBtn  = document.getElementById('prev');
+  var nextBtn  = document.getElementById('next');
+  var counter  = document.getElementById('counter');
+  var railFill = document.getElementById('railFill');
+  var hint     = document.getElementById('hint');
+  var curtain  = document.getElementById('curtain');
+
+  /* ---- dots ---- */
+  slides.forEach(function(s, i){
+    var b = document.createElement('button');
+    b.setAttribute('role', 'tab');
+    b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+    if (i === 0) b.classList.add('active');
+    b.addEventListener('click', function(){ goTo(i); });
+    dotsWrap.appendChild(b);
+  });
+  var dotEls = Array.prototype.slice.call(dotsWrap.querySelectorAll('button'));
+
+  function pad(n){ return n < 10 ? '0' + n : String(n); }
+
+  var REDUCED = window.matchMedia &&
+                window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function render(){
+    slides.forEach(function(s, i){
+      var on = (i === current);
+      s.classList.toggle('active', on);
+      s.setAttribute('aria-hidden', on ? 'false' : 'true');
+    });
+    setCamera(current);
+    stagePhase(slides[current]);
+    wasWorld = (current >= 1 && current <= 7);
+    dotEls.forEach(function(d, i){
+      var on = (i === current);
+      d.classList.toggle('active', on);
+      d.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    counter.innerHTML = pad(current + 1) + '<span class="sep">/</span>' + pad(total);
+    railFill.style.width = ((current + 1) / total * 100) + '%';
+    prevBtn.classList.toggle('disabled', current === 0);
+    nextBtn.classList.toggle('disabled', current === total - 1);
+  }
+
+
+  /* ---------------- CAMERA ----------------
+     One world, six stations. Each deck index resolves to a camera: where
+     to look (world coords), how close, and where on screen that point
+     should sit. Computed from the live viewport every time, so a resize
+     or a phone never inherits a desktop framing. */
+  var world = document.getElementById('world');
+  var WORLD_W = 2400, RAIL_L = 200, RAIL_R = 2200, MID_Y = 300;
+  var NODE_X = [200, 600, 1000, 1400, 1800, 2200];
+
+  function fitScale(){
+    /* frame the whole rail with a margin, but never so small it turns to
+       dust on a phone, nor so large it crops on a wide monitor */
+    var vw = window.innerWidth;
+    var margin = vw < 900 ? 0.86 : 0.76;
+    return Math.min(1.15, (vw * margin) / (RAIL_R - RAIL_L));
+  }
+
+
+  /* Vertical geography: rail at x=120, nodes every 400 down from y=200. */
+  /* On narrow the label hangs to the RIGHT of the vertical rail, so centring
+     the rail pushes the whole group off to the right. Centre the GROUP: the
+     rail plus the label beside it, measured rather than assumed, since the
+     label width is a clamp against the viewport. */
+  function narrowAx(){
+    var lab = world.querySelector('.label');
+    var labW = lab ? lab.getBoundingClientRect().width : 0;
+    if (!labW) labW = Math.min(240, window.innerWidth * 0.56);
+    var groupW = labW + 34;                    /* 34px gap from rail to label */
+    return Math.max(0.08, 0.5 - (groupW / 2) / window.innerWidth);
+  }
+
+  function cameraNarrow(i){
+    var vh = window.innerHeight;
+    var RAIL_TOP = 200, RAIL_BOT = 2200, RAIL_X = 120;
+    var nodeY = function(n){ return 200 + n * 400; };
+    var fit = Math.min(0.62, (vh * 0.56) / (RAIL_BOT - RAIL_TOP));
+    if (i === 0) return { x: RAIL_X, y: (RAIL_TOP + RAIL_BOT) / 2, s: fit * 0.5, ax: 0.5, ay: 0.72 };
+    if (i === 1) return { x: RAIL_X, y: (RAIL_TOP + RAIL_BOT) / 2, s: fit,       ax: narrowAx(), ay: 0.62 };
+    if (i >= 2 && i <= 7) return { x: RAIL_X, y: nodeY(i - 2), s: fit * 2.6, ax: narrowAx(), ay: 0.90 };
+    return { x: RAIL_X, y: (RAIL_TOP + RAIL_BOT) / 2, s: fit * 0.86, ax: 0.5, ay: 0.5 };
+  }
+
+  function cameraFor(i){
+    var narrow = window.innerWidth <= 900;
+    if (narrow) return cameraNarrow(i);
+    var f = fitScale();
+    if (i === 0)  return { x: (RAIL_L + RAIL_R) / 2, y: MID_Y, s: f * 0.42, ax: 0.5, ay: 0.82 };
+    if (i === 1)  return { x: (RAIL_L + RAIL_R) / 2, y: MID_Y, s: f,        ax: 0.5, ay: narrow ? 0.66 : 0.68 };
+    if (i >= 2 && i <= 7){
+      var n = i - 2;
+      return {
+        x: NODE_X[n], y: MID_Y,
+        s: f * (narrow ? 2.4 : 3.1),
+        ax: 0.5,
+        /* the rail runs through the navy band BELOW the panel. Anywhere
+           higher and the card simply covers the node you just flew to. */
+        ay: narrow ? 0.88 : (window.innerHeight < 820 ? 0.74 : 0.82)
+      };
+    }
+    /* the closing slide pulls back out to the whole rail, book-ending the cover */
+    return { x: (RAIL_L + RAIL_R) / 2, y: MID_Y, s: f * 0.82, ax: 0.5, ay: 0.5 };
+  }
+
+  function setCamera(i, instant){
+    /* The world is on for the roadmap AND every phase. Sharing one timeline
+       across both is what lets slide 2 -> 3 be a pure camera move with
+       nothing leaving the screen. */
+    var onWorld = (i >= 1 && i <= 7);
+    var stageEl = document.querySelector('.stage');
+    stageEl.dataset.on = onWorld ? 'true' : 'false';
+
+    if (!onWorld){
+      world.dataset.mode = 'map';
+      world.removeAttribute('data-draw');
+      Array.prototype.forEach.call(world.querySelectorAll('.node'), function(n){
+        n.dataset.active = 'false';
+      });
+      return;
+    }
+
+    function place(frame, noAnim){
+      var vw = window.innerWidth, vh = window.innerHeight;
+      var tx = vw * frame.ax - frame.x * frame.s;
+      var ty = vh * frame.ay - frame.y * frame.s;
+      if (noAnim) world.style.transition = 'none';
+      world.style.transform = 'translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0) scale(' + frame.s.toFixed(4) + ')';
+      world.style.setProperty('--s', frame.s.toFixed(4));
+      if (noAnim){ void world.offsetWidth; world.style.transition = ''; }
+    }
+
+    var isPhase = (i >= 2 && i <= 7);
+    world.dataset.mode = isPhase ? 'phase' : 'map';
+    Array.prototype.forEach.call(world.querySelectorAll('.node'), function(n){
+      n.dataset.active = (isPhase && Number(n.dataset.node) === i - 2) ? 'true' : 'false';
+    });
+
+    var target = cameraFor(i);
+
+    if (instant || REDUCED){ place(target, true); world.removeAttribute('data-draw'); return; }
+
+    if (!wasWorld){
+      /* First time the rail appears, it draws itself in. */
+      place(target, true);
+      world.removeAttribute('data-draw');
+      void world.offsetWidth;
+      world.dataset.draw = '1';
+    } else {
+      /* Already on screen: never re-draw, just fly. */
+      world.removeAttribute('data-draw');
+      place(target);
+    }
+  }
+
+  var wasWorld = false;
+  var stageTimer = null;
+
+  /* Beat 1 holds while the camera flies and the title owns the frame.
+     Beat 2 hands that height to the panel. Every other phase resets to
+     'intro' as it is left, so the sequence replays on each arrival rather
+     than only the first time. Reduced motion lands straight on beat 2. */
+  function stagePhase(slide){
+    clearTimeout(stageTimer);
+    /* Reset the OTHER phases to beat 1, but never one that is still on
+       screen leaving: rearming it mid-exit slammed its panel back down,
+       which read as the choppiness. The leaving slide is rearmed by the
+       navigation code once its exit has finished. */
+    slides.forEach(function(s){
+      if (s.classList.contains('phase') && s !== slide && !s.classList.contains('leaving')){
+        s.dataset.stage = 'intro';
+      }
+    });
+    if (!slide || !slide.classList.contains('phase')) { checkFit(); return; }
+    if (REDUCED){ slide.dataset.stage = 'detail'; checkFit(); return; }
+    slide.dataset.stage = 'intro';
+    stageTimer = setTimeout(function(){
+      slide.dataset.stage = 'detail';
+      setTimeout(checkFit, 1400);
+    }, 1400);
+  }
+
+  var leaveTimer = null;
+
+  function goTo(i){
+    if (i < 0 || i >= total || i === current) return;
+
+    /* Direction drives the parallax: the incoming slide arrives from the
+       side you are travelling toward. */
+    var deck = document.getElementById('deck');
+    deck.dataset.dir = (i > current) ? 'fwd' : 'back';
+
+    var outgoing = slides[current];
+    slides.forEach(function(s){ s.classList.remove('leaving'); });
+    outgoing.classList.add('leaving');
+    clearTimeout(leaveTimer);
+    leaveTimer = setTimeout(function(){
+      outgoing.classList.remove('leaving');
+      /* now it is off screen, it is safe to rearm for next time */
+      if (outgoing.classList.contains('phase')) outgoing.dataset.stage = 'intro';
+    }, 900);
+
+    current = i;
+    render();
+    if (hint) hint.classList.add('gone');
+  }
+
+  prevBtn.addEventListener('click', function(){ goTo(current - 1); });
+  nextBtn.addEventListener('click', function(){ goTo(current + 1); });
+
+  /* ---- keyboard ---- */
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') goTo(current + 1);
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') goTo(current - 1);
+    else if (e.key === 'Home') goTo(0);
+    else if (e.key === 'End') goTo(total - 1);
+  });
+
+  /* ---- touch swipe. Ignored when the gesture starts inside a scrollable
+     card that actually has somewhere to scroll, so reading never fights
+     navigation. ---- */
+  var tx = 0, ty = 0, tScroller = null;
+  document.addEventListener('touchstart', function(e){
+    var t = e.changedTouches[0];
+    tx = t.clientX; ty = t.clientY;
+    tScroller = e.target.closest ? e.target.closest('.card, .track') : null;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e){
+    var t = e.changedTouches[0];
+    var dx = t.clientX - tx;
+    var dy = t.clientY - ty;
+    if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy)) return;
+    if (tScroller && tScroller.scrollHeight > tScroller.clientHeight + 1) return;
+    goTo(current + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+
+  /* ---- wheel / trackpad, throttled ---- */
+  var wheelLock = false;
+  document.addEventListener('wheel', function(e){
+    var sc = e.target.closest ? e.target.closest('.card, .track') : null;
+    if (sc && sc.scrollHeight > sc.clientHeight + 1){
+      var atTop = sc.scrollTop <= 0;
+      var atEnd = sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 1;
+      if (!(atTop && e.deltaY < 0) && !(atEnd && e.deltaY > 0)) return;
+    }
+    if (wheelLock || Math.abs(e.deltaY) < 18) return;
+    wheelLock = true;
+    setTimeout(function(){ wheelLock = false; }, 600);
+    goTo(current + (e.deltaY > 0 ? 1 : -1));
+  }, { passive: true });
+
+  /* ---- FIT GUARD (snap-deck standard).
+     A slide taller than the deck traps its own tail. Measure at runtime
+     rather than guessing a breakpoint: if a card overflows, let it scroll
+     and say so. Re-run on resize and after fonts land, because glue and
+     font swap both change height. ---- */
+  function checkFit(){
+    var deck = document.getElementById('deck');
+    var deckH = deck.clientHeight;
+
+    slides.forEach(function(s){
+      var card = s.querySelector('.card');
+      if (!card) return;
+      var head = s.querySelector('.phase-head');
+
+      /* Cap the panel to the space actually left under the head, measured
+         rather than modelled. Flex shrink alone left the card 50-odd px past
+         the frame at every width from 350 to 900: the head is flex-shrink:0
+         and its height changes with the two-beat stage, so no static rule can
+         know the remainder. Measuring it is the only thing that survives both
+         the stage change and a resize. */
+      var mb = parseFloat(getComputedStyle(card).marginBottom) || 0;
+      /* Derive the remainder from where the panel ACTUALLY starts, not from
+         the head height plus the negative margin. Those two disagreed by
+         24px, and the arithmetic version shipped a card 28px past the frame
+         at every width. The panel's top does not depend on its own height,
+         so reading it is stable. */
+      var top = card.getBoundingClientRect().top - deck.getBoundingClientRect().top;
+      var avail = Math.max(120, deckH - top - mb);
+      card.style.maxHeight = avail + 'px';
+
+      /* Re-read after the cap so the flag reflects the capped box. */
+      var over = card.scrollHeight > card.clientHeight + 1;
+      s.dataset.overflow = over ? 'true' : 'false';
+      card.setAttribute('tabindex', over ? '0' : '-1');
+    });
+  }
+
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){ setCamera(current, true); checkFit(); }, 140);
+  });
+
+  render();
+  setCamera(current, true);
+  checkFit();
+
+  /* ---- word-by-word split for display type ----
+     Runs AFTER ag-typography.js has glued, so a non-breaking space is
+     already inside its token and splitting on ordinary spaces can never
+     separate a glued pair. Text nodes only, so <b> and entities survive.
+     Skipped entirely under reduced motion: there is nothing to reveal and
+     the extra boxes would only complicate the static render. */
+  function splitWords(){
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var targets = document.querySelectorAll('.cover h1, .roadmap h2, .phase-head h2');
+    Array.prototype.forEach.call(targets, function(el){
+      if (el.dataset.split === 'done') return;
+      var words = el.textContent.split(/(\s+)/);
+      var frag = document.createDocumentFragment();
+      var idx = 0;
+      words.forEach(function(tok){
+        if (!tok) return;
+        if (/^\s+$/.test(tok)){ frag.appendChild(document.createTextNode(' ')); return; }
+        var span = document.createElement('span');
+        span.className = 'w';
+        var inner = document.createElement('i');
+        inner.textContent = tok;
+        inner.style.setProperty('--wi', idx++);
+        span.appendChild(inner);
+        frag.appendChild(span);
+      });
+      el.textContent = '';
+      el.appendChild(frag);
+      el.dataset.split = 'done';
+    });
+  }
+
+  /* ---- curtain lift ---- */
+  function lift(){
+    splitWords();
+    if (curtain) curtain.classList.add('lifted');
+    checkFit();
+  }
+  if (document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){ setTimeout(lift, 300); });
+  } else {
+    window.addEventListener('load', function(){ setTimeout(lift, 300); });
+  }
+  setTimeout(lift, 2100); /* hard fallback so the curtain can never stick */
+})();
+</script>
+
+
+<!-- ag-typography.js v1.0 — CANONICAL DROP-IN, inlined verbatim so the deck
+     stays a single portable file. Clears WIDOW / HYPHEN-BREAK / NUMBER-SPLIT
+     by inserting non-breaking characters; visually identical, copy unchanged. -->
+<script>
+/* =========================================================== */
+/* AG Typography Enhancer v1.0 — CANONICAL DROP-IN             */
+/* Pair with ag-typography.css. Load once, before </body>.     */
+/*                                                             */
+/* Fixes the three orphan classes CSS physically cannot reach,  */
+/* because each needs a non-breaking CHARACTER inserted into    */
+/* existing copy and no CSS property can do that:               */
+/*   WIDOW       1948  last two words glued                     */
+/*   HYPHEN-BREAK 478  compound hyphen -> U+2011                */
+/*   NUMBER-SPLIT 282  figure glued to its unit                 */
+/* (counts: reports/orphan-allpages-BEFORE-2026-08-01.md, 265pp) */
+/*                                                             */
+/* WHAT IT DOES NOT TOUCH. INTERIOR (1273) is a sizing defect - */
+/* the line cannot hold two words at that font-size — and glue  */
+/* makes it WORSE, not better. That one is ag-typography.css's  */
+/* display ceiling. Do not be tempted to "fix" it here.         */
+/*                                                             */
+/* SAFETY CONTRACT                                              */
+/*  - Substitutions are VISUALLY IDENTICAL: U+00A0 renders as a */
+/*    space, U+2011 renders as a hyphen. Nothing moves on screen*/
+/*    except the break opportunity being removed.               */
+/*  - Copy is never reworded, reordered, or re-cased. The AG    */
+/*    rule that an approved copy doc is canon is not bent here: */
+/*    the CHARACTERS a reader sees are unchanged.               */
+/*  - Idempotent. Running twice changes nothing the second time.*/
+/*  - Never runs inside code, pre, inputs, or [data-ag-no-type].*/
+/*  - Glue is APPLY-VERIFY-REVERT, not predicted. Every change  */
+/*    is made, then measured, then undone if the document got   */
+/*    wider or the block got taller. Predicting safety was the  */
+/*    first design and it was circular for shrink-to-fit boxes  */
+/*    (see transact() below). Overflow is a worse defect than   */
+/*    the widow, and glue that adds a line manufactures the     */
+/*    interior orphan it was meant to prevent.                  */
+/* =========================================================== */
+
+(function () {
+  'use strict';
+
+  var NBSP = '\u00A0';
+  var NBHY = '\u2011';                       // non-breaking hyphen
+  var SKIP = 'code,pre,kbd,samp,script,style,textarea,input,select,svg,[data-ag-no-type]';
+
+  function skip(el) { return el.closest(SKIP) !== null; }
+
+  /* WHICH ELEMENTS GET TYPESET.
+     Not a selector list. The first version used
+     'h1..h6,p,li,blockquote,figcaption,dd,dt' and left a third of the
+     widows untouched on the first real build, because production copy
+     lives in div.kpi-label, div.header-title and bare spans just as
+     often as in <p>. A hand-maintained tag list will always drift from
+     the markup it is supposed to cover.
+
+     Instead this uses the SAME definition the orphan detector uses: an
+     element that owns its own line boxes, meaning it has text and no
+     block-level element inside it. Checker and fixer therefore agree on
+     what a "text block" is, which is the only way the fixer can be
+     expected to clear what the checker finds.
+
+     Ancestors of block boxes are marked in one pass, so the test stays
+     O(1) per element instead of rescanning the subtree for each. */
+  var OWNS = function (d) { return d !== 'inline' && d !== 'contents' && d !== 'none'; };
+  var SPLITS = /^(block|flow-root|list-item|table|table-row|table-cell|table-caption|grid|flex)$/;
+
+  function textBlocks(scope) {
+    var all = scope.querySelectorAll('*');
+    var hasBlockChild = new WeakSet();
+    var disp = new WeakMap();
+    var i, el, d, n;
+    for (i = 0; i < all.length; i++) {
+      el = all[i];
+      d = getComputedStyle(el).display;
+      disp.set(el, d);
+      if (SPLITS.test(d)) {
+        n = el.parentElement;
+        while (n && !hasBlockChild.has(n)) { hasBlockChild.add(n); n = n.parentElement; }
+      }
+    }
+    var out = [];
+    for (i = 0; i < all.length; i++) {
+      el = all[i];
+      if (hasBlockChild.has(el)) continue;
+      if (!OWNS(disp.get(el))) continue;
+      if (!el.textContent || !el.textContent.trim()) continue;
+      out.push(el);
+    }
+    return out;
+  }
+
+  /* ---- THE SAFETY NET: apply, verify, revert ----
+     The first version tried to PREDICT whether glue was safe, by
+     measuring the pair against el.getBoundingClientRect().width. That
+     test is circular for any shrink-to-fit box (inline-block, flex or
+     grid item, table cell, width:fit-content): such an element's width
+     IS its current wrapped content width, so the pair always "fits" and
+     the guard always passes, right up until the element grows past its
+     container.
+
+     Predicting is the wrong shape. Apply the change, measure the real
+     consequence, and put it back if it made anything worse. Two
+     invariants, both cheap:
+
+       1. The document must not get wider. Turning a widow into
+          horizontal overflow trades a visible-but-minor defect for an
+          invisible-and-major one.
+       2. The element must not get TALLER. Glue removes a break
+          opportunity, so it can push a word down and add a line, which
+          manufactures the one-word interior line it was meant to
+          prevent. Osborne's INTERIOR count went 12 -> 14 that way.
+          Glue that adds a line is glue that failed.
+
+     Same lesson as the detector: measure the outcome, do not trust the
+     model of it. */
+  function transact(el, mutate) {
+    var docW0 = document.documentElement.scrollWidth;
+    var h0 = el.getBoundingClientRect().height;
+    var undo = mutate();
+    if (!undo) return;
+    var grewWide = document.documentElement.scrollWidth > docW0;
+    var grewTall = el.getBoundingClientRect().height > h0 + 1;
+    if (grewWide || grewTall) undo();
+  }
+
+  /* ---- Pass 1: compound hyphens ----
+     Browsers break at an author's hyphen with no CSS asking them to, so
+     "revenue-generating" becomes "revenue-" / "generating". Only short
+     compounds are glued: a long one may legitimately need the break
+     rather than overflowing. */
+  function fixHyphens(text) {
+    return text.replace(/([A-Za-z]{2,})-([A-Za-z]{2,})/g, function (m, a, b) {
+      /* CAP AT 16. A non-breaking hyphen makes the whole compound one
+         unbreakable token, and ag-defensive puts `overflow-wrap:
+         break-word` on body as the URL safety net. So a glued compound
+         that no longer fits its line does not overflow, it gets broken
+         MID-WORD instead: HYPHEN-BREAK is traded for WORD-BREAK, which
+         is the uglier of the two. Measured on Osborne Advisory at cap
+         22 (HYPHEN-BREAK 3->2 but WORD-BREAK 2->3).
+         16 keeps the common compounds (high-ticket, long-form, Co-Host,
+         top-performing) and leaves the long ones alone, since those are
+         exactly the ones most likely to not fit. The transaction guard
+         cannot catch this one: a mid-word break changes neither the
+         element height nor the document width. */
+      if (m.length > 16) return m;
+      return a + NBHY + b;
+    });
+  }
+
+  /* ---- Pass 2: figure + unit ----
+     "$5,100 per month" must not break after the figure. Glue the number
+     to the ONE short word that follows it. */
+  function fixNumbers(text) {
+    return text.replace(
+      /([$£€¥]?\d[\d,.]*(?:%|k|m|bn?)?)(\s+)([A-Za-z][A-Za-z'-]{0,11})(?=[\s.,;:!?)]|$)/gi,
+      function (m, num, sp, word) {
+        if (sp.indexOf('\n') !== -1 && sp.length > 40) return m;
+        return num + NBSP + word;
+      }
+    );
+  }
+
+  /* ---- Pass 3: widow glue ----
+     Bind the final two words so the last line can never hold one word.
+     Width-guarded: if the pair cannot fit the container on its own, the
+     glue is refused and the widow is left for a human, because an
+     overflow is worse than a widow. */
+  function fixWidow(el) {
+    var last = null, n;
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    while ((n = walker.nextNode())) { if (n.textContent.trim()) last = n; }
+    if (!last) return;
+
+    var t = last.textContent;
+    var trimmedEnd = t.replace(/\s+$/, '');
+    var m = /^([\s\S]*?)([^\s\u00A0]+)([ \t]+)([^\s\u00A0]+)$/.exec(trimmedEnd);
+    if (!m) return;                          // fewer than two words in the last node
+    if ((m[2] + m[4]).length > 24) return;   // implausibly long pair, do not even try
+
+    transact(el, function () {
+      last.textContent = m[1] + m[2] + NBSP + m[4] + t.slice(trimmedEnd.length);
+      return function () { last.textContent = t; };
+    });
+  }
+
+  function run(root) {
+    var scope = root || document;
+    var els = textBlocks(scope);
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (skip(el)) continue;
+      if (el.getAttribute('data-ag-typeset') === '1') continue;
+
+      /* Text passes first: they only ever REPLACE a break opportunity,
+         so they cannot change the character a reader sees. */
+      var tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+      var node, edits = [];
+      while ((node = tw.nextNode())) {
+        if (!node.textContent.trim()) continue;
+        if (node.parentElement && node.parentElement.closest(SKIP)) continue;
+        var out = fixNumbers(fixHyphens(node.textContent));
+        if (out !== node.textContent) edits.push([node, node.textContent, out]);
+      }
+      /* Hyphen and number glue also remove break opportunities, so they
+         get the same apply-verify-revert treatment as the widow pass.
+         All of an element's text edits are one transaction: they are
+         judged by their combined effect, which is what the reader sees. */
+      if (edits.length) {
+        transact(el, function () {
+          for (var j = 0; j < edits.length; j++) edits[j][0].textContent = edits[j][2];
+          return function () {
+            for (var k = 0; k < edits.length; k++) edits[k][0].textContent = edits[k][1];
+          };
+        });
+      }
+
+      /* Widow glue LAST: it measures, so it must run after the text is
+         final or it would measure a string that no longer exists. */
+      fixWidow(el);
+      el.setAttribute('data-ag-typeset', '1');
+    }
+  }
+
+  function boot() {
+    /* Webfonts change metrics, and the widow guard MEASURES. Running
+       before the real face has loaded measures a page that never
+       existed, exactly the failure the HTML-to-PDF path hits without a
+       virtual-time budget. Wait for fonts, then typeset. */
+    var go = function () { try { run(document); } catch (e) { /* never break the page for typography */ } };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(go).catch(go);
+    else go();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+
+  /* Re-typeset after dynamic content. Clears the stamp on the subtree so
+     new nodes are processed and existing ones are not double-glued. */
+  window.AGTypography = {
+    run: run,
+    refresh: function (root) {
+      var scope = root || document;
+      var done = scope.querySelectorAll('[data-ag-typeset]');
+      for (var i = 0; i < done.length; i++) done[i].removeAttribute('data-ag-typeset');
+      run(scope);
+    }
+  };
+})();
+
+</script>
+</body>
+</html>
