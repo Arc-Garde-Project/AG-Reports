@@ -52,6 +52,15 @@
 <html lang="en" class="is-loading">
 <head>
 <meta charset="UTF-8">
+<!-- REQUIRED IN PRODUCTION. ag-reports sets "trailingSlash": false, so Vercel
+     308s /presentations/a-greater-hope/ down to /presentations/a-greater-hope
+     and every relative URL then resolves against /presentations/ instead of
+     this folder. Without this the whole deck 404s live: all four stylesheets,
+     all four scripts, the loops, the frame sets and the favicon.
+     Same fix c-design, cogentic, moneyboymax, muevelo, gold-coast-roofing and
+     california-landlords-union already carry. It must stay first in <head>,
+     ahead of anything with a relative href, and CSP allows it via base-uri 'self'. -->
+<base href="/presentations/a-greater-hope/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
 <meta name="robots" content="noindex, nofollow">
