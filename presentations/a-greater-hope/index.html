@@ -794,6 +794,24 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
     }
   }).observe(stage, { attributes: true, attributeFilter: ['data-released'] });
 
+  /* NEVER REVEAL A BLANK STAGE. The curtain fails open at 14s so a reader is
+     never trapped behind it. On a slow connection that fires BEFORE the engine
+     has called enter(0), and .hseg-text only becomes visible when the engine
+     sets data-visible, so the reader landed on an empty hero. Measured on the
+     live site at 5Mbps: lift at 14981ms with hero opacity still 0.
+     If the curtain has lifted and the stage still has not shown anything, the
+     first segment's text is revealed directly. The engine setting it again a
+     moment later is a no-op. */
+  window.addEventListener('ag:ready', function () {
+    setTimeout(function () {
+      if (stage.querySelector('.hseg-text[data-visible="true"]')) return;
+      var first = stage.querySelector('.hseg-text');
+      if (first) first.dataset.visible = 'true';
+      var seg = stage.querySelector('.hseg');
+      if (seg && seg.dataset.active !== 'true') seg.dataset.active = 'true';
+    }, 120);
+  }, { once: true });
+
   /* THE SKY REACHES BEHIND THE CREDIT LINE. Its height is whatever the footer
      actually measures, which changes as the line wraps: one line on a desktop,
      three at 350px. Hard-coding that number is what broke this at 600px, so it
