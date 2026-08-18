@@ -1805,12 +1805,15 @@ h1,h2,h3,h4,p,li,a,button,label,
          know the remainder. Measuring it is the only thing that survives both
          the stage change and a resize. */
       var mb = parseFloat(getComputedStyle(card).marginBottom) || 0;
-      /* Derive the remainder from where the panel ACTUALLY starts, not from
-         the head height plus the negative margin. Those two disagreed by
-         24px, and the arithmetic version shipped a card 28px past the frame
-         at every width. The panel's top does not depend on its own height,
-         so reading it is stable. */
-      var top = card.getBoundingClientRect().top - deck.getBoundingClientRect().top;
+      /* offsetTop, NOT getBoundingClientRect().top.
+         The rect includes the transform, and during beat 1 the panel is
+         parked a full viewport below its resting place. Measuring the rect
+         there computed "no room left", clamped the cap to its 120px floor,
+         and held it there for the whole entrance, so the panel arrived as a
+         120px sliver and then snapped 374px taller the moment the guard
+         re-ran. That snap was the chop. offsetTop is the LAYOUT position and
+         ignores transforms, so the cap is right from the first frame. */
+      var top = card.offsetTop;
       var avail = Math.max(120, deckH - top - mb);
       card.style.maxHeight = avail + 'px';
 
