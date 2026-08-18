@@ -575,7 +575,7 @@ h1,h2,h3,h4,p,li,a,button,label,
 
    min-height carries it because a percentage animates against the flex
    parent, where height:auto is not interpolable. */
-.phase[data-stage="intro"]:not(.leaving) .phase-head{ min-height:100%; }
+
 
 
 /* ---- TICKS ALWAYS UP WHEN FLOWN INTO ----
@@ -599,28 +599,83 @@ h1,h2,h3,h4,p,li,a,button,label,
   transform-origin:left center;
   animation:wTrunk var(--duration-cinematic) var(--ease-satisfying) 180ms both;
 }
-#world[data-draw="1"] .dot{
-  animation:wDot var(--duration-medium) var(--ease-snap) both;
-  animation-delay:calc(560ms + var(--n) * 90ms);
-}
-#world[data-draw="1"] .branch{
-  animation:wBranch var(--duration-quick) var(--ease-satisfying) both;
-  animation-delay:calc(680ms + var(--n) * 90ms);
-}
-#world[data-draw="1"] .label{
-  animation:wFade var(--duration-medium) var(--ease-settle) both;
-  animation-delay:calc(760ms + var(--n) * 90ms);
-}
 #world[data-draw="1"] .trunk::after{
   animation:runline 2.1s var(--ease-soft) 1.4s 1 forwards;
 }
-@keyframes wTrunk{ from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
-@keyframes wDot{ from{ transform:translate(-50%,-50%) scale(0); } to{ transform:translate(-50%,-50%) scale(1); } }
-@keyframes wBranch{ from{ transform:scaleY(0); } to{ transform:scaleY(1); } }
+@keyframes wTrunk{ from{ transform:scaleX(0); } to{ transform:scaleX(1); } } to{ transform:translate(-50%,-50%) scale(1); } } to{ transform:scaleY(1); } }
 @keyframes wFade{ from{ opacity:0; } to{ opacity:1; } }
 
 .world .node.up .branch{ transform-origin:bottom; }
 .world .node.down .branch{ transform-origin:top; }
+
+
+/* ===========================================================
+   PHASE PINS — a circle per phase, sitting on the line
+   Constant SCREEN size, never inflated by the camera: only their
+   POSITIONS scale, the way map pins behave. That is what stops them
+   colliding when the camera pushes in, and it means the type inside is
+   always set at its designed size instead of being blown up or shrunk.
+   =========================================================== */
+:root{ --pin: 176px; }
+
+.world .node{
+  position:absolute; top:300px;
+  width:0; height:0;
+  display:block; flex:none;
+  transform:none;
+}
+
+.world .pin{
+  position:absolute; left:0; top:0;
+  width:var(--pin); height:var(--pin);
+  border-radius:50%;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:4px; padding:16px;
+  text-align:center;
+  background:
+    radial-gradient(circle at 50% 34%, rgba(13,31,53,0.96), rgba(9,20,34,0.93) 72%);
+  border:1px solid var(--gold-a40);
+  box-shadow:0 10px 30px rgba(0,0,0,0.34);
+  /* counter-scaled: the circle keeps its screen size at every zoom */
+  transform:translate(-50%, -50%) scale(calc(1 / var(--s, 1)));
+  transform-origin:50% 50%;
+}
+.world .node[data-active="true"] .pin{
+  border-color:var(--gold);
+  box-shadow:0 0 0 5px var(--gold-a14), 0 0 40px var(--gold-a40), 0 10px 30px rgba(0,0,0,0.34);
+  background:
+    radial-gradient(circle at 50% 34%, rgba(18,40,68,0.97), rgba(10,24,40,0.94) 72%);
+}
+
+.world .pin .ph{
+  font-size:0.62rem; font-weight:700; letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--gold);
+}
+.world .pin .nm{
+  font-family:'Playfair Display', Georgia, serif;
+  font-size:0.95rem; line-height:1.16; color:var(--paper);
+  max-width:100%;
+  overflow-wrap:normal;      /* body sets break-word; a name must not shear */
+  word-break:keep-all;
+  hyphens:none;
+}
+.world .pin .wk{
+  font-size:0.68rem; color:var(--paper-a60);
+  font-variant-numeric:tabular-nums;
+}
+
+/* Six circles that hold three lines each cannot fit a 390x667 screen at
+   once: at any diameter big enough to read, the column is taller than the
+   phone. The week line goes, because it is already stated on the phase's own
+   pill, and the circle shrinks to a size where all six fit above the pager
+   with the type still legible. */
+@media (max-width:900px){ :root{ --pin: 92px; }
+  .world .pin{ padding:7px; gap:2px; }
+  .world .pin .nm{ font-size:0.63rem; line-height:1.1; }
+  .world .pin .ph{ font-size:0.44rem; letter-spacing:0.1em; }
+  .world .pin .wk{ display:none; }
+}
 
 /* ---------- phase slides ---------- */
 .phase{ height:100%; }
@@ -642,7 +697,6 @@ h1,h2,h3,h4,p,li,a,button,label,
   padding:var(--v-lg) var(--pad-x) calc(var(--v-lg) + 18px);
   overflow:hidden;
   min-height:0;
-  transition:min-height var(--duration-cinematic) var(--ease-satisfying);
 }
 
 /* ghost numeral: depth without noise */
@@ -745,7 +799,7 @@ h1,h2,h3,h4,p,li,a,button,label,
    reads as a loading state rather than a designed move. What actually
    reveals it is the head above it giving up its height, so the panel is
    uncovered rather than assembled. */
-.slide .card{ transform:none; opacity:1; transition:none; }
+.slide .card{ opacity:1; }
 .slide.leaving .phase-head{ transition:none; }
 
 
@@ -912,6 +966,28 @@ h1,h2,h3,h4,p,li,a,button,label,
 .note{ margin-inline:auto; }
 .items-list{ margin-inline:auto; }
 .item-row{ justify-content:center; }
+
+
+/* ---- THE TWO BEATS, DONE ON THE COMPOSITOR ----
+   Beat 1 holds the title in the middle of the frame with the panel parked
+   below it. Beat 2 returns both to their resting places. This used to
+   animate the head's min-height, which reflows the entire slide on every
+   frame and is exactly why it looked chopped. Nothing here touches layout:
+   the head and the panel each ride a transform, so the browser can hand the
+   whole move to the compositor. */
+.phase .phase-head,
+.phase .card{
+  transition:transform var(--duration-cinematic) var(--ease-satisfying);
+  will-change:transform;
+}
+.phase[data-stage="intro"]:not(.leaving) .phase-head{
+  transform:translateY(calc((100vh - 100%) / 2 - var(--v-lg)));
+}
+.phase[data-stage="intro"]:not(.leaving) .card{
+  transform:translateY(100vh);
+}
+.phase[data-stage="detail"] .phase-head,
+.phase[data-stage="detail"] .card{ transform:translateY(0); }
 
 /* ---------- chrome ---------- */
 .navbtn{
@@ -1099,8 +1175,9 @@ h1,h2,h3,h4,p,li,a,button,label,
      letting label text muddy the controls. */
   padding:8px clamp(12px, 1.6vw, 18px);
   border-radius:999px;
-  background:rgba(9,20,34,0.72);
-  backdrop-filter:blur(7px);
+  /* opaque enough that a pin travelling past behind it is fully covered */
+  background:rgba(9,20,34,0.94);
+  backdrop-filter:blur(9px);
   -webkit-backdrop-filter:blur(7px);
 }
 .pager .navbtn{
@@ -1114,6 +1191,37 @@ h1,h2,h3,h4,p,li,a,button,label,
 @media (max-width:900px){
   .pager{ bottom:14px; gap:14px; }
   .pager .navbtn{ width:32px; height:32px; }
+}
+
+
+/* ---- NARROW GEOMETRY, RESTATED LAST ----
+   The pin block redefines .world .node, and it is declared after the narrow
+   media block. A media query adds no specificity, so `top:300px` was winning
+   at phone widths and every pin stacked on the same point. Order decides it,
+   so the vertical rail is restated here, after. */
+/* ---- NARROW: TWO COLUMNS ----
+   Under the roadmap heading a phone leaves about 390px of band. Six circles
+   big enough to read need roughly 580px in a single column, so they were
+   climbing into the heading. Staggering them either side of the rail halves
+   the column height and it fits, with the circles still clear of each other
+   because the diagonal step is longer than the vertical one. */
+@media (max-width:900px){
+  :root{ --pin: 76px; }
+  .world .node{
+    left:calc(300px + (var(--n) - 0.5) * 0px) !important;
+    top:calc(200px + var(--n) * 200px) !important;
+  }
+  .world .node:nth-child(odd){  left:204px !important; }
+  .world .node:nth-child(even){ left:396px !important; }
+  .world .trunk{
+    left:300px !important; right:auto !important;
+    top:200px !important; bottom:200px !important;
+    width:2px !important; height:auto !important; margin-left:-1px !important;
+  }
+  .world .pin .wk{ display:none; }
+  .world .pin{ padding:6px; }
+  .world .pin .nm{ font-size:0.58rem; line-height:1.08; }
+  .world .pin .ph{ font-size:0.4rem; letter-spacing:0.08em; }
 }
 
 /* ---------- reduced motion ---------- */
@@ -1156,32 +1264,26 @@ h1,h2,h3,h4,p,li,a,button,label,
 <div class="counter" id="counter" aria-live="polite" aria-atomic="true">01<span class="sep">/</span>09</div>
 
 <div class="stage" aria-hidden="true">
-  <div class="world" id="world">
+  <div class="world" id="world" data-ag-no-type>
     <div class="trunk"></div>
     <div class="nodes">
-      <div class="node up" data-node="0" style="--n:0; left:200px">
-        <div class="branch"></div><div class="dot"></div>
-        <div class="label"><div class="ph">Phase 0</div><div class="nm">Accounts&nbsp;&amp; Tooling</div><div class="wk">Week 1–2</div></div>
+      <div class="node" data-node="0" style="--n:0; left:200px">
+        <div class="pin"><div class="ph">Phase 0</div><div class="nm">Accounts&nbsp;&amp; Tooling</div><div class="wk">Week 1–2</div></div>
       </div>
-      <div class="node down" data-node="1" style="--n:1; left:600px">
-        <div class="branch"></div><div class="dot"></div>
-        <div class="label"><div class="ph">Phase 1</div><div class="nm">Research&nbsp;&amp; Strategy</div><div class="wk">Week 1–3</div></div>
+      <div class="node" data-node="1" style="--n:1; left:600px">
+        <div class="pin"><div class="ph">Phase 1</div><div class="nm">Research&nbsp;&amp; Strategy</div><div class="wk">Week 1–3</div></div>
       </div>
-      <div class="node up" data-node="2" style="--n:2; left:1000px">
-        <div class="branch"></div><div class="dot"></div>
-        <div class="label"><div class="ph">Phase 2</div><div class="nm">Lead Sourcing</div><div class="wk">Week 2–4</div></div>
+      <div class="node" data-node="2" style="--n:2; left:1000px">
+        <div class="pin"><div class="ph">Phase 2</div><div class="nm">Lead Sourcing</div><div class="wk">Week 2–4</div></div>
       </div>
-      <div class="node down" data-node="3" style="--n:3; left:1400px">
-        <div class="branch"></div><div class="dot"></div>
-        <div class="label"><div class="ph">Phase 3</div><div class="nm">Creative Production</div><div class="wk">Week 3–7+</div></div>
+      <div class="node" data-node="3" style="--n:3; left:1400px">
+        <div class="pin"><div class="ph">Phase 3</div><div class="nm">Creative Production</div><div class="wk">Week 3–7+</div></div>
       </div>
-      <div class="node up" data-node="4" style="--n:4; left:1800px">
-        <div class="branch"></div><div class="dot"></div>
-        <div class="label"><div class="ph">Phase 4</div><div class="nm">Outbound Execution</div><div class="wk">Ongoing</div></div>
+      <div class="node" data-node="4" style="--n:4; left:1800px">
+        <div class="pin"><div class="ph">Phase 4</div><div class="nm">Outbound Execution</div><div class="wk">Ongoing</div></div>
       </div>
-      <div class="node down" data-node="5" style="--n:5; left:2200px">
-        <div class="branch"></div><div class="dot"></div>
-        <div class="label"><div class="ph">Phase 5</div><div class="nm">Paid Launch</div><div class="wk">Week 6–8+</div></div>
+      <div class="node" data-node="5" style="--n:5; left:2200px">
+        <div class="pin"><div class="ph">Phase 5</div><div class="nm">Paid Launch</div><div class="wk">Week 6–8+</div></div>
       </div>
     </div>
   </div>
@@ -1446,6 +1548,33 @@ h1,h2,h3,h4,p,li,a,button,label,
   var WORLD_W = 2400, RAIL_L = 200, RAIL_R = 2200, MID_Y = 300;
   var NODE_X = [200, 600, 1000, 1400, 1800, 2200];
 
+
+  /* ---- clearance, measured not guessed ----
+     The rail sits low, and each pin is a circle centred ON it, so the line
+     has to clear the pager by the pin's RADIUS plus the pager's own height.
+     Both are read from the DOM, so changing the pin size or the pager can
+     never silently start clipping. */
+  function pinSize(){
+    var pin = world.querySelector('.pin');
+    return pin ? pin.getBoundingClientRect().width : 176;
+  }
+  function railAy(){
+    var vh = window.innerHeight;
+    var pager = document.querySelector('.pager');
+    var pagerH = pager ? (vh - pager.getBoundingClientRect().top) : 64;
+    var need = pinSize() / 2 + pagerH + 22;
+    return Math.min(0.9, Math.max(0.5, (vh - need) / vh));
+  }
+  /* Scale that spreads the pins far enough apart that the circles cannot
+     touch, and still fits the whole rail on screen. */
+  function railScale(vwFrac, span, gapAxis){
+    var pin = pinSize();
+    var room = gapAxis * vwFrac;
+    var fit  = (room - pin) / span;            /* whole rail visible */
+    var apart = (pin + 14) / 400;              /* 400 = node spacing */
+    return Math.max(apart, Math.min(fit, 1.15));
+  }
+
   function fitScale(){
     /* frame the whole rail with a margin, but never so small it turns to
        dust on a phone, nor so large it crops on a wide monitor */
@@ -1469,34 +1598,42 @@ h1,h2,h3,h4,p,li,a,button,label,
   }
 
   function cameraNarrow(i){
-    var vh = window.innerHeight;
-    var RAIL_TOP = 200, RAIL_BOT = 2200, RAIL_X = 120;
-    var nodeY = function(n){ return 200 + n * 400; };
-    var fit = Math.min(0.62, (vh * 0.56) / (RAIL_BOT - RAIL_TOP));
-    if (i === 0) return { x: RAIL_X, y: (RAIL_TOP + RAIL_BOT) / 2, s: fit * 0.5, ax: 0.5, ay: 0.72 };
-    if (i === 1) return { x: RAIL_X, y: (RAIL_TOP + RAIL_BOT) / 2, s: fit,       ax: narrowAx(), ay: 0.62 };
-    if (i >= 2 && i <= 7) return { x: RAIL_X, y: nodeY(i - 2), s: fit * 2.6, ax: narrowAx(), ay: 0.90 };
-    return { x: RAIL_X, y: (RAIL_TOP + RAIL_BOT) / 2, s: fit * 0.86, ax: 0.5, ay: 0.5 };
+    var vh = window.innerHeight, vw = window.innerWidth;
+    var RAIL_TOP = 200, RAIL_BOT = 1200, RAIL_X = 300;
+    var nodeY = function(n){ return 200 + n * 200; };
+    var pin = pinSize();
+    var pager = document.querySelector('.pager');
+    var pagerTop = pager ? pager.getBoundingClientRect().top - 8 : vh - 70;
+    /* The roadmap heading owns the top of the frame, so the column has to be
+       centred in what is LEFT under it, not in the viewport. Measured, because
+       the heading is two lines at some widths and three at others. */
+    var head = document.querySelector('.slide.roadmap .stagger');
+    var headBot = head ? head.getBoundingClientRect().bottom + 12 : 0;
+    var band = pagerTop - headBot;
+    /* spread just far enough that the circles cannot touch, and no further,
+       so the whole column still clears the pager */
+    /* adjacent pins sit on opposite sides, so the step between them is the
+       diagonal, not the vertical: 192 across by 200 down in world units. */
+    var apart = (pin + 8) / Math.hypot(192, 200);
+    var fitAll = (band - pin) / (RAIL_BOT - RAIL_TOP);
+    var f = Math.max(apart, Math.min(fitAll, 0.62));
+    if (i === 0) return { x: RAIL_X, y: (RAIL_TOP + RAIL_BOT) / 2, s: f * 0.5, ax: 0.5, ay: 0.72 };
+    if (i === 1) return { x: RAIL_X, y: (RAIL_TOP + RAIL_BOT) / 2, s: f, ax: 0.5, ay: (headBot + band / 2) / vh };
+    if (i >= 2 && i <= 7) return { x: RAIL_X, y: nodeY(i - 2), s: f, ax: 0.5, ay: railAy() };
+    return { x: RAIL_X, y: (RAIL_TOP + RAIL_BOT) / 2, s: f * 0.86, ax: 0.5, ay: 0.5 };
   }
 
   function cameraFor(i){
     var narrow = window.innerWidth <= 900;
     if (narrow) return cameraNarrow(i);
-    var f = fitScale();
+    var vw = window.innerWidth;
+    var f = railScale(0.94, RAIL_R - RAIL_L, vw);
+    var ay = railAy();
     if (i === 0)  return { x: (RAIL_L + RAIL_R) / 2, y: MID_Y, s: f * 0.42, ax: 0.5, ay: 0.82 };
-    if (i === 1)  return { x: (RAIL_L + RAIL_R) / 2, y: MID_Y, s: f,        ax: 0.5, ay: narrow ? 0.66 : 0.68 };
+    if (i === 1)  return { x: (RAIL_L + RAIL_R) / 2, y: MID_Y, s: f,        ax: 0.5, ay: ay };
     if (i >= 2 && i <= 7){
-      var n = i - 2;
-      return {
-        x: NODE_X[n], y: MID_Y,
-        s: f * (narrow ? 2.4 : 3.1),
-        ax: 0.5,
-        /* the rail runs through the navy band BELOW the panel. Anywhere
-           higher and the card simply covers the node you just flew to. */
-        ay: narrow ? 0.88 : (window.innerHeight < 820 ? 0.74 : 0.82)
-      };
+      return { x: NODE_X[i - 2], y: MID_Y, s: f * 2.2, ax: 0.5, ay: ay };
     }
-    /* the closing slide pulls back out to the whole rail, book-ending the cover */
     return { x: (RAIL_L + RAIL_R) / 2, y: MID_Y, s: f * 0.82, ax: 0.5, ay: 0.5 };
   }
 
