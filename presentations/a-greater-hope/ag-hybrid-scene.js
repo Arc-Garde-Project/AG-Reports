@@ -103,16 +103,38 @@
       return pattern.replace(/%0(\d+)d/, (_, w) => String(i + 1).padStart(parseInt(w, 10), '0'));
     }
 
-    function loadFrame(url, arr, idx) {
-      return new Promise((res, rej) => {
+    /* A FRAME REQUEST MUST ALWAYS SETTLE.
+       This used to resolve only on load and reject only on error. An <img> that
+       neither fires is entirely possible when the browser stalls or drops a
+       request under load, and the batch loop below awaits Promise.all, so one
+       hung request wedged the whole pipeline permanently.
+       That is exactly what happened in production: measured on the live site,
+       frame loading STOPPED at 7.5s with scrub 1 at 160 of 298 and scrub 2 at
+       77 of 298, both mid-batch, and nothing more arrived for the next twenty
+       seconds. The Plate 2 -> 3 transition had no frames to draw, which is why
+       it showed no motion.
+       Now every request settles: one retry, then it gives up and resolves
+       anyway so the loop advances. A frame that never arrives is simply absent
+       from the array, and draw() already falls back to the nearest one it has. */
+    function loadFrame(url, arr, idx, attempt) {
+      return new Promise(res => {
         const img = new Image();
+        let done = false;
+        const finish = ok => {
+          if (done) return; done = true;
+          clearTimeout(timer);
+          if (ok) return res(true);
+          if (!attempt) return res(loadFrame(url, arr, idx, 1));  // one retry
+          res(false);
+        };
+        const timer = setTimeout(() => { img.src = ''; finish(false); }, 12000);
         img.decoding = 'async';
         img.onload = async () => {
           try { arr[idx] = await createImageBitmap(img); }
           catch (_) { arr[idx] = img; }
-          res();
+          finish(true);
         };
-        img.onerror = () => rej(new Error('frame failed: ' + url));
+        img.onerror = () => finish(false);
         img.src = url;
       });
     }
@@ -131,6 +153,36 @@
       segs.forEach(x => { if (x.kind === 'scrub' && x.count) { want += x.gateCount || x.count; have += x.loaded || 0; } });
       const pct = want ? Math.min(1, have / want) : 0;
       window.dispatchEvent(new CustomEvent('ag:hybrid-progress', { detail: { pct } }));
+    }
+
+    /* A LOW-RESOLUTION PROXY, LOADED AHEAD OF EVERYTHING ELSE, so a transition
+       can MOVE long before its full frame set exists.
+       The full sets are 298 frames and about 9MB each. Measured at 8Mbps, the
+       second one is not complete until roughly 29 seconds, and a reader arrives
+       well before that. That is why the Plate 2 -> Plate 3 scrub read as a
+       frozen picture: the frame index was advancing correctly across frames
+       that had not arrived.
+       The decimated set already built for phones is 43 frames at 640x360, about
+       half a megabyte, and lands in about a second. Desktop now loads it too and
+       draw() falls back to it, so the scrub animates immediately at low
+       resolution and sharpens as the real frames land. Started before the full
+       sets so it is first in the queue rather than stuck behind 9MB. */
+    function loadProxy(s) {
+      const m = s.cfg.mobile;
+      if (!m || s.proxy) return;
+      s.proxy = new Array(m.count);
+      s.proxyCount = m.count;
+      (async () => {
+        for (let start = 0; start < m.count; start += BATCH) {
+          const slice = [];
+          for (let i = start; i < Math.min(start + BATCH, m.count); i++) {
+            slice.push(loadFrame(expand(m.framesPath, i), s.proxy, i, 0));
+          }
+          await Promise.all(slice);
+          if (s.ctx && !s.lastFrame && s.proxy[0]) draw(s, 0);   // first sign of life
+          await new Promise(r => setTimeout(r, 0));
+        }
+      })();
     }
 
     async function loadScrub(s, gate) {
@@ -158,14 +210,18 @@
       let gateResolve;
       s.gatePromise = new Promise(r => { gateResolve = r; });
       if (!gate) gateResolve();
+      // resolves when every frame in this segment has settled, one way or the
+      // other. The gate promise cannot serve for this: ungated it resolves at once.
+      let doneResolve;
+      s.donePromise = new Promise(r => { doneResolve = r; });
 
       (async () => {
         let failed = 0;
         for (let start = 0; start < s.count; start += BATCH) {
           const slice = [];
           for (let i = start; i < Math.min(start + BATCH, s.count); i++) {
-            slice.push(loadFrame(expand(src.framesPath, i), s.frames, i)
-              .then(() => { s.loaded++; }, () => { failed++; }));
+            slice.push(loadFrame(expand(src.framesPath, i), s.frames, i, 0)
+              .then(ok => { if (ok) s.loaded++; else failed++; }));
           }
           await Promise.all(slice);
           reportProgress();
@@ -178,6 +234,7 @@
           console.error(`AG Hybrid: segment ${s.i} lost ${failed}/${s.count} frames.`);
         }
         gateResolve();
+        doneResolve();
         reportProgress();
       })();
 
@@ -199,17 +256,26 @@
       if (!s.frames || !s.ctx || !s.count) return;
       const c = Math.max(0, Math.min(s.count - 1, idx));
       const want = Math.floor(c), b = Math.min(want + 1, s.count - 1), t = c - want;
-      let a = want, fa = s.frames[a];
+      let fa = s.frames[want];
+      const exact = !!fa;
+      /* The proxy is consulted BEFORE walking back through the full set. A
+         low-resolution frame at the RIGHT index beats a sharp one at the wrong
+         index: the first keeps the transition moving, the second freezes it. */
+      if (!fa && s.proxy && s.proxyCount) {
+        const pi = Math.round((want / Math.max(1, s.count - 1)) * (s.proxyCount - 1));
+        fa = s.proxy[pi] || null;
+      }
       if (!fa) {
-        for (let k = want - 1; k >= 0; k--) { if (s.frames[k]) { fa = s.frames[k]; a = k; break; } }
+        for (let k = want - 1; k >= 0; k--) { if (s.frames[k]) { fa = s.frames[k]; break; } }
       }
       if (!fa) fa = s.lastFrame;          // nothing behind it yet: hold the last painted image
       if (!fa) return;                    // genuinely nothing has arrived, leave the warm ground
       s.ctx.globalAlpha = 1;
       s.ctx.drawImage(fa, 0, 0, s.canvas.width, s.canvas.height);
       s.lastFrame = fa;
-      // only blend toward the next frame when the exact one was available
-      if (a === want && t > 0 && a !== b && s.frames[b]) {
+      // blend toward the next frame ONLY when the exact full-resolution frame
+      // was the one drawn; blending a sharp neighbor over a proxy flickers
+      if (exact && t > 0 && want !== b && s.frames[b]) {
         s.ctx.globalAlpha = t;
         s.ctx.drawImage(s.frames[b], 0, 0, s.canvas.width, s.canvas.height);
         s.ctx.globalAlpha = 1;
@@ -440,6 +506,12 @@
         opener.addEventListener('canplay', r, { once: true });
         setTimeout(r, 8000);                       // never hang on a stalled video
       }) : Promise.resolve();
+
+      /* Proxies first, for every scrub, before a single full frame is asked
+         for. They are small and they are what guarantees the transitions move
+         at all on a slow connection. Desktop only: phones drop scrub segments
+         from the DOM entirely, and there the decimated set IS the source. */
+      if (!isNarrow) segs.forEach(s => { if (s.kind === 'scrub') loadProxy(s); });
 
       await Promise.all([videoReady, loadScrub(segs[1], true)]);
 
