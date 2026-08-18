@@ -349,15 +349,28 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
 
    Content sits on the SAME cream scrim used on plates 1-3, measured at 7.52:1.
    Before this it was bare ink on a bright sky and it washed out. */
-.sec--cream { position: relative; overflow: hidden; isolation: isolate;
-  background: var(--cream); padding-top: clamp(3rem, 8vw, 5.5rem); }
+/* THE SKY EXTENDS PAST THE SECTION, rather than the footer being dragged up
+   into it. The first attempt pulled the credit line up with a negative margin,
+   which meant the lift had to equal the footer's own height. That height
+   changes as the line wraps (39px at 1440, 83px at 350), so a clamp that fit
+   nine widths broke the tenth. --foot-h is measured from the live element, so
+   the geometry stops being a guess.
+   overflow:hidden moved off the section and onto .cost-sky, which is what
+   actually needs to clip the scaled video. */
+.sec--cream { position: relative; isolation: isolate;
+  background: var(--cream); padding-top: clamp(3rem, 8vw, 5.5rem);
+  padding-bottom: clamp(3.5rem, 8vw, 6rem); }
 
 /* the sky rises into frame off the back of Plate 3 */
-.cost-sky { position: absolute; inset: 0; z-index: 0; overflow: hidden;
+.cost-sky { position: absolute; left: 0; right: 0; top: 0;
+  bottom: calc(-1 * var(--foot-h, 0px)); z-index: 0; overflow: hidden;
   /* The clouds have to meet Plate 3 at the seam. A long transparent lead-in
-     left a white gap that read as a gap, not a bridge. */
-  -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.55) 0, #000 4%, #000 88%, transparent 100%);
-          mask-image: linear-gradient(180deg, rgba(0,0,0,0.55) 0, #000 4%, #000 88%, transparent 100%); }
+     left a white gap that read as a gap, not a bridge.
+     The tail used to fade to transparent at 88-100% so the section could blend
+     into the paper footer beneath it. That footer is now ON the sky, so the
+     fade is gone and the footage holds all the way to the bottom edge. */
+  -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.55) 0, #000 4%, #000 100%);
+          mask-image: linear-gradient(180deg, rgba(0,0,0,0.55) 0, #000 4%, #000 100%); }
 /* phone / reduced-motion fallback: one still, no video */
 .sec--cream[data-film="still"] .cost-sky {
   background: url("cost-sky-mobile.jpg") center/cover no-repeat; }
@@ -369,7 +382,8 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
 
 /* a soft warm wash so the type has something to sit on even at the brightest
    part of the footage */
-.sec--cream::after { content: ""; position: absolute; inset: 0; z-index: 1;
+.sec--cream::after { content: ""; position: absolute; left: 0; right: 0; top: 0;
+  bottom: calc(-1 * var(--foot-h, 0px)); z-index: 1;
   pointer-events: none;
   background: linear-gradient(180deg, rgba(253,248,242,0.30) 0%, rgba(253,248,242,0.10) 30%,
                                        rgba(253,248,242,0.10) 70%, rgba(253,248,242,0.55) 100%); }
@@ -445,8 +459,22 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   .cost-film { transform: none; }
 }
 
-.pagefoot { padding: clamp(2.5rem,6vw,4rem) 0 clamp(3rem,7vw,5rem); text-align: center; color: var(--ink-faint); font-size: 0.88rem; }
-.pagefoot svg { width: 14px; fill: var(--sky-400); }
+/* THE CREDIT LINE SITS ON THE FOOTAGE. It used to be a separate band on plain
+   paper below the cost section, which read as a hard rule across the foot of
+   the page. It is now pulled up into that section's bottom padding so the sky
+   runs behind it and the page ends on the image rather than on a seam.
+   The chip is the same cream scrim every other block on this section uses. */
+.pagefoot { position: relative; z-index: 3; text-align: center;
+  padding: clamp(1.5rem, 3.4vw, 2.4rem) 0 clamp(2rem, 4.5vw, 3.2rem);
+  color: var(--ink-soft); font-size: 0.88rem; }
+.foot-chip { display: inline-block; max-width: 100%;
+  padding: 0.5rem 1.05rem; border-radius: 999px;
+  background: var(--scrim-firm); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.5); }
+.pagefoot b { font-weight: 700; color: var(--ink); }
+@media (max-width: 900px) {
+  .foot-chip { padding: 0.55rem 0.95rem; line-height: 1.5; }
+}
 
 /* ===== AG Motion v2.5 ==================================================== */
 .reveal, .reveal-stagger > * { opacity: 0; transform: translateY(21px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
@@ -696,14 +724,13 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   <!-- No CTA band. Presentation law. -->
 </main>
 
+<!-- The credit line rides ON the sky, not on a band of paper under it. It stays
+     a body-level <footer> so it keeps the page's contentinfo landmark, and is
+     pulled up into the cost section's bottom padding instead of being nested
+     inside <main>, which would demote it to a generic footer. -->
 <footer class="pagefoot">
   <div class="shell">
-    <p>
-      <svg viewBox="0 0 200 190" aria-hidden="true" focusable="false" style="display:inline-block;vertical-align:-2px;margin-right:0.5rem">
-        <path d="M100,180 C40,130 10,95 10,62 C10,32 32,12 58,12 C76,12 92,22 100,38 C108,22 124,12 142,12 C168,12 190,32 190,62 C190,95 160,130 100,180 Z"/>
-      </svg>
-      Presentation made by <b>Arc Garde</b> &nbsp;&middot;&nbsp; Prepared for A&nbsp;Greater&nbsp;Hope &nbsp;&middot;&nbsp; August&nbsp;2026
-    </p>
+    <p><span class="foot-chip">Presentation made by <b>Arc Garde</b> &nbsp;&middot;&nbsp; Prepared for A&nbsp;Greater&nbsp;Hope &nbsp;&middot;&nbsp; August&nbsp;2026</span></p>
   </div>
 </footer>
 
@@ -756,6 +783,23 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
       releaseLenis();
     }
   }).observe(stage, { attributes: true, attributeFilter: ['data-released'] });
+
+  /* THE SKY REACHES BEHIND THE CREDIT LINE. Its height is whatever the footer
+     actually measures, which changes as the line wraps: one line on a desktop,
+     three at 350px. Hard-coding that number is what broke this at 600px, so it
+     is measured instead. Falls back to 0, which simply leaves the sky ending at
+     the section edge as it did before. */
+  (function () {
+    var foot = document.querySelector('.pagefoot');
+    var sec = document.querySelector('.sec--cream');
+    if (!foot || !sec) return;
+    function sync() { sec.style.setProperty('--foot-h', foot.offsetHeight + 'px'); }
+    sync();
+    if (window.ResizeObserver) new ResizeObserver(sync).observe(foot);
+    else window.addEventListener('resize', sync);
+    window.addEventListener('load', sync);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+  })();
 })();
 
 /* ═══ ASCENT — What It Costs ══════════════════════════════════════════════
