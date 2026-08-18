@@ -91,7 +91,9 @@
      the exact glyphs that render ("ARC GARDE" / "AG", and "Presents" which CSS
      uppercases) rather than pulling two whole families for 17 characters. -->
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&text=ACDEGR&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&text=EFNPRSTefnprst&display=swap" rel="stylesheet">
+<!-- digits and % are in the subset because the loader shows a live percentage;
+     without them the readout falls back to a system face mid-count -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600&text=EFNPRSTefnprst0123456789%25&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="ag-cursor.css">
 <link rel="stylesheet" href="ag-scroll.css">
 <link rel="stylesheet" href="ag-curtain.css">
@@ -534,7 +536,15 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
       <div class="ld-wm ld-gold">ARC&nbsp;GARDE</div>
       <div class="ld-rule"></div>
       <div class="ld-sub">Presents</div>
-      <div class="ld-progress" aria-hidden="true"><i></i></div>
+      <!-- No second hairline here. The brand phase already draws .ld-rule, and
+           a progress bar directly beneath it read as the same line twice. The
+           number is the progress indicator; the dots carry the motion. -->
+      <div class="ld-load">
+        <div class="ld-readout">
+          <span class="ld-pct">0%</span>
+          <span class="ld-dots"><b></b><b></b><b></b></span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
