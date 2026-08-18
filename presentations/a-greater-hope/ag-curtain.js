@@ -1,105 +1,68 @@
-/* =========================================================== */
-/* AG Curtain — Orchestrator (CANONICAL DROP-IN, locked)        */
-/* Source of truth: sectors/web/standards/AG-CURTAIN-STANDARD.md */
-/* Loads LAST so it can wait on the other AG systems.           */
-/* Holds MIN_DISPLAY, fails open at MAX_TIMEOUT, lifts + removes */
-/* the curtain, fires `ag:ready`. SESSION-GATED: the full intro */
-/* plays once per visit (sessionStorage) so multi-page sites do  */
-/* not replay it on every navigation; repeat loads reveal at     */
-/* once. Mount the curtain as the FIRST child of <body>.        */
-/* =========================================================== */
+/* ═══════════════════════════════════════════════════════════════════
+   AG CURTAIN — "Arc Garde Presents" presentation loader, orchestrator
+   -------------------------------------------------------------------
+   The AG presentation loader, lifted from the deployed decks (dr-dani-b,
+   c-design, arbor-growth-roadmap, all identical). Phases: load -> brand,
+   then lift, then remove.
+
+   ONE ADAPTATION, and it is the reason the curtain exists on this deck.
+   The standard schedules the lift off `window.load`. That does not work
+   here: the stage's rest states are <video> and its scrub frames are
+   fetched by the engine AFTER boot, so neither holds up `load`. Left as
+   the standard has it, the curtain would lift before the thing it exists
+   to hide had arrived. It therefore ALSO waits on `ag:hybrid-ready`, the
+   engine's own signal, and MAX rises from 6000 to 14000 because the
+   opening loop alone is ~8.5MB at 1080p and the stock 6s fail-open would
+   fire in front of a still-empty stage.
+
+   Everything else, including the 2520 minimum and the 1400ms phase turn,
+   is the standard untouched.
+   ═══════════════════════════════════════════════════════════════════ */
 (function () {
-  var MIN_DISPLAY_MS = 2520;   /* sweep-reveal: emblem 0-1120, sweep+reveal 1260-2160, hold ~360, then lift */
-  /* ADAPTED for this page. The stock 6000 fails open before a video-led stage
-     can possibly be ready: the opening loop alone is ~7MB at 1080p and the
-     first scrub set is ~10MB. Failing open early would show exactly the
-     half-loaded stage the curtain exists to hide. Still fails open, just later. */
-  var MAX_TIMEOUT_MS = 14000;
-  var CLEANUP_DELAY_MS = 900;
-  var SESSION_KEY = 'agCurtainShown';
+  var C = document.querySelector('.ag-curtain'), root = document.documentElement;
+  if (!C) { root.classList.remove('is-loading'); return; }
 
-  var root = document.documentElement;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var MIN = 2520, BRAND_AT = 1400, CLEANUP = 900, MAX = 14000;
+  var start = performance.now(), done = false;
 
-  function removeCurtain() {
-    var c = document.querySelector('.ag-curtain');
-    if (c && c.parentNode) c.parentNode.removeChild(c);
-  }
-
-  // Session gate: if the intro already played this visit, skip it (no replay
-  // on internal navigation across a multi-page static site).
-  var seen = false;
-  try { seen = sessionStorage.getItem(SESSION_KEY) === '1'; } catch (e) {}
-  if (seen) {
-    root.classList.remove('is-loading');
-    root.classList.add('is-ready');
-    removeCurtain();
-    return;
-  }
-
-  var startTime = (window.performance && performance.now) ? performance.now() : Date.now();
-  var revealed = false;
-
-  function waitForReadiness() {
-    var signals = [];
-    if (document.fonts && document.fonts.ready) signals.push(document.fonts.ready);
-    if (document.readyState !== 'complete') {
-      signals.push(new Promise(function (resolve) { window.addEventListener('load', resolve, { once: true }); }));
-    }
-    /* ADAPTED: window 'load' does NOT cover this page. The scrub frames are
-       fetched by the engine after boot and the rest loops are <video>, neither
-       of which holds up 'load'. ag:hybrid-ready is the engine's own signal that
-       the opening loop and the first transition are actually decoded, so the
-       curtain waits on the thing it is supposed to be waiting on. */
-    if (document.querySelector('[data-hybrid-stage]')) {
-      signals.push(new Promise(function (resolve) {
-        window.addEventListener('ag:hybrid-ready', resolve, { once: true });
-      }));
-    }
-    return Promise.all(signals);
-  }
-
-  function now() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
-
-  function reveal() {
-    if (revealed) return;
-    revealed = true;
-    try { sessionStorage.setItem(SESSION_KEY, '1'); } catch (e) {}
+  function lift() {
+    if (done) return; done = true;
     root.classList.remove('is-loading');
     root.classList.add('is-ready');
     window.dispatchEvent(new CustomEvent('ag:ready'));
-    setTimeout(removeCurtain, CLEANUP_DELAY_MS);
+    setTimeout(function () { if (C.parentNode) C.parentNode.removeChild(C); }, CLEANUP);
   }
 
-  function boot() {
-    var ready = waitForReadiness();
-    var timeout = new Promise(function (resolve) { setTimeout(resolve, MAX_TIMEOUT_MS); });
-    Promise.race([ready, timeout]).catch(function () {}).then(function () {
-      var remaining = Math.max(0, MIN_DISPLAY_MS - (now() - startTime));
-      setTimeout(reveal, remaining);
-    });
-  }
+  if (reduce) { lift(); return; }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot, { once: true });
-  } else {
-    boot();
-  }
+  setTimeout(function () { C.setAttribute('data-phase', 'brand'); }, BRAND_AT);
 
-  /* Real progress on the bar. The stock indeterminate slider tells the viewer
-     nothing while a video-led stage pulls its assets, which reads as a hang.
-     The engine emits ag:hybrid-progress with a 0..1 fraction. */
-  (function () {
-    var bar = document.querySelector('.ag-curtain-load__bar');
-    var label = document.querySelector('.ag-curtain-load__label');
-    if (!bar) return;
-    var fill = bar.querySelector('i');
+  /* Real progress on the hairline. The engine reports a 0..1 fraction as the
+     frame sets arrive; the bar only reveals once there is something to show. */
+  var prog = C.querySelector('.ld-progress'), fill = prog && prog.querySelector('i');
+  if (prog && fill) {
     window.addEventListener('ag:hybrid-progress', function (e) {
-      var pct = Math.round((e.detail && e.detail.pct || 0) * 100);
-      bar.classList.add('is-determinate');
-      if (fill) fill.style.width = pct + '%';
-      if (label) label.textContent = 'Loading ' + pct + '%';
+      var pct = e && e.detail && typeof e.detail.pct === 'number' ? e.detail.pct : 0;
+      if (pct > 0) prog.classList.add('is-live');
+      fill.style.width = Math.max(0, Math.min(1, pct)) * 100 + '%';
     });
-  })();
+  }
 
-  window.AGCurtain = { reveal: reveal };
+  /* Both signals must land: the document finishing, and the engine saying the
+     stage is actually ready to be looked at. */
+  var signals = [];
+  if (document.readyState === 'complete') signals.push(Promise.resolve());
+  else signals.push(new Promise(function (res) {
+    window.addEventListener('load', res, { once: true });
+  }));
+  signals.push(new Promise(function (res) {
+    window.addEventListener('ag:hybrid-ready', res, { once: true });
+  }));
+
+  Promise.all(signals).then(function () {
+    setTimeout(lift, Math.max(0, MIN - (performance.now() - start)));
+  });
+
+  setTimeout(lift, MAX);   /* fail open: never trap the reader behind the curtain */
 })();

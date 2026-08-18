@@ -24,11 +24,16 @@
   backwards. pullback-v3 = Plate 1 -> Plate 2. calm-v4 = Plate 2 -> Plate 3.
 
   ASSEMBLED. ag-defensive v1.0, ag-typography v1.0, ag-motion v2.5 (static
-  sections), ag-scroll v1.2 (Lenis, off the stage), ag-cursor v2.1, ag-curtain
-  v2.5, plus ag-hybrid-scene v1.0 whose loader/draw path is lifted from
-  ag-sequence v1.0. NOT used: ag-header, ag-button (presentation law forbids a
-  header bar and a CTA). ag-curtain IS used, by Quinten's explicit override on
-  2026-08-18: a video-led stage that pops in half-loaded is worse than the rule.
+  sections), ag-scroll v1.2 (Lenis, off the stage), ag-cursor v2.1, plus
+  ag-hybrid-scene v1.0 whose loader/draw path is lifted from ag-sequence v1.0.
+  NOT used: ag-header, ag-button (presentation law forbids a header bar and a
+  CTA).
+
+  THE LOADER is the AG presentation curtain, "Arc Garde Presents", lifted from
+  the deployed decks. It replaced ag-curtain v2.5 (the generic Sweep-Reveal) on
+  2026-08-18 because that is not what AG presentations open with. Present by
+  exception at all: presentation law says no loading screen, overridden because
+  a video-led stage that pops in half-loaded is worse than the rule.
 
   COPY WALL. Every client-facing line is lifted verbatim from the approved deck.
   Nothing here was written in Claude Code.
@@ -51,7 +56,7 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="robots" content="noindex, nofollow">
 <!-- the curtain is what opens the page, so the browser chrome matches its ground -->
-<meta name="theme-color" content="#2B2C3F">
+<meta name="theme-color" content="#0a0a0a">
 <!-- favicon.ico alone: it already carries 16/32/48, and every extra <link rel=icon>
      is another real fetch against the LOCKED 1400KB phone budget. -->
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
@@ -70,6 +75,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,SOFT,WONK,wght@9..144,0..100,0..1,300..600&family=Nunito+Sans:opsz,wght@6..12,300..800&display=swap" rel="stylesheet">
+<!-- Cinzel + DM Sans exist ONLY for the AG curtain's wordmark, which the
+     presentation loader standard specifies. This takes the page to four
+     families against the two-family build rule; the curtain is Arc Garde's
+     signature layer and the standard names these faces, so they are subset to
+     the exact glyphs that render ("ARC GARDE" / "AG", and "Presents" which CSS
+     uppercases) rather than pulling two whole families for 17 characters. -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&text=ACDEGR&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&text=EFNPRSTefnprst&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="ag-cursor.css">
 <link rel="stylesheet" href="ag-scroll.css">
 <link rel="stylesheet" href="ag-curtain.css">
@@ -163,14 +176,10 @@ button { background: none; border: 0; cursor: pointer; }
   --pad: clamp(1.125rem, 0.262rem + 3.68vw, 3rem);
   --gap: clamp(1rem, 0.5rem + 2vw, 2rem);
 
-  /* Curtain, brand-tokened. ag-curtain defaults to the AG gold thread; the
-     brandkit wins. The ground is the logo's indigo taken down to the same
-     luminance the old neutral slate sat at (0.0264 against 0.0276), so it
-     reads as the mark's dark end rather than a generic charcoal. White on it
-     measures 13.74:1. */
-  --curtain-bg: #2B2C3F;
-  --curtain-on: #B2CEE6;
-  --curtain-on-soft: #D7E5F1;
+  /* No --curtain-* tokens. The AG presentation loader is Arc Garde's own
+     signature and carries its gold thread inline; it is deliberately NOT
+     brand-tokened to the client. The three tokens that used to sit here fed
+     the Sweep-Reveal curtain and became dead the moment it was replaced. */
 }
 body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: var(--text-base); }
 .shell { max-width: 1180px; margin-inline: auto; padding-inline: var(--pad); }
@@ -467,30 +476,32 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
 </head>
 <body>
 
-<!-- AG Curtain v2.5, lifted from ag-components. Present by exception: the
-     presentation format law says no loading screen, and Quinten overrode it on
-     2026-08-18 because a video-led stage that pops in half-loaded is worse.
-     The emblem slot carries A Greater Hope's own heart mark. -->
-<div class="ag-curtain" role="status" aria-live="polite" aria-label="Loading the presentation">
-  <div class="ag-curtain-slot">
-    <!-- The real mark, not a stand-in. The slot was carrying a generic heart
-         path drawn from the stock line-art pattern; this is A Greater Hope's
-         own badge, cut off its black plate to a transparent alpha (the source
-         is RGB, so the black had to be removed or it would have shown as a
-         square on the curtain ground). -->
-    <div class="ag-curtain-emblem ag-curtain-emblem--mark">
-      <picture>
-        <source srcset="agh-logo-256.webp" type="image/webp">
-        <img src="agh-logo-256.png" alt="" width="256" height="256" decoding="async" fetchpriority="high">
-      </picture>
+<!-- THE AG PRESENTATION LOADER. This deck opened with ag-curtain v2.5, the
+     generic web-build Sweep-Reveal, which is the wrong one: every deployed AG
+     presentation opens with "Arc Garde Presents" instead. Corrected to the
+     standard on Quinten's instruction, 2026-08-18.
+
+     Present by exception either way: presentation format law says no loading
+     screen, overridden because a video-led stage that pops in half-loaded is
+     worse than the rule. -->
+<div class="ag-curtain" data-phase="load" aria-hidden="true">
+  <div class="ld-layer ld-boot">
+    <div class="ld-boot__in">
+      <div class="ld-mono ld-gold">AG</div>
+      <div class="ld-bar"><i></i></div>
+      <div class="ld-dots"><b></b><b></b><b></b></div>
     </div>
-    <div class="ag-curtain-sweep" aria-hidden="true"></div>
-    <div class="ag-curtain-load">
-      <span class="ag-curtain-load__label">Loading</span>
-      <span class="ag-curtain-load__bar" aria-hidden="true"><i></i></span>
+  </div>
+  <div class="ld-layer ld-brand">
+    <div class="ld-brand__in">
+      <div class="ld-wm ld-gold">ARC&nbsp;GARDE</div>
+      <div class="ld-rule"></div>
+      <div class="ld-sub">Presents</div>
+      <div class="ld-progress" aria-hidden="true"><i></i></div>
     </div>
   </div>
 </div>
+<noscript><style>.ag-curtain{display:none!important} html.is-loading{overflow:auto!important}</style></noscript>
 
 <a class="skip" href="#main">Skip to content</a>
 
