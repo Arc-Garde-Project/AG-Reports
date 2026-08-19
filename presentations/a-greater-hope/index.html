@@ -665,7 +665,7 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   </section>
 
   <!-- ── SCRUB 1 · Plate 1 → Plate 2 ─────────────────────────────────────── -->
-  <section class="hseg" style="--ox:53%" data-segment='{"kind":"scrub","framesPath":"frames-scrub1/frame_%04d.webp","count":298,"width":1280,"height":720,"mobile":{"framesPath":"frames-scrub1-phone/frame_%04d.webp","count":26,"width":338,"height":600}}'>
+  <section class="hseg" style="--ox:53%" data-segment='{"kind":"scrub","framesPath":"frames-scrub1/frame_%04d.webp","count":298,"width":1280,"height":720,"mobile":{"framesPath":"frames-scrub1-phone/frame_%04d.webp","count":21,"width":338,"height":600}}'>
     <canvas aria-hidden="true"></canvas>
   </section>
 
@@ -707,7 +707,7 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   </section>
 
   <!-- ── SCRUB 2 · Plate 2 → Plate 3 ─────────────────────────────────────── -->
-  <section class="hseg" style="--ox:56%" data-segment='{"kind":"scrub","framesPath":"frames-scrub2/frame_%04d.webp","count":298,"width":1280,"height":720,"mobile":{"framesPath":"frames-scrub2-phone/frame_%04d.webp","count":26,"width":338,"height":600}}'>
+  <section class="hseg" style="--ox:56%" data-segment='{"kind":"scrub","framesPath":"frames-scrub2/frame_%04d.webp","count":298,"width":1280,"height":720,"mobile":{"framesPath":"frames-scrub2-phone/frame_%04d.webp","count":21,"width":338,"height":600}}'>
     <canvas aria-hidden="true"></canvas>
   </section>
 
@@ -770,7 +770,7 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
      the <footer> inside it still maps to the page's contentinfo landmark. -->
 <div class="sky-scope">
   <div class="cost-sky" aria-hidden="true">
-    <canvas class="cost-scrub" width="1280" height="720"></canvas>
+    <canvas class="cost-scrub" width="1280" height="720" data-phone-size="338x600"></canvas>
   </div>
 
 <main id="main">
@@ -1033,7 +1033,13 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
     window.dispatchEvent(new CustomEvent('ag:cost-ready'));
   }
 
-  if (narrow || reduced) {
+  /* THE PHONE GETS THE MOVING SKY TOO (Quinten, 2026-08-19). It used to fall
+     back to one still image here, so the fourth scene was the only one that did
+     not move on a phone while every plate did. It now scrubs the same footage
+     from a portrait set: 14 frames rather than 141, cross-faded so the step
+     between them is not visible, which is what makes 14 affordable inside the
+     LOCKED 1400KB. Reduced motion still gets the still, which is the point. */
+  if (reduced) {
     scope.dataset.film = 'still';
     announce();
     return;
@@ -1041,6 +1047,10 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
 
   var cv = scope.querySelector('.cost-scrub');
   if (!cv) { announce(); return; }
+  /* narrow, not PHONE: PHONE is declared further down, so var hoisting made it
+     undefined here and the canvas stayed 1280x720 while the frames were
+     portrait. That stretched a 338x600 image across a landscape box. */
+  if (narrow) { cv.width = 338; cv.height = 600; }
   var ctx = cv.getContext('2d', { alpha: false });
   ctx.fillStyle = '#876F58';
   ctx.fillRect(0, 0, cv.width, cv.height);
@@ -1050,7 +1060,9 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
      clock no matter what the reader did. 141 frames, the forward half of the
      cloud loop decimated 4:1, drive off position through .sky-scope, so the
      ascent happens because you scroll. */
-  var COUNT = 141, frames = new Array(COUNT), got = 0, failed = 0;
+  var PHONE = narrow;
+  var COUNT = PHONE ? 14 : 141, frames = new Array(COUNT), got = 0, failed = 0;
+  var DIR = PHONE ? 'frames-cloud-phone/' : 'frames-cloud/';
 
   function grab(i, attempt) {
     return new Promise(function (res) {
@@ -1068,7 +1080,7 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
         finish(true);
       };
       img.onerror = function () { finish(false); };
-      img.src = 'frames-cloud/frame_' + String(i + 1).padStart(4, '0') + '.webp';
+      img.src = DIR + 'frame_' + String(i + 1).padStart(4, '0') + '.webp';
     });
   }
 
@@ -1095,12 +1107,28 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
     announce();
   })();
 
+  function nearest(i) {
+    if (frames[i]) return frames[i];
+    for (var k = i; k >= 0; k--) if (frames[k]) return frames[k];
+    for (var k2 = i; k2 < COUNT; k2++) if (frames[k2]) return frames[k2];
+    return null;
+  }
+  /* CROSS-FADED. At 141 frames rounding to the nearest was invisible. The phone
+     set is 14, where rounding would read as a slideshow, so the pair either
+     side of the position is blended by the fraction between them. Same code
+     path on both, since a blend at 141 frames costs nothing and is a no-op
+     whenever the position lands on a frame. */
   function paint(idx) {
-    var i = Math.max(0, Math.min(COUNT - 1, Math.round(idx)));
-    var f = frames[i];
-    if (!f) { for (var k = i; k >= 0; k--) { if (frames[k]) { f = frames[k]; break; } } }
-    if (!f) return;
-    ctx.drawImage(f, 0, 0, cv.width, cv.height);
+    var clamped = Math.max(0, Math.min(COUNT - 1, idx));
+    var lo = Math.floor(clamped), hi = Math.min(COUNT - 1, lo + 1), t = clamped - lo;
+    var a = nearest(lo);
+    if (!a) return;
+    ctx.globalAlpha = 1;
+    ctx.drawImage(a, 0, 0, cv.width, cv.height);
+    if (t > 0.001 && hi !== lo) {
+      var b = frames[hi];
+      if (b) { ctx.globalAlpha = t; ctx.drawImage(b, 0, 0, cv.width, cv.height); ctx.globalAlpha = 1; }
+    }
   }
 
   /* Position through the scope, 0 at its top edge meeting the stage and 1 when
