@@ -211,6 +211,48 @@
 
 html { background: var(--paper); }
 
+/* ---------- Grain and vignette ----------
+   Both lifted from the house pattern (.grain / .vignette in
+   presentations/arbor-growth-roadmap), retuned from that deck's navy to this
+   one's cream - the house values are 0.055 overlay noise and a 0.42 BLACK
+   vignette, and 0.42 black on paper is a bruise.
+
+   The grain is the point. Measured on the deployed page, the field's local
+   contrast was 0.35 - mathematically smooth. Nothing physical is smooth at
+   that scale, and a surface with no tooth is the single clearest tell that a
+   background was computed rather than made. Multiply rather than overlay,
+   because overlay on near-white paper has almost nothing to darken against.
+
+   Both are static, both are pointer-events:none, and neither repaints: they
+   cost one composited layer each and nothing per frame. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.19;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+  background-size: 160px 160px;
+}
+
+/* the frame gets weight, in the brand's plum rather than black, so the field
+   falls away at the corners and the copy sits in a pool of light */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(126% 100% at 50% 42%,
+    rgba(96, 68, 116, 0) 62%,
+    rgba(96, 68, 116, 0.028) 82%,
+    rgba(72, 46, 92, 0.075) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain { opacity: 0.14; }
+}
+
 /* ---------- The backdrop ----------
    One 2D canvas, fixed, z-index 0, pointer-events none, aria-hidden. It is
    the page's single Tier 1 effect (AG-PREMIUM-EFFECTS-STANDARD v1.5 Tier 1
@@ -806,8 +848,10 @@ html.is-ready .agh-curtain .ld-layer {
      viewport-relative at all. */
   grid-template-columns: minmax(0, 1fr);
   place-items: center;
-  /* the top clears the progress rail, the bottom is exactly the strip */
-  padding-block: calc(var(--v-section) + 14px) var(--tick-h);
+  /* Exactly one screen. The bottom side only has to clear the scroll cue,
+     which is pinned to the floor of the hero rather than sitting in the
+     flow - in the flow it pushed the stack off center by its own height. */
+  padding-block: calc(var(--v-section) + 14px) calc(var(--v-md) + 46px);
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -929,10 +973,7 @@ html.is-ready .agh-curtain .ld-layer {
    Transform only, so it stays on the compositor, and it stops dead under
    reduced motion. */
 .ticker {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
   z-index: 1;
   height: var(--tick-h);
   overflow: hidden;
@@ -985,9 +1026,16 @@ html.is-ready .agh-curtain .ld-layer {
 
 /* ---------- Scroll cue ---------- */
 
-/* In flow, not absolute. Absolute positioning put it straight through the
-   figures row and under the presenter rail. */
+/* On the FLOOR of the hero, and a DIRECT CHILD of it. In the flow it counted
+   toward the stack's height and pushed the title off center. Absolute alone
+   was not enough either: .hero > .wrap is itself positioned, so the cue
+   resolved against the content box and landed on top of the figures row. */
 .scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(14px, 2.2vh, 26px);
+  transform: translateX(-50%);
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1747,15 +1795,17 @@ html.is-ready .agh-curtain .ld-layer {
 
 .ledger {
   position: relative;
-  background:
-    radial-gradient(120% 90% at 12% 0%, rgba(142, 237, 217, 0.12) 0%, rgba(142, 237, 217, 0) 58%),
-    radial-gradient(120% 90% at 92% 100%, rgba(255, 122, 107, 0.14) 0%, rgba(255, 122, 107, 0) 58%),
-    var(--panel);
+  /* Glass, like every other container. It was the one dark panel in the deck
+     and it read as a different material dropped into the middle of the page.
+     The ink tokens are overridden HERE rather than at :root, so all eight
+     descendants that reference them flip together and nothing else moves. */
+  --on-panel: var(--text-primary);
+  --on-panel-soft: var(--text-secondary);
+  --panel-rule: rgba(96, 68, 116, 0.16);
+  background: var(--surface);
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  /* the dark panel carried its own shadow rather than the token, so it kept
-     reaching 76px and staying severed after the tokens were tightened */
-  box-shadow: var(--panel-bevel), 0 2px 6px rgba(40, 24, 58, 0.16), 0 8px 18px rgba(40, 24, 58, 0.26);
+  border: 1px solid var(--surface-line);
+  box-shadow: var(--shadow-card);
   backdrop-filter: var(--glass);
   -webkit-backdrop-filter: var(--glass);
   padding: clamp(28px, 3.4vw, 56px) clamp(20px, 3vw, 52px) clamp(30px, 3.6vw, 58px);
@@ -1782,10 +1832,10 @@ html.is-ready .agh-curtain .ld-layer {
   width: fit-content;
   max-width: 100%;
   margin-inline: auto;
-  background: var(--sweep-ondark);
+  background: var(--sweep-ink);
   -webkit-background-clip: text;
   background-clip: text;
-  color: #cfe0ff;
+  color: var(--agh-indigo);
   word-break: normal;
 }
 @supports (-webkit-background-clip: text) or (background-clip: text) {
@@ -1841,7 +1891,7 @@ html.is-ready .agh-curtain .ld-layer {
   word-break: normal;
 }
 
-.lrow--waived .lrow-val { color: #a9e07a; font-family: var(--font-display); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.lrow--waived .lrow-val { color: #4a7c1f; font-family: var(--font-display); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 
 /* Stacked requirement blocks read as prose, not as a table row. */
 .req { margin-top: var(--v-md); }
@@ -1852,7 +1902,7 @@ html.is-ready .agh-curtain .ld-layer {
   font-size: clamp(0.75rem, 0.72rem + 0.16vw, 0.875rem);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #ffc59b;
+  color: var(--agh-plum);
   margin-bottom: 7px;
   word-break: normal;
 }
@@ -1928,8 +1978,7 @@ html.is-ready .agh-curtain .ld-layer {
      iPhone SE. A 3-across figure row was tried and rejected: "PER TESTING
      CYCLE" needs a 9px type size to fit a 108px column. */
   .hero {
-    /* the bottom side is exactly the strip, same as desktop */
-    padding-block: 42px var(--tick-h);
+    padding-block: 42px 62px;
     min-height: 100svh;
   }
 
@@ -1939,7 +1988,9 @@ html.is-ready .agh-curtain .ld-layer {
   /* Decorative only, and it was the element colliding with the rail.
      The hero already overflows a phone screen, so the affordance is
      redundant here. */
-  .scroll-cue { display: none; }
+  /* the hero resolves inside 100svh on a phone now, so the cue can sit on
+     the floor of it here too rather than being dropped */
+  .scroll-cue { bottom: 10px; }
 
   /* Three across on a phone too. The earlier note here said this was tried
      and rejected because "PER TESTING CYCLE" needed 9px type to fit - but the
@@ -2120,6 +2171,8 @@ html.is-ready .agh-curtain .ld-layer {
 </script>
 
 <canvas class="backdrop" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
 <div class="agh-topline" aria-hidden="true"><i class="agh-progress"></i></div>
 <a class="ag-skip-link" href="#main">Skip to content</a>
 
@@ -2157,20 +2210,21 @@ html.is-ready .agh-curtain .ld-layer {
           </div>
         </div>
 
-        <div class="scroll-cue" aria-hidden="true">
-          <span>Scroll</span>
-          <i></i>
-        </div>
       </div>
     </div>
 
-    <div class="ticker" aria-hidden="true">
+    <div class="scroll-cue" aria-hidden="true">
+      <span>Scroll</span>
+      <i></i>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
       <div class="tick-track">
         <div class="tick-group"><span class="tick-word lit">Meta Only</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Facebook and Instagram</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">14 Ads Per Testing Cycle</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">English and Spanish</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">2 Ads Head to Head</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Every Step Tracked</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">7 Sprints Per Cycle</span><i class="tick-sep" aria-hidden="true"></i></div>
         <div class="tick-group"><span class="tick-word lit">Meta Only</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Facebook and Instagram</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">14 Ads Per Testing Cycle</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">English and Spanish</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">2 Ads Head to Head</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Every Step Tracked</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">7 Sprints Per Cycle</span><i class="tick-sep" aria-hidden="true"></i></div>
       </div>
-    </div>
-  </section>
+  </div>
 
   <!-- ============ 1 - WHAT WE DO ============ -->
   <section class="band pad-section" id="what-we-do" aria-labelledby="h-approach">
@@ -2525,6 +2579,7 @@ html.is-ready .agh-curtain .ld-layer {
 
   var W = 0, H = 0, DPR = 1, FIELD_H = 0;
   var map = null, mctx = null, MW = 0, MH = 0, GEO_W = 0;
+  var wash = null, WW = 0, WH = 0, WK = 0;
   var tmp = null, tctx = null, TW = 0, TH = 0;
 
   var scrollY = 0;
@@ -2757,6 +2812,41 @@ html.is-ready .agh-curtain .ld-layer {
     mctx = sctx;
   }
 
+  /* The body of the field. Very low frequency, so it is baked tiny and
+     upscaled - the smoothing that costs is the smoothing we want. One extra
+     drawImage per frame, which is why the breath still holds 60fps. */
+  function bakeWash() {
+    WK = 96 / Math.max(1, MW);
+    WW = 96;
+    WH = Math.max(2, Math.round(MH * WK));
+    wash = document.createElement('canvas');
+    wash.width = WW; wash.height = WH;
+    var w = wash.getContext('2d');
+    w.fillStyle = '#ffffff';
+    w.fillRect(0, 0, WW, WH);
+
+    seed(20260820);
+    /* the logo's own five stops, walked down the field so scrolling moves
+       through the whole sweep rather than sitting in one hue */
+    var STOPS = [[110, 40, 119], [55, 80, 154], [0, 118, 187], [52, 153, 138], [127, 188, 66]];
+    var BLOOMS = 18;
+    w.globalCompositeOperation = 'multiply';
+    for (var i = 0; i < BLOOMS; i++) {
+      var t = (i + 0.5) / BLOOMS;
+      var c = STOPS[Math.min(STOPS.length - 1, Math.floor(t * STOPS.length))];
+      var cx = (0.5 + (rnd() - 0.5) * 1.7) * WW;
+      var cy = (t + (rnd() - 0.5) * 0.06) * WH;
+      var r = (0.30 + rnd() * 0.34) * WW;
+      var g = w.createRadialGradient(cx, cy, 0, cx, cy, r);
+      var a = 0.055 + rnd() * 0.055;
+      g.addColorStop(0, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a.toFixed(3) + ')');
+      g.addColorStop(1, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)');
+      w.fillStyle = g;
+      w.fillRect(cx - r, cy - r, r * 2, r * 2);
+    }
+    w.globalCompositeOperation = 'source-over';
+  }
+
   function build() {
     var vw = Math.max(window.innerWidth, 1), vh = Math.max(window.innerHeight, 1);
     DPR = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -2768,6 +2858,7 @@ html.is-ready .agh-curtain .ld-layer {
     PAPER = getComputedStyle(document.documentElement).getPropertyValue('--paper').trim() || '#fffdfa';
 
     bakeMap();
+    bakeWash();
 
     TW = Math.max(2, Math.round(W * MAP_SCALE));
     TH = Math.max(2, Math.round(H * MAP_SCALE));
@@ -2832,6 +2923,12 @@ html.is-ready .agh-curtain .ld-layer {
     ctx.fillStyle = PAPER;
     ctx.fillRect(0, 0, W, H);
     ctx.globalCompositeOperation = 'multiply';
+    /* body first, seams over it. The wash rides the same scroll offset as the
+       map, so the two are one surface rather than two layers sliding. */
+    if (wash) {
+      /* same source window as the map, scaled by WK into wash coordinates */
+      ctx.drawImage(wash, 0, oy * WK, TW * WK, TH * WK, 0, 0, W, H);
+    }
     ctx.drawImage(tmp, 0, 0, TW, TH, 0, 0, W, H);
 
     ctx.globalCompositeOperation = 'source-over';
