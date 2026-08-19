@@ -780,6 +780,7 @@
           if (s.kind === 'scrub') draw(s, s.count - 1);
           if (s.video) { s.video.removeAttribute('autoplay'); s.video.pause(); }
         });
+        window.__agHybridReady = true;
         window.dispatchEvent(new CustomEvent('ag:hybrid-ready',
           { detail: { stageId: stage.id, mode: 'reduced', tier } }));
         return;
@@ -791,6 +792,12 @@
          every video can play through and every frame set is complete, so by the
          time this line runs there is nothing left to fetch. */
 
+      /* LATCH BEFORE DISPATCHING. An event only reaches listeners that already
+         exist. ag-curtain.js is an external script and on a phone this fires in
+         a few hundred milliseconds, so the curtain could miss it entirely and
+         wait forever on a signal that had already happened. The flag is what
+         makes readiness order-independent. */
+      window.__agHybridReady = true;
       window.dispatchEvent(new CustomEvent('ag:hybrid-ready', {
         detail: {
           stageId: stage.id, mode: 'interactive', tier,

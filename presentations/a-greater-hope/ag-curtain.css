@@ -57,25 +57,40 @@ html.is-ready .hseg-text[data-visible="true"] { transition-delay: 260ms; }
 @keyframes ld-fill { to { width: 100%; } }
 /* ONE, TWO, THREE. The stock rule ran a 1.2s pulse on all three dots offset by
    0.16s and 0.32s, so their peaks overlapped and it read as a wave rather than
-   a count. Each dot now lights for roughly a third of the cycle and the offsets
-   are exactly a third apart, so exactly one dot is lit at a time and it marches
-   1, 2, 3, 1, 2, 3. 0.9s / 0.3s / 0.6s are all on the AG timing ladder. */
+   a count. The offsets are now exactly a third of the cycle apart, so it marches
+   1, 2, 3, 1, 2, 3. Cycle 1.2s with 0.4s and 0.8s delays. */
 .ld-dots { display: inline-flex; gap: 9px; align-items: center; }
-.ld-dots b { width: 6px; height: 6px; border-radius: 50%; background: #F5C842; opacity: 0.22; animation: ld-dot 0.9s cubic-bezier(0.16,1,0.3,1) infinite; }
-.ld-dots b:nth-child(2) { animation-delay: 0.3s; }
-.ld-dots b:nth-child(3) { animation-delay: 0.6s; }
+.ld-dots b { width: 6px; height: 6px; border-radius: 50%; background: #F5C842; opacity: 0.22; animation: ld-dot 1.2s ease-in-out infinite; }
+.ld-dots b:nth-child(2) { animation-delay: 0.4s; }
+.ld-dots b:nth-child(3) { animation-delay: 0.8s; }
+/* SOFTER, NOT SNAPPIER. The old curve peaked at 16% of a 0.9s cycle with a 5px
+   hop and a 1.15 scale, which is a jump. The cycle is longer, the rise and fall
+   are symmetrical around a gentle ease-in-out, the travel is 2px and the scale
+   1.06, so it reads as a glow passing along the row rather than three dots
+   bouncing. The thirds are kept, so it still counts 1, 2, 3. */
 @keyframes ld-dot {
-  0%   { opacity: 0.22; transform: translateY(0) scale(1); }
-  16%  { opacity: 1;    transform: translateY(-5px) scale(1.15); }
-  38%  { opacity: 0.22; transform: translateY(0) scale(1); }
-  100% { opacity: 0.22; transform: translateY(0) scale(1); }
+  0%   { opacity: 0.22; transform: translateY(0)     scale(1); }
+  16%  { opacity: 0.62; transform: translateY(-1px)  scale(1.03); }
+  32%  { opacity: 1;    transform: translateY(-2px)  scale(1.06); }
+  48%  { opacity: 0.62; transform: translateY(-1px)  scale(1.03); }
+  64%  { opacity: 0.22; transform: translateY(0)     scale(1); }
+  100% { opacity: 0.22; transform: translateY(0)     scale(1); }
 }
 .ld-brand__in { display: flex; flex-direction: column; align-items: center; gap: clamp(11px,1.9vh,17px); }
 .ld-wm { position: relative; font-family: 'Cinzel', serif; font-weight: 600; font-size: clamp(2.1rem,9vw,4.6rem); letter-spacing: 0.14em; margin-right: -0.14em; line-height: 1; white-space: nowrap; }
-.ag-curtain[data-phase="brand"] .ld-wm { animation: ld-swoosh 900ms cubic-bezier(0.16,1,0.3,1) 0s both, ld-glare 1000ms linear 0.1s both; }
+/* THE SHINE COMES BACK. It ran once and then the wordmark sat there for as
+   long as the load took. It now sweeps on entry and again every 32 seconds
+   until the curtain lifts (Quinten, 2026-08-19). CSS cannot schedule "1s every
+   32s" directly, so the sweep occupies the first 3.1% of a 32s cycle and the
+   band parks off-frame, where it is transparent, for the rest. */
+.ag-curtain[data-phase="brand"] .ld-wm { animation: ld-swoosh 900ms cubic-bezier(0.16,1,0.3,1) 0s both, ld-glare-loop 32s linear 0.1s infinite; }
 @keyframes ld-swoosh { 0% { opacity: 0; transform: translateY(10px); filter: blur(8px); } 60% { opacity: 1; } 100% { opacity: 1; transform: translateY(0); filter: blur(0); } }
 .ld-wm.ld-gold { background-image: linear-gradient(100deg,transparent 28%,rgba(255,255,255,0.7) 40%,#ffffff 47%,#ffffff 53%,rgba(255,255,255,0.7) 60%,transparent 72%), linear-gradient(100deg,#C9A227 0%,#E0BA5A 28%,#FFF3C4 50%,#E0BA5A 72%,#C9A227 100%); background-repeat: no-repeat, no-repeat; background-size: 220% 100%, 100% 100%; background-position: -120% 0, 0 0; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
-@keyframes ld-glare { 0% { background-position: -120% 0, 0 0; } 100% { background-position: 220% 0, 0 0; } }
+@keyframes ld-glare-loop {
+  0%    { background-position: -120% 0, 0 0; }
+  3.1%  { background-position:  220% 0, 0 0; }   /* ~1s sweep */
+  100%  { background-position:  220% 0, 0 0; }   /* parked off-frame, invisible */
+}
 .ld-rule { width: 0; height: 1px; background: linear-gradient(90deg, transparent, #F5C842, transparent); }
 .ag-curtain[data-phase="brand"] .ld-rule { animation: ld-rule-draw 700ms cubic-bezier(0.16,1,0.3,1) 260ms both; }
 @keyframes ld-rule-draw { from { width: 0; } to { width: clamp(120px,26vw,200px); } }

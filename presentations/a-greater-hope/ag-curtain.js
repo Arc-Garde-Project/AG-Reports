@@ -86,6 +86,11 @@
   });
   window.addEventListener('ag:cost-ready', function () { costPct = 1; blend(); });
   window.addEventListener('ag:hybrid-ready', function () { ready = true; target = 1; }, { once: true });
+  /* Same race as the signals below: either reporter may have finished before
+     this script ran, so the latched flags are read once at startup rather than
+     relying on an event that has already been and gone. */
+  if (window.__agCostReady) { costPct = 1; blend(); }
+  if (window.__agHybridReady) { ready = true; target = 1; }
 
   function tick() {
     var cap = ready ? 1 : 0.99;               // never claim done before it is
@@ -110,15 +115,22 @@
   else signals.push(new Promise(function (res) {
     window.addEventListener('load', res, { once: true });
   }));
-  signals.push(new Promise(function (res) {
-    window.addEventListener('ag:hybrid-ready', res, { once: true });
-  }));
-  /* The cost section's cloud loop is not part of the stage, so it reports
+  /* Each reporter LATCHES a flag before it dispatches, and this checks the flag
+     first. Listening alone is a race: whichever of these fires before the
+     external curtain script has executed would be missed entirely, and the
+     curtain would wait on a signal that had already happened. That is exactly
+     what hung the phone, where the cost section reports in ~255ms. */
+  function awaitSignal(name, flag) {
+    return new Promise(function (res) {
+      if (window[flag]) return res();
+      window.addEventListener(name, res, { once: true });
+    });
+  }
+  signals.push(awaitSignal('ag:hybrid-ready', '__agHybridReady'));
+  /* The cost section's cloud sequence is not part of the stage, so it reports
      separately. Without this the curtain could lift while the last section
      still had no footage. */
-  signals.push(new Promise(function (res) {
-    window.addEventListener('ag:cost-ready', res, { once: true });
-  }));
+  signals.push(awaitSignal('ag:cost-ready', '__agCostReady'));
   signals.push(counted);   /* let the number finish counting, see above */
 
   Promise.all(signals).then(function () {

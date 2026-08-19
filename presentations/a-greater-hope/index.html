@@ -944,7 +944,14 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
      lift without it, so the last section is never reached before its footage
      exists. The still and reduced-motion paths announce at once: nothing to
      wait for. */
-  function announce() { window.dispatchEvent(new CustomEvent('ag:cost-ready')); }
+  /* Latched, not just dispatched. On a phone this path runs synchronously at
+     ~255ms, before the external ag-curtain.js has executed, so the event landed
+     with nobody listening and the curtain waited forever on a signal that had
+     already fired. That is the mobile hang: 100% on screen and never lifting. */
+  function announce() {
+    window.__agCostReady = true;
+    window.dispatchEvent(new CustomEvent('ag:cost-ready'));
+  }
 
   if (narrow || reduced) {
     scope.dataset.film = 'still';
