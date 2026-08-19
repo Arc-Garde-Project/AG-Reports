@@ -1,1389 +1,2223 @@
-<!--
-  A GREATER HOPE — PAID MEDIA PRESENTATION (hybrid rest/scrub build)
-  ============================================================================
-  ARCHITECTURE. Five ordered states on one full-viewport stage:
-
-    REST A (Plate 1 loop, the hero)
-      -> SCRUB 1 (Plate 1 -> Plate 2, canvas, scroll-driven)
-    REST B (Plate 2 loop, What We Do)
-      -> SCRUB 2 (Plate 2 -> Plate 3, canvas, scroll-driven)
-    REST C (Plate 3 loop, the echo)
-      -> releases the page to the static sections below
-
-  This SUPERSEDES the single continuous pinned scroll at
-  agh-paid-media-presentation.html. That build is left intact, not deleted; its
-  23/110/141 thresholds do not carry over because they describe beats along one
-  continuous scrub and there is no longer one continuous scrub.
-
-  THE SEAM DEFECT IS GONE, for free. The 4x camera-speed jump only ever existed
-  because the two source clips were concatenated. Here each clip IS a scrub
-  segment and a rest state sits between them, so there is no join to be rough.
-
-  Clip direction was established by MEASUREMENT, not filename: each clip's first
-  and last frame were matched against all three plates. Chat history had them
-  backwards. pullback-v3 = Plate 1 -> Plate 2. calm-v4 = Plate 2 -> Plate 3.
-
-  ASSEMBLED. ag-defensive v1.0, ag-typography v1.0, ag-motion v2.5 (static
-  sections), ag-scroll v1.2 (Lenis, off the stage), ag-cursor v2.1, plus
-  ag-hybrid-scene v1.0 whose loader/draw path is lifted from ag-sequence v1.0.
-  NOT used: ag-header, ag-button (presentation law forbids a header bar and a
-  CTA).
-
-  THE LOADER is the AG presentation curtain, "Arc Garde Presents", lifted from
-  the deployed decks. It replaced ag-curtain v2.5 (the generic Sweep-Reveal) on
-  2026-08-18 because that is not what AG presentations open with. Present by
-  exception at all: presentation law says no loading screen, overridden because
-  a video-led stage that pops in half-loaded is worse than the rule.
-
-  COPY WALL. Every client-facing line is lifted verbatim from the approved deck.
-  Nothing here was written in Claude Code.
-
-  PALETTE. Read off "AGH Updated Logo.png" on 2026-08-18, see the token block.
-  The mark is a purple-to-green gradient on a 135deg axis, and it replaced the
-  flat #0076BB the deck used to carry.
-
-  CONTRAST. Measured against the delivered frames: ink on film is 3.23:1, so it
-  carries display type only; body copy sits on a cream scrim at 7.52:1. White on
-  this film is 1.04:1 and is never used. Every accent is a solved twin, verified
-  from rendered pixels at 5.15:1 worst on plate and 6.14:1 worst on the price
-  section, not from the derivation alone.
--->
 <!DOCTYPE html>
-<html lang="en" class="is-loading">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <!-- REQUIRED IN PRODUCTION. ag-reports sets "trailingSlash": false, so Vercel
      308s /presentations/a-greater-hope/ down to /presentations/a-greater-hope
      and every relative URL then resolves against /presentations/ instead of
-     this folder. Without this the whole deck 404s live: all four stylesheets,
-     all four scripts, the loops, the frame sets and the favicon.
-     Same fix c-design, cogentic, moneyboymax, muevelo, gold-coast-roofing and
-     california-landlords-union already carry. It must stay first in <head>,
-     ahead of anything with a relative href, and CSP allows it via base-uri 'self'. -->
+     this folder. Without this the deck 404s live: every stylesheet, every
+     script and the favicon. It must stay first in <head>, ahead of anything
+     with a relative href. CSP allows it via base-uri 'self'. -->
 <base href="/presentations/a-greater-hope/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
 <meta name="robots" content="noindex, nofollow">
-<!-- the curtain is what opens the page, so the browser chrome matches its ground -->
-<meta name="theme-color" content="#0a0a0a">
-<!-- favicon.ico alone: it already carries 16/32/48, and every extra <link rel=icon>
-     is another real fetch against the LOCKED 1400KB phone budget. -->
-<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
-<link rel="preload" as="image" href="agh-logo-256.webp" type="image/webp" fetchpriority="high">
+<!-- Browser Chrome Tint must match the top of the page. The ground is warm
+     cream now, not white, so the chrome follows it. -->
+<meta name="theme-color" content="#fffdfa">
+
 <title>Paid Media for A Greater Hope | Arc Garde</title>
-<meta name="description" content="Arc Garde paid media presentation for A Greater Hope. Four engines, a 28 day testing cycle, and one fixed monthly fee.">
-<link rel="canonical" href="https://ag-reports.vercel.app/presentations/a-greater-hope/">
-<!-- The link gets pasted into an email or a chat, so it needs a card. URL taken
-     from core/DEPLOY-REGISTRY.md, not assumed. -->
+<meta name="description" content="Arc Garde paid media presentation for A Greater Hope. Meta ads, a 28 day testing cycle, and one fixed monthly fee.">
+
+<!-- Banner law -->
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="canonical" href="https://ag-reports.vercel.app/presentations/a-greater-hope">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Paid Media for A Greater Hope">
-<meta property="og:description" content="Four engines, a 28 day testing cycle, and one clear answer for where every dollar lands.">
-<meta property="og:url" content="https://ag-reports.vercel.app/presentations/a-greater-hope/">
-<meta property="og:image" content="https://ag-reports.vercel.app/presentations/a-greater-hope/agh-logo-512.png">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="The families you need are already scrolling. They just haven't been asked yet.">
+<meta property="og:url" content="https://ag-reports.vercel.app/presentations/a-greater-hope">
+<meta property="og:image" content="https://ag-reports.vercel.app/presentations/a-greater-hope/og-banner.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ag-reports.vercel.app/presentations/a-greater-hope/og-banner.png">
+
+<link rel="preload" as="image" href="agh-logo-256.webp" type="image/webp" fetchpriority="high">
+
+<!-- Fira Sans is A Greater Hope's own type. Their homepage h1 renders in
+     fira-sans-condensed and every interior page heading in fira-sans; both
+     families are on Google Fonts, so the deck sets in the client's real face
+     rather than a lookalike. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,SOFT,WONK,wght@9..144,0..100,0..1,300..600&family=Nunito+Sans:opsz,wght@6..12,300..800&display=swap" rel="stylesheet">
-<!-- Cinzel + DM Sans exist ONLY for the AG curtain's wordmark, which the
-     presentation loader standard specifies. This takes the page to four
-     families against the two-family build rule; the curtain is Arc Garde's
-     signature layer and the standard names these faces, so they are subset to
-     the exact glyphs that render ("ARC GARDE" / "AG", and "Presents" which CSS
-     uppercases) rather than pulling two whole families for 17 characters. -->
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&text=ACDEGR&display=swap" rel="stylesheet">
-<!-- digits and % are in the subset because the loader shows a live percentage;
-     without them the readout falls back to a system face mid-count -->
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600&text=EFNPRSTefnprst0123456789%25&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="ag-cursor.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;700&family=Fira+Sans+Condensed:wght@500;600;700;800&display=swap">
+
+<!-- Canonical AG primitives. Load order is locked. -->
+<link rel="stylesheet" href="ag-defensive.css">
+<link rel="stylesheet" href="ag-tokens.css">
+<link rel="stylesheet" href="ag-responsive.css">
+<link rel="stylesheet" href="ag-typography.css">
+<link rel="stylesheet" href="ag-motion.css">
 <link rel="stylesheet" href="ag-scroll.css">
-<link rel="stylesheet" href="ag-curtain.css">
-<link rel="stylesheet" href="ag-hybrid-scene.css">
+<link rel="stylesheet" href="ag-cursor.css">
+
 <style>
-/* ===== AG Defensive v1.0 — first stylesheet, verbatim ===================== */
-*, *::before, *::after { box-sizing: border-box; }
-* { margin: 0; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; overflow-x: hidden; -webkit-tap-highlight-color: transparent; background-color: #FFFFFF; }
-body { min-height: 100svh; overflow-wrap: break-word; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; line-height: 1.5; }
-img, picture, video, canvas, svg { display: block; max-width: 100%; height: auto; }
-input, button, textarea, select { font: inherit; color: inherit; }
-h1, h2, h3 { text-wrap: balance; line-height: 1.1; }
-p, li { text-wrap: pretty; }
-a, button, [role="button"], label[for] { touch-action: manipulation; }
-a { color: inherit; text-decoration: none; }
-button { background: none; border: 0; cursor: pointer; }
-:focus-visible { outline: 3px solid #1A68AC; outline-offset: 3px; }
-.skip { position: absolute; left: 7px; top: -100px; z-index: 99; padding: 14px 20px; min-height: 49px; display: inline-flex; align-items: center; border-radius: 8px; background: #22303A; color: #FFF; transition: top 0.3s cubic-bezier(0.16,1,0.3,1); }
-.skip:focus-visible { top: 7px; }
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-}
+/* ===========================================================
+   A GREATER HOPE - deck design layer
+   Styled from two sources, both measured, never guessed:
+     1. The logo: a gradient badge sweeping purple to blue to green,
+        with a white single-stroke heart on it.
+     2. aghope.org: that sweep worn as a nav band, PLUS the warm half of
+        their palette that the first pass missed - the lagoon teal their
+        homepage hero sits on and the mint-to-coral wash on the Nevada
+        band. Plum headings, sky statement lines, a deep panel beside
+        content, big numerals over condensed caps labels.
+   The ground is cream and every surface is curved, because the mark is a
+   circle with one continuous ribbon heart drawn inside it.
+   Every value below is overridden onto the ag-tokens contract.
+   Token NAMES are never changed; only their values.
+   =========================================================== */
 
-/* ===== AGH palette, read off the logo ====================================
-   Source: "AGH Updated Logo.png", 4219x4219. The badge is a circle (bbox fill
-   78.6% against a perfect circle's 78.5%) carrying a CONTINUOUS gradient, not a
-   set of spot colors: sampling hue around the ring and fitting an axis gives
-   135deg at |r| = 0.986. Purple sits upper-left and runs through indigo, blue
-   and teal to green at the lower-right.
-
-   The five anchors, sampled on the ring at 0.86r, white lettering excluded:
-     purple #674084   indigo #4E5195   blue #1A68AC   teal #288C98   green #7EBB46
-
-   Those are the brand and they drive the gradient thread. They are NOT all
-   usable as ink. Measured on cream: purple 7.52, indigo 6.78, blue 5.49, but
-   teal 3.76 and green 2.19, the last two below the 4.5 floor. So every anchor
-   carries two solved twins at its own hue and saturation with only lightness
-   moved: an -ink twin at 4.5:1 on cream, and a -plate twin at 5.0:1 on the 72%
-   scrim over the DARKEST film measured under the text band (p5 #504A3D across
-   18 sampled frames of all three loops). Raw anchors are kept only for the
-   gradient, where nothing is read off them. */
 :root {
-  --white: #FFFFFF; --paper: #FFFFFF;
-  --cream: #FDF8F2; --cream-deep: #F7EFE3;
+  /* ---- A Greater Hope, COOL half: the nav band and interior headings ---- */
+  --agh-purple: #6e2877;   /* gradient stop 1, homepage nav band */
+  --agh-plum:   #593885;   /* interior page section headings */
+  --agh-indigo: #37509a;   /* the site's primary link and text accent */
+  --agh-blue:   #0076bb;   /* gradient stop 2 */
+  /* Their statement-line blue is #1a73b7, which measured 4.42:1 from
+     painted pixels on a tinted ground. Same hue, two steps deeper. */
+  --agh-sky:    #166295;
+  --agh-teal:   #34998a;
+  --agh-green:  #7fbc42;   /* gradient stop 3 */
 
-  /* raw logo anchors, gradient use only */
-  --lg-purple: #674084; --lg-indigo: #4E5195; --lg-blue: #1A68AC;
-  --lg-teal: #288C98;   --lg-green: #7EBB46;
+  /* ---- A Greater Hope, WARM half ----
+     The first pass only used the cool nav sweep, which is why the deck read
+     clinical. Their site is actually full of warmth: the homepage hero sits
+     on a soft lagoon teal, and the Nevada band runs a mint-to-coral wash.
+     Both sampled from rendered pixels on aghope.org, not invented. */
+  --agh-peach:  #f5a578;   /* warm band stop 2 */
+  --agh-coral:  #ff5757;   /* warm band stop 3 */
+  /* Also sampled from aghope.org and kept on record. They are not shipped as
+     live custom properties because the water canvas carries them in its own
+     palette instead: lagoon #56b7be (the homepage hero ground), mint #8eedd9
+     (warm band stop 1), mint-2 #a3f0e0, sage #cfd3ba, orange #f49831. */
 
-  /* the mark's own sweep, at the mark's own angle */
-  --grad-brand: linear-gradient(135deg, #674084 0%, #4E5195 24%, #1A68AC 48%,
-                                #288C98 72%, #7EBB46 100%);
+  /* ---- Gradients ----
+     COOL and WARM are their two real brand washes and are used only on
+     non-text surfaces: blobs, rules, bars, edges, arcs.
+     The INK sweeps are darkened variants for type. The raw brand colors
+     cannot carry text: the green measures 2.29:1 on paper and the coral
+     3.3:1, both well under the 4.5 floor. */
+  /* Their whole brand arc in one wash: the cool nav sweep (purple, blue,
+     green) running on into the warm band (peach, coral). */
+  --sweep-decor:  linear-gradient(90deg, var(--agh-purple) 0%, var(--agh-blue) 28%, var(--agh-teal) 46%, var(--agh-green) 62%, var(--agh-peach) 84%, var(--agh-coral) 100%);
+  /* Darkened brand hues, because this type sits on a light ground. The raw
+     sweep cannot carry text: its green measures 2.29:1 on paper. This one
+     holds 5.22:1 at its lightest stop. */
+  --sweep-ink:    linear-gradient(90deg, #6e2877 0%, #37509a 50%, #0f7a6c 100%);
+  --sweep-ondark: linear-gradient(90deg, #e0b4e8 0%, #8fd6f7 48%, #ffcaa8 100%);
 
-  /* solved for cream grounds, 4.5:1 */
-  --purple-ink: #674084; --indigo-ink: #4E5195; --blue-ink: #1A68AC;
-  --teal-ink: #247E89;   --green-ink: #557E2E;
+  /* ---- Grounds ----
+     The deck runs DARK. Glow only exists against dark: the seam light in
+     the backdrop cannot be rendered on cream, so the whole surface inverts
+     rather than the background fighting the page. The ground is a deep
+     plum-black, not neutral black, so it stays in the brand's purple
+     family instead of going cold. */
+  --ink: #221b29;                  /* warm plum-black, not neutral charcoal */
+  --paper: #fffdfa;                /* white, a breath warm so it is not clinical */
 
-  /* solved for the scrims over film, 5.0:1 on the 72% worst case */
-  --purple-plate: #633D7F; --indigo-plate: #454884; --blue-plate: #145084;
-  --teal-plate: #18555D;   --green-plate: #39551F;
+  /* Real glass, not tinted plastic. Three things make it read as glass:
+     a heavy blur so what is behind is present but unreadable, a surface
+     that is barely translucent rather than a color wash, and a BEVEL -
+     a bright top edge where light catches and a soft dark bottom edge
+     where the pane has thickness. */
+  --surface: rgba(255, 255, 255, 0.26);
+  --surface-line: rgba(255, 255, 255, 0.55);
+  /* 26px blurred the field into a flat white wash behind every card, so the
+     glass read as plastic. 15px keeps enough seam structure to see that
+     there IS something behind the pane without it competing with copy. */
+  --glass: blur(15px) saturate(1.7) brightness(1.03);
 
-  /* tint ramp, rebuilt as tints of the logo blue (hue 208) rather than the old
-     hue-202 sky, so the light rules belong to the mark too */
-  --sky-50: #F5F8FB; --sky-200: #D7E5F1; --sky-300: #B2CEE6;
-  --sky-400: #80ACD3; --sky-500: #548CBD;
-  --teal-tint: #B8DCE0; --green-tint: #CBDCBC; --purple-tint: #CEC0D8;
+  /* the bevel: top and left catch light, bottom and right fall away */
+  /* The mist. Text sits over a field that keeps changing color underneath
+     it, so every glyph carries its own soft paper halo and never depends on
+     what happens to be behind it at that moment. Gradient-filled text is
+     excluded: its fill is transparent, so a text-shadow would show THROUGH
+     the letterforms instead of behind them. Those rely on the scrim. */
+  --mist: 0 0 22px var(--paper), 0 0 11px var(--paper), 0 0 4px var(--paper);
 
-  /* --blue / --blue-deep stay as names so nothing downstream breaks, but they
-     now hold the logo's blue rather than the old #0076BB. That old value was a
-     100%-saturation hue-202 blue that failed every scrim it touched. */
-  --blue: #1A68AC;
-  --blue-deep: #145084;
-  /* ag-cursor and ag-curtain both fall back to the AG gold #c9a861 when
-     --accent is undefined, which is how a gold edge was still riding on this
-     page. The brandkit wins, so --accent is the mark's own blue. */
-  --accent: #1A68AC;
-  --ink: #22303A;
-  --ink-soft: rgba(34,48,58,0.78);
-  --ink-faint: rgba(34,48,58,0.68);
-  --hairline: rgba(34,48,58,0.14);
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'Nunito Sans', system-ui, sans-serif;
-  --scrim: rgba(253,248,242,0.72);
-  --scrim-firm: rgba(253,248,242,0.86);
-  --text-hero: clamp(2rem, 1.25rem + 3.3vw, 4rem);
-  --text-h2: clamp(1.6rem, 1.15rem + 2vw, 2.7rem);
-  --text-h3: clamp(1.05rem, 0.8rem + 1.1vw, 1.5rem);
-  --text-base: clamp(0.95rem, 0.92rem + 0.16vw, 1.06rem);
-  --text-micro: clamp(0.66rem, 0.64rem + 0.1vw, 0.73rem);
-  --pad: clamp(1.125rem, 0.262rem + 3.68vw, 3rem);
-  --gap: clamp(1rem, 0.5rem + 2vw, 2rem);
+  --bevel:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.95),
+    inset 1.5px 0 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1.5px 0 rgba(96, 68, 116, 0.16),
+    inset -1.5px 0 0 rgba(96, 68, 116, 0.10),
+    inset 0 0 22px rgba(255, 255, 255, 0.30);
+  --glass: blur(18px) saturate(1.35);
+  --accent: var(--agh-teal);       /* focus ring, cursor tint */
+  --brand: var(--agh-indigo);
+  --brand-700: #2b3f7c;
+  --brand-rgb: 55 80 154;
+  --brand-primary: var(--brand);
 
-  /* No --curtain-* tokens. The AG presentation loader is Arc Garde's own
-     signature and carries its gold thread inline; it is deliberately NOT
-     brand-tokened to the client. The three tokens that used to sit here fed
-     the Sweep-Reveal curtain and became dead the moment it was replaced. */
+  --text-primary: var(--ink);
+  --text-secondary: #4a4152;       /* warm-leaning body gray */
+  /* Neutral #6b7280 measured 4.54:1, only 0.04 above the floor. This is
+     darker and warmer; every label and eyebrow in the deck uses it. */
+  --muted: #6a5f74;
+  --rule: rgba(34, 27, 41, 0.12);
+
+  /* The ledger sits a step ABOVE the page now, not below it, so it still
+     separates from a ground that is already dark. */
+  /* Dark glass. It cannot go as transparent as the light panes: white type
+     needs the blend behind it to stay under 0.183 relative luminance to hold
+     4.5:1, which pins the alpha at 0.80 or above over a ground this light.
+     0.86 with the blur and a bevel still reads as glass. */
+  --panel: rgba(26, 17, 38, 0.86);
+  --panel-bevel:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.22),
+    inset 1.5px 0 0 rgba(255, 255, 255, 0.10),
+    inset 0 -1.5px 0 rgba(0, 0, 0, 0.30),
+    inset 0 0 26px rgba(255, 255, 255, 0.05);
+  --on-panel: #ffffff;
+  --on-panel-soft: rgba(255, 255, 255, 0.68);
+  --panel-rule: rgba(255, 255, 255, 0.13);
+
+  --font-heading: 'Fira Sans', system-ui, sans-serif;
+  --font-display: 'Fira Sans Condensed', 'Fira Sans', system-ui, sans-serif;
+  --font-body: 'Fira Sans', system-ui, sans-serif;
+
+  --max-w: 1180px;
+  /* Curves are the brand's core gesture: a circular badge with a single
+     continuous ribbon heart drawn on it. Nothing in this deck is a sharp
+     rectangle any more. */
+  --radius-md: 22px;          /* ag-tokens contract slot, bound by the primitives */
+  --radius-lg: clamp(24px, 3.4vw, 48px);
+  --radius-pill: 999px;
+
+  /* A deck is height-bound, not width-bound. AG spacing tokens are
+     width-fluid, so every vertical rhythm value is capped against vh. */
+  --v-sm: min(clamp(0.75rem, 0.5rem + 1vw, 1.25rem), 2.2vh);
+  --v-md: min(clamp(1.25rem, 0.9rem + 1.6vw, 2.25rem), 3.4vh);
+  --v-lg: min(clamp(2rem, 1.4rem + 2.6vw, 3.5rem), 4.4vh);
+  --v-section: min(clamp(3.5rem, 2rem + 6vw, 7rem), 11vh);
+
+  /* Warm-tinted shadows. A neutral gray shadow on warm paper reads as dirt. */
+  --shadow-card: var(--bevel), 0 2px 6px rgba(64, 40, 72, 0.05), 0 16px 40px rgba(64, 40, 72, 0.10);
+  --shadow-lift: var(--bevel), 0 4px 12px rgba(64, 40, 72, 0.08), 0 30px 64px rgba(64, 40, 72, 0.16);
 }
-body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: var(--text-base); }
-.shell { max-width: 1180px; margin-inline: auto; padding-inline: var(--pad); }
-.num { font-variant-numeric: tabular-nums lining-nums; }
 
-/* ===== Overlay type, from the measured patterns ========================== */
-.eyebrow-chip { display: inline-block; padding: 0.34rem 0.72rem; border-radius: 999px; background: var(--scrim-firm); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.5); font-size: var(--text-micro); font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.9rem; }
-/* h1 on the hero, h2 on plates 2 and 3 (promoted 2026-08-19 to close an
-   h1 -> h3 skip: .eng-card carries h3s with no h2 above them). A heading's
-   default block margin differs from a paragraph's, and these plates have one
-   viewport and no more, so the margin is zeroed and spacing stays with the
-   explicit margin-top the siblings already carry. */
-.lead { margin-block: 0; font-family: var(--font-display); font-weight: 400; font-size: var(--text-hero); letter-spacing: -0.022em; color: var(--ink); text-shadow: 0 0 20px rgba(255,255,255,0.92), 0 0 46px rgba(255,255,255,0.7); max-width: 21ch; }
-.lead-sub { margin-top: 0.35rem; font-family: var(--font-display); font-weight: 400;
-  font-size: clamp(1.15rem,0.95rem + 0.9vw,1.9rem); letter-spacing: -0.015em; color: var(--ink);
-  text-shadow: 0 0 20px rgba(255,255,255,0.92), 0 0 46px rgba(255,255,255,0.7); }
-.sub-card { margin-top: clamp(1.1rem,2.5vw,1.6rem); display: block; width: fit-content; max-width: 34rem; padding: clamp(0.9rem,2vw,1.25rem) clamp(1.1rem,2.4vw,1.5rem); border-radius: 14px; background: var(--scrim); backdrop-filter: blur(16px) saturate(115%); -webkit-backdrop-filter: blur(16px) saturate(115%); border: 1px solid rgba(255,255,255,0.55); color: var(--ink-soft); font-size: clamp(1rem,0.92rem + 0.4vw,1.18rem); }
-.hc { margin-top: clamp(1.1rem,2.5vw,1.5rem); display: block; width: fit-content; text-align: left; background: var(--scrim-firm); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.55); border-radius: 14px; padding: 0.9rem 1.25rem; }
-.hc-row { display: flex; justify-content: space-between; gap: 1.5rem; padding: 0.34rem 0; }
-.hc-row + .hc-row { border-top: 1px solid var(--hairline); }
-.hc-k { font-size: var(--text-micro); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; }
-.hc-v { font-weight: 600; }
-.hc-v.blue { color: var(--blue-plate); }
-.mast { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.05rem,0.95rem + 0.5vw,1.35rem); }
-/* The mark on the hero plate. It carries a soft white halo for the same reason
-   .lead does: the film underneath swings from #504A3D to #FCEECF across the
-   loop, and a disc with no separation disappears into the bright end. */
-.hero-mark { display: block; width: fit-content; margin: 0 auto clamp(0.7rem,1.8vw,1.05rem); }
-.hero-mark img { display: block; width: clamp(58px, 4.6vw + 40px, 86px); height: auto;
-  border-radius: 50%; box-shadow: 0 0 0 6px rgba(255,255,255,0.42), 0 6px 24px rgba(34,48,58,0.22); }
+/* ---------- Ground ---------- */
 
-/* CENTERED THROUGHOUT, all widths (Quinten 2026-08-18). Overlay text used to be
-   left aligned above 900px and only centered below it. */
-.hseg-text { text-align: center; }
-.hseg-text .lead,
-.hseg-text .sub-card,
-.hseg-text .hc { margin-inline: auto; }
-.hseg-text .hc { text-align: left; }          /* a key/value card still reads as rows */
+html { background: var(--paper); }
 
-.eng-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--gap); margin-top: clamp(1.25rem,3vw,1.9rem); max-width: 52rem; margin-inline: auto; text-align: left; }
+/* ---------- The backdrop ----------
+   One 2D canvas, fixed, z-index 0, pointer-events none, aria-hidden. It is
+   the page's single Tier 1 effect (AG-PREMIUM-EFFECTS-STANDARD v1.5 Tier 1
+   limit, MOT-17), so nothing else carries a second hero moment.
+   It IS scroll-coupled, at exactly 1:1. MOT-22 bans PARALLAX backgrounds,
+   meaning a layer traveling at its own rate; a field that matches the page
+   pixel for pixel is a long background, not a parallax layer. Content sits
+   above it per the AG-FOOTER-STANDARD watermark stacking. */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+  pointer-events: none;   /* never intercepts a click; input is read on window */
+}
 
-/* ---- 2 How It Runs, on Plate 3 ------------------------------------------ */
-.run-panel { margin: clamp(1.1rem,2.6vw,1.6rem) auto 0; max-width: 54rem;
-  padding: clamp(1rem,2.4vw,1.5rem) clamp(1.1rem,2.6vw,1.75rem); border-radius: 16px;
-  background: var(--scrim); backdrop-filter: blur(18px) saturate(115%);
-  -webkit-backdrop-filter: blur(18px) saturate(115%); border: 1px solid rgba(255,255,255,0.55); }
-.run-panel .ladder { margin-top: 0; }
-.run-panel .lad-sprint { background: rgba(255,255,255,0.55); }
-.run-panel .lad-pair i { background: var(--lad); }
-.run-panel .lad-pair i:nth-child(2) { background: var(--lad); opacity: 0.42; }
-.run-panel .fig { background: rgba(255,255,255,0.55); padding: clamp(0.6rem,1.6vw,0.9rem) 0.4rem; }
-.run-panel .fig-n { font-size: clamp(1.5rem,1.1rem + 1.6vw,2.3rem); color: var(--blue-plate); }
-.run-panel .figs { margin-top: clamp(0.9rem,2.2vw,1.35rem); }
-.run-panel .rhythm { margin-top: clamp(0.7rem,1.8vw,1.05rem); }
-/* the border-top SHORTHAND here used to hardcode --sky-300, which silently
-   reset the per-cell color set above it. It takes --rh like everything else. */
-.run-panel .rh-cell { background: rgba(255,255,255,0.55); border-left: 0; border-top: 3px solid var(--rh);
-  border-radius: 0 0 10px 10px; text-align: center; padding: clamp(0.6rem,1.6vw,0.9rem) 0.75rem; }
-.honest-line { margin-top: clamp(0.9rem,2.2vw,1.3rem); font-family: var(--font-display);
-  font-size: clamp(0.95rem,0.88rem + 0.4vw,1.15rem); line-height: 1.45; color: var(--ink); }
-.honest-line b { font-weight: 600; }
-.eng-card { position: relative; overflow: hidden; padding: clamp(0.95rem,2.2vw,1.4rem) clamp(1.05rem,2.4vw,1.55rem); border-radius: 14px; background: var(--scrim); backdrop-filter: blur(16px) saturate(115%); -webkit-backdrop-filter: blur(16px) saturate(115%); border: 1px solid rgba(255,255,255,0.55); }
-/* THE FOUR ENGINES TAKE FOUR STOPS OFF THE MARK. Four cards, four points on a
-   five-stop gradient, so the sweep is spent on real content rather than
-   sprinkled as decoration. Each card's own stop is set on --eg below and drives
-   both the numeral and the edge rule; the -plate twins are used because these
-   sit on a scrim over film. */
-.eng-card { --eg: var(--blue-plate); }
-.eng-card:nth-child(1) { --eg: var(--purple-plate); }
-.eng-card:nth-child(2) { --eg: var(--indigo-plate); }
-.eng-card:nth-child(3) { --eg: var(--teal-plate); }
-.eng-card:nth-child(4) { --eg: var(--green-plate); }
-.eng-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--eg); }
-.eng-card .n { display: block; font-family: var(--font-display); font-weight: 500; font-size: clamp(1rem,0.9rem + 0.5vw,1.3rem); color: var(--eg); line-height: 1; }
-.eng-card h3 { margin-top: 0.42rem; font-family: var(--font-display); font-weight: 400; font-size: var(--text-h3); letter-spacing: -0.012em; }
-.eng-card .geo { margin-top: 0.3rem; font-size: var(--text-micro); letter-spacing: 0.14em; text-transform: uppercase; color: var(--eg); font-weight: 700; }
-.eng-card .one { margin-top: 0.45rem; color: var(--ink-soft); font-size: 0.96rem; }
+body > main,
+body > footer,
+.agh-topline { position: relative; z-index: 1; }
 
-.cue-lab { font-size: var(--text-micro); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); font-weight: 800; background: var(--scrim-firm); padding: 0.4rem 0.8rem; border-radius: 999px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+body {
+  background: var(--paper);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(0.975rem, 0.93rem + 0.2vw, 1.0625rem);
+  line-height: 1.62;
+  letter-spacing: 0.005em;
+}
 
-/* ===== Static sections (unchanged from the approved deck) ================ */
-.sec { padding: clamp(3.5rem,9vw,7rem) 0; }
-.sec--band { background: var(--sky-50); }
-.sec--cream { background: var(--cream); }
-/* LAST SECTION CENTERED at every width, not only below 900px. */
-.sec-head { display: flex; align-items: baseline; gap: clamp(0.75rem,2vw,1.25rem); flex-wrap: wrap; justify-content: center; text-align: center; }
-.sec--cream .shell { text-align: center; }
-.sec--cream .sec-note { margin-inline: auto; }
-.sec--cream .deliv-row,
-.sec--cream .led-row,
-.sec--cream .band-row { grid-template-columns: 1fr; gap: 0.15rem; text-align: center; }
-.sec--cream .deliv, .sec--cream .band { max-width: 46rem; margin-inline: auto; }
-.sec--cream .sec-price { margin-left: 0; }
-.sec-num { font-family: var(--font-display); font-weight: 300; font-size: clamp(2.2rem,1.5rem + 3vw,4rem); color: var(--sky-500); line-height: 0.9; }
-.sec-title { font-family: var(--font-display); font-weight: 400; font-size: var(--text-h2); letter-spacing: -0.02em; }
-.sec-price { margin-left: auto; font-family: var(--font-display); font-weight: 500; font-size: clamp(1.1rem,0.9rem + 0.9vw,1.6rem); color: var(--blue); }
-.sec-rule { height: 1px; background: var(--hairline); margin: clamp(1.1rem,2.5vw,1.6rem) 0 clamp(1rem,2.2vw,1.4rem); }
-.sec-note { color: var(--ink-soft); max-width: 56ch; font-size: clamp(1rem,0.94rem + 0.3vw,1.15rem); }
-.ag-break { display: block; height: 0.35rem; }
-.ladder { margin-top: clamp(2rem,5vw,3rem); }
-.lad-scale { display: flex; justify-content: space-between; font-size: var(--text-micro); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; margin-bottom: 0.6rem; }
-.lad-track { display: grid; grid-template-columns: repeat(7,1fr); gap: clamp(0.4rem,1.2vw,0.85rem); }
-.lad-sprint { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: clamp(0.7rem,1.6vw,1rem) 0; border-radius: 10px; background: var(--white); border: 1px solid var(--hairline); }
-.lad-pair { display: flex; gap: 5px; }
-/* THE SPRINT LADDER WALKS THE MARK. Seven sprints, seven samples along the same
-   135deg sweep the logo runs, so the ladder reads as a progression in the
-   brand's own color rather than seven identical blue pips. The lighter second
-   pip in each pair is the same stop at 42%, which keeps the pair relationship
-   the original design had. */
-.lad-sprint:nth-child(1) { --lad: var(--purple-ink); --ladp: var(--purple-plate); }
-.lad-sprint:nth-child(2) { --lad: #59489C; --ladp: #4A4788; }
-.lad-sprint:nth-child(3) { --lad: var(--indigo-ink); --ladp: var(--indigo-plate); }
-.lad-sprint:nth-child(4) { --lad: var(--blue-ink);   --ladp: var(--blue-plate); }
-.lad-sprint:nth-child(5) { --lad: #1F7A9E; --ladp: #17536B; }
-.lad-sprint:nth-child(6) { --lad: var(--teal-ink);   --ladp: var(--teal-plate); }
-.lad-sprint:nth-child(7) { --lad: var(--green-ink);  --ladp: var(--green-plate); }
-.lad-pair i { display: block; width: 9px; height: 22px; border-radius: 3px; background: var(--lad, var(--blue)); }
-.lad-pair i:nth-child(2) { opacity: 0.42; }
-.run-panel .lad-sprint { --lad: var(--ladp); }
-.lad-lab { font-size: var(--text-micro); color: var(--ink-faint); font-weight: 700; }
-.lad-note { margin-top: 0.9rem; color: var(--ink-soft); font-size: 0.95rem; }
-.figs { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--gap); margin-top: clamp(2rem,5vw,3rem); }
-.fig { text-align: center; padding: clamp(1rem,2.4vw,1.5rem) 0.5rem; background: var(--white); border: 1px solid var(--hairline); border-radius: 12px; }
-.fig-n { display: block; font-family: var(--font-display); font-weight: 500; font-size: clamp(1.9rem,1.3rem + 2.4vw,3.1rem); color: var(--blue); line-height: 1; }
-.fig-l { display: block; margin-top: 0.45rem; font-size: var(--text-micro); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; }
-.rhythm { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--gap); margin-top: var(--gap); }
-/* Daily / every 4 / every 7 is a cadence that loosens as it goes, so it takes
-   three consecutive stops off the mark rather than three identical rules. */
-.rh-cell { --rh: var(--blue-ink); padding: clamp(0.9rem,2.2vw,1.35rem) clamp(1rem,2.4vw,1.5rem); border-left: 3px solid var(--rh); background: var(--white); border-radius: 0 10px 10px 0; }
-.rh-cell:nth-child(1) { --rh: var(--blue-ink); }
-.rh-cell:nth-child(2) { --rh: var(--teal-ink); }
-.rh-cell:nth-child(3) { --rh: var(--green-ink); }
-.run-panel .rh-cell:nth-child(1) { --rh: var(--blue-plate); }
-.run-panel .rh-cell:nth-child(2) { --rh: var(--teal-plate); }
-.run-panel .rh-cell:nth-child(3) { --rh: var(--green-plate); }
-.rh-when { font-weight: 800; font-size: 0.95rem; }
-.rh-what { margin-top: 0.25rem; color: var(--ink-soft); font-size: 0.92rem; }
-/* `.honest` used to be a bordered callout block here. The markup now carries
-   `.honest-line` instead and no element has the `.honest` class, so its rules
-   were removed rather than left computing against nothing. */
-.deliv { margin-top: clamp(2rem,5vw,3rem); }
-.deliv-h { font-size: var(--text-micro); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint); font-weight: 800; margin-bottom: 0.75rem; }
-.deliv-row, .led-row, .band-row { display: grid; grid-template-columns: minmax(8.5rem,15rem) 1fr; gap: clamp(0.6rem,2vw,1.5rem); padding: 0.8rem 0; border-top: 1px solid var(--hairline); }
-.deliv-k, .led-k, .band-k { font-weight: 700; }
-.deliv-v, .led-v, .band-v { color: var(--ink-soft); }
-.band { margin-top: clamp(2rem,5vw,3rem); background: var(--white); border: 1px solid var(--hairline); border-radius: 14px; padding: clamp(1.1rem,2.6vw,1.7rem) clamp(1.25rem,3vw,2rem); }
-.band-label { font-size: var(--text-micro); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint); font-weight: 800; }
-.band-row:first-of-type { border-top: 0; }
-/* The total is the line that matters most on the page, so it gets the mark's
-   full sweep as its rule instead of a flat 2px. */
-.band-total { position: relative; border-top: 0; margin-top: 0.35rem; padding-top: 1rem; }
-.band-total::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; border-radius: 2px; background: var(--grad-brand); }
-.band-total .band-k { font-weight: 800; }
-.band-total .band-v { font-family: var(--font-display); font-weight: 600; color: var(--blue);
-  font-size: clamp(1.05rem,0.9rem + 0.7vw,1.45rem); }
-.band-row.total .band-v { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.05rem,0.9rem + 0.7vw,1.45rem); color: var(--blue); }
-.closemark { margin-top: clamp(2.5rem,6vw,4rem); text-align: center; }
-.closemark svg { width: clamp(30px,5vw,42px); height: auto; margin-inline: auto; fill: var(--sky-300); }
-/* ═══ ASCENDING SECTION — What It Costs ═══════════════════════════════════
-   Plate 4's real cloud footage IS the transition and the ground. The drawn SVG
-   clouds that used to live here were built before Plate 4 existed and, sat next
-   to photographic clouds, read as a sticker on a photograph. They are gone.
+ul { padding-left: 0; list-style: none; }
 
-   Content sits on the SAME cream scrim used on plates 1-3, measured at 7.52:1.
-   Before this it was bare ink on a bright sky and it washed out. */
-/* THE SKY IS PINNED, THE CONTENT TRAVELS OVER IT.
-   It used to be an absolutely positioned layer stretched to whatever height the
-   section happened to be, with a parallax translate on the video. Two problems:
-   the footage was scaled to a box that had nothing to do with its own 16:9, so
-   it read as stretched, and the section was a video playing behind text rather
-   than anything you could scroll THROUGH.
-   Now .cost-sky is a sticky full-viewport layer inside .sky-scope, which spans
-   the section and the credit line. It holds one viewport of footage at its own
-   aspect and stays put while the containers move across it. The negative margin
-   is what pulls the content back up over the pinned layer.
-   --foot-h is gone with it: the scope contains the footer, so there is no
-   overhang left to measure. */
-.sky-scope { position: relative;
-  /* THE PAGE MUST NOT PAN SIDEWAYS. The cloud bank is deliberately wider than
-     the viewport and drifts, which pushed scrollWidth past clientWidth: 441
-     against 390 on an iPhone, so the whole deck could be swiped left and right.
-     overflow-x: clip is the right tool rather than hidden: hidden would force
-     the other axis into a scroll container and kill the sticky sky inside. */
-  overflow-x: clip; }
-.cost-sky {
-  position: sticky; top: 0; z-index: 0;
-  height: 100svh; margin-bottom: -100svh;
+/* The brand sweep as the page's top edge. This is the one device the
+   whole identity hangs on: aghope.org wears it as its nav band. Widened
+   to the full five-stop wash so the warm half of the palette is present
+   from the very first pixel. */
+/* The top edge is the reading position. The whole sweep is always there
+   but held back, and the portion already read comes up to full strength -
+   so the bar fills as the deck is worked through rather than appearing and
+   disappearing. Width only, so it is a transform-cheap paint. */
+.agh-topline {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 5px;
+  background: var(--sweep-decor);
+  opacity: 0.18;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.agh-progress {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  background: var(--sweep-decor);
+  background-size: 100vw 100%;
+  background-attachment: fixed;
+  box-shadow: 0 0 14px rgba(110, 40, 119, 0.35);
+}
+
+/* ---------- Layout ---------- */
+
+/* The container. This rule went missing when the arc block was removed, and
+   with max-width:none / padding:0 every section ran edge to edge. AG holds a
+   measured gutter at every width: --safe-edge from ag-tokens at the narrow
+   end, 5vw through the middle, capped at 56px. */
+.wrap {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: clamp(var(--safe-edge), 5vw, 56px);
+}
+
+section { position: relative; }
+
+.pad-section { padding-block: var(--v-section); }
+
+/* Sections carry NO surface of their own. Tinted panels were tried and
+   removed: at 74% opacity they washed the background back out to near-white,
+   which is the exact problem the background exists to solve. The weave runs
+   unbroken from the first pixel to the last and only the content cards float
+   on it. Section separation comes from the flow, not from boxes. */
+.band {
+  position: relative;
+  background: transparent;
+  /* The copy scrim below feathers 8% past this box on each side. Without
+     clipping that pushed the page 84px wide at 1200 and 1px at 1366 - a real
+     horizontal pan. The scrim has nothing to escape for. */
   overflow: hidden;
 }
-/* THE CLOUDS ARE SCRUBBED BY SCROLL, not played. It was an autoplaying loop
-   behind the containers, which meant the last section had no scroll effect of
-   its own: the footage ran on its own clock whatever the reader did. It is now
-   a frame sequence on a canvas driven by position through this scope, so the
-   ascent through the cloud deck happens because you scroll, exactly like the
-   two transitions above it. */
-.cost-scrub { width: 100%; height: 100%; object-fit: cover; display: block;
-  background: #876F58; }
-/* phone / reduced-motion fallback: one still, no sequence */
-.sky-scope[data-film="still"] .cost-sky {
-  background: url("cost-sky-mobile.webp") center/cover no-repeat; }
-.sky-scope[data-film="still"] .cost-scrub { display: none; }
 
-/* the warm wash rides WITH the pinned sky, so the type sits on a consistent
-   ground instead of one that slides as the section scrolls */
-.cost-sky::after { content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(180deg, rgba(253,248,242,0.34) 0%, rgba(253,248,242,0.12) 26%,
-                                       rgba(253,248,242,0.12) 68%, rgba(253,248,242,0.42) 100%); }
-
-/* a short bridge at the very top so the clouds arrive off the back of Plate 3
-   rather than cutting in. This one is NOT sticky: it scrolls away. */
-/* THE SEAM INTO THE CLOUDS IS CLOUD, NOT A CUT.
-   Plate 3 ends on water and the cost section begins in sky, and the join was a
-   hard horizontal line with a band of haze under it. This is a bank of cloud
-   tops STRADDLING that line instead: the box is pulled up so half of it sits
-   over the plate, and overlapping radial gradients at different sizes build a
-   billowed edge that swells up over the dock rather than cutting across it.
-   Two layers at different scales drifting opposite ways, which is what keeps
-   it from reading as a repeat. All gradients, so no bytes and no decode. */
-.sky-scope::before { content: ""; position: absolute; left: -6%; right: -6%;
-  top: calc(-1 * clamp(150px, 21vh, 300px));
-  height: clamp(330px, 46vh, 640px); z-index: 1; pointer-events: none;
-  /* HIDDEN UNTIL THE CLOUDS ARE ACTUALLY BEING APPROACHED. The bank is pulled
-     up so it straddles the seam, which put it ~300px above the scope, i.e.
-     inside the viewport over the bottom of every plate from the very first
-     frame. --seam is driven from how close the scope is to the viewport, so
-     the cloud tops only build as the reader comes up to the cost section. */
-  opacity: var(--seam, 0); transition: opacity 0.3s linear;
-  background:
-    radial-gradient(30% 40% at  8% 58%, rgba(253,248,242,0.98) 0 38%, rgba(253,248,242,0) 70%),
-    radial-gradient(24% 34% at 22% 66%, rgba(253,248,242,0.96) 0 40%, rgba(253,248,242,0) 72%),
-    radial-gradient(34% 46% at 37% 56%, rgba(253,248,242,0.99) 0 36%, rgba(253,248,242,0) 68%),
-    radial-gradient(26% 36% at 52% 64%, rgba(253,248,242,0.97) 0 40%, rgba(253,248,242,0) 72%),
-    radial-gradient(32% 44% at 66% 57%, rgba(253,248,242,0.98) 0 37%, rgba(253,248,242,0) 69%),
-    radial-gradient(24% 34% at 80% 65%, rgba(253,248,242,0.96) 0 40%, rgba(253,248,242,0) 72%),
-    radial-gradient(30% 42% at 94% 59%, rgba(253,248,242,0.98) 0 38%, rgba(253,248,242,0) 70%),
-    linear-gradient(180deg, rgba(253,248,242,0) 0%, rgba(253,248,242,0) 44%,
-                            rgba(253,248,242,0.72) 62%, rgba(253,248,242,0.30) 82%,
-                            rgba(253,248,242,0) 100%);
-  animation: cloud-drift-a 42s ease-in-out infinite alternate;
-}
-/* a finer bank sitting slightly lower and drifting the other way, so the edge
-   has depth rather than one silhouette */
-.sky-scope::after { content: ""; position: absolute; left: -5%; right: -5%;
-  top: calc(-1 * clamp(70px, 10vh, 150px));
-  height: clamp(240px, 32vh, 460px); z-index: 1; pointer-events: none;
-  opacity: var(--seam, 0); transition: opacity 0.3s linear;
-  background:
-    radial-gradient(20% 30% at 15% 60%, rgba(253,248,242,0.86) 0 40%, rgba(253,248,242,0) 74%),
-    radial-gradient(16% 24% at 31% 68%, rgba(253,248,242,0.80) 0 42%, rgba(253,248,242,0) 76%),
-    radial-gradient(22% 32% at 47% 58%, rgba(253,248,242,0.88) 0 40%, rgba(253,248,242,0) 74%),
-    radial-gradient(17% 26% at 63% 67%, rgba(253,248,242,0.82) 0 42%, rgba(253,248,242,0) 76%),
-    radial-gradient(21% 31% at 79% 59%, rgba(253,248,242,0.86) 0 40%, rgba(253,248,242,0) 74%);
-  animation: cloud-drift-b 63s ease-in-out infinite alternate;
-}
-@keyframes cloud-drift-a { from { transform: translate3d(-1.4%,0,0); } to { transform: translate3d(1.4%,0,0); } }
-@keyframes cloud-drift-b { from { transform: translate3d(1.8%,0,0); } to { transform: translate3d(-1.8%,0,0); } }
-@media (prefers-reduced-motion: reduce) {
-  .sky-scope::before, .sky-scope::after { animation: none; }
+/* The scrim: a soft ground under each block of copy. HER-10's pattern. The
+   field varies frame to frame, so copy gets its own ground rather than
+   trusting the background to stay quiet where it matters. This is the layer
+   that protects gradient-filled headlines, which cannot carry a halo. */
+.band > .wrap::before,
+.hero > .wrap::before {
+  content: "";
+  position: absolute;
+  inset: -6% -8%;
+  background: radial-gradient(66% 56% at 50% 50%,
+    rgba(255, 253, 250, 0.88) 0%,
+    rgba(255, 253, 250, 0.62) 48%,
+    rgba(255, 253, 250, 0) 80%);
+  pointer-events: none;
+  z-index: -1;
 }
 
-.sec--cream { position: relative; z-index: 2; background: transparent;
-  /* THE CLOUD WAS LANDING ON THE FIRST CONTAINER (Quinten, 2026-08-19). Both
-     banks are pulled ABOVE the scope so they straddle the seam, so each one
-     still reaches this far DOWN into it:
-         ::before  clamp(330px,46vh,640px) - clamp(150px,21vh,300px)
-         ::after   clamp(240px,32vh,460px) - clamp( 70px,10vh,150px)
-     The first is the deeper of the two. The head used to start inside that
-     band. Derived from the same expressions rather than guessed at, so it
-     tracks the bank if either is ever retuned. */
-  --seam-reach: calc(clamp(330px,46vh,640px) - clamp(150px,21vh,300px));
-  padding-top: max(clamp(3rem, 8vw, 5.5rem),
-                   calc(var(--seam-reach) + clamp(1.5rem,4vh,3rem)));
-  padding-bottom: clamp(3.5rem, 8vw, 6rem); }
+.band > .wrap,
+.hero > .wrap { position: relative; z-index: 1; }
 
-.sec--cream .shell { position: relative; z-index: 2; }
+/* Every non-gradient text run wears the mist. Listed explicitly rather than
+   applied globally so gradient-filled headlines are never caught by it. */
+.sec-eyebrow,
+.sec-label,
+.sec-sub,
+.statement,
+.hero-lede,
+.hero-line,
+.hero-title .l1 .t,
+.sec-title .t,
+.fig-desc,
+.chart-eyebrow,
+.chart-tick,
+.sprint-marks span,
+.foot-line { text-shadow: var(--mist); }
 
-/* every block on the cream scrim, same as the plates */
-.sec--cream .sec-head,
-.sec--cream .sec-note,
-.sec--cream .deliv,
-.sec--cream .band,
-.sec--cream .terms-wrap {
-  background: var(--scrim); backdrop-filter: blur(16px) saturate(115%);
-  -webkit-backdrop-filter: blur(16px) saturate(115%);
-  border: 1px solid rgba(255,255,255,0.55); border-radius: 16px;
-  padding: clamp(1rem,2.4vw,1.6rem) clamp(1.15rem,2.8vw,2rem);
-  max-width: 46rem; margin-inline: auto;
-}
-/* THIS SECTION IS NO LONGER ON PLAIN CREAM. It moved onto Plate 4's sky on
-   2026-08-18 and its panels are scrims, so it takes the -plate twins, not the
-   -ink ones. The color it used to carry, #0076BB, measured 2.64:1 against
-   these scrims, which is below even the 3.0 large-text floor. */
-.sec--cream .sec-head { position: relative; padding-bottom: 0.9rem; border-bottom: 0;
-  display: flex; flex-direction: column; align-items: center; gap: 0; }
-/* the price is the big line now, so it takes display sizing rather than the
-   small inline treatment it had beside the title. max-width is released
-   because the string is long and .lead caps at 21ch for a plate headline. */
-.sec--cream .sec-head .lead { max-width: 100%; margin: 0;
-  font-size: clamp(1.45rem, 1.05rem + 1.9vw, 2.5rem); font-weight: 500;
-  color: var(--blue-plate); text-shadow: none; }
-.sec--cream .sec-head::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 2px; background: var(--grad-brand); }
-.sec--cream .sec-num { color: var(--blue-plate); }
-.sec--cream .sec-price { color: var(--blue-plate); font-weight: 600; }
-.sec--cream .deliv-h { color: var(--blue-plate); letter-spacing: 0.22em; }
-.sec--cream .deliv-k, .sec--cream .led-k, .sec--cream .band-k { color: var(--blue-plate); }
-.sec--cream .deliv-row, .sec--cream .led-row { border-top-color: rgba(20,80,132,0.20); }
-/* the number they are actually buying */
-.sec--cream .band-total .band-v { color: var(--blue-plate); }
-.sec--cream .band-row.total .band-v { color: var(--blue-plate); }
-.sec--cream .sec-note { margin-top: 0.9rem; }
-.sec--cream .deliv, .sec--cream .band { margin-top: clamp(1rem,2.4vw,1.5rem); }
-.sec--cream .terms-wrap { margin-top: clamp(1rem,2.4vw,1.5rem); }
-.sec--cream .sec-rule { display: none; }
-
-/* SCROLL-LINKED, ALTERNATING. Every value here is written per frame by the
-   section script from the block's own position, so there is no transition and
-   no trigger: the block glides in from its side as it rises, holds while it is
-   being read, and fades up and away as it leaves through the top. Alternating
-   --r-dir gives left, right, left, right down the section.
-   No transition on purpose. A transition on top of a per-frame value fights it
-   and lags the scroll, which is the mistake the dwell response already taught
-   this file once. */
-.rise {
-  opacity: var(--r-o, 0);
-  transform: translate3d(var(--r-x, 0px), var(--r-y, 34px), 0) scale(var(--r-s, 0.965));
-  filter: blur(var(--r-b, 5px));
-  will-change: opacity, transform, filter;
+/* ---------- Copy panes ----------
+   Loose text sitting straight on the field was the last thing without a
+   surface of its own. Same glass as the cards, so the whole deck reads as
+   panes resting on one continuous ground. */
+.pane {
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  padding: clamp(22px, 2.6vw, 38px) clamp(20px, 2.4vw, 40px);
 }
 
-/* the rows inside each panel come in behind it, so the panel does not arrive
-   as one flat slab */
-.rise .deliv-row, .rise .band-row, .rise .led-row {
-  opacity: 0; transform: translateY(22px);
-  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
-              transform 0.7s cubic-bezier(0.16,1,0.3,1);
-}
-.rise.is-up .deliv-row, .rise.is-up .band-row, .rise.is-up .led-row {
-  opacity: 1; transform: translateY(0);
-}
-.rise.is-up .deliv-row:nth-child(2), .rise.is-up .band-row:nth-child(2), .rise.is-up .led-row:nth-child(2) { transition-delay: 0.21s; }
-.rise.is-up .deliv-row:nth-child(3), .rise.is-up .band-row:nth-child(3), .rise.is-up .led-row:nth-child(3) { transition-delay: 0.3s; }
-.rise.is-up .deliv-row:nth-child(4), .rise.is-up .band-row:nth-child(4), .rise.is-up .led-row:nth-child(4) { transition-delay: 0.42s; }
-.rise.is-up .deliv-row:nth-child(5), .rise.is-up .band-row:nth-child(5), .rise.is-up .led-row:nth-child(5) { transition-delay: 0.6s; }
-.rise.is-up .deliv-row:nth-child(6), .rise.is-up .band-row:nth-child(6) { transition-delay: 0.7s; }
-.rise.is-up .deliv-row:nth-child(7), .rise.is-up .band-row:nth-child(7) { transition-delay: 0.9s; }
-
-@media (prefers-reduced-motion: reduce) {
-  .rise { opacity: 1 !important; transform: none !important; filter: none !important; }
+.sec-head.pane {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
 }
 
-/* THE CREDIT LINE SITS ON THE FOOTAGE. It used to be a separate band on plain
-   paper below the cost section, which read as a hard rule across the foot of
-   the page. It is now pulled up into that section's bottom padding so the sky
-   runs behind it and the page ends on the image rather than on a seam.
-   The chip is the same cream scrim every other block on this section uses. */
-.pagefoot { position: relative; z-index: 3; text-align: center;
-  padding: clamp(1.5rem, 3.4vw, 2.4rem) 0 clamp(2rem, 4.5vw, 3.2rem);
-  color: var(--ink-soft); font-size: 0.88rem; }
-.foot-chip { display: inline-block; max-width: 100%;
-  padding: 0.5rem 1.05rem; border-radius: 999px;
-  background: var(--scrim-firm); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.5); }
-.pagefoot b { font-weight: 700; color: var(--ink); }
-/* THE NAV IS FIXED, SO THE LAST THING ON THE PAGE HAS TO GET OUT FROM UNDER IT.
-   Measured before this: the credit line ended at 849 with the nav starting at
-   825 on desktop, and it was covered at 393 and 350 as well. --nav-h is written
-   from the bar's real height, which changes when the labels drop at 760px. */
-.pagefoot { padding-bottom: calc(var(--nav-h, 56px) + clamp(1.25rem, 4vh, 2.25rem)); }
+.statement.pane {
+  max-width: 56ch;
+  padding: clamp(18px, 2vw, 28px) clamp(22px, 2.6vw, 38px);
+}
 
-/* PRESENTATION CONTROLS. Fixed to the viewport so it rides over the stage AND
-   the cost section without either knowing about it. pointer-events sit on the
-   BUTTONS only: the stage reads every wheel and touch event on the page, and a
-   bar spanning the bottom that swallowed them would break scrolling outright. */
-.deck-nav {
-  position: fixed; left: 50%; bottom: clamp(0.7rem, 2.2vh, 1.4rem);
-  transform: translateX(-50%); z-index: 60;
-  display: flex; align-items: center; gap: clamp(0.15rem, 0.6vw, 0.4rem);
-  padding: clamp(0.25rem, 0.7vw, 0.4rem);
-  border-radius: 999px; pointer-events: none;
-  background: rgba(253,248,242,0.82);
-  backdrop-filter: blur(18px) saturate(120%);
-  -webkit-backdrop-filter: blur(18px) saturate(120%);
-  border: 1px solid rgba(255,255,255,0.6);
-  box-shadow: 0 6px 28px rgba(20,40,60,0.16);
-  max-width: calc(100vw - 1.5rem);
+/* ---------- Section headers ---------- */
+
+.sec-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--v-sm);
+  margin-bottom: var(--v-lg);
 }
-.deck-nav > * { pointer-events: auto; }
-.deck-stop, .deck-fs {
-  font: inherit; border: 0; background: transparent; cursor: pointer;
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  padding: 0.42rem 0.72rem; border-radius: 999px; color: var(--ink);
-  transition: background 0.3s ease, color 0.3s ease;
-  /* LOCKED AG minimum, which exceeds the WCAG 44px floor. Measured before this
-     the stops were 26x40 and the full-screen button 33x40. */
-  min-height: 49px; min-width: 49px; justify-content: center;
+
+.sec-rule {
+  width: 72px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--sweep-decor);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--duration-medium, 600ms) var(--ease-satisfying, cubic-bezier(0.16, 1, 0.3, 1));
 }
-.deck-stop b { font-family: var(--font-display); font-weight: 500; font-size: 0.95rem;
-  line-height: 1; color: var(--blue-plate); }
-.deck-stop span { font-size: clamp(0.72rem, 0.66rem + 0.24vw, 0.84rem);
-  font-weight: 600; letter-spacing: 0.01em; white-space: nowrap; }
-.deck-stop--mark { padding: 0.28rem; }
-.deck-stop--mark img { display: block; width: 30px; height: 30px; }
+
+.in-view .sec-rule { transform: scaleX(1); }
+
+.sec-eyebrow {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.75rem, 0.71rem + 0.18vw, 0.875rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  word-break: normal;
+}
+
+.sec-label {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.0625rem, 0.98rem + 0.42vw, 1.3125rem);
+  line-height: 1.2;
+  color: var(--agh-plum);
+  word-break: normal;
+}
+
+.sec-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  /* vw-keyed, same reason as the hero. The factor is MEASURED, not guessed:
+     the longest line, "BUILT TO FILL YOUR PROGRAMS", renders at 13.08em in
+     Fira Sans Condensed 800. The container is 0.90vw wide below 1120px, so
+     0.90 / 13.08 = 6.88vw is the fitting ceiling; 6.6vw keeps 4% headroom
+     for a fallback face. A 7.6vw guess here overflowed by 15px at 350px. */
+  font-size: min(3.5rem, 6.6vw);
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ink);
+  max-width: 100%;
+  text-wrap: balance;
+}
+
+/* Headline lines break where the copy breaks, never anywhere else. Same
+   masked-slide construction as the hero. */
+.sec-title .l1,
+.sec-title .l2 { display: block; overflow: hidden; padding-bottom: 0.06em; margin-bottom: -0.06em; }
+
+/* ---------- The line slide ----------
+   Transform only, vertical only (MOT-10 forbids arrivals from the sides),
+   on the canonical tokens. The line boxes above clip; these slide. */
+.hero-title .t,
+.sec-title .t,
+.close-title .t {
+  display: block;
+  white-space: nowrap;
+  transform: translateY(108%);
+  transition: transform var(--duration-long) var(--ease-satisfying);
+  will-change: transform;
+}
+
+.in-view .hero-title .t,
+.in-view .sec-title .t,
+.in-view .close-title .t { transform: translateY(0); }
+
+/* second line lands a beat later - 126ms is MOT-08's stagger ceiling */
+.hero-title .l2 .t,
+.sec-title .l2 .t { transition-delay: 126ms; }
+
+/* the headline does not ALSO rise as a stagger child; the mask owns its
+   entrance, and running both at once just muddies it */
+.reveal-stagger > .hero-title { opacity: 1; transform: none; }
+
+.close-title { overflow: hidden; padding-bottom: 0.08em; }
+
+.sec-sub {
+  font-weight: 400;
+  font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.375rem);
+  line-height: 1.42;
+  letter-spacing: 0.015em;
+  color: var(--agh-sky);
+  max-width: 40ch;
+  text-wrap: pretty;
+}
+
+/* A statement line, set the way their interior pages set one: centered,
+   sky blue, light, generous tracking. */
+.statement {
+  text-align: center;
+  font-weight: 400;
+  font-size: clamp(1.0625rem, 0.93rem + 0.62vw, 1.4375rem);
+  line-height: 1.42;
+  letter-spacing: 0.015em;
+  color: var(--agh-sky);
+  max-width: 44ch;
+  margin-inline: auto;
+  text-wrap: pretty;
+}
+
+.statement span { display: block; }
+.statement--quiet { color: var(--text-secondary); }
+
+/* Gradient type. Always fed an INK sweep, never a decorative one.
+   fit-content matters: as a full-width block, a centered line samples only
+   the middle of the gradient and comes out one flat color. */
+.grad {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  background: var(--sweep-ink);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: var(--agh-indigo);
+}
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .grad { -webkit-text-fill-color: transparent; }
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding-block: calc(var(--v-section) + 28px) var(--v-section);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero > .wrap { position: relative; z-index: 1; }
+
+.hero-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--v-md);
+}
+
+.hero-mark {
+  width: clamp(72px, 7.4vw, 100px);
+  height: auto;
+  filter: drop-shadow(0 6px 22px rgba(64, 40, 72, 0.18));
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  /* Keyed to vw so the longest line always holds one line down to 320px.
+     MEASURED: "ARE ALREADY SCROLLING" renders at 10.515em and the container
+     is 0.90vw, so 8.56vw is the ceiling. 8.2vw keeps 4% headroom for a
+     fallback face. */
+  font-size: min(4.5rem, 8.2vw);
+  line-height: 0.96;
+  letter-spacing: 0.008em;
+  text-transform: uppercase;
+  color: var(--ink);
+  max-width: 100%;
+}
+
+/* Each line of the headline is its own block and never wraps, so it breaks
+   where the copy breaks and nowhere else. Balance is off here on purpose:
+   it was pulling "ARE" down onto a line by itself.
+   The line is also the MASK for the slide: overflow hidden here, transform
+   on the inner .t, so each line rises out from behind its own edge. */
+.hero-title .l1,
+.hero-title .l2 { display: block; overflow: hidden; padding-bottom: 0.06em; margin-bottom: -0.06em; }
+
+.hero-rule {
+  width: 92px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--sweep-decor);
+}
+
+.hero-lede {
+  font-weight: 400;
+  font-size: clamp(1.0625rem, 0.9rem + 0.75vw, 1.5rem);
+  line-height: 1.42;
+  letter-spacing: 0.02em;
+  color: var(--agh-sky);
+  max-width: 30ch;
+  text-wrap: pretty;
+}
+
+.hero-line {
+  font-size: clamp(1rem, 0.94rem + 0.28vw, 1.125rem);
+  line-height: 1.55;
+  color: var(--text-secondary);
+  max-width: 42ch;
+  text-wrap: pretty;
+}
+
+/* ---------- Figure rows (hero band and cost band) ---------- */
+
+.figs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 34px);
+  width: 100%;
+  max-width: 760px;
+  margin-top: var(--v-sm);
+  padding-top: var(--v-md);
+  border-top: 1px solid var(--rule);
+}
+
+.fig { display: flex; flex-direction: column; align-items: center; gap: 3px; text-align: center; }
+
+.fig-term {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 1.05rem + 1.9vw, 2.625rem);
+  line-height: 1.04;
+  letter-spacing: 0.012em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  word-break: normal;
+}
+
+.fig-desc {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.75rem, 0.72rem + 0.16vw, 0.875rem);
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--muted);
+  word-break: normal;
+  text-wrap: balance;
+}
+
+/* ---------- Scroll cue ---------- */
+
+/* In flow, not absolute. Absolute positioning put it straight through the
+   figures row and under the presenter rail. */
+.scroll-cue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--v-md);
+}
+
+.scroll-cue span {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+  word-break: normal;
+}
+
+.scroll-cue i {
+  display: block;
+  position: relative;
+  width: 1px;
+  height: 38px;
+  overflow: hidden;
+  background: var(--rule);
+}
+
+.scroll-cue i::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 1px;
+  height: 15px;
+  background: var(--sweep-decor);
+  animation: cue-fall 2100ms var(--ease-soft, cubic-bezier(0.4, 0, 0.2, 1)) infinite;
+}
+
+@keyframes cue-fall {
+  0%   { transform: translateY(-17px); opacity: 0; }
+  30%  { opacity: 1; }
+  70%  { opacity: 1; }
+  100% { transform: translateY(38px); opacity: 0; }
+}
+
+/* ---------- What We Do: the road ----------
+   Structure lifted from the Arbor Wealth growth roadmap (rail, rail-fill,
+   nodes on a shared road); the behavior is rebuilt. It is a stepper now,
+   not a static timeline: the road opens on step 01 CENTERED, arrows travel
+   it left to right, and the road itself slides so the step you are on is
+   always the one in the middle of the frame.
+
+   Everything animates on transform and opacity only. */
+
+.roadmap { position: relative; }
+
+.road-viewport {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(20px, 2.6vw, 34px);
+  /* the frame fades at both edges so the road runs off rather than stopping */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+}
+
+.road-track {
+  position: relative;
+  width: max-content;
+  transform: translateX(var(--shift, 0px));
+  transition: transform var(--duration-long) var(--ease-satisfying);
+  will-change: transform;
+}
+
+/* ---- the road ---- */
+.road-rail {
+  position: absolute;
+  left: -1400px;
+  right: -1400px;
+  top: 50%;
+  height: 3px;
+  margin-top: -1.5px;
+  border-radius: var(--radius-pill);
+  background: rgba(34, 27, 41, 0.10);
+  overflow: hidden;
+}
+
+.road-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  border-radius: var(--radius-pill);
+  background: var(--sweep-decor);
+  box-shadow: 0 0 14px rgba(110, 40, 119, 0.30);
+  transition: width var(--duration-long) var(--ease-satisfying);
+}
+
+/* arrows traveling the road left to right. Pure background-position on a
+   repeating chevron, so it is one compositor-cheap paint, and it only runs
+   while the section is actually on screen. */
+.road-arrows {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background-image: repeating-linear-gradient(115deg,
+    rgba(255, 255, 255, 0.85) 0 7px,
+    rgba(255, 255, 255, 0) 7px 22px);
+  background-size: 44px 100%;
+  transition: opacity var(--duration-medium) var(--ease-soft);
+}
+
+.roadmap.in-view .road-arrows {
+  opacity: 0.5;
+  animation: road-travel 1.4s linear infinite;
+}
+
+@keyframes road-travel {
+  from { background-position: 0 0; }
+  to   { background-position: 44px 0; }
+}
+
+/* ---- the nodes ---- */
+.road-nodes {
+  position: relative;
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.road-node {
+  position: relative;
+  width: var(--cell, 268px);
+  flex: 0 0 auto;
+  min-height: clamp(250px, 25vw, 320px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.road-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 17px;
+  height: 17px;
+  margin: -8.5px 0 0 -8.5px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 3px solid var(--agh-indigo);
+  box-shadow: 0 0 0 6px rgba(255, 253, 250, 0.95);
+  transition:
+    transform var(--duration-quick) var(--ease-snap),
+    box-shadow var(--duration-quick) var(--ease-soft);
+  z-index: 2;
+}
+
+.road-node:nth-child(1) .road-dot { border-color: var(--agh-purple); }
+.road-node:nth-child(2) .road-dot { border-color: var(--agh-indigo); }
+.road-node:nth-child(3) .road-dot { border-color: var(--agh-blue); }
+.road-node:nth-child(4) .road-dot { border-color: var(--agh-teal); }
+.road-node:nth-child(5) .road-dot { border-color: #5d9a2f; }
+
+.road-node[data-on="true"] .road-dot {
+  transform: scale(1.5);
+  box-shadow: 0 0 0 8px rgba(255, 253, 250, 0.98), 0 0 20px rgba(55, 80, 154, 0.4);
+}
+
+/* ---- the pane ---- */
+.road-card {
+  position: absolute;
+  left: 50%;
+  bottom: calc(50% + 40px);
+  width: min(92%, 244px);
+  padding: clamp(16px, 1.7vw, 22px);
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  transform: translateX(-50%) scale(0.9);
+  opacity: 0.38;
+  transition:
+    transform var(--duration-medium) var(--ease-settle),
+    opacity var(--duration-medium) var(--ease-settle),
+    box-shadow var(--duration-quick) var(--ease-satisfying);
+}
+
+/* the step you are on sits proud, the rest recede */
+.road-node[data-on="true"] .road-card {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+  box-shadow: var(--shadow-lift);
+}
+
+/* the connector, drawn from the pane down to the road */
+.road-card::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 2px;
+  height: 28px;
+  margin-left: -1px;
+  background: linear-gradient(var(--agh-indigo), rgba(55, 80, 154, 0.12));
+}
+
+.road-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.125rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  background: var(--sweep-ink);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: var(--agh-indigo);
+  margin-bottom: 8px;
+}
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .road-num { -webkit-text-fill-color: transparent; }
+}
+
+.road-text {
+  font-size: clamp(0.9375rem, 0.9rem + 0.22vw, 1.0625rem);
+  line-height: 1.42;
+  color: var(--text-primary);
+  text-wrap: pretty;
+  word-break: normal;
+}
+
 @media (hover: hover) {
-  .deck-stop:hover, .deck-fs:hover { background: rgba(20,80,132,0.10); }
+  .road-node:hover .road-card { opacity: 0.72; }
+  .road-node[data-on="true"]:hover .road-card { opacity: 1; }
 }
-.deck-stop[aria-current="true"] { background: var(--blue-plate); }
-.deck-stop[aria-current="true"] b,
-.deck-stop[aria-current="true"] span { color: #fff; }
-.deck-fs { padding: 0.42rem; }
-.deck-fs svg { width: 20px; height: 20px; fill: none; stroke: var(--ink);
-  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.deck-fs .fs-out { display: none; }
-.deck-fs[aria-pressed="true"] .fs-in { display: none; }
-.deck-fs[aria-pressed="true"] .fs-out { display: inline; }
-.deck-stop:focus-visible, .deck-fs:focus-visible {
-  outline: 2px solid var(--blue-plate); outline-offset: 2px; }
 
-/* A phone cannot carry four labels and a mark. The words drop and the numbers
-   stay, which is still four NAMED stops rather than anonymous dots. */
-@media (max-width: 760px) {
-  .deck-stop span { display: none; }
-  .deck-stop { padding: 0.42rem 0.5rem; }
-  .deck-stop b { font-size: 0.95rem; }
-  .deck-stop--mark img { width: 26px; height: 26px; }
+/* ---- controls ---- */
+.road-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 1.8vw, 24px);
+  margin-top: clamp(10px, 1.4vw, 18px);
 }
+
+.road-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  color: var(--agh-indigo);
+  transition:
+    transform var(--duration-quick) var(--ease-satisfying),
+    opacity var(--duration-quick) var(--ease-soft);
+}
+
+.road-btn svg { width: 19px; height: 19px; }
+.road-btn--prev svg { transform: rotate(180deg); }
+
+.road-btn[disabled] { opacity: 0.3; cursor: default; }
+
+@media (hover: hover) {
+  .road-btn:not([disabled]):hover { transform: scale(1.09); }
+}
+
+.road-btn:not([disabled]):active { opacity: 0.63; transition-duration: 0.21s; }
+
+.road-pips { display: flex; align-items: center; gap: 9px; }
+
+.road-pip {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(34, 27, 41, 0.18);
+  transition: transform var(--duration-quick) var(--ease-snap),
+              background var(--duration-quick) var(--ease-soft);
+}
+
+.road-pip[data-on="true"] { background: var(--agh-indigo); transform: scale(1.5); }
+
+/* ---------- System cards ---------- */
+
+.system-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* column gap holds; the row gap opens up so stacked panes breathe */
+  gap: clamp(26px, 3vw, 40px) clamp(14px, 1.6vw, 22px);
+  align-items: stretch;
+}
+
+.sys {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: clamp(24px, 2.4vw, 34px) clamp(20px, 2vw, 28px) clamp(26px, 2.6vw, 34px);
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  overflow: hidden;
+  transition:
+    transform var(--duration-quick, 300ms) var(--ease-satisfying, cubic-bezier(0.16, 1, 0.3, 1)),
+    box-shadow var(--duration-quick, 300ms) var(--ease-satisfying, cubic-bezier(0.16, 1, 0.3, 1)),
+    border-color var(--duration-quick, 300ms) var(--ease-soft, cubic-bezier(0.4, 0, 0.2, 1));
+}
+
+/* The gradient edge. Each card takes a different slice of the sweep, so
+   the three of them read left to right as one continuous band. */
+.sys::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--sweep-decor);
+  background-size: 300% 100%;
+  background-position: var(--slice) 0;
+  transition: height var(--duration-quick, 300ms) var(--ease-satisfying, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.sys:nth-child(1) { --slice: 0%; }
+.sys:nth-child(2) { --slice: 50%; }
+.sys:nth-child(3) { --slice: 100%; }
+
+.sys-name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.0625rem, 0.98rem + 0.42vw, 1.25rem);
+  line-height: 1.2;
+  color: var(--agh-plum);
+  text-wrap: balance;
+  word-break: normal;
+}
+
+.sys ul { display: grid; gap: 9px; width: 100%; }
+
+.sys li {
+  position: relative;
+  padding-left: 17px;
+  font-size: clamp(0.9375rem, 0.9rem + 0.16vw, 1rem);
+  line-height: 1.5;
+  color: var(--text-secondary);
+  text-wrap: pretty;
+  word-break: normal;
+}
+
+.sys li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--agh-blue);
+}
+
+@media (hover: hover) {
+  .sys:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); border-color: #ffffff; }
+  .sys:hover::before { height: 6px; }
+}
+.sys:active { opacity: 0.63; transition-duration: 0.21s; }
+
+/* ---------- The mechanic: 28 days, 7 sprints ---------- */
+
+.track-frame { max-width: 860px; margin: var(--v-lg) auto 0; }
+
+.track-ends {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  word-break: normal;
+}
+
+/* ---------- The cycle chart ----------
+   There is no AG chart standard; this follows the convention the locked ads
+   and organic report templates share. INLINE SVG, not a third canvas: two
+   canvases already own the frame budget, an SVG path draws on via
+   stroke-dashoffset with zero JS per frame, and canvas rasterizes (often
+   blank) through the HTML to PDF path while SVG stays vector.
+
+   The five brand hues run as ONE horizontal gradient across a single
+   series, never as categorical colors - measured deltaE between indigo and
+   purple is 6.1 under deuteranopia, well under the 15 floor, so they cannot
+   carry separate meanings. Green is 2.23:1 on white, so it appears only on
+   the endpoint dot, which wears a white ring.
+
+   The paint reference lives on in the strands clipped inside the line. */
+
+.chart-wrap {
+  max-width: 880px;
+  /* the panes in this section were sitting too close vertically; the gap is
+     height only, the column width is unchanged */
+  margin: clamp(34px, 4.4vw, 62px) auto 0;
+  padding: clamp(20px, 2.4vw, 32px) clamp(18px, 2.2vw, 30px) clamp(14px, 1.6vw, 20px);
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+}
+
+.chart-eyebrow {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: clamp(10px, 1.2vw, 16px);
+  word-break: normal;
+}
+
+/* the plot is inset so the Y scale and its name have a column of their own
+   and never sit on top of the curve */
+.chart-box {
+  position: relative;
+  padding-left: clamp(46px, 5vw, 62px);
+  padding-bottom: 4px;
+}
+
+.chart-axis-name {
+  position: absolute;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-shadow: var(--mist);
+  word-break: normal;
+}
+
+.chart-axis-name--y {
+  left: 0;
+  top: calc(clamp(150px, 19vw, 250px) / 2);
+  transform: translate(-40%, -50%) rotate(-90deg);
+  transform-origin: center;
+}
+
+.chart-axis-name--x {
+  position: static;
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.chart-axis--y {
+  position: absolute;
+  left: clamp(22px, 2.6vw, 32px);
+  top: 0;
+  height: clamp(150px, 19vw, 250px);   /* the plot height, not the whole box */
+  width: clamp(20px, 2.2vw, 26px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.chart-svg {
+  display: block;
+  width: 100%;
+  height: clamp(150px, 19vw, 250px);
+  overflow: visible;
+}
+
+.chart-gridline {
+  stroke: rgba(34, 27, 41, 0.09);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart-line {
+  stroke-width: 13;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chart-area { opacity: 1; }
+
+/* the combed-paint strands, clipped inside the line's own band */
+.chart-stri { fill: none; stroke-width: 1.7; vector-effect: non-scaling-stroke; }
+.chart-stri--a { stroke: rgba(255, 255, 255, 0.62); }
+.chart-stri--b { stroke: rgba(255, 255, 255, 0.36); }
+
+.chart-endpoint {
+  fill: var(--agh-green);
+  stroke: #ffffff;
+  stroke-width: 2.5;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.chart-axis--x {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* the sprint row shares the plot's left inset so its 7 marks stay aligned
+   under the days they describe */
+/* ---- draw-on. stroke-dashoffset and transform only, never a geometry
+   property. Fires once via the shared IntersectionObserver. ---- */
+.chart-line,
+.chart-stri {
+  stroke-dasharray: var(--len, 2400);
+  stroke-dashoffset: var(--len, 2400);
+  transition: stroke-dashoffset var(--duration-long) var(--ease-satisfying);
+}
+
+.chart-area,
+.chart-endpoint { opacity: 0; }
+
+.chart-area { transition: opacity var(--duration-quick) var(--ease-soft) 300ms; }
+
+.chart-endpoint {
+  transform: scale(0);
+  transition:
+    opacity var(--duration-quick) var(--ease-satisfying) 840ms,
+    transform var(--duration-quick) var(--ease-snap) 840ms;
+}
+
+.chart-wrap.in-view .chart-line,
+.chart-wrap.in-view .chart-stri { stroke-dashoffset: 0; }
+.chart-wrap.in-view .chart-area { opacity: 1; }
+.chart-wrap.in-view .chart-endpoint { opacity: 1; transform: scale(1); }
+
+/* ---------- Cost: the dark ledger ---------- */
+
+.ledger {
+  position: relative;
+  background:
+    radial-gradient(120% 90% at 12% 0%, rgba(142, 237, 217, 0.12) 0%, rgba(142, 237, 217, 0) 58%),
+    radial-gradient(120% 90% at 92% 100%, rgba(255, 122, 107, 0.14) 0%, rgba(255, 122, 107, 0) 58%),
+    var(--panel);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: var(--panel-bevel), 0 22px 54px rgba(40, 24, 58, 0.24);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  padding: clamp(28px, 3.4vw, 56px) clamp(20px, 3vw, 52px) clamp(30px, 3.6vw, 58px);
+  color: var(--on-panel);
+  overflow: hidden;
+}
+
+.ledger::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 5px;
+  background: var(--sweep-decor);
+}
+
+.price {
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.25rem, 1.2rem + 4.6vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: 0.008em;
+  font-variant-numeric: tabular-nums;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  background: var(--sweep-ondark);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: #cfe0ff;
+  word-break: normal;
+}
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .price { -webkit-text-fill-color: transparent; }
+}
+
+.ledger-block { margin-top: var(--v-lg); }
+
+.ledger-head {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.75rem, 0.72rem + 0.16vw, 0.875rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--on-panel);
+  padding-bottom: 11px;
+  margin-bottom: 4px;
+  border-bottom: 2px solid transparent;
+  border-image: var(--sweep-decor) 1;
+  border-image-slice: 0 0 1 0;
+  border-image-width: 0 0 2px 0;
+  width: fit-content;
+  word-break: normal;
+}
+
+.lrow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(14px, 2vw, 30px);
+  align-items: baseline;
+  padding: clamp(12px, 1.3vw, 17px) 0;
+  border-bottom: 1px solid var(--panel-rule);
+}
+
+.lrow:last-child { border-bottom: 0; }
+
+.lrow-term {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.875rem, 0.84rem + 0.16vw, 0.9375rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-panel);
+  word-break: normal;
+}
+
+.lrow-val {
+  text-align: right;
+  font-size: clamp(0.9375rem, 0.9rem + 0.16vw, 1.0625rem);
+  line-height: 1.5;
+  color: var(--on-panel);
+  font-variant-numeric: tabular-nums;
+  word-break: normal;
+}
+
+.lrow--waived .lrow-val { color: #a9e07a; font-family: var(--font-display); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* Stacked requirement blocks read as prose, not as a table row. */
+.req { margin-top: var(--v-md); }
+
+.req-head {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.75rem, 0.72rem + 0.16vw, 0.875rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffc59b;
+  margin-bottom: 7px;
+  word-break: normal;
+}
+
+.req p {
+  font-size: clamp(0.9375rem, 0.9rem + 0.16vw, 1.0625rem);
+  line-height: 1.58;
+  color: var(--on-panel-soft);
+  text-wrap: pretty;
+  word-break: normal;
+  max-width: 62ch;
+}
+
+.req p + p { margin-top: 3px; }
+
+.lrow--stack { grid-template-columns: minmax(0, 34%) minmax(0, 1fr); }
+.lrow--stack .lrow-val { text-align: left; color: var(--on-panel-soft); }
+
+/* ---------- Close ---------- */
+
+.close-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  /* MEASURED: "READY WHEN YOU ARE" is 9.246em, ceiling 9.73vw, 9.3vw used. */
+  font-size: min(4rem, 9.3vw);
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--ink);
+  white-space: nowrap;
+  word-break: normal;
+}
+
+.deck-foot { padding-block: var(--v-lg) var(--v-section); text-align: center; }
+
+.foot-rule {
+  width: 56px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--sweep-decor);
+  margin: 0 auto var(--v-md);
+}
+
+.foot-line {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(0.75rem, 0.72rem + 0.16vw, 0.875rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  word-break: normal;
+}
+
+/* ---------- Responsive: layout shift only, breakpoints 1200 / 900 ---------- */
+
+@media (max-width: 1200px) {
+  .system-grid { grid-template-columns: minmax(0, 1fr); max-width: 660px; margin-inline: auto; }
+  .sys:nth-child(1), .sys:nth-child(2), .sys:nth-child(3) { --slice: 50%; }
+}
+
 @media (max-width: 900px) {
-  .foot-chip { padding: 0.55rem 0.95rem; line-height: 1.5; }
+  /* Literal centering. Every block is centered on a phone, no carve-outs. */
+
+  /* The hero still resolves inside one phone screen. Measured on a 375x667
+     iPhone SE. A 3-across figure row was tried and rejected: "PER TESTING
+     CYCLE" needs a 9px type size to fit a 108px column. */
+  .hero {
+    padding-block: 56px 64px;
+    min-height: 100svh;
+  }
+
+  .hero-stack { gap: 16px; }
+  .hero-mark { width: 56px; }
+
+  /* Decorative only, and it was the element colliding with the rail.
+     The hero already overflows a phone screen, so the affordance is
+     redundant here. */
+  .scroll-cue { display: none; }
+
+  .figs {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+    margin-top: 0;
+    padding-top: 16px;
+  }
+
+  /* the road stays a stepper on a phone, just narrower */
+  .road-node { min-height: clamp(230px, 62vw, 300px); }
+  .road-card { width: min(94%, 250px); }
+
+  .sys { align-items: center; text-align: center; }
+  .sys ul { justify-items: center; }
+  .sys li { padding-left: 0; padding-top: 15px; text-align: center; }
+  .sys li::before { left: 50%; top: 4px; transform: translateX(-50%); }
+
+  .track { padding: 16px 12px; }
+
+  .lrow, .lrow--stack {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 5px;
+    text-align: center;
+    justify-items: center;
+  }
+  .lrow-val, .lrow--stack .lrow-val { text-align: center; }
+
+  .ledger-head, .req-head { margin-inline: auto; text-align: center; }
+  .req p { margin-inline: auto; text-align: center; }
+
+  .deck-foot { padding-bottom: var(--v-section); }
 }
 
-/* ===== AG Motion v2.5 ==================================================== */
-.reveal, .reveal-stagger > * { opacity: 0; transform: translateY(21px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
-.reveal.is-in, .reveal-stagger.is-in > * { opacity: 1; transform: translateY(0); }
-.reveal-stagger.is-in > *:nth-child(2) { transition-delay: 0.09s; }
-.reveal-stagger.is-in > *:nth-child(3) { transition-delay: 0.18s; }
-.reveal-stagger.is-in > *:nth-child(4) { transition-delay: 0.27s; }
-.reveal-stagger.is-in > *:nth-child(5) { transition-delay: 0.36s; }
-.reveal-stagger.is-in > *:nth-child(6) { transition-delay: 0.45s; }
-.reveal-stagger.is-in > *:nth-child(7) { transition-delay: 0.54s; }
-@media (prefers-reduced-motion: reduce) { .reveal, .reveal-stagger > * { opacity: 1; transform: none; } }
+/* ---------- Reduced motion. Last block in the sheet. ----------
+   Content must be visible without any animation having fired. */
 
-/* At 350px the chip's 0.2em tracking pushed "Arc Garde . Strategic Growth
-   Partners" onto two lines and widowed "Partners". Gluing would have overflowed
-   the pill (a chip is exactly the tight container glue breaks), so the measure
-   is fixed instead: less tracking and tighter padding buy the ~40px needed. */
-@media (max-width: 620px) {
-  .eyebrow-chip { letter-spacing: 0.1em; padding-inline: 0.55rem; }
-}
-@media (max-width: 900px) {
-  .sub-card, .hc { margin-inline: auto; }
-  .eng-grid { grid-template-columns: 1fr; max-width: 30rem; }
-  .run-panel .figs, .run-panel .rhythm { grid-template-columns: 1fr; }
-  .figs, .rhythm { grid-template-columns: 1fr; }
-  .lad-track { grid-template-columns: repeat(4,1fr); row-gap: 0.6rem; }
-  .lad-note { text-align: center; }
-  .sec-head { justify-content: center; text-align: center; }
-  /* was overflowing 35px off the LEFT edge on every phone: the line carries
-     non-breaking spaces so it could not wrap, and at the clamp size it is wider
-     than a 390px screen. It wraps at the plus on a phone and drops a step. */
-  .sec-price { margin-left: 0; width: 100%; max-width: 100%;
-    font-size: clamp(0.9rem, 0.75rem + 1.4vw, 1.2rem); }
-  .sec-note { margin-inline: auto; text-align: center; }
-  /* the card rule flips from the left edge to the top */
-  .eng-card::before { inset: 0 0 auto 0; width: auto; height: 3px; }
-  .rh-cell { border-left: 0; border-top: 3px solid var(--rh); border-radius: 0 0 10px 10px; text-align: center; }
-  .deliv-row, .led-row, .band-row { grid-template-columns: 1fr; gap: 0.2rem; text-align: center; }
+@media (prefers-reduced-motion: reduce) {
+  .chart-line, .chart-stri { stroke-dashoffset: 0 !important; transition: none !important; }
+  .chart-area { opacity: 1 !important; transition: none !important; }
+  .chart-endpoint { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .hero-title .t,
+  .sec-title .t,
+  .close-title .t { transform: none !important; transition: none !important; }
+  .agh-topline { animation: none; background-position: 0 0; }
+  .hero::after { animation: none; opacity: 0.85; }
+  .sec-rule { transform: scaleX(1) !important; transition: none !important; }
+  .scroll-cue i::after { animation: none; opacity: 1; transform: translateY(12px); }
+  .road-track, .road-fill, .road-card, .road-dot, .road-pip { transition: none !important; }
+  .road-arrows { animation: none !important; opacity: 0.3 !important; }
+  .sys { transition: none !important; }
 }
 </style>
 </head>
+
 <body>
-
-<!-- THE AG PRESENTATION LOADER. This deck opened with ag-curtain v2.5, the
-     generic web-build Sweep-Reveal, which is the wrong one: every deployed AG
-     presentation opens with "Arc Garde Presents" instead. Corrected to the
-     standard on Quinten's instruction, 2026-08-18.
-
-     Present by exception either way: presentation format law says no loading
-     screen, overridden because a video-led stage that pops in half-loaded is
-     worse than the rule. -->
-<div class="ag-curtain" data-phase="load" aria-hidden="true">
-  <div class="ld-layer ld-boot">
-    <div class="ld-boot__in">
-      <div class="ld-mono ld-gold">AG</div>
-      <div class="ld-bar"><i></i></div>
-      <div class="ld-dots"><b></b><b></b><b></b></div>
-    </div>
-  </div>
-  <div class="ld-layer ld-brand">
-    <div class="ld-brand__in">
-      <div class="ld-wm ld-gold">ARC&nbsp;GARDE</div>
-      <div class="ld-rule"></div>
-      <div class="ld-sub">Presents</div>
-      <!-- No second hairline here. The brand phase already draws .ld-rule, and
-           a progress bar directly beneath it read as the same line twice. The
-           number is the progress indicator; the dots carry the motion. -->
-      <div class="ld-load">
-        <div class="ld-readout">
-          <span class="ld-pct">0%</span>
-          <span class="ld-dots"><b></b><b></b><b></b></span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<noscript><style>.ag-curtain{display:none!important} html.is-loading{overflow:auto!important}</style></noscript>
-
-<a class="skip" href="#main">Skip to content</a>
-
-<!-- No header bar. Presentation law. -->
-
-<div class="hybrid-stage" id="stage" data-hybrid-stage
-     data-stage-config='{"stepPx":1800,"restStepPx":300,"settleMs":140,"textDuringScrub":false}'
-     aria-label="A Greater Hope paid media presentation, scroll to advance">
-
-  <!-- ── REST A · Plate 1 · THE HERO ─────────────────────────────────────── -->
-  <section class="hseg" data-enter="left" data-sun data-segment='{"kind":"rest","videoBase":"loops/agh-fg1-restA-loop","poster":"poster-fg1-restA.webp","dwellPx":300}'>
-    <video muted loop playsinline preload="auto" aria-hidden="true"></video>
-    <div class="hseg-text" data-seg-text>
-      <div>
-        <!-- Their mark, on their presentation. Not a header bar: it sits inside
-             the hero content block, which presentation law leaves alone. -->
-        <picture class="hero-mark">
-          <source srcset="agh-logo-256.webp" type="image/webp">
-          <img src="agh-logo-256.png" alt="A Greater Hope" width="256" height="256" decoding="async">
-        </picture>
-        <!-- Logo, title, one supporting line. The agency chip and the
-             For/From/Date card came off 2026-08-19: the credit line on the
-             footer already carries who made it, for whom, and when. The
-             supporting line takes .lead-sub, the same display face as the
-             title, instead of the boxed .sub-card. -->
-        <h1 class="lead">Paid Media For A&nbsp;Greater&nbsp;Hope</h1>
-        <p class="lead-sub">One clear answer for where every dollar&nbsp;lands.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── SCRUB 1 · Plate 1 → Plate 2 ─────────────────────────────────────── -->
-  <section class="hseg" style="--ox:53%" data-segment='{"kind":"scrub","framesPath":"frames-scrub1/frame_%04d.webp","count":298,"width":1280,"height":720,"mobile":{"framesPath":"frames-scrub1-phone/frame_%04d.webp","count":21,"width":338,"height":600}}'>
-    <canvas aria-hidden="true"></canvas>
-  </section>
-
-  <!-- ── REST B · Plate 2 · WHAT WE DO ───────────────────────────────────── -->
-  <section class="hseg" data-enter="right" style="--ox:56%" data-segment='{"kind":"rest","videoBase":"loops/agh-fg3-restB-loop","poster":"poster-fg3-restB.webp","posterMobile":"poster-fg3-restB-m.webp","dwellPx":500}'>
-    <video muted loop playsinline preload="auto" aria-hidden="true"></video>
-    <div class="hseg-text" data-seg-text>
-      <div>
-        <span class="eyebrow-chip">1 &middot; What We Do</span>
-        <h2 class="lead">4 Engines</h2>
-        <div class="eng-grid">
-          <div class="eng-card">
-            <span class="n num">01</span>
-            <h3>Enhanced Care Management</h3>
-            <p class="geo">Riverside and San Bernardino</p>
-            <p class="one">Free care navigation for Medi&#8209;Cal members. English and&nbsp;Spanish.</p>
-          </div>
-          <div class="eng-card">
-            <span class="n num">02</span>
-            <h3>Resource and Adoptive Families</h3>
-            <p class="geo">California and Clark County</p>
-            <p class="one">Recruitment built for a long decision, not a same&#8209;day&nbsp;click.</p>
-          </div>
-          <div class="eng-card">
-            <span class="n num">03</span>
-            <h3>Hiring and Internships</h3>
-            <p class="geo">4 offices</p>
-            <p class="one">1 tracked destination per&nbsp;role.</p>
-          </div>
-          <div class="eng-card">
-            <span class="n num">04</span>
-            <h3>Giving and Events</h3>
-            <p class="geo">7 events a year</p>
-            <p class="one">Built around the calendar you already&nbsp;run.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── SCRUB 2 · Plate 2 → Plate 3 ─────────────────────────────────────── -->
-  <section class="hseg" style="--ox:56%" data-segment='{"kind":"scrub","framesPath":"frames-scrub2/frame_%04d.webp","count":298,"width":1280,"height":720,"mobile":{"framesPath":"frames-scrub2-phone/frame_%04d.webp","count":21,"width":338,"height":600}}'>
-    <canvas aria-hidden="true"></canvas>
-  </section>
-
-  <!-- ── REST C · Plate 3 · 2 HOW IT RUNS ────────────────────────────────
-       Moved onto the plate 2026-08-18. Plate 3 is the calmest frame in the set,
-       which is the right bed for the densest block of content. The echo line
-       that used to sit here is gone: the hero already carries it, and a second
-       showing was costing a state that section 2 needs more. ─────────────── -->
-  <section class="hseg" data-enter="left" style="--ox:56%" data-segment='{"kind":"rest","videoBase":"loops/agh-fg5-restC-loop","poster":"poster-fg5-restC.webp","posterMobile":"poster-fg5-restC-m.webp","dwellPx":700}'>
-    <video muted loop playsinline preload="auto" aria-hidden="true"></video>
-    <div class="hseg-text" data-seg-text>
-      <div>
-        <span class="eyebrow-chip">2 &middot; How It Runs</span>
-        <h2 class="lead">This Is The Engine</h2>
-        <p class="lead-sub">It does not&nbsp;stop.</p>
-
-        <div class="run-panel">
-          <div class="ladder">
-            <div class="lad-scale" aria-hidden="true"><span>Day 1</span><span>Day 28</span></div>
-            <div class="lad-track" role="img" aria-label="Seven sprints of two ads head to head across twenty eight days, fourteen creatives in total">
-              <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">1</span></div>
-              <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">2</span></div>
-              <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">3</span></div>
-              <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">4</span></div>
-              <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">5</span></div>
-              <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">6</span></div>
-              <div class="lad-sprint"><span class="lad-pair" aria-hidden="true"><i></i><i></i></span><span class="lad-lab num">7</span></div>
-            </div>
-            <p class="lad-note">2 ads head to head, every sprint. Then it repeats.</p>
-          </div>
-
-          <div class="figs">
-            <div class="fig"><span class="fig-n num">14</span><span class="fig-l">Creatives</span></div>
-            <div class="fig"><span class="fig-n num">7</span><span class="fig-l">Sprints</span></div>
-            <div class="fig"><span class="fig-n num">28</span><span class="fig-l">Days</span></div>
-          </div>
-
-          <div class="rhythm">
-            <div class="rh-cell"><div class="rh-when">Daily</div><p class="rh-what">In depth&nbsp;tracking</p></div>
-            <div class="rh-cell"><div class="rh-when">Every 4 Days</div><p class="rh-what">While&nbsp;testing</p></div>
-            <div class="rh-cell"><div class="rh-when">Every 7 Days</div><p class="rh-what">Once there is a&nbsp;winner</p></div>
-          </div>
-
-          <p class="honest-line"><b>We do not forecast results.</b> Any number quoted before launch is a guess wearing a decimal&nbsp;point.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</div>
-
-<!-- THE CLOUDS ARE A FIXED BACKDROP, NOT A CLIP THAT PLAYS.
-     .cost-sky is a sticky full-viewport layer pinned across this whole scope,
-     and the section plus the credit line scroll over it. That is what stops the
-     footage being stretched to whatever height the content happens to be, and
-     it turns the last section into a scroll effect rather than a video playing
-     behind text (Quinten, 2026-08-18).
-     The wrapper is a plain <div> on purpose: it is not sectioning content, so
-     the <footer> inside it still maps to the page's contentinfo landmark. -->
-<div class="sky-scope">
-  <div class="cost-sky" aria-hidden="true">
-    <canvas class="cost-scrub" width="1280" height="720" data-phone-size="338x600"></canvas>
-  </div>
+<canvas class="backdrop" aria-hidden="true"></canvas>
+<div class="agh-topline" aria-hidden="true"><i class="agh-progress"></i></div>
+<a class="ag-skip-link" href="#main">Skip to content</a>
 
 <main id="main">
 
-  <!-- ═══ 3 · WHAT IT COSTS ═════════════════════════════════════════════════ -->
-  <section class="sec sec--cream" aria-labelledby="sec-3">
-    <div class="shell">
-      <!-- SAME SHAPE AS THE PLATES (Quinten, 2026-08-19). Plates 2 and 3 both
-           open with a small pill carrying the number and the section name, then
-           the big line underneath. This head was the odd one out: number, title
-           and price all inline on one baseline row. It now reads the same way.
-           The chip is the h2 so aria-labelledby still names the section. -->
-      <div class="sec-head rise">
-        <h2 class="eyebrow-chip" id="sec-3"><span class="num">3</span> &middot; What It Costs</h2>
-        <p class="lead sec-price num">$3,700 management&nbsp;+&nbsp;$2,500 ad&nbsp;spend</p>
-      </div>
-      <div class="sec-rule"></div>
-      <p class="sec-note rise">1 fixed fee.<span class="ag-break"></span>No setup fee.<span class="ag-break"></span>Ad spend goes straight to Meta, never through&nbsp;us.</p>
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-labelledby="deck-title">
+    <div class="wrap">
+      <div class="hero-stack reveal-stagger">
+        <img class="hero-mark" src="agh-logo-256.webp" width="256" height="256"
+             alt="A Greater Hope" fetchpriority="high" decoding="async">
 
-      <div class="deliv rise">
-        <div class="deliv-h">Included</div>
-        <div class="deliv-row"><span class="deliv-k">Meta</span><span class="deliv-v">Facebook and Instagram. Built, run and optimized&nbsp;daily.</span></div>
-        <div class="deliv-row"><span class="deliv-k">Funnel</span><span class="deliv-v">A landing page per engine. Your site is not&nbsp;touched.</span></div>
-        <div class="deliv-row"><span class="deliv-k">CRM</span><span class="deliv-v">Leads land in the CRM live. Every step&nbsp;tracked.</span></div>
-        <div class="deliv-row"><span class="deliv-k">Creative and copy</span><span class="deliv-v">14 ads per testing cycle. Scripts written word for word. English and&nbsp;Spanish.</span></div>
-        <div class="deliv-row"><span class="deliv-k">Tracking</span><span class="deliv-v">Fired end to end and proven before&nbsp;launch.</span></div>
-        <div class="deliv-row"><span class="deliv-k">Attribution</span><span class="deliv-v">You see which ad every inquiry came&nbsp;from.</span></div>
-        <div class="deliv-row"><span class="deliv-k">Speed to lead</span><span class="deliv-v">We coach whoever answers the&nbsp;phone.</span></div>
-      </div>
+        <h1 class="hero-title" id="deck-title">
+          <span class="l1"><span class="t">The Families You Need</span></span>
+          <span class="l2"><span class="t grad">Are Already Scrolling</span></span>
+        </h1>
 
-      <div class="band rise">
-        <div class="band-label">Cost</div>
-        <div class="band-row total"><span class="band-k">Management fee</span><span class="band-v num">$3,700&nbsp;/&nbsp;month</span></div>
-        <div class="band-row"><span class="band-k">Setup fee</span><span class="band-v">Waived</span></div>
-        <div class="band-row"><span class="band-k">Ad spend</span><span class="band-v num">$2,500&nbsp;/&nbsp;month minimum, paid straight to&nbsp;Meta</span></div>
-        <div class="band-row"><span class="band-k">CRM subscription</span><span class="band-v">Paid directly to the CRM, not&nbsp;us</span></div>
-        <div class="band-row band-total"><span class="band-k">Total monthly</span><span class="band-v num">$6,200&nbsp;/&nbsp;month minimum</span></div>
-      </div>
+        <div class="hero-rule" aria-hidden="true"></div>
 
-      <div class="terms-wrap rise">
-        <div class="deliv-h">Terms</div>
-        <div class="led-row"><span class="led-k">The CRM</span><span class="led-v">GoHighLevel. The account is yours, in your name, paid direct. We build and run everything inside&nbsp;it.</span></div>
-        <div class="led-row"><span class="led-k">You give us</span><span class="led-v">Ad account access, CRM access, 1&nbsp;filming day, sign off, and 1&nbsp;person who answers&nbsp;inquiries.</span></div>
-        <div class="led-row"><span class="led-k">You keep</span><span class="led-v">Every account, pixel, page and file. In your name from day&nbsp;1.</span></div>
-        <div class="led-row"><span class="led-k">Minimum term</span><span class="led-v">3&nbsp;months.</span></div>
-      </div>
+        <p class="hero-lede">They just haven't been asked&nbsp;yet.</p>
+        <p class="hero-line">We build the ads that ask, and we track every&nbsp;one.</p>
 
-      <div class="closemark rise" aria-hidden="true">
-        <svg viewBox="0 0 200 190" focusable="false">
-          <path d="M100,180 C40,130 10,95 10,62 C10,32 32,12 58,12 C76,12 92,22 100,38 C108,22 124,12 142,12 C168,12 190,32 190,62 C190,95 160,130 100,180 Z"/>
-        </svg>
+        <div class="figs">
+          <div class="fig">
+            <p class="fig-term grad"><span data-count="14">14</span>&nbsp;Ads</p>
+            <p class="fig-desc">Per testing&nbsp;cycle</p>
+          </div>
+          <div class="fig">
+            <p class="fig-term grad"><span data-count="28">28</span>&nbsp;Days</p>
+            <p class="fig-desc">Per&nbsp;cycle</p>
+          </div>
+          <div class="fig">
+            <p class="fig-term grad">Daily</p>
+            <p class="fig-desc">Tracking</p>
+          </div>
+        </div>
+
+        <div class="scroll-cue" aria-hidden="true">
+          <span>Scroll</span>
+          <i></i>
+        </div>
       </div>
+    </div>
   </section>
 
-  <!-- No CTA band. Presentation law. -->
+  <!-- ============ 1 - WHAT WE DO ============ -->
+  <section class="band pad-section" id="what-we-do" aria-labelledby="h-approach">
+    <div class="wrap">
+      <header class="sec-head pane reveal">
+        <div class="sec-rule" aria-hidden="true"></div>
+        <p class="sec-eyebrow">1. What We Do</p>
+        <p class="sec-label">The Approach</p>
+        <h2 class="sec-title" id="h-approach">
+          <span class="l1"><span class="t">Here's What We'd Build</span></span>
+          <span class="l2"><span class="t">For A Greater Hope</span></span>
+        </h2>
+        <p class="sec-sub">Meta only, Facebook and&nbsp;Instagram.</p>
+      </header>
+
+      <div class="roadmap reveal">
+        <div class="road-viewport">
+          <div class="road-track">
+            <div class="road-rail" aria-hidden="true">
+              <i class="road-fill"></i>
+              <i class="road-arrows"></i>
+            </div>
+            <ol class="road-nodes">
+              <li class="road-node" data-i="0">
+                <span class="road-dot" aria-hidden="true"></span>
+                <div class="road-card">
+                  <p class="road-num">01</p>
+                  <p class="road-text">A landing page and booking flow, custom&nbsp;coded</p>
+                </div>
+              </li>
+              <li class="road-node" data-i="1">
+                <span class="road-dot" aria-hidden="true"></span>
+                <div class="road-card">
+                  <p class="road-num">02</p>
+                  <p class="road-text">Every inquiry tracked from ad to phone&nbsp;call</p>
+                </div>
+              </li>
+              <li class="road-node" data-i="2">
+                <span class="road-dot" aria-hidden="true"></span>
+                <div class="road-card">
+                  <p class="road-num">03</p>
+                  <p class="road-text">Targeted to the counties you already&nbsp;serve</p>
+                </div>
+              </li>
+              <li class="road-node" data-i="3">
+                <span class="road-dot" aria-hidden="true"></span>
+                <div class="road-card">
+                  <p class="road-num">04</p>
+                  <p class="road-text">14 fresh ads every cycle, English and&nbsp;Spanish</p>
+                </div>
+              </li>
+              <li class="road-node" data-i="4">
+                <span class="road-dot" aria-hidden="true"></span>
+                <div class="road-card">
+                  <p class="road-num">05</p>
+                  <p class="road-text">Scale what works, cut what&nbsp;doesn't</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="road-controls">
+          <button class="road-btn road-btn--prev" type="button" aria-label="Previous step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+          <div class="road-pips" aria-hidden="true">
+            <span class="road-pip"></span>
+            <span class="road-pip"></span>
+            <span class="road-pip"></span>
+            <span class="road-pip"></span>
+            <span class="road-pip"></span>
+          </div>
+          <button class="road-btn road-btn--next" type="button" aria-label="Next step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2 - HOW IT WORKS ============ -->
+  <section class="band pad-section" id="how-it-works" aria-labelledby="h-system">
+    <div class="wrap">
+      <header class="sec-head pane reveal">
+        <div class="sec-rule" aria-hidden="true"></div>
+        <p class="sec-eyebrow">2. How It Works</p>
+        <p class="sec-label">The System</p>
+        <h2 class="sec-title" id="h-system">
+          <span class="l1"><span class="t">Your Ad System</span></span>
+          <span class="l2"><span class="t">Built To Fill Your Programs</span></span>
+        </h2>
+        <p class="sec-sub">Everything below is included in one fixed&nbsp;fee.</p>
+      </header>
+
+      <div class="system-grid reveal-stagger">
+        <article class="sys">
+          <h3 class="sys-name">Creative&nbsp;Production</h3>
+          <ul>
+            <li>14 ads per testing&nbsp;cycle</li>
+            <li>Scripts written word for word for every&nbsp;ad</li>
+            <li>English and&nbsp;Spanish</li>
+            <li>2 ads head to head, 4 days per&nbsp;sprint</li>
+            <li>7 sprints per cycle, 14 creatives over 28&nbsp;days</li>
+          </ul>
+        </article>
+
+        <article class="sys">
+          <h3 class="sys-name">Funnel and&nbsp;CRM</h3>
+          <ul>
+            <li>Landing page and booking flow, custom&nbsp;coded</li>
+            <li>No separate build&nbsp;fee</li>
+            <li>Your site is not&nbsp;touched</li>
+            <li>Leads land in the CRM&nbsp;live</li>
+            <li>Every step&nbsp;tracked</li>
+          </ul>
+        </article>
+
+        <article class="sys">
+          <h3 class="sys-name">Tracking and&nbsp;Reporting</h3>
+          <ul>
+            <li>In depth daily&nbsp;tracking</li>
+            <li>Reports every 4 days while&nbsp;testing</li>
+            <li>Every 7 days once there is a&nbsp;winner</li>
+            <li>Know which ads your leads are coming in&nbsp;from</li>
+            <li>Coaching on speed to lead and follow&nbsp;up</li>
+          </ul>
+        </article>
+      </div>
+
+      <!-- The sprint mechanic, drawn. 7 sprints, 2 ads each, 28 days. -->
+      <div class="chart-wrap reveal">
+        <p class="chart-eyebrow">Day 1 to Day&nbsp;28</p>
+
+        <div class="chart-box">
+          <svg class="chart-svg" viewBox="0 0 1000 320" preserveAspectRatio="none" role="img"
+               aria-label="One 28 day cycle. Seven sprints of four days, two ads head to head in each, compounding as winners take budget.">
+            <defs>
+              <linearGradient id="chartStroke" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0"    stop-color="var(--agh-purple)"/>
+                <stop offset="0.28" stop-color="var(--agh-indigo)"/>
+                <stop offset="0.55" stop-color="var(--agh-blue)"/>
+                <stop offset="0.80" stop-color="var(--agh-teal)"/>
+                <stop offset="1"    stop-color="var(--agh-green)"/>
+              </linearGradient>
+              <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0"   stop-color="var(--agh-blue)" stop-opacity="0.22"/>
+                <stop offset="1"   stop-color="var(--agh-blue)" stop-opacity="0"/>
+              </linearGradient>
+              <clipPath id="chartBand">
+                <path d="M 26.00 286.00 C 31.60 284.87, 48.38 283.55, 59.57 279.21 C 70.76 274.87, 81.95 266.24, 93.14 259.95 C 104.33 253.67, 115.52 245.07, 126.71 241.53 C 137.90 237.99, 149.10 239.60, 160.29 238.73 C 171.48 237.85, 182.67 239.57, 193.86 236.29 C 205.05 233.00, 216.24 224.73, 227.43 219.00 C 238.62 213.28, 249.81 205.08, 261.00 201.95 C 272.19 198.81, 283.38 200.75, 294.57 200.20 C 305.76 199.64, 316.95 201.64, 328.14 198.61 C 339.33 195.59, 350.52 187.55, 361.71 182.05 C 372.90 176.54, 384.10 168.55, 395.29 165.61 C 406.48 162.66, 417.67 164.78, 428.86 164.40 C 440.05 164.01, 451.24 166.17, 462.43 163.29 C 473.62 160.42, 484.81 152.52, 496.00 147.16 C 507.19 141.80, 518.38 133.93, 529.57 131.11 C 540.76 128.30, 551.95 130.53, 563.14 130.26 C 574.33 129.99, 585.52 132.26, 596.71 129.49 C 607.90 126.72, 619.10 118.93, 630.29 113.66 C 641.48 108.40, 652.67 100.62, 663.86 97.90 C 675.05 95.18, 686.24 97.50, 697.43 97.32 C 708.62 97.13, 719.81 99.48, 731.00 96.79 C 742.19 94.11, 753.38 86.39, 764.57 81.20 C 775.76 76.01, 786.95 68.31, 798.14 65.66 C 809.33 63.01, 820.52 65.40, 831.71 65.29 C 842.90 65.17, 854.10 67.58, 865.29 64.96 C 876.48 62.34, 887.67 54.69, 898.86 49.56 C 910.05 44.43, 921.24 36.79, 932.43 34.20 C 943.62 31.61, 960.40 34.03, 966.00 34.00" stroke-width="13" stroke-linecap="round" fill="none" stroke="#000"/>
+              </clipPath>
+            </defs>
+
+            <g class="chart-grid">
+          <line class="chart-gridline" x1="26.0" y1="34.0" x2="966.0" y2="34.0"/>
+          <line class="chart-gridline" x1="26.0" y1="97.0" x2="966.0" y2="97.0"/>
+          <line class="chart-gridline" x1="26.0" y1="160.0" x2="966.0" y2="160.0"/>
+          <line class="chart-gridline" x1="26.0" y1="223.0" x2="966.0" y2="223.0"/>
+          <line class="chart-gridline" x1="26.0" y1="286.0" x2="966.0" y2="286.0"/>
+            </g>
+
+            <path class="chart-area" d="M 26.00 286.00 C 31.60 284.87, 48.38 283.55, 59.57 279.21 C 70.76 274.87, 81.95 266.24, 93.14 259.95 C 104.33 253.67, 115.52 245.07, 126.71 241.53 C 137.90 237.99, 149.10 239.60, 160.29 238.73 C 171.48 237.85, 182.67 239.57, 193.86 236.29 C 205.05 233.00, 216.24 224.73, 227.43 219.00 C 238.62 213.28, 249.81 205.08, 261.00 201.95 C 272.19 198.81, 283.38 200.75, 294.57 200.20 C 305.76 199.64, 316.95 201.64, 328.14 198.61 C 339.33 195.59, 350.52 187.55, 361.71 182.05 C 372.90 176.54, 384.10 168.55, 395.29 165.61 C 406.48 162.66, 417.67 164.78, 428.86 164.40 C 440.05 164.01, 451.24 166.17, 462.43 163.29 C 473.62 160.42, 484.81 152.52, 496.00 147.16 C 507.19 141.80, 518.38 133.93, 529.57 131.11 C 540.76 128.30, 551.95 130.53, 563.14 130.26 C 574.33 129.99, 585.52 132.26, 596.71 129.49 C 607.90 126.72, 619.10 118.93, 630.29 113.66 C 641.48 108.40, 652.67 100.62, 663.86 97.90 C 675.05 95.18, 686.24 97.50, 697.43 97.32 C 708.62 97.13, 719.81 99.48, 731.00 96.79 C 742.19 94.11, 753.38 86.39, 764.57 81.20 C 775.76 76.01, 786.95 68.31, 798.14 65.66 C 809.33 63.01, 820.52 65.40, 831.71 65.29 C 842.90 65.17, 854.10 67.58, 865.29 64.96 C 876.48 62.34, 887.67 54.69, 898.86 49.56 C 910.05 44.43, 921.24 36.79, 932.43 34.20 C 943.62 31.61, 960.40 34.03, 966.00 34.00 L 966.00 286.00 L 26.00 286.00 Z" fill="url(#chartFill)"/>
+            <path class="chart-line" d="M 26.00 286.00 C 31.60 284.87, 48.38 283.55, 59.57 279.21 C 70.76 274.87, 81.95 266.24, 93.14 259.95 C 104.33 253.67, 115.52 245.07, 126.71 241.53 C 137.90 237.99, 149.10 239.60, 160.29 238.73 C 171.48 237.85, 182.67 239.57, 193.86 236.29 C 205.05 233.00, 216.24 224.73, 227.43 219.00 C 238.62 213.28, 249.81 205.08, 261.00 201.95 C 272.19 198.81, 283.38 200.75, 294.57 200.20 C 305.76 199.64, 316.95 201.64, 328.14 198.61 C 339.33 195.59, 350.52 187.55, 361.71 182.05 C 372.90 176.54, 384.10 168.55, 395.29 165.61 C 406.48 162.66, 417.67 164.78, 428.86 164.40 C 440.05 164.01, 451.24 166.17, 462.43 163.29 C 473.62 160.42, 484.81 152.52, 496.00 147.16 C 507.19 141.80, 518.38 133.93, 529.57 131.11 C 540.76 128.30, 551.95 130.53, 563.14 130.26 C 574.33 129.99, 585.52 132.26, 596.71 129.49 C 607.90 126.72, 619.10 118.93, 630.29 113.66 C 641.48 108.40, 652.67 100.62, 663.86 97.90 C 675.05 95.18, 686.24 97.50, 697.43 97.32 C 708.62 97.13, 719.81 99.48, 731.00 96.79 C 742.19 94.11, 753.38 86.39, 764.57 81.20 C 775.76 76.01, 786.95 68.31, 798.14 65.66 C 809.33 63.01, 820.52 65.40, 831.71 65.29 C 842.90 65.17, 854.10 67.58, 865.29 64.96 C 876.48 62.34, 887.67 54.69, 898.86 49.56 C 910.05 44.43, 921.24 36.79, 932.43 34.20 C 943.62 31.61, 960.40 34.03, 966.00 34.00" fill="none" stroke="url(#chartStroke)"/>
+
+            <g class="chart-strands" clip-path="url(#chartBand)">
+          <path class="chart-stri chart-stri--a" d="M 26.00 281.60 C 31.60 280.47, 48.38 279.15, 59.57 274.81 C 70.76 270.47, 81.95 261.84, 93.14 255.55 C 104.33 249.27, 115.52 240.67, 126.71 237.13 C 137.90 233.59, 149.10 235.20, 160.29 234.33 C 171.48 233.45, 182.67 235.17, 193.86 231.89 C 205.05 228.60, 216.24 220.33, 227.43 214.60 C 238.62 208.88, 249.81 200.68, 261.00 197.55 C 272.19 194.41, 283.38 196.35, 294.57 195.80 C 305.76 195.24, 316.95 197.24, 328.14 194.21 C 339.33 191.19, 350.52 183.15, 361.71 177.65 C 372.90 172.14, 384.10 164.15, 395.29 161.21 C 406.48 158.26, 417.67 160.38, 428.86 160.00 C 440.05 159.61, 451.24 161.77, 462.43 158.89 C 473.62 156.02, 484.81 148.12, 496.00 142.76 C 507.19 137.40, 518.38 129.53, 529.57 126.71 C 540.76 123.90, 551.95 126.13, 563.14 125.86 C 574.33 125.59, 585.52 127.86, 596.71 125.09 C 607.90 122.32, 619.10 114.53, 630.29 109.26 C 641.48 104.00, 652.67 96.22, 663.86 93.50 C 675.05 90.78, 686.24 93.10, 697.43 92.92 C 708.62 92.73, 719.81 95.08, 731.00 92.39 C 742.19 89.71, 753.38 81.99, 764.57 76.80 C 775.76 71.61, 786.95 63.91, 798.14 61.26 C 809.33 58.61, 820.52 61.00, 831.71 60.89 C 842.90 60.77, 854.10 63.18, 865.29 60.56 C 876.48 57.94, 887.67 50.29, 898.86 45.16 C 910.05 40.03, 921.24 32.39, 932.43 29.80 C 943.62 27.21, 960.40 29.63, 966.00 29.60"/>
+          <path class="chart-stri chart-stri--b" d="M 26.00 283.80 C 31.60 282.67, 48.38 281.35, 59.57 277.01 C 70.76 272.67, 81.95 264.04, 93.14 257.75 C 104.33 251.47, 115.52 242.87, 126.71 239.33 C 137.90 235.79, 149.10 237.40, 160.29 236.53 C 171.48 235.65, 182.67 237.37, 193.86 234.09 C 205.05 230.80, 216.24 222.53, 227.43 216.80 C 238.62 211.08, 249.81 202.88, 261.00 199.75 C 272.19 196.61, 283.38 198.55, 294.57 198.00 C 305.76 197.44, 316.95 199.44, 328.14 196.41 C 339.33 193.39, 350.52 185.35, 361.71 179.85 C 372.90 174.34, 384.10 166.35, 395.29 163.41 C 406.48 160.46, 417.67 162.58, 428.86 162.20 C 440.05 161.81, 451.24 163.97, 462.43 161.09 C 473.62 158.22, 484.81 150.32, 496.00 144.96 C 507.19 139.60, 518.38 131.73, 529.57 128.91 C 540.76 126.10, 551.95 128.33, 563.14 128.06 C 574.33 127.79, 585.52 130.06, 596.71 127.29 C 607.90 124.52, 619.10 116.73, 630.29 111.46 C 641.48 106.20, 652.67 98.42, 663.86 95.70 C 675.05 92.98, 686.24 95.30, 697.43 95.12 C 708.62 94.93, 719.81 97.28, 731.00 94.59 C 742.19 91.91, 753.38 84.19, 764.57 79.00 C 775.76 73.81, 786.95 66.11, 798.14 63.46 C 809.33 60.81, 820.52 63.20, 831.71 63.09 C 842.90 62.97, 854.10 65.38, 865.29 62.76 C 876.48 60.14, 887.67 52.49, 898.86 47.36 C 910.05 42.23, 921.24 34.59, 932.43 32.00 C 943.62 29.41, 960.40 31.83, 966.00 31.80"/>
+          <path class="chart-stri chart-stri--b" d="M 26.00 288.20 C 31.60 287.07, 48.38 285.75, 59.57 281.41 C 70.76 277.07, 81.95 268.44, 93.14 262.15 C 104.33 255.87, 115.52 247.27, 126.71 243.73 C 137.90 240.19, 149.10 241.80, 160.29 240.93 C 171.48 240.05, 182.67 241.77, 193.86 238.49 C 205.05 235.20, 216.24 226.93, 227.43 221.20 C 238.62 215.48, 249.81 207.28, 261.00 204.15 C 272.19 201.01, 283.38 202.95, 294.57 202.40 C 305.76 201.84, 316.95 203.84, 328.14 200.81 C 339.33 197.79, 350.52 189.75, 361.71 184.25 C 372.90 178.74, 384.10 170.75, 395.29 167.81 C 406.48 164.86, 417.67 166.98, 428.86 166.60 C 440.05 166.21, 451.24 168.37, 462.43 165.49 C 473.62 162.62, 484.81 154.72, 496.00 149.36 C 507.19 144.00, 518.38 136.13, 529.57 133.31 C 540.76 130.50, 551.95 132.73, 563.14 132.46 C 574.33 132.19, 585.52 134.46, 596.71 131.69 C 607.90 128.92, 619.10 121.13, 630.29 115.86 C 641.48 110.60, 652.67 102.82, 663.86 100.10 C 675.05 97.38, 686.24 99.70, 697.43 99.52 C 708.62 99.33, 719.81 101.68, 731.00 98.99 C 742.19 96.31, 753.38 88.59, 764.57 83.40 C 775.76 78.21, 786.95 70.51, 798.14 67.86 C 809.33 65.21, 820.52 67.60, 831.71 67.49 C 842.90 67.37, 854.10 69.78, 865.29 67.16 C 876.48 64.54, 887.67 56.89, 898.86 51.76 C 910.05 46.63, 921.24 38.99, 932.43 36.40 C 943.62 33.81, 960.40 36.23, 966.00 36.20"/>
+          <path class="chart-stri chart-stri--a" d="M 26.00 290.40 C 31.60 289.27, 48.38 287.95, 59.57 283.61 C 70.76 279.27, 81.95 270.64, 93.14 264.35 C 104.33 258.07, 115.52 249.47, 126.71 245.93 C 137.90 242.39, 149.10 244.00, 160.29 243.13 C 171.48 242.25, 182.67 243.97, 193.86 240.69 C 205.05 237.40, 216.24 229.13, 227.43 223.40 C 238.62 217.68, 249.81 209.48, 261.00 206.35 C 272.19 203.21, 283.38 205.15, 294.57 204.60 C 305.76 204.04, 316.95 206.04, 328.14 203.01 C 339.33 199.99, 350.52 191.95, 361.71 186.45 C 372.90 180.94, 384.10 172.95, 395.29 170.01 C 406.48 167.06, 417.67 169.18, 428.86 168.80 C 440.05 168.41, 451.24 170.57, 462.43 167.69 C 473.62 164.82, 484.81 156.92, 496.00 151.56 C 507.19 146.20, 518.38 138.33, 529.57 135.51 C 540.76 132.70, 551.95 134.93, 563.14 134.66 C 574.33 134.39, 585.52 136.66, 596.71 133.89 C 607.90 131.12, 619.10 123.33, 630.29 118.06 C 641.48 112.80, 652.67 105.02, 663.86 102.30 C 675.05 99.58, 686.24 101.90, 697.43 101.72 C 708.62 101.53, 719.81 103.88, 731.00 101.19 C 742.19 98.51, 753.38 90.79, 764.57 85.60 C 775.76 80.41, 786.95 72.71, 798.14 70.06 C 809.33 67.41, 820.52 69.80, 831.71 69.69 C 842.90 69.57, 854.10 71.98, 865.29 69.36 C 876.48 66.74, 887.67 59.09, 898.86 53.96 C 910.05 48.83, 921.24 41.19, 932.43 38.60 C 943.62 36.01, 960.40 38.43, 966.00 38.40"/>
+            </g>
+
+            <circle class="chart-endpoint" cx="966.00" cy="34.00" r="6"/>
+          </svg>
+
+          <div class="chart-axis chart-axis--y" aria-hidden="true">
+            <span class="chart-tick">40</span>
+            <span class="chart-tick">30</span>
+            <span class="chart-tick">20</span>
+            <span class="chart-tick">10</span>
+            <span class="chart-tick">0</span>
+          </div>
+          <p class="chart-axis-name chart-axis-name--y" aria-hidden="true">Leads</p>
+          <div class="chart-axis chart-axis--x" aria-hidden="true">
+            <span class="chart-tick">1</span>
+            <span class="chart-tick">7</span>
+            <span class="chart-tick">14</span>
+            <span class="chart-tick">21</span>
+            <span class="chart-tick">28</span>
+          </div>
+          <p class="chart-axis-name chart-axis-name--x" aria-hidden="true">Days</p>
+        </div>
+
+      </div>
+
+      <p class="statement statement--quiet pane reveal" style="margin-top: clamp(34px, 4.4vw, 62px);">
+        <span>All numbers are for display purposes, we do not guarantee any&nbsp;results.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ 3 - WHAT IT COSTS ============ -->
+  <section class="band pad-section" id="what-it-costs" aria-labelledby="h-cost">
+    <div class="wrap">
+      <header class="sec-head pane reveal">
+        <div class="sec-rule" aria-hidden="true"></div>
+        <p class="sec-eyebrow">3. What It Costs</p>
+        <p class="sec-label">Investment</p>
+        <h2 class="sec-title" id="h-cost"><span class="l1"><span class="t">One Fee, All&nbsp;In</span></span></h2>
+      </header>
+
+      <div class="ledger reveal">
+        <p class="price"><span data-count="3700" data-prefix="$">$3,700</span>&nbsp;/&nbsp;month</p>
+
+        <div class="ledger-block reveal-stagger">
+          <div class="lrow"><p class="lrow-term">Ads&nbsp;tested</p><p class="lrow-val">14 per&nbsp;cycle</p></div>
+          <div class="lrow"><p class="lrow-term">Creative&nbsp;refresh</p><p class="lrow-val">Every 28&nbsp;days</p></div>
+          <div class="lrow"><p class="lrow-term">Reporting</p><p class="lrow-val">Every 4 days while&nbsp;testing</p></div>
+          <div class="lrow lrow--waived"><p class="lrow-term">Setup&nbsp;fee</p><p class="lrow-val">Waived</p></div>
+          <div class="lrow lrow--waived"><p class="lrow-term">Content, 6 blog topics and 6 voiceover&nbsp;scripts</p><p class="lrow-val">Waived</p></div>
+        </div>
+
+        <div class="req">
+          <p class="req-head">Ad Spend Requirement</p>
+          <p>$2,500&nbsp;/&nbsp;month minimum, paid straight to&nbsp;Meta.</p>
+          <p>Management fees are separate from ad spend and never pass through&nbsp;us.</p>
+        </div>
+
+        <div class="req">
+          <p class="req-head">CRM Requirement</p>
+          <p>A CRM is required to run this system&nbsp;properly.</p>
+          <p>The subscription is yours, in your name, paid&nbsp;direct.</p>
+          <p>We recommend GoHighLevel and we build and run everything inside&nbsp;it.</p>
+        </div>
+
+        <div class="ledger-block reveal-stagger">
+          <div class="lrow lrow--stack"><p class="lrow-term">Not&nbsp;included</p><p class="lrow-val">Ad spend. CRM subscription. Website work outside the&nbsp;funnel.</p></div>
+          <div class="lrow lrow--stack"><p class="lrow-term">You give&nbsp;us</p><p class="lrow-val">Ad account access, CRM access, 1 filming day, offer sign off, and 1 person to call&nbsp;leads.</p></div>
+          <div class="lrow lrow--stack"><p class="lrow-term">You&nbsp;keep</p><p class="lrow-val">Every account, pixel, page and file. In your name from day&nbsp;1.</p></div>
+          <div class="lrow lrow--stack"><p class="lrow-term">Minimum&nbsp;term</p><p class="lrow-val">3&nbsp;months.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSE ============ -->
+  <section class="pad-section" id="close" aria-labelledby="h-close">
+    <div class="wrap">
+      <header class="sec-head pane reveal" style="margin-bottom: 0;">
+        <div class="sec-rule" aria-hidden="true"></div>
+        <p class="sec-eyebrow">Close</p>
+        <h2 class="close-title" id="h-close"><span class="t grad">Ready When You&nbsp;Are</span></h2>
+      </header>
+    </div>
+  </section>
+
+  <footer class="deck-foot">
+    <div class="wrap">
+      <div class="foot-rule" aria-hidden="true"></div>
+      <p class="foot-line">Powered by Arc&nbsp;Garde</p>
+    </div>
+  </footer>
+
 </main>
 
-<!-- The credit line rides ON the sky, not on a band of paper under it. It stays
-     a body-level <footer> so it keeps the page's contentinfo landmark, and is
-     pulled up into the cost section's bottom padding instead of being nested
-     inside <main>, which would demote it to a generic footer. -->
-<footer class="pagefoot">
-  <div class="shell">
-    <p><span class="foot-chip">Presentation made by <b>Arc Garde</b> &nbsp;&middot;&nbsp; Prepared for A&nbsp;Greater&nbsp;Hope &nbsp;&middot;&nbsp; August&nbsp;2026</span></p>
-  </div>
-</footer>
-</div><!-- /.sky-scope -->
 
-<!-- PRESENTATION CONTROLS (Quinten, 2026-08-19). The five-dot segment rail that
-     sat at the bottom of the stage is gone: it was an indicator only and it
-     collided with this. Every label here is copy that already exists in the
-     deck, and the hero takes the mark rather than a word, so nothing new is
-     written. The scrubs are transitions, not destinations, so there are four
-     stops rather than five. -->
-<nav class="deck-nav" data-ag-center-exempt aria-label="Presentation sections">
-  <button class="deck-stop deck-stop--mark" data-seg="0" aria-label="Title">
-    <picture><source srcset="agh-logo-256.webp" type="image/webp">
-    <img src="agh-logo-256.png" alt="" width="256" height="256" decoding="async"></picture>
-  </button>
-  <button class="deck-stop" data-seg="2"><b>1</b><span>What We Do</span></button>
-  <button class="deck-stop" data-seg="4"><b>2</b><span>How It Runs</span></button>
-  <button class="deck-stop" data-cost="1"><b>3</b><span>What It Costs</span></button>
-  <button class="deck-fs" aria-label="Full screen" aria-pressed="false">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path class="fs-in"  d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>
-      <path class="fs-out" d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>
-    </svg>
-  </button>
-</nav>
 
 <script>
-/* Page scroll is suppressed while the stage owns input, and handed back the
-   moment the last rest state is passed. Reduced motion never locks at all.
+/* ===========================================================
+   THE FIELD - seams of color in a tessellated plane
 
-   LENIS IS HELD OFF THE PLATES. The stage is delta-driven: it reads raw wheel
-   and touch deltas itself. Leaving Lenis running underneath means two things
-   interpreting the same gesture, and its smoothing lands on a surface that
-   does not scroll. It is stopped for the whole stage and started only when the
-   stage releases, so it drives the last section and nothing else.
+   From the reference image. The properties that matter:
+     - cells vary large to small but every edge is SHARED, so the plane
+       locks together with no gaps. A real Voronoi tessellation, built as a
+       Delaunay triangulation converted to its dual - not lines that happen
+       to meet.
+     - a seam is never a clean stroke. Each is a BUNDLE of filaments that
+       splay mid-span and curl off into wisps.
+     - filaments pinch back together and intensify where three cells meet.
+     - cell interiors stay empty. The ground is most of the picture.
 
-   lenis.stop()/start() directly rather than AGScroll.lock(), because lock()
-   also pins the body via .is-locked, which would break the stage's own layout.
-   Only the Lenis half of that API is wanted here. */
+   LIGHT GROUND. The reference glows because light ADDS to dark. On a white
+   page additive compositing does nothing - white is already at maximum - so
+   the same structure is composited with 'multiply' instead and the seams
+   read as ink laid into paper rather than light escaping through rock. The
+   geometry is identical; only the physics of the composite inverted.
+
+   PERFORMANCE - the architecture, and why it changed three times.
+     v1 rebuilt every filament's geometry every frame: 4,270 strokes and
+        64,050 lineTo. Measured 33.3ms, 30fps.
+     v2 baked geometry into Path2D and only restyled: 1,076 strokes, 0
+        lineTo. STILL 33.3ms - the cost was never the JavaScript, it was
+        rasterizing a thousand strokes over 1440x900. Canvas flush measured
+        21.4ms against a 16.7ms budget, and an empty page in the same
+        browser held 60fps, so the number was real, not a harness artifact.
+     v3 rasterizes the whole field ONCE into an offscreen light map. A frame
+        is a handful of canvas operations and no strokes at all. 4.1ms.
+
+   Color: the tint gradient is rebuilt each frame from the logo sweep,
+   offset by scroll, so scrolling walks the sweep through the seams.
+
+   Scroll is 1:1, read from lenis.scroll - the same number the content is
+   transformed by - every frame. An easing lerp lived here once and was the
+   cause of the field visibly trailing the containers. MOT-22 bans parallax,
+   meaning a layer moving at its own rate; matching the page exactly is not
+   parallax.
+
+   Geometry comes from a seeded PRNG, never Math.random.
+   =========================================================== */
 (function () {
   'use strict';
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // Narrow viewports never enter the delta-driven stage: the engine unstacks and
-  // autoplays instead, so the page must scroll normally. Locking here froze
-  // every phone on the hero.
-  var narrow = window.matchMedia('(max-width: 900px)').matches;
-  var stage = document.getElementById('stage');
 
-  if (!reduced && !narrow) document.documentElement.dataset.stageLocked = 'true';
-
-  function holdLenis() {
-    if (window.lenis && typeof window.lenis.stop === 'function') window.lenis.stop();
-  }
-  function releaseLenis() {
-    if (window.lenis && typeof window.lenis.start === 'function') window.lenis.start();
-  }
-
-  if (!reduced && !narrow) {
-    holdLenis();
-    // ag-scroll boots on DOMContentLoaded; make sure the hold survives it.
-    window.addEventListener('ag:ready', holdLenis);
-    setTimeout(holdLenis, 0);
-  }
-
-  /* ═══ PRESENTATION CONTROLS ════════════════════════════════════════════════
-     Four stops. The three plates are stage segments 0, 2 and 4 (1 and 3 are the
-     transitions between them, which are not destinations), and the fourth is
-     the cost section, which lives outside the stage in normal page flow.
-
-     WHY THE HANDOFF NEEDED FIXING. Leaving the last plate set released=true and
-     returned false so the wheel fell through to the page. But the page is held
-     at overflow:hidden with Lenis stopped, and both are only undone by the
-     observer below, which runs a beat later. scrollY was still 0 at that point,
-     so the reader pushed through the dwell, nothing moved, and then a whole
-     viewport scrolled at once when the lock finally lifted. That is the
-     "blocked by the anchor magnet" feel. Releasing now eases to the cost
-     section instead of dumping the reader into raw scroll at the top. */
-  var scope = document.querySelector('.sky-scope');
-  var stops = Array.prototype.slice.call(document.querySelectorAll('.deck-stop'));
-  var SEG_OF_STOP = [0, 2, 4];
-
-  function hyb() { return stage.__hybrid || null; }
-  function lockPage() {
-    if (reduced || narrow) return;
-    document.documentElement.dataset.stageLocked = 'true';
-    holdLenis();
-  }
-  function unlockPage() {
-    document.documentElement.dataset.stageLocked = 'false';
-    releaseLenis();
-    /* LENIS MEASURED THE PAGE WHILE IT WAS LOCKED. The lock is overflow:hidden,
-       so scrollHeight was one viewport and Lenis cached limit = 0. Every
-       scrollTo after that clamped to 0 and silently did nothing, which is why
-       the cost stop moved on a phone (never locked) and not on a desktop.
-       The unlock has to land in the layout before the remeasure, hence rAF. */
-    requestAnimationFrame(function () {
-      if (window.lenis && typeof window.lenis.resize === 'function') window.lenis.resize();
-    });
-  }
-  /* ONE OWNER, ONE REMEASURE. This used to resize Lenis on every call, including
-     while a jump was already running, and both toCost() and the released
-     observer issued their own jump. Two animations plus a mid-flight remeasure
-     is what made the first frames read 109, 180, 73, 122 instead of easing.
-     resize() now happens once in unlockPage, and only ONE path starts a jump. */
-  function easeTo(target, done, secs) {
-    if (window.lenis && typeof window.lenis.scrollTo === 'function') {
-      window.lenis.scrollTo(target, { duration: secs || 1.4, onComplete: done });
-      if (done) setTimeout(done, (secs || 1.4) * 1000 + 120);
-    } else {
-      window.scrollTo({ top: typeof target === 'number' ? target : target.offsetTop,
-                        behavior: reduced ? 'auto' : 'smooth' });
-      if (done) setTimeout(done, reduced ? 0 : 700);
-    }
-  }
-  /* Fires the jump only after the unlock and the remeasure have both landed. */
-  function easeToCost() {
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { easeTo(scope, null, 1.4); });
-    });
-  }
-
-  var settling = false;
-  function markCurrent(i) {
-    stops.forEach(function (b, n) { b.setAttribute('aria-current', String(n === i)); });
-  }
-
-  function toStage(seg) {
-    var h = hyb(); if (!h) return;
-    var land = function () {
-      if (settling) return; settling = true;
-      h.relock(); lockPage(); h.go(seg, false);
-      setTimeout(function () { settling = false; }, 120);
-    };
-    if (window.scrollY > 2) easeTo(0, land); else land();
-  }
-
-  function toCost() {
-    var h = hyb();
-    if (h && !h.isReleased()) { h.release(); return; }   // the observer takes it
-    unlockPage();
-    easeToCost();
-  }
-
-  stops.forEach(function (btn, i) {
-    btn.addEventListener('click', function () {
-      if (btn.dataset.cost) { markCurrent(3); toCost(); }
-      else { markCurrent(i); toStage(SEG_OF_STOP[i]); }
-    });
-  });
-
-  window.addEventListener('ag:hybrid-state', function (e) {
-    var idx = e.detail.index;
-    var at = SEG_OF_STOP.indexOf(idx);
-    if (at === -1) at = idx > 4 ? 3 : Math.max(0, Math.floor(idx / 2));  // mid-scrub
-    markCurrent(at);
-  });
-
-  /* The cost section owns the fourth stop once it is actually on screen. */
-  if (scope && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) {
-      es.forEach(function (en) { if (en.isIntersecting && en.intersectionRatio > 0.5) markCurrent(3); });
-    }, { threshold: [0.5] }).observe(scope);
-  }
-
-  new MutationObserver(function () {
-    if (stage.dataset.released === 'true') {
-      unlockPage();
-      if (!settling && window.scrollY < 4) { markCurrent(3); easeToCost(); }
-    } else {
-      lockPage();
-    }
-  }).observe(stage, { attributes: true, attributeFilter: ['data-released'] });
-
-  /* FULL SCREEN. No ag-* primitive covers the Fullscreen API, so this is the one
-     net-new piece. Safari still needs the webkit prefix on iOS and older macOS. */
-  var navEl = document.querySelector('.deck-nav');
-  function sizeNav() {
-    if (!navEl) return;
-    document.documentElement.style.setProperty('--nav-h', Math.round(navEl.getBoundingClientRect().height) + 'px');
-  }
-  sizeNav();
-  window.addEventListener('resize', sizeNav, { passive: true });
-  window.addEventListener('orientationchange', sizeNav, { passive: true });
-
-  var fsBtn = document.querySelector('.deck-fs');
-  function fsElement() { return document.fullscreenElement || document.webkitFullscreenElement || null; }
-  function syncFs() { if (fsBtn) fsBtn.setAttribute('aria-pressed', String(!!fsElement())); }
-  if (fsBtn) {
-    var root = document.documentElement;
-    if (!(root.requestFullscreen || root.webkitRequestFullscreen)) {
-      fsBtn.hidden = true;                          // iPhone Safari has no element fullscreen
-    }
-    fsBtn.addEventListener('click', function () {
-      var el = fsElement();
-      if (el) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
-      else { (root.requestFullscreen || root.webkitRequestFullscreen).call(root); }
-    });
-    document.addEventListener('fullscreenchange', syncFs);
-    document.addEventListener('webkitfullscreenchange', syncFs);
-  }
-
-  /* NEVER REVEAL A BLANK STAGE. The curtain fails open at 14s so a reader is
-     never trapped behind it. On a slow connection that fires BEFORE the engine
-     has called enter(0), and .hseg-text only becomes visible when the engine
-     sets data-visible, so the reader landed on an empty hero. Measured on the
-     live site at 5Mbps: lift at 14981ms with hero opacity still 0.
-     If the curtain has lifted and the stage still has not shown anything, the
-     first segment's text is revealed directly. The engine setting it again a
-     moment later is a no-op. */
-  window.addEventListener('ag:ready', function () {
-    setTimeout(function () {
-      if (stage.querySelector('.hseg-text[data-visible="true"]')) return;
-      var first = stage.querySelector('.hseg-text');
-      if (first) first.dataset.visible = 'true';
-      var seg = stage.querySelector('.hseg');
-      if (seg && seg.dataset.active !== 'true') seg.dataset.active = 'true';
-    }, 120);
-  }, { once: true });
-
-  /* The --foot-h measuring block that used to sit here is gone. It existed to
-     stretch an absolutely positioned sky far enough down to cover the credit
-     line. The sky is now a sticky layer inside .sky-scope, and that scope
-     already contains the footer, so there is no overhang left to measure. */
-})();
-
-/* ═══ ASCENT — What It Costs ══════════════════════════════════════════════
-   The sky drifts DOWN as the section scrolls up, which is what reads as rising
-   through it. Driven off Lenis, the one place on this page it runs. */
-(function () {
-  'use strict';
-  var sec = document.querySelector('.sec--cream');
-  if (!sec) return;
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var narrow  = window.matchMedia('(max-width: 900px)').matches;
-
-  /* The --sky-y parallax that used to live here is gone. The sky is pinned by
-     CSS position:sticky now, so translating it per scroll frame would fight the
-     pin and was the thing making the footage look like it was being dragged. */
-
-  /* THE CONTAINERS ARE SCROLL-LINKED, NOT TRIGGERED.
-     They used to be a one-shot IntersectionObserver: cross a threshold, fire a
-     1.4s transition, done. That is why they arrived in a lump and did nothing
-     on the way back out. Each block now reads its own position every frame and
-     glides on it, alternating in from the left and the right and fading as it
-     leaves through the top (Quinten, 2026-08-19).
-
-     Nothing is ever stranded invisible: opacity is a function of where the
-     block is, so anything on screen is on screen. That is what retires the old
-     2.1s safety net, which existed only because a triggered reveal can miss. */
-  var ups = [].slice.call(sec.querySelectorAll('.rise'));
-  ups.forEach(function (el, i) { el.style.setProperty('--r-dir', i % 2 ? 1 : -1); });
-
-  /* NO LATERAL SLIDE ON A PHONE. The containers are close to full width there,
-     so a sideways entrance puts them off the screen by definition: the safe-edge
-     check caught the price line 35px past the left edge at its start position,
-     which is exactly this distance. Phones keep the lift, the fade and the blur,
-     which is the same entrance without the axis that does not fit. */
-  var SLIDE = window.matchMedia('(max-width: 900px)').matches ? 0 : 78;
-  var LIFT  = 26;                       // px it rises the last of the way in
-  var OUT   = 44;                       // px it drifts up as it leaves
-
-  function ease(t) { return t <= 0 ? 0 : t >= 1 ? 1 : 1 - Math.pow(1 - t, 3); }
-
-  var riseRaf = 0;
-  /* placeRise, not place: the cloud scrub below declares its own place() in this
-     same function scope, and a later function declaration wins. The rise
-     handler was calling the cloud's place() before its variables existed,
-     which threw and left every container at opacity 0. */
-  function placeRise() {
-    riseRaf = 0;
-    var vh = window.innerHeight;
-    for (var i = 0; i < ups.length; i++) {
-      var el = ups[i], r = el.getBoundingClientRect();
-      if (r.bottom < -260 || r.top > vh + 260) continue;   // far off screen, skip the work
-      /* enter: 0 when the top edge is at the bottom of the viewport, 1 once it
-         has climbed to 72% of the way up. exit: begins only once the block's
-         BOTTOM passes 22% from the top, so nothing fades while it is still
-         comfortably in the reading zone. */
-      var enter = ease((vh - r.top) / (vh * 0.42));
-      var exit  = ease((vh * 0.22 - r.bottom) / (vh * 0.30));
-      var vis   = enter * (1 - exit);
-      var dir   = +(getComputedStyle(el).getPropertyValue('--r-dir')) || -1;
-      el.style.setProperty('--r-o', vis.toFixed(3));
-      el.style.setProperty('--r-x', ((1 - enter) * SLIDE * dir).toFixed(1) + 'px');
-      el.style.setProperty('--r-y', ((1 - enter) * LIFT - exit * OUT).toFixed(1) + 'px');
-      el.style.setProperty('--r-s', (0.965 + 0.035 * enter).toFixed(4));
-      el.style.setProperty('--r-b', ((1 - enter) * 5).toFixed(2) + 'px');
-      // the inner rows keep their own stagger, armed once the block is really in
-      if (enter > 0.25) el.classList.add('is-up');
-    }
-  }
-  function onRise() { if (!riseRaf) riseRaf = requestAnimationFrame(placeRise); }
-  if (reduced) {
-    ups.forEach(function (el) { el.classList.add('is-up'); el.style.setProperty('--r-o', 1); });
-  } else {
-    window.addEventListener('scroll', onRise, { passive: true });
-    window.addEventListener('resize', onRise, { passive: true });
-    if (window.lenis && window.lenis.on) window.lenis.on('scroll', onRise);
-    window.addEventListener('ag:ready', onRise);
-    placeRise();
-  }
-
-  /* Phones and reduced motion get a single cloud still. The frame set is 5.4MB
-     against a LOCKED 1400KB mobile budget, and there is no scroll-scrub on
-     touch anyway, so the section reads as sky from one image. */
-  var scope = document.querySelector('.sky-scope');
-  if (!scope) return;
-
-  /* The cloud seam fades in with proximity rather than sitting on screen from
-     the start. 0 while the scope is a full viewport below, 1 once its top edge
-     reaches the top of the viewport. Runs on every path, including the phone
-     still, because the seam is CSS and exists there too. */
-  var seamRaf = 0;
-  function seam() {
-    seamRaf = 0;
-    var top = scope.getBoundingClientRect().top, vh = window.innerHeight;
-    /* Full strength by the time the section's top edge is 45% up the viewport,
-       not when it reaches the very top. The old ramp only finished once you
-       were three quarters into the section, so the cloud bank arrived AFTER the
-       join it exists to bridge. It still reads 0 while the section is a whole
-       viewport below, so nothing shows behind the plates. */
-    var v = (vh - top) / Math.max(1, vh * 0.55);
-    scope.style.setProperty('--seam', Math.max(0, Math.min(1, v)).toFixed(3));
-  }
-  function onSeam() { if (!seamRaf) seamRaf = requestAnimationFrame(seam); }
-  window.addEventListener('scroll', onSeam, { passive: true });
-  window.addEventListener('resize', onSeam, { passive: true });
-  if (window.lenis && window.lenis.on) window.lenis.on('scroll', onSeam);
-  window.addEventListener('ag:ready', onSeam);
-  seam();
-
-  /* THE CLOUD SEQUENCE IS PART OF THE LOADING GUARANTEE. It announces
-     ag:cost-ready only once every frame is decoded, and the curtain will not
-     lift without it, so the last section is never reached before its footage
-     exists. The still and reduced-motion paths announce at once: nothing to
-     wait for. */
-  /* Latched, not just dispatched. On a phone this path runs synchronously at
-     ~255ms, before the external ag-curtain.js has executed, so the event landed
-     with nobody listening and the curtain waited forever on a signal that had
-     already fired. That is the mobile hang: 100% on screen and never lifting. */
-  function announce() {
-    window.__agCostReady = true;
-    window.dispatchEvent(new CustomEvent('ag:cost-ready'));
-  }
-
-  /* THE PHONE GETS THE MOVING SKY TOO (Quinten, 2026-08-19). It used to fall
-     back to one still image here, so the fourth scene was the only one that did
-     not move on a phone while every plate did. It now scrubs the same footage
-     from a portrait set: 14 frames rather than 141, cross-faded so the step
-     between them is not visible, which is what makes 14 affordable inside the
-     LOCKED 1400KB. Reduced motion still gets the still, which is the point. */
-  if (reduced) {
-    scope.dataset.film = 'still';
-    announce();
-    return;
-  }
-
-  var cv = scope.querySelector('.cost-scrub');
-  if (!cv) { announce(); return; }
-  /* narrow, not PHONE: PHONE is declared further down, so var hoisting made it
-     undefined here and the canvas stayed 1280x720 while the frames were
-     portrait. That stretched a 338x600 image across a landscape box. */
-  if (narrow) { cv.width = 338; cv.height = 600; }
+  var cv = document.querySelector('.backdrop');
+  if (!cv || !cv.getContext) return;
   var ctx = cv.getContext('2d', { alpha: false });
-  ctx.fillStyle = '#876F58';
-  ctx.fillRect(0, 0, cv.width, cv.height);
+  if (!ctx) return;
 
-  /* THE CLOUDS ARE SCRUBBED BY SCROLL. This was an autoplaying loop, so the
-     last section had no scroll effect of its own: the footage ran on its own
-     clock no matter what the reader did. 141 frames, the forward half of the
-     cloud loop decimated 4:1, drive off position through .sky-scope, so the
-     ascent happens because you scroll. */
-  var PHONE = narrow;
-  var COUNT = PHONE ? 14 : 141, frames = new Array(COUNT), got = 0, failed = 0;
-  var DIR = PHONE ? 'frames-cloud-phone/' : 'frames-cloud/';
+  var _s = 0;
+  function seed(n) { _s = n >>> 0; }
+  function rnd() { _s = (_s * 1664525 + 1013904223) >>> 0; return _s / 4294967296; }
 
-  function grab(i, attempt) {
-    return new Promise(function (res) {
-      var img = new Image(), done = false;
-      var finish = function (ok) {
-        if (done) return; done = true; clearTimeout(t);
-        if (ok) return res(true);
-        if (attempt < 3) return res(grab(i, attempt + 1));
-        res(false);
-      };
-      var t = setTimeout(function () { img.src = ''; finish(false); }, 12000);
-      img.decoding = 'async';
-      img.onload = async function () {
-        try { frames[i] = await createImageBitmap(img); } catch (e) { frames[i] = img; }
-        finish(true);
-      };
-      img.onerror = function () { finish(false); };
-      img.src = DIR + 'frame_' + String(i + 1).padStart(4, '0') + '.webp';
-    });
+  /* The logo sweep as INK. These are the brand hues at full strength; on a
+     light ground the seams are pigment, not glow, so they are not lifted. */
+  var HUES = [
+    [110, 40, 119], [55, 80, 154], [0, 118, 187],
+    [52, 153, 138], [127, 188, 66], [110, 40, 119]
+  ];
+  function sweep(u) {
+    u = u - Math.floor(u);
+    var g = u * (HUES.length - 1);
+    var i = g | 0, k = g - i;
+    var a = HUES[i], b = HUES[i + 1];
+    return [(a[0] + (b[0] - a[0]) * k) | 0, (a[1] + (b[1] - a[1]) * k) | 0, (a[2] + (b[2] - a[2]) * k) | 0];
   }
 
-  var tick = setInterval(function () {
-    window.dispatchEvent(new CustomEvent('ag:cost-progress',
-      { detail: { pct: Math.min(0.99, (got + failed) / COUNT) } }));
-  }, 300);
+  /* The map rasterizes at a fraction of device pixels. The seams are soft,
+     so the upscale is invisible and it cuts fill cost and memory by half. */
+  var MAP_SCALE = 0.62;
 
-  (async function load() {
-    for (var start = 0; start < COUNT; start += 12) {
-      var slice = [];
-      for (var i = start; i < Math.min(start + 12, COUNT); i++) {
-        slice.push(grab(i, 0).then(function (ok) { ok ? got++ : failed++; }));
+  var W = 0, H = 0, DPR = 1, FIELD_H = 0;
+  var map = null, mctx = null, MW = 0, MH = 0;
+  var tmp = null, tctx = null, TW = 0, TH = 0;
+
+  var scrollY = 0;
+
+  var PAPER = '#fffdfa';
+
+  function circumcenter(a, b, c) {
+    var ax = a[0], ay = a[1], bx = b[0], by = b[1], cx = c[0], cy = c[1];
+    var d = 2 * (ax * (by - cy) + bx * (cy - ay) + cx * (ay - by));
+    if (Math.abs(d) < 1e-9) return null;
+    var a2 = ax * ax + ay * ay, b2 = bx * bx + by * by, c2 = cx * cx + cy * cy;
+    return [
+      (a2 * (by - cy) + b2 * (cy - ay) + c2 * (ay - by)) / d,
+      (a2 * (cx - bx) + b2 * (ax - cx) + c2 * (bx - ax)) / d
+    ];
+  }
+
+  function triangulate(pts) {
+    var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity, i;
+    for (i = 0; i < pts.length; i++) {
+      if (pts[i][0] < minX) minX = pts[i][0];
+      if (pts[i][0] > maxX) maxX = pts[i][0];
+      if (pts[i][1] < minY) minY = pts[i][1];
+      if (pts[i][1] > maxY) maxY = pts[i][1];
+    }
+    var dm = Math.max(maxX - minX, maxY - minY) * 14;
+    var mx = (minX + maxX) / 2, my = (minY + maxY) / 2;
+    var P = pts.concat([[mx - dm, my - dm], [mx + dm, my - dm], [mx, my + dm]]);
+    var n = pts.length;
+    var tris = [[n, n + 1, n + 2]];
+
+    for (var p = 0; p < n; p++) {
+      var bad = [], keep = [];
+      for (var ti = 0; ti < tris.length; ti++) {
+        var tr = tris[ti];
+        var cc = circumcenter(P[tr[0]], P[tr[1]], P[tr[2]]);
+        if (!cc) { keep.push(tr); continue; }
+        var rr = (P[tr[0]][0] - cc[0]) * (P[tr[0]][0] - cc[0]) + (P[tr[0]][1] - cc[1]) * (P[tr[0]][1] - cc[1]);
+        var dd = (P[p][0] - cc[0]) * (P[p][0] - cc[0]) + (P[p][1] - cc[1]) * (P[p][1] - cc[1]);
+        if (dd < rr) bad.push(tr); else keep.push(tr);
       }
-      await Promise.all(slice);
-      if (frames[0] && !cv.dataset.painted) { cv.dataset.painted = '1'; paint(0); }
-      await new Promise(function (r) { setTimeout(r, 0); });
+      var poly = [];
+      for (var bi = 0; bi < bad.length; bi++) {
+        var b = bad[bi];
+        var es = [[b[0], b[1]], [b[1], b[2]], [b[2], b[0]]];
+        for (var ei = 0; ei < 3; ei++) {
+          var e = es[ei], shared = false;
+          for (var bj = 0; bj < bad.length && !shared; bj++) {
+            if (bj === bi) continue;
+            var o = bad[bj];
+            var os = [[o[0], o[1]], [o[1], o[2]], [o[2], o[0]]];
+            for (var oi = 0; oi < 3; oi++) {
+              if ((os[oi][0] === e[0] && os[oi][1] === e[1]) ||
+                  (os[oi][0] === e[1] && os[oi][1] === e[0])) { shared = true; break; }
+            }
+          }
+          if (!shared) poly.push(e);
+        }
+      }
+      tris = keep;
+      for (var pi = 0; pi < poly.length; pi++) tris.push([poly[pi][0], poly[pi][1], p]);
     }
-    clearInterval(tick);
-    if (failed) console.error('AG cost clouds: lost ' + failed + ' of ' + COUNT + ' frames.');
-    scope.dataset.film = 'on';
-    window.dispatchEvent(new CustomEvent('ag:cost-progress', { detail: { pct: 1 } }));
-    place();
-    announce();
-  })();
 
-  function nearest(i) {
-    if (frames[i]) return frames[i];
-    for (var k = i; k >= 0; k--) if (frames[k]) return frames[k];
-    for (var k2 = i; k2 < COUNT; k2++) if (frames[k2]) return frames[k2];
-    return null;
-  }
-  /* CROSS-FADED. At 141 frames rounding to the nearest was invisible. The phone
-     set is 14, where rounding would read as a slideshow, so the pair either
-     side of the position is blended by the fraction between them. Same code
-     path on both, since a blend at 141 frames costs nothing and is a no-op
-     whenever the position lands on a frame. */
-  function paint(idx) {
-    var clamped = Math.max(0, Math.min(COUNT - 1, idx));
-    var lo = Math.floor(clamped), hi = Math.min(COUNT - 1, lo + 1), t = clamped - lo;
-    var a = nearest(lo);
-    if (!a) return;
-    ctx.globalAlpha = 1;
-    ctx.drawImage(a, 0, 0, cv.width, cv.height);
-    if (t > 0.001 && hi !== lo) {
-      var b = frames[hi];
-      if (b) { ctx.globalAlpha = t; ctx.drawImage(b, 0, 0, cv.width, cv.height); ctx.globalAlpha = 1; }
+    var out = [];
+    for (var k = 0; k < tris.length; k++) {
+      if (tris[k][0] < n && tris[k][1] < n && tris[k][2] < n) out.push(tris[k]);
     }
+    return { tris: out, P: P };
   }
 
-  /* Position through the scope, 0 at its top edge meeting the stage and 1 when
-     its foot reaches the bottom of the viewport. The sticky sky is pinned for
-     exactly this range, so the mapping is 1:1 with what is on screen. */
-  var raf = 0;
-  function place() {
-    raf = 0;
-    var r = scope.getBoundingClientRect(), vh = window.innerHeight;
-    var span = r.height - vh;
-    if (span <= 0) return paint(0);
-    var t = Math.max(0, Math.min(1, -r.top / span));
-    paint(t * (COUNT - 1));
-  }
-  function onScroll() { if (!raf) raf = requestAnimationFrame(place); }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-  if (window.lenis && window.lenis.on) window.lenis.on('scroll', onScroll);
-})();
+  /* Rasterize one seam's filament bundle into the map, in white. Only the
+     ALPHA matters - color is applied later at composite time, which is what
+     lets the hue change with scroll without ever redrawing this. */
+  function paintSeam(ed) {
+    var dx = ed.x2 - ed.x1, dy = ed.y2 - ed.y1;
+    var L = ed.len || 1;
+    var nx = -dy / L, ny = dx / L;
+    var STR = 6, SEG = 26, s, k, u;   /* 15 faceted the arcs once they bowed */
 
-/* ===== AG Motion v2.5 — reveal on intersect, static sections only ======== */
-(function () {
-  'use strict';
-  var targets = document.querySelectorAll('.reveal, .reveal-stagger');
-  if (!('IntersectionObserver' in window)) {
-    targets.forEach(function (el) { el.classList.add('is-in'); });
-    return;
+    for (s = 0; s < STR; s++) {
+      var lane = (s / (STR - 1) - 0.5);
+      mctx.beginPath();
+      for (k = 0; k <= SEG; k++) {
+        u = k / SEG;
+        /* pinch to nothing at both ends so strands converge at the junction */
+        var pinch = Math.sin(u * Math.PI);
+        var wob = Math.sin(u * 5.1 + ed.ph) * 0.55
+                + Math.sin(u * 11.3 - ed.ph * 1.7) * 0.30
+                + Math.sin(u * 2.3 + s * 1.9 + ed.ph * 0.6) * 0.5;
+        var bend = Math.sin(u * Math.PI) * ed.curve * L
+                 + Math.sin(u * 6.283) * ed.curve2 * L;
+        var off = (lane * 1.9 + wob * ed.amp * 2.6) * pinch * L * 0.16 + bend;
+        var x = ed.x1 + dx * u + nx * off;
+        var y = ed.y1 + dy * u + ny * off;
+        if (k === 0) mctx.moveTo(x, y); else mctx.lineTo(x, y);
+      }
+      var a = (0.040 + 0.070 * (1 - Math.abs(lane) * 1.7)) * ed.bright;
+      if (a < 0.004) continue;
+      mctx.strokeStyle = 'rgba(255,255,255,' + a.toFixed(4) + ')';
+      mctx.lineWidth = (s === 0 || s === STR - 1 ? 0.8 : 1.5) * MAP_SCALE * DPR;
+      mctx.stroke();
+    }
+
+    mctx.beginPath();
+    for (k = 0; k <= SEG; k++) {
+      u = k / SEG;
+      var p2 = Math.sin(u * Math.PI);
+      var o2 = Math.sin(u * 4.2 + ed.ph) * 0.4 * ed.amp * p2 * L * 0.13
+             + Math.sin(u * Math.PI) * ed.curve * L
+             + Math.sin(u * 6.283) * ed.curve2 * L;
+      var cx = ed.x1 + dx * u + nx * o2;
+      var cy = ed.y1 + dy * u + ny * o2;
+      if (k === 0) mctx.moveTo(cx, cy); else mctx.lineTo(cx, cy);
+    }
+    mctx.strokeStyle = 'rgba(255,255,255,' + (0.20 * ed.bright).toFixed(4) + ')';
+    mctx.lineWidth = 1.1 * MAP_SCALE * DPR;
+    mctx.stroke();
   }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      e.target.classList.add('is-in');
-      io.unobserve(e.target);
-    });
-  }, { threshold: 0.18, rootMargin: '0px 0px -7% 0px' });
-  targets.forEach(function (el) { io.observe(el); });
+
+  function bakeMap() {
+    MW = Math.max(2, Math.round(W * MAP_SCALE));
+    MH = Math.max(2, Math.round(FIELD_H * MAP_SCALE));
+    map = document.createElement('canvas');
+    map.width = MW; map.height = MH;
+    mctx = map.getContext('2d');
+    /* TRANSPARENT, deliberately. Filling this opaque gives the map alpha=1
+       across its whole area, so the 'source-in' tint later keeps the gradient
+       EVERYWHERE and the cell structure disappears into a flat wash. The seam
+       shape lives in the alpha channel. */
+    mctx.globalCompositeOperation = 'lighter';
+    mctx.lineCap = 'round';
+    mctx.lineJoin = 'round';
+
+    seed(20260819);
+    var pts = [];
+    var y = -MH * 0.03;
+    var band = 0;
+    while (y < MH * 1.03) {
+      var scale = 0.62 + 0.58 * (0.5 + 0.5 * Math.sin(band * 0.83 + 1.7));
+      var rowH = MW * 0.135 * scale;
+      var cols = Math.max(3, Math.round(1 / (0.145 * scale)));
+      var stagger = (band % 2) * 0.5;
+      for (var c = -1; c <= cols + 1; c++) {
+        pts.push([
+          (c + stagger + (rnd() - 0.5) * 0.8) * (MW / cols),
+          y + (rnd() - 0.5) * rowH * 0.8
+        ]);
+      }
+      y += rowH;
+      band++;
+    }
+
+    var d = triangulate(pts);
+    var tris = d.tris, P = d.P;
+    var cc = [];
+    for (var i = 0; i < tris.length; i++) {
+      cc[i] = circumcenter(P[tris[i][0]], P[tris[i][1]], P[tris[i][2]]) || [0, 0];
+    }
+
+    var key = {}, verts = [], vseen = {};
+    for (var ti = 0; ti < tris.length; ti++) {
+      var tr = tris[ti];
+      var pairs = [[tr[0], tr[1]], [tr[1], tr[2]], [tr[2], tr[0]]];
+      for (var pi = 0; pi < 3; pi++) {
+        var a = Math.min(pairs[pi][0], pairs[pi][1]);
+        var b = Math.max(pairs[pi][0], pairs[pi][1]);
+        var kk = a + ':' + b;
+        if (key[kk] === undefined) { key[kk] = ti; continue; }
+        var p1 = cc[key[kk]], p2 = cc[ti];
+        var len = Math.hypot(p2[0] - p1[0], p2[1] - p1[1]);
+        if (len > 6 && len < MW * 0.8) {
+          var ed = {
+            x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], len: len,
+            ph: rnd() * 6.283, amp: 0.10 + rnd() * 0.17, bright: 0.5 + rnd() * 0.5,
+            /* the bow. Endpoints stay pinned to the Voronoi vertices so every
+               cell still closes; only the span between them arcs. That is what
+               makes the cells read as organic rather than as a wire diagram. */
+            curve: (rnd() - 0.5) * 0.46,
+            curve2: (rnd() - 0.5) * 0.20
+          };
+          paintSeam(ed);
+          var k1 = (ed.x1 | 0) + ',' + (ed.y1 | 0);
+          var k2 = (ed.x2 | 0) + ',' + (ed.y2 | 0);
+          if (!vseen[k1]) { vseen[k1] = 1; verts.push([ed.x1, ed.y1, 0.45 + rnd() * 0.55]); }
+          if (!vseen[k2]) { vseen[k2] = 1; verts.push([ed.x2, ed.y2, 0.45 + rnd() * 0.55]); }
+        }
+      }
+    }
+
+    /* junctions are the densest point of the bundle */
+    for (var v = 0; v < verts.length; v++) {
+      var r = (8 + 18 * verts[v][2]) * MAP_SCALE * DPR;
+      var g = mctx.createRadialGradient(verts[v][0], verts[v][1], 0, verts[v][0], verts[v][1], r);
+      g.addColorStop(0, 'rgba(255,255,255,' + (0.34 * verts[v][2]).toFixed(3) + ')');
+      g.addColorStop(0.4, 'rgba(255,255,255,' + (0.11 * verts[v][2]).toFixed(3) + ')');
+      g.addColorStop(1, 'rgba(255,255,255,0)');
+      mctx.fillStyle = g;
+      mctx.fillRect(verts[v][0] - r, verts[v][1] - r, r * 2, r * 2);
+    }
+
+    mctx.globalCompositeOperation = 'source-over';
+  }
+
+  function build() {
+    var vw = Math.max(window.innerWidth, 1), vh = Math.max(window.innerHeight, 1);
+    DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+    W = Math.round(vw * DPR); H = Math.round(vh * DPR);
+    cv.width = W; cv.height = H;
+    cv.style.width = vw + 'px'; cv.style.height = vh + 'px';
+    FIELD_H = Math.max(document.body.scrollHeight, vh) * DPR;
+
+    PAPER = getComputedStyle(document.documentElement).getPropertyValue('--paper').trim() || '#fffdfa';
+
+    bakeMap();
+
+    TW = Math.max(2, Math.round(W * MAP_SCALE));
+    TH = Math.max(2, Math.round(H * MAP_SCALE));
+    tmp = document.createElement('canvas');
+    tmp.width = TW; tmp.height = TH;
+    tctx = tmp.getContext('2d');
+  }
+
+  /* Build the tint gradient for the current scroll position. Hue is driven
+     mostly by position DOWN the field, so scrolling walks the whole sweep. */
+  function tintGradient(c2d, boost) {
+    var g = c2d.createLinearGradient(0, 0, 0, TH);
+    /* scroll position only. The time term is gone with the animation: the
+       hue still walks the whole logo sweep as the deck is scrolled, but the
+       field never changes on its own. */
+    var base = (scrollY * DPR * MAP_SCALE) / Math.max(1, MH) * 2.6;
+    for (var i = 0; i <= 8; i++) {
+      var f = i / 8;
+      var c = sweep(base + f * (TH / Math.max(1, MH)) * 2.6);
+      g.addColorStop(f, 'rgb(' + (c[0] * boost | 0) + ',' + (c[1] * boost | 0) + ',' + (c[2] * boost | 0) + ')');
+    }
+    return g;
+  }
+
+  function draw() {
+    var oy = scrollY * DPR * MAP_SCALE;
+
+    /* 1. the visible slice of the baked map, tinted through its own alpha.
+       One blit. A sine/cosine strip warp lived here and is gone: the field
+       is stationary, so the seams and the junctions where they meet hold
+       their exact positions. */
+    tctx.globalCompositeOperation = 'source-over';
+    tctx.clearRect(0, 0, TW, TH);
+    tctx.drawImage(map, 0, oy, TW, TH, 0, 0, TW, TH);
+
+    /* The TINT. The baked map is white and carries the seam shape only in
+       its alpha, so without this pass the whole field multiplies white onto
+       paper and disappears. It was lost when the sine warp was removed,
+       because the warp block and the tint block were adjacent. */
+    tctx.globalCompositeOperation = 'source-in';
+    tctx.fillStyle = tintGradient(tctx, 1);
+    tctx.fillRect(0, 0, TW, TH);
+
+    /* 2. lay it into the paper. MULTIPLY, not lighter: on a light ground the
+       seams are ink sinking into the page. Additive would be invisible here. */
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = PAPER;
+    ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'multiply';
+    ctx.drawImage(tmp, 0, 0, TW, TH, 0, 0, W, H);
+
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  /* No requestAnimationFrame loop at all. The field is stationary, so it
+     only needs redrawing when the scroll position changes. That costs
+     nothing at rest and removes the perpetual loop entirely. */
+  var queued = false;
+  function schedule() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(function () { queued = false; readScroll(); draw(); });
+  }
+
+  /* Lenis owns the page's scroll animation, so window.pageYOffset and the
+     position the content is actually drawn at can differ mid-glide. Taking
+     lenis.scroll binds the field to the exact number the containers are
+     transformed by, which is what keeps them locked together. */
+  function readScroll() {
+    var L = window.lenis;
+    if (L && typeof L.scroll === 'number') { scrollY = L.scroll; return; }
+    scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+  }
+
+  build();
+  readScroll();
+  draw();
+
+  window.addEventListener('scroll', schedule, { passive: true });
+
+  var rt = 0;
+  window.addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () { build(); readScroll(); draw(); }, 200);
+  }, { passive: true });
 })();
 </script>
-<!-- Lenis pinned + SRI, matching the approved deck. AG Scroll v1.2 consumes it
-     at the LOCKED lerp 0.07 and drives the static sections below the stage.
-     It was missing entirely from the first pass of this build. -->
+
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.min.js"
         integrity="sha384-ClD7pCgIUz5M81HT8aZmMxCsWmfsycmBiwL5gy1pUbdWHvICIbea22N9sTtAFotA"
         crossorigin="anonymous"></script>
 <script src="ag-scroll.js"></script>
+<script src="ag-motion.js"></script>
 <script src="ag-cursor.js"></script>
-<script src="ag-hybrid-scene.js"></script>
-<script src="ag-curtain.js"></script>
+<script src="ag-typography.js"></script>
+
+<script>
+/* ===========================================================
+   Deck engagement layer.
+   Net-new: no library component covers count-ups, the sprint
+   track fill, section tracking or the fullscreen toggle.
+   Every figure it animates is already correct in the HTML, so a
+   script failure leaves the right number on screen.
+   =========================================================== */
+(function () {
+  'use strict';
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+
+  /* ---- The road: a stepper that always centers the step you are on ----
+     Opens on 01. The TRACK slides rather than each node moving on its own,
+     so the road reads as one object you are traveling along. */
+  var road = document.querySelector('.roadmap');
+  if (road) {
+    var vp = road.querySelector('.road-viewport');
+    var track = road.querySelector('.road-track');
+    var nodes = [].slice.call(road.querySelectorAll('.road-node'));
+    var pips = [].slice.call(road.querySelectorAll('.road-pip'));
+    var fill = road.querySelector('.road-fill');
+    var prevBtn = road.querySelector('.road-btn--prev');
+    var nextBtn = road.querySelector('.road-btn--next');
+    var at = 0;
+
+    function place() {
+      if (!nodes.length) return;
+      var cell = nodes[0].getBoundingClientRect().width;
+      var shift = vp.clientWidth / 2 - (at + 0.5) * cell;
+      track.style.setProperty('--shift', shift.toFixed(1) + 'px');
+      nodes.forEach(function (nd, i) { nd.setAttribute('data-on', i === at ? 'true' : 'false'); });
+      pips.forEach(function (pp, i) { pp.setAttribute('data-on', i === at ? 'true' : 'false'); });
+      /* The rail runs 1400px past the track on each side, so the fill is
+         measured in pixels from the rail's real start to the active dot.
+         The sweep is then pinned to the NODE SPAN rather than to the fill's
+         own width - without that the gradient stretches across the whole
+         2070px fill and the traveled road opens on the warm end of the
+         sweep instead of starting at purple. */
+      if (fill) {
+        fill.style.width = (1400 + (at + 0.5) * cell).toFixed(1) + 'px';
+        fill.style.backgroundSize = (cell * nodes.length).toFixed(1) + 'px 100%';
+        fill.style.backgroundPosition = '1400px 0';
+        fill.style.backgroundRepeat = 'no-repeat';
+      }
+      if (prevBtn) prevBtn.disabled = at === 0;
+      if (nextBtn) nextBtn.disabled = at === nodes.length - 1;
+    }
+
+    function go(i) { at = Math.max(0, Math.min(nodes.length - 1, i)); place(); }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { go(at - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { go(at + 1); });
+    nodes.forEach(function (nd, i) { nd.addEventListener('click', function () { go(i); }); });
+    road.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') go(at + 1);
+      else if (e.key === 'ArrowLeft') go(at - 1);
+    });
+
+    place();
+    var rz = 0;
+    window.addEventListener('resize', function () {
+      clearTimeout(rz); rz = setTimeout(place, 150);
+    }, { passive: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+  }
+
+  /* ---- Chart: set each path's true length so the draw-on is exact ---- */
+  var chart = document.querySelector('.chart-wrap');
+  if (chart) {
+    chart.querySelectorAll('.chart-line, .chart-stri').forEach(function (pth) {
+      try { pth.style.setProperty('--len', pth.getTotalLength().toFixed(1)); } catch (e) {}
+    });
+  }
+
+  /* ---- Reading position: the top edge fills as the deck is worked through
+     ---- Driven off lenis.scroll, the same number the field and the content
+     use, so the bar can never disagree with either. */
+  var bar = document.querySelector('.agh-progress');
+  if (bar) {
+    var lastPct = -1;
+    function progress() {
+      var doc = document.documentElement;
+      var max = Math.max(1, (document.body.scrollHeight || doc.scrollHeight) - window.innerHeight);
+      var L = window.lenis;
+      var y = (L && typeof L.scroll === 'number') ? L.scroll : (window.pageYOffset || doc.scrollTop || 0);
+      var pct = Math.max(0, Math.min(100, (y / max) * 100));
+      /* only touch the DOM when the rounded value actually changes */
+      var r = Math.round(pct * 10) / 10;
+      if (r !== lastPct) { lastPct = r; bar.style.width = r + '%'; }
+      requestAnimationFrame(progress);
+    }
+    requestAnimationFrame(progress);
+  }
+
+  /* ---- Count-ups ---- */
+  var figs = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));
+
+  function runCount(el) {
+    var target = parseFloat(el.getAttribute('data-count'));
+    if (!isFinite(target)) return;
+    var prefix = el.getAttribute('data-prefix') || '';
+    var final = el.textContent;
+    var dur = 900;
+    var t0 = null;
+
+    function frame(ts) {
+      if (t0 === null) t0 = ts;
+      var p = Math.min((ts - t0) / dur, 1);
+      if (p >= 1) { el.textContent = final; return; }
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = prefix + Math.round(target * eased).toLocaleString('en-US');
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  if (!reduced && figs.length && 'IntersectionObserver' in window) {
+    var cio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        cio.unobserve(e.target);
+        runCount(e.target);
+      });
+    }, { threshold: 0.6, rootMargin: '0px 0px -8% 0px' });
+    figs.forEach(function (el) { cio.observe(el); });
+  }
+
+})();
+</script>
 </body>
 </html>

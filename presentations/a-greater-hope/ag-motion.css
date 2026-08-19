@@ -1,0 +1,121 @@
+/* =========================================================== */
+/* AG Motion v2.5 — reveal system + tokens (CANONICAL DROP-IN) */
+/* Source of truth: core/standards/AG-MOTION-STANDARD.md (v2.5) */
+/* Extracted 2026-06-26, verbatim. Pairs with ag-motion.js (the IO trigger).  */
+/*                                                                            */
+/* Owns the timing / easing / distance tokens (other ag-* primitives          */
+/* reference them) + the 4 reveal recipes. Hidden state is in CSS; the JS       */
+/* trigger adds `.in-view` to animate to visible (never gsap.from()).          */
+/*                                                                            */
+/* Cinematic ships the DEFAULT variant (Pull Focus). The standard defines 6    */
+/* alternates (Drift Out/In, Slow Pan, Rise, Soft Focus, Diagonal Drift) —      */
+/* ONE variant's CSS ships per brand (selected at G1); swap the .reveal-       */
+/* cinematic block for the chosen variant from the standard.                   */
+/* =========================================================== */
+
+/* ---- Timing tokens (every value is a multiple of 3 or 7, AG DNA) ---- */
+:root {
+  /* DURATION: every value is a multiple of 3 or 7 (AG DNA) */
+  --duration-instant: 120ms;   /* 3 x 40.   Button feedback, cursor follows */
+  --duration-quick:   300ms;   /* 3 x 100.  Hover states, small UI, tap pulse */
+  --duration-medium:  600ms;   /* 3 x 200.  Standard reveal, card entry */
+  --duration-long:      900ms;   /* 3 x 300.  Hero rise, section arrival, first paint */
+  --duration-cinematic: 1400ms;  /* 7 x 200.  Cinematic image entrance (Recipe 4 only) */
+}
+
+/* ---- Easing curves (never write raw cubic-bezier in components) ---- */
+:root {
+  /* EASING */
+  --ease-satisfying: cubic-bezier(0.16, 1, 0.3, 1);     /* Expo out. The default. */
+  --ease-soft:       cubic-bezier(0.4, 0, 0.2, 1);      /* Material standard. Calm. */
+  --ease-snap:       cubic-bezier(0.34, 1.2, 0.64, 1);  /* Slight overshoot. Click feedback. */
+  --ease-settle:     cubic-bezier(0.22, 1, 0.36, 1);    /* Quick start, soft land. Cards. */
+}
+
+/* ---- Distance tokens (translateY reveal distance, multiples of 7) ---- */
+:root {
+  /* DISTANCE (for translateY reveals): multiples of 7 */
+  --dist-micro: 7px;    /* 7 x 1.  Text lines, subtle elements */
+  --dist-base:  14px;   /* 7 x 2.  Cards, paragraphs, standard */
+  --dist-lg:    21px;   /* 7 x 3.  Hero headline, section heads */
+}
+
+/* ---- Recipe 1: Card Reveal (workhorse, 80% of uses) ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--dist-base));
+  transition:
+    opacity var(--duration-medium) var(--ease-satisfying),
+    transform var(--duration-medium) var(--ease-satisfying);
+  will-change: opacity, transform;
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Recipe 2: Hero Arrival (once per page) ---- */
+.reveal-hero {
+  opacity: 0;
+  transform: translateY(var(--dist-lg)) scale(0.98);
+  transition:
+    opacity var(--duration-long) var(--ease-satisfying),
+    transform var(--duration-long) var(--ease-satisfying);
+  will-change: opacity, transform;
+}
+
+.reveal-hero.in-view {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ---- Recipe 3: Staggered Group (set --i per child, or auto via ag-motion.js) ---- */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(var(--dist-base));
+  transition:
+    opacity var(--duration-medium) var(--ease-settle),
+    transform var(--duration-medium) var(--ease-settle);
+  transition-delay: calc(var(--i, 0) * 81ms);  /* 3 x 27, closest multiple of 3 or 7 to 80ms */
+}
+
+.reveal-stagger.in-view > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Recipe 4: Cinematic Image Entrance — Variant 7: Pull Focus (SYSTEM DEFAULT) ----
+   All images site-wide, via .reveal-cinematic on .ag-image-wrapper. Swap this block
+   for another variant from AG-MOTION-STANDARD §Recipe 4 when a brand selects one at G1. */
+.reveal-cinematic {
+  opacity: 0;
+  transform: scale(1.42);
+  filter: blur(14px) brightness(1.21);
+  transition:
+    opacity var(--duration-cinematic) var(--ease-satisfying),
+    transform var(--duration-cinematic) var(--ease-satisfying),
+    filter var(--duration-cinematic) var(--ease-satisfying);
+  will-change: opacity, transform, filter;
+}
+
+.reveal-cinematic.in-view {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0) brightness(1);
+}
+
+/* ---- Reduced motion: the standard's rule (§Recipe 4 note: "all variants disabled,
+   appears in final state instantly"). CSS safety so a JS-trigger failure can never
+   leave a .reveal element stuck hidden. Added 2026-06-26 during extraction. ---- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-hero,
+  .reveal-stagger > *,
+  .reveal-cinematic {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
