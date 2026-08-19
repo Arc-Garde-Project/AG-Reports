@@ -484,21 +484,20 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
 .sec--cream .terms-wrap { margin-top: clamp(1rem,2.4vw,1.5rem); }
 .sec--cream .sec-rule { display: none; }
 
+/* SCROLL-LINKED, ALTERNATING. Every value here is written per frame by the
+   section script from the block's own position, so there is no transition and
+   no trigger: the block glides in from its side as it rises, holds while it is
+   being read, and fades up and away as it leaves through the top. Alternating
+   --r-dir gives left, right, left, right down the section.
+   No transition on purpose. A transition on top of a per-frame value fights it
+   and lags the scroll, which is the mistake the dwell response already taught
+   this file once. */
 .rise {
-  opacity: 0;
-  transform: translateY(90px) scale(0.94);
-  filter: blur(10px);
-  transition: opacity 1.4s cubic-bezier(0.16,1,0.3,1),
-              transform 1.4s cubic-bezier(0.16,1,0.3,1),
-              filter 1.4s cubic-bezier(0.16,1,0.3,1);
+  opacity: var(--r-o, 0);
+  transform: translate3d(var(--r-x, 0px), var(--r-y, 34px), 0) scale(var(--r-s, 0.965));
+  filter: blur(var(--r-b, 5px));
+  will-change: opacity, transform, filter;
 }
-.rise.is-up { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-/* each block lands after the one above it, so the section assembles upward */
-.rise:nth-of-type(1).is-up { transition-delay: 0s; }
-.rise:nth-of-type(2).is-up { transition-delay: 0.14s; }
-.rise:nth-of-type(3).is-up { transition-delay: 0.21s; }
-.rise:nth-of-type(4).is-up { transition-delay: 0.3s; }
-.rise:nth-of-type(5).is-up { transition-delay: 0.3s; }
 
 /* the rows inside each panel come in behind it, so the panel does not arrive
    as one flat slab */
@@ -518,7 +517,7 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
 .rise.is-up .deliv-row:nth-child(7), .rise.is-up .band-row:nth-child(7) { transition-delay: 0.9s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .rise { opacity: 1; transform: none; filter: none; transition: none; }
+  .rise { opacity: 1 !important; transform: none !important; filter: none !important; }
 }
 
 /* THE CREDIT LINE SITS ON THE FOOTAGE. It used to be a separate band on plain
@@ -900,26 +899,63 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
      CSS position:sticky now, so translating it per scroll frame would fight the
      pin and was the thing making the footage look like it was being dragged. */
 
-  var ups = sec.querySelectorAll('.rise');
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-up'); io.unobserve(e.target); } });
-    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-    [].forEach.call(ups, function (el) { io.observe(el); });
-  } else {
-    [].forEach.call(ups, function (el) { el.classList.add('is-up'); });
+  /* THE CONTAINERS ARE SCROLL-LINKED, NOT TRIGGERED.
+     They used to be a one-shot IntersectionObserver: cross a threshold, fire a
+     1.4s transition, done. That is why they arrived in a lump and did nothing
+     on the way back out. Each block now reads its own position every frame and
+     glides on it, alternating in from the left and the right and fading as it
+     leaves through the top (Quinten, 2026-08-19).
+
+     Nothing is ever stranded invisible: opacity is a function of where the
+     block is, so anything on screen is on screen. That is what retires the old
+     2.1s safety net, which existed only because a triggered reveal can miss. */
+  var ups = [].slice.call(sec.querySelectorAll('.rise'));
+  ups.forEach(function (el, i) { el.style.setProperty('--r-dir', i % 2 ? 1 : -1); });
+
+  var SLIDE = 78;                       // px a block travels in from the side
+  var LIFT  = 26;                       // px it rises the last of the way in
+  var OUT   = 44;                       // px it drifts up as it leaves
+
+  function ease(t) { return t <= 0 ? 0 : t >= 1 ? 1 : 1 - Math.pow(1 - t, 3); }
+
+  var riseRaf = 0;
+  /* placeRise, not place: the cloud scrub below declares its own place() in this
+     same function scope, and a later function declaration wins. The rise
+     handler was calling the cloud's place() before its variables existed,
+     which threw and left every container at opacity 0. */
+  function placeRise() {
+    riseRaf = 0;
+    var vh = window.innerHeight;
+    for (var i = 0; i < ups.length; i++) {
+      var el = ups[i], r = el.getBoundingClientRect();
+      if (r.bottom < -260 || r.top > vh + 260) continue;   // far off screen, skip the work
+      /* enter: 0 when the top edge is at the bottom of the viewport, 1 once it
+         has climbed to 72% of the way up. exit: begins only once the block's
+         BOTTOM passes 22% from the top, so nothing fades while it is still
+         comfortably in the reading zone. */
+      var enter = ease((vh - r.top) / (vh * 0.42));
+      var exit  = ease((vh * 0.22 - r.bottom) / (vh * 0.30));
+      var vis   = enter * (1 - exit);
+      var dir   = +(getComputedStyle(el).getPropertyValue('--r-dir')) || -1;
+      el.style.setProperty('--r-o', vis.toFixed(3));
+      el.style.setProperty('--r-x', ((1 - enter) * SLIDE * dir).toFixed(1) + 'px');
+      el.style.setProperty('--r-y', ((1 - enter) * LIFT - exit * OUT).toFixed(1) + 'px');
+      el.style.setProperty('--r-s', (0.965 + 0.035 * enter).toFixed(4));
+      el.style.setProperty('--r-b', ((1 - enter) * 5).toFixed(2) + 'px');
+      // the inner rows keep their own stagger, armed once the block is really in
+      if (enter > 0.25) el.classList.add('is-up');
+    }
   }
-  /* Safety net, scoped. Only reveals blocks ACTUALLY in view: a block below the
-     fold keeps its observer and still gets its entrance. The unscoped version
-     of this revealed everything at 2.1s, so by the time anyone scrolled down
-     the animation had already played to an empty room. */
-  setInterval(function () {
-    [].forEach.call(ups, function (el) {
-      if (el.classList.contains('is-up')) return;
-      var r = el.getBoundingClientRect();
-      if (r.top < window.innerHeight * 0.95 && r.bottom > 0) el.classList.add('is-up');
-    });
-  }, 700);
+  function onRise() { if (!riseRaf) riseRaf = requestAnimationFrame(placeRise); }
+  if (reduced) {
+    ups.forEach(function (el) { el.classList.add('is-up'); el.style.setProperty('--r-o', 1); });
+  } else {
+    window.addEventListener('scroll', onRise, { passive: true });
+    window.addEventListener('resize', onRise, { passive: true });
+    if (window.lenis && window.lenis.on) window.lenis.on('scroll', onRise);
+    window.addEventListener('ag:ready', onRise);
+    placeRise();
+  }
 
   /* Phones and reduced motion get a single cloud still. The frame set is 5.4MB
      against a LOCKED 1400KB mobile budget, and there is no scroll-scrub on
