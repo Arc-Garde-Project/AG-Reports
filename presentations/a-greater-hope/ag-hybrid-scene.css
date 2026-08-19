@@ -239,7 +239,22 @@ html.is-ready .hseg[data-sun] .hseg-text[data-visible="true"] { transition-delay
      on phone-scale assets that fit the LOCKED 1400KB. What is left here is only
      what genuinely differs on a small screen: type sizing, single-column grids
      and literal centering per Mobile Standard 6C. */
+  /* THE PHONE TIER IS A PORTRAIT CROP, not the wide plate scaled down. Each
+     file is already cropped around the point that plate centers on, so the
+     per-plate --ox corrections (53%, 56%) would double-apply and push the
+     subject off. Portrait assets center. */
+  .hseg video, .hseg canvas { object-position: 50% center; }
   .hseg-text { text-align: center; }
+
+  /* THE LOGO SITS ON THE SUN (Quinten, 2026-08-19). The phone plate is a
+     portrait crop and the sun lands 24% down it, measured on iPhone SE, 15 and
+     14 Pro Max alike. The copy block is otherwise vertically centered, which
+     put the mark well below the sun. The hero alone starts from the top and is
+     pushed down so the MARK'S CENTER, not its top edge, lands on the sun.
+     Only the hero: plates 2 and 3 carry dense copy that needs the full box. */
+  .hseg[data-sun] .hseg-text { align-content: start; padding-top: calc(24svh - (var(--mark-size) / 2)); }
+  .hseg[data-sun] .hero-mark img { width: var(--mark-size); height: var(--mark-size); }
+  .hseg[data-sun] .hseg-text { --mark-size: clamp(72px, 19vw, 104px); }
   .hseg-text .lead,
   .hseg-text .lead-sub,
   .hseg-text .sub-card,

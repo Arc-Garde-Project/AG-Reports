@@ -518,7 +518,15 @@
       resetDwellPaint();
       warm(i);
       const s = segs[i];
-      if (s.kind === 'rest') s.holdUntil = performance.now() + (s.cfg.holdMs || opts.holdMs);
+      /* NO ANCHORS ON A PHONE (Quinten, 2026-08-19). The hold is a TIME-based
+         refusal: the plate will not advance for holdMs no matter how hard you
+         push. That is right on a desktop, where a trackpad flick is 500px and
+         would otherwise throw the reader past a plate they never saw. On a
+         phone it reads as the deck fighting the thumb. Mobile keeps the
+         DISTANCE cost below (dwellPx), which is the same bargain the last
+         section makes: content takes scroll to pass, but nothing refuses to
+         move. A swipe carries straight through. */
+      if (s.kind === 'rest') s.holdUntil = performance.now() + (isNarrow ? 0 : (s.cfg.holdMs || opts.holdMs));
       if (s.kind === 'scrub') {
         stopEase();
         s.pos = atEnd ? Math.max(0, (s.count || 1) - 1) : 0;
@@ -533,7 +541,7 @@
            This is the toll for going back out the way you came in. Pushing
            INWARD clears it immediately, so it never gets in the way of actually
            traveling the scrub. */
-        s.edgeHold = opts.edgeHoldPx || 300;
+        s.edgeHold = isNarrow ? 0 : (opts.edgeHoldPx || 300);
         s.edgeFrom = atEnd ? 1 : -1;
         s.exitOnSettle = 0;
         draw(s, s.pos);
@@ -741,7 +749,10 @@
        so it is COMPUTED rather than guessed: object-position is solved from the
        real box, the real intrinsic size and the sun's measured position at
        52.5% of frame width. Holds across 350 to 900 by construction. */
-    const SUN_X = 0.525;
+    /* PORTRAIT PHONE ASSETS ARE CROPPED AROUND THE SUN ALREADY (2026-08-19),
+       so on a phone the sun sits at the middle of its own frame rather than at
+       52.5% of a wide one. Landscape tiers keep the measured value. */
+    const SUN_X = isNarrow ? 0.5 : 0.525;
     function aimSun() {
       const s = segs[0];
       if (!s || !s.video || !isNarrow) return;
