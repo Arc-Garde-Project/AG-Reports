@@ -16,15 +16,15 @@
      cream now, not white, so the chrome follows it. -->
 <meta name="theme-color" content="#fffdfa">
 
-<title>Paid Media for A Greater Hope | Arc Garde</title>
-<meta name="description" content="Arc Garde paid media presentation for A Greater Hope. Meta ads, a 28 day testing cycle, and one fixed monthly fee.">
+<title>A Greater Hope | Paid Ads System - Arc Garde</title>
+<meta name="description" content="Paid advertising system for A Greater Hope. Meta ads, a landing page and booking flow per engine, CRM, tracking and attribution, creative in English and Spanish. Built by Arc Garde.">
 
 <!-- Banner law -->
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="canonical" href="https://ag-reports.vercel.app/presentations/a-greater-hope">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Paid Media for A Greater Hope">
+<meta property="og:title" content="A Greater Hope | Paid Ads System - Arc Garde">
 <meta property="og:description" content="The families you need are already scrolling. They just haven't been asked yet.">
 <meta property="og:url" content="https://ag-reports.vercel.app/presentations/a-greater-hope">
 <meta property="og:image" content="https://ag-reports.vercel.app/presentations/a-greater-hope/og-banner.png">
@@ -218,11 +218,9 @@ html { background: var(--paper); }
   display: block;
   z-index: 0;
   pointer-events: none;
-  /* The field was reading as the loudest thing on the page. A blur throws it
-     out of focus so it sits behind the content rather than beside it, and the
-     opacity drops its weight. It only repaints on scroll, so the blur is a
-     one-off compositor cost, not a per-frame one. */
-  filter: blur(2.5px);
+  /* The softness is baked into the light map, not applied here. As a CSS
+     filter it cost a full-screen blur every frame once the field started
+     breathing, which measured 30fps. */
   opacity: 0.72;   /* never intercepts a click; input is read on window */
 }
 
@@ -336,6 +334,69 @@ section { position: relative; }
 .chart-tick,
 .sprint-marks span,
 .foot-line { text-shadow: var(--mist); }
+
+/* ---------- Depth and arrival ----------
+   Two things here.
+
+   THE LIFT. Panes tilt very slightly toward the pointer on hover and rise
+   off the page. The rotation is deliberately tiny - 1.6 degrees - because
+   anything more reads as a novelty rather than as weight. Transform and
+   shadow only, so it stays on the compositor.
+
+   THE ARRIVAL. Cards come in from alternating sides and fade out as they
+   leave the top. Sideways arrivals normally trip MOT-10, but this deck
+   already shipped exactly this pattern (commit 9de7496, "containers slide in
+   from alternating sides and fade out on the way up"), so it is a
+   re-instated approved behavior rather than new drift. The exit fade rides
+   a scroll-driven timeline where the browser supports one, which keeps it
+   off the main thread; where it does not, nothing fades and nothing breaks. */
+
+.sys, .road-card, .chart-wrap, .pane, .ledger, .bento-card {
+  transform-origin: center;
+}
+
+@media (hover: hover) {
+  .sys:hover,
+  .chart-wrap:hover {
+    transform: perspective(1100px) translate3d(0, -7px, 0) rotateX(1.6deg);
+    box-shadow: var(--shadow-lift);
+    border-color: #ffffff;
+  }
+  .pane:hover {
+    transform: perspective(1100px) translate3d(0, -4px, 0) rotateX(1.2deg);
+    box-shadow: var(--shadow-lift);
+  }
+  .sys, .chart-wrap, .pane {
+    transition:
+      transform var(--duration-quick) var(--ease-satisfying),
+      box-shadow var(--duration-quick) var(--ease-satisfying),
+      border-color var(--duration-quick) var(--ease-soft);
+  }
+}
+
+/* alternating arrival, on the existing IntersectionObserver */
+.reveal-stagger > *:nth-child(odd)  { transform: translate3d(-46px, 14px, 0); }
+.reveal-stagger > *:nth-child(even) { transform: translate3d(46px, 14px, 0); }
+.reveal-stagger.in-view > *          { transform: none; }
+
+/* the headline owns its own entrance, so it must not also slide */
+.reveal-stagger > .hero-title,
+.reveal-stagger.in-view > .hero-title { transform: none; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .system-grid, .chart-wrap, .roadmap, .ledger, .sec-head, .statement {
+      animation: lift-away linear both;
+      animation-timeline: view();
+      animation-range: exit 10% exit 90%;
+    }
+  }
+}
+
+@keyframes lift-away {
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to   { opacity: 0; transform: translate3d(0, -54px, 0); }
+}
 
 /* ---------- Copy panes ----------
    Loose text sitting straight on the field was the last thing without a
@@ -498,6 +559,12 @@ section { position: relative; }
 .hero {
   min-height: 100dvh;
   display: grid;
+  /* minmax(0,1fr), not auto. An auto track sizes to its content's max-content
+     width, and the ticker's track is very wide - so the hero column grew to
+     --max-w even on a 1000px viewport and the whole stack sat 90px off the
+     center axis, identically at 1000 and 1100 because it was no longer
+     viewport-relative at all. */
+  grid-template-columns: minmax(0, 1fr);
   place-items: center;
   padding-block: calc(var(--v-section) + 28px) var(--v-section);
   text-align: center;
@@ -605,6 +672,61 @@ section { position: relative; }
   text-wrap: balance;
 }
 
+/* ---------- The ticker ----------
+   A continuous run of the deck's own phrases under the scroll cue. Every
+   item is lifted verbatim from the approved copy; nothing here is newly
+   written. The track holds the sequence TWICE and translates by exactly
+   half its width, which is what makes the loop seamless with no jump.
+   Transform only, and it stops dead under reduced motion. */
+.ticker {
+  position: relative;
+  /* 100vw here overflowed the padded wrap and pushed the hero stack off
+     center by exactly the padding - 550 against a 500 axis at 1000px.
+     min-width:0 matters as much: as a flex item its automatic minimum is
+     its max-content track, so without this it refuses to shrink and drags
+     the whole stack wide. */
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  margin-top: var(--v-md);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+}
+
+.tick-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: tick 42s linear infinite;
+}
+
+@keyframes tick {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.tick-item {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.75rem, 0.72rem + 0.16vw, 0.875rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  text-shadow: var(--mist);
+}
+
+.tick-dot {
+  display: block;
+  width: 5px;
+  height: 5px;
+  margin: 0 clamp(18px, 2.4vw, 34px);
+  border-radius: 50%;
+  background: var(--sweep-decor);
+  flex: none;
+}
+
 /* ---------- Scroll cue ---------- */
 
 /* In flow, not absolute. Absolute positioning put it straight through the
@@ -692,14 +814,18 @@ section { position: relative; }
   height: 3px;
   margin-top: -1.5px;
   border-radius: var(--radius-pill);
-  background: rgba(34, 27, 41, 0.10);
-  overflow: hidden;
+  /* no gray track. The line IS the distance traveled, nothing more, so it
+     never reads as a broken rule running off both edges. */
+  background: transparent;
 }
 
 .road-fill {
   position: absolute;
-  inset: 0 auto 0 0;
+  top: 0;
+  bottom: 0;
   width: 0;
+  /* both ends round, so each end sits under a node circle and the line
+     reads as finished rather than cut */
   border-radius: var(--radius-pill);
   background: var(--sweep-decor);
   box-shadow: 0 0 14px rgba(110, 40, 119, 0.30);
@@ -1005,6 +1131,79 @@ section { position: relative; }
   word-break: normal;
 }
 
+/* ---------- The cycle KPIs ----------
+   Every figure is DERIVED from numbers the deck already states - $2,500 a
+   month of ad spend across a 28 day cycle - not invented. Cost per inquiry
+   is spend divided by inquiries to date, which is why it falls as the cycle
+   finds its winners. That fall is the whole argument, so it is the figure
+   that moves when the chart is scrubbed. */
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(8px, 1.2vw, 18px);
+  margin-bottom: clamp(14px, 1.8vw, 22px);
+}
+
+.kpi {
+  text-align: center;
+  padding: clamp(8px, 1vw, 13px) 6px;
+  border-radius: var(--radius-md);
+  transition: background var(--duration-quick) var(--ease-soft);
+}
+
+.kpi-fig {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.25rem, 0.95rem + 1.1vw, 1.875rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  background: var(--sweep-ink);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: var(--agh-indigo);
+  width: fit-content;
+  margin-inline: auto;
+}
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .kpi-fig { -webkit-text-fill-color: transparent; }
+}
+
+.kpi-label {
+  margin-top: 5px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.625rem, 0.6rem + 0.14vw, 0.75rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  word-break: normal;
+}
+
+/* the scrubber: drag or hover the plot and every figure reports that day */
+.chart-scrub {
+  position: absolute;
+  top: 0;
+  height: clamp(150px, 19vw, 250px);
+  width: 2px;
+  margin-left: -1px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-quick) var(--ease-soft);
+}
+
+.chart-scrub i {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--agh-indigo), rgba(55, 80, 154, 0.06));
+}
+
+.chart-box[data-scrub="true"] .chart-scrub { opacity: 0.55; }
+
+.chart-box { cursor: crosshair; }
+
 /* ---------- The cycle chart ----------
    There is no AG chart standard; this follows the convention the locked ads
    and organic report templates share. INLINE SVG, not a third canvas: two
@@ -1107,7 +1306,7 @@ section { position: relative; }
 }
 
 .chart-line {
-  stroke-width: 13;
+  stroke-width: 17;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -1115,9 +1314,13 @@ section { position: relative; }
 .chart-area { opacity: 1; }
 
 /* the combed-paint strands, clipped inside the line's own band */
-.chart-stri { fill: none; stroke-width: 1.7; vector-effect: non-scaling-stroke; }
-.chart-stri--a { stroke: rgba(255, 255, 255, 0.62); }
-.chart-stri--b { stroke: rgba(255, 255, 255, 0.36); }
+/* more combing, and a dark strand among the light ones - poured media has
+   both, and only having highlights made it read as a gradient with lines on
+   top rather than as a body with structure inside it */
+.chart-stri { fill: none; stroke-width: 1.9; vector-effect: non-scaling-stroke; }
+.chart-stri--a { stroke: rgba(255, 255, 255, 0.72); }
+.chart-stri--b { stroke: rgba(255, 255, 255, 0.44); }
+.chart-stri--c { stroke: rgba(30, 12, 44, 0.16); }
 
 .chart-endpoint {
   fill: var(--agh-green);
@@ -1324,7 +1527,16 @@ section { position: relative; }
 /* ---------- Responsive: layout shift only, breakpoints 1200 / 900 ---------- */
 
 @media (max-width: 1200px) {
-  .system-grid { grid-template-columns: minmax(0, 1fr); max-width: 660px; margin-inline: auto; }
+  /* 900-1200. Three across is too tight and one across wastes the width, so
+     this band gets its own answer rather than inheriting either neighbor. */
+  .system-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 820px;
+    margin-inline: auto;
+  }
+  .system-grid > :last-child { grid-column: 1 / -1; max-width: 50%; margin-inline: auto; }
+  .chart-wrap { max-width: 760px; }
+  .road-node { width: 252px; }
   .sys:nth-child(1), .sys:nth-child(2), .sys:nth-child(3) { --slice: 50%; }
 }
 
@@ -1355,13 +1567,18 @@ section { position: relative; }
   }
 
   /* the road stays a stepper on a phone, just narrower */
-  .road-node { min-height: clamp(230px, 62vw, 300px); }
-  .road-card { width: min(94%, 250px); }
+  /* the node band was reserving a screen and a half for one card */
+  .road-node { min-height: clamp(200px, 52vw, 240px); width: min(78vw, 300px); }
+  .road-card { width: min(92%, 250px); bottom: calc(50% + 30px); }
+  .road-viewport { padding-block: 14px; }
 
+  /* Centering these put a bullet ABOVE every line and stretched each card to
+     nearly twice its height, which is what read as chopped-up dead space.
+     They go back to an ordinary left-aligned list. */
   .sys { align-items: center; text-align: center; }
-  .sys ul { justify-items: center; }
-  .sys li { padding-left: 0; padding-top: 15px; text-align: center; }
-  .sys li::before { left: 50%; top: 4px; transform: translateX(-50%); }
+  .sys ul { width: fit-content; margin-inline: auto; gap: 7px; }
+  .sys li { padding-left: 17px; padding-top: 0; text-align: left; }
+  .sys li::before { left: 0; top: 0.62em; transform: none; }
 
   .track { padding: 16px 12px; }
 
@@ -1377,12 +1594,27 @@ section { position: relative; }
   .req p { margin-inline: auto; text-align: center; }
 
   .deck-foot { padding-bottom: var(--v-section); }
+
+  /* 350-900 is the mobile standard: one column, everything centerd on the
+     axis, no carve-outs. */
+  .system-grid { grid-template-columns: minmax(0, 1fr); max-width: 560px; }
+  .system-grid > :last-child { grid-column: auto; max-width: none; }
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .chart-wrap { max-width: none; }
+
+  /* the deck breathes plenty on a phone already; the section padding was
+     stacking on top of card margins and doubling every gap */
+  .pad-section { padding-block: clamp(34px, 8vw, 52px); }
+  .pane { padding: clamp(18px, 4.6vw, 26px) clamp(16px, 4.4vw, 24px); }
+  .chart-wrap { margin-top: clamp(22px, 6vw, 34px); }
+  .ticker { display: none; }
 }
 
 /* ---------- Reduced motion. Last block in the sheet. ----------
    Content must be visible without any animation having fired. */
 
 @media (prefers-reduced-motion: reduce) {
+  .tick-track { animation: none !important; }
   .chart-line, .chart-stri { stroke-dashoffset: 0 !important; transition: none !important; }
   .chart-area { opacity: 1 !important; transition: none !important; }
   .chart-endpoint { opacity: 1 !important; transform: none !important; transition: none !important; }
@@ -1441,6 +1673,10 @@ section { position: relative; }
         <div class="scroll-cue" aria-hidden="true">
           <span>Scroll</span>
           <i></i>
+        </div>
+
+        <div class="ticker" aria-hidden="true">
+          <div class="tick-track"><span class="tick-item">Meta only</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">Facebook and Instagram</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">14 ads per testing cycle</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">English and Spanish</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">2 ads head to head</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">Every step tracked</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">Leads land in the CRM live</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">7 sprints per cycle</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">Meta only</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">Facebook and Instagram</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">14 ads per testing cycle</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">English and Spanish</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">2 ads head to head</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">Every step tracked</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">Leads land in the CRM live</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">7 sprints per cycle</span><i class="tick-dot" aria-hidden="true"></i></div>
         </div>
       </div>
     </div>
@@ -1575,6 +1811,25 @@ section { position: relative; }
       <div class="chart-wrap reveal">
         <p class="chart-eyebrow">Day 1 to Day&nbsp;28</p>
 
+        <div class="kpis">
+          <div class="kpi">
+            <p class="kpi-fig" data-kpi="total">40</p>
+            <p class="kpi-label">Leads</p>
+          </div>
+          <div class="kpi">
+            <p class="kpi-fig" data-kpi="cpl">$58</p>
+            <p class="kpi-label">Cost per&nbsp;lead</p>
+          </div>
+          <div class="kpi">
+            <p class="kpi-fig" data-kpi="perDay">1.4</p>
+            <p class="kpi-label">Per&nbsp;day</p>
+          </div>
+          <div class="kpi">
+            <p class="kpi-fig" data-kpi="spend">$2,333</p>
+            <p class="kpi-label">Ad spend</p>
+          </div>
+        </div>
+
         <div class="chart-box">
           <svg class="chart-svg" viewBox="0 0 1000 320" preserveAspectRatio="none" role="img"
                aria-label="One 28 day cycle. Seven sprints of four days, two ads head to head in each, compounding as winners take budget.">
@@ -1591,7 +1846,7 @@ section { position: relative; }
                 <stop offset="1"   stop-color="var(--agh-blue)" stop-opacity="0"/>
               </linearGradient>
               <clipPath id="chartBand">
-                <path d="M 26.00 286.00 C 31.60 284.87, 48.38 283.55, 59.57 279.21 C 70.76 274.87, 81.95 266.24, 93.14 259.95 C 104.33 253.67, 115.52 245.07, 126.71 241.53 C 137.90 237.99, 149.10 239.60, 160.29 238.73 C 171.48 237.85, 182.67 239.57, 193.86 236.29 C 205.05 233.00, 216.24 224.73, 227.43 219.00 C 238.62 213.28, 249.81 205.08, 261.00 201.95 C 272.19 198.81, 283.38 200.75, 294.57 200.20 C 305.76 199.64, 316.95 201.64, 328.14 198.61 C 339.33 195.59, 350.52 187.55, 361.71 182.05 C 372.90 176.54, 384.10 168.55, 395.29 165.61 C 406.48 162.66, 417.67 164.78, 428.86 164.40 C 440.05 164.01, 451.24 166.17, 462.43 163.29 C 473.62 160.42, 484.81 152.52, 496.00 147.16 C 507.19 141.80, 518.38 133.93, 529.57 131.11 C 540.76 128.30, 551.95 130.53, 563.14 130.26 C 574.33 129.99, 585.52 132.26, 596.71 129.49 C 607.90 126.72, 619.10 118.93, 630.29 113.66 C 641.48 108.40, 652.67 100.62, 663.86 97.90 C 675.05 95.18, 686.24 97.50, 697.43 97.32 C 708.62 97.13, 719.81 99.48, 731.00 96.79 C 742.19 94.11, 753.38 86.39, 764.57 81.20 C 775.76 76.01, 786.95 68.31, 798.14 65.66 C 809.33 63.01, 820.52 65.40, 831.71 65.29 C 842.90 65.17, 854.10 67.58, 865.29 64.96 C 876.48 62.34, 887.67 54.69, 898.86 49.56 C 910.05 44.43, 921.24 36.79, 932.43 34.20 C 943.62 31.61, 960.40 34.03, 966.00 34.00" stroke-width="13" stroke-linecap="round" fill="none" stroke="#000"/>
+                <path d="M 26.00 286.00 C 31.60 286.00, 48.38 287.14, 59.57 286.00 C 70.76 284.86, 81.95 281.75, 93.14 279.17 C 104.33 276.59, 115.52 272.23, 126.71 270.53 C 137.90 268.82, 149.10 269.67, 160.29 268.96 C 171.48 268.25, 182.67 268.72, 193.86 266.26 C 205.05 263.81, 216.24 258.47, 227.43 254.23 C 238.62 249.99, 249.81 244.19, 261.00 240.83 C 272.19 237.47, 283.38 236.55, 294.57 234.06 C 305.76 231.56, 316.95 230.16, 328.14 225.86 C 339.33 221.57, 350.52 214.33, 361.71 208.28 C 372.90 202.24, 384.10 194.61, 395.29 189.58 C 406.48 184.56, 417.67 182.03, 428.86 178.14 C 440.05 174.25, 451.24 171.56, 462.43 166.26 C 473.62 160.96, 484.81 152.90, 496.00 146.32 C 507.19 139.75, 518.38 131.83, 529.57 126.81 C 540.76 121.79, 551.95 119.54, 563.14 116.18 C 574.33 112.82, 585.52 110.96, 596.71 106.66 C 607.90 102.37, 619.10 95.58, 630.29 90.40 C 641.48 85.22, 652.67 78.93, 663.86 75.57 C 675.05 72.20, 686.24 71.78, 697.43 70.23 C 708.62 68.68, 719.81 68.72, 731.00 66.26 C 742.19 63.81, 753.38 58.90, 764.57 55.50 C 775.76 52.10, 786.95 47.57, 798.14 45.87 C 809.33 44.17, 820.52 45.34, 831.71 45.29 C 842.90 45.24, 854.10 46.69, 865.29 45.55 C 876.48 44.41, 887.67 40.38, 898.86 38.46 C 910.05 36.53, 921.24 34.74, 932.43 34.00 C 943.62 33.26, 960.40 34.00, 966.00 34.00" stroke-width="17" stroke-linecap="round" fill="none" stroke="#000"/>
               </clipPath>
             </defs>
 
@@ -1603,18 +1858,21 @@ section { position: relative; }
           <line class="chart-gridline" x1="26.0" y1="286.0" x2="966.0" y2="286.0"/>
             </g>
 
-            <path class="chart-area" d="M 26.00 286.00 C 31.60 284.87, 48.38 283.55, 59.57 279.21 C 70.76 274.87, 81.95 266.24, 93.14 259.95 C 104.33 253.67, 115.52 245.07, 126.71 241.53 C 137.90 237.99, 149.10 239.60, 160.29 238.73 C 171.48 237.85, 182.67 239.57, 193.86 236.29 C 205.05 233.00, 216.24 224.73, 227.43 219.00 C 238.62 213.28, 249.81 205.08, 261.00 201.95 C 272.19 198.81, 283.38 200.75, 294.57 200.20 C 305.76 199.64, 316.95 201.64, 328.14 198.61 C 339.33 195.59, 350.52 187.55, 361.71 182.05 C 372.90 176.54, 384.10 168.55, 395.29 165.61 C 406.48 162.66, 417.67 164.78, 428.86 164.40 C 440.05 164.01, 451.24 166.17, 462.43 163.29 C 473.62 160.42, 484.81 152.52, 496.00 147.16 C 507.19 141.80, 518.38 133.93, 529.57 131.11 C 540.76 128.30, 551.95 130.53, 563.14 130.26 C 574.33 129.99, 585.52 132.26, 596.71 129.49 C 607.90 126.72, 619.10 118.93, 630.29 113.66 C 641.48 108.40, 652.67 100.62, 663.86 97.90 C 675.05 95.18, 686.24 97.50, 697.43 97.32 C 708.62 97.13, 719.81 99.48, 731.00 96.79 C 742.19 94.11, 753.38 86.39, 764.57 81.20 C 775.76 76.01, 786.95 68.31, 798.14 65.66 C 809.33 63.01, 820.52 65.40, 831.71 65.29 C 842.90 65.17, 854.10 67.58, 865.29 64.96 C 876.48 62.34, 887.67 54.69, 898.86 49.56 C 910.05 44.43, 921.24 36.79, 932.43 34.20 C 943.62 31.61, 960.40 34.03, 966.00 34.00 L 966.00 286.00 L 26.00 286.00 Z" fill="url(#chartFill)"/>
-            <path class="chart-line" d="M 26.00 286.00 C 31.60 284.87, 48.38 283.55, 59.57 279.21 C 70.76 274.87, 81.95 266.24, 93.14 259.95 C 104.33 253.67, 115.52 245.07, 126.71 241.53 C 137.90 237.99, 149.10 239.60, 160.29 238.73 C 171.48 237.85, 182.67 239.57, 193.86 236.29 C 205.05 233.00, 216.24 224.73, 227.43 219.00 C 238.62 213.28, 249.81 205.08, 261.00 201.95 C 272.19 198.81, 283.38 200.75, 294.57 200.20 C 305.76 199.64, 316.95 201.64, 328.14 198.61 C 339.33 195.59, 350.52 187.55, 361.71 182.05 C 372.90 176.54, 384.10 168.55, 395.29 165.61 C 406.48 162.66, 417.67 164.78, 428.86 164.40 C 440.05 164.01, 451.24 166.17, 462.43 163.29 C 473.62 160.42, 484.81 152.52, 496.00 147.16 C 507.19 141.80, 518.38 133.93, 529.57 131.11 C 540.76 128.30, 551.95 130.53, 563.14 130.26 C 574.33 129.99, 585.52 132.26, 596.71 129.49 C 607.90 126.72, 619.10 118.93, 630.29 113.66 C 641.48 108.40, 652.67 100.62, 663.86 97.90 C 675.05 95.18, 686.24 97.50, 697.43 97.32 C 708.62 97.13, 719.81 99.48, 731.00 96.79 C 742.19 94.11, 753.38 86.39, 764.57 81.20 C 775.76 76.01, 786.95 68.31, 798.14 65.66 C 809.33 63.01, 820.52 65.40, 831.71 65.29 C 842.90 65.17, 854.10 67.58, 865.29 64.96 C 876.48 62.34, 887.67 54.69, 898.86 49.56 C 910.05 44.43, 921.24 36.79, 932.43 34.20 C 943.62 31.61, 960.40 34.03, 966.00 34.00" fill="none" stroke="url(#chartStroke)"/>
+            <path class="chart-area" d="M 26.00 286.00 C 31.60 286.00, 48.38 287.14, 59.57 286.00 C 70.76 284.86, 81.95 281.75, 93.14 279.17 C 104.33 276.59, 115.52 272.23, 126.71 270.53 C 137.90 268.82, 149.10 269.67, 160.29 268.96 C 171.48 268.25, 182.67 268.72, 193.86 266.26 C 205.05 263.81, 216.24 258.47, 227.43 254.23 C 238.62 249.99, 249.81 244.19, 261.00 240.83 C 272.19 237.47, 283.38 236.55, 294.57 234.06 C 305.76 231.56, 316.95 230.16, 328.14 225.86 C 339.33 221.57, 350.52 214.33, 361.71 208.28 C 372.90 202.24, 384.10 194.61, 395.29 189.58 C 406.48 184.56, 417.67 182.03, 428.86 178.14 C 440.05 174.25, 451.24 171.56, 462.43 166.26 C 473.62 160.96, 484.81 152.90, 496.00 146.32 C 507.19 139.75, 518.38 131.83, 529.57 126.81 C 540.76 121.79, 551.95 119.54, 563.14 116.18 C 574.33 112.82, 585.52 110.96, 596.71 106.66 C 607.90 102.37, 619.10 95.58, 630.29 90.40 C 641.48 85.22, 652.67 78.93, 663.86 75.57 C 675.05 72.20, 686.24 71.78, 697.43 70.23 C 708.62 68.68, 719.81 68.72, 731.00 66.26 C 742.19 63.81, 753.38 58.90, 764.57 55.50 C 775.76 52.10, 786.95 47.57, 798.14 45.87 C 809.33 44.17, 820.52 45.34, 831.71 45.29 C 842.90 45.24, 854.10 46.69, 865.29 45.55 C 876.48 44.41, 887.67 40.38, 898.86 38.46 C 910.05 36.53, 921.24 34.74, 932.43 34.00 C 943.62 33.26, 960.40 34.00, 966.00 34.00 L 966.00 286.00 L 26.00 286.00 Z" fill="url(#chartFill)"/>
+            <path class="chart-line" d="M 26.00 286.00 C 31.60 286.00, 48.38 287.14, 59.57 286.00 C 70.76 284.86, 81.95 281.75, 93.14 279.17 C 104.33 276.59, 115.52 272.23, 126.71 270.53 C 137.90 268.82, 149.10 269.67, 160.29 268.96 C 171.48 268.25, 182.67 268.72, 193.86 266.26 C 205.05 263.81, 216.24 258.47, 227.43 254.23 C 238.62 249.99, 249.81 244.19, 261.00 240.83 C 272.19 237.47, 283.38 236.55, 294.57 234.06 C 305.76 231.56, 316.95 230.16, 328.14 225.86 C 339.33 221.57, 350.52 214.33, 361.71 208.28 C 372.90 202.24, 384.10 194.61, 395.29 189.58 C 406.48 184.56, 417.67 182.03, 428.86 178.14 C 440.05 174.25, 451.24 171.56, 462.43 166.26 C 473.62 160.96, 484.81 152.90, 496.00 146.32 C 507.19 139.75, 518.38 131.83, 529.57 126.81 C 540.76 121.79, 551.95 119.54, 563.14 116.18 C 574.33 112.82, 585.52 110.96, 596.71 106.66 C 607.90 102.37, 619.10 95.58, 630.29 90.40 C 641.48 85.22, 652.67 78.93, 663.86 75.57 C 675.05 72.20, 686.24 71.78, 697.43 70.23 C 708.62 68.68, 719.81 68.72, 731.00 66.26 C 742.19 63.81, 753.38 58.90, 764.57 55.50 C 775.76 52.10, 786.95 47.57, 798.14 45.87 C 809.33 44.17, 820.52 45.34, 831.71 45.29 C 842.90 45.24, 854.10 46.69, 865.29 45.55 C 876.48 44.41, 887.67 40.38, 898.86 38.46 C 910.05 36.53, 921.24 34.74, 932.43 34.00 C 943.62 33.26, 960.40 34.00, 966.00 34.00" fill="none" stroke="url(#chartStroke)"/>
 
             <g class="chart-strands" clip-path="url(#chartBand)">
-          <path class="chart-stri chart-stri--a" d="M 26.00 281.60 C 31.60 280.47, 48.38 279.15, 59.57 274.81 C 70.76 270.47, 81.95 261.84, 93.14 255.55 C 104.33 249.27, 115.52 240.67, 126.71 237.13 C 137.90 233.59, 149.10 235.20, 160.29 234.33 C 171.48 233.45, 182.67 235.17, 193.86 231.89 C 205.05 228.60, 216.24 220.33, 227.43 214.60 C 238.62 208.88, 249.81 200.68, 261.00 197.55 C 272.19 194.41, 283.38 196.35, 294.57 195.80 C 305.76 195.24, 316.95 197.24, 328.14 194.21 C 339.33 191.19, 350.52 183.15, 361.71 177.65 C 372.90 172.14, 384.10 164.15, 395.29 161.21 C 406.48 158.26, 417.67 160.38, 428.86 160.00 C 440.05 159.61, 451.24 161.77, 462.43 158.89 C 473.62 156.02, 484.81 148.12, 496.00 142.76 C 507.19 137.40, 518.38 129.53, 529.57 126.71 C 540.76 123.90, 551.95 126.13, 563.14 125.86 C 574.33 125.59, 585.52 127.86, 596.71 125.09 C 607.90 122.32, 619.10 114.53, 630.29 109.26 C 641.48 104.00, 652.67 96.22, 663.86 93.50 C 675.05 90.78, 686.24 93.10, 697.43 92.92 C 708.62 92.73, 719.81 95.08, 731.00 92.39 C 742.19 89.71, 753.38 81.99, 764.57 76.80 C 775.76 71.61, 786.95 63.91, 798.14 61.26 C 809.33 58.61, 820.52 61.00, 831.71 60.89 C 842.90 60.77, 854.10 63.18, 865.29 60.56 C 876.48 57.94, 887.67 50.29, 898.86 45.16 C 910.05 40.03, 921.24 32.39, 932.43 29.80 C 943.62 27.21, 960.40 29.63, 966.00 29.60"/>
-          <path class="chart-stri chart-stri--b" d="M 26.00 283.80 C 31.60 282.67, 48.38 281.35, 59.57 277.01 C 70.76 272.67, 81.95 264.04, 93.14 257.75 C 104.33 251.47, 115.52 242.87, 126.71 239.33 C 137.90 235.79, 149.10 237.40, 160.29 236.53 C 171.48 235.65, 182.67 237.37, 193.86 234.09 C 205.05 230.80, 216.24 222.53, 227.43 216.80 C 238.62 211.08, 249.81 202.88, 261.00 199.75 C 272.19 196.61, 283.38 198.55, 294.57 198.00 C 305.76 197.44, 316.95 199.44, 328.14 196.41 C 339.33 193.39, 350.52 185.35, 361.71 179.85 C 372.90 174.34, 384.10 166.35, 395.29 163.41 C 406.48 160.46, 417.67 162.58, 428.86 162.20 C 440.05 161.81, 451.24 163.97, 462.43 161.09 C 473.62 158.22, 484.81 150.32, 496.00 144.96 C 507.19 139.60, 518.38 131.73, 529.57 128.91 C 540.76 126.10, 551.95 128.33, 563.14 128.06 C 574.33 127.79, 585.52 130.06, 596.71 127.29 C 607.90 124.52, 619.10 116.73, 630.29 111.46 C 641.48 106.20, 652.67 98.42, 663.86 95.70 C 675.05 92.98, 686.24 95.30, 697.43 95.12 C 708.62 94.93, 719.81 97.28, 731.00 94.59 C 742.19 91.91, 753.38 84.19, 764.57 79.00 C 775.76 73.81, 786.95 66.11, 798.14 63.46 C 809.33 60.81, 820.52 63.20, 831.71 63.09 C 842.90 62.97, 854.10 65.38, 865.29 62.76 C 876.48 60.14, 887.67 52.49, 898.86 47.36 C 910.05 42.23, 921.24 34.59, 932.43 32.00 C 943.62 29.41, 960.40 31.83, 966.00 31.80"/>
-          <path class="chart-stri chart-stri--b" d="M 26.00 288.20 C 31.60 287.07, 48.38 285.75, 59.57 281.41 C 70.76 277.07, 81.95 268.44, 93.14 262.15 C 104.33 255.87, 115.52 247.27, 126.71 243.73 C 137.90 240.19, 149.10 241.80, 160.29 240.93 C 171.48 240.05, 182.67 241.77, 193.86 238.49 C 205.05 235.20, 216.24 226.93, 227.43 221.20 C 238.62 215.48, 249.81 207.28, 261.00 204.15 C 272.19 201.01, 283.38 202.95, 294.57 202.40 C 305.76 201.84, 316.95 203.84, 328.14 200.81 C 339.33 197.79, 350.52 189.75, 361.71 184.25 C 372.90 178.74, 384.10 170.75, 395.29 167.81 C 406.48 164.86, 417.67 166.98, 428.86 166.60 C 440.05 166.21, 451.24 168.37, 462.43 165.49 C 473.62 162.62, 484.81 154.72, 496.00 149.36 C 507.19 144.00, 518.38 136.13, 529.57 133.31 C 540.76 130.50, 551.95 132.73, 563.14 132.46 C 574.33 132.19, 585.52 134.46, 596.71 131.69 C 607.90 128.92, 619.10 121.13, 630.29 115.86 C 641.48 110.60, 652.67 102.82, 663.86 100.10 C 675.05 97.38, 686.24 99.70, 697.43 99.52 C 708.62 99.33, 719.81 101.68, 731.00 98.99 C 742.19 96.31, 753.38 88.59, 764.57 83.40 C 775.76 78.21, 786.95 70.51, 798.14 67.86 C 809.33 65.21, 820.52 67.60, 831.71 67.49 C 842.90 67.37, 854.10 69.78, 865.29 67.16 C 876.48 64.54, 887.67 56.89, 898.86 51.76 C 910.05 46.63, 921.24 38.99, 932.43 36.40 C 943.62 33.81, 960.40 36.23, 966.00 36.20"/>
-          <path class="chart-stri chart-stri--a" d="M 26.00 290.40 C 31.60 289.27, 48.38 287.95, 59.57 283.61 C 70.76 279.27, 81.95 270.64, 93.14 264.35 C 104.33 258.07, 115.52 249.47, 126.71 245.93 C 137.90 242.39, 149.10 244.00, 160.29 243.13 C 171.48 242.25, 182.67 243.97, 193.86 240.69 C 205.05 237.40, 216.24 229.13, 227.43 223.40 C 238.62 217.68, 249.81 209.48, 261.00 206.35 C 272.19 203.21, 283.38 205.15, 294.57 204.60 C 305.76 204.04, 316.95 206.04, 328.14 203.01 C 339.33 199.99, 350.52 191.95, 361.71 186.45 C 372.90 180.94, 384.10 172.95, 395.29 170.01 C 406.48 167.06, 417.67 169.18, 428.86 168.80 C 440.05 168.41, 451.24 170.57, 462.43 167.69 C 473.62 164.82, 484.81 156.92, 496.00 151.56 C 507.19 146.20, 518.38 138.33, 529.57 135.51 C 540.76 132.70, 551.95 134.93, 563.14 134.66 C 574.33 134.39, 585.52 136.66, 596.71 133.89 C 607.90 131.12, 619.10 123.33, 630.29 118.06 C 641.48 112.80, 652.67 105.02, 663.86 102.30 C 675.05 99.58, 686.24 101.90, 697.43 101.72 C 708.62 101.53, 719.81 103.88, 731.00 101.19 C 742.19 98.51, 753.38 90.79, 764.57 85.60 C 775.76 80.41, 786.95 72.71, 798.14 70.06 C 809.33 67.41, 820.52 69.80, 831.71 69.69 C 842.90 69.57, 854.10 71.98, 865.29 69.36 C 876.48 66.74, 887.67 59.09, 898.86 53.96 C 910.05 48.83, 921.24 41.19, 932.43 38.60 C 943.62 36.01, 960.40 38.43, 966.00 38.40"/>
+          <path class="chart-stri chart-stri--c" d="M 26.00 281.60 C 31.60 281.60, 48.38 282.74, 59.57 281.60 C 70.76 280.46, 81.95 277.35, 93.14 274.77 C 104.33 272.19, 115.52 267.83, 126.71 266.13 C 137.90 264.42, 149.10 265.27, 160.29 264.56 C 171.48 263.85, 182.67 264.32, 193.86 261.86 C 205.05 259.41, 216.24 254.07, 227.43 249.83 C 238.62 245.59, 249.81 239.79, 261.00 236.43 C 272.19 233.07, 283.38 232.15, 294.57 229.66 C 305.76 227.16, 316.95 225.76, 328.14 221.46 C 339.33 217.17, 350.52 209.93, 361.71 203.88 C 372.90 197.84, 384.10 190.21, 395.29 185.18 C 406.48 180.16, 417.67 177.63, 428.86 173.74 C 440.05 169.85, 451.24 167.16, 462.43 161.86 C 473.62 156.56, 484.81 148.50, 496.00 141.92 C 507.19 135.35, 518.38 127.43, 529.57 122.41 C 540.76 117.39, 551.95 115.14, 563.14 111.78 C 574.33 108.42, 585.52 106.56, 596.71 102.26 C 607.90 97.97, 619.10 91.18, 630.29 86.00 C 641.48 80.82, 652.67 74.53, 663.86 71.17 C 675.05 67.80, 686.24 67.38, 697.43 65.83 C 708.62 64.28, 719.81 64.32, 731.00 61.86 C 742.19 59.41, 753.38 54.50, 764.57 51.10 C 775.76 47.70, 786.95 43.17, 798.14 41.47 C 809.33 39.77, 820.52 40.94, 831.71 40.89 C 842.90 40.84, 854.10 42.29, 865.29 41.15 C 876.48 40.01, 887.67 35.98, 898.86 34.06 C 910.05 32.13, 921.24 30.34, 932.43 29.60 C 943.62 28.86, 960.40 29.60, 966.00 29.60"/>
+          <path class="chart-stri chart-stri--a" d="M 26.00 281.60 C 31.60 281.60, 48.38 282.74, 59.57 281.60 C 70.76 280.46, 81.95 277.35, 93.14 274.77 C 104.33 272.19, 115.52 267.83, 126.71 266.13 C 137.90 264.42, 149.10 265.27, 160.29 264.56 C 171.48 263.85, 182.67 264.32, 193.86 261.86 C 205.05 259.41, 216.24 254.07, 227.43 249.83 C 238.62 245.59, 249.81 239.79, 261.00 236.43 C 272.19 233.07, 283.38 232.15, 294.57 229.66 C 305.76 227.16, 316.95 225.76, 328.14 221.46 C 339.33 217.17, 350.52 209.93, 361.71 203.88 C 372.90 197.84, 384.10 190.21, 395.29 185.18 C 406.48 180.16, 417.67 177.63, 428.86 173.74 C 440.05 169.85, 451.24 167.16, 462.43 161.86 C 473.62 156.56, 484.81 148.50, 496.00 141.92 C 507.19 135.35, 518.38 127.43, 529.57 122.41 C 540.76 117.39, 551.95 115.14, 563.14 111.78 C 574.33 108.42, 585.52 106.56, 596.71 102.26 C 607.90 97.97, 619.10 91.18, 630.29 86.00 C 641.48 80.82, 652.67 74.53, 663.86 71.17 C 675.05 67.80, 686.24 67.38, 697.43 65.83 C 708.62 64.28, 719.81 64.32, 731.00 61.86 C 742.19 59.41, 753.38 54.50, 764.57 51.10 C 775.76 47.70, 786.95 43.17, 798.14 41.47 C 809.33 39.77, 820.52 40.94, 831.71 40.89 C 842.90 40.84, 854.10 42.29, 865.29 41.15 C 876.48 40.01, 887.67 35.98, 898.86 34.06 C 910.05 32.13, 921.24 30.34, 932.43 29.60 C 943.62 28.86, 960.40 29.60, 966.00 29.60"/>
+          <path class="chart-stri chart-stri--b" d="M 26.00 283.80 C 31.60 283.80, 48.38 284.94, 59.57 283.80 C 70.76 282.66, 81.95 279.55, 93.14 276.97 C 104.33 274.39, 115.52 270.03, 126.71 268.33 C 137.90 266.62, 149.10 267.47, 160.29 266.76 C 171.48 266.05, 182.67 266.52, 193.86 264.06 C 205.05 261.61, 216.24 256.27, 227.43 252.03 C 238.62 247.79, 249.81 241.99, 261.00 238.63 C 272.19 235.27, 283.38 234.35, 294.57 231.86 C 305.76 229.36, 316.95 227.96, 328.14 223.66 C 339.33 219.37, 350.52 212.13, 361.71 206.08 C 372.90 200.04, 384.10 192.41, 395.29 187.38 C 406.48 182.36, 417.67 179.83, 428.86 175.94 C 440.05 172.05, 451.24 169.36, 462.43 164.06 C 473.62 158.76, 484.81 150.70, 496.00 144.12 C 507.19 137.55, 518.38 129.63, 529.57 124.61 C 540.76 119.59, 551.95 117.34, 563.14 113.98 C 574.33 110.62, 585.52 108.76, 596.71 104.46 C 607.90 100.17, 619.10 93.38, 630.29 88.20 C 641.48 83.02, 652.67 76.73, 663.86 73.37 C 675.05 70.00, 686.24 69.58, 697.43 68.03 C 708.62 66.48, 719.81 66.52, 731.00 64.06 C 742.19 61.61, 753.38 56.70, 764.57 53.30 C 775.76 49.90, 786.95 45.37, 798.14 43.67 C 809.33 41.97, 820.52 43.14, 831.71 43.09 C 842.90 43.04, 854.10 44.49, 865.29 43.35 C 876.48 42.21, 887.67 38.18, 898.86 36.26 C 910.05 34.33, 921.24 32.54, 932.43 31.80 C 943.62 31.06, 960.40 31.80, 966.00 31.80"/>
+          <path class="chart-stri chart-stri--b" d="M 26.00 288.20 C 31.60 288.20, 48.38 289.34, 59.57 288.20 C 70.76 287.06, 81.95 283.95, 93.14 281.37 C 104.33 278.79, 115.52 274.43, 126.71 272.73 C 137.90 271.02, 149.10 271.87, 160.29 271.16 C 171.48 270.45, 182.67 270.92, 193.86 268.46 C 205.05 266.01, 216.24 260.67, 227.43 256.43 C 238.62 252.19, 249.81 246.39, 261.00 243.03 C 272.19 239.67, 283.38 238.75, 294.57 236.26 C 305.76 233.76, 316.95 232.36, 328.14 228.06 C 339.33 223.77, 350.52 216.53, 361.71 210.48 C 372.90 204.44, 384.10 196.81, 395.29 191.78 C 406.48 186.76, 417.67 184.23, 428.86 180.34 C 440.05 176.45, 451.24 173.76, 462.43 168.46 C 473.62 163.16, 484.81 155.10, 496.00 148.52 C 507.19 141.95, 518.38 134.03, 529.57 129.01 C 540.76 123.99, 551.95 121.74, 563.14 118.38 C 574.33 115.02, 585.52 113.16, 596.71 108.86 C 607.90 104.57, 619.10 97.78, 630.29 92.60 C 641.48 87.42, 652.67 81.13, 663.86 77.77 C 675.05 74.40, 686.24 73.98, 697.43 72.43 C 708.62 70.88, 719.81 70.92, 731.00 68.46 C 742.19 66.01, 753.38 61.10, 764.57 57.70 C 775.76 54.30, 786.95 49.77, 798.14 48.07 C 809.33 46.37, 820.52 47.54, 831.71 47.49 C 842.90 47.44, 854.10 48.89, 865.29 47.75 C 876.48 46.61, 887.67 42.58, 898.86 40.66 C 910.05 38.73, 921.24 36.94, 932.43 36.20 C 943.62 35.46, 960.40 36.20, 966.00 36.20"/>
+          <path class="chart-stri chart-stri--a" d="M 26.00 290.40 C 31.60 290.40, 48.38 291.54, 59.57 290.40 C 70.76 289.26, 81.95 286.15, 93.14 283.57 C 104.33 280.99, 115.52 276.63, 126.71 274.93 C 137.90 273.22, 149.10 274.07, 160.29 273.36 C 171.48 272.65, 182.67 273.12, 193.86 270.66 C 205.05 268.21, 216.24 262.87, 227.43 258.63 C 238.62 254.39, 249.81 248.59, 261.00 245.23 C 272.19 241.87, 283.38 240.95, 294.57 238.46 C 305.76 235.96, 316.95 234.56, 328.14 230.26 C 339.33 225.97, 350.52 218.73, 361.71 212.68 C 372.90 206.64, 384.10 199.01, 395.29 193.98 C 406.48 188.96, 417.67 186.43, 428.86 182.54 C 440.05 178.65, 451.24 175.96, 462.43 170.66 C 473.62 165.36, 484.81 157.30, 496.00 150.72 C 507.19 144.15, 518.38 136.23, 529.57 131.21 C 540.76 126.19, 551.95 123.94, 563.14 120.58 C 574.33 117.22, 585.52 115.36, 596.71 111.06 C 607.90 106.77, 619.10 99.98, 630.29 94.80 C 641.48 89.62, 652.67 83.33, 663.86 79.97 C 675.05 76.60, 686.24 76.18, 697.43 74.63 C 708.62 73.08, 719.81 73.12, 731.00 70.66 C 742.19 68.21, 753.38 63.30, 764.57 59.90 C 775.76 56.50, 786.95 51.97, 798.14 50.27 C 809.33 48.57, 820.52 49.74, 831.71 49.69 C 842.90 49.64, 854.10 51.09, 865.29 49.95 C 876.48 48.81, 887.67 44.78, 898.86 42.86 C 910.05 40.93, 921.24 39.14, 932.43 38.40 C 943.62 37.66, 960.40 38.40, 966.00 38.40"/>
             </g>
 
             <circle class="chart-endpoint" cx="966.00" cy="34.00" r="6"/>
           </svg>
+
+          <div class="chart-scrub" aria-hidden="true"><i></i></div>
 
           <div class="chart-axis chart-axis--y" aria-hidden="true">
             <span class="chart-tick">40</span>
@@ -1637,7 +1895,7 @@ section { position: relative; }
       </div>
 
       <p class="statement statement--quiet pane reveal" style="margin-top: clamp(34px, 4.4vw, 62px);">
-        <span>All numbers are for display purposes, we do not guarantee any&nbsp;results.</span>
+        <span>We do not guarantee a specific # of leads/inquiries/donations.</span>
       </p>
     </div>
   </section>
@@ -1775,6 +2033,8 @@ section { position: relative; }
   var tmp = null, tctx = null, TW = 0, TH = 0;
 
   var scrollY = 0;
+  var t = 0, raf = 0, running = false, touch = false;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var PAPER = '#fffdfa';
 
@@ -1973,6 +2233,19 @@ section { position: relative; }
     }
 
     mctx.globalCompositeOperation = 'source-over';
+
+    /* Soften ONCE, here, rather than with a CSS filter on the canvas. As a
+       CSS filter it was nearly free while the field only repainted on
+       scroll, but the breath repaints every frame and a full-screen blur
+       per frame measured 33.3ms - half rate. Baked, it costs nothing. */
+    var soft = document.createElement('canvas');
+    soft.width = MW; soft.height = MH;
+    var sctx = soft.getContext('2d');
+    sctx.filter = 'blur(' + (2.6 * MAP_SCALE * DPR).toFixed(2) + 'px)';
+    sctx.drawImage(map, 0, 0);
+    sctx.filter = 'none';
+    map = soft;
+    mctx = sctx;
   }
 
   function build() {
@@ -1996,6 +2269,15 @@ section { position: relative; }
 
   /* Build the tint gradient for the current scroll position. Hue is driven
      mostly by position DOWN the field, so scrolling walks the whole sweep. */
+  /* The breath. The geometry never moves - the seams and the junctions hold
+     their exact positions - but the ink rises and falls, so the field is
+     alive without anything sliding. Two waves at different periods so it
+     never lands on an obvious loop. */
+  function breath() {
+    if (reduced) return 1;
+    return 1 + 0.30 * Math.sin(t * 0.55) + 0.12 * Math.sin(t * 0.23 + 1.7);
+  }
+
   function tintGradient(c2d, boost) {
     var g = c2d.createLinearGradient(0, 0, 0, TH);
     /* scroll position only. The time term is gone with the animation: the
@@ -2005,7 +2287,10 @@ section { position: relative; }
     for (var i = 0; i <= 8; i++) {
       var f = i / 8;
       var c = sweep(base + f * (TH / Math.max(1, MH)) * 2.6);
-      g.addColorStop(f, 'rgb(' + (c[0] * boost | 0) + ',' + (c[1] * boost | 0) + ',' + (c[2] * boost | 0) + ')');
+      /* boost below 1 darkens the ink, which on a multiply composite reads
+         as the seam glowing stronger. Clamped so it never crushes to black. */
+      var k = Math.max(0.55, Math.min(1.45, boost));
+      g.addColorStop(f, 'rgb(' + Math.min(255, c[0] * k | 0) + ',' + Math.min(255, c[1] * k | 0) + ',' + Math.min(255, c[2] * k | 0) + ')');
     }
     return g;
   }
@@ -2026,7 +2311,7 @@ section { position: relative; }
        paper and disappears. It was lost when the sine warp was removed,
        because the warp block and the tint block were adjacent. */
     tctx.globalCompositeOperation = 'source-in';
-    tctx.fillStyle = tintGradient(tctx, 1);
+    tctx.fillStyle = tintGradient(tctx, 2 - breath());
     tctx.fillRect(0, 0, TW, TH);
 
     /* 2. lay it into the paper. MULTIPLY, not lighter: on a light ground the
@@ -2043,33 +2328,53 @@ section { position: relative; }
   /* No requestAnimationFrame loop at all. The field is stationary, so it
      only needs redrawing when the scroll position changes. That costs
      nothing at rest and removes the perpetual loop entirely. */
-  var queued = false;
-  function schedule() {
-    if (queued) return;
-    queued = true;
-    requestAnimationFrame(function () { queued = false; readScroll(); draw(); });
+  function frame() {
+    t += 0.016;
+    readScroll();
+    draw();
+    raf = requestAnimationFrame(frame);
   }
+  function start() { if (running || reduced) return; running = true; raf = requestAnimationFrame(frame); }
+  function stop() { running = false; if (raf) cancelAnimationFrame(raf); raf = 0; }
 
   /* Lenis owns the page's scroll animation, so window.pageYOffset and the
      position the content is actually drawn at can differ mid-glide. Taking
      lenis.scroll binds the field to the exact number the containers are
      transformed by, which is what keeps them locked together. */
   function readScroll() {
+    /* On touch there is no Lenis (ag-scroll is pointer-fine gated), so a
+       scroll-coupled fixed canvas repaints AFTER the browser has already
+       composited the momentum scroll - which reads as the background
+       sliding underneath the content. On touch the field is pinned. */
+    if (touch) { scrollY = 0; return; }
     var L = window.lenis;
     if (L && typeof L.scroll === 'number') { scrollY = L.scroll; return; }
     scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
   }
 
+  touch = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 900;
+
   build();
   readScroll();
   draw();
 
-  window.addEventListener('scroll', schedule, { passive: true });
+  if (reduced) {
+    /* off is off: one settled frame, no loop, and it still tracks scroll */
+    if (!touch) window.addEventListener('scroll', function () { readScroll(); draw(); }, { passive: true });
+  } else {
+    start();
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stop(); else start();
+    });
+  }
 
   var rt = 0;
   window.addEventListener('resize', function () {
     clearTimeout(rt);
-    rt = setTimeout(function () { build(); readScroll(); draw(); }, 200);
+    rt = setTimeout(function () {
+      touch = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 900;
+      build(); readScroll(); draw();
+    }, 200);
   }, { passive: true });
 })();
 </script>
@@ -2095,6 +2400,72 @@ section { position: relative; }
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+
+  /* ---- The chart, scrubbable ----
+     Hovering or dragging the plot reports that day's figures. The series is
+     derived, not invented: see the KPI comment in the stylesheet. */
+  var chartBox = document.querySelector('.chart-box');
+  if (chartBox) {
+    var SERIES = [{"d":0,"total":0.0,"perDay":0.0,"cpl":null,"spend":0.0},{"d":1,"total":0.0,"perDay":0.0,"cpl":null,"spend":83.0},{"d":2,"total":1.1,"perDay":1.1,"cpl":153.73,"spend":167.0},{"d":3,"total":2.5,"perDay":1.4,"cpl":101.78,"spend":250.0},{"d":4,"total":2.7,"perDay":0.2,"cpl":123.23,"spend":333.0},{"d":5,"total":3.1,"perDay":0.4,"cpl":132.98,"spend":417.0},{"d":6,"total":5.0,"perDay":1.9,"cpl":99.16,"spend":500.0},{"d":7,"total":7.2,"perDay":2.1,"cpl":81.36,"spend":583.0},{"d":8,"total":8.2,"perDay":1.1,"cpl":80.86,"spend":667.0},{"d":9,"total":9.5,"perDay":1.3,"cpl":78.57,"spend":750.0},{"d":10,"total":12.3,"perDay":2.8,"cpl":67.55,"spend":833.0},{"d":11,"total":15.3,"perDay":3.0,"cpl":59.9,"spend":917.0},{"d":12,"total":17.1,"perDay":1.8,"cpl":58.41,"spend":1000.0},{"d":13,"total":19.0,"perDay":1.9,"cpl":57.0,"spend":1083.0},{"d":14,"total":22.2,"perDay":3.2,"cpl":52.62,"spend":1167.0},{"d":15,"total":25.3,"perDay":3.1,"cpl":49.47,"spend":1250.0},{"d":16,"total":27.0,"perDay":1.7,"cpl":49.46,"spend":1333.0},{"d":17,"total":28.5,"perDay":1.5,"cpl":49.77,"spend":1417.0},{"d":18,"total":31.0,"perDay":2.6,"cpl":48.31,"spend":1500.0},{"d":19,"total":33.4,"perDay":2.4,"cpl":47.4,"spend":1583.0},{"d":20,"total":34.2,"perDay":0.8,"cpl":48.66,"spend":1667.0},{"d":21,"total":34.9,"perDay":0.6,"cpl":50.17,"spend":1750.0},{"d":22,"total":36.6,"perDay":1.7,"cpl":50.11,"spend":1833.0},{"d":23,"total":38.1,"perDay":1.5,"cpl":50.29,"spend":1917.0},{"d":24,"total":38.2,"perDay":0.1,"cpl":52.34,"spend":2000.0},{"d":25,"total":38.2,"perDay":0.0,"cpl":54.59,"spend":2083.0},{"d":26,"total":39.3,"perDay":1.1,"cpl":55.14,"spend":2167.0},{"d":27,"total":40.0,"perDay":0.7,"cpl":56.25,"spend":2250.0},{"d":28,"total":40.0,"perDay":0.0,"cpl":58.33,"spend":2333.0}];
+    var scrub = chartBox.querySelector('.chart-scrub');
+    /* NOT `figs`. The count-up block later in this same IIFE declares
+       `var figs` too, and `var` gives one binding per function - so its
+       NodeList silently replaced this map and every scrub reported the same
+       figures. Renamed, and the two no longer collide. */
+    var kpiEls = {};
+    document.querySelectorAll('.kpi-fig').forEach(function (el) { kpiEls[el.getAttribute('data-kpi')] = el; });
+    var PAD_L = 26 / 1000, PAD_R = 34 / 1000;   /* the viewBox insets */
+
+    function fmt(k, v) {
+      if (v === null || v === undefined) return '--';
+      if (k === 'cpl') return '$' + v.toFixed(0);
+      if (k === 'spend') return '$' + Math.round(v).toLocaleString('en-US');
+      if (k === 'perDay') return v.toFixed(1);
+      return Math.round(v).toString();
+    }
+
+    function report(rec) {
+      for (var k in kpiEls) if (kpiEls[k]) kpiEls[k].textContent = fmt(k, rec[k]);
+    }
+
+    /* At rest the row reports the CYCLE, not the final day - day 28's
+       per-day figure is near zero because the curve has flattened, which
+       read as a broken stat. */
+    var last = SERIES[SERIES.length - 1];
+    var summary = {
+      total: last.total,
+      cpl: last.cpl,
+      perDay: last.total / (SERIES.length - 1),
+      spend: last.spend
+    };
+    function reset() { report(summary); }
+
+    function at(clientX) {
+      var r = chartBox.getBoundingClientRect();
+      var padL = parseFloat(getComputedStyle(chartBox).paddingLeft) || 0;
+      var plotW = r.width - padL;
+      var u = (clientX - r.left - padL) / Math.max(1, plotW);
+      u = Math.max(0, Math.min(1, u));
+      /* undo the viewBox padding so the scrubber lands on the real day */
+      var uu = (u - PAD_L) / Math.max(0.0001, (1 - PAD_L - PAD_R));
+      uu = Math.max(0, Math.min(1, uu));
+      var i = Math.round(uu * (SERIES.length - 1));
+      if (scrub) scrub.style.left = (padL + (PAD_L + uu * (1 - PAD_L - PAD_R)) * plotW).toFixed(1) + 'px';
+      report(SERIES[i]);
+    }
+
+    chartBox.addEventListener('pointermove', function (e) {
+      chartBox.setAttribute('data-scrub', 'true');
+      at(e.clientX);
+    }, { passive: true });
+
+    chartBox.addEventListener('pointerleave', function () {
+      chartBox.setAttribute('data-scrub', 'false');
+      reset();
+    }, { passive: true });
+
+    reset();
+  }
 
   /* ---- The road: a stepper that always centers the step you are on ----
      Opens on 01. The TRACK slides rather than each node moving on its own,
@@ -2124,9 +2495,13 @@ section { position: relative; }
          2070px fill and the traveled road opens on the warm end of the
          sweep instead of starting at purple. */
       if (fill) {
-        fill.style.width = (1400 + (at + 0.5) * cell).toFixed(1) + 'px';
-        fill.style.backgroundSize = (cell * nodes.length).toFixed(1) + 'px 100%';
-        fill.style.backgroundPosition = '1400px 0';
+        /* the line spans node 1 to the node you are on, and nothing else -
+           it starts and ends under a circle, so neither end looks severed */
+        var start = 1400 + 0.5 * cell;
+        fill.style.left = start.toFixed(1) + 'px';
+        fill.style.width = (at * cell).toFixed(1) + 'px';
+        fill.style.backgroundSize = (cell * Math.max(1, nodes.length - 1)).toFixed(1) + 'px 100%';
+        fill.style.backgroundPosition = '0 0';
         fill.style.backgroundRepeat = 'no-repeat';
       }
       if (prevBtn) prevBtn.disabled = at === 0;
