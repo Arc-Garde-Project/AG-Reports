@@ -59,6 +59,7 @@
       stepPx: 700,        // wheel delta to cross one whole scrub segment (~7 notches)
       restStepPx: 300,    // default delta to leave a rest state (~3 notches)
       settleMs: 140,      // input must go quiet this long before a rest state takes over
+      holdMs: 900,        // a rest state cannot be scrolled past for this long after arriving
       textDuringScrub: false   // the "text rolls in while scrubbing" idea, OFF by default
     }, JSON.parse(stage.dataset.stageConfig || '{}'));
 
@@ -208,7 +209,17 @@
       }).then(blob => {
         s.bytesTotal = s.bytesTotal || blob.size;
         s.bytesLoaded = s.bytesTotal;
-        s.video.src = URL.createObjectURL(blob);
+        /* THE ELEMENT GETS THE PLAIN URL, NOT A blob: URL.
+           iOS and WebKit refuse a blob source for <video>: play() rejects with
+           NotSupportedError and the element reports error code 4,
+           MEDIA_ERR_SRC_NOT_SUPPORTED, with networkState 3. Measured on an
+           iPhone profile, that killed the footage on every plate, which is what
+           reduced the deck to a colored box on both of Quinten's devices.
+           The fetch above still runs and is still what the loading guarantee
+           waits on: it puts the whole file in the HTTP cache, so pointing the
+           element at the ordinary URL loads it from cache immediately and plays
+           natively everywhere. The bytes are proven present either way. */
+        s.video.src = url;
         s.video.load();
         s.videoReady = true;
       }).catch(err => {
@@ -518,6 +529,7 @@
       resetDwellPaint();
       warm(i);
       const s = segs[i];
+      if (s.kind === 'rest') s.holdUntil = performance.now() + (s.cfg.holdMs || opts.holdMs);
       if (s.kind === 'scrub') {
         stopEase();
         s.pos = atEnd ? Math.max(0, (s.count || 1) - 1) : 0;
@@ -592,7 +604,15 @@
     }
 
     function onDelta(dy) {
-      if (prefersReduced) return false;
+      /* THE STAGE DOES NOT TOUCH INPUT ON A PHONE.
+         Mobile unstacks into normal flow and the scrub segments are removed, so
+         there is nothing to jack, but the touchmove handler still ran onDelta,
+         got `true` back and called preventDefault on every move. That is why
+         the deck could not be swiped AT ALL on iOS: the page was scrollable,
+         the gesture was simply being eaten. Reported on two devices.
+         Synthetic touch events cannot drive native scrolling, which is why no
+         amount of emulation surfaced it. */
+      if (prefersReduced || isNarrow) return false;
       const s = segs[cur];
 
       if (s.kind === 'rest') {
@@ -611,6 +631,10 @@
           if (dir < 0) return false;
           if (dir !== dwellDir) { dwell = 0; dwellDir = dir; resetDwellPaint(); }
           dwell += Math.abs(dy);
+          if (performance.now() < (s.holdUntil || 0)) {
+            paintDwell(Math.min(1, dwell / (s.cfg.dwellPx || opts.restStepPx)));
+            return true;
+          }
           const needOut = s.cfg.dwellPx || opts.restStepPx;
           if (dwell < needOut) { paintDwell(Math.min(1, dwell / needOut)); return true; }
           dwell = 0; resetDwellPaint();
@@ -620,6 +644,18 @@
 
         if (dir !== dwellDir) { dwell = 0; dwellDir = dir; resetDwellPaint(); }
         dwell += Math.abs(dy);
+
+        /* A PLATE HOLDS FOR A BEAT NO AMOUNT OF SCROLL CAN BUY THROUGH.
+           dwellPx alone could not anchor anything: 500px is a single trackpad
+           flick, so arriving at a plate mid-gesture handed it straight on and
+           the reader never saw what was on it. A rest state now refuses to
+           advance for holdMs after it is entered, however hard the wheel is
+           turned. Scroll still paints the dwell response during the hold, so it
+           reads as the plate resisting rather than as the page ignoring you. */
+        if (performance.now() < (s.holdUntil || 0)) {
+          paintDwell(Math.min(1, dwell / (s.cfg.dwellPx || opts.restStepPx)));
+          return true;
+        }
 
         const need = s.cfg.dwellPx || opts.restStepPx;
         if (dwell < need) {
@@ -685,17 +721,19 @@
       const consumed = onDelta(e.deltaY);
       if (consumed) e.preventDefault();
     }
-    stage.addEventListener('wheel', wheel, { passive: false });
+    if (!isNarrow && !prefersReduced) stage.addEventListener('wheel', wheel, { passive: false });
 
     let touchY = null;
-    stage.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
-    stage.addEventListener('touchmove', e => {
-      if (touchY === null) return;
-      const dy = (touchY - e.touches[0].clientY) * 2.1;
-      touchY = e.touches[0].clientY;
-      if (onDelta(dy)) e.preventDefault();
-    }, { passive: false });
-    stage.addEventListener('touchend', () => { touchY = null; }, { passive: true });
+    if (!isNarrow && !prefersReduced) {
+      stage.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
+      stage.addEventListener('touchmove', e => {
+        if (touchY === null) return;
+        const dy = (touchY - e.touches[0].clientY) * 2.1;
+        touchY = e.touches[0].clientY;
+        if (onDelta(dy)) e.preventDefault();
+      }, { passive: false });
+      stage.addEventListener('touchend', () => { touchY = null; }, { passive: true });
+    }
 
     // Keyboard, so this is not mouse-only.
     stage.addEventListener('keydown', e => {
