@@ -363,7 +363,13 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
    is what pulls the content back up over the pinned layer.
    --foot-h is gone with it: the scope contains the footer, so there is no
    overhang left to measure. */
-.sky-scope { position: relative; }
+.sky-scope { position: relative;
+  /* THE PAGE MUST NOT PAN SIDEWAYS. The cloud bank is deliberately wider than
+     the viewport and drifts, which pushed scrollWidth past clientWidth: 441
+     against 390 on an iPhone, so the whole deck could be swiped left and right.
+     overflow-x: clip is the right tool rather than hidden: hidden would force
+     the other axis into a scroll container and kill the sticky sky inside. */
+  overflow-x: clip; }
 .cost-sky {
   position: sticky; top: 0; z-index: 0;
   height: 100svh; margin-bottom: -100svh;
@@ -398,9 +404,9 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
    billowed edge that swells up over the dock rather than cutting across it.
    Two layers at different scales drifting opposite ways, which is what keeps
    it from reading as a repeat. All gradients, so no bytes and no decode. */
-.sky-scope::before { content: ""; position: absolute; left: -12%; right: -12%;
+.sky-scope::before { content: ""; position: absolute; left: -6%; right: -6%;
   top: calc(-1 * clamp(150px, 21vh, 300px));
-  height: clamp(330px, 46vh, 640px); z-index: 3; pointer-events: none;
+  height: clamp(330px, 46vh, 640px); z-index: 1; pointer-events: none;
   /* HIDDEN UNTIL THE CLOUDS ARE ACTUALLY BEING APPROACHED. The bank is pulled
      up so it straddles the seam, which put it ~300px above the scope, i.e.
      inside the viewport over the bottom of every plate from the very first
@@ -422,9 +428,9 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
 }
 /* a finer bank sitting slightly lower and drifting the other way, so the edge
    has depth rather than one silhouette */
-.sky-scope::after { content: ""; position: absolute; left: -10%; right: -10%;
+.sky-scope::after { content: ""; position: absolute; left: -5%; right: -5%;
   top: calc(-1 * clamp(70px, 10vh, 150px));
-  height: clamp(240px, 32vh, 460px); z-index: 3; pointer-events: none;
+  height: clamp(240px, 32vh, 460px); z-index: 1; pointer-events: none;
   opacity: var(--seam, 0); transition: opacity 0.3s linear;
   background:
     radial-gradient(20% 30% at 15% 60%, rgba(253,248,242,0.86) 0 40%, rgba(253,248,242,0) 74%),
@@ -434,8 +440,8 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
     radial-gradient(21% 31% at 79% 59%, rgba(253,248,242,0.86) 0 40%, rgba(253,248,242,0) 74%);
   animation: cloud-drift-b 63s ease-in-out infinite alternate;
 }
-@keyframes cloud-drift-a { from { transform: translate3d(-2.2%,0,0); } to { transform: translate3d(2.2%,0,0); } }
-@keyframes cloud-drift-b { from { transform: translate3d(3.0%,0,0); } to { transform: translate3d(-3.0%,0,0); } }
+@keyframes cloud-drift-a { from { transform: translate3d(-1.4%,0,0); } to { transform: translate3d(1.4%,0,0); } }
+@keyframes cloud-drift-b { from { transform: translate3d(1.8%,0,0); } to { transform: translate3d(-1.8%,0,0); } }
 @media (prefers-reduced-motion: reduce) {
   .sky-scope::before, .sky-scope::after { animation: none; }
 }
@@ -929,8 +935,13 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   function seam() {
     seamRaf = 0;
     var top = scope.getBoundingClientRect().top, vh = window.innerHeight;
-    var v = 1 - Math.max(0, Math.min(1, top / Math.max(1, vh)));
-    scope.style.setProperty('--seam', v.toFixed(3));
+    /* Full strength by the time the section's top edge is 45% up the viewport,
+       not when it reaches the very top. The old ramp only finished once you
+       were three quarters into the section, so the cloud bank arrived AFTER the
+       join it exists to bridge. It still reads 0 while the section is a whole
+       viewport below, so nothing shows behind the plates. */
+    var v = (vh - top) / Math.max(1, vh * 0.55);
+    scope.style.setProperty('--seam', Math.max(0, Math.min(1, v)).toFixed(3));
   }
   function onSeam() { if (!seamRaf) seamRaf = requestAnimationFrame(seam); }
   window.addEventListener('scroll', onSeam, { passive: true });

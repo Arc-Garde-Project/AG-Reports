@@ -77,8 +77,18 @@
     // background loops, not detail imagery: at a 390px viewport even 480p is
     // oversampled at 1.6x a 390px viewport, and the LOCKED Mobile §8 budget
     // is 1400KB total. 360p at crf 30 beats 480p squeezed to the same bytes.
-    const tier = window.innerWidth <= 900 ? '360'
-               : (effectiveWidth <= 1280 ? '720' : '1080');
+    /* Tiers are full filename suffixes now, not just numbers, because the phone
+       tier is no longer simply a smaller version of the same file.
+       THE PHONE GETS A SHARPER, SHORTER LOOP. cover crops 67% of the width at a
+       390px viewport, so the visible strip came from about 211 source pixels
+       stretched across 1170 device pixels: a 5.5x upscale, which is why it read
+       as mush. The phone file is 1280 wide, which halves that, and it pays for
+       the resolution by dropping the 2x slow motion (18.5s -> 9.3s) rather than
+       by breaching the LOCKED 1400KB budget. Measured: 886KB, and its loop seam
+       is 1.25x against neighboring frames where the 360p file it replaces
+       measured 3.56x, so the wrap is better as well as sharper. */
+    const tier = window.innerWidth <= 900 ? 'phone'
+               : (effectiveWidth <= 1280 ? '720p' : '1080p');
     stage.dataset.tier = tier;
 
     segs.filter(s => s.kind === 'rest' && s.video).forEach(s => {
@@ -106,7 +116,7 @@
       // on this footage, so offering it first cost bytes rather than saving
       // them. The URL is recorded rather than attached as a <source>: boot
       // fetches the file itself so completion is knowable, see fetchVideo.
-      s.videoUrl = `${base}-${tier}p.mp4`;
+      s.videoUrl = `${base}-${tier}.mp4`;
       /* A POSTER, SO A PLATE IS NEVER AN EMPTY BOX.
          The rest videos other than the opener carry preload="none" and only
          begin fetching when warm() fires, so arriving at Plate 2 or Plate 3
@@ -742,6 +752,38 @@
       if (onDelta(map[e.key])) e.preventDefault();
     });
     stage.tabIndex = 0;
+
+    /* THE SUN MEETS THE LOGO ON A PHONE TOO.
+       The desktop fix is a fixed transform, which works there because cover
+       barely crops a 16:9 plate in a 16:9-ish window. A phone is nothing like
+       that: at 390x844 the drawn image is ~1500px wide against a 390px box, so
+       two thirds of the width is cropped and the sun lands about 37px right of
+       center. That offset is not a constant either, it moves with the viewport,
+       so it is COMPUTED rather than guessed: object-position is solved from the
+       real box, the real intrinsic size and the sun's measured position at
+       52.5% of frame width. Holds across 350 to 900 by construction. */
+    const SUN_X = 0.525;
+    function aimSun() {
+      const s = segs[0];
+      if (!s || !s.video || !isNarrow) return;
+      const v = s.video, r = v.getBoundingClientRect();
+      const vw = v.videoWidth, vh = v.videoHeight;
+      if (!vw || !vh || !r.width || !r.height) return;
+      const scale = Math.max(r.width / vw, r.height / vh);
+      const drawnW = vw * scale;
+      const over = drawnW - r.width;
+      if (over <= 1) { v.style.objectPosition = ''; return; }
+      const p = (SUN_X * drawnW - r.width / 2) / over;
+      v.style.objectPosition = (Math.max(0, Math.min(1, p)) * 100).toFixed(2) + '% center';
+    }
+    if (isNarrow) {
+      window.addEventListener('resize', aimSun, { passive: true });
+      window.addEventListener('orientationchange', aimSun);
+      if (segs[0] && segs[0].video) {
+        segs[0].video.addEventListener('loadedmetadata', aimSun);
+        segs[0].video.addEventListener('loadeddata', aimSun);
+      }
+    }
 
     // ---- Boot ----------------------------------------------------------------
     (async function boot() {
