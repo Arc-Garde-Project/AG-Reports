@@ -189,8 +189,14 @@
      width-fluid, so every vertical rhythm value is capped against vh. */
   --v-sm: min(clamp(0.75rem, 0.5rem + 1vw, 1.25rem), 2.2vh);
   --v-md: min(clamp(1.25rem, 0.9rem + 1.6vw, 2.25rem), 3.4vh);
-  --v-lg: min(clamp(2rem, 1.4rem + 2.6vw, 3.5rem), 4.4vh);
-  --v-section: min(clamp(3.5rem, 2rem + 6vw, 7rem), 11vh);
+  /* AG Section Standard v1.2: 28px a side at 900 and below, 63px on
+     desktop (the approved step above the locked 42 - these headings are
+     oversized display type). --v-lg rides the same 7-family ladder at 42. */
+  /* the full-bleed marquee strip: its own height AND the hero's bottom
+     reservation, so the words can never land under the fold */
+  --tick-h: clamp(48px, 1.6rem + 4.4vw, 112px);
+  --v-lg: clamp(1.3125rem, 0.772rem + 2.471vw, 2.625rem);
+  --v-section: clamp(1.75rem, 0.849rem + 4.118vw, 3.9375rem);
 
   /* Warm-tinted shadows. A neutral gray shadow on warm paper reads as dirt. */
   /* deeper, so a pane sits clearly ON the field rather than in it */
@@ -566,7 +572,8 @@ section { position: relative; }
      viewport-relative at all. */
   grid-template-columns: minmax(0, 1fr);
   place-items: center;
-  padding-block: calc(var(--v-section) + 28px) var(--v-section);
+  /* the top clears the progress rail, the bottom is exactly the strip */
+  padding-block: calc(var(--v-section) + 14px) var(--tick-h);
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -673,58 +680,73 @@ section { position: relative; }
 }
 
 /* ---------- The ticker ----------
-   A continuous run of the deck's own phrases under the scroll cue. Every
-   item is lifted verbatim from the approved copy; nothing here is newly
-   written. The track holds the sequence TWICE and translates by exactly
-   half its width, which is what makes the loop seamless with no jump.
-   Transform only, and it stops dead under reduced motion. */
+   The house jumbo marquee (cogentic .jumbo), retuned to this deck's tokens:
+   display face, uppercase, transparent fill with a stroke instead of a fill,
+   two identical groups translating by exactly -50% so the loop is seamless.
+   Every phrase is the deck's own approved copy; nothing here is new writing.
+
+   It is a direct child of .hero and absolutely positioned, NOT a child of
+   .wrap. Inside the padded container it could only ever be as wide as the
+   text column, and forcing 100vw there overflowed the padding and dragged
+   the hero stack 50px off its center axis. Taking it out of the flow
+   entirely is the only version that runs true edge to edge AND leaves the
+   hero's centering mathematically untouchable.
+
+   Transform only, so it stays on the compositor, and it stops dead under
+   reduced motion. */
 .ticker {
-  position: relative;
-  /* 100vw here overflowed the padded wrap and pushed the hero stack off
-     center by exactly the padding - 550 against a 500 axis at 1000px.
-     min-width:0 matters as much: as a flex item its automatic minimum is
-     its max-content track, so without this it refuses to shrink and drags
-     the whole stack wide. */
-  width: 100%;
-  min-width: 0;
-  max-width: 100%;
-  margin-top: var(--v-md);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  height: var(--tick-h);
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+  /* a narrow fade only - the words still reach both edges, they just do not
+     terminate on a hard chop */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
 }
 
 .tick-track {
   display: flex;
   align-items: center;
+  height: 100%;
   width: max-content;
   animation: tick 42s linear infinite;
 }
 
+.tick-group { display: flex; align-items: center; flex-shrink: 0; }
+
 @keyframes tick {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
 }
 
-.tick-item {
+.tick-word {
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(0.75rem, 0.72rem + 0.16vw, 0.875rem);
-  letter-spacing: 0.2em;
+  font-weight: 800;
+  font-size: clamp(1.75rem, 0.9rem + 4vw, 4.375rem);
+  line-height: 1;
+  letter-spacing: 0.012em;
   text-transform: uppercase;
-  color: var(--muted);
   white-space: nowrap;
-  text-shadow: var(--mist);
+  padding-inline: clamp(0.6rem, 0.35rem + 0.9vw, 1.3rem);
+  color: transparent;
+  -webkit-text-stroke: 1.4px rgba(88, 66, 108, 0.55);
 }
 
-.tick-dot {
-  display: block;
-  width: 5px;
-  height: 5px;
-  margin: 0 clamp(18px, 2.4vw, 34px);
-  border-radius: 50%;
-  background: var(--sweep-decor);
+.tick-word.lit { -webkit-text-stroke: 1.6px rgba(84, 52, 128, 0.78); }
+
+/* the diamond between phrases, drawn rather than typed so it never depends
+   on a glyph the display face may not carry */
+.tick-sep {
   flex: none;
+  width: clamp(6px, 0.55vw, 9px);
+  height: clamp(6px, 0.55vw, 9px);
+  background: var(--sweep-decor);
+  transform: rotate(45deg);
+  opacity: 0.72;
 }
 
 /* ---------- Scroll cue ---------- */
@@ -784,12 +806,20 @@ section { position: relative; }
 
    Everything animates on transform and opacity only. */
 
-.roadmap { position: relative; }
+.roadmap {
+  position: relative;
+  /* where the rail sits inside the node. NOT 50%: the cards hang above the
+     line, so a centered axis reserved a whole empty half-node between the
+     road and the controls. */
+  --axis: 74%;
+}
 
 .road-viewport {
   position: relative;
   overflow: hidden;
-  padding-block: clamp(20px, 2.6vw, 34px);
+  /* asymmetric: the top side is real headroom for cards that overflow the
+     track upward, the bottom side has nothing to clear */
+  padding-block: clamp(16px, 1.7vw, 24px) clamp(4px, 0.5vw, 8px);
   /* The frame fades at both edges so the road runs off rather than stopping.
      The band is deliberately narrow: a wide fade dropped whole cards to
      2.5:1, because a card half inside the fade is half transparent. */
@@ -810,7 +840,7 @@ section { position: relative; }
   position: absolute;
   left: -1400px;
   right: -1400px;
-  top: 50%;
+  top: var(--axis, 50%);
   height: 3px;
   margin-top: -1.5px;
   border-radius: var(--radius-pill);
@@ -869,7 +899,7 @@ section { position: relative; }
   position: relative;
   width: var(--cell, 268px);
   flex: 0 0 auto;
-  min-height: clamp(250px, 25vw, 320px);
+  min-height: clamp(240px, 22vw, 290px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -878,7 +908,7 @@ section { position: relative; }
 .road-dot {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: var(--axis, 50%);
   width: 17px;
   height: 17px;
   margin: -8.5px 0 0 -8.5px;
@@ -907,7 +937,7 @@ section { position: relative; }
 .road-card {
   position: absolute;
   left: 50%;
-  bottom: calc(50% + 40px);
+  bottom: calc(100% - var(--axis, 50%) + 40px);
   width: min(92%, 244px);
   padding: clamp(16px, 1.7vw, 22px);
   background: var(--surface);
@@ -982,7 +1012,7 @@ section { position: relative; }
   align-items: center;
   justify-content: center;
   gap: clamp(14px, 1.8vw, 24px);
-  margin-top: clamp(10px, 1.4vw, 18px);
+  margin-top: clamp(2px, 0.4vw, 7px);
 }
 
 .road-btn {
@@ -1547,7 +1577,8 @@ section { position: relative; }
      iPhone SE. A 3-across figure row was tried and rejected: "PER TESTING
      CYCLE" needs a 9px type size to fit a 108px column. */
   .hero {
-    padding-block: 56px 64px;
+    /* the bottom side is exactly the strip, same as desktop */
+    padding-block: 42px var(--tick-h);
     min-height: 100svh;
   }
 
@@ -1568,9 +1599,10 @@ section { position: relative; }
 
   /* the road stays a stepper on a phone, just narrower */
   /* the node band was reserving a screen and a half for one card */
-  .road-node { min-height: clamp(200px, 52vw, 240px); width: min(78vw, 300px); }
-  .road-card { width: min(92%, 250px); bottom: calc(50% + 30px); }
-  .road-viewport { padding-block: 14px; }
+  .roadmap { --axis: 70%; }
+  .road-node { min-height: clamp(196px, 50vw, 232px); width: min(78vw, 300px); }
+  .road-card { width: min(92%, 250px); bottom: calc(100% - var(--axis) + 30px); }
+  .road-viewport { padding-block: 12px 4px; }
 
   /* Centering these put a bullet ABOVE every line and stretched each card to
      nearly twice its height, which is what read as chopped-up dead space.
@@ -1604,10 +1636,8 @@ section { position: relative; }
 
   /* the deck breathes plenty on a phone already; the section padding was
      stacking on top of card margins and doubling every gap */
-  .pad-section { padding-block: clamp(34px, 8vw, 52px); }
   .pane { padding: clamp(18px, 4.6vw, 26px) clamp(16px, 4.4vw, 24px); }
   .chart-wrap { margin-top: clamp(22px, 6vw, 34px); }
-  .ticker { display: none; }
 }
 
 /* ---------- Reduced motion. Last block in the sheet. ----------
@@ -1674,10 +1704,13 @@ section { position: relative; }
           <span>Scroll</span>
           <i></i>
         </div>
+      </div>
+    </div>
 
-        <div class="ticker" aria-hidden="true">
-          <div class="tick-track"><span class="tick-item">Meta only</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">Facebook and Instagram</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">14 ads per testing cycle</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">English and Spanish</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">2 ads head to head</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">Every step tracked</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">Leads land in the CRM live</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">7 sprints per cycle</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">Meta only</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">Facebook and Instagram</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">14 ads per testing cycle</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">English and Spanish</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">2 ads head to head</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">Every step tracked</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">Leads land in the CRM live</span><i class="tick-dot" aria-hidden="true"></i><span class="tick-item">7 sprints per cycle</span><i class="tick-dot" aria-hidden="true"></i></div>
-        </div>
+    <div class="ticker" aria-hidden="true">
+      <div class="tick-track">
+        <div class="tick-group"><span class="tick-word lit">Meta Only</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Facebook and Instagram</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">14 Ads Per Testing Cycle</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">English and Spanish</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">2 Ads Head to Head</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Every Step Tracked</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">7 Sprints Per Cycle</span><i class="tick-sep" aria-hidden="true"></i></div>
+        <div class="tick-group"><span class="tick-word lit">Meta Only</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Facebook and Instagram</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">14 Ads Per Testing Cycle</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">English and Spanish</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">2 Ads Head to Head</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Every Step Tracked</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">7 Sprints Per Cycle</span><i class="tick-sep" aria-hidden="true"></i></div>
       </div>
     </div>
   </section>
@@ -2029,7 +2062,7 @@ section { position: relative; }
   var MAP_SCALE = 0.62;
 
   var W = 0, H = 0, DPR = 1, FIELD_H = 0;
-  var map = null, mctx = null, MW = 0, MH = 0;
+  var map = null, mctx = null, MW = 0, MH = 0, GEO_W = 0;
   var tmp = null, tctx = null, TW = 0, TH = 0;
 
   var scrollY = 0;
@@ -2154,6 +2187,10 @@ section { position: relative; }
   function bakeMap() {
     MW = Math.max(2, Math.round(W * MAP_SCALE));
     MH = Math.max(2, Math.round(FIELD_H * MAP_SCALE));
+    /* the width the PLATES are sized against. Floored at 1000 CSS px so the
+       field never zooms out past the desktop read; on anything wider this is
+       just MW and the desktop field is bit-for-bit what it already was. */
+    GEO_W = Math.max(MW, Math.round(1000 * DPR * MAP_SCALE));
     map = document.createElement('canvas');
     map.width = MW; map.height = MH;
     mctx = map.getContext('2d');
@@ -2171,12 +2208,22 @@ section { position: relative; }
     var band = 0;
     while (y < MH * 1.03) {
       var scale = 0.62 + 0.58 * (0.5 + 0.5 * Math.sin(band * 0.83 + 1.7));
-      var rowH = MW * 0.135 * scale;
+      /* Cell size comes off GEO_W, not MW. Sizing it off the real map width
+         made a plate a fixed FRACTION of the viewport, so a 390px phone drew
+         the same count of cells as a 1440px desktop - each one 3.7x smaller.
+         That is what read as foam instead of rock. GEO_W floors the basis, so
+         a narrow screen shows a zoomed-in crop of the same field rather than
+         a shrunken copy of it. Above the floor nothing changes at all. */
+      var rowH = GEO_W * 0.135 * scale;
       var cols = Math.max(3, Math.round(1 / (0.145 * scale)));
+      var colW = GEO_W / cols;
+      /* the count follows the REAL width, or a narrow screen would come up
+         short of its own right edge */
+      var span = Math.ceil(MW / colW);
       var stagger = (band % 2) * 0.5;
-      for (var c = -1; c <= cols + 1; c++) {
+      for (var c = -1; c <= span + 1; c++) {
         pts.push([
-          (c + stagger + (rnd() - 0.5) * 0.8) * (MW / cols),
+          (c + stagger + (rnd() - 0.5) * 0.8) * colW,
           y + (rnd() - 0.5) * rowH * 0.8
         ]);
       }
