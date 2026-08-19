@@ -451,12 +451,14 @@
            1.78 and a peak of 7.19, and 49% of frames jumped more than 2.5. That
            unevenness is the glitchiness, and the 2.3x mean is the speed.
            The step is now capped at roughly one source frame per animation
-           frame, which is real-time for this 60fps footage. Scrolling harder no
-           longer plays faster, it just queues more travel, and the transition
-           plays that out at a constant cinematic rate. The exit already waits
-           for the drawn position, so nothing is skipped by the lag. */
+           frame. 1.15 was exactly real time and measured too slow to sit
+           through, so it is 1.85: still a fixed rate with no burst, about 1.6x
+           speed, which takes a transition from 4.8s to roughly 2.7s. Scrolling
+           harder does not play faster, it queues more travel and the transition
+           plays it out at that constant rate. The exit already waits for the
+           drawn position, so nothing is skipped by the lag. */
         const step = d * 0.12;
-        s.pos += Math.sign(step) * Math.min(Math.abs(step), 1.15);
+        s.pos += Math.sign(step) * Math.min(Math.abs(step), 1.85);
         draw(s, s.pos);
         easeRaf = requestAnimationFrame(tick);
       };
@@ -597,12 +599,22 @@
         const dir = dy > 0 ? 1 : -1;
         const dest = dir > 0 ? segs[cur + 1] : segs[cur - 1];
 
-        /* Nothing lies that way. Do not accumulate and do not paint: the first
-           plate used to lift its text on an upward scroll even though there was
-           nowhere above it to go, which read as the page wobbling for no reason.
-           A dead end must look dead. */
+        /* THE LAST PLATE HAS TO REST TOO.
+           Scrolling down off the final rest state found no next segment and
+           released the page on the FIRST notch, so that plate never dwelled at
+           all: its copy was handed away before anyone could read it, which is
+           why the resting sections did not read as rests. It now spends the
+           same dwell every other rest state spends, and only then hands over.
+           Upward off the first plate stays genuinely dead: there is nothing
+           above it, and accumulating there made the hero wobble for no reason. */
         if (!dest) {
-          if (dir > 0) { released = true; stage.dataset.released = 'true'; }
+          if (dir < 0) return false;
+          if (dir !== dwellDir) { dwell = 0; dwellDir = dir; resetDwellPaint(); }
+          dwell += Math.abs(dy);
+          const needOut = s.cfg.dwellPx || opts.restStepPx;
+          if (dwell < needOut) { paintDwell(Math.min(1, dwell / needOut)); return true; }
+          dwell = 0; resetDwellPaint();
+          released = true; stage.dataset.released = 'true';
           return false;
         }
 
