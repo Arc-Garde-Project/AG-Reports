@@ -92,14 +92,51 @@ html[data-stage-locked="true"] body {
   padding-inline: var(--pad, clamp(1.125rem, 0.262rem + 3.68vw, 3rem));
   pointer-events: none;
   opacity: 0;
-  transform: translateY(21px);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  /* SLIDES IN FROM A SIDE (Quinten, 2026-08-19). A 21px vertical nudge was the
+     entire entrance for all three plates and it read as nothing. Each plate now
+     travels in from alternating sides over 0.9s, with a small lift kept so it
+     arrives rather than merely slides. The distance is fluid: 72px is right on
+     a wide screen and would be a third of a phone, and a block that starts
+     that far off a 390px viewport is how the price line ended up 35px past the
+     left edge last round.
+     This lives on .hseg-text, NOT on its children: the dwell response owns the
+     transform of .hseg-text > * and writes it per frame, and putting an eased
+     entrance on the same property would fight it and lag the scroll. */
+  --enter-dist: clamp(26px, 5vw, 72px);
+  transform: translate3d(var(--enter-x, 0px), 14px, 0);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.hseg[data-enter="left"]  .hseg-text { --enter-x: calc(-1 * var(--enter-dist)); }
+.hseg[data-enter="right"] .hseg-text { --enter-x: var(--enter-dist); }
 .hseg-text[data-visible="true"] {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
+
+/* HELD AT THE ENTRANCE START WHILE THE CURTAIN IS UP. The engine calls enter(0)
+   before ag:hybrid-ready, so without this the hero's entrance played behind a
+   curtain that had not lifted and was over before anyone saw it.
+   This lived in ag-curtain.css until 2026-08-19 with the offset hardcoded as
+   translateY(21px). That is how the hero lost its slide: the plate was pinned
+   to a DIFFERENT transform than the one it was supposed to travel from, so
+   when the curtain cleared it went straight to 0 and never moved sideways at
+   all. Written against the same variables as the entrance, it cannot go stale
+   again. Measured after: the hero starts at -72px at 1440 and -26px at 393. */
+html.is-loading .hseg-text {
+  opacity: 0 !important;
+  transform: translate3d(var(--enter-x, 0px), 14px, 0) !important;
+}
+/* ONLY THE HERO WAITS, AND IT WAITS FOR THE CURTAIN TO ACTUALLY BE GONE.
+   Measured timeline before this: is-loading cleared at 7477ms, the curtain was
+   not fully transparent until 8248ms, and with a 260ms delay the slide ran
+   7737 -> 8637. More than half of it happened behind a curtain that was still
+   fading, which is the same fault the 260ms was added to fix, just smaller.
+   0.7s starts it at 8177, within a frame or two of the curtain clearing.
+   The delay used to apply to EVERY plate, which put a 260ms lag on plates 2
+   and 3 as well. They are entered by scrolling, with no curtain to wait for,
+   so they now start the moment they are entered. */
+html.is-ready .hseg[data-sun] .hseg-text[data-visible="true"] { transition-delay: 0.7s; }
 
 /* DWELL RESPONSE. --dwell is 0..1, set by the engine from scroll accumulated on
    a rest state, and already eased per frame there. It is applied to the INNER

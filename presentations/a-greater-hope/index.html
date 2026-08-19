@@ -198,7 +198,12 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
 
 /* ===== Overlay type, from the measured patterns ========================== */
 .eyebrow-chip { display: inline-block; padding: 0.34rem 0.72rem; border-radius: 999px; background: var(--scrim-firm); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.5); font-size: var(--text-micro); font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.9rem; }
-.lead { font-family: var(--font-display); font-weight: 400; font-size: var(--text-hero); letter-spacing: -0.022em; color: var(--ink); text-shadow: 0 0 20px rgba(255,255,255,0.92), 0 0 46px rgba(255,255,255,0.7); max-width: 21ch; }
+/* h1 on the hero, h2 on plates 2 and 3 (promoted 2026-08-19 to close an
+   h1 -> h3 skip: .eng-card carries h3s with no h2 above them). A heading's
+   default block margin differs from a paragraph's, and these plates have one
+   viewport and no more, so the margin is zeroed and spacing stays with the
+   explicit margin-top the siblings already carry. */
+.lead { margin-block: 0; font-family: var(--font-display); font-weight: 400; font-size: var(--text-hero); letter-spacing: -0.022em; color: var(--ink); text-shadow: 0 0 20px rgba(255,255,255,0.92), 0 0 46px rgba(255,255,255,0.7); max-width: 21ch; }
 .lead-sub { margin-top: 0.35rem; font-family: var(--font-display); font-weight: 400;
   font-size: clamp(1.15rem,0.95rem + 0.9vw,1.9rem); letter-spacing: -0.015em; color: var(--ink);
   text-shadow: 0 0 20px rgba(255,255,255,0.92), 0 0 46px rgba(255,255,255,0.7); }
@@ -445,10 +450,19 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
 @media (prefers-reduced-motion: reduce) {
   .sky-scope::before, .sky-scope::after { animation: none; }
 }
-}
 
 .sec--cream { position: relative; z-index: 2; background: transparent;
-  padding-top: clamp(3rem, 8vw, 5.5rem);
+  /* THE CLOUD WAS LANDING ON THE FIRST CONTAINER (Quinten, 2026-08-19). Both
+     banks are pulled ABOVE the scope so they straddle the seam, so each one
+     still reaches this far DOWN into it:
+         ::before  clamp(330px,46vh,640px) - clamp(150px,21vh,300px)
+         ::after   clamp(240px,32vh,460px) - clamp( 70px,10vh,150px)
+     The first is the deeper of the two. The head used to start inside that
+     band. Derived from the same expressions rather than guessed at, so it
+     tracks the bank if either is ever retuned. */
+  --seam-reach: calc(clamp(330px,46vh,640px) - clamp(150px,21vh,300px));
+  padding-top: max(clamp(3rem, 8vw, 5.5rem),
+                   calc(var(--seam-reach) + clamp(1.5rem,4vh,3rem)));
   padding-bottom: clamp(3.5rem, 8vw, 6rem); }
 
 .sec--cream .shell { position: relative; z-index: 2; }
@@ -469,7 +483,14 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
    2026-08-18 and its panels are scrims, so it takes the -plate twins, not the
    -ink ones. The color it used to carry, #0076BB, measured 2.64:1 against
    these scrims, which is below even the 3.0 large-text floor. */
-.sec--cream .sec-head { position: relative; padding-bottom: 0.9rem; border-bottom: 0; }
+.sec--cream .sec-head { position: relative; padding-bottom: 0.9rem; border-bottom: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 0; }
+/* the price is the big line now, so it takes display sizing rather than the
+   small inline treatment it had beside the title. max-width is released
+   because the string is long and .lead caps at 21ch for a plate headline. */
+.sec--cream .sec-head .lead { max-width: 100%; margin: 0;
+  font-size: clamp(1.45rem, 1.05rem + 1.9vw, 2.5rem); font-weight: 500;
+  color: var(--blue-plate); text-shadow: none; }
 .sec--cream .sec-head::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 2px; background: var(--grad-brand); }
 .sec--cream .sec-num { color: var(--blue-plate); }
 .sec--cream .sec-price { color: var(--blue-plate); font-weight: 600; }
@@ -622,7 +643,7 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
      aria-label="A Greater Hope paid media presentation, scroll to advance">
 
   <!-- ── REST A · Plate 1 · THE HERO ─────────────────────────────────────── -->
-  <section class="hseg" data-sun data-segment='{"kind":"rest","videoBase":"loops/agh-fg1-restA-loop","poster":"poster-fg1-restA.webp","dwellPx":300}'>
+  <section class="hseg" data-enter="left" data-sun data-segment='{"kind":"rest","videoBase":"loops/agh-fg1-restA-loop","poster":"poster-fg1-restA.webp","dwellPx":300}'>
     <video muted loop playsinline preload="auto" aria-hidden="true"></video>
     <div class="hseg-text" data-seg-text>
       <div>
@@ -650,12 +671,12 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   </section>
 
   <!-- ── REST B · Plate 2 · WHAT WE DO ───────────────────────────────────── -->
-  <section class="hseg" style="--ox:56%" data-segment='{"kind":"rest","videoBase":"loops/agh-fg3-restB-loop","poster":"poster-fg3-restB.webp","posterMobile":"poster-fg3-restB-m.webp","dwellPx":500}'>
+  <section class="hseg" data-enter="right" style="--ox:56%" data-segment='{"kind":"rest","videoBase":"loops/agh-fg3-restB-loop","poster":"poster-fg3-restB.webp","posterMobile":"poster-fg3-restB-m.webp","dwellPx":500}'>
     <video muted loop playsinline preload="auto" aria-hidden="true"></video>
     <div class="hseg-text" data-seg-text>
       <div>
         <span class="eyebrow-chip">1 &middot; What We Do</span>
-        <p class="lead">4 Engines</p>
+        <h2 class="lead">4 Engines</h2>
         <div class="eng-grid">
           <div class="eng-card">
             <span class="n num">01</span>
@@ -696,12 +717,12 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
        which is the right bed for the densest block of content. The echo line
        that used to sit here is gone: the hero already carries it, and a second
        showing was costing a state that section 2 needs more. ─────────────── -->
-  <section class="hseg" style="--ox:56%" data-segment='{"kind":"rest","videoBase":"loops/agh-fg5-restC-loop","poster":"poster-fg5-restC.webp","posterMobile":"poster-fg5-restC-m.webp","dwellPx":700}'>
+  <section class="hseg" data-enter="left" style="--ox:56%" data-segment='{"kind":"rest","videoBase":"loops/agh-fg5-restC-loop","poster":"poster-fg5-restC.webp","posterMobile":"poster-fg5-restC-m.webp","dwellPx":700}'>
     <video muted loop playsinline preload="auto" aria-hidden="true"></video>
     <div class="hseg-text" data-seg-text>
       <div>
         <span class="eyebrow-chip">2 &middot; How It Runs</span>
-        <p class="lead">This Is The Engine</p>
+        <h2 class="lead">This Is The Engine</h2>
         <p class="lead-sub">It does not&nbsp;stop.</p>
 
         <div class="run-panel">
@@ -758,10 +779,14 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   <!-- ═══ 3 · WHAT IT COSTS ═════════════════════════════════════════════════ -->
   <section class="sec sec--cream" aria-labelledby="sec-3">
     <div class="shell">
+      <!-- SAME SHAPE AS THE PLATES (Quinten, 2026-08-19). Plates 2 and 3 both
+           open with a small pill carrying the number and the section name, then
+           the big line underneath. This head was the odd one out: number, title
+           and price all inline on one baseline row. It now reads the same way.
+           The chip is the h2 so aria-labelledby still names the section. -->
       <div class="sec-head rise">
-        <span class="sec-num num">3</span>
-        <h2 class="sec-title" id="sec-3">What It Costs</h2>
-        <span class="sec-price num">$3,700 management&nbsp;+&nbsp;$2,500 ad&nbsp;spend</span>
+        <h2 class="eyebrow-chip" id="sec-3"><span class="num">3</span> &middot; What It Costs</h2>
+        <p class="lead sec-price num">$3,700 management&nbsp;+&nbsp;$2,500 ad&nbsp;spend</p>
       </div>
       <div class="sec-rule"></div>
       <p class="sec-note rise">1 fixed fee.<span class="ag-break"></span>No setup fee.<span class="ag-break"></span>Ad spend goes straight to Meta, never through&nbsp;us.</p>

@@ -41,9 +41,11 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; transform: scale(1
    playing behind a curtain that had not lifted yet and was over by the time
    anyone saw it. Holding it at its start state until is-loading clears means
    the animation the build already had now plays where it can be seen.
-   Note this cannot be a fade on <body>: the curtain is inside body. */
-html.is-loading .hseg-text { opacity: 0 !important; transform: translateY(21px) !important; }
-html.is-ready .hseg-text[data-visible="true"] { transition-delay: 260ms; }
+   Note this cannot be a fade on <body>: the curtain is inside body.
+   MOVED OUT 2026-08-19: the two .hseg-text rules that used to sit here now
+   live in ag-hybrid-scene.css. They are stage rules, not curtain rules, and
+   keeping them here meant the hold state was a hardcoded translateY(21px)
+   that silently went stale the moment the stage entrance changed. */
 .ld-layer { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; transition: opacity 600ms cubic-bezier(0.16,1,0.3,1); pointer-events: none; }
 .ag-curtain[data-phase="load"]  .ld-boot  { opacity: 1; }
 .ag-curtain[data-phase="brand"] .ld-brand { opacity: 1; }
