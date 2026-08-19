@@ -252,7 +252,12 @@ html.is-ready .hseg[data-sun] .hseg-text[data-visible="true"] { transition-delay
      put the mark well below the sun. The hero alone starts from the top and is
      pushed down so the MARK'S CENTER, not its top edge, lands on the sun.
      Only the hero: plates 2 and 3 carry dense copy that needs the full box. */
-  .hseg[data-sun] .hseg-text { align-content: start; padding-top: calc(24svh - (var(--mark-size) / 2)); }
+  .hseg[data-sun] .hseg-text { align-content: start; padding-top: calc(28.6svh - (var(--mark-size) / 2)); }
+  /* 28.6svh, not 24. The first number came from the brightest ROW, which on
+     this footage is the wide hazy band above the horizon, not the sun. Blurring
+     hard and taking the brightest BLOB finds the disc itself: 28.6% down the
+     frame. The plate is filled to the height by cover, so the sun's fraction of
+     the frame IS its fraction of the viewport at every phone size. */
   .hseg[data-sun] .hero-mark img { width: var(--mark-size); height: var(--mark-size); }
   .hseg[data-sun] .hseg-text { --mark-size: clamp(72px, 19vw, 104px); }
   .hseg-text .lead,
