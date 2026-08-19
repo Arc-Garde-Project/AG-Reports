@@ -138,6 +138,26 @@ html.is-loading .hseg-text {
    so they now start the moment they are entered. */
 html.is-ready .hseg[data-sun] .hseg-text[data-visible="true"] { transition-delay: 0.7s; }
 
+/* THE MARK SITS ON THE SUN ON EVERY TIER, NOT JUST THE PHONE.
+   Stripping the hero to logo, title and one line on 2026-08-19 changed the
+   block's height, and because the block is vertically centered the mark fell
+   133px below the sun at 1440 and 159px at 1680. Centering was never what put
+   it there; it happened to line up with the old content height.
+   The sun is a fixed fraction of the plate and cover fills the HEIGHT at both
+   shapes, so that fraction is the same fraction of the viewport. Desktop reads
+   27.9% rather than the phone's 28.6% because the hero plate carries
+   scale(1.08), which pulls a point above center slightly toward it. */
+.hseg[data-sun] .hseg-text {
+  --sun-y: 27.9svh;
+  --mark-size: clamp(76px, 6vw, 104px);
+  align-content: start;
+  padding-top: calc(var(--sun-y) - (var(--mark-size) / 2));
+}
+.hseg[data-sun] .hero-mark img { width: var(--mark-size); height: var(--mark-size); }
+@media (prefers-reduced-motion: reduce) {
+  .hseg[data-sun] .hseg-text { align-content: center; padding-top: 0; }
+}
+
 /* DWELL RESPONSE. --dwell is 0..1, set by the engine from scroll accumulated on
    a rest state, and already eased per frame there. It is applied to the INNER
    wrapper, not to .hseg-text itself: that element owns the 0.6s entry ease, and
@@ -252,13 +272,12 @@ html.is-ready .hseg[data-sun] .hseg-text[data-visible="true"] { transition-delay
      put the mark well below the sun. The hero alone starts from the top and is
      pushed down so the MARK'S CENTER, not its top edge, lands on the sun.
      Only the hero: plates 2 and 3 carry dense copy that needs the full box. */
-  .hseg[data-sun] .hseg-text { align-content: start; padding-top: calc(28.6svh - (var(--mark-size) / 2)); }
+  .hseg[data-sun] .hseg-text { --sun-y: 28.6svh; }
   /* 28.6svh, not 24. The first number came from the brightest ROW, which on
      this footage is the wide hazy band above the horizon, not the sun. Blurring
      hard and taking the brightest BLOB finds the disc itself: 28.6% down the
      frame. The plate is filled to the height by cover, so the sun's fraction of
      the frame IS its fraction of the viewport at every phone size. */
-  .hseg[data-sun] .hero-mark img { width: var(--mark-size); height: var(--mark-size); }
   .hseg[data-sun] .hseg-text { --mark-size: clamp(72px, 19vw, 104px); }
   .hseg-text .lead,
   .hseg-text .lead-sub,
