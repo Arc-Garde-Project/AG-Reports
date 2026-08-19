@@ -341,6 +341,237 @@ section { position: relative; }
 .sprint-marks span,
 .foot-line { text-shadow: var(--mist); }
 
+/* ---------- The curtain ----------
+   The house AG report curtain (lifted from presentations/arbor-growth-roadmap,
+   same two-phase boot -> brand structure, same fail-open contract, same
+   ag:ready event), re-skinned onto this deck's identity.
+
+   It opens on PAPER, not on the house navy. The deck's first frame is a cream
+   ground, so a dark curtain would flash light at the exact moment the client
+   first sees the work. Lifting from paper to paper makes the mark the only
+   thing that changes.
+
+   Second visit is short. The full sequence is a first-impression device, and
+   sitting through it again on every reload is friction, so a returning view
+   in the same session gets the brand phase only. */
+html.is-loading { overflow: hidden; }
+
+.agh-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483645;
+  background: var(--paper);
+  display: grid;
+  place-items: center;
+  opacity: 1;
+  transition: opacity 0.7s var(--ease-satisfying);
+}
+
+/* The content clears BEFORE the ground does. Both are the same cream, so a
+   straight crossfade showed the hero reading through the wordmark for the
+   whole 0.7s - two headlines stacked on each other. */
+html.is-ready .agh-curtain {
+  opacity: 0;
+  pointer-events: none;
+  transition-delay: 0.14s;
+}
+
+html.is-ready .agh-curtain .ld-layer {
+  opacity: 0;
+  transform: translateY(-9px);
+  transition-duration: 0.3s;
+}
+
+.ld-layer {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-soft), transform 0.6s var(--ease-satisfying);
+  pointer-events: none;
+}
+
+.agh-curtain[data-phase="boot"]  .ld-boot  { opacity: 1; }
+.agh-curtain[data-phase="brand"] .ld-brand { opacity: 1; }
+.agh-curtain[data-phase="brand"] .ld-boot  { opacity: 0; transform: scale(0.94); }
+
+/* ---- phase one: the mark, and a bar that fills ---- */
+.ld-mark {
+  width: clamp(74px, 8vw, 104px);
+  height: auto;
+  filter: drop-shadow(0 8px 26px rgba(64, 40, 72, 0.22));
+  animation: ld-pulse 2.1s var(--ease-soft) infinite;
+}
+
+@keyframes ld-pulse {
+  0%, 100% { transform: scale(1);    filter: drop-shadow(0 8px 26px rgba(64, 40, 72, 0.20)); }
+  50%      { transform: scale(1.04); filter: drop-shadow(0 10px 34px rgba(64, 40, 72, 0.34)); }
+}
+
+.ld-bar {
+  width: clamp(140px, 26vw, 220px);
+  height: 3px;
+  margin-top: clamp(22px, 3vh, 34px);
+  border-radius: var(--radius-pill);
+  background: rgba(96, 68, 116, 0.14);
+  overflow: hidden;
+}
+
+.ld-bar i {
+  display: block;
+  height: 100%;
+  width: 6%;
+  border-radius: var(--radius-pill);
+  background: var(--sweep-decor);
+  animation: ld-fill 1.4s var(--ease-satisfying) 0.14s forwards;
+}
+
+@keyframes ld-fill { to { width: 100%; } }
+
+/* ---- phase two: their name, in their own sweep ---- */
+.ld-wm {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 1rem + 3vw, 3.2rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: var(--sweep-ink);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: var(--agh-indigo);
+}
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .ld-wm { -webkit-text-fill-color: transparent; }
+}
+
+.agh-curtain[data-phase="brand"] .ld-wm {
+  animation: ld-rise 0.9s var(--ease-satisfying) both;
+}
+
+@keyframes ld-rise {
+  from { opacity: 0; transform: translateY(12px); filter: blur(7px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+
+.ld-rule {
+  width: 0;
+  height: 3px;
+  margin-top: clamp(13px, 1.8vh, 20px);
+  border-radius: var(--radius-pill);
+  background: var(--sweep-decor);
+}
+
+.agh-curtain[data-phase="brand"] .ld-rule {
+  animation: ld-draw 0.7s var(--ease-satisfying) 0.28s both;
+}
+
+@keyframes ld-draw { from { width: 0; } to { width: clamp(110px, 22vw, 190px); } }
+
+.ld-sub {
+  margin-top: clamp(11px, 1.6vh, 16px);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.625rem, 0.6rem + 0.16vw, 0.75rem);
+  letter-spacing: 0.34em;
+  padding-left: 0.34em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0;
+  word-break: normal;
+}
+
+.agh-curtain[data-phase="brand"] .ld-sub {
+  animation: ld-sub-in 0.7s var(--ease-satisfying) 0.42s both;
+}
+
+@keyframes ld-sub-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- The live edge ----------
+   Hover or press any container and a full-spectrum ring runs around its
+   whole perimeter, in the logo's own five stops.
+
+   The ring is a conic gradient on a pseudo-element, masked by two stacked
+   layers - one clipped to the content box, one to the border box - composited
+   with xor so everything except the border band is punched out. That is what
+   makes it follow the container's own border-radius exactly instead of being
+   a rectangle behind it.
+
+   --ring-ang is declared with @property. An unregistered custom property is
+   just a string, so an angle inside a gradient cannot be interpolated and the
+   animation would snap from 0 to 360 with nothing in between. Registering it
+   as an <angle> is what makes it turn. Where @property is unsupported the
+   ring still paints, it just holds still - so the interaction degrades to a
+   static colored edge rather than disappearing. */
+@property --ring-ang {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.pane, .sys, .chart-wrap, .ledger, .road-card, .kpi { position: relative; }
+
+.pane::after,
+.sys::after,
+.chart-wrap::after,
+.ledger::after,
+.kpi::after,
+.road-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.6px;
+  background: conic-gradient(from var(--ring-ang),
+    var(--agh-purple), var(--agh-indigo), var(--agh-blue),
+    var(--agh-teal), var(--agh-green), var(--agh-purple));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 4;
+  transition: opacity var(--duration-quick) var(--ease-soft);
+}
+
+@keyframes ring-turn { to { --ring-ang: 360deg; } }
+
+@media (hover: hover) {
+  .pane:hover::after,
+  .sys:hover::after,
+  .chart-wrap:hover::after,
+  .ledger:hover::after,
+  .kpi:hover::after,
+  .road-card:hover::before {
+    opacity: 1;
+    animation: ring-turn 4.2s linear infinite;
+  }
+}
+
+/* press. Works on touch too, which is the only edge treatment a phone gets. */
+.pane:active::after,
+.sys:active::after,
+.chart-wrap:active::after,
+.ledger:active::after,
+.kpi:active::after,
+.road-card:active::before {
+  opacity: 1;
+  animation: ring-turn 1.4s linear infinite;
+}
+
+/* the step you are on wears it permanently, so the road always reads */
+.road-node[data-on="true"] .road-card::before {
+  opacity: 0.85;
+  animation: ring-turn 6.3s linear infinite;
+}
+
 /* ---------- Depth and arrival ----------
    Two things here.
 
@@ -808,10 +1039,14 @@ section { position: relative; }
 
 .roadmap {
   position: relative;
-  /* where the rail sits inside the node. NOT 50%: the cards hang above the
-     line, so a centered axis reserved a whole empty half-node between the
-     road and the controls. */
-  --axis: 74%;
+  /* The rail sits a FIXED distance up from the bottom of the node, not at a
+     percentage of it. A percentage coupled the two things that must not be
+     coupled: the pocket the tallest card needs above the line, and the gap
+     to the controls below it. At 1100 the card had 7px of clearance left,
+     because the card grows as the column narrows (same words, more lines)
+     while the pocket shrinks with it. Now the pocket is min-height minus
+     --below, and the controls never move when the pocket changes. */
+  --below: clamp(52px, 4.2vw, 66px);
 }
 
 .road-viewport {
@@ -840,9 +1075,9 @@ section { position: relative; }
   position: absolute;
   left: -1400px;
   right: -1400px;
-  top: var(--axis, 50%);
+  bottom: var(--below, 50%);
   height: 3px;
-  margin-top: -1.5px;
+  margin-bottom: -1.5px;
   border-radius: var(--radius-pill);
   /* no gray track. The line IS the distance traveled, nothing more, so it
      never reads as a broken rule running off both edges. */
@@ -899,7 +1134,7 @@ section { position: relative; }
   position: relative;
   width: var(--cell, 268px);
   flex: 0 0 auto;
-  min-height: clamp(240px, 22vw, 290px);
+  min-height: clamp(268px, 25vw, 312px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -908,10 +1143,10 @@ section { position: relative; }
 .road-dot {
   position: absolute;
   left: 50%;
-  top: var(--axis, 50%);
+  bottom: var(--below, 50%);
   width: 17px;
   height: 17px;
-  margin: -8.5px 0 0 -8.5px;
+  margin: 0 0 -8.5px -8.5px;
   border-radius: 50%;
   background: var(--paper);
   border: 3px solid var(--agh-indigo);
@@ -937,7 +1172,7 @@ section { position: relative; }
 .road-card {
   position: absolute;
   left: 50%;
-  bottom: calc(100% - var(--axis, 50%) + 40px);
+  bottom: calc(var(--below, 50%) + 40px);
   width: min(92%, 244px);
   padding: clamp(16px, 1.7vw, 22px);
   background: var(--surface);
@@ -1019,8 +1254,8 @@ section { position: relative; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 49px;
+  height: 49px;
   border-radius: 50%;
   background: var(--surface);
   border: 1px solid var(--surface-line);
@@ -1273,6 +1508,63 @@ section { position: relative; }
   text-align: center;
   margin-bottom: clamp(10px, 1.2vw, 16px);
   word-break: normal;
+}
+
+/* ---------- The chart switcher ----------
+   Three reads of the same 28 days. Leads is the volume, cost per lead is the
+   argument, ad spend is the input - and the three are not independent
+   pictures, they are the same arithmetic seen from three sides, which is why
+   the curve MORPHS between them rather than cutting. */
+.chart-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: clamp(14px, 1.8vw, 22px);
+  padding: 5px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--surface-line);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  width: fit-content;
+  margin-inline: auto;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+.chart-tab {
+  /* 49px, the AG floor, which clears the WCAG 44px minimum. At 40 these
+     measured as short tap targets on every phone in the proof sweep. */
+  padding: 12px clamp(12px, 1.5vw, 20px);
+  min-height: 49px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.6875rem, 0.65rem + 0.16vw, 0.8125rem);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  word-break: normal;
+  cursor: pointer;
+  transition:
+    color var(--duration-quick) var(--ease-soft),
+    background var(--duration-quick) var(--ease-soft),
+    transform var(--duration-quick) var(--ease-snap);
+}
+
+@media (hover: hover) {
+  .chart-tab:not(.is-on):hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.72); }
+}
+
+.chart-tab:active { transform: scale(0.96); }
+
+.chart-tab.is-on {
+  color: #ffffff;
+  background: var(--sweep-ink);
+  box-shadow: 0 3px 12px rgba(64, 40, 72, 0.24);
 }
 
 /* the plot is inset so the Y scale and its name have a column of their own
@@ -1599,9 +1891,9 @@ section { position: relative; }
 
   /* the road stays a stepper on a phone, just narrower */
   /* the node band was reserving a screen and a half for one card */
-  .roadmap { --axis: 70%; }
-  .road-node { min-height: clamp(196px, 50vw, 232px); width: min(78vw, 300px); }
-  .road-card { width: min(92%, 250px); bottom: calc(100% - var(--axis) + 30px); }
+  .roadmap { --below: 44px; }
+  .road-node { min-height: clamp(222px, 54vw, 258px); width: min(78vw, 300px); }
+  .road-card { width: min(92%, 250px); bottom: calc(var(--below) + 30px); }
   .road-viewport { padding-block: 12px 4px; }
 
   /* Centering these put a bullet ABOVE every line and stretched each card to
@@ -1645,6 +1937,8 @@ section { position: relative; }
 
 @media (prefers-reduced-motion: reduce) {
   .tick-track { animation: none !important; }
+  .pane::after, .sys::after, .chart-wrap::after, .ledger::after,
+  .kpi::after, .road-card::before { animation: none !important; }
   .chart-line, .chart-stri { stroke-dashoffset: 0 !important; transition: none !important; }
   .chart-area { opacity: 1 !important; transition: none !important; }
   .chart-endpoint { opacity: 1 !important; transform: none !important; transition: none !important; }
@@ -1662,6 +1956,93 @@ section { position: relative; }
 </head>
 
 <body>
+
+<!-- The curtain. Every word in it is already in the deck: their own name and
+     the line the deck itself signs off with. No new copy. -->
+<div class="agh-curtain" data-phase="boot" aria-hidden="true">
+  <div class="ld-layer ld-boot">
+    <img class="ld-mark" src="agh-logo-256.webp" width="256" height="256" alt="" decoding="async">
+    <div class="ld-bar"><i></i></div>
+  </div>
+  <div class="ld-layer ld-brand">
+    <p class="ld-wm">A Greater Hope</p>
+    <div class="ld-rule"></div>
+    <p class="ld-sub">Powered by Arc&nbsp;Garde</p>
+  </div>
+</div>
+
+<script>
+/* The curtain runs itself and ALWAYS fails open: three independent paths lift
+   it (the load event, a hard ceiling, and reduced motion), and the is-loading
+   class that hides the page is added by this script - so with JS off it is
+   never added and the deck is simply visible. It can never strand a client on
+   a blank screen.
+
+   A return visit in the same session skips the boot phase. He asked for the
+   loading screen to stay but not to run full length again. */
+(function () {
+  var C = document.querySelector('.agh-curtain');
+  var root = document.documentElement;
+  if (!C) return;
+
+  var seen = false;
+  try { seen = sessionStorage.getItem('agh-seen') === '1'; sessionStorage.setItem('agh-seen', '1'); } catch (e) {}
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { C.parentNode.removeChild(C); return; }
+
+  root.classList.add('is-loading');
+
+  /* AG-DNA timing, multiples of 7 and 3 */
+  var MIN      = seen ? 700  : 2100;
+  var BRAND_AT = seen ? 0    : 1400;
+  var MAX      = 6000;
+  var CLEANUP  = 900;
+  var start = (window.performance && performance.now) ? performance.now() : Date.now();
+  var done = false;
+
+  function now() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
+
+  function lift() {
+    if (done) return;
+    done = true;
+    root.classList.remove('is-loading');
+    root.classList.add('is-ready');
+    window.dispatchEvent(new CustomEvent('ag:ready'));
+    setTimeout(function () { if (C.parentNode) C.parentNode.removeChild(C); }, CLEANUP);
+  }
+
+  setTimeout(function () { C.setAttribute('data-phase', 'brand'); }, BRAND_AT);
+
+  function schedule() { setTimeout(lift, Math.max(0, MIN - (now() - start))); }
+  if (document.readyState === 'complete') schedule();
+  else window.addEventListener('load', schedule, { once: true });
+
+  setTimeout(lift, MAX);   /* fail-open ceiling */
+
+  window.addEventListener('ag:ready', function () {
+    /* Lenis caches a scroll limit of 0 while the page is locked, so without a
+       resize on unlock every programmatic scroll silently does nothing. */
+    if (window.lenis && typeof window.lenis.resize === 'function') window.lenis.resize();
+
+    /* The reveal observer fired behind the curtain, so the hero had already
+       finished arriving by the time anyone could see it. Stripping in-view and
+       re-adding it after a reflow replays the CSS transitions, without
+       reaching into ag-motion.js - a shared primitive this deck does not own. */
+    var vh = window.innerHeight || root.clientHeight;
+    var live = [].slice.call(document.querySelectorAll('.in-view')).filter(function (el) {
+      var r = el.getBoundingClientRect();
+      return r.top < vh && r.bottom > 0;
+    });
+    live.forEach(function (el) { el.classList.remove('in-view'); });
+    void document.body.offsetHeight;
+    requestAnimationFrame(function () {
+      live.forEach(function (el) { el.classList.add('in-view'); });
+    });
+  }, { once: true });
+})();
+</script>
+
 <canvas class="backdrop" aria-hidden="true"></canvas>
 <div class="agh-topline" aria-hidden="true"><i class="agh-progress"></i></div>
 <a class="ag-skip-link" href="#main">Skip to content</a>
@@ -1844,6 +2225,12 @@ section { position: relative; }
       <div class="chart-wrap reveal">
         <p class="chart-eyebrow">Day 1 to Day&nbsp;28</p>
 
+        <div class="chart-tabs" role="group" aria-label="Choose what the chart plots">
+            <button class="chart-tab is-on" type="button" data-view="0" aria-pressed="true">Leads</button>
+            <button class="chart-tab" type="button" data-view="1" aria-pressed="false">Cost Per Lead</button>
+            <button class="chart-tab" type="button" data-view="2" aria-pressed="false">Ad Spend</button>
+        </div>
+
         <div class="kpis">
           <div class="kpi">
             <p class="kpi-fig" data-kpi="total">40</p>
@@ -1879,7 +2266,7 @@ section { position: relative; }
                 <stop offset="1"   stop-color="var(--agh-blue)" stop-opacity="0"/>
               </linearGradient>
               <clipPath id="chartBand">
-                <path d="M 26.00 286.00 C 31.60 286.00, 48.38 287.14, 59.57 286.00 C 70.76 284.86, 81.95 281.75, 93.14 279.17 C 104.33 276.59, 115.52 272.23, 126.71 270.53 C 137.90 268.82, 149.10 269.67, 160.29 268.96 C 171.48 268.25, 182.67 268.72, 193.86 266.26 C 205.05 263.81, 216.24 258.47, 227.43 254.23 C 238.62 249.99, 249.81 244.19, 261.00 240.83 C 272.19 237.47, 283.38 236.55, 294.57 234.06 C 305.76 231.56, 316.95 230.16, 328.14 225.86 C 339.33 221.57, 350.52 214.33, 361.71 208.28 C 372.90 202.24, 384.10 194.61, 395.29 189.58 C 406.48 184.56, 417.67 182.03, 428.86 178.14 C 440.05 174.25, 451.24 171.56, 462.43 166.26 C 473.62 160.96, 484.81 152.90, 496.00 146.32 C 507.19 139.75, 518.38 131.83, 529.57 126.81 C 540.76 121.79, 551.95 119.54, 563.14 116.18 C 574.33 112.82, 585.52 110.96, 596.71 106.66 C 607.90 102.37, 619.10 95.58, 630.29 90.40 C 641.48 85.22, 652.67 78.93, 663.86 75.57 C 675.05 72.20, 686.24 71.78, 697.43 70.23 C 708.62 68.68, 719.81 68.72, 731.00 66.26 C 742.19 63.81, 753.38 58.90, 764.57 55.50 C 775.76 52.10, 786.95 47.57, 798.14 45.87 C 809.33 44.17, 820.52 45.34, 831.71 45.29 C 842.90 45.24, 854.10 46.69, 865.29 45.55 C 876.48 44.41, 887.67 40.38, 898.86 38.46 C 910.05 36.53, 921.24 34.74, 932.43 34.00 C 943.62 33.26, 960.40 34.00, 966.00 34.00" stroke-width="17" stroke-linecap="round" fill="none" stroke="#000"/>
+                <path d="M 26.00 286.00 C 31.60 286.00, 48.38 287.05, 59.57 286.00 C 70.76 284.95, 81.95 281.80, 93.14 279.70 C 104.33 277.60, 115.52 275.50, 126.71 273.40 C 137.90 271.30, 149.10 269.20, 160.29 267.10 C 171.48 265.00, 182.67 262.90, 193.86 260.80 C 205.05 258.70, 216.24 256.60, 227.43 254.50 C 238.62 252.40, 249.81 250.30, 261.00 248.20 C 272.19 246.10, 283.38 244.00, 294.57 241.90 C 305.76 239.80, 316.95 237.70, 328.14 235.60 C 339.33 233.50, 350.52 231.40, 361.71 229.30 C 372.90 227.20, 384.10 226.15, 395.29 223.00 C 406.48 219.85, 417.67 213.55, 428.86 210.40 C 440.05 207.25, 451.24 207.25, 462.43 204.10 C 473.62 200.95, 484.81 194.65, 496.00 191.50 C 507.19 188.35, 518.38 188.35, 529.57 185.20 C 540.76 182.05, 551.95 176.80, 563.14 172.60 C 574.33 168.40, 585.52 164.20, 596.71 160.00 C 607.90 155.80, 619.10 150.55, 630.29 147.40 C 641.48 144.25, 652.67 144.25, 663.86 141.10 C 675.05 137.95, 686.24 132.70, 697.43 128.50 C 708.62 124.30, 719.81 119.05, 731.00 115.90 C 742.19 112.75, 753.38 112.75, 764.57 109.60 C 775.76 106.45, 786.95 101.20, 798.14 97.00 C 809.33 92.80, 820.52 88.60, 831.71 84.40 C 842.90 80.20, 854.10 76.00, 865.29 71.80 C 876.48 67.60, 887.67 63.40, 898.86 59.20 C 910.05 55.00, 921.24 50.80, 932.43 46.60 C 943.62 42.40, 960.40 36.10, 966.00 34.00" stroke-width="17" stroke-linecap="round" fill="none" stroke="#000"/>
               </clipPath>
             </defs>
 
@@ -1891,15 +2278,15 @@ section { position: relative; }
           <line class="chart-gridline" x1="26.0" y1="286.0" x2="966.0" y2="286.0"/>
             </g>
 
-            <path class="chart-area" d="M 26.00 286.00 C 31.60 286.00, 48.38 287.14, 59.57 286.00 C 70.76 284.86, 81.95 281.75, 93.14 279.17 C 104.33 276.59, 115.52 272.23, 126.71 270.53 C 137.90 268.82, 149.10 269.67, 160.29 268.96 C 171.48 268.25, 182.67 268.72, 193.86 266.26 C 205.05 263.81, 216.24 258.47, 227.43 254.23 C 238.62 249.99, 249.81 244.19, 261.00 240.83 C 272.19 237.47, 283.38 236.55, 294.57 234.06 C 305.76 231.56, 316.95 230.16, 328.14 225.86 C 339.33 221.57, 350.52 214.33, 361.71 208.28 C 372.90 202.24, 384.10 194.61, 395.29 189.58 C 406.48 184.56, 417.67 182.03, 428.86 178.14 C 440.05 174.25, 451.24 171.56, 462.43 166.26 C 473.62 160.96, 484.81 152.90, 496.00 146.32 C 507.19 139.75, 518.38 131.83, 529.57 126.81 C 540.76 121.79, 551.95 119.54, 563.14 116.18 C 574.33 112.82, 585.52 110.96, 596.71 106.66 C 607.90 102.37, 619.10 95.58, 630.29 90.40 C 641.48 85.22, 652.67 78.93, 663.86 75.57 C 675.05 72.20, 686.24 71.78, 697.43 70.23 C 708.62 68.68, 719.81 68.72, 731.00 66.26 C 742.19 63.81, 753.38 58.90, 764.57 55.50 C 775.76 52.10, 786.95 47.57, 798.14 45.87 C 809.33 44.17, 820.52 45.34, 831.71 45.29 C 842.90 45.24, 854.10 46.69, 865.29 45.55 C 876.48 44.41, 887.67 40.38, 898.86 38.46 C 910.05 36.53, 921.24 34.74, 932.43 34.00 C 943.62 33.26, 960.40 34.00, 966.00 34.00 L 966.00 286.00 L 26.00 286.00 Z" fill="url(#chartFill)"/>
-            <path class="chart-line" d="M 26.00 286.00 C 31.60 286.00, 48.38 287.14, 59.57 286.00 C 70.76 284.86, 81.95 281.75, 93.14 279.17 C 104.33 276.59, 115.52 272.23, 126.71 270.53 C 137.90 268.82, 149.10 269.67, 160.29 268.96 C 171.48 268.25, 182.67 268.72, 193.86 266.26 C 205.05 263.81, 216.24 258.47, 227.43 254.23 C 238.62 249.99, 249.81 244.19, 261.00 240.83 C 272.19 237.47, 283.38 236.55, 294.57 234.06 C 305.76 231.56, 316.95 230.16, 328.14 225.86 C 339.33 221.57, 350.52 214.33, 361.71 208.28 C 372.90 202.24, 384.10 194.61, 395.29 189.58 C 406.48 184.56, 417.67 182.03, 428.86 178.14 C 440.05 174.25, 451.24 171.56, 462.43 166.26 C 473.62 160.96, 484.81 152.90, 496.00 146.32 C 507.19 139.75, 518.38 131.83, 529.57 126.81 C 540.76 121.79, 551.95 119.54, 563.14 116.18 C 574.33 112.82, 585.52 110.96, 596.71 106.66 C 607.90 102.37, 619.10 95.58, 630.29 90.40 C 641.48 85.22, 652.67 78.93, 663.86 75.57 C 675.05 72.20, 686.24 71.78, 697.43 70.23 C 708.62 68.68, 719.81 68.72, 731.00 66.26 C 742.19 63.81, 753.38 58.90, 764.57 55.50 C 775.76 52.10, 786.95 47.57, 798.14 45.87 C 809.33 44.17, 820.52 45.34, 831.71 45.29 C 842.90 45.24, 854.10 46.69, 865.29 45.55 C 876.48 44.41, 887.67 40.38, 898.86 38.46 C 910.05 36.53, 921.24 34.74, 932.43 34.00 C 943.62 33.26, 960.40 34.00, 966.00 34.00" fill="none" stroke="url(#chartStroke)"/>
+            <path class="chart-area" d="M 26.00 286.00 C 31.60 286.00, 48.38 287.05, 59.57 286.00 C 70.76 284.95, 81.95 281.80, 93.14 279.70 C 104.33 277.60, 115.52 275.50, 126.71 273.40 C 137.90 271.30, 149.10 269.20, 160.29 267.10 C 171.48 265.00, 182.67 262.90, 193.86 260.80 C 205.05 258.70, 216.24 256.60, 227.43 254.50 C 238.62 252.40, 249.81 250.30, 261.00 248.20 C 272.19 246.10, 283.38 244.00, 294.57 241.90 C 305.76 239.80, 316.95 237.70, 328.14 235.60 C 339.33 233.50, 350.52 231.40, 361.71 229.30 C 372.90 227.20, 384.10 226.15, 395.29 223.00 C 406.48 219.85, 417.67 213.55, 428.86 210.40 C 440.05 207.25, 451.24 207.25, 462.43 204.10 C 473.62 200.95, 484.81 194.65, 496.00 191.50 C 507.19 188.35, 518.38 188.35, 529.57 185.20 C 540.76 182.05, 551.95 176.80, 563.14 172.60 C 574.33 168.40, 585.52 164.20, 596.71 160.00 C 607.90 155.80, 619.10 150.55, 630.29 147.40 C 641.48 144.25, 652.67 144.25, 663.86 141.10 C 675.05 137.95, 686.24 132.70, 697.43 128.50 C 708.62 124.30, 719.81 119.05, 731.00 115.90 C 742.19 112.75, 753.38 112.75, 764.57 109.60 C 775.76 106.45, 786.95 101.20, 798.14 97.00 C 809.33 92.80, 820.52 88.60, 831.71 84.40 C 842.90 80.20, 854.10 76.00, 865.29 71.80 C 876.48 67.60, 887.67 63.40, 898.86 59.20 C 910.05 55.00, 921.24 50.80, 932.43 46.60 C 943.62 42.40, 960.40 36.10, 966.00 34.00 L 966.00 286.00 L 26.00 286.00 Z" fill="url(#chartFill)"/>
+            <path class="chart-line" d="M 26.00 286.00 C 31.60 286.00, 48.38 287.05, 59.57 286.00 C 70.76 284.95, 81.95 281.80, 93.14 279.70 C 104.33 277.60, 115.52 275.50, 126.71 273.40 C 137.90 271.30, 149.10 269.20, 160.29 267.10 C 171.48 265.00, 182.67 262.90, 193.86 260.80 C 205.05 258.70, 216.24 256.60, 227.43 254.50 C 238.62 252.40, 249.81 250.30, 261.00 248.20 C 272.19 246.10, 283.38 244.00, 294.57 241.90 C 305.76 239.80, 316.95 237.70, 328.14 235.60 C 339.33 233.50, 350.52 231.40, 361.71 229.30 C 372.90 227.20, 384.10 226.15, 395.29 223.00 C 406.48 219.85, 417.67 213.55, 428.86 210.40 C 440.05 207.25, 451.24 207.25, 462.43 204.10 C 473.62 200.95, 484.81 194.65, 496.00 191.50 C 507.19 188.35, 518.38 188.35, 529.57 185.20 C 540.76 182.05, 551.95 176.80, 563.14 172.60 C 574.33 168.40, 585.52 164.20, 596.71 160.00 C 607.90 155.80, 619.10 150.55, 630.29 147.40 C 641.48 144.25, 652.67 144.25, 663.86 141.10 C 675.05 137.95, 686.24 132.70, 697.43 128.50 C 708.62 124.30, 719.81 119.05, 731.00 115.90 C 742.19 112.75, 753.38 112.75, 764.57 109.60 C 775.76 106.45, 786.95 101.20, 798.14 97.00 C 809.33 92.80, 820.52 88.60, 831.71 84.40 C 842.90 80.20, 854.10 76.00, 865.29 71.80 C 876.48 67.60, 887.67 63.40, 898.86 59.20 C 910.05 55.00, 921.24 50.80, 932.43 46.60 C 943.62 42.40, 960.40 36.10, 966.00 34.00" fill="none" stroke="url(#chartStroke)"/>
 
             <g class="chart-strands" clip-path="url(#chartBand)">
-          <path class="chart-stri chart-stri--c" d="M 26.00 281.60 C 31.60 281.60, 48.38 282.74, 59.57 281.60 C 70.76 280.46, 81.95 277.35, 93.14 274.77 C 104.33 272.19, 115.52 267.83, 126.71 266.13 C 137.90 264.42, 149.10 265.27, 160.29 264.56 C 171.48 263.85, 182.67 264.32, 193.86 261.86 C 205.05 259.41, 216.24 254.07, 227.43 249.83 C 238.62 245.59, 249.81 239.79, 261.00 236.43 C 272.19 233.07, 283.38 232.15, 294.57 229.66 C 305.76 227.16, 316.95 225.76, 328.14 221.46 C 339.33 217.17, 350.52 209.93, 361.71 203.88 C 372.90 197.84, 384.10 190.21, 395.29 185.18 C 406.48 180.16, 417.67 177.63, 428.86 173.74 C 440.05 169.85, 451.24 167.16, 462.43 161.86 C 473.62 156.56, 484.81 148.50, 496.00 141.92 C 507.19 135.35, 518.38 127.43, 529.57 122.41 C 540.76 117.39, 551.95 115.14, 563.14 111.78 C 574.33 108.42, 585.52 106.56, 596.71 102.26 C 607.90 97.97, 619.10 91.18, 630.29 86.00 C 641.48 80.82, 652.67 74.53, 663.86 71.17 C 675.05 67.80, 686.24 67.38, 697.43 65.83 C 708.62 64.28, 719.81 64.32, 731.00 61.86 C 742.19 59.41, 753.38 54.50, 764.57 51.10 C 775.76 47.70, 786.95 43.17, 798.14 41.47 C 809.33 39.77, 820.52 40.94, 831.71 40.89 C 842.90 40.84, 854.10 42.29, 865.29 41.15 C 876.48 40.01, 887.67 35.98, 898.86 34.06 C 910.05 32.13, 921.24 30.34, 932.43 29.60 C 943.62 28.86, 960.40 29.60, 966.00 29.60"/>
-          <path class="chart-stri chart-stri--a" d="M 26.00 281.60 C 31.60 281.60, 48.38 282.74, 59.57 281.60 C 70.76 280.46, 81.95 277.35, 93.14 274.77 C 104.33 272.19, 115.52 267.83, 126.71 266.13 C 137.90 264.42, 149.10 265.27, 160.29 264.56 C 171.48 263.85, 182.67 264.32, 193.86 261.86 C 205.05 259.41, 216.24 254.07, 227.43 249.83 C 238.62 245.59, 249.81 239.79, 261.00 236.43 C 272.19 233.07, 283.38 232.15, 294.57 229.66 C 305.76 227.16, 316.95 225.76, 328.14 221.46 C 339.33 217.17, 350.52 209.93, 361.71 203.88 C 372.90 197.84, 384.10 190.21, 395.29 185.18 C 406.48 180.16, 417.67 177.63, 428.86 173.74 C 440.05 169.85, 451.24 167.16, 462.43 161.86 C 473.62 156.56, 484.81 148.50, 496.00 141.92 C 507.19 135.35, 518.38 127.43, 529.57 122.41 C 540.76 117.39, 551.95 115.14, 563.14 111.78 C 574.33 108.42, 585.52 106.56, 596.71 102.26 C 607.90 97.97, 619.10 91.18, 630.29 86.00 C 641.48 80.82, 652.67 74.53, 663.86 71.17 C 675.05 67.80, 686.24 67.38, 697.43 65.83 C 708.62 64.28, 719.81 64.32, 731.00 61.86 C 742.19 59.41, 753.38 54.50, 764.57 51.10 C 775.76 47.70, 786.95 43.17, 798.14 41.47 C 809.33 39.77, 820.52 40.94, 831.71 40.89 C 842.90 40.84, 854.10 42.29, 865.29 41.15 C 876.48 40.01, 887.67 35.98, 898.86 34.06 C 910.05 32.13, 921.24 30.34, 932.43 29.60 C 943.62 28.86, 960.40 29.60, 966.00 29.60"/>
-          <path class="chart-stri chart-stri--b" d="M 26.00 283.80 C 31.60 283.80, 48.38 284.94, 59.57 283.80 C 70.76 282.66, 81.95 279.55, 93.14 276.97 C 104.33 274.39, 115.52 270.03, 126.71 268.33 C 137.90 266.62, 149.10 267.47, 160.29 266.76 C 171.48 266.05, 182.67 266.52, 193.86 264.06 C 205.05 261.61, 216.24 256.27, 227.43 252.03 C 238.62 247.79, 249.81 241.99, 261.00 238.63 C 272.19 235.27, 283.38 234.35, 294.57 231.86 C 305.76 229.36, 316.95 227.96, 328.14 223.66 C 339.33 219.37, 350.52 212.13, 361.71 206.08 C 372.90 200.04, 384.10 192.41, 395.29 187.38 C 406.48 182.36, 417.67 179.83, 428.86 175.94 C 440.05 172.05, 451.24 169.36, 462.43 164.06 C 473.62 158.76, 484.81 150.70, 496.00 144.12 C 507.19 137.55, 518.38 129.63, 529.57 124.61 C 540.76 119.59, 551.95 117.34, 563.14 113.98 C 574.33 110.62, 585.52 108.76, 596.71 104.46 C 607.90 100.17, 619.10 93.38, 630.29 88.20 C 641.48 83.02, 652.67 76.73, 663.86 73.37 C 675.05 70.00, 686.24 69.58, 697.43 68.03 C 708.62 66.48, 719.81 66.52, 731.00 64.06 C 742.19 61.61, 753.38 56.70, 764.57 53.30 C 775.76 49.90, 786.95 45.37, 798.14 43.67 C 809.33 41.97, 820.52 43.14, 831.71 43.09 C 842.90 43.04, 854.10 44.49, 865.29 43.35 C 876.48 42.21, 887.67 38.18, 898.86 36.26 C 910.05 34.33, 921.24 32.54, 932.43 31.80 C 943.62 31.06, 960.40 31.80, 966.00 31.80"/>
-          <path class="chart-stri chart-stri--b" d="M 26.00 288.20 C 31.60 288.20, 48.38 289.34, 59.57 288.20 C 70.76 287.06, 81.95 283.95, 93.14 281.37 C 104.33 278.79, 115.52 274.43, 126.71 272.73 C 137.90 271.02, 149.10 271.87, 160.29 271.16 C 171.48 270.45, 182.67 270.92, 193.86 268.46 C 205.05 266.01, 216.24 260.67, 227.43 256.43 C 238.62 252.19, 249.81 246.39, 261.00 243.03 C 272.19 239.67, 283.38 238.75, 294.57 236.26 C 305.76 233.76, 316.95 232.36, 328.14 228.06 C 339.33 223.77, 350.52 216.53, 361.71 210.48 C 372.90 204.44, 384.10 196.81, 395.29 191.78 C 406.48 186.76, 417.67 184.23, 428.86 180.34 C 440.05 176.45, 451.24 173.76, 462.43 168.46 C 473.62 163.16, 484.81 155.10, 496.00 148.52 C 507.19 141.95, 518.38 134.03, 529.57 129.01 C 540.76 123.99, 551.95 121.74, 563.14 118.38 C 574.33 115.02, 585.52 113.16, 596.71 108.86 C 607.90 104.57, 619.10 97.78, 630.29 92.60 C 641.48 87.42, 652.67 81.13, 663.86 77.77 C 675.05 74.40, 686.24 73.98, 697.43 72.43 C 708.62 70.88, 719.81 70.92, 731.00 68.46 C 742.19 66.01, 753.38 61.10, 764.57 57.70 C 775.76 54.30, 786.95 49.77, 798.14 48.07 C 809.33 46.37, 820.52 47.54, 831.71 47.49 C 842.90 47.44, 854.10 48.89, 865.29 47.75 C 876.48 46.61, 887.67 42.58, 898.86 40.66 C 910.05 38.73, 921.24 36.94, 932.43 36.20 C 943.62 35.46, 960.40 36.20, 966.00 36.20"/>
-          <path class="chart-stri chart-stri--a" d="M 26.00 290.40 C 31.60 290.40, 48.38 291.54, 59.57 290.40 C 70.76 289.26, 81.95 286.15, 93.14 283.57 C 104.33 280.99, 115.52 276.63, 126.71 274.93 C 137.90 273.22, 149.10 274.07, 160.29 273.36 C 171.48 272.65, 182.67 273.12, 193.86 270.66 C 205.05 268.21, 216.24 262.87, 227.43 258.63 C 238.62 254.39, 249.81 248.59, 261.00 245.23 C 272.19 241.87, 283.38 240.95, 294.57 238.46 C 305.76 235.96, 316.95 234.56, 328.14 230.26 C 339.33 225.97, 350.52 218.73, 361.71 212.68 C 372.90 206.64, 384.10 199.01, 395.29 193.98 C 406.48 188.96, 417.67 186.43, 428.86 182.54 C 440.05 178.65, 451.24 175.96, 462.43 170.66 C 473.62 165.36, 484.81 157.30, 496.00 150.72 C 507.19 144.15, 518.38 136.23, 529.57 131.21 C 540.76 126.19, 551.95 123.94, 563.14 120.58 C 574.33 117.22, 585.52 115.36, 596.71 111.06 C 607.90 106.77, 619.10 99.98, 630.29 94.80 C 641.48 89.62, 652.67 83.33, 663.86 79.97 C 675.05 76.60, 686.24 76.18, 697.43 74.63 C 708.62 73.08, 719.81 73.12, 731.00 70.66 C 742.19 68.21, 753.38 63.30, 764.57 59.90 C 775.76 56.50, 786.95 51.97, 798.14 50.27 C 809.33 48.57, 820.52 49.74, 831.71 49.69 C 842.90 49.64, 854.10 51.09, 865.29 49.95 C 876.48 48.81, 887.67 44.78, 898.86 42.86 C 910.05 40.93, 921.24 39.14, 932.43 38.40 C 943.62 37.66, 960.40 38.40, 966.00 38.40"/>
+          <path class="chart-stri chart-stri--c" d="M 26.00 281.60 C 31.60 281.60, 48.38 282.65, 59.57 281.60 C 70.76 280.55, 81.95 277.40, 93.14 275.30 C 104.33 273.20, 115.52 271.10, 126.71 269.00 C 137.90 266.90, 149.10 264.80, 160.29 262.70 C 171.48 260.60, 182.67 258.50, 193.86 256.40 C 205.05 254.30, 216.24 252.20, 227.43 250.10 C 238.62 248.00, 249.81 245.90, 261.00 243.80 C 272.19 241.70, 283.38 239.60, 294.57 237.50 C 305.76 235.40, 316.95 233.30, 328.14 231.20 C 339.33 229.10, 350.52 227.00, 361.71 224.90 C 372.90 222.80, 384.10 221.75, 395.29 218.60 C 406.48 215.45, 417.67 209.15, 428.86 206.00 C 440.05 202.85, 451.24 202.85, 462.43 199.70 C 473.62 196.55, 484.81 190.25, 496.00 187.10 C 507.19 183.95, 518.38 183.95, 529.57 180.80 C 540.76 177.65, 551.95 172.40, 563.14 168.20 C 574.33 164.00, 585.52 159.80, 596.71 155.60 C 607.90 151.40, 619.10 146.15, 630.29 143.00 C 641.48 139.85, 652.67 139.85, 663.86 136.70 C 675.05 133.55, 686.24 128.30, 697.43 124.10 C 708.62 119.90, 719.81 114.65, 731.00 111.50 C 742.19 108.35, 753.38 108.35, 764.57 105.20 C 775.76 102.05, 786.95 96.80, 798.14 92.60 C 809.33 88.40, 820.52 84.20, 831.71 80.00 C 842.90 75.80, 854.10 71.60, 865.29 67.40 C 876.48 63.20, 887.67 59.00, 898.86 54.80 C 910.05 50.60, 921.24 46.40, 932.43 42.20 C 943.62 38.00, 960.40 31.70, 966.00 29.60"/>
+          <path class="chart-stri chart-stri--a" d="M 26.00 281.60 C 31.60 281.60, 48.38 282.65, 59.57 281.60 C 70.76 280.55, 81.95 277.40, 93.14 275.30 C 104.33 273.20, 115.52 271.10, 126.71 269.00 C 137.90 266.90, 149.10 264.80, 160.29 262.70 C 171.48 260.60, 182.67 258.50, 193.86 256.40 C 205.05 254.30, 216.24 252.20, 227.43 250.10 C 238.62 248.00, 249.81 245.90, 261.00 243.80 C 272.19 241.70, 283.38 239.60, 294.57 237.50 C 305.76 235.40, 316.95 233.30, 328.14 231.20 C 339.33 229.10, 350.52 227.00, 361.71 224.90 C 372.90 222.80, 384.10 221.75, 395.29 218.60 C 406.48 215.45, 417.67 209.15, 428.86 206.00 C 440.05 202.85, 451.24 202.85, 462.43 199.70 C 473.62 196.55, 484.81 190.25, 496.00 187.10 C 507.19 183.95, 518.38 183.95, 529.57 180.80 C 540.76 177.65, 551.95 172.40, 563.14 168.20 C 574.33 164.00, 585.52 159.80, 596.71 155.60 C 607.90 151.40, 619.10 146.15, 630.29 143.00 C 641.48 139.85, 652.67 139.85, 663.86 136.70 C 675.05 133.55, 686.24 128.30, 697.43 124.10 C 708.62 119.90, 719.81 114.65, 731.00 111.50 C 742.19 108.35, 753.38 108.35, 764.57 105.20 C 775.76 102.05, 786.95 96.80, 798.14 92.60 C 809.33 88.40, 820.52 84.20, 831.71 80.00 C 842.90 75.80, 854.10 71.60, 865.29 67.40 C 876.48 63.20, 887.67 59.00, 898.86 54.80 C 910.05 50.60, 921.24 46.40, 932.43 42.20 C 943.62 38.00, 960.40 31.70, 966.00 29.60"/>
+          <path class="chart-stri chart-stri--b" d="M 26.00 283.80 C 31.60 283.80, 48.38 284.85, 59.57 283.80 C 70.76 282.75, 81.95 279.60, 93.14 277.50 C 104.33 275.40, 115.52 273.30, 126.71 271.20 C 137.90 269.10, 149.10 267.00, 160.29 264.90 C 171.48 262.80, 182.67 260.70, 193.86 258.60 C 205.05 256.50, 216.24 254.40, 227.43 252.30 C 238.62 250.20, 249.81 248.10, 261.00 246.00 C 272.19 243.90, 283.38 241.80, 294.57 239.70 C 305.76 237.60, 316.95 235.50, 328.14 233.40 C 339.33 231.30, 350.52 229.20, 361.71 227.10 C 372.90 225.00, 384.10 223.95, 395.29 220.80 C 406.48 217.65, 417.67 211.35, 428.86 208.20 C 440.05 205.05, 451.24 205.05, 462.43 201.90 C 473.62 198.75, 484.81 192.45, 496.00 189.30 C 507.19 186.15, 518.38 186.15, 529.57 183.00 C 540.76 179.85, 551.95 174.60, 563.14 170.40 C 574.33 166.20, 585.52 162.00, 596.71 157.80 C 607.90 153.60, 619.10 148.35, 630.29 145.20 C 641.48 142.05, 652.67 142.05, 663.86 138.90 C 675.05 135.75, 686.24 130.50, 697.43 126.30 C 708.62 122.10, 719.81 116.85, 731.00 113.70 C 742.19 110.55, 753.38 110.55, 764.57 107.40 C 775.76 104.25, 786.95 99.00, 798.14 94.80 C 809.33 90.60, 820.52 86.40, 831.71 82.20 C 842.90 78.00, 854.10 73.80, 865.29 69.60 C 876.48 65.40, 887.67 61.20, 898.86 57.00 C 910.05 52.80, 921.24 48.60, 932.43 44.40 C 943.62 40.20, 960.40 33.90, 966.00 31.80"/>
+          <path class="chart-stri chart-stri--b" d="M 26.00 288.20 C 31.60 288.20, 48.38 289.25, 59.57 288.20 C 70.76 287.15, 81.95 284.00, 93.14 281.90 C 104.33 279.80, 115.52 277.70, 126.71 275.60 C 137.90 273.50, 149.10 271.40, 160.29 269.30 C 171.48 267.20, 182.67 265.10, 193.86 263.00 C 205.05 260.90, 216.24 258.80, 227.43 256.70 C 238.62 254.60, 249.81 252.50, 261.00 250.40 C 272.19 248.30, 283.38 246.20, 294.57 244.10 C 305.76 242.00, 316.95 239.90, 328.14 237.80 C 339.33 235.70, 350.52 233.60, 361.71 231.50 C 372.90 229.40, 384.10 228.35, 395.29 225.20 C 406.48 222.05, 417.67 215.75, 428.86 212.60 C 440.05 209.45, 451.24 209.45, 462.43 206.30 C 473.62 203.15, 484.81 196.85, 496.00 193.70 C 507.19 190.55, 518.38 190.55, 529.57 187.40 C 540.76 184.25, 551.95 179.00, 563.14 174.80 C 574.33 170.60, 585.52 166.40, 596.71 162.20 C 607.90 158.00, 619.10 152.75, 630.29 149.60 C 641.48 146.45, 652.67 146.45, 663.86 143.30 C 675.05 140.15, 686.24 134.90, 697.43 130.70 C 708.62 126.50, 719.81 121.25, 731.00 118.10 C 742.19 114.95, 753.38 114.95, 764.57 111.80 C 775.76 108.65, 786.95 103.40, 798.14 99.20 C 809.33 95.00, 820.52 90.80, 831.71 86.60 C 842.90 82.40, 854.10 78.20, 865.29 74.00 C 876.48 69.80, 887.67 65.60, 898.86 61.40 C 910.05 57.20, 921.24 53.00, 932.43 48.80 C 943.62 44.60, 960.40 38.30, 966.00 36.20"/>
+          <path class="chart-stri chart-stri--a" d="M 26.00 290.40 C 31.60 290.40, 48.38 291.45, 59.57 290.40 C 70.76 289.35, 81.95 286.20, 93.14 284.10 C 104.33 282.00, 115.52 279.90, 126.71 277.80 C 137.90 275.70, 149.10 273.60, 160.29 271.50 C 171.48 269.40, 182.67 267.30, 193.86 265.20 C 205.05 263.10, 216.24 261.00, 227.43 258.90 C 238.62 256.80, 249.81 254.70, 261.00 252.60 C 272.19 250.50, 283.38 248.40, 294.57 246.30 C 305.76 244.20, 316.95 242.10, 328.14 240.00 C 339.33 237.90, 350.52 235.80, 361.71 233.70 C 372.90 231.60, 384.10 230.55, 395.29 227.40 C 406.48 224.25, 417.67 217.95, 428.86 214.80 C 440.05 211.65, 451.24 211.65, 462.43 208.50 C 473.62 205.35, 484.81 199.05, 496.00 195.90 C 507.19 192.75, 518.38 192.75, 529.57 189.60 C 540.76 186.45, 551.95 181.20, 563.14 177.00 C 574.33 172.80, 585.52 168.60, 596.71 164.40 C 607.90 160.20, 619.10 154.95, 630.29 151.80 C 641.48 148.65, 652.67 148.65, 663.86 145.50 C 675.05 142.35, 686.24 137.10, 697.43 132.90 C 708.62 128.70, 719.81 123.45, 731.00 120.30 C 742.19 117.15, 753.38 117.15, 764.57 114.00 C 775.76 110.85, 786.95 105.60, 798.14 101.40 C 809.33 97.20, 820.52 93.00, 831.71 88.80 C 842.90 84.60, 854.10 80.40, 865.29 76.20 C 876.48 72.00, 887.67 67.80, 898.86 63.60 C 910.05 59.40, 921.24 55.20, 932.43 51.00 C 943.62 46.80, 960.40 40.50, 966.00 38.40"/>
             </g>
 
             <circle class="chart-endpoint" cx="966.00" cy="34.00" r="6"/>
@@ -2322,7 +2709,7 @@ section { position: relative; }
      never lands on an obvious loop. */
   function breath() {
     if (reduced) return 1;
-    return 1 + 0.30 * Math.sin(t * 0.55) + 0.12 * Math.sin(t * 0.23 + 1.7);
+    return 1 + 0.46 * Math.sin(t * 0.55) + 0.20 * Math.sin(t * 0.23 + 1.7);
   }
 
   function tintGradient(c2d, boost) {
@@ -2336,7 +2723,10 @@ section { position: relative; }
       var c = sweep(base + f * (TH / Math.max(1, MH)) * 2.6);
       /* boost below 1 darkens the ink, which on a multiply composite reads
          as the seam glowing stronger. Clamped so it never crushes to black. */
-      var k = Math.max(0.55, Math.min(1.45, boost));
+      /* Opened from 0.55-1.45. The old window was narrower than the wave
+         that drove it, so the breath spent most of its time pinned against
+         a stop and the field read as barely moving. */
+      var k = Math.max(0.34, Math.min(1.66, boost));
       g.addColorStop(f, 'rgb(' + Math.min(255, c[0] * k | 0) + ',' + Math.min(255, c[1] * k | 0) + ',' + Math.min(255, c[2] * k | 0) + ')');
     }
     return g;
@@ -2372,9 +2762,10 @@ section { position: relative; }
     ctx.globalCompositeOperation = 'source-over';
   }
 
-  /* No requestAnimationFrame loop at all. The field is stationary, so it
-     only needs redrawing when the scroll position changes. That costs
-     nothing at rest and removes the perpetual loop entirely. */
+  /* The GEOMETRY is stationary - seams and junctions hold their exact
+     positions and nothing slides. The loop exists only for the breath: the
+     ink rises and falls while the shape stays put. One blit and one fill per
+     frame, both on a canvas at 0.62 scale, which is why it holds 60fps. */
   function frame() {
     t += 0.016;
     readScroll();
@@ -2448,26 +2839,108 @@ section { position: relative; }
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 
-  /* ---- The chart, scrubbable ----
-     Hovering or dragging the plot reports that day's figures. The series is
-     derived, not invented: see the KPI comment in the stylesheet. */
+  /* ---- The chart: three reads of one cycle, scrubbable ----
+     SERIES is integer-true. Every figure printed is the figure the arithmetic
+     uses, so ad spend divided by leads gives exactly the cost on screen at
+     all 29 scrub positions. See the generator comment for why the arrivals
+     are written per sprint instead of fitted to a curve.
+
+     All three views share the same 29 x positions, which is the whole reason
+     one can be linearly interpolated into another - the curve genuinely
+     travels between shapes instead of cutting. */
   var chartBox = document.querySelector('.chart-box');
   if (chartBox) {
-    var SERIES = [{"d":0,"total":0.0,"perDay":0.0,"cpl":null,"spend":0.0},{"d":1,"total":0.0,"perDay":0.0,"cpl":null,"spend":83.0},{"d":2,"total":1.1,"perDay":1.1,"cpl":153.73,"spend":167.0},{"d":3,"total":2.5,"perDay":1.4,"cpl":101.78,"spend":250.0},{"d":4,"total":2.7,"perDay":0.2,"cpl":123.23,"spend":333.0},{"d":5,"total":3.1,"perDay":0.4,"cpl":132.98,"spend":417.0},{"d":6,"total":5.0,"perDay":1.9,"cpl":99.16,"spend":500.0},{"d":7,"total":7.2,"perDay":2.1,"cpl":81.36,"spend":583.0},{"d":8,"total":8.2,"perDay":1.1,"cpl":80.86,"spend":667.0},{"d":9,"total":9.5,"perDay":1.3,"cpl":78.57,"spend":750.0},{"d":10,"total":12.3,"perDay":2.8,"cpl":67.55,"spend":833.0},{"d":11,"total":15.3,"perDay":3.0,"cpl":59.9,"spend":917.0},{"d":12,"total":17.1,"perDay":1.8,"cpl":58.41,"spend":1000.0},{"d":13,"total":19.0,"perDay":1.9,"cpl":57.0,"spend":1083.0},{"d":14,"total":22.2,"perDay":3.2,"cpl":52.62,"spend":1167.0},{"d":15,"total":25.3,"perDay":3.1,"cpl":49.47,"spend":1250.0},{"d":16,"total":27.0,"perDay":1.7,"cpl":49.46,"spend":1333.0},{"d":17,"total":28.5,"perDay":1.5,"cpl":49.77,"spend":1417.0},{"d":18,"total":31.0,"perDay":2.6,"cpl":48.31,"spend":1500.0},{"d":19,"total":33.4,"perDay":2.4,"cpl":47.4,"spend":1583.0},{"d":20,"total":34.2,"perDay":0.8,"cpl":48.66,"spend":1667.0},{"d":21,"total":34.9,"perDay":0.6,"cpl":50.17,"spend":1750.0},{"d":22,"total":36.6,"perDay":1.7,"cpl":50.11,"spend":1833.0},{"d":23,"total":38.1,"perDay":1.5,"cpl":50.29,"spend":1917.0},{"d":24,"total":38.2,"perDay":0.1,"cpl":52.34,"spend":2000.0},{"d":25,"total":38.2,"perDay":0.0,"cpl":54.59,"spend":2083.0},{"d":26,"total":39.3,"perDay":1.1,"cpl":55.14,"spend":2167.0},{"d":27,"total":40.0,"perDay":0.7,"cpl":56.25,"spend":2250.0},{"d":28,"total":40.0,"perDay":0.0,"cpl":58.33,"spend":2333.0}];
+    var SERIES = [{"d":0,"total":0,"perDay":0,"cpl":null,"spend":0},{"d":1,"total":0,"perDay":0,"cpl":null,"spend":83},{"d":2,"total":1,"perDay":1,"cpl":167.0,"spend":167},{"d":3,"total":2,"perDay":1,"cpl":125.0,"spend":250},{"d":4,"total":3,"perDay":1,"cpl":111.0,"spend":333},{"d":5,"total":4,"perDay":1,"cpl":104.25,"spend":417},{"d":6,"total":5,"perDay":1,"cpl":100.0,"spend":500},{"d":7,"total":6,"perDay":1,"cpl":97.17,"spend":583},{"d":8,"total":7,"perDay":1,"cpl":95.29,"spend":667},{"d":9,"total":8,"perDay":1,"cpl":93.75,"spend":750},{"d":10,"total":9,"perDay":1,"cpl":92.56,"spend":833},{"d":11,"total":10,"perDay":1,"cpl":91.7,"spend":917},{"d":12,"total":12,"perDay":2,"cpl":83.33,"spend":1000},{"d":13,"total":13,"perDay":1,"cpl":83.31,"spend":1083},{"d":14,"total":15,"perDay":2,"cpl":77.8,"spend":1167},{"d":15,"total":16,"perDay":1,"cpl":78.12,"spend":1250},{"d":16,"total":18,"perDay":2,"cpl":74.06,"spend":1333},{"d":17,"total":20,"perDay":2,"cpl":70.85,"spend":1417},{"d":18,"total":22,"perDay":2,"cpl":68.18,"spend":1500},{"d":19,"total":23,"perDay":1,"cpl":68.83,"spend":1583},{"d":20,"total":25,"perDay":2,"cpl":66.68,"spend":1667},{"d":21,"total":27,"perDay":2,"cpl":64.81,"spend":1750},{"d":22,"total":28,"perDay":1,"cpl":65.46,"spend":1833},{"d":23,"total":30,"perDay":2,"cpl":63.9,"spend":1917},{"d":24,"total":32,"perDay":2,"cpl":62.5,"spend":2000},{"d":25,"total":34,"perDay":2,"cpl":61.26,"spend":2083},{"d":26,"total":36,"perDay":2,"cpl":60.19,"spend":2167},{"d":27,"total":38,"perDay":2,"cpl":59.21,"spend":2250},{"d":28,"total":40,"perDay":2,"cpl":58.33,"spend":2333}];
+    var VIEWS = [{"key":"total","label":"Leads","name":"Leads","ticks":["40","30","20","10","0"],"ys":[286.0,286.0,279.7,273.4,267.1,260.8,254.5,248.2,241.9,235.6,229.3,223.0,210.4,204.1,191.5,185.2,172.6,160.0,147.4,141.1,128.5,115.9,109.6,97.0,84.4,71.8,59.2,46.6,34.0]},{"key":"cpl","label":"Cost Per Lead","name":"Cost","ticks":["$200","$150","$100","$50","$0"],"ys":[75.58,75.58,75.58,128.5,146.14,154.65,160.0,163.57,165.93,167.88,169.37,170.46,181.0,181.03,187.97,187.57,192.68,196.73,200.09,199.27,201.98,204.34,203.52,205.49,207.25,208.81,210.16,211.4,212.5]},{"key":"spend","label":"Ad Spend","name":"Spend","ticks":["$2,400","$1,800","$1,200","$600","$0"],"ys":[286.0,277.29,268.46,259.75,251.03,242.22,233.5,224.78,215.97,207.25,198.53,189.72,181.0,172.29,163.46,154.75,146.03,137.22,128.5,119.78,110.97,102.25,93.53,84.72,76.0,67.28,58.47,49.75,41.03]}];
+    var XS = [26.0,59.57,93.14,126.71,160.29,193.86,227.43,261.0,294.57,328.14,361.71,395.29,428.86,462.43,496.0,529.57,563.14,596.71,630.29,663.86,697.43,731.0,764.57,798.14,831.71,865.29,898.86,932.43,966.0];
+    var svg = chartBox.querySelector('.chart-svg');
+    var lineEl = svg.querySelector('.chart-line');
+    var areaEl = svg.querySelector('.chart-area');
+    var clipEl = svg.querySelector('#chartBand path');
+    var striEls = [].slice.call(svg.querySelectorAll('.chart-stri'));
+    var endEl = svg.querySelector('.chart-endpoint');
+    var STRI_DY = [-4.4, -4.4, -2.2, 2.2, 4.4];
+    var BASE_Y = 286;
+
+    var tabs = [].slice.call(document.querySelectorAll('.chart-tab'));
+    var yTicks = [].slice.call(chartBox.querySelectorAll('.chart-axis--y .chart-tick'));
+    var yName = chartBox.querySelector('.chart-axis-name--y');
     var scrub = chartBox.querySelector('.chart-scrub');
-    /* NOT `figs`. The count-up block later in this same IIFE declares
-       `var figs` too, and `var` gives one binding per function - so its
-       NodeList silently replaced this map and every scrub reported the same
-       figures. Renamed, and the two no longer collide. */
     var kpiEls = {};
     document.querySelectorAll('.kpi-fig').forEach(function (el) { kpiEls[el.getAttribute('data-kpi')] = el; });
-    var PAD_L = 26 / 1000, PAD_R = 34 / 1000;   /* the viewBox insets */
 
+    var PAD_L = 26 / 1000, PAD_R = 34 / 1000;   /* the viewBox insets */
+    var view = 0;
+    var cur = VIEWS[0].ys.slice();
+
+    /* Catmull-Rom through the points, expressed as cubic beziers. Same
+       construction the generator uses, so a morphed frame and a baked path
+       are the identical curve. */
+    function smooth(ys, dy) {
+      var p = [], i;
+      for (i = 0; i < XS.length; i++) p.push([XS[i], ys[i] + dy]);
+      var d = 'M ' + p[0][0].toFixed(2) + ' ' + p[0][1].toFixed(2);
+      for (i = 0; i < p.length - 1; i++) {
+        var p0 = i > 0 ? p[i - 1] : p[i];
+        var p1 = p[i], p2 = p[i + 1];
+        var p3 = (i + 2 < p.length) ? p[i + 2] : p2;
+        d += ' C ' + (p1[0] + (p2[0] - p0[0]) / 6).toFixed(2) + ' ' + (p1[1] + (p2[1] - p0[1]) / 6).toFixed(2) +
+             ', ' + (p2[0] - (p3[0] - p1[0]) / 6).toFixed(2) + ' ' + (p2[1] - (p3[1] - p1[1]) / 6).toFixed(2) +
+             ', ' + p2[0].toFixed(2) + ' ' + p2[1].toFixed(2);
+      }
+      return d;
+    }
+
+    function paint(ys) {
+      var d = smooth(ys, 0);
+      lineEl.setAttribute('d', d);
+      if (clipEl) clipEl.setAttribute('d', d);
+      areaEl.setAttribute('d', d +
+        ' L ' + XS[XS.length - 1].toFixed(2) + ' ' + BASE_Y +
+        ' L ' + XS[0].toFixed(2) + ' ' + BASE_Y + ' Z');
+      for (var i = 0; i < striEls.length; i++) striEls[i].setAttribute('d', smooth(ys, STRI_DY[i] || 0));
+      endEl.setAttribute('cx', XS[XS.length - 1].toFixed(2));
+      endEl.setAttribute('cy', ys[ys.length - 1].toFixed(2));
+    }
+
+    var anim = 0;
+    var slow = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function show(nv) {
+      if (nv === view) return;
+      view = nv;
+      var from = cur.slice(), to = VIEWS[nv].ys, t0 = 0;
+
+      tabs.forEach(function (b, i) {
+        b.classList.toggle('is-on', i === nv);
+        b.setAttribute('aria-pressed', i === nv ? 'true' : 'false');
+      });
+      yTicks.forEach(function (el, i) { el.textContent = VIEWS[nv].ticks[i]; });
+      if (yName) yName.textContent = VIEWS[nv].name;
+
+      if (anim) { cancelAnimationFrame(anim); anim = 0; }
+      if (slow) { cur = to.slice(); paint(cur); return; }
+
+      function step(ts) {
+        if (!t0) t0 = ts;
+        var u = Math.min(1, (ts - t0) / 600);
+        var e = u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2;
+        for (var i = 0; i < to.length; i++) cur[i] = from[i] + (to[i] - from[i]) * e;
+        paint(cur);
+        anim = u < 1 ? requestAnimationFrame(step) : 0;
+      }
+      anim = requestAnimationFrame(step);
+    }
+
+    tabs.forEach(function (b, i) {
+      b.addEventListener('click', function () { show(i); });
+    });
+
+    /* ---- the scrubber. Every KPI reports the same day, always. ---- */
     function fmt(k, v) {
       if (v === null || v === undefined) return '--';
       if (k === 'cpl') return '$' + v.toFixed(0);
       if (k === 'spend') return '$' + Math.round(v).toLocaleString('en-US');
-      if (k === 'perDay') return v.toFixed(1);
       return Math.round(v).toString();
     }
 
@@ -2475,17 +2948,8 @@ section { position: relative; }
       for (var k in kpiEls) if (kpiEls[k]) kpiEls[k].textContent = fmt(k, rec[k]);
     }
 
-    /* At rest the row reports the CYCLE, not the final day - day 28's
-       per-day figure is near zero because the curve has flattened, which
-       read as a broken stat. */
     var last = SERIES[SERIES.length - 1];
-    var summary = {
-      total: last.total,
-      cpl: last.cpl,
-      perDay: last.total / (SERIES.length - 1),
-      spend: last.spend
-    };
-    function reset() { report(summary); }
+    function reset() { report(last); }
 
     function at(clientX) {
       var r = chartBox.getBoundingClientRect();
