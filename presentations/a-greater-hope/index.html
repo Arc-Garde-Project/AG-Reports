@@ -554,6 +554,68 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   background: var(--scrim-firm); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255,255,255,0.5); }
 .pagefoot b { font-weight: 700; color: var(--ink); }
+/* THE NAV IS FIXED, SO THE LAST THING ON THE PAGE HAS TO GET OUT FROM UNDER IT.
+   Measured before this: the credit line ended at 849 with the nav starting at
+   825 on desktop, and it was covered at 393 and 350 as well. --nav-h is written
+   from the bar's real height, which changes when the labels drop at 760px. */
+.pagefoot { padding-bottom: calc(var(--nav-h, 56px) + clamp(1.25rem, 4vh, 2.25rem)); }
+
+/* PRESENTATION CONTROLS. Fixed to the viewport so it rides over the stage AND
+   the cost section without either knowing about it. pointer-events sit on the
+   BUTTONS only: the stage reads every wheel and touch event on the page, and a
+   bar spanning the bottom that swallowed them would break scrolling outright. */
+.deck-nav {
+  position: fixed; left: 50%; bottom: clamp(0.7rem, 2.2vh, 1.4rem);
+  transform: translateX(-50%); z-index: 60;
+  display: flex; align-items: center; gap: clamp(0.15rem, 0.6vw, 0.4rem);
+  padding: clamp(0.25rem, 0.7vw, 0.4rem);
+  border-radius: 999px; pointer-events: none;
+  background: rgba(253,248,242,0.82);
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  border: 1px solid rgba(255,255,255,0.6);
+  box-shadow: 0 6px 28px rgba(20,40,60,0.16);
+  max-width: calc(100vw - 1.5rem);
+}
+.deck-nav > * { pointer-events: auto; }
+.deck-stop, .deck-fs {
+  font: inherit; border: 0; background: transparent; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.42rem 0.72rem; border-radius: 999px; color: var(--ink);
+  transition: background 0.3s ease, color 0.3s ease;
+  /* LOCKED AG minimum, which exceeds the WCAG 44px floor. Measured before this
+     the stops were 26x40 and the full-screen button 33x40. */
+  min-height: 49px; min-width: 49px; justify-content: center;
+}
+.deck-stop b { font-family: var(--font-display); font-weight: 500; font-size: 0.95rem;
+  line-height: 1; color: var(--blue-plate); }
+.deck-stop span { font-size: clamp(0.72rem, 0.66rem + 0.24vw, 0.84rem);
+  font-weight: 600; letter-spacing: 0.01em; white-space: nowrap; }
+.deck-stop--mark { padding: 0.28rem; }
+.deck-stop--mark img { display: block; width: 30px; height: 30px; }
+@media (hover: hover) {
+  .deck-stop:hover, .deck-fs:hover { background: rgba(20,80,132,0.10); }
+}
+.deck-stop[aria-current="true"] { background: var(--blue-plate); }
+.deck-stop[aria-current="true"] b,
+.deck-stop[aria-current="true"] span { color: #fff; }
+.deck-fs { padding: 0.42rem; }
+.deck-fs svg { width: 20px; height: 20px; fill: none; stroke: var(--ink);
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.deck-fs .fs-out { display: none; }
+.deck-fs[aria-pressed="true"] .fs-in { display: none; }
+.deck-fs[aria-pressed="true"] .fs-out { display: inline; }
+.deck-stop:focus-visible, .deck-fs:focus-visible {
+  outline: 2px solid var(--blue-plate); outline-offset: 2px; }
+
+/* A phone cannot carry four labels and a mark. The words drop and the numbers
+   stay, which is still four NAMED stops rather than anonymous dots. */
+@media (max-width: 760px) {
+  .deck-stop span { display: none; }
+  .deck-stop { padding: 0.42rem 0.5rem; }
+  .deck-stop b { font-size: 0.95rem; }
+  .deck-stop--mark img { width: 26px; height: 26px; }
+}
 @media (max-width: 900px) {
   .foot-chip { padding: 0.55rem 0.95rem; line-height: 1.5; }
 }
@@ -757,7 +819,6 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
     </div>
   </section>
 
-  <div class="hstage-rail" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
 </div>
 
 <!-- THE CLOUDS ARE A FIXED BACKDROP, NOT A CLIP THAT PLAYS.
@@ -839,6 +900,28 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
 </footer>
 </div><!-- /.sky-scope -->
 
+<!-- PRESENTATION CONTROLS (Quinten, 2026-08-19). The five-dot segment rail that
+     sat at the bottom of the stage is gone: it was an indicator only and it
+     collided with this. Every label here is copy that already exists in the
+     deck, and the hero takes the mark rather than a word, so nothing new is
+     written. The scrubs are transitions, not destinations, so there are four
+     stops rather than five. -->
+<nav class="deck-nav" data-ag-center-exempt aria-label="Presentation sections">
+  <button class="deck-stop deck-stop--mark" data-seg="0" aria-label="Title">
+    <picture><source srcset="agh-logo-256.webp" type="image/webp">
+    <img src="agh-logo-256.png" alt="" width="256" height="256" decoding="async"></picture>
+  </button>
+  <button class="deck-stop" data-seg="2"><b>1</b><span>What We Do</span></button>
+  <button class="deck-stop" data-seg="4"><b>2</b><span>How It Runs</span></button>
+  <button class="deck-stop" data-cost="1"><b>3</b><span>What It Costs</span></button>
+  <button class="deck-fs" aria-label="Full screen" aria-pressed="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path class="fs-in"  d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>
+      <path class="fs-out" d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>
+    </svg>
+  </button>
+</nav>
+
 <script>
 /* Page scroll is suppressed while the stage owns input, and handed back the
    moment the last rest state is passed. Reduced motion never locks at all.
@@ -860,7 +943,6 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   // every phone on the hero.
   var narrow = window.matchMedia('(max-width: 900px)').matches;
   var stage = document.getElementById('stage');
-  var rail = stage.querySelectorAll('.hstage-rail i');
 
   if (!reduced && !narrow) document.documentElement.dataset.stageLocked = 'true';
 
@@ -878,16 +960,142 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
     setTimeout(holdLenis, 0);
   }
 
-  window.addEventListener('ag:hybrid-state', function (e) {
-    rail.forEach(function (el, i) { el.dataset.on = String(i <= e.detail.index); });
+  /* ═══ PRESENTATION CONTROLS ════════════════════════════════════════════════
+     Four stops. The three plates are stage segments 0, 2 and 4 (1 and 3 are the
+     transitions between them, which are not destinations), and the fourth is
+     the cost section, which lives outside the stage in normal page flow.
+
+     WHY THE HANDOFF NEEDED FIXING. Leaving the last plate set released=true and
+     returned false so the wheel fell through to the page. But the page is held
+     at overflow:hidden with Lenis stopped, and both are only undone by the
+     observer below, which runs a beat later. scrollY was still 0 at that point,
+     so the reader pushed through the dwell, nothing moved, and then a whole
+     viewport scrolled at once when the lock finally lifted. That is the
+     "blocked by the anchor magnet" feel. Releasing now eases to the cost
+     section instead of dumping the reader into raw scroll at the top. */
+  var scope = document.querySelector('.sky-scope');
+  var stops = Array.prototype.slice.call(document.querySelectorAll('.deck-stop'));
+  var SEG_OF_STOP = [0, 2, 4];
+
+  function hyb() { return stage.__hybrid || null; }
+  function lockPage() {
+    if (reduced || narrow) return;
+    document.documentElement.dataset.stageLocked = 'true';
+    holdLenis();
+  }
+  function unlockPage() {
+    document.documentElement.dataset.stageLocked = 'false';
+    releaseLenis();
+    /* LENIS MEASURED THE PAGE WHILE IT WAS LOCKED. The lock is overflow:hidden,
+       so scrollHeight was one viewport and Lenis cached limit = 0. Every
+       scrollTo after that clamped to 0 and silently did nothing, which is why
+       the cost stop moved on a phone (never locked) and not on a desktop.
+       The unlock has to land in the layout before the remeasure, hence rAF. */
+    requestAnimationFrame(function () {
+      if (window.lenis && typeof window.lenis.resize === 'function') window.lenis.resize();
+    });
+  }
+  /* ONE OWNER, ONE REMEASURE. This used to resize Lenis on every call, including
+     while a jump was already running, and both toCost() and the released
+     observer issued their own jump. Two animations plus a mid-flight remeasure
+     is what made the first frames read 109, 180, 73, 122 instead of easing.
+     resize() now happens once in unlockPage, and only ONE path starts a jump. */
+  function easeTo(target, done, secs) {
+    if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+      window.lenis.scrollTo(target, { duration: secs || 1.4, onComplete: done });
+      if (done) setTimeout(done, (secs || 1.4) * 1000 + 120);
+    } else {
+      window.scrollTo({ top: typeof target === 'number' ? target : target.offsetTop,
+                        behavior: reduced ? 'auto' : 'smooth' });
+      if (done) setTimeout(done, reduced ? 0 : 700);
+    }
+  }
+  /* Fires the jump only after the unlock and the remeasure have both landed. */
+  function easeToCost() {
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { easeTo(scope, null, 1.4); });
+    });
+  }
+
+  var settling = false;
+  function markCurrent(i) {
+    stops.forEach(function (b, n) { b.setAttribute('aria-current', String(n === i)); });
+  }
+
+  function toStage(seg) {
+    var h = hyb(); if (!h) return;
+    var land = function () {
+      if (settling) return; settling = true;
+      h.relock(); lockPage(); h.go(seg, false);
+      setTimeout(function () { settling = false; }, 120);
+    };
+    if (window.scrollY > 2) easeTo(0, land); else land();
+  }
+
+  function toCost() {
+    var h = hyb();
+    if (h && !h.isReleased()) { h.release(); return; }   // the observer takes it
+    unlockPage();
+    easeToCost();
+  }
+
+  stops.forEach(function (btn, i) {
+    btn.addEventListener('click', function () {
+      if (btn.dataset.cost) { markCurrent(3); toCost(); }
+      else { markCurrent(i); toStage(SEG_OF_STOP[i]); }
+    });
   });
+
+  window.addEventListener('ag:hybrid-state', function (e) {
+    var idx = e.detail.index;
+    var at = SEG_OF_STOP.indexOf(idx);
+    if (at === -1) at = idx > 4 ? 3 : Math.max(0, Math.floor(idx / 2));  // mid-scrub
+    markCurrent(at);
+  });
+
+  /* The cost section owns the fourth stop once it is actually on screen. */
+  if (scope && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting && en.intersectionRatio > 0.5) markCurrent(3); });
+    }, { threshold: [0.5] }).observe(scope);
+  }
 
   new MutationObserver(function () {
     if (stage.dataset.released === 'true') {
-      document.documentElement.dataset.stageLocked = 'false';
-      releaseLenis();
+      unlockPage();
+      if (!settling && window.scrollY < 4) { markCurrent(3); easeToCost(); }
+    } else {
+      lockPage();
     }
   }).observe(stage, { attributes: true, attributeFilter: ['data-released'] });
+
+  /* FULL SCREEN. No ag-* primitive covers the Fullscreen API, so this is the one
+     net-new piece. Safari still needs the webkit prefix on iOS and older macOS. */
+  var navEl = document.querySelector('.deck-nav');
+  function sizeNav() {
+    if (!navEl) return;
+    document.documentElement.style.setProperty('--nav-h', Math.round(navEl.getBoundingClientRect().height) + 'px');
+  }
+  sizeNav();
+  window.addEventListener('resize', sizeNav, { passive: true });
+  window.addEventListener('orientationchange', sizeNav, { passive: true });
+
+  var fsBtn = document.querySelector('.deck-fs');
+  function fsElement() { return document.fullscreenElement || document.webkitFullscreenElement || null; }
+  function syncFs() { if (fsBtn) fsBtn.setAttribute('aria-pressed', String(!!fsElement())); }
+  if (fsBtn) {
+    var root = document.documentElement;
+    if (!(root.requestFullscreen || root.webkitRequestFullscreen)) {
+      fsBtn.hidden = true;                          // iPhone Safari has no element fullscreen
+    }
+    fsBtn.addEventListener('click', function () {
+      var el = fsElement();
+      if (el) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
+      else { (root.requestFullscreen || root.webkitRequestFullscreen).call(root); }
+    });
+    document.addEventListener('fullscreenchange', syncFs);
+    document.addEventListener('webkitfullscreenchange', syncFs);
+  }
 
   /* NEVER REVEAL A BLANK STAGE. The curtain fails open at 14s so a reader is
      never trapped behind it. On a slow connection that fires BEFORE the engine

@@ -879,6 +879,11 @@
     // Exposed for verification, not for page code to drive.
     stage.__hybrid = {
       go: (i, atEnd) => enter(i, !!atEnd),
+      /* Re-arms the stage after it has handed scrolling back, so a nav click
+         can return to a plate instead of the deck being one-way once released. */
+      relock: () => { released = false; stage.dataset.released = 'false'; },
+      release: () => { released = true; stage.dataset.released = 'true'; },
+      isReleased: () => released,
       delta: onDelta,
       state: () => ({ cur, kind: segs[cur].kind, pos: segs[cur].pos, released, tier }),
       segs
