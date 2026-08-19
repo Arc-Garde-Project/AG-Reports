@@ -122,8 +122,8 @@
      that is barely translucent rather than a color wash, and a BEVEL -
      a bright top edge where light catches and a soft dark bottom edge
      where the pane has thickness. */
-  --surface: rgba(255, 255, 255, 0.26);
-  --surface-line: rgba(255, 255, 255, 0.55);
+  --surface: rgba(255, 255, 255, 0.62);
+  --surface-line: rgba(255, 255, 255, 0.85);
   /* 26px blurred the field into a flat white wash behind every card, so the
      glass read as plastic. 15px keeps enough seam structure to see that
      there IS something behind the pane without it competing with copy. */
@@ -163,7 +163,7 @@
      needs the blend behind it to stay under 0.183 relative luminance to hold
      4.5:1, which pins the alpha at 0.80 or above over a ground this light.
      0.86 with the blur and a bevel still reads as glass. */
-  --panel: rgba(26, 17, 38, 0.86);
+  --panel: rgba(26, 17, 38, 0.92);
   --panel-bevel:
     inset 0 1.5px 0 rgba(255, 255, 255, 0.22),
     inset 1.5px 0 0 rgba(255, 255, 255, 0.10),
@@ -193,8 +193,9 @@
   --v-section: min(clamp(3.5rem, 2rem + 6vw, 7rem), 11vh);
 
   /* Warm-tinted shadows. A neutral gray shadow on warm paper reads as dirt. */
-  --shadow-card: var(--bevel), 0 2px 6px rgba(64, 40, 72, 0.05), 0 16px 40px rgba(64, 40, 72, 0.10);
-  --shadow-lift: var(--bevel), 0 4px 12px rgba(64, 40, 72, 0.08), 0 30px 64px rgba(64, 40, 72, 0.16);
+  /* deeper, so a pane sits clearly ON the field rather than in it */
+  --shadow-card: var(--bevel), 0 3px 8px rgba(64, 40, 72, 0.08), 0 22px 52px rgba(64, 40, 72, 0.15);
+  --shadow-lift: var(--bevel), 0 6px 16px rgba(64, 40, 72, 0.12), 0 38px 78px rgba(64, 40, 72, 0.22);
 }
 
 /* ---------- Ground ---------- */
@@ -216,7 +217,13 @@ html { background: var(--paper); }
   height: 100%;
   display: block;
   z-index: 0;
-  pointer-events: none;   /* never intercepts a click; input is read on window */
+  pointer-events: none;
+  /* The field was reading as the loudest thing on the page. A blur throws it
+     out of focus so it sits behind the content rather than beside it, and the
+     opacity drops its weight. It only repaints on scroll, so the blur is a
+     one-off compositor cost, not a per-frame one. */
+  filter: blur(2.5px);
+  opacity: 0.72;   /* never intercepts a click; input is read on window */
 }
 
 body > main,
@@ -423,8 +430,7 @@ section { position: relative; }
    Transform only, vertical only (MOT-10 forbids arrivals from the sides),
    on the canonical tokens. The line boxes above clip; these slide. */
 .hero-title .t,
-.sec-title .t,
-.close-title .t {
+.sec-title .t {
   display: block;
   white-space: nowrap;
   transform: translateY(108%);
@@ -433,8 +439,7 @@ section { position: relative; }
 }
 
 .in-view .hero-title .t,
-.in-view .sec-title .t,
-.in-view .close-title .t { transform: translateY(0); }
+.in-view .sec-title .t { transform: translateY(0); }
 
 /* second line lands a beat later - 126ms is MOT-08's stagger ceiling */
 .hero-title .l2 .t,
@@ -444,7 +449,6 @@ section { position: relative; }
    entrance, and running both at once just muddies it */
 .reveal-stagger > .hero-title { opacity: 1; transform: none; }
 
-.close-title { overflow: hidden; padding-bottom: 0.08em; }
 
 .sec-sub {
   font-weight: 400;
@@ -664,9 +668,11 @@ section { position: relative; }
   position: relative;
   overflow: hidden;
   padding-block: clamp(20px, 2.6vw, 34px);
-  /* the frame fades at both edges so the road runs off rather than stopping */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+  /* The frame fades at both edges so the road runs off rather than stopping.
+     The band is deliberately narrow: a wide fade dropped whole cards to
+     2.5:1, because a card half inside the fade is half transparent. */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 3.5%, #000 96.5%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 3.5%, #000 96.5%, transparent 100%);
 }
 
 .road-track {
@@ -784,8 +790,10 @@ section { position: relative; }
   box-shadow: var(--shadow-card);
   backdrop-filter: var(--glass);
   -webkit-backdrop-filter: var(--glass);
-  transform: translateX(-50%) scale(0.9);
-  opacity: 0.38;
+  transform: translateX(-50%) scale(0.93);
+  /* 0.38 measured 1.59:1 from painted pixels - the step you are NOT on was
+     effectively unreadable. It still recedes; it stays legible. */
+  opacity: 0.85;
   transition:
     transform var(--duration-medium) var(--ease-settle),
     opacity var(--duration-medium) var(--ease-settle),
@@ -1279,8 +1287,6 @@ section { position: relative; }
 .lrow--stack { grid-template-columns: minmax(0, 34%) minmax(0, 1fr); }
 .lrow--stack .lrow-val { text-align: left; color: var(--on-panel-soft); }
 
-/* ---------- Close ---------- */
-
 .close-title {
   font-family: var(--font-display);
   font-weight: 800;
@@ -1381,8 +1387,7 @@ section { position: relative; }
   .chart-area { opacity: 1 !important; transition: none !important; }
   .chart-endpoint { opacity: 1 !important; transform: none !important; transition: none !important; }
   .hero-title .t,
-  .sec-title .t,
-  .close-title .t { transform: none !important; transition: none !important; }
+  .sec-title .t { transform: none !important; transition: none !important; }
   .agh-topline { animation: none; background-position: 0 0; }
   .hero::after { animation: none; opacity: 0.85; }
   .sec-rule { transform: scaleX(1) !important; transition: none !important; }
@@ -1681,16 +1686,6 @@ section { position: relative; }
     </div>
   </section>
 
-  <!-- ============ CLOSE ============ -->
-  <section class="pad-section" id="close" aria-labelledby="h-close">
-    <div class="wrap">
-      <header class="sec-head pane reveal" style="margin-bottom: 0;">
-        <div class="sec-rule" aria-hidden="true"></div>
-        <p class="sec-eyebrow">Close</p>
-        <h2 class="close-title" id="h-close"><span class="t grad">Ready When You&nbsp;Are</span></h2>
-      </header>
-    </div>
-  </section>
 
   <footer class="deck-foot">
     <div class="wrap">
