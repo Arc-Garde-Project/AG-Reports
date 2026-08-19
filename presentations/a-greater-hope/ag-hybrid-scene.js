@@ -105,17 +105,16 @@
          the cost section. The still is the loop's own first frame, so the plate
          is the real image rather than an empty box, and nothing beige can show.
          The full-motion deck is the desktop deck. */
-      if (isNarrow && s.i !== 0) {
-        if (s.cfg.posterMobile) s.video.poster = s.cfg.posterMobile;
-        s.video.removeAttribute('autoplay');
-        s.video.preload = 'none';
-        s.skipVideo = true;
-        return;
-      }
+      /* MOBILE RUNS THE SAME DECK AS DESKTOP (Quinten, 2026-08-19).
+         Plates 2 and 3 used to be stills on a phone and the scrub segments were
+         removed entirely, because three desktop loops plus two desktop frame
+         sets is 2768KB against a LOCKED 1400KB. The assets are rebuilt at phone
+         scale instead: three 960-wide short loops and two 32-frame 380px scrub
+         sets, 1342KB all in. Same five states, same scroll-scrub, same order. */
       // h264 only. VP9 was built first and measured 5.2MB against h264's 2.5MB
       // on this footage, so offering it first cost bytes rather than saving
       // them. The URL is recorded rather than attached as a <source>: boot
-      // fetches the file itself so completion is knowable, see fetchVideo.
+      // sets it on the element itself, see loadVideo.
       s.videoUrl = `${base}-${tier}.mp4`;
       /* A POSTER, SO A PLATE IS NEVER AN EMPTY BOX.
          The rest videos other than the opener carry preload="none" and only
@@ -127,7 +126,7 @@
          plate is THERE instantly and the video takes over when it can play.
          Desktop only: on a phone this would add ~70KB to a budget already at
          1377 of 1400KB, and the phone tier is 360p where the wait is short. */
-      if (!isNarrow && s.cfg.poster) s.video.poster = s.cfg.poster;
+      if (s.cfg.poster) s.video.poster = isNarrow ? (s.cfg.posterMobile || s.cfg.poster) : s.cfg.poster;
 
       s.video.preload = 'none';   // nothing streams; boot fetches the whole file
     });
@@ -189,68 +188,46 @@
        averaged: frame sets by frames loaded, videos by how much of their
        duration has buffered. Nothing here is invented — every term is read off
        the asset itself. */
-    /* THE LOOPS ARE FETCHED, NOT PRELOADED.
-       preload="auto" is only a HINT. A <video> that is not playing stops
-       buffering once the browser decides it has enough, and measurement proved
-       it: waiting on buffered.end() covering the duration, the three loops
-       plateaued at 79.6%, 82.4% and 100% and never finished, so a rule of
-       "nothing opens until everything is in" could never be satisfied that way.
-       Each loop is downloaded in full with fetch(), held as a Blob and handed
-       to the element as a blob: URL. That is the only way to KNOW the whole
-       file is present, and it makes the percentage exact bytes rather than a
-       buffering heuristic. */
-    function fetchVideo(s, url) {
-      s.bytesTotal = 0; s.bytesLoaded = 0; s.videoReady = false;
-      return fetch(url).then(res => {
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const len = +res.headers.get('content-length') || 0;
-        s.bytesTotal = len;
-        if (!res.body || !len) return res.blob();          // no streaming: still correct
-        const reader = res.body.getReader();
-        const chunks = [];
-        return (function pump() {
-          return reader.read().then(({ done, value }) => {
-            if (done) return new Blob(chunks, { type: 'video/mp4' });
-            chunks.push(value);
-            s.bytesLoaded += value.length;
-            return pump();
-          });
-        })();
-      }).then(blob => {
-        s.bytesTotal = s.bytesTotal || blob.size;
-        s.bytesLoaded = s.bytesTotal;
-        /* THE ELEMENT GETS THE PLAIN URL, NOT A blob: URL.
-           iOS and WebKit refuse a blob source for <video>: play() rejects with
-           NotSupportedError and the element reports error code 4,
-           MEDIA_ERR_SRC_NOT_SUPPORTED, with networkState 3. Measured on an
-           iPhone profile, that killed the footage on every plate, which is what
-           reduced the deck to a colored box on both of Quinten's devices.
-           The fetch above still runs and is still what the loading guarantee
-           waits on: it puts the whole file in the HTTP cache, so pointing the
-           element at the ordinary URL loads it from cache immediately and plays
-           natively everywhere. The bytes are proven present either way. */
-        s.video.src = url;
-        s.video.load();
+    /* THE LOOPS ARE LOADED ONCE, BY THE ELEMENT.
+       They used to be pulled with fetch() and handed over as a blob: URL, so
+       the guarantee could be stated in bytes. iOS refuses blob video, so the
+       element was given the plain URL instead and the fetch was kept to warm
+       the cache. Measured in production, that warms nothing: Vercel serves
+       these with "max-age=0, must-revalidate" and the element downloaded the
+       whole file a SECOND time. 886KB became 1772KB on a phone, and four loops
+       became eight on a desktop. That is most of why the wait was so long.
+
+       One request each now. Readiness is readyState 4, HAVE_ENOUGH_DATA, which
+       is the browser stating it can play to the end without stalling.
+       Stated honestly: that is a weaker promise than "every byte is here", and
+       it is the strongest promise available across both engines. WebKit does
+       not populate buffered ranges for these files at all, so a byte-level test
+       is not portable. The frame sets, which are the bulk of the deck, keep
+       their exact count-based guarantee. */
+    function loadVideo(s, url) {
+      s.videoReady = false;
+      const v = s.video;
+      const done = () => {
+        if (s.videoReady) return;
         s.videoReady = true;
-      }).catch(err => {
-        /* One retry, then fall back to letting the element stream it itself.
-           A loop that cannot be fetched must not hold the deck shut forever,
-           and the element can still play a partially buffered file. */
-        console.error('AG Hybrid: loop fetch failed for ' + url + ' — ' + err.message);
-        if (!s.videoRetried) { s.videoRetried = true; return fetchVideo(s, url); }
-        s.video.src = url; s.video.load(); s.videoReady = true;
-      });
+      };
+      v.addEventListener('canplaythrough', done);
+      v.addEventListener('loadeddata', () => { if (v.readyState >= 4) done(); });
+      v.preload = 'auto';
+      v.src = url;
+      v.load();
+      // some engines settle at readyState 4 without firing canplaythrough again
+      const poll = setInterval(() => {
+        if (v.readyState >= 4) { done(); clearInterval(poll); }
+      }, 250);
+      setTimeout(() => clearInterval(poll), 120000);
     }
 
-    function videoComplete(v) {
-      const s = segs.find(x => x.video === v);
-      return !!(s && s.videoReady);
-    }
+
 
     function assetsComplete() {
       return segs.every(s => {
         if (s.kind === 'scrub') {
-          if (isNarrow) return true;              // not rendered on a phone
           return !!s.count && ((s.loaded || 0) + (s.failed || 0)) >= s.count;
         }
         if (s.kind === 'rest' && s.video && !s.skipVideo) return !!s.videoReady;
@@ -263,7 +240,7 @@
       return segs.map(s => {
         if (s.kind === 'scrub') return `scrub${s.i}:${s.loaded || 0}/${s.count || 0}`;
         if (s.kind === 'rest' && s.video && !s.skipVideo) {
-          return `video${s.i}:${s.videoReady ? 'ok' : (s.bytesLoaded || 0) + '/' + (s.bytesTotal || '?')}`;
+          return `video${s.i}:${s.videoReady ? 'ok' : 'rs' + s.video.readyState}`;
         }
         return `seg${s.i}:skipped`;
       }).join(' ');
@@ -272,13 +249,15 @@
     function overallProgress() {
       const parts = [];
       segs.forEach(x => {
-        if (x.kind === 'scrub' && !isNarrow && x.count) {
+        if (x.kind === 'scrub' && x.count) {
           parts.push(Math.min(1, (x.loaded || 0) / x.count));
         }
         if (x.kind === 'rest' && x.video && !x.skipVideo) {
           let f = 0;
           if (x.videoReady) f = 1;
-          else if (x.bytesTotal) f = Math.min(0.99, (x.bytesLoaded || 0) / x.bytesTotal);
+          else if (x.video.duration && x.video.buffered && x.video.buffered.length) {
+            f = Math.min(0.95, x.video.buffered.end(x.video.buffered.length - 1) / x.video.duration);
+          } else if (x.video.readyState >= 1) f = 0.25;
           parts.push(f);
         }
       });
@@ -525,7 +504,7 @@
            and warm() was still pulling the decimated set for them: measured at
            a 390px viewport, ~40 frames of frames-scrub1-mobile downloading for
            a segment that does not render. */
-        if (s.kind === 'scrub') { if (!isNarrow) loadScrub(s, false); }
+        if (s.kind === 'scrub') loadScrub(s, false);
         else if (s.video && !s.skipVideo && s.video.preload === 'none') {
           s.video.preload = 'auto';
           s.video.load();
@@ -622,7 +601,7 @@
          the gesture was simply being eaten. Reported on two devices.
          Synthetic touch events cannot drive native scrolling, which is why no
          amount of emulation surfaced it. */
-      if (prefersReduced || isNarrow) return false;
+      if (prefersReduced) return false;
       const s = segs[cur];
 
       if (s.kind === 'rest') {
@@ -731,10 +710,10 @@
       const consumed = onDelta(e.deltaY);
       if (consumed) e.preventDefault();
     }
-    if (!isNarrow && !prefersReduced) stage.addEventListener('wheel', wheel, { passive: false });
+    if (!prefersReduced) stage.addEventListener('wheel', wheel, { passive: false });
 
     let touchY = null;
-    if (!isNarrow && !prefersReduced) {
+    if (!prefersReduced) {
       stage.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
       stage.addEventListener('touchmove', e => {
         if (touchY === null) return;
@@ -799,17 +778,17 @@
 
       // proxies first: small, and they make the transitions usable the instant
       // the stage opens even if a full set is still settling
-      if (!isNarrow) segs.forEach(s => { if (s.kind === 'scrub') loadProxy(s); });
+      if (!isNarrow) segs.forEach(s => { if (s.kind === 'scrub') loadProxy(s); });   // phone frames ARE the small set
 
       // every rest loop, downloaded in full before anything opens
       segs.forEach(s => {
-        if (s.kind === 'rest' && s.video && !s.skipVideo && s.videoUrl) fetchVideo(s, s.videoUrl);
+        if (s.kind === 'rest' && s.video && !s.skipVideo && s.videoUrl) loadVideo(s, s.videoUrl);
       });
 
       /* Scrub sets are skipped entirely on a phone: those segments are removed
          from the DOM there, so fetching them would be pure weight and would
          make the wait longer for nothing. */
-      if (!isNarrow) segs.forEach(s => { if (s.kind === 'scrub') loadScrub(s, false); });
+      segs.forEach(s => { if (s.kind === 'scrub') loadScrub(s, false); });
 
       progressTicker();
 

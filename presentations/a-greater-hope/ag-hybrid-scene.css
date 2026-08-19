@@ -195,83 +195,74 @@ html[data-stage-locked="true"] body {
 }
 
 @media (max-width: 900px) {
-  /* MOBILE UNSTACKS. There is no scrub on touch, so a stacked layer would leave
-     every segment but the active one invisible and unreachable: the page showed
-     the hero, then nothing, then the footer. The equivalent rule existed only in
-     ag-sequence.css, the previous engine's file, and was never carried across.
-     Same principle as reduced motion: when nothing can be scrubbed back, nothing
-     may be hidden behind a scrub. */
-  .hybrid-stage { height: auto; overflow: visible; background: transparent; }
-  /* THE FOOTAGE IS THE BACKGROUND ON A PHONE TOO.
-     Unstacking used to turn each plate into a 16:9 block with the copy beneath
-     it, so the video read as a boxed clip dropped into an article rather than
-     the ground the deck stands on. Each segment is now a full-height panel with
-     the loop behind it and the copy centered over it, which is the desktop
-     composition delivered as ordinary scrolling. */
-  .hseg {
-    position: relative;
-    inset: auto;
-    opacity: 1;
-    visibility: visible;
-    transition: none;
-    margin-bottom: 0;
-    overflow: visible;          /* sticky cannot stick inside an overflow clip */
-  }
-  /* The loop is PINNED at one viewport rather than stretched to the section.
-     Stretching a 640x360 phone tier to a section two thousand pixels tall is a
-     5x vertical upscale, which is why it looked soft and over-zoomed. Sticky
-     keeps it at viewport size and the copy travels over it, the same technique
-     the cloud section uses. */
-  .hseg video {
-    position: sticky;
-    top: 0;
-    inset: auto;
-    display: block;
-    width: 100%;
-    height: 100svh;
-    margin-bottom: -100svh;
-    aspect-ratio: auto;
-    object-fit: cover;
-    border-radius: 0;
-    z-index: 0;
-  }
-  .hseg-text {
-    position: relative;
-    z-index: 1;
-    min-height: 100svh;
-    display: grid;
-    align-content: center;
-    opacity: 1;
-    transform: none;
-    transition: none;
-    text-align: center;
-    padding-block: clamp(2rem, 9vw, 3.5rem);
-  }
-  .hseg-text > * { opacity: 1 !important; transform: none !important; }
-  /* The sun nudge is a desktop concern only. Mobile unstacks, so the mark sits
-     BELOW the video rather than over it, there is nothing to line up, and a
-     1.08 scale would just spill past the block's rounded corners. */
-  .hseg[data-sun] video { transform: none; }
-  /* §6C literal centering. Unstacking put these blocks back into normal flow,
-     where their desktop max-widths left them hugging the left edge. */
+  /* MOBILE IS THE DESKTOP DECK NOW (Quinten, 2026-08-19).
+     This block used to unstack the stage into an ordinary article, hide the
+     scrub segments and turn each plate into a block. It no longer does any of
+     that: the stage stays pinned, the scrubs render, and touch drives it, all
+     on phone-scale assets that fit the LOCKED 1400KB. What is left here is only
+     what genuinely differs on a small screen: type sizing, single-column grids
+     and literal centering per Mobile Standard 6C. */
+  .hseg-text { text-align: center; }
   .hseg-text .lead,
   .hseg-text .lead-sub,
   .hseg-text .sub-card,
   .hseg-text .hc,
   .hseg-text .eng-grid,
   .hseg-text .run-panel { margin-inline: auto; }
-  .hseg-text .eng-grid { grid-template-columns: 1fr; max-width: 26rem; text-align: center; }
-  /* the cards carry text-align:left from the desktop rule; §6C overrides it */
+  .hseg-text .eng-grid { grid-template-columns: 1fr; max-width: 22rem; gap: 0.5rem; text-align: center; }
   .hseg-text .eng-card,
   .hseg-text .eng-card h3,
   .hseg-text .eng-card .geo,
   .hseg-text .eng-card .one { text-align: center; }
   .hseg-text .run-panel .figs,
-  .hseg-text .run-panel .rhythm { grid-template-columns: 1fr; }
-  .hseg-text .run-panel .lad-track { grid-template-columns: repeat(4,1fr); row-gap: 0.5rem; }
-  /* A scrub segment has nothing to scrub on touch and paints black until its
-     frames arrive. It is a black box and dead weight on a phone, so it is
-     removed rather than left to load. */
-  .hseg:has(canvas) { display: none; }
-  .hstage-rail { display: none; }
+  .hseg-text .run-panel .rhythm { grid-template-columns: repeat(3, 1fr); }
+  .hseg-text .run-panel .lad-track { grid-template-columns: repeat(7,1fr); gap: 3px; }
+  .hstage-rail { bottom: clamp(0.6rem, 2vh, 1.2rem); }
+  .hstage-rail i { width: 18px; }
+
+  /* NOTHING MAY LEAVE THE PLATE. The stage is pinned, so a plate's copy has one
+     viewport and no more: it cannot be scrolled to. Measured at 390x664 before
+     this, Plate 3's lead ran to 401px against a 390px viewport and Plate 2's
+     card grid ran to 674px against 664. Both were the "text going off" and the
+     broken look. Every child is held inside the content box, and the two dense
+     plates are compressed enough to fit the short side. */
+  .hseg-text > * { max-width: 100%; }
+  .hseg-text .lead,
+  .hseg-text .lead-sub,
+  .hseg-text .sub-card,
+  .hseg-text .hc,
+  .hseg-text .eng-grid,
+  .hseg-text .run-panel { max-width: 100%; }
+  .hseg-text .lead { max-width: 15ch; }
+
+  /* Plate 2: four cards in one viewport */
+  .hseg-text .eng-grid { gap: 0.4rem; margin-top: 0.6rem; }
+  .hseg-text .eng-card { padding: 0.5rem 0.7rem; border-radius: 10px; }
+  .hseg-text .eng-card .n { font-size: 0.82rem; }
+  .hseg-text .eng-card h3 { margin-top: 0.15rem; font-size: 0.98rem; }
+  .hseg-text .eng-card .geo { margin-top: 0.1rem; font-size: 0.58rem; letter-spacing: 0.1em; }
+  .hseg-text .eng-card .one { margin-top: 0.16rem; font-size: 0.78rem; line-height: 1.32; }
+
+  /* Plate 3: the run panel in one viewport */
+  .hseg-text .run-panel { padding: 0.6rem 0.7rem; margin-top: 0.6rem; border-radius: 12px; }
+  .hseg-text .run-panel .ladder { margin-top: 0; }
+  .hseg-text .run-panel .lad-scale { font-size: 0.54rem; margin-bottom: 0.3rem; }
+  .hseg-text .run-panel .lad-sprint { padding: 0.3rem 0; gap: 0.2rem; }
+  .hseg-text .run-panel .lad-pair i { width: 5px; height: 13px; }
+  .hseg-text .run-panel .lad-lab { font-size: 0.5rem; }
+  .hseg-text .run-panel .lad-note { margin-top: 0.4rem; font-size: 0.72rem; }
+  .hseg-text .run-panel .figs { margin-top: 0.5rem; gap: 0.4rem; }
+  .hseg-text .run-panel .fig { padding: 0.4rem 0.2rem; }
+  .hseg-text .run-panel .fig-n { font-size: 1.15rem; }
+  .hseg-text .run-panel .fig-l { margin-top: 0.15rem; font-size: 0.5rem; }
+  .hseg-text .run-panel .rhythm { margin-top: 0.45rem; gap: 0.4rem; }
+  .hseg-text .run-panel .rh-cell { padding: 0.36rem 0.3rem; }
+  .hseg-text .run-panel .rh-when { font-size: 0.68rem; }
+  .hseg-text .run-panel .rh-what { margin-top: 0.08rem; font-size: 0.6rem; }
+  .hseg-text .honest-line { margin-top: 0.5rem; font-size: 0.76rem; line-height: 1.34; }
+
+  /* the hero card set, so plate 1 also clears the short side */
+  .hseg-text .sub-card { margin-top: 0.7rem; padding: 0.6rem 0.9rem; font-size: 0.9rem; }
+  .hseg-text .hc { margin-top: 0.7rem; padding: 0.55rem 0.9rem; }
+  .hseg-text .hc-row { padding: 0.22rem 0; }
 }

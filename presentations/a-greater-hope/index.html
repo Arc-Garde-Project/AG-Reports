@@ -563,7 +563,11 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   .lad-track { grid-template-columns: repeat(4,1fr); row-gap: 0.6rem; }
   .lad-note { text-align: center; }
   .sec-head { justify-content: center; text-align: center; }
-  .sec-price { margin-left: 0; width: 100%; }
+  /* was overflowing 35px off the LEFT edge on every phone: the line carries
+     non-breaking spaces so it could not wrap, and at the clamp size it is wider
+     than a 390px screen. It wraps at the plus on a phone and drops a step. */
+  .sec-price { margin-left: 0; width: 100%; max-width: 100%;
+    font-size: clamp(0.9rem, 0.75rem + 1.4vw, 1.2rem); }
   .sec-note { margin-inline: auto; text-align: center; }
   /* the card rule flips from the left edge to the top */
   .eng-card::before { inset: 0 0 auto 0; width: auto; height: 3px; }
@@ -641,7 +645,7 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   </section>
 
   <!-- ── SCRUB 1 · Plate 1 → Plate 2 ─────────────────────────────────────── -->
-  <section class="hseg" style="--ox:53%" data-segment='{"kind":"scrub","framesPath":"frames-scrub1/frame_%04d.webp","count":298,"width":1280,"height":720,"mobile":{"framesPath":"frames-scrub1-mobile/frame_%04d.webp","count":43,"width":640,"height":360}}'>
+  <section class="hseg" style="--ox:53%" data-segment='{"kind":"scrub","framesPath":"frames-scrub1/frame_%04d.webp","count":298,"width":1280,"height":720,"mobile":{"framesPath":"frames-scrub1-phone/frame_%04d.webp","count":26,"width":360,"height":202}}'>
     <canvas aria-hidden="true"></canvas>
   </section>
 
@@ -683,7 +687,7 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   </section>
 
   <!-- ── SCRUB 2 · Plate 2 → Plate 3 ─────────────────────────────────────── -->
-  <section class="hseg" style="--ox:56%" data-segment='{"kind":"scrub","framesPath":"frames-scrub2/frame_%04d.webp","count":298,"width":1280,"height":720,"mobile":{"framesPath":"frames-scrub2-mobile/frame_%04d.webp","count":43,"width":640,"height":360}}'>
+  <section class="hseg" style="--ox:56%" data-segment='{"kind":"scrub","framesPath":"frames-scrub2/frame_%04d.webp","count":298,"width":1280,"height":720,"mobile":{"framesPath":"frames-scrub2-phone/frame_%04d.webp","count":26,"width":360,"height":202}}'>
     <canvas aria-hidden="true"></canvas>
   </section>
 
@@ -912,7 +916,12 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-body
   var ups = [].slice.call(sec.querySelectorAll('.rise'));
   ups.forEach(function (el, i) { el.style.setProperty('--r-dir', i % 2 ? 1 : -1); });
 
-  var SLIDE = 78;                       // px a block travels in from the side
+  /* NO LATERAL SLIDE ON A PHONE. The containers are close to full width there,
+     so a sideways entrance puts them off the screen by definition: the safe-edge
+     check caught the price line 35px past the left edge at its start position,
+     which is exactly this distance. Phones keep the lift, the fade and the blur,
+     which is the same entrance without the axis that does not fit. */
+  var SLIDE = window.matchMedia('(max-width: 900px)').matches ? 0 : 78;
   var LIFT  = 26;                       // px it rises the last of the way in
   var OUT   = 44;                       // px it drifts up as it leaves
 
