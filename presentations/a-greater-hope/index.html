@@ -200,8 +200,11 @@
 
   /* Warm-tinted shadows. A neutral gray shadow on warm paper reads as dirt. */
   /* deeper, so a pane sits clearly ON the field rather than in it */
-  --shadow-card: var(--bevel), 0 3px 8px rgba(64, 40, 72, 0.08), 0 22px 52px rgba(64, 40, 72, 0.15);
-  --shadow-lift: var(--bevel), 0 6px 16px rgba(64, 40, 72, 0.12), 0 38px 78px rgba(64, 40, 72, 0.22);
+  /* Reach = |y offset| + blur. Held under the 30px clip gap MEASURED at 390,
+     so a card's shadow can never be severed by its own section. Depth now
+     comes from density rather than distance: the lift is darker, not longer. */
+  --shadow-card: var(--bevel), 0 1px 3px rgba(64, 40, 72, 0.06), 0 5px 12px rgba(64, 40, 72, 0.10);
+  --shadow-lift: var(--bevel), 0 2px 5px rgba(64, 40, 72, 0.10), 0 8px 18px rgba(64, 40, 72, 0.17);
 }
 
 /* ---------- Ground ---------- */
@@ -1065,10 +1068,23 @@ html.is-ready .agh-curtain .ld-layer {
 .road-track {
   position: relative;
   width: max-content;
-  transform: translateX(var(--shift, 0px));
-  transition: transform var(--duration-long) var(--ease-satisfying);
+  transform: translate3d(var(--shift, 0px), 0, 0);
+  transition: transform var(--duration-medium) var(--ease-soft);
   will-change: transform;
 }
+
+/* the road is draggable. pan-y hands vertical scrolling back to the browser
+   so grabbing the road never traps the page. */
+.road-viewport { touch-action: pan-y; cursor: grab; }
+
+.roadmap.is-dragging .road-viewport { cursor: grabbing; user-select: none; }
+
+/* nothing eases while a finger is on it - the track must track the pointer
+   exactly, or the drag feels like it is lagging behind the thumb */
+.roadmap.is-dragging .road-track,
+.roadmap.is-dragging .road-fill,
+.roadmap.is-dragging .road-card,
+.roadmap.is-dragging .road-dot { transition: none; }
 
 /* ---- the road ---- */
 .road-rail {
@@ -1094,7 +1110,7 @@ html.is-ready .agh-curtain .ld-layer {
   border-radius: var(--radius-pill);
   background: var(--sweep-decor);
   box-shadow: 0 0 14px rgba(110, 40, 119, 0.30);
-  transition: width var(--duration-long) var(--ease-satisfying);
+  transition: width var(--duration-medium) var(--ease-soft);
 }
 
 /* arrows traveling the road left to right. Pure background-position on a
@@ -1510,32 +1526,72 @@ html.is-ready .agh-curtain .ld-layer {
   word-break: normal;
 }
 
+/* The line the graph is qualified by. It sits INSIDE the chart container,
+   directly under the plot it belongs to, rather than in a pane of its own -
+   a caveat floating in its own card reads as a second claim instead of as a
+   footnote to the first. */
+.chart-note {
+  margin-top: clamp(12px, 1.5vw, 18px);
+  text-align: center;
+  font-size: clamp(0.75rem, 0.72rem + 0.16vw, 0.8125rem);
+  line-height: 1.5;
+  color: var(--muted);
+  text-wrap: pretty;
+  word-break: normal;
+}
+
 /* ---------- The chart switcher ----------
    Three reads of the same 28 days. Leads is the volume, cost per lead is the
    argument, ad spend is the input - and the three are not independent
    pictures, they are the same arithmetic seen from three sides, which is why
    the curve MORPHS between them rather than cutting. */
 .chart-tabs {
+  position: relative;
   display: flex;
   justify-content: center;
-  gap: 6px;
-  margin-bottom: clamp(14px, 1.8vw, 22px);
+  gap: 0;
+  margin: 0 auto clamp(14px, 1.8vw, 22px);
   padding: 5px;
   border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid var(--surface-line);
-  backdrop-filter: var(--glass);
-  -webkit-backdrop-filter: var(--glass);
+  /* recessed, so the pill reads as sitting INSIDE a groove rather than
+     floating on the card */
+  background: rgba(96, 68, 116, 0.07);
+  border: 1px solid rgba(96, 68, 116, 0.14);
+  box-shadow:
+    inset 0 2px 6px rgba(64, 40, 72, 0.14),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.7),
+    0 1px 0 rgba(255, 255, 255, 0.8);
   width: fit-content;
-  margin-inline: auto;
   max-width: 100%;
-  flex-wrap: wrap;
+}
+
+/* the pill that travels. A separate element, not a background on the active
+   tab, which is the only way the change can be a MOVEMENT the eye follows. */
+.chart-glider {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  height: calc(100% - 10px);
+  width: 0;
+  z-index: 1;
+  border-radius: var(--radius-pill);
+  background: var(--sweep-ink);
+  box-shadow:
+    0 3px 14px rgba(64, 40, 72, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34);
+  pointer-events: none;
+  transition:
+    transform 0.42s cubic-bezier(0.34, 1.35, 0.5, 1),
+    width 0.42s cubic-bezier(0.34, 1.35, 0.5, 1);
+  will-change: transform, width;
 }
 
 .chart-tab {
+  position: relative;
+  z-index: 2;
   /* 49px, the AG floor, which clears the WCAG 44px minimum. At 40 these
      measured as short tap targets on every phone in the proof sweep. */
-  padding: 12px clamp(12px, 1.5vw, 20px);
+  padding: 12px clamp(11px, 1.4vw, 19px);
   min-height: 49px;
   border: 0;
   border-radius: var(--radius-pill);
@@ -1556,15 +1612,16 @@ html.is-ready .agh-curtain .ld-layer {
 }
 
 @media (hover: hover) {
-  .chart-tab:not(.is-on):hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.72); }
+  .chart-tab:not(.is-on):hover { color: var(--text-primary); }
 }
 
 .chart-tab:active { transform: scale(0.96); }
 
-.chart-tab.is-on {
-  color: #ffffff;
-  background: var(--sweep-ink);
-  box-shadow: 0 3px 12px rgba(64, 40, 72, 0.24);
+/* the pill carries the fill now, so the active tab only changes ink */
+.chart-tab.is-on { color: #ffffff; }
+
+@media (prefers-reduced-motion: reduce) {
+  .chart-glider { transition: none; }
 }
 
 /* the plot is inset so the Y scale and its name have a column of their own
@@ -1696,7 +1753,9 @@ html.is-ready .agh-curtain .ld-layer {
     var(--panel);
   border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: var(--panel-bevel), 0 22px 54px rgba(40, 24, 58, 0.24);
+  /* the dark panel carried its own shadow rather than the token, so it kept
+     reaching 76px and staying severed after the tokens were tightened */
+  box-shadow: var(--panel-bevel), 0 2px 6px rgba(40, 24, 58, 0.16), 0 8px 18px rgba(40, 24, 58, 0.26);
   backdrop-filter: var(--glass);
   -webkit-backdrop-filter: var(--glass);
   padding: clamp(28px, 3.4vw, 56px) clamp(20px, 3vw, 52px) clamp(30px, 3.6vw, 58px);
@@ -1882,11 +1941,24 @@ html.is-ready .agh-curtain .ld-layer {
      redundant here. */
   .scroll-cue { display: none; }
 
+  /* Three across on a phone too. The earlier note here said this was tried
+     and rejected because "PER TESTING CYCLE" needed 9px type to fit - but the
+     fix was never a smaller size, it was the LETTER SPACING. At 0.17em that
+     label is 29% wider than the letters themselves; at 0.06em it fits one
+     line inside a 102px column at 350 with the size left readable. */
   .figs {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 8px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(6px, 2.2vw, 14px);
     margin-top: 0;
     padding-top: 16px;
+  }
+
+  .fig-term { font-size: clamp(1.125rem, 0.62rem + 2.3vw, 1.625rem); }
+
+  .fig-desc {
+    font-size: clamp(0.625rem, 0.6rem + 0.12vw, 0.6875rem);
+    letter-spacing: 0.06em;
+    line-height: 1.3;
   }
 
   /* the road stays a stepper on a phone, just narrower */
@@ -1994,7 +2066,11 @@ html.is-ready .agh-curtain .ld-layer {
   root.classList.add('is-loading');
 
   /* AG-DNA timing, multiples of 7 and 3 */
-  var MIN      = seen ? 700  : 2100;
+  /* The brand frame is the one that carries words, so it is the one that has
+     to be READABLE. It used to hold for 700ms, which is under the time it
+     takes to read three lines. It now holds 2100ms on a first visit and
+     1400ms on a return. */
+  var MIN      = seen ? 1400 : 3500;
   var BRAND_AT = seen ? 0    : 1400;
   var MAX      = 6000;
   var CLEANUP  = 900;
@@ -2226,6 +2302,7 @@ html.is-ready .agh-curtain .ld-layer {
         <p class="chart-eyebrow">Day 1 to Day&nbsp;28</p>
 
         <div class="chart-tabs" role="group" aria-label="Choose what the chart plots">
+            <i class="chart-glider" aria-hidden="true"></i>
             <button class="chart-tab is-on" type="button" data-view="0" aria-pressed="true">Leads</button>
             <button class="chart-tab" type="button" data-view="1" aria-pressed="false">Cost Per Lead</button>
             <button class="chart-tab" type="button" data-view="2" aria-pressed="false">Ad Spend</button>
@@ -2312,11 +2389,9 @@ html.is-ready .agh-curtain .ld-layer {
           <p class="chart-axis-name chart-axis-name--x" aria-hidden="true">Days</p>
         </div>
 
-      </div>
+        <p class="chart-note">We do not guarantee a specific # of leads/inquiries/donations.</p>
 
-      <p class="statement statement--quiet pane reveal" style="margin-top: clamp(34px, 4.4vw, 62px);">
-        <span>We do not guarantee a specific # of leads/inquiries/donations.</span>
-      </p>
+      </div>
     </div>
   </section>
 
@@ -2863,6 +2938,17 @@ html.is-ready .agh-curtain .ld-layer {
     var BASE_Y = 286;
 
     var tabs = [].slice.call(document.querySelectorAll('.chart-tab'));
+    var glider = document.querySelector('.chart-glider');
+
+    /* The pill is measured from the live button rather than assuming three
+       equal thirds - the three labels are different lengths, so equal thirds
+       would leave it short of one and over the next. */
+    function slide() {
+      if (!glider || !tabs[view]) return;
+      var t = tabs[view];
+      glider.style.width = t.offsetWidth + 'px';
+      glider.style.transform = 'translateX(' + t.offsetLeft + 'px)';
+    }
     var yTicks = [].slice.call(chartBox.querySelectorAll('.chart-axis--y .chart-tick'));
     var yName = chartBox.querySelector('.chart-axis-name--y');
     var scrub = chartBox.querySelector('.chart-scrub');
@@ -2917,6 +3003,7 @@ html.is-ready .agh-curtain .ld-layer {
       });
       yTicks.forEach(function (el, i) { el.textContent = VIEWS[nv].ticks[i]; });
       if (yName) yName.textContent = VIEWS[nv].name;
+      slide();
 
       if (anim) { cancelAnimationFrame(anim); anim = 0; }
       if (slow) { cur = to.slice(); paint(cur); return; }
@@ -2935,6 +3022,16 @@ html.is-ready .agh-curtain .ld-layer {
     tabs.forEach(function (b, i) {
       b.addEventListener('click', function () { show(i); });
     });
+
+    slide();
+    /* the labels are web-font set, so their widths are not final until the
+       font is - and a resize re-flows the row */
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(slide);
+    var tz = 0;
+    window.addEventListener('resize', function () {
+      clearTimeout(tz); tz = setTimeout(slide, 150);
+    }, { passive: true });
+    window.addEventListener('ag:ready', slide);
 
     /* ---- the scrubber. Every KPI reports the same day, always. ---- */
     function fmt(k, v) {
@@ -3023,7 +3120,101 @@ html.is-ready .agh-curtain .ld-layer {
 
     if (prevBtn) prevBtn.addEventListener('click', function () { go(at - 1); });
     if (nextBtn) nextBtn.addEventListener('click', function () { go(at + 1); });
-    nodes.forEach(function (nd, i) { nd.addEventListener('click', function () { go(i); }); });
+
+    /* ---- drag and flick ----
+       The road had no swipe at all: arrows, node taps and arrow keys only,
+       which on a phone means the only way along it is a 49px button. The
+       track now follows the pointer 1:1 with easing off, and on release it
+       settles to the nearest step - counting VELOCITY, so a short fast flick
+       carries as far as a long slow drag. Past either end it rubber-bands at
+       35% so the road resists rather than tearing away from its own edge. */
+    var dragging = false, startX = 0, startShift = 0, moved = 0;
+    var cellW = 0, lastX = 0, lastT = 0, vel = 0, captured = false, capId = 0;
+    var SLOP = 8;   /* px of travel before this counts as a drag, not a tap.
+                       4 sat inside ordinary finger wobble: a 6px drift on a
+                       steady tap captured the pointer and ate the tap. */
+
+    function clock() {
+      return (window.performance && performance.now) ? performance.now() : Date.now();
+    }
+
+    function shiftNow() {
+      return parseFloat(track.style.getPropertyValue('--shift')) || 0;
+    }
+
+    function bounds() {
+      var half = vp.clientWidth / 2;
+      return { max: half - 0.5 * cellW, min: half - (nodes.length - 0.5) * cellW };
+    }
+
+    vp.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      if (!nodes.length) return;
+      dragging = true;
+      moved = 0;
+      startX = lastX = e.clientX;
+      lastT = e.timeStamp;
+      vel = 0;
+      cellW = nodes[0].getBoundingClientRect().width || 1;
+      startShift = shiftNow();
+      capId = e.pointerId;
+      captured = false;
+      lastT = clock();
+      /* Capture is taken LAZILY, only once the pointer has actually traveled.
+         Capturing on pointerdown retargets the eventual click to the capture
+         element, so every tap on a step landed on .road-viewport instead of
+         the node and silently stopped selecting it. */
+    });
+
+    vp.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) > moved) moved = Math.abs(dx);
+      if (moved <= SLOP) return;          /* still inside tap slop */
+
+      if (!captured) {
+        captured = true;
+        road.classList.add('is-dragging');
+        try { vp.setPointerCapture(capId); } catch (err) {}
+      }
+
+      /* performance.now(), not e.timeStamp: a flick is judged on velocity, and
+         timestamps that arrive coarse or identical collapse the velocity to
+         zero, which turns every quick throw into a drag too short to advance. */
+      var t = clock(), dt = t - lastT;
+      if (dt > 0) vel = (e.clientX - lastX) / dt;   /* px per ms */
+      lastX = e.clientX;
+      lastT = t;
+
+      var raw = startShift + dx, bb = bounds();
+      if (raw > bb.max) raw = bb.max + (raw - bb.max) * 0.35;
+      else if (raw < bb.min) raw = bb.min + (raw - bb.min) * 0.35;
+      track.style.setProperty('--shift', raw.toFixed(1) + 'px');
+    });
+
+    function endDrag(e) {
+      if (!dragging) return;
+      dragging = false;
+      road.classList.remove('is-dragging');
+      if (captured) { try { vp.releasePointerCapture(capId); } catch (err) {} }
+      if (!captured) return;              /* a tap: leave it to the click */
+      var dx = (typeof e.clientX === 'number' ? e.clientX : lastX) - startX;
+      /* The flick term is 220ms of release velocity. At 140 a real 56px throw
+         carried 0.485 of a cell and rounded back to where it started - a flick
+         that visibly moved the road and then undid itself. */
+      var target = Math.round(at - (dx + vel * 220) / cellW);
+      /* and a deliberate short drag always commits, however slowly it was made */
+      if (target === at && Math.abs(dx) > cellW * 0.18) target = at + (dx < 0 ? 1 : -1);
+      go(target);
+    }
+
+    vp.addEventListener('pointerup', endDrag);
+    vp.addEventListener('pointercancel', endDrag);
+
+    /* a drag that ends on a node must not also read as a tap on it */
+    nodes.forEach(function (nd, i) {
+      nd.addEventListener('click', function () { if (moved <= SLOP) go(i); });
+    });
     road.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowRight') go(at + 1);
       else if (e.key === 'ArrowLeft') go(at - 1);
