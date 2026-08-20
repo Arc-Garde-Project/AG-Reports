@@ -2817,6 +2817,333 @@ html[data-theme="dark"] .theme-glider { background: var(--sweep-ondark); }
   .sys:nth-child(1), .sys:nth-child(2), .sys:nth-child(3) { --slice: 50%; }
 }
 
+/* ---------- Peek: a preview that opens its contents in a modal ----------
+   One engine, any number of panels. The trigger is a real button element
+   carrying data-peek="panel-id"; the panel is a [role=dialog] that starts
+   hidden. Written without angle brackets on purpose - a bare tag name inside
+   a comment reads as an unclosed tag to every balance check that greps.
+
+   Three things this has to get right and most hand-rolled modals do not:
+     - the page behind must not scroll. Lenis is stopped, not just overflow
+       hidden, because Lenis drives scroll itself and would keep going.
+     - focus must be trapped inside and RETURNED to the trigger on close,
+       or a keyboard reader is dumped at the top of the document.
+     - Escape closes from anywhere inside. */
+.peek {
+  position: fixed;
+  inset: 0;
+  z-index: 80;               /* over .agh-topline (60) and the deck bar (45) */
+  display: grid;
+  place-items: center;
+  padding: clamp(14px, 3vw, 40px);
+}
+
+.peek[hidden] { display: none; }
+
+/* belt and braces with lenis.stop(): a touch device can still rubber-band
+   the document underneath a stopped Lenis. */
+html.peek-open, html.peek-open body { overflow: hidden; }
+
+.peek-veil {
+  position: absolute;
+  inset: 0;
+  background: rgba(38, 24, 44, 0.52);
+  backdrop-filter: blur(6px) saturate(1.1);
+  -webkit-backdrop-filter: blur(6px) saturate(1.1);
+  opacity: 0;
+  transition: opacity var(--duration-quick) var(--ease-soft);
+}
+
+.peek-panel {
+  position: relative;
+  width: min(920px, 100%);
+  max-height: min(86vh, 900px);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;   /* stops the scroll chaining to the deck */
+  background: var(--paper);
+  border: 1px solid var(--surface-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lift);
+  padding: clamp(22px, 3vw, 44px);
+  opacity: 0;
+  transform: translateY(14px) scale(0.985);
+  transition: opacity var(--duration-quick) var(--ease-soft),
+              transform var(--duration-medium) var(--ease-satisfying);
+}
+
+.peek.is-open .peek-veil { opacity: 1; }
+.peek.is-open .peek-panel { opacity: 1; transform: none; }
+
+.peek-x {
+  position: sticky;
+  top: 0;
+  float: right;
+  min-width: 49px;
+  min-height: 49px;
+  display: grid;
+  place-items: center;
+  margin: -6px -6px 0 12px;
+  border: 1px solid var(--surface-line);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color var(--duration-quick) var(--ease-soft),
+              transform var(--duration-quick) var(--ease-snap);
+}
+
+.peek-x svg { display: block; width: 17px; height: 17px; }
+.peek-x:active { transform: scale(0.94); }
+@media (hover: hover) { .peek-x:hover { color: var(--ink); } }
+
+/* ---------- The book: three statics, turned like pages ----------
+   A real page turn, not a crossfade: the leaf rotates about its LEFT edge in
+   3D so it lifts off the stack the way paper does. The incoming leaf is
+   already sitting underneath, so nothing has to fade in.
+
+   transform-origin is the whole illusion. Rotating about the center reads as
+   a card flip; rotating about the spine edge reads as a page. */
+.book { display: flex; flex-direction: column; gap: 16px; }
+
+.book-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  perspective: 1600px;
+  perspective-origin: 0% 50%;
+}
+
+.book-leaf {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform var(--duration-medium) var(--ease-satisfying),
+              opacity 1ms linear var(--duration-medium);
+}
+
+.book-leaf img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* the leaf on top */
+.book-leaf.is-on {
+  opacity: 1;
+  transform: none;
+  z-index: 2;
+  pointer-events: auto;
+  transition: transform var(--duration-medium) var(--ease-satisfying),
+              opacity 1ms linear;
+}
+
+/* the one being turned away, mid-flight */
+.book-leaf.is-turning {
+  opacity: 1;
+  z-index: 3;
+  transform: rotateY(-168deg);
+  transition: transform var(--duration-medium) var(--ease-satisfying),
+              opacity 1ms linear var(--duration-medium);
+}
+
+/* turning BACK: the previous page swings in from the left rather than the
+   current one swinging out, or the direction reads wrong */
+.book-leaf.is-returning {
+  opacity: 1;
+  z-index: 3;
+  transform: rotateY(0deg);
+  transition: transform var(--duration-medium) var(--ease-satisfying),
+              opacity 1ms linear;
+}
+.book-leaf.is-parked { transform: rotateY(-168deg); transition: none; opacity: 1; z-index: 3; }
+
+.book-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.book-arrow {
+  min-width: 49px;
+  min-height: 49px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--surface-line);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  color: var(--agh-indigo);
+  cursor: pointer;
+  transition: transform var(--duration-quick) var(--ease-snap),
+              color var(--duration-quick) var(--ease-soft);
+}
+
+.book-arrow svg { display: block; width: 19px; height: 19px; }
+.book-arrow:active { transform: scale(0.94); }
+@media (hover: hover) { .book-arrow:hover { color: var(--ink); } }
+
+.book-count {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 5.5ch;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-leaf, .book-leaf.is-on, .book-leaf.is-turning,
+  .book-leaf.is-returning, .book-arrow { transition: none; }
+  .book-leaf.is-turning, .book-leaf.is-parked { transform: none; opacity: 0; }
+}
+
+/* ---------- Proof block: the report shown as itself ---------- */
+.proof {
+  margin-top: var(--v-md);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 26px);
+  align-items: start;
+}
+
+@media (max-width: 820px) { .proof { grid-template-columns: minmax(0, 1fr); } }
+
+.proof-card,
+.statics-card {
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* three squares fanned like a short stack, so the card says "there are more
+   of these" without needing a line of copy to say it */
+.statics-fan {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1000 / 683;   /* matches the report cover, so the row is even */
+  overflow: hidden;
+  border-bottom: 1px solid var(--surface-line);
+  background: var(--surface);
+}
+
+.statics-fan img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 46%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--duration-medium) var(--ease-settle);
+}
+
+.statics-fan img:nth-child(1) { transform: translate(-50%, -50%) translateX(-34%) rotate(-8deg); z-index: 1; }
+.statics-fan img:nth-child(2) { transform: translate(-50%, -50%) translateX(34%) rotate(8deg);  z-index: 2; }
+.statics-fan img:nth-child(3) { transform: translate(-50%, -50%) rotate(0deg);                   z-index: 3; }
+
+@media (hover: hover) {
+  .statics-card:hover .statics-fan img:nth-child(1) { transform: translate(-50%, -50%) translateX(-44%) rotate(-11deg); }
+  .statics-card:hover .statics-fan img:nth-child(2) { transform: translate(-50%, -50%) translateX(44%) rotate(11deg); }
+}
+
+@media (prefers-reduced-motion: reduce) { .statics-fan img { transition: none; } }
+
+.peek-panel--book { width: min(680px, 100%); }
+
+.proof-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* the report's cover is the preview - its own headline figure is already
+     the biggest thing on it, so nothing here needs to restate it */
+  border-bottom: 1px solid var(--surface-line);
+}
+
+.proof-cue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 15px 18px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.6875rem, 0.65rem + 0.16vw, 0.8125rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--agh-indigo);
+}
+
+.proof-cue svg { width: 17px; height: 17px; flex: none; transition: transform var(--duration-quick) var(--ease-soft); }
+@media (hover: hover) { .proof-card:hover .proof-cue svg { transform: translateX(3px); } }
+@media (prefers-reduced-motion: reduce) { .proof-cue svg { transition: none; } }
+
+/* a panel whose whole body is one tall image wants no padding fighting it */
+.peek-panel--shot { padding: clamp(14px, 1.6vw, 20px); }
+
+.peek-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+  line-height: 1.24;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  margin: 2px 56px 14px 6px;   /* clears the sticky close button */
+  text-wrap: pretty;
+}
+
+.peek-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--surface-line);
+}
+
+/* ---------- The preview card that opens one ---------- */
+.peek-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  width: 100%;
+  min-height: 49px;
+  padding: clamp(16px, 1.8vw, 24px);
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  cursor: pointer;
+  transition: transform var(--duration-quick) var(--ease-settle),
+              box-shadow var(--duration-quick) var(--ease-soft);
+}
+
+@media (hover: hover) {
+  .peek-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+}
+.peek-card:active { transform: translateY(-1px) scale(0.995); }
+
+@media (prefers-reduced-motion: reduce) {
+  .peek-veil, .peek-panel, .peek-card { transition: none; }
+  .peek-panel { transform: none; }
+  .peek-card:hover, .peek-card:active { transform: none; }
+}
+
 @media (max-width: 900px) {
   /* Literal centering. Every block is centered on a phone, no carve-outs. */
 
@@ -3446,8 +3773,94 @@ html[data-theme="dark"] .theme-glider { background: var(--sweep-ondark); }
           <p class="sys-copy">We will create the static images, so 30 statics per month and 30 talking head and voiceover&nbsp;scripts.</p>
         </article>
       </div>
+
+      <!-- ---- Proof: a finished six-month organic engagement ----
+           EVERY WORD AND FIGURE ON SCREEN HERE IS THE REPORT'S OWN, rendered
+           from the deck at reports/deepwaters-recovery/6-month-2026. Nothing is
+           re-typed. That is deliberate: a transcribed number is a number that
+           can be transcribed wrong, and this one is going in front of a client.
+
+           NO HEADING YET, deliberately. The block carries no eyebrow, label
+           or sentence of its own, because every one of those would be a claim
+           about a past client and this file does not author those. The only
+           text here is the UI cue on the card and the report's own title.
+
+           AND ONE THING MUST BE SETTLED BEFORE IT SHIPS: Deep Waters Recovery
+           is a recovery network, not a non-profit, so it cannot be introduced
+           as one to a non-profit. It is honest as a finished six-month organic
+           engagement; it is not honest as a sector match. -->
+      <div class="proof reveal">
+        <button class="peek-card proof-card" type="button" data-peek="peek-deepwaters"
+                aria-label="Open the Deep Waters Recovery six-month organic report">
+          <img class="proof-shot" src="dw-cover.webp" width="1000" height="683"
+               alt="Cover of the Deep Waters Recovery six-month organic report"
+               loading="lazy" decoding="async">
+          <span class="proof-cue">
+            <span class="proof-cue-t">View the full report</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </button>
+        <button class="peek-card statics-card" type="button" data-peek="peek-statics"
+                aria-label="Open three sample static graphics">
+          <span class="statics-fan" aria-hidden="true">
+            <img src="ig-3.webp" width="900" height="900" alt="" loading="lazy" decoding="async">
+            <img src="ig-2.webp" width="900" height="900" alt="" loading="lazy" decoding="async">
+            <img src="ig-1.webp" width="900" height="900" alt="" loading="lazy" decoding="async">
+          </span>
+          <span class="proof-cue">
+            <span class="proof-cue-t">Three sample statics</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </button>
+      </div>
     </div>
   </section>
+
+  <div class="peek" id="peek-statics" role="dialog" aria-modal="true"
+       aria-label="Three sample static graphics" hidden>
+    <div class="peek-veil" data-peek-close></div>
+    <div class="peek-panel peek-panel--book">
+      <button class="peek-x" type="button" data-peek-close aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+             stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="book" data-book>
+        <div class="book-stage">
+          <figure class="book-leaf is-on"><img src="ig-1.webp" width="900" height="900" alt="Sample static graphic, 1 of 3" loading="lazy" decoding="async"></figure>
+          <figure class="book-leaf"><img src="ig-2.webp" width="900" height="900" alt="Sample static graphic, 2 of 3" loading="lazy" decoding="async"></figure>
+          <figure class="book-leaf"><img src="ig-3.webp" width="900" height="900" alt="Sample static graphic, 3 of 3" loading="lazy" decoding="async"></figure>
+        </div>
+        <div class="book-nav">
+          <button class="book-arrow" type="button" data-book-prev aria-label="Previous graphic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <p class="book-count" aria-live="polite"><span data-book-i>1</span>&nbsp;/&nbsp;3</p>
+          <button class="book-arrow" type="button" data-book-next aria-label="Next graphic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="peek" id="peek-deepwaters" role="dialog" aria-modal="true"
+       aria-labelledby="peek-deepwaters-t" hidden>
+    <div class="peek-veil" data-peek-close></div>
+    <div class="peek-panel peek-panel--shot">
+      <button class="peek-x" type="button" data-peek-close aria-label="Close the report">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+             stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <h3 class="peek-title" id="peek-deepwaters-t">Deep Waters Recovery &mdash; 6 Months of Consecutive Daily Posting, November 2025 to April&nbsp;2026</h3>
+      <img class="peek-shot" src="dw-report.webp" width="1100" height="4000"
+           alt="The full Deep Waters Recovery six-month organic report"
+           loading="lazy" decoding="async">
+    </div>
+  </div>
 
   <!-- ============ 4 - WHAT IT COSTS ============ -->
   <section class="band pad-section" id="what-it-costs" aria-labelledby="h-cost">
@@ -3603,13 +4016,26 @@ html[data-theme="dark"] .theme-glider { background: var(--sweep-ondark); }
       flowMs = phone ? 14000 : 7000;
       root.style.setProperty('--toy-wave-dur', (phone ? 3.5 : 1.75).toFixed(3) + 's');
 
-      /* THE FIELD ONLY TRAVELS ON DESKTOP. On a phone it reads as jitter
-         rather than as depth: touch scrolling arrives in coarse, uneven
-         momentum steps, and a field moving 1:1 with them stutters against
-         type that is being resampled at the same moment. It stays pinned
-         below 900, exactly as it always was - the wave is the only thing
-         moving there, at the halved 3.5s. */
-      travels = !phone;
+      /* THE FIELD TRAVELS ONLY UNDER A FINE POINTER, and WIDTH IS THE WRONG
+         TEST FOR IT. It was gated on max-width:900, which pinned phones and
+         left every tablet travelling: measured, an iPad is 1024 in landscape
+         and the 12.9 is 1024 in PORTRAIT, so four of five tablet form factors
+         sat above the breakpoint. All of them are coarse-pointer, and coarse
+         is the thing that actually matters - touch scrolling arrives in
+         uneven momentum steps and a field moving 1:1 with them stutters,
+         which is what a tablet reader sees as sticky. A 1024px laptop window
+         is smooth at the identical width, so the width never explained it.
+
+         Same dual gate ag-cursor.js uses, and for the same reason: `hover`
+         alone would drop a Windows touchscreen laptop being driven by its
+         trackpad, which is a fine pointer and scrolls perfectly smoothly.
+
+         The WAVE stays keyed to width, deliberately. These are two different
+         questions - how fast motion should read on a small screen is about
+         size, whether the field should chase the scroll is about input. */
+      travels = !!(window.matchMedia &&
+                   matchMedia('(pointer: fine)').matches &&
+                   matchMedia('(hover: hover)').matches);
       if (!travels && moving) { moving = false; root.classList.remove('is-scrolling'); }
     }
 
@@ -4121,6 +4547,146 @@ html[data-theme="dark"] .theme-glider { background: var(--sweep-ondark); }
     }
     requestAnimationFrame(progress);
   }
+
+  /* ---- Peek: preview cards that open their contents in a modal ----
+     Wires every [data-peek] trigger to the panel whose id it names. Nothing
+     is hardcoded per panel, so adding one is markup only.
+
+     LENIS HAS TO BE STOPPED, not just `overflow: hidden` on the body. Lenis
+     drives the scroll position itself and will happily keep running behind a
+     modal. And it has to be RESIZED on the way out: it caches the scroll
+     limit, and a limit cached while the page was locked is 0, which leaves
+     scrollTo silently doing nothing afterwards. */
+  (function () {
+    var FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),' +
+                    'select:not([disabled]),textarea:not([disabled]),' +
+                    '[tabindex]:not([tabindex="-1"])';
+    var open = null, opener = null;
+
+    function panelOf(id) { return id ? document.getElementById(id) : null; }
+
+    function show(panel, trigger) {
+      if (!panel || open) return;
+      open = panel; opener = trigger || null;
+      panel.hidden = false;
+      /* one frame between unhide and the class, or the transition has no
+         starting value to move from and the panel simply appears */
+      requestAnimationFrame(function () { panel.classList.add('is-open'); });
+      document.documentElement.classList.add('peek-open');
+      if (window.lenis && typeof window.lenis.stop === 'function') window.lenis.stop();
+      var first = panel.querySelector(FOCUSABLE);
+      if (first) first.focus();
+    }
+
+    function hide() {
+      if (!open) return;
+      var panel = open, back = opener;
+      open = null; opener = null;
+      panel.classList.remove('is-open');
+      document.documentElement.classList.remove('peek-open');
+      if (window.lenis) {
+        if (typeof window.lenis.start === 'function') window.lenis.start();
+        if (typeof window.lenis.resize === 'function') window.lenis.resize();
+      }
+      var done = function () { panel.hidden = true; };
+      if (reduced) done();
+      else setTimeout(done, 300);   /* --duration-quick */
+      if (back && typeof back.focus === 'function') back.focus();
+    }
+
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-peek]');
+      if (t) { e.preventDefault(); show(panelOf(t.getAttribute('data-peek')), t); return; }
+      if (e.target.closest('[data-peek-close]')) { e.preventDefault(); hide(); }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!open) return;
+      if (e.key === 'Escape') { e.preventDefault(); hide(); return; }
+      if (e.key !== 'Tab') return;
+      /* the trap. Without it Tab walks out of the panel and into the deck
+         behind, which is still there and still focusable. */
+      var items = [].slice.call(open.querySelectorAll(FOCUSABLE))
+                    .filter(function (el) { return el.offsetParent !== null; });
+      if (!items.length) return;
+      var firstEl = items[0], lastEl = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === firstEl) { e.preventDefault(); lastEl.focus(); }
+      else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); firstEl.focus(); }
+    });
+  })();
+
+  /* ---- The book: turn the statics like pages ----
+     Two different motions, because a page turn is not symmetric. Going
+     FORWARD the current leaf lifts off and swings away to the left. Going
+     BACK it is the PREVIOUS leaf that swings in from the left, parked at the
+     turned angle first with no transition so it has somewhere to come from.
+     Animating the current one backwards instead reads as a rewind, not as
+     turning back a page. */
+  (function () {
+    var book = document.querySelector('[data-book]');
+    if (!book) return;
+    var leaves = [].slice.call(book.querySelectorAll('.book-leaf'));
+    var count  = book.querySelector('[data-book-i]');
+    var TURN   = 600;                     /* --duration-medium */
+    var i = 0, busy = false;
+
+    function paint() { if (count) count.textContent = String(i + 1); }
+
+    function go(dir) {
+      if (busy || leaves.length < 2) return;
+      var from = i;
+      var to = (i + dir + leaves.length) % leaves.length;
+      if (to === from) return;
+      busy = true;
+      var a = leaves[from], b = leaves[to];
+
+      if (reduced) {
+        a.className = 'book-leaf';
+        b.className = 'book-leaf is-on';
+        i = to; paint(); busy = false;
+        return;
+      }
+
+      if (dir > 0) {
+        b.classList.add('is-on');          /* waiting underneath */
+        a.classList.add('is-turning');     /* lifts and swings away */
+        setTimeout(function () {
+          a.className = 'book-leaf';
+          busy = false;
+        }, TURN);
+      } else {
+        b.classList.add('is-parked');      /* pre-rotated, no transition */
+        /* two frames: one to commit the parked transform, one to start the
+           real one. A single frame gets coalesced and the leaf just appears. */
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            b.classList.remove('is-parked');
+            b.classList.add('is-returning');
+            setTimeout(function () {
+              a.className = 'book-leaf';
+              b.className = 'book-leaf is-on';
+              busy = false;
+            }, TURN);
+          });
+        });
+      }
+      i = to; paint();
+    }
+
+    var prev = book.querySelector('[data-book-prev]');
+    var next = book.querySelector('[data-book-next]');
+    if (prev) prev.addEventListener('click', function () { go(-1); });
+    if (next) next.addEventListener('click', function () { go(1); });
+
+    document.addEventListener('keydown', function (e) {
+      var panel = book.closest('.peek');
+      if (!panel || panel.hidden) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+    });
+
+    paint();
+  })();
 
   /* ---- The deck bar: out of the way going down, back on the way up ----
      Reads lenis.scroll, the SAME number the reading line and the field read,
