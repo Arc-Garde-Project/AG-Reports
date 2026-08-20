@@ -101,7 +101,14 @@
      3.3:1, both well under the 4.5 floor. */
   /* Their whole brand arc in one wash: the cool nav sweep (purple, blue,
      green) running on into the warm band (peach, coral). */
-  --sweep-decor:  linear-gradient(90deg, var(--agh-purple) 0%, var(--agh-blue) 28%, var(--agh-teal) 46%, var(--agh-green) 62%, var(--agh-peach) 84%, var(--agh-coral) 100%);
+  /* The logo's own run and nothing past it: purple to blue to green. The
+     peach and coral stops that used to close this sweep took it across the
+     full warm end of the spectrum, and on a thin rule that reads as a rainbow
+     rather than as a brand. Every decorative line in the deck draws from this
+     one token, so they all lose the red together.
+     --agh-peach and --agh-coral are now unreferenced; they stay defined
+     because they are part of A Greater Hope's documented palette. */
+  --sweep-decor:  linear-gradient(90deg, var(--agh-purple) 0%, var(--agh-indigo) 26%, var(--agh-blue) 50%, var(--agh-teal) 74%, var(--agh-green) 100%);
   /* Darkened brand hues, because this type sits on a light ground. The raw
      sweep cannot carry text: its green measures 2.29:1 on paper. This one
      holds 5.22:1 at its lightest stop. */
@@ -886,13 +893,19 @@ html.is-ready .agh-curtain {
   /* Keyed to vw so the longest line always holds one line down to 320px.
      RE-MEASURED after "& Donors" went in: the longest line is no longer
      "ARE ALREADY SCROLLING" at 10.515em, it is "THE FAMILIES & DONORS YOU
-     NEED" at 14.581em. That moves the ceiling from 8.56vw to 6.86vw, so the
-     old 8.2vw would have overflowed every width below 1200. 6.5vw keeps 5%
-     headroom for a fallback face.
+     NEED" at 14.581em.
+
+     6.86vw was WRONG and so was the 6.5vw it produced. That measurement took
+     .wrap's BORDER box, which includes its padding, so it reported 900px of
+     room at a 900px viewport when the content box is 810. Measured against
+     the CONTENT box the ceiling is 6.17vw, and 6.5 overflowed at 768, 900,
+     1024 and 1100 - clipped rather than wrapped, because .l1 carries
+     overflow:hidden for the reveal, so the ends of the line were being cut
+     off instead of visibly breaking. 5.9vw keeps 4.4% headroom.
 
      The 4.5rem cap still holds above the wrap's max-width: 72px x 14.581em
      is 1050px against 1180px of container. */
-  font-size: min(4.5rem, 6.5vw);
+  font-size: min(4.5rem, 5.9vw);
   line-height: 0.96;
   letter-spacing: 0.008em;
   text-transform: uppercase;
@@ -1063,7 +1076,10 @@ html.is-ready .agh-curtain {
 .plat-track {
   display: flex;
   width: max-content;
-  animation: plat-roll 42s linear infinite;
+  /* 21s, half of 42. Both are AG timings; the platform row reads faster than
+     the word marquee because the tiles are wider than the words and a slower
+     cycle made the same seven icons feel becalmed. */
+  animation: plat-roll 21s linear infinite;
 }
 
 .plat-group { display: flex; align-items: stretch; flex-shrink: 0; }
