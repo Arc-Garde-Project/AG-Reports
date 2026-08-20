@@ -1787,12 +1787,53 @@ html[data-theme="dark"] .ld-rocket {
 }
 
 /* Two cards, side by side, both of them the section 2 card reused. */
+/* ONE LONG PANEL, not two. The figures and the sentence about them were in
+   separate containers side by side, which read as two unrelated cards sitting
+   above the three proof cards. Merged: the numbers run across the top, the
+   sentence sits under them behind a rule, and the whole thing is one wide
+   block leading into the row of three. */
 .org-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(14px, 1.6vw, 22px);
   align-items: stretch;
   margin-top: clamp(26px, 3.2vw, 44px);
+}
+
+.sys--wide { gap: 0; align-items: stretch; }
+
+.ostat-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 30px);
+  width: 100%;
+}
+/* the figures divide with a vertical rule now they sit side by side, so the
+   stacked rule the column layout used has to go */
+.ostat-row .ostat + .ostat {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+  border-left: 1px solid var(--rule);
+  padding-left: clamp(16px, 2vw, 30px);
+}
+.sys--wide .sys-copy {
+  width: 100%;
+  margin-top: clamp(18px, 2.2vw, 28px);
+  padding-top: clamp(18px, 2.2vw, 28px);
+  border-top: 1px solid var(--rule);
+}
+
+/* phone: the three figures stack again, and the rule goes back to horizontal */
+@media (max-width: 700px) {
+  .ostat-row { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ostat-row .ostat + .ostat {
+    border-left: 0;
+    padding-left: 0;
+    margin-top: clamp(14px, 1.8vw, 22px);
+    padding-top: clamp(14px, 1.8vw, 22px);
+    border-top: 1px solid var(--rule);
+  }
 }
 
 /* the numbers STACK inside their card. Three across in a half-width card put
@@ -3221,9 +3262,17 @@ html.peek-open, html.peek-open body { overflow: hidden; }
    square needs. */
 .book-stage {
   flex: none;
-  width: 100%;
+  /* CAPPED BY HEIGHT AS WELL AS WIDTH. Sizing purely by width made the square
+     as big as the panel was wide, regardless of how short the SCREEN was: at
+     1280x800 and 1024x768 the stage outgrew the panel and the nav arrows were
+     clipped off the bottom. Because the ratio is 1:1, width and height are the
+     same number, so capping the width by the space actually available does the
+     whole job. The subtrahend is the chrome around the stage: panel padding,
+     the book's top offset, the gap, and the nav row. */
+  width: min(100%, calc(92vh - 196px));
   height: auto;
   aspect-ratio: 1 / 1;
+  margin-inline: auto;
 }
 
 /* THESE PANELS DO NOT SCROLL, so they must not reserve a scrollbar gutter.
@@ -3270,22 +3319,34 @@ html.peek-open, html.peek-open body { overflow: hidden; }
   border-bottom: 1px solid var(--surface-line);
   overflow: hidden;
 }
+/* THE SAME FAN AS THE STATICS. Same offsets, same rotations, same z-order,
+   same easing token, and the same widening on hover - the two cards sit beside
+   each other, so anything less than an exact match reads as a mistake. */
 .voice-sheet {
   position: absolute;
-  left: 50%; top: 52%;
+  top: 50%; left: 50%;
   width: 46%; aspect-ratio: 3 / 4;
   background: #fff;
   border: 1px solid rgba(34,27,41,0.13);
-  border-radius: 4px;
-  box-shadow: 0 6px 18px rgba(64,40,72,0.14);
-  transform: translate(-50%, -50%) rotate(-9deg) translateX(-16%);
+  border-radius: 10px;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--duration-medium) var(--ease-settle);
 }
-.voice-sheet:nth-child(2) { transform: translate(-50%, -50%) rotate(4deg) translateX(8%); }
+.voice-sheet:nth-child(1) { transform: translate(-50%, -50%) translateX(-34%) rotate(-8deg); z-index: 1; }
+.voice-sheet:nth-child(2) { transform: translate(-50%, -50%) translateX(34%) rotate(8deg);  z-index: 2; }
 .voice-sheet:nth-child(3) {
-  transform: translate(-50%, -50%) rotate(-1deg);
+  transform: translate(-50%, -50%) rotate(0deg);
+  z-index: 3;
   display: flex; flex-direction: column; justify-content: center; gap: 9%;
   padding: 13% 12%;
 }
+
+@media (hover: hover) {
+  .voice-card:hover .voice-sheet:nth-child(1) { transform: translate(-50%, -50%) translateX(-44%) rotate(-11deg); }
+  .voice-card:hover .voice-sheet:nth-child(2) { transform: translate(-50%, -50%) translateX(44%) rotate(11deg); }
+}
+
+@media (prefers-reduced-motion: reduce) { .voice-sheet { transition: none; } }
 .voice-rule { display: block; height: 5%; border-radius: 999px; background: rgba(78,81,149,0.30); }
 .voice-rule:nth-child(1) { width: 62%; background: rgba(78,81,149,0.62); height: 7%; }
 .voice-rule:nth-child(3) { width: 84%; }
@@ -3300,9 +3361,10 @@ html.peek-open, html.peek-open body { overflow: hidden; }
    leaf holds a document that scrolls rather than a picture that does not.
    Giving the docs their own portrait geometry made them a second component to
    keep in sync for no gain. */
+/* identical to the statics panel: same width, same square stage, same nav */
 .peek-panel--docs { width: min(680px, 100%); }
 .book--docs .book-stage { aspect-ratio: 1 / 1; }
-.peek-panel--docs .peek-title { flex: none; align-self: flex-start; margin-bottom: 4px; }
+
 /* THE SCROLLBAR HAS TO LIVE INSIDE THE PAGE, NOT ON ITS EDGE. The leaf is a
    rounded, clipped box, so a frame stretched flush to its bounds puts the
    native bar right in the rounded corner, where it gets sliced. Inset the
@@ -3323,6 +3385,38 @@ html.peek-open, html.peek-open body { overflow: hidden; }
 /* the shading pass must not sit over a document the reader is scrolling */
 .book--docs .book-leaf.is-on::after { opacity: 0; }
 .book--docs .book-leaf:not(.is-on) iframe { pointer-events: none; }
+
+/* ---- ARRIVAL: CHILL, NOT SNAPPY (deck-local override) ----
+   ag-motion.css reveals on --duration-medium with --ease-satisfying, which its
+   own comment calls "Expo out". Expo-out front-loads almost all of the movement
+   into the first fraction, which is what makes a container look like it is
+   being thrown into place rather than settling into it. It is the same curve
+   that made the page-turn read as a cut.
+
+   So: --duration-long instead of --duration-medium, --ease-soft instead of
+   expo (an even in-out, so it starts gently and lands gently), a shorter
+   travel so the slower move does not turn into a drift, and a longer beat
+   between staggered children. All four are AG tokens or 3/7-grid values;
+   nothing here is invented.
+
+   Overridden HERE rather than in ag-motion.css, because that file is shared
+   with every other deck and this is one client's taste, not a system change. */
+.reveal,
+.reveal-stagger > * {
+  transition-duration: var(--duration-long);
+  transition-timing-function: var(--ease-soft);
+}
+.reveal { transform: translateY(var(--dist-micro)); }
+.reveal-stagger > * {
+  transform: translateY(var(--dist-micro));
+  transition-delay: calc(var(--i, 0) * 126ms);   /* 7 x 18, up from 81ms */
+}
+.reveal.in-view,
+.reveal-stagger.in-view > * { transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-stagger > * { transition: none; transform: none; }
+}
 
 /* ---- the Deep Waters card: the mark, and what it opens ---- */
 /* THE LOGO IS THE COVER. It is a full lockup on its own blue plate - iceberg,
@@ -4073,22 +4167,21 @@ html.peek-open, html.peek-open body { overflow: hidden; }
       </div>
 
       <div class="org-grid reveal-stagger">
-        <article class="sys sys--stats">
-          <div class="ostat">
-            <p class="ostat-fig grad"><span data-count="2">2</span>&nbsp;A&nbsp;Day</p>
-            <p class="ostat-sub">60 a&nbsp;month</p>
+        <article class="sys sys--stats sys--wide">
+          <div class="ostat-row">
+            <div class="ostat">
+              <p class="ostat-fig grad"><span data-count="2">2</span>&nbsp;A&nbsp;Day</p>
+              <p class="ostat-sub">60 a&nbsp;month</p>
+            </div>
+            <div class="ostat">
+              <p class="ostat-fig grad"><span data-count="7">7</span>&nbsp;Platforms</p>
+              <p class="ostat-sub">Every piece on all&nbsp;7</p>
+            </div>
+            <div class="ostat">
+              <p class="ostat-fig grad"><span data-count="420">420</span>&nbsp;Posts</p>
+              <p class="ostat-sub">Every&nbsp;month</p>
+            </div>
           </div>
-          <div class="ostat">
-            <p class="ostat-fig grad"><span data-count="7">7</span>&nbsp;Platforms</p>
-            <p class="ostat-sub">Every piece on all&nbsp;7</p>
-          </div>
-          <div class="ostat">
-            <p class="ostat-fig grad"><span data-count="420">420</span>&nbsp;Posts</p>
-            <p class="ostat-sub">Every&nbsp;month</p>
-          </div>
-        </article>
-
-        <article class="sys sys--note">
           <p class="sys-copy">We will create the static images, so 30 statics per month and 30 talking head and voiceover&nbsp;scripts.</p>
         </article>
       </div>
@@ -4194,7 +4287,6 @@ html.peek-open, html.peek-open body { overflow: hidden; }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
              stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
-      <p class="peek-title" data-voice-title>Voice scripts</p>
       <div class="book book--docs" data-book-docs>
         <div class="book-stage" data-docs-stage></div>
         <div class="book-nav">
