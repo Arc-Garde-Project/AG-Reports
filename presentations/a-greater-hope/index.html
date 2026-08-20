@@ -52,6 +52,18 @@
 <link rel="stylesheet" href="ag-scroll.css">
 <link rel="stylesheet" href="ag-cursor.css">
 
+<script>
+/* Runs before any paint: reading the stored choice after the stylesheet has
+   applied would show one frame of the wrong ground. Wrapped because storage
+   throws in some privacy modes, and the catch simply leaves the light
+   default in place. */
+(function () {
+  try {
+    var t = localStorage.getItem('agh-theme');
+    if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+</script>
 <style>
 /* ===========================================================
    A GREATER HOPE - deck design layer
@@ -205,6 +217,12 @@
   --v-lg: clamp(1.3125rem, 0.772rem + 2.471vw, 2.625rem);
   --v-section: clamp(1.75rem, 0.849rem + 4.118vw, 3.9375rem);
 
+  --field-comp: multiply;   /* how the seam map meets the ground */
+  /* the copy scrim's ground, as channels so the gradient can vary its alpha */
+  --scrim-rgb: 255, 253, 250;
+  --tick-stroke: rgba(88, 66, 108, 0.55);
+  --tick-stroke-lit: rgba(84, 52, 128, 0.78);
+
   /* Warm-tinted shadows. A neutral gray shadow on warm paper reads as dirt. */
   /* deeper, so a pane sits clearly ON the field rather than in it */
   /* Reach = |y offset| + blur. Held under the 30px clip gap MEASURED at 390,
@@ -250,14 +268,159 @@ html { background: var(--paper); }
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(122% 98% at 50% 42%,
-    rgba(96, 68, 116, 0) 52%,
-    rgba(96, 68, 116, 0.055) 78%,
-    rgba(72, 46, 92, 0.135) 100%);
+  background: radial-gradient(124% 100% at 50% 42%,
+    rgba(96, 68, 116, 0) 58%,
+    rgba(96, 68, 116, 0.032) 80%,
+    rgba(72, 46, 92, 0.085) 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .grain { opacity: 0.14; }
+}
+
+/* ---------- Dark ----------
+   Ground tokens only. Everything that is not the ground - brand hues, type,
+   spacing, radii - is shared, so the two themes cannot drift apart. */
+html[data-theme="dark"] {
+  --paper: #100d18;
+  --ink: #f4f1f8;
+  --field-comp: lighter;
+
+  --surface: rgba(255, 255, 255, 0.055);
+  --surface-line: rgba(255, 255, 255, 0.13);
+  --glass: blur(16px) saturate(1.25) brightness(1.06);
+
+  --bevel:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.16),
+    inset 1.5px 0 0 rgba(255, 255, 255, 0.07),
+    inset 0 -1.5px 0 rgba(0, 0, 0, 0.34),
+    inset -1.5px 0 0 rgba(0, 0, 0, 0.24),
+    inset 0 0 26px rgba(255, 255, 255, 0.035);
+
+  --mist: 0 0 22px var(--paper), 0 0 11px var(--paper), 0 0 4px var(--paper);
+
+  --text-primary: #f4f1f8;
+  --text-secondary: rgba(244, 241, 248, 0.80);
+  --muted: rgba(244, 241, 248, 0.62);
+  --rule: rgba(255, 255, 255, 0.14);
+
+  /* type set in a gradient needs the light run, not the darkened one */
+  --sweep-ink: var(--sweep-ondark);
+
+  /* The brand hues are used as ACCENT INK - section labels, card names,
+     figures, dots, and every decorative rule. Values chosen against paper sit
+     at 2.13:1 on this ground, so each one gets its light-on-dark counterpart.
+     Same hue family, lifted into the range a dark ground can carry. */
+  --agh-purple: #cf96db;
+  --agh-plum:   #d3b4ea;
+  --agh-indigo: #9db2ec;
+  --agh-blue:   #6cc4f5;
+  --agh-sky:    #7fc4ee;
+  --agh-teal:   #74dcc8;
+  --agh-green:  #aee485;
+
+  /* the pricing panel is the same glass as every other card here */
+  --panel: rgba(255, 255, 255, 0.055);
+  --panel-bevel: var(--bevel);
+  --panel-rule: rgba(255, 255, 255, 0.13);
+
+  --shadow-card: var(--bevel), 0 1px 3px rgba(0, 0, 0, 0.34), 0 5px 14px rgba(0, 0, 0, 0.40);
+  --shadow-lift: var(--bevel), 0 2px 6px rgba(0, 0, 0, 0.40), 0 10px 24px rgba(0, 0, 0, 0.50);
+
+  --scrim-rgb: 16, 13, 24;
+  --tick-stroke: rgba(224, 216, 240, 0.34);
+  --tick-stroke-lit: rgba(224, 180, 232, 0.62);
+}
+
+/* the scrubber line and the chart ink were picked against paper */
+html[data-theme="dark"] .chart-scrub i { background: linear-gradient(#8fd6f7, rgba(143, 214, 247, 0.06)); }
+
+/* On paper the grain darkens; on a dark ground there is nothing to darken, so
+   it lifts instead. */
+html[data-theme="dark"] .grain { mix-blend-mode: overlay; opacity: 0.30; }
+
+html[data-theme="dark"] .vignette {
+  background: radial-gradient(124% 100% at 50% 42%,
+    rgba(0, 0, 0, 0) 46%,
+    rgba(0, 0, 0, 0.26) 78%,
+    rgba(0, 0, 0, 0.52) 100%);
+}
+
+/* the waived-style accent and the road dots keep their hues; only the ring
+   that reads as a hairline needs lifting off the dark */
+html[data-theme="dark"] .road-dot { background: #221b29; }
+html[data-theme="dark"] .road-dot { box-shadow: 0 0 0 6px rgba(16, 13, 24, 0.95); }
+html[data-theme="dark"] .road-node[data-on="true"] .road-dot {
+  box-shadow: 0 0 0 8px rgba(16, 13, 24, 0.98), 0 0 22px rgba(143, 214, 247, 0.45);
+}
+html[data-theme="dark"] .chart-gridline { stroke: rgba(255, 255, 255, 0.10); }
+html[data-theme="dark"] .chart-stri--c { stroke: rgba(0, 0, 0, 0.26); }
+html[data-theme="dark"] .plat-mark { color: #ffffff; }
+html[data-theme="dark"] .chart-tabs {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.44), inset 0 -1px 0 rgba(255, 255, 255, 0.07);
+}
+
+/* ---------- The theme switch ----------
+   Two explicit choices, not a single toggle: the label has to say which
+   ground you are on, and a lone icon does not. Sits under the progress rail
+   in the corner, out of the reading column. */
+.theme-switch {
+  position: fixed;
+  top: clamp(14px, 2vh, 22px);
+  right: clamp(14px, 2vw, 26px);
+  z-index: 40;
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+}
+
+.theme-btn {
+  /* 49px, the AG floor, which clears the WCAG 44px minimum - on both axes and
+     at every width, including the phone override below. */
+  min-height: 49px;
+  min-width: 49px;
+  padding: 7px 14px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  word-break: normal;
+  cursor: pointer;
+  transition: color var(--duration-quick) var(--ease-soft),
+              background var(--duration-quick) var(--ease-soft);
+}
+
+@media (hover: hover) {
+  .theme-btn:not([aria-pressed="true"]):hover { color: var(--text-primary); }
+}
+
+.theme-btn[aria-pressed="true"] {
+  color: #ffffff;
+  background: var(--sweep-ink);
+}
+
+html[data-theme="dark"] .theme-btn[aria-pressed="true"] {
+  color: #100d18;
+  background: linear-gradient(90deg, #e0b4e8, #8fd6f7);
+}
+
+@media (max-width: 900px) {
+  .theme-switch { top: 10px; right: 10px; padding: 3px; }
+  .theme-btn { min-height: 49px; min-width: 49px; padding: 6px 11px; font-size: 0.625rem; letter-spacing: 0.06em; }
 }
 
 /* ---------- The backdrop ----------
@@ -367,9 +530,9 @@ section { position: relative; }
   position: absolute;
   inset: -6% -8%;
   background: radial-gradient(66% 56% at 50% 50%,
-    rgba(255, 253, 250, 0.88) 0%,
-    rgba(255, 253, 250, 0.62) 48%,
-    rgba(255, 253, 250, 0) 80%);
+    rgba(var(--scrim-rgb), 0.88) 0%,
+    rgba(var(--scrim-rgb), 0.62) 48%,
+    rgba(var(--scrim-rgb), 0) 80%);
   pointer-events: none;
   z-index: -1;
 }
@@ -1034,10 +1197,10 @@ html.is-ready .agh-curtain {
   white-space: nowrap;
   padding-inline: clamp(0.6rem, 0.35rem + 0.9vw, 1.3rem);
   color: transparent;
-  -webkit-text-stroke: 1.4px rgba(88, 66, 108, 0.55);
+  -webkit-text-stroke: 1.4px var(--tick-stroke);
 }
 
-.tick-word.lit { -webkit-text-stroke: 1.6px rgba(84, 52, 128, 0.78); }
+.tick-word.lit { -webkit-text-stroke: 1.6px var(--tick-stroke-lit); }
 
 /* the diamond between phrases, drawn rather than typed so it never depends
    on a glyph the display face may not carry */
@@ -2351,6 +2514,11 @@ html.is-ready .agh-curtain {
 })();
 </script>
 
+<div class="theme-switch" role="group" aria-label="Choose light or dark">
+  <button class="theme-btn" type="button" data-set-theme="light" aria-pressed="true">Light</button>
+  <button class="theme-btn" type="button" data-set-theme="dark" aria-pressed="false">Dark</button>
+</div>
+
 <canvas class="backdrop" aria-hidden="true"></canvas>
 <div class="grain" aria-hidden="true"></div>
 <div class="vignette" aria-hidden="true"></div>
@@ -2444,7 +2612,7 @@ html.is-ready .agh-curtain {
                 <span class="road-dot" aria-hidden="true"></span>
                 <div class="road-card">
                   <p class="road-num">03</p>
-                  <p class="road-text">Targeted to the High Desert and the Inland&nbsp;Empire</p>
+                  <p class="road-text">Targeted the High Desert and the Inland&nbsp;Empire</p>
                 </div>
               </li>
               <li class="road-node" data-i="3">
@@ -2807,7 +2975,6 @@ html.is-ready .agh-curtain {
 
   var W = 0, H = 0, DPR = 1, FIELD_H = 0;
   var map = null, mctx = null, MW = 0, MH = 0, GEO_W = 0;
-  var wash = null, WW = 0, WH = 0, WK = 0;
   var tmp = null, tctx = null, TW = 0, TH = 0;
 
   var scrollY = 0;
@@ -2815,6 +2982,13 @@ html.is-ready .agh-curtain {
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var PAPER = '#fffdfa';
+  var COMP = 'multiply';
+
+  function readTheme() {
+    var cs = getComputedStyle(document.documentElement);
+    PAPER = cs.getPropertyValue('--paper').trim() || '#fffdfa';
+    COMP = cs.getPropertyValue('--field-comp').trim() || 'multiply';
+  }
 
   function circumcenter(a, b, c) {
     var ax = a[0], ay = a[1], bx = b[0], by = b[1], cx = c[0], cy = c[1];
@@ -2906,7 +3080,7 @@ html.is-ready .agh-curtain {
         var y = ed.y1 + dy * u + ny * off;
         if (k === 0) mctx.moveTo(x, y); else mctx.lineTo(x, y);
       }
-      var a = (0.040 + 0.070 * (1 - Math.abs(lane) * 1.7)) * ed.bright;
+      var a = (0.068 + 0.118 * (1 - Math.abs(lane) * 1.7)) * ed.bright;
       if (a < 0.004) continue;
       mctx.strokeStyle = 'rgba(255,255,255,' + a.toFixed(4) + ')';
       mctx.lineWidth = (s === 0 || s === STR - 1 ? 0.8 : 1.5) * MAP_SCALE * DPR;
@@ -2924,7 +3098,7 @@ html.is-ready .agh-curtain {
       var cy = ed.y1 + dy * u + ny * o2;
       if (k === 0) mctx.moveTo(cx, cy); else mctx.lineTo(cx, cy);
     }
-    mctx.strokeStyle = 'rgba(255,255,255,' + (0.20 * ed.bright).toFixed(4) + ')';
+    mctx.strokeStyle = 'rgba(255,255,255,' + (0.34 * ed.bright).toFixed(4) + ')';
     mctx.lineWidth = 1.1 * MAP_SCALE * DPR;
     mctx.stroke();
   }
@@ -3017,8 +3191,8 @@ html.is-ready .agh-curtain {
     for (var v = 0; v < verts.length; v++) {
       var r = (8 + 18 * verts[v][2]) * MAP_SCALE * DPR;
       var g = mctx.createRadialGradient(verts[v][0], verts[v][1], 0, verts[v][0], verts[v][1], r);
-      g.addColorStop(0, 'rgba(255,255,255,' + (0.34 * verts[v][2]).toFixed(3) + ')');
-      g.addColorStop(0.4, 'rgba(255,255,255,' + (0.11 * verts[v][2]).toFixed(3) + ')');
+      g.addColorStop(0, 'rgba(255,255,255,' + (0.56 * verts[v][2]).toFixed(3) + ')');
+      g.addColorStop(0.4, 'rgba(255,255,255,' + (0.19 * verts[v][2]).toFixed(3) + ')');
       g.addColorStop(1, 'rgba(255,255,255,0)');
       mctx.fillStyle = g;
       mctx.fillRect(verts[v][0] - r, verts[v][1] - r, r * 2, r * 2);
@@ -3040,41 +3214,6 @@ html.is-ready .agh-curtain {
     mctx = sctx;
   }
 
-  /* The body of the field. Very low frequency, so it is baked tiny and
-     upscaled - the smoothing that costs is the smoothing we want. One extra
-     drawImage per frame, which is why the breath still holds 60fps. */
-  function bakeWash() {
-    WK = 96 / Math.max(1, MW);
-    WW = 96;
-    WH = Math.max(2, Math.round(MH * WK));
-    wash = document.createElement('canvas');
-    wash.width = WW; wash.height = WH;
-    var w = wash.getContext('2d');
-    w.fillStyle = '#ffffff';
-    w.fillRect(0, 0, WW, WH);
-
-    seed(20260820);
-    /* the logo's own five stops, walked down the field so scrolling moves
-       through the whole sweep rather than sitting in one hue */
-    var STOPS = [[110, 40, 119], [55, 80, 154], [0, 118, 187], [52, 153, 138], [127, 188, 66]];
-    var BLOOMS = 24;
-    w.globalCompositeOperation = 'multiply';
-    for (var i = 0; i < BLOOMS; i++) {
-      var t = (i + 0.5) / BLOOMS;
-      var c = STOPS[Math.min(STOPS.length - 1, Math.floor(t * STOPS.length))];
-      var cx = (0.5 + (rnd() - 0.5) * 1.7) * WW;
-      var cy = (t + (rnd() - 0.5) * 0.06) * WH;
-      var r = (0.26 + rnd() * 0.32) * WW;
-      var g = w.createRadialGradient(cx, cy, 0, cx, cy, r);
-      var a = 0.17 + rnd() * 0.13;
-      g.addColorStop(0, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a.toFixed(3) + ')');
-      g.addColorStop(1, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)');
-      w.fillStyle = g;
-      w.fillRect(cx - r, cy - r, r * 2, r * 2);
-    }
-    w.globalCompositeOperation = 'source-over';
-  }
-
   function build() {
     var vw = Math.max(window.innerWidth, 1), vh = Math.max(window.innerHeight, 1);
     DPR = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -3083,10 +3222,9 @@ html.is-ready .agh-curtain {
     cv.style.width = vw + 'px'; cv.style.height = vh + 'px';
     FIELD_H = Math.max(document.body.scrollHeight, vh) * DPR;
 
-    PAPER = getComputedStyle(document.documentElement).getPropertyValue('--paper').trim() || '#fffdfa';
+    readTheme();
 
     bakeMap();
-    bakeWash();
 
     TW = Math.max(2, Math.round(W * MAP_SCALE));
     TH = Math.max(2, Math.round(H * MAP_SCALE));
@@ -3150,13 +3288,10 @@ html.is-ready .agh-curtain {
     ctx.globalCompositeOperation = 'source-over';
     ctx.fillStyle = PAPER;
     ctx.fillRect(0, 0, W, H);
-    ctx.globalCompositeOperation = 'multiply';
-    /* body first, seams over it. The wash rides the same scroll offset as the
-       map, so the two are one surface rather than two layers sliding. */
-    if (wash) {
-      /* same source window as the map, scaled by WK into wash coordinates */
-      ctx.drawImage(wash, 0, oy * WK, TW * WK, TH * WK, 0, 0, W, H);
-    }
+    /* multiply on paper, 'lighter' on dark. Same baked map either way: on a
+       dark ground the seams stop being ink and become light coming THROUGH
+       the cracks, which is the picture this field was built from. */
+    ctx.globalCompositeOperation = COMP;
     ctx.drawImage(tmp, 0, 0, TW, TH, 0, 0, W, H);
 
     ctx.globalCompositeOperation = 'source-over';
@@ -3189,6 +3324,9 @@ html.is-ready .agh-curtain {
     if (L && typeof L.scroll === 'number') { scrollY = L.scroll; return; }
     scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
   }
+
+  /* the ground changed under us: re-read the tokens and repaint at once */
+  window.addEventListener('ag:theme', function () { readTheme(); draw(); });
 
   touch = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 900;
 
@@ -3238,6 +3376,40 @@ html.is-ready .agh-curtain {
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+
+  /* ---- The theme switch ----
+     The attribute is already set before first paint by the inline head
+     script; this only wires the buttons and keeps them in sync. */
+  (function () {
+    var root = document.documentElement;
+    var btns = [].slice.call(document.querySelectorAll('[data-set-theme]'));
+    if (!btns.length) return;
+
+    function current() { return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'; }
+
+    function sync() {
+      var now = current();
+      btns.forEach(function (b) {
+        b.setAttribute('aria-pressed', b.getAttribute('data-set-theme') === now ? 'true' : 'false');
+      });
+    }
+
+    function set(next) {
+      if (next === current()) return;
+      root.setAttribute('data-theme', next === 'dark' ? 'dark' : 'light');
+      try { localStorage.setItem('agh-theme', next); } catch (e) {}
+      sync();
+      /* the field is a canvas, so it cannot inherit a CSS token - it has to be
+         told, and it has to repaint before the next frame or the old ground
+         stays on screen until something else moves */
+      window.dispatchEvent(new CustomEvent('ag:theme', { detail: next }));
+    }
+
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () { set(b.getAttribute('data-set-theme')); });
+    });
+    sync();
+  })();
 
   /* ---- The chart: three reads of one cycle, scrubbable ----
      SERIES is integer-true. Every figure printed is the figure the arithmetic
