@@ -120,12 +120,12 @@
      one token, so they all lose the red together.
      --agh-peach and --agh-coral are now unreferenced; they stay defined
      because they are part of A Greater Hope's documented palette. */
-  --sweep-decor:  linear-gradient(90deg, var(--agh-purple) 0%, var(--agh-indigo) 26%, var(--agh-blue) 50%, var(--agh-teal) 74%, var(--agh-green) 100%);
+  --sweep-decor:  linear-gradient(135deg, var(--agh-purple) 0%, var(--agh-indigo) 26%, var(--agh-blue) 50%, var(--agh-teal) 74%, var(--agh-green) 100%);
   /* Darkened brand hues, because this type sits on a light ground. The raw
      sweep cannot carry text: its green measures 2.29:1 on paper. This one
      holds 5.22:1 at its lightest stop. */
-  --sweep-ink:    linear-gradient(90deg, #6e2877 0%, #37509a 50%, #0f7a6c 100%);
-  --sweep-ondark: linear-gradient(90deg, #ba58c7 0%, #657ec8 50%, #34998a 100%);
+  --sweep-ink:    linear-gradient(135deg, #6e2877 0%, #37509a 50%, #0f7a6c 100%);
+  --sweep-ondark: linear-gradient(135deg, #ba58c7 0%, #657ec8 50%, #34998a 100%);
 
   /* ---- Grounds ----
      The deck runs DARK. Glow only exists against dark: the seam light in
@@ -415,13 +415,96 @@ html.is-theming .toys { opacity: 0; }
    in the corner, out of the reading column. */
 /* the corner cluster: theme pair plus fullscreen, laid out left to right on
    desktop and stacked on a phone */
-.deck-controls {
+/* ---------- The deck bar ----------
+   A sticky header that carries the theme pair and the full-screen button. It
+   travels out of the way going DOWN and comes back on the first movement UP,
+   which is the pattern every long reading page uses, because a control strip
+   that is always there is always in the way and one that is only at the top
+   is a scroll back.
+
+   AT REST IT IS NOT A BAR. Above the ARM threshold there is no ground, no
+   rule and no shadow - only the pills, sitting exactly where they sat before
+   this existed, so the hero is untouched at first paint. The bar materializes
+   on the way past .is-stuck and takes its glass from the same --surface /
+   --glass / --shadow-card tokens the pills already use.
+
+   pointer-events: none on the strip is load-bearing, not tidiness. It spans
+   the full width and is ~69px tall on a phone; left live it would swallow
+   every tap across the top of the hero. The children take them back. */
+/* ABOVE 900 IT IS A PILL, not an edge-to-edge bar - it holds three buttons,
+   and a rule ruled across 1440px to carry them reads as chrome the deck does
+   not otherwise have. It sits exactly where the two floating pills already
+   sat, so at rest nothing about the hero moves. The full-width bar is the
+   PHONE treatment only, in the media query below, where edge to edge is the
+   only way three 49px targets and the mark fit one row. */
+.deck-bar {
   position: fixed;
   top: clamp(14px, 2vh, 22px);
   right: clamp(14px, 2vw, 26px);
-  z-index: 40;
+  /* under .agh-topline (60) so the reading position always paints over the
+     header, and over the field (0-4) */
+  z-index: 45;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  gap: 6px;
+  padding: 5px;
+  border-radius: var(--radius-pill);
+  pointer-events: none;
+  background: transparent;
+  border: 1px solid transparent;
+  /* Asymmetric on purpose. Coming BACK is the movement the reader asked for
+     by scrolling up, so it gets the long expo-out settle; going away is
+     housekeeping and gets out of the way at half the length. */
+  transition: transform var(--duration-medium) var(--ease-satisfying),
+              background-color var(--duration-quick) var(--ease-soft),
+              border-color var(--duration-quick) var(--ease-soft),
+              box-shadow var(--duration-quick) var(--ease-soft);
+}
+
+.deck-bar > * { pointer-events: auto; }
+
+html.is-stuck .deck-bar {
+  background: var(--surface);
+  border-color: var(--surface-line);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+}
+
+/* -100% alone is not enough for a pill: it is inset from the top, so its own
+   height only carries it as far as its own top edge. Its offset and the 5px
+   reading line go with it. */
+html.nav-hidden .deck-bar {
+  transform: translateY(calc(-100% - clamp(14px, 2vh, 22px) - 9px));
+  transition: transform var(--duration-quick) var(--ease-soft),
+              background-color var(--duration-quick) var(--ease-soft),
+              border-color var(--duration-quick) var(--ease-soft),
+              box-shadow var(--duration-quick) var(--ease-soft);
+}
+
+/* Once the container has a ground of its own, the pieces inside stop needing
+   theirs, or it is a pill inside a pill inside a pill. The PRESSED states
+   keep their fill - that is the state indicator, not decoration. */
+html.is-stuck .theme-switch,
+html.is-stuck .fs-btn:not([aria-pressed="true"]) {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* The mark only appears once the hero's own logo has been scrolled past, so
+   the two are never on screen together. Decorative: the accessible name for
+   this deck is the h1, and a second "A Greater Hope" here would just be read
+   out twice. */
+/* Only the phone bar carries it - see the media query. A pill in the corner
+   does not need a logo in it, and the hero already has the mark at 96px. */
+.deck-bar-mark { display: none; }
+
+.deck-controls {
+  display: flex;
+  align-items: center;
   gap: 6px;
 }
 
@@ -470,14 +553,42 @@ html.is-theming .toys { opacity: 0; }
 
 html[data-theme="dark"] .theme-btn[aria-pressed="true"] {
   color: #100d18;
-  background: linear-gradient(90deg, #ba58c7, #0086d4);
+  background: linear-gradient(135deg, #ba58c7, #0086d4);
 }
 
 @media (max-width: 900px) {
-  /* top right on a phone too, but stacked UP AND DOWN - side by side it ate
-     a third of the width beside the progress rail */
-  .deck-controls { top: 10px; right: 10px; flex-direction: column; gap: 4px; align-items: flex-end; }
-  .theme-switch { padding: 3px; flex-direction: column; gap: 3px; }
+  /* The old note here stacked this cluster UP AND DOWN because side by side
+     it ate a third of the width beside the progress rail. Inside the bar the
+     rail is above it rather than beside it, so it goes back across: measured
+     at 320px the mark, both theme buttons and FULL come to 238px of 320, and
+     a column of three 49px targets would have made the bar 150px tall. */
+  .deck-bar {
+    top: 0;
+    right: 0;
+    left: 0;
+    padding: 8px 12px;
+    gap: 8px;
+    justify-content: space-between;
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid transparent;
+  }
+  html.is-stuck .deck-bar { border-bottom-color: var(--surface-line); }
+  /* a full-width bar clears itself with its own height and nothing else */
+  html.nav-hidden .deck-bar { transform: translateY(-100%); }
+
+  .deck-bar-mark {
+    display: block;
+    width: 30px;
+    height: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-quick) var(--ease-soft);
+  }
+  html.is-stuck .deck-bar-mark { opacity: 1; }
+
+  .deck-controls { flex-direction: row; gap: 6px; align-items: center; }
+  .theme-switch { padding: 3px; flex-direction: row; gap: 3px; }
   .fs-btn { padding: 6px 10px; font-size: 0.625rem; letter-spacing: 0.06em; }
   .theme-btn { min-height: 49px; min-width: 49px; padding: 6px 10px; font-size: 0.625rem; letter-spacing: 0.06em; }
 }
@@ -523,7 +634,7 @@ html.fs-ok .fs-btn { display: inline-flex; align-items: center; justify-content:
 
 html[data-theme="dark"] .fs-btn[aria-pressed="true"] {
   color: #100d18;
-  background: linear-gradient(90deg, #ba58c7, #0086d4);
+  background: linear-gradient(135deg, #ba58c7, #0086d4);
 }
 
 /* ---------- The toy monogram ----------
@@ -533,19 +644,21 @@ html[data-theme="dark"] .fs-btn[aria-pressed="true"] {
    fading in from almost nothing at the top of the viewport to full strength
    at the bottom, which is the thing the shirt does.
 
-   THE ARCHITECTURE IS A PERFORMANCE DECISION, measured not assumed. The first
-   build animated inside a full-viewport SVG <mask>; a mask whose CONTENTS
-   move has to be re-rendered every single frame and it measured 33fps idle.
-   Held static the same mask measures 60fps. So the mask stopped moving and
-   the COLOR moves underneath it instead:
+   THE STRUCTURE, accurately: one <rect> filled with the #toyFlow gradient and
+   masked by #toyMask, which is a <pattern> of 64 outlined motifs. The motifs
+   animate INSIDE the mask, so the mask is re-rasterized every frame - that is
+   the 33fps documented under .toy below, and it is a live cost, not a fixed
+   one. (An earlier note here claimed a static mask and a .toy-flow CSS layer.
+   No such element exists in this file; it described a build never shipped.)
 
-     .toys      static mask - the toy tile, plus the fade, composited together
-     .toy-flow  one repeating gradient, moved by TRANSFORM only, which the
-                compositor handles without repainting anything
+   Stops read the --toy-* tokens, so both themes come from one source.
 
-   The gradient is a CSS gradient on an HTML element rather than an SVG one,
-   so its stops read the --toy-* tokens directly and both themes still come
-   from a single source. */
+   THE AXIS IS THE LOGO'S AXIS. Sampled off agh-logo-256.webp at 15-degree
+   steps around the ring, the mark runs purple at 135deg (top-left, hue 292)
+   through blue at 225deg to green at 315deg (bottom-right, hue 90). Every
+   gradient in this deck now runs that same top-left to bottom-right diagonal:
+   the three --sweep-* tokens at 135deg in CSS, and this one as an axis of
+   (0,0)->(820,820) with the flow translating along it. */
 .toys {
   position: fixed;
   inset: 0;
@@ -560,13 +673,22 @@ html[data-theme="dark"] .fs-btn[aria-pressed="true"] {
     transparent 0%, rgba(0,0,0,0.16) 26%, rgba(0,0,0,0.52) 56%, #000 100%);
 }
 
-/* The ripple. Every motif carries its own animation-delay taken from its own
-   y, so a crest travels UPWARD through the field. An earlier build moved the
-   whole layer as one body, which is the thing this is not.
+/* The ripple. Every motif carries its own animation-delay, and that delay is
+   taken from x + y, not from y, so the crest travels the SAME top-left to
+   bottom-right diagonal the color does. An earlier build moved the whole
+   layer as one body, which is the thing this is not.
 
-   Color and wave share a speed by construction: the band covers 1640px in 7s
-   and the wave covers one 410px tile in 1.75s, both 234 px/s, so a toy lifts
-   as the color reaches it. */
+   The phase HAS to stay periodic in the 410 tile on BOTH axes: a <pattern> is
+   one tile the renderer repeats, so every copy of a motif is the same node
+   carrying the same delay. f(x+y) with period 410 satisfies that. A period
+   measured along the diagonal itself - 410*sqrt2 - would not, and the tile
+   would seam, which is why the wave speed had to move instead of the period.
+
+   Color and wave still share a speed by construction, which is what makes a
+   toy lift as the color reaches it. Diagonally: 1159.7px of band per 7s and
+   289.9px of wave per 1.75s, both 165.7 px/s, the same 4:1 band-to-wave ratio
+   the vertical build held at 234 px/s. It crosses the glass 29% slower,
+   because one tile is longer to cross corner to corner than top to bottom. */
 .toy {
   transform-box: fill-box;
   transform-origin: center;
@@ -2594,12 +2716,28 @@ html[data-theme="dark"] .chart-tab.is-on { color: #100d18; }
   /* The hero still resolves inside one phone screen. Measured on a 375x667
      iPhone SE. A 3-across figure row was tried and rejected: "PER TESTING
      CYCLE" needs a 9px type size to fit a 108px column. */
+  /* Top-anchored, not centered. Centering a stack that is shorter than the
+     screen banks all the slack ABOVE the logo: measured at 390x844 there was
+     252px of empty paper before the mark and another 192px between the
+     figures and the cue. The wrap stretches to the full row instead, and the
+     stack distributes that slack internally. Bottom padding is the measured
+     cue (70px tall, 10px off the floor) plus clearance. */
   .hero {
-    padding-block: 42px 62px;
+    /* 80px, not 24. The controls run ACROSS inside the deck bar now, and at
+       390 that cluster reaches from x=202 to the right edge while the centered
+       96px mark spans 147-243 - a measured 41px of horizontal overlap in the
+       same vertical band, so the Light/Dark pill sat on top of the logo. The
+       bar measures 74px tall on a phone; 80 clears it with 6 to spare.
+       This is the header's band, not dead space: the thing that made the old
+       252px void dead was that nothing was in it. */
+    padding-block: 80px 92px;
     min-height: 100svh;
+    align-items: stretch;
   }
 
-  .hero-stack { gap: 20px; }
+  .hero > .wrap { display: flex; }
+
+  .hero-stack { gap: 18px; width: 100%; }
   .hero-mark { width: 96px; }
 
   /* THE HERO WAS 24% OF THE SCREEN. Measured at 390x844, 375x667 and 430x932,
@@ -2644,23 +2782,51 @@ html[data-theme="dark"] .chart-tab.is-on { color: #100d18; }
      the floor of it here too rather than being dropped */
   .scroll-cue { bottom: 10px; }
 
-  /* Three across on a phone too. The earlier note here said this was tried
-     and rejected because "PER TESTING CYCLE" needed 9px type to fit - but the
-     fix was never a smaller size, it was the LETTER SPACING. At 0.17em that
-     label is 29% wider than the letters themselves; at 0.06em it fits one
-     line inside a 102px column at 350 with the size left readable. */
+  /* ONE COLUMN, and it is the element that eats the leftover screen.
+     Three across worked but it is a 58px band on an 844px screen, so the
+     slack had to go somewhere and it went to the voids at the two ends.
+     Stacked, the row takes flex:1 of whatever the headline leaves and
+     grid-auto-rows:1fr splits that into three EQUAL rows, so the stats run
+     from under the rule down to the cue instead of huddling in a strip.
+
+     Full width per stat also buys back the type: the label no longer has to
+     survive a 102px column, so the 0.06em tracking that was holding "PER
+     TESTING CYCLE" on one line goes back to the house 0.14em, and the term
+     goes from 23px to 29px. It stays UNDER the 33px headline - the headline
+     has to stay the largest thing on the screen. */
   .figs {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(6px, 2.2vw, 14px);
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(0, 1fr);
+    gap: 0;
+    /* takes ALL the leftover screen. Capping it at 400px was tried and
+       rejected: the surplus has to go somewhere, and wherever it went it
+       became a visible void - parked above the row it left the gradient rule
+       floating in 96px of nothing, which is the same dead space the layout
+       was meant to close, just moved. Uncapped there is no surplus. */
+    flex: 1 1 auto;
+    min-height: 0;
     margin-top: 0;
-    padding-top: 16px;
+    padding-top: 0;
+    border-top: 0;
   }
 
-  .fig-term { font-size: clamp(1.375rem, 0.72rem + 3.1vw, 2rem); }
+  /* the divider moves onto each row, so the generous row height reads as
+     rhythm rather than as a gap that got away */
+  .fig {
+    justify-content: center;
+    gap: 4px;
+  }
+
+  /* second and third only. The first band's top edge is the gradient rule
+     sitting 18px above it - a hairline there would draw a second line
+     directly under it. */
+  .fig + .fig { border-top: 1px solid var(--rule); }
+
+  .fig-term { font-size: clamp(1.75rem, 1rem + 3.4vw, 2.25rem); }
 
   .fig-desc {
-    font-size: clamp(0.625rem, 0.6rem + 0.12vw, 0.6875rem);
-    letter-spacing: 0.06em;
+    font-size: clamp(0.6875rem, 0.65rem + 0.2vw, 0.8125rem);
+    letter-spacing: 0.14em;
     line-height: 1.3;
   }
 
@@ -2835,6 +3001,8 @@ html[data-theme="dark"] .chart-tab.is-on { color: #100d18; }
 })();
 </script>
 
+<header class="deck-bar">
+<img class="deck-bar-mark" src="agh-logo-256.webp" width="256" height="256" alt="" aria-hidden="true" decoding="async">
 <div class="deck-controls">
   <div class="theme-switch" role="group" aria-label="Choose light or dark">
     <button class="theme-btn" type="button" data-set-theme="light" aria-pressed="true">Light</button>
@@ -2844,8 +3012,9 @@ html[data-theme="dark"] .chart-tab.is-on { color: #100d18; }
     <span class="fs-label">Full</span>
   </button>
 </div>
+</header>
 
-<svg class="toys" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><defs><linearGradient id="toyFlow" gradientUnits="userSpaceOnUse" x1="0" y1="1640" x2="0" y2="0" spreadMethod="repeat"><stop offset="0" stop-color="var(--toy-a)"/><stop offset="0.22" stop-color="var(--toy-b)"/><stop offset="0.46" stop-color="var(--toy-c)"/><stop offset="0.70" stop-color="var(--toy-d)"/><stop offset="0.86" stop-color="var(--toy-e)"/><stop offset="1" stop-color="var(--toy-a)"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="0 -1640" dur="7s" repeatCount="indefinite"/></linearGradient><pattern id="toyTile" x="0" y="0" width="410" height="410" patternUnits="userSpaceOnUse"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(29.3 29.3) rotate(6) scale(0.379) translate(-50 -50)" stroke-width="3.67"><g class="toy" style="animation-delay:-0.12s"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g></g><g transform="translate(29.3 87.9) rotate(-3) scale(0.381) translate(-50 -50)" stroke-width="4.39"><g class="toy" style="animation-delay:-0.38s"><path d="M12 78 C13 44 38 24 50 24 C63 24 87 43 88 78"/> <path d="M26 79 C27 53 40 38 50 38 C61 38 74 52 75 79"/> <path d="M40 80 C41 63 45 52 50 52 C56 52 61 62 62 80"/></g></g><g transform="translate(29.3 146.4) rotate(3) scale(0.382) translate(-50 -50)" stroke-width="4.03"><g class="toy" style="animation-delay:-0.62s"><path d="M34 22 L66 22 L66 74 L50 92 L34 74 Z"/> <path d="M34 36 L66 36"/> <path d="M34 74 L66 74"/> <path d="M50 44 L50 66"/></g></g><g transform="translate(29.3 205.0) rotate(9) scale(0.359) translate(-50 -50)" stroke-width="4.52"><g class="toy" style="animation-delay:-0.88s"><path d="M50 12 L61 39 L90 41 L67 59 L75 88 L50 71 L25 88 L33 59 L10 40 L39 38 Z"/></g></g><g transform="translate(29.3 263.6) rotate(3) scale(0.388) translate(-50 -50)" stroke-width="4.03"><g class="toy" style="animation-delay:-1.12s"><path d="M56 22 C44 22 36 31 36 42 C36 47 38 51 41 54 C30 58 22 66 22 74 C22 82 32 88 48 88 C68 88 82 78 82 62 C82 52 76 44 68 40 C68 30 63 22 56 22 Z"/> <circle cx="52" cy="36" r="2.8"/> <path d="M36 34 L22 38 L36 43"/> <path d="M40 88 L40 94"/><path d="M58 88 L58 94"/></g></g><g transform="translate(29.3 322.1) rotate(-9) scale(0.370) translate(-50 -50)" stroke-width="4.46"><g class="toy" style="animation-delay:-1.37s"><path d="M28 74 C18 74 12 66 14 58 C16 50 24 46 30 48 C31 34 42 26 54 28 C66 30 73 40 72 50 C82 48 90 54 90 63 C90 70 84 74 76 74 Z"/></g></g><g transform="translate(29.3 380.7) rotate(6) scale(0.371) translate(-50 -50)" stroke-width="4.29"><g class="toy" style="animation-delay:-1.62s"><path d="M50 26 C42 18 28 16 16 18 L16 78 C28 76 42 78 50 86 C58 78 72 76 84 78 L84 18 C72 16 58 18 50 26 Z"/> <path d="M50 26 L50 86"/> <path d="M25 34 C32 33 39 34 43 37"/> <path d="M57 37 C61 34 68 33 75 34"/></g></g><g transform="translate(87.9 58.6) rotate(-3) scale(0.395) translate(-50 -50)" stroke-width="3.87"><g class="toy" style="animation-delay:-0.25s"><path d="M50 32 C42 24 26 26 22 42 C18 58 28 82 40 88 C46 91 50 87 50 87 C50 87 54 91 60 88 C72 82 82 58 78 42 C74 26 58 24 50 32 Z"/> <path d="M50 32 L50 16"/> <path d="M50 20 C58 12 70 14 70 14 C70 14 68 24 58 24 C53 24 50 20 50 20 Z"/></g></g><g transform="translate(87.9 117.1) rotate(-6) scale(0.366) translate(-50 -50)" stroke-width="3.89"><g class="toy" style="animation-delay:-0.50s"><rect x="14" y="52" width="34" height="33" rx="4"/> <rect x="52" y="52" width="34" height="33" rx="4"/> <rect x="33" y="16" width="34" height="33" rx="4"/></g></g><g transform="translate(87.9 175.7) rotate(-3) scale(0.399) translate(-50 -50)" stroke-width="4.37"><g class="toy" style="animation-delay:-0.75s"><circle cx="50" cy="50" r="22"/> <path d="M50 14 L50 4"/><path d="M50 96 L50 86"/> <path d="M14 50 L4 50"/><path d="M96 50 L86 50"/> <path d="M24 24 L17 17"/><path d="M83 83 L76 76"/> <path d="M76 24 L83 17"/><path d="M17 83 L24 76"/></g></g><g transform="translate(87.9 234.3) rotate(9) scale(0.384) translate(-50 -50)" stroke-width="4.01"><g class="toy" style="animation-delay:-1.00s"><path d="M50 12 C31 12 22 27 23 41 C24 57 39 68 50 70 C61 68 76 57 77 41 C78 26 68 12 50 12 Z"/> <path d="M46 70 L54 70 L50 77 Z"/> <path d="M50 77 C43 85 57 90 50 99"/></g></g><g transform="translate(87.9 292.9) rotate(-9) scale(0.375) translate(-50 -50)" stroke-width="3.68"><g class="toy" style="animation-delay:-1.25s"><path d="M12 68 C12 58 14 54 19 52 L27 52 C28 42 34 36 43 36 L59 36 C68 36 74 42 75 52 L83 52 C88 54 90 58 90 68 L76 68 C75 57 57 57 56 68 L46 68 C45 57 27 57 26 68 Z"/> <path d="M26 68 C26 80 46 80 46 68"/> <path d="M56 68 C56 80 76 80 76 68"/> <path d="M50 36 L50 52"/> <path d="M33 52 C34 45 38 42 43 42"/></g></g><g transform="translate(87.9 351.4) rotate(-9) scale(0.393) translate(-50 -50)" stroke-width="4.38"><g class="toy" style="animation-delay:-1.50s"><path d="M50 8 C62 20 68 38 68 56 L68 72 L32 72 L32 56 C32 38 38 20 50 8 Z"/> <circle cx="50" cy="40" r="8"/> <path d="M32 54 L18 70 L18 84 L32 72 Z"/> <path d="M68 54 L82 70 L82 84 L68 72 Z"/> <path d="M42 72 L42 84 C42 90 46 94 50 96 C54 94 58 90 58 84 L58 72"/></g></g><g transform="translate(87.9 0.0) rotate(-9) scale(0.388) translate(-50 -50)" stroke-width="4.09"><g class="toy" style="animation-delay:-0.00s"><path d="M28 47 C26 37 30 30 36 28 C30 22 33 13 41 13 C48 13 50 21 45 27 C48 25 52 25 55 27 C50 21 52 13 59 13 C67 13 70 22 64 28 C70 30 74 37 72 47 C72 59 62 67 50 67 C38 67 28 59 28 47 Z"/> <circle cx="41" cy="42" r="2.8"/><circle cx="59" cy="42" r="2.8"/> <path d="M44 53 C47 56 53 56 56 53"/> <path d="M34 63 C26 69 24 83 32 89 C38 93 45 94 50 94 C55 94 62 93 68 89 C76 83 74 69 66 63"/> <path d="M30 68 C22 71 20 79 24 84"/><path d="M70 68 C78 71 80 79 76 84"/></g></g><g transform="translate(146.4 29.3) rotate(3) scale(0.358) translate(-50 -50)" stroke-width="4.19"><g class="toy" style="animation-delay:-0.12s"><path d="M50 8 L84 44 L50 88 L16 44 Z"/> <path d="M50 8 L50 88"/><path d="M16 44 L84 44"/> <path d="M50 88 C43 93 57 97 50 102"/></g></g><g transform="translate(146.4 87.9) rotate(-9) scale(0.391) translate(-50 -50)" stroke-width="4.39"><g class="toy" style="animation-delay:-0.38s"><path d="M64 14 C40 18 24 38 26 60 C28 82 48 96 70 92 C54 84 44 68 45 53 C46 36 53 22 64 14 Z"/></g></g><g transform="translate(146.4 146.4) rotate(3) scale(0.391) translate(-50 -50)" stroke-width="3.90"><g class="toy" style="animation-delay:-0.62s"><path d="M14 66 L86 66 L74 88 L26 88 Z"/> <path d="M50 64 L50 14"/> <path d="M53 18 L78 56 L53 56 Z"/></g></g><g transform="translate(146.4 205.0) rotate(3) scale(0.366) translate(-50 -50)" stroke-width="4.45"><g class="toy" style="animation-delay:-0.88s"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g></g><g transform="translate(146.4 263.6) rotate(3) scale(0.382) translate(-50 -50)" stroke-width="4.09"><g class="toy" style="animation-delay:-1.12s"><path d="M12 78 C13 44 38 24 50 24 C63 24 87 43 88 78"/> <path d="M26 79 C27 53 40 38 50 38 C61 38 74 52 75 79"/> <path d="M40 80 C41 63 45 52 50 52 C56 52 61 62 62 80"/></g></g><g transform="translate(146.4 322.1) rotate(6) scale(0.359) translate(-50 -50)" stroke-width="4.15"><g class="toy" style="animation-delay:-1.37s"><path d="M34 22 L66 22 L66 74 L50 92 L34 74 Z"/> <path d="M34 36 L66 36"/> <path d="M34 74 L66 74"/> <path d="M50 44 L50 66"/></g></g><g transform="translate(146.4 380.7) rotate(6) scale(0.364) translate(-50 -50)" stroke-width="4.22"><g class="toy" style="animation-delay:-1.62s"><path d="M50 12 L61 39 L90 41 L67 59 L75 88 L50 71 L25 88 L33 59 L10 40 L39 38 Z"/></g></g><g transform="translate(205.0 58.6) rotate(9) scale(0.379) translate(-50 -50)" stroke-width="4.50"><g class="toy" style="animation-delay:-0.25s"><path d="M56 22 C44 22 36 31 36 42 C36 47 38 51 41 54 C30 58 22 66 22 74 C22 82 32 88 48 88 C68 88 82 78 82 62 C82 52 76 44 68 40 C68 30 63 22 56 22 Z"/> <circle cx="52" cy="36" r="2.8"/> <path d="M36 34 L22 38 L36 43"/> <path d="M40 88 L40 94"/><path d="M58 88 L58 94"/></g></g><g transform="translate(205.0 117.1) rotate(3) scale(0.381) translate(-50 -50)" stroke-width="4.32"><g class="toy" style="animation-delay:-0.50s"><path d="M28 74 C18 74 12 66 14 58 C16 50 24 46 30 48 C31 34 42 26 54 28 C66 30 73 40 72 50 C82 48 90 54 90 63 C90 70 84 74 76 74 Z"/></g></g><g transform="translate(205.0 175.7) rotate(-9) scale(0.377) translate(-50 -50)" stroke-width="4.16"><g class="toy" style="animation-delay:-0.75s"><path d="M50 26 C42 18 28 16 16 18 L16 78 C28 76 42 78 50 86 C58 78 72 76 84 78 L84 18 C72 16 58 18 50 26 Z"/> <path d="M50 26 L50 86"/> <path d="M25 34 C32 33 39 34 43 37"/> <path d="M57 37 C61 34 68 33 75 34"/></g></g><g transform="translate(205.0 234.3) rotate(6) scale(0.388) translate(-50 -50)" stroke-width="4.45"><g class="toy" style="animation-delay:-1.00s"><path d="M50 32 C42 24 26 26 22 42 C18 58 28 82 40 88 C46 91 50 87 50 87 C50 87 54 91 60 88 C72 82 82 58 78 42 C74 26 58 24 50 32 Z"/> <path d="M50 32 L50 16"/> <path d="M50 20 C58 12 70 14 70 14 C70 14 68 24 58 24 C53 24 50 20 50 20 Z"/></g></g><g transform="translate(205.0 292.9) rotate(6) scale(0.394) translate(-50 -50)" stroke-width="4.39"><g class="toy" style="animation-delay:-1.25s"><rect x="14" y="52" width="34" height="33" rx="4"/> <rect x="52" y="52" width="34" height="33" rx="4"/> <rect x="33" y="16" width="34" height="33" rx="4"/></g></g><g transform="translate(205.0 351.4) rotate(9) scale(0.391) translate(-50 -50)" stroke-width="3.85"><g class="toy" style="animation-delay:-1.50s"><circle cx="50" cy="50" r="22"/> <path d="M50 14 L50 4"/><path d="M50 96 L50 86"/> <path d="M14 50 L4 50"/><path d="M96 50 L86 50"/> <path d="M24 24 L17 17"/><path d="M83 83 L76 76"/> <path d="M76 24 L83 17"/><path d="M17 83 L24 76"/></g></g><g transform="translate(205.0 0.0) rotate(3) scale(0.387) translate(-50 -50)" stroke-width="3.81"><g class="toy" style="animation-delay:-0.00s"><path d="M50 12 C31 12 22 27 23 41 C24 57 39 68 50 70 C61 68 76 57 77 41 C78 26 68 12 50 12 Z"/> <path d="M46 70 L54 70 L50 77 Z"/> <path d="M50 77 C43 85 57 90 50 99"/></g></g><g transform="translate(263.6 29.3) rotate(-9) scale(0.376) translate(-50 -50)" stroke-width="4.34"><g class="toy" style="animation-delay:-0.12s"><path d="M12 68 C12 58 14 54 19 52 L27 52 C28 42 34 36 43 36 L59 36 C68 36 74 42 75 52 L83 52 C88 54 90 58 90 68 L76 68 C75 57 57 57 56 68 L46 68 C45 57 27 57 26 68 Z"/> <path d="M26 68 C26 80 46 80 46 68"/> <path d="M56 68 C56 80 76 80 76 68"/> <path d="M50 36 L50 52"/> <path d="M33 52 C34 45 38 42 43 42"/></g></g><g transform="translate(263.6 87.9) rotate(6) scale(0.387) translate(-50 -50)" stroke-width="4.20"><g class="toy" style="animation-delay:-0.38s"><path d="M50 8 C62 20 68 38 68 56 L68 72 L32 72 L32 56 C32 38 38 20 50 8 Z"/> <circle cx="50" cy="40" r="8"/> <path d="M32 54 L18 70 L18 84 L32 72 Z"/> <path d="M68 54 L82 70 L82 84 L68 72 Z"/> <path d="M42 72 L42 84 C42 90 46 94 50 96 C54 94 58 90 58 84 L58 72"/></g></g><g transform="translate(263.6 146.4) rotate(6) scale(0.399) translate(-50 -50)" stroke-width="3.64"><g class="toy" style="animation-delay:-0.62s"><path d="M28 47 C26 37 30 30 36 28 C30 22 33 13 41 13 C48 13 50 21 45 27 C48 25 52 25 55 27 C50 21 52 13 59 13 C67 13 70 22 64 28 C70 30 74 37 72 47 C72 59 62 67 50 67 C38 67 28 59 28 47 Z"/> <circle cx="41" cy="42" r="2.8"/><circle cx="59" cy="42" r="2.8"/> <path d="M44 53 C47 56 53 56 56 53"/> <path d="M34 63 C26 69 24 83 32 89 C38 93 45 94 50 94 C55 94 62 93 68 89 C76 83 74 69 66 63"/> <path d="M30 68 C22 71 20 79 24 84"/><path d="M70 68 C78 71 80 79 76 84"/></g></g><g transform="translate(263.6 205.0) rotate(-9) scale(0.366) translate(-50 -50)" stroke-width="4.41"><g class="toy" style="animation-delay:-0.88s"><path d="M50 8 L84 44 L50 88 L16 44 Z"/> <path d="M50 8 L50 88"/><path d="M16 44 L84 44"/> <path d="M50 88 C43 93 57 97 50 102"/></g></g><g transform="translate(263.6 263.6) rotate(-3) scale(0.370) translate(-50 -50)" stroke-width="3.66"><g class="toy" style="animation-delay:-1.12s"><path d="M64 14 C40 18 24 38 26 60 C28 82 48 96 70 92 C54 84 44 68 45 53 C46 36 53 22 64 14 Z"/></g></g><g transform="translate(263.6 322.1) rotate(0) scale(0.390) translate(-50 -50)" stroke-width="3.65"><g class="toy" style="animation-delay:-1.37s"><path d="M14 66 L86 66 L74 88 L26 88 Z"/> <path d="M50 64 L50 14"/> <path d="M53 18 L78 56 L53 56 Z"/></g></g><g transform="translate(263.6 380.7) rotate(0) scale(0.377) translate(-50 -50)" stroke-width="4.27"><g class="toy" style="animation-delay:-1.62s"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g></g><g transform="translate(322.1 58.6) rotate(0) scale(0.366) translate(-50 -50)" stroke-width="3.79"><g class="toy" style="animation-delay:-0.25s"><path d="M12 78 C13 44 38 24 50 24 C63 24 87 43 88 78"/> <path d="M26 79 C27 53 40 38 50 38 C61 38 74 52 75 79"/> <path d="M40 80 C41 63 45 52 50 52 C56 52 61 62 62 80"/></g></g><g transform="translate(322.1 117.1) rotate(3) scale(0.387) translate(-50 -50)" stroke-width="4.51"><g class="toy" style="animation-delay:-0.50s"><path d="M34 22 L66 22 L66 74 L50 92 L34 74 Z"/> <path d="M34 36 L66 36"/> <path d="M34 74 L66 74"/> <path d="M50 44 L50 66"/></g></g><g transform="translate(322.1 175.7) rotate(-3) scale(0.385) translate(-50 -50)" stroke-width="3.83"><g class="toy" style="animation-delay:-0.75s"><path d="M50 12 L61 39 L90 41 L67 59 L75 88 L50 71 L25 88 L33 59 L10 40 L39 38 Z"/></g></g><g transform="translate(322.1 234.3) rotate(3) scale(0.358) translate(-50 -50)" stroke-width="3.81"><g class="toy" style="animation-delay:-1.00s"><path d="M56 22 C44 22 36 31 36 42 C36 47 38 51 41 54 C30 58 22 66 22 74 C22 82 32 88 48 88 C68 88 82 78 82 62 C82 52 76 44 68 40 C68 30 63 22 56 22 Z"/> <circle cx="52" cy="36" r="2.8"/> <path d="M36 34 L22 38 L36 43"/> <path d="M40 88 L40 94"/><path d="M58 88 L58 94"/></g></g><g transform="translate(322.1 292.9) rotate(6) scale(0.391) translate(-50 -50)" stroke-width="4.08"><g class="toy" style="animation-delay:-1.25s"><path d="M28 74 C18 74 12 66 14 58 C16 50 24 46 30 48 C31 34 42 26 54 28 C66 30 73 40 72 50 C82 48 90 54 90 63 C90 70 84 74 76 74 Z"/></g></g><g transform="translate(322.1 351.4) rotate(0) scale(0.377) translate(-50 -50)" stroke-width="4.58"><g class="toy" style="animation-delay:-1.50s"><path d="M50 26 C42 18 28 16 16 18 L16 78 C28 76 42 78 50 86 C58 78 72 76 84 78 L84 18 C72 16 58 18 50 26 Z"/> <path d="M50 26 L50 86"/> <path d="M25 34 C32 33 39 34 43 37"/> <path d="M57 37 C61 34 68 33 75 34"/></g></g><g transform="translate(322.1 0.0) rotate(9) scale(0.391) translate(-50 -50)" stroke-width="4.17"><g class="toy" style="animation-delay:-0.00s"><path d="M50 32 C42 24 26 26 22 42 C18 58 28 82 40 88 C46 91 50 87 50 87 C50 87 54 91 60 88 C72 82 82 58 78 42 C74 26 58 24 50 32 Z"/> <path d="M50 32 L50 16"/> <path d="M50 20 C58 12 70 14 70 14 C70 14 68 24 58 24 C53 24 50 20 50 20 Z"/></g></g><g transform="translate(380.7 29.3) rotate(-9) scale(0.399) translate(-50 -50)" stroke-width="3.81"><g class="toy" style="animation-delay:-0.12s"><rect x="14" y="52" width="34" height="33" rx="4"/> <rect x="52" y="52" width="34" height="33" rx="4"/> <rect x="33" y="16" width="34" height="33" rx="4"/></g></g><g transform="translate(380.7 87.9) rotate(-9) scale(0.395) translate(-50 -50)" stroke-width="3.91"><g class="toy" style="animation-delay:-0.38s"><circle cx="50" cy="50" r="22"/> <path d="M50 14 L50 4"/><path d="M50 96 L50 86"/> <path d="M14 50 L4 50"/><path d="M96 50 L86 50"/> <path d="M24 24 L17 17"/><path d="M83 83 L76 76"/> <path d="M76 24 L83 17"/><path d="M17 83 L24 76"/></g></g><g transform="translate(380.7 146.4) rotate(-3) scale(0.400) translate(-50 -50)" stroke-width="4.26"><g class="toy" style="animation-delay:-0.62s"><path d="M50 12 C31 12 22 27 23 41 C24 57 39 68 50 70 C61 68 76 57 77 41 C78 26 68 12 50 12 Z"/> <path d="M46 70 L54 70 L50 77 Z"/> <path d="M50 77 C43 85 57 90 50 99"/></g></g><g transform="translate(380.7 205.0) rotate(-9) scale(0.391) translate(-50 -50)" stroke-width="4.28"><g class="toy" style="animation-delay:-0.88s"><path d="M12 68 C12 58 14 54 19 52 L27 52 C28 42 34 36 43 36 L59 36 C68 36 74 42 75 52 L83 52 C88 54 90 58 90 68 L76 68 C75 57 57 57 56 68 L46 68 C45 57 27 57 26 68 Z"/> <path d="M26 68 C26 80 46 80 46 68"/> <path d="M56 68 C56 80 76 80 76 68"/> <path d="M50 36 L50 52"/> <path d="M33 52 C34 45 38 42 43 42"/></g></g><g transform="translate(380.7 263.6) rotate(9) scale(0.370) translate(-50 -50)" stroke-width="3.68"><g class="toy" style="animation-delay:-1.12s"><path d="M50 8 C62 20 68 38 68 56 L68 72 L32 72 L32 56 C32 38 38 20 50 8 Z"/> <circle cx="50" cy="40" r="8"/> <path d="M32 54 L18 70 L18 84 L32 72 Z"/> <path d="M68 54 L82 70 L82 84 L68 72 Z"/> <path d="M42 72 L42 84 C42 90 46 94 50 96 C54 94 58 90 58 84 L58 72"/></g></g><g transform="translate(380.7 322.1) rotate(9) scale(0.388) translate(-50 -50)" stroke-width="3.68"><g class="toy" style="animation-delay:-1.37s"><path d="M28 47 C26 37 30 30 36 28 C30 22 33 13 41 13 C48 13 50 21 45 27 C48 25 52 25 55 27 C50 21 52 13 59 13 C67 13 70 22 64 28 C70 30 74 37 72 47 C72 59 62 67 50 67 C38 67 28 59 28 47 Z"/> <circle cx="41" cy="42" r="2.8"/><circle cx="59" cy="42" r="2.8"/> <path d="M44 53 C47 56 53 56 56 53"/> <path d="M34 63 C26 69 24 83 32 89 C38 93 45 94 50 94 C55 94 62 93 68 89 C76 83 74 69 66 63"/> <path d="M30 68 C22 71 20 79 24 84"/><path d="M70 68 C78 71 80 79 76 84"/></g></g><g transform="translate(380.7 380.7) rotate(9) scale(0.383) translate(-50 -50)" stroke-width="4.10"><g class="toy" style="animation-delay:-1.62s"><path d="M50 8 L84 44 L50 88 L16 44 Z"/> <path d="M50 8 L50 88"/><path d="M16 44 L84 44"/> <path d="M50 88 C43 93 57 97 50 102"/></g></g><g transform="translate(29.3 439.3) rotate(-3) scale(0.396) translate(-50 -50)" stroke-width="4.56"><g class="toy" style="animation-delay:-0.12s"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g></g><g transform="translate(439.3 29.3) rotate(-6) scale(0.396) translate(-50 -50)" stroke-width="3.90"><g class="toy" style="animation-delay:-0.12s"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g></g><g transform="translate(439.3 439.3) rotate(-3) scale(0.385) translate(-50 -50)" stroke-width="4.10"><g class="toy" style="animation-delay:-0.12s"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g></g><g transform="translate(439.3 87.9) rotate(-6) scale(0.382) translate(-50 -50)" stroke-width="4.22"><g class="toy" style="animation-delay:-0.38s"><path d="M12 78 C13 44 38 24 50 24 C63 24 87 43 88 78"/> <path d="M26 79 C27 53 40 38 50 38 C61 38 74 52 75 79"/> <path d="M40 80 C41 63 45 52 50 52 C56 52 61 62 62 80"/></g></g><g transform="translate(439.3 146.4) rotate(-6) scale(0.366) translate(-50 -50)" stroke-width="4.57"><g class="toy" style="animation-delay:-0.62s"><path d="M34 22 L66 22 L66 74 L50 92 L34 74 Z"/> <path d="M34 36 L66 36"/> <path d="M34 74 L66 74"/> <path d="M50 44 L50 66"/></g></g><g transform="translate(439.3 205.0) rotate(-9) scale(0.369) translate(-50 -50)" stroke-width="3.69"><g class="toy" style="animation-delay:-0.88s"><path d="M50 12 L61 39 L90 41 L67 59 L75 88 L50 71 L25 88 L33 59 L10 40 L39 38 Z"/></g></g><g transform="translate(439.3 263.6) rotate(-6) scale(0.403) translate(-50 -50)" stroke-width="4.59"><g class="toy" style="animation-delay:-1.12s"><path d="M56 22 C44 22 36 31 36 42 C36 47 38 51 41 54 C30 58 22 66 22 74 C22 82 32 88 48 88 C68 88 82 78 82 62 C82 52 76 44 68 40 C68 30 63 22 56 22 Z"/> <circle cx="52" cy="36" r="2.8"/> <path d="M36 34 L22 38 L36 43"/> <path d="M40 88 L40 94"/><path d="M58 88 L58 94"/></g></g><g transform="translate(439.3 322.1) rotate(-3) scale(0.365) translate(-50 -50)" stroke-width="3.77"><g class="toy" style="animation-delay:-1.37s"><path d="M28 74 C18 74 12 66 14 58 C16 50 24 46 30 48 C31 34 42 26 54 28 C66 30 73 40 72 50 C82 48 90 54 90 63 C90 70 84 74 76 74 Z"/></g></g><g transform="translate(29.3 -29.3) rotate(0) scale(0.378) translate(-50 -50)" stroke-width="3.71"><g class="toy" style="animation-delay:-1.62s"><path d="M50 26 C42 18 28 16 16 18 L16 78 C28 76 42 78 50 86 C58 78 72 76 84 78 L84 18 C72 16 58 18 50 26 Z"/> <path d="M50 26 L50 86"/> <path d="M25 34 C32 33 39 34 43 37"/> <path d="M57 37 C61 34 68 33 75 34"/></g></g><g transform="translate(439.3 -29.3) rotate(-9) scale(0.401) translate(-50 -50)" stroke-width="3.85"><g class="toy" style="animation-delay:-1.62s"><path d="M50 26 C42 18 28 16 16 18 L16 78 C28 76 42 78 50 86 C58 78 72 76 84 78 L84 18 C72 16 58 18 50 26 Z"/> <path d="M50 26 L50 86"/> <path d="M25 34 C32 33 39 34 43 37"/> <path d="M57 37 C61 34 68 33 75 34"/></g></g><g transform="translate(439.3 380.7) rotate(-6) scale(0.361) translate(-50 -50)" stroke-width="3.77"><g class="toy" style="animation-delay:-1.62s"><path d="M50 26 C42 18 28 16 16 18 L16 78 C28 76 42 78 50 86 C58 78 72 76 84 78 L84 18 C72 16 58 18 50 26 Z"/> <path d="M50 26 L50 86"/> <path d="M25 34 C32 33 39 34 43 37"/> <path d="M57 37 C61 34 68 33 75 34"/></g></g><g transform="translate(87.9 410.0) rotate(-9) scale(0.368) translate(-50 -50)" stroke-width="3.96"><g class="toy" style="animation-delay:-0.00s"><path d="M28 47 C26 37 30 30 36 28 C30 22 33 13 41 13 C48 13 50 21 45 27 C48 25 52 25 55 27 C50 21 52 13 59 13 C67 13 70 22 64 28 C70 30 74 37 72 47 C72 59 62 67 50 67 C38 67 28 59 28 47 Z"/> <circle cx="41" cy="42" r="2.8"/><circle cx="59" cy="42" r="2.8"/> <path d="M44 53 C47 56 53 56 56 53"/> <path d="M34 63 C26 69 24 83 32 89 C38 93 45 94 50 94 C55 94 62 93 68 89 C76 83 74 69 66 63"/> <path d="M30 68 C22 71 20 79 24 84"/><path d="M70 68 C78 71 80 79 76 84"/></g></g><g transform="translate(146.4 439.3) rotate(3) scale(0.358) translate(-50 -50)" stroke-width="4.00"><g class="toy" style="animation-delay:-0.12s"><path d="M50 8 L84 44 L50 88 L16 44 Z"/> <path d="M50 8 L50 88"/><path d="M16 44 L84 44"/> <path d="M50 88 C43 93 57 97 50 102"/></g></g><g transform="translate(146.4 -29.3) rotate(-6) scale(0.382) translate(-50 -50)" stroke-width="4.44"><g class="toy" style="animation-delay:-1.62s"><path d="M50 12 L61 39 L90 41 L67 59 L75 88 L50 71 L25 88 L33 59 L10 40 L39 38 Z"/></g></g><g transform="translate(205.0 410.0) rotate(-6) scale(0.372) translate(-50 -50)" stroke-width="4.03"><g class="toy" style="animation-delay:-0.00s"><path d="M50 12 C31 12 22 27 23 41 C24 57 39 68 50 70 C61 68 76 57 77 41 C78 26 68 12 50 12 Z"/> <path d="M46 70 L54 70 L50 77 Z"/> <path d="M50 77 C43 85 57 90 50 99"/></g></g><g transform="translate(263.6 439.3) rotate(-3) scale(0.374) translate(-50 -50)" stroke-width="4.00"><g class="toy" style="animation-delay:-0.12s"><path d="M12 68 C12 58 14 54 19 52 L27 52 C28 42 34 36 43 36 L59 36 C68 36 74 42 75 52 L83 52 C88 54 90 58 90 68 L76 68 C75 57 57 57 56 68 L46 68 C45 57 27 57 26 68 Z"/> <path d="M26 68 C26 80 46 80 46 68"/> <path d="M56 68 C56 80 76 80 76 68"/> <path d="M50 36 L50 52"/> <path d="M33 52 C34 45 38 42 43 42"/></g></g><g transform="translate(263.6 -29.3) rotate(0) scale(0.370) translate(-50 -50)" stroke-width="3.83"><g class="toy" style="animation-delay:-1.62s"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g></g><g transform="translate(322.1 410.0) rotate(6) scale(0.402) translate(-50 -50)" stroke-width="4.01"><g class="toy" style="animation-delay:-0.00s"><path d="M50 32 C42 24 26 26 22 42 C18 58 28 82 40 88 C46 91 50 87 50 87 C50 87 54 91 60 88 C72 82 82 58 78 42 C74 26 58 24 50 32 Z"/> <path d="M50 32 L50 16"/> <path d="M50 20 C58 12 70 14 70 14 C70 14 68 24 58 24 C53 24 50 20 50 20 Z"/></g></g><g transform="translate(-29.3 29.3) rotate(9) scale(0.378) translate(-50 -50)" stroke-width="4.27"><g class="toy" style="animation-delay:-0.12s"><rect x="14" y="52" width="34" height="33" rx="4"/> <rect x="52" y="52" width="34" height="33" rx="4"/> <rect x="33" y="16" width="34" height="33" rx="4"/></g></g><g transform="translate(-29.3 439.3) rotate(0) scale(0.365) translate(-50 -50)" stroke-width="4.41"><g class="toy" style="animation-delay:-0.12s"><rect x="14" y="52" width="34" height="33" rx="4"/> <rect x="52" y="52" width="34" height="33" rx="4"/> <rect x="33" y="16" width="34" height="33" rx="4"/></g></g><g transform="translate(380.7 439.3) rotate(6) scale(0.365) translate(-50 -50)" stroke-width="3.72"><g class="toy" style="animation-delay:-0.12s"><rect x="14" y="52" width="34" height="33" rx="4"/> <rect x="52" y="52" width="34" height="33" rx="4"/> <rect x="33" y="16" width="34" height="33" rx="4"/></g></g><g transform="translate(-29.3 87.9) rotate(0) scale(0.361) translate(-50 -50)" stroke-width="4.07"><g class="toy" style="animation-delay:-0.38s"><circle cx="50" cy="50" r="22"/> <path d="M50 14 L50 4"/><path d="M50 96 L50 86"/> <path d="M14 50 L4 50"/><path d="M96 50 L86 50"/> <path d="M24 24 L17 17"/><path d="M83 83 L76 76"/> <path d="M76 24 L83 17"/><path d="M17 83 L24 76"/></g></g><g transform="translate(-29.3 146.4) rotate(-9) scale(0.385) translate(-50 -50)" stroke-width="4.50"><g class="toy" style="animation-delay:-0.62s"><path d="M50 12 C31 12 22 27 23 41 C24 57 39 68 50 70 C61 68 76 57 77 41 C78 26 68 12 50 12 Z"/> <path d="M46 70 L54 70 L50 77 Z"/> <path d="M50 77 C43 85 57 90 50 99"/></g></g><g transform="translate(-29.3 205.0) rotate(9) scale(0.392) translate(-50 -50)" stroke-width="4.29"><g class="toy" style="animation-delay:-0.88s"><path d="M12 68 C12 58 14 54 19 52 L27 52 C28 42 34 36 43 36 L59 36 C68 36 74 42 75 52 L83 52 C88 54 90 58 90 68 L76 68 C75 57 57 57 56 68 L46 68 C45 57 27 57 26 68 Z"/> <path d="M26 68 C26 80 46 80 46 68"/> <path d="M56 68 C56 80 76 80 76 68"/> <path d="M50 36 L50 52"/> <path d="M33 52 C34 45 38 42 43 42"/></g></g><g transform="translate(-29.3 263.6) rotate(3) scale(0.366) translate(-50 -50)" stroke-width="4.30"><g class="toy" style="animation-delay:-1.12s"><path d="M50 8 C62 20 68 38 68 56 L68 72 L32 72 L32 56 C32 38 38 20 50 8 Z"/> <circle cx="50" cy="40" r="8"/> <path d="M32 54 L18 70 L18 84 L32 72 Z"/> <path d="M68 54 L82 70 L82 84 L68 72 Z"/> <path d="M42 72 L42 84 C42 90 46 94 50 96 C54 94 58 90 58 84 L58 72"/></g></g><g transform="translate(-29.3 322.1) rotate(-9) scale(0.371) translate(-50 -50)" stroke-width="4.35"><g class="toy" style="animation-delay:-1.37s"><path d="M28 47 C26 37 30 30 36 28 C30 22 33 13 41 13 C48 13 50 21 45 27 C48 25 52 25 55 27 C50 21 52 13 59 13 C67 13 70 22 64 28 C70 30 74 37 72 47 C72 59 62 67 50 67 C38 67 28 59 28 47 Z"/> <circle cx="41" cy="42" r="2.8"/><circle cx="59" cy="42" r="2.8"/> <path d="M44 53 C47 56 53 56 56 53"/> <path d="M34 63 C26 69 24 83 32 89 C38 93 45 94 50 94 C55 94 62 93 68 89 C76 83 74 69 66 63"/> <path d="M30 68 C22 71 20 79 24 84"/><path d="M70 68 C78 71 80 79 76 84"/></g></g><g transform="translate(-29.3 -29.3) rotate(-3) scale(0.376) translate(-50 -50)" stroke-width="4.16"><g class="toy" style="animation-delay:-1.62s"><path d="M50 8 L84 44 L50 88 L16 44 Z"/> <path d="M50 8 L50 88"/><path d="M16 44 L84 44"/> <path d="M50 88 C43 93 57 97 50 102"/></g></g><g transform="translate(-29.3 380.7) rotate(3) scale(0.398) translate(-50 -50)" stroke-width="3.70"><g class="toy" style="animation-delay:-1.62s"><path d="M50 8 L84 44 L50 88 L16 44 Z"/> <path d="M50 8 L50 88"/><path d="M16 44 L84 44"/> <path d="M50 88 C43 93 57 97 50 102"/></g></g><g transform="translate(380.7 -29.3) rotate(9) scale(0.363) translate(-50 -50)" stroke-width="3.95"><g class="toy" style="animation-delay:-1.62s"><path d="M50 8 L84 44 L50 88 L16 44 Z"/> <path d="M50 8 L50 88"/><path d="M16 44 L84 44"/> <path d="M50 88 C43 93 57 97 50 102"/></g></g></g></pattern><mask id="toyMask" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%"><rect width="100%" height="100%" fill="url(#toyTile)"/></mask></defs><rect width="100%" height="100%" fill="url(#toyFlow)" mask="url(#toyMask)"/></svg>
+<svg class="toys" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><defs><linearGradient id="toyFlow" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="820" y2="820" spreadMethod="repeat"><stop offset="0" stop-color="var(--toy-a)"/><stop offset="0.22" stop-color="var(--toy-b)"/><stop offset="0.46" stop-color="var(--toy-c)"/><stop offset="0.70" stop-color="var(--toy-d)"/><stop offset="0.86" stop-color="var(--toy-e)"/><stop offset="1" stop-color="var(--toy-a)"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="820 820" dur="7s" repeatCount="indefinite"/></linearGradient><pattern id="toyTile" x="0" y="0" width="410" height="410" patternUnits="userSpaceOnUse"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(29.3 29.3) rotate(6) scale(0.379) translate(-50 -50)" stroke-width="3.67"><g class="toy" style="animation-delay:-1.50s"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g></g><g transform="translate(29.3 87.9) rotate(-3) scale(0.381) translate(-50 -50)" stroke-width="4.39"><g class="toy" style="animation-delay:-1.25s"><path d="M12 78 C13 44 38 24 50 24 C63 24 87 43 88 78"/> <path d="M26 79 C27 53 40 38 50 38 C61 38 74 52 75 79"/> <path d="M40 80 C41 63 45 52 50 52 C56 52 61 62 62 80"/></g></g><g transform="translate(29.3 146.4) rotate(3) scale(0.382) translate(-50 -50)" stroke-width="4.03"><g class="toy" style="animation-delay:-1.00s"><path d="M34 22 L66 22 L66 74 L50 92 L34 74 Z"/> <path d="M34 36 L66 36"/> <path d="M34 74 L66 74"/> <path d="M50 44 L50 66"/></g></g><g transform="translate(29.3 205.0) rotate(9) scale(0.359) translate(-50 -50)" stroke-width="4.52"><g class="toy" style="animation-delay:-0.75s"><path d="M50 12 L61 39 L90 41 L67 59 L75 88 L50 71 L25 88 L33 59 L10 40 L39 38 Z"/></g></g><g transform="translate(29.3 263.6) rotate(3) scale(0.388) translate(-50 -50)" stroke-width="4.03"><g class="toy" style="animation-delay:-0.50s"><path d="M56 22 C44 22 36 31 36 42 C36 47 38 51 41 54 C30 58 22 66 22 74 C22 82 32 88 48 88 C68 88 82 78 82 62 C82 52 76 44 68 40 C68 30 63 22 56 22 Z"/> <circle cx="52" cy="36" r="2.8"/> <path d="M36 34 L22 38 L36 43"/> <path d="M40 88 L40 94"/><path d="M58 88 L58 94"/></g></g><g transform="translate(29.3 322.1) rotate(-9) scale(0.370) translate(-50 -50)" stroke-width="4.46"><g class="toy" style="animation-delay:-0.25s"><path d="M28 74 C18 74 12 66 14 58 C16 50 24 46 30 48 C31 34 42 26 54 28 C66 30 73 40 72 50 C82 48 90 54 90 63 C90 70 84 74 76 74 Z"/></g></g><g transform="translate(29.3 380.7) rotate(6) scale(0.371) translate(-50 -50)" stroke-width="4.29"><g class="toy" style="animation-delay:-0.00s"><path d="M50 26 C42 18 28 16 16 18 L16 78 C28 76 42 78 50 86 C58 78 72 76 84 78 L84 18 C72 16 58 18 50 26 Z"/> <path d="M50 26 L50 86"/> <path d="M25 34 C32 33 39 34 43 37"/> <path d="M57 37 C61 34 68 33 75 34"/></g></g><g transform="translate(87.9 58.6) rotate(-3) scale(0.395) translate(-50 -50)" stroke-width="3.87"><g class="toy" style="animation-delay:-1.12s"><path d="M50 32 C42 24 26 26 22 42 C18 58 28 82 40 88 C46 91 50 87 50 87 C50 87 54 91 60 88 C72 82 82 58 78 42 C74 26 58 24 50 32 Z"/> <path d="M50 32 L50 16"/> <path d="M50 20 C58 12 70 14 70 14 C70 14 68 24 58 24 C53 24 50 20 50 20 Z"/></g></g><g transform="translate(87.9 117.1) rotate(-6) scale(0.366) translate(-50 -50)" stroke-width="3.89"><g class="toy" style="animation-delay:-0.88s"><rect x="14" y="52" width="34" height="33" rx="4"/> <rect x="52" y="52" width="34" height="33" rx="4"/> <rect x="33" y="16" width="34" height="33" rx="4"/></g></g><g transform="translate(87.9 175.7) rotate(-3) scale(0.399) translate(-50 -50)" stroke-width="4.37"><g class="toy" style="animation-delay:-0.62s"><circle cx="50" cy="50" r="22"/> <path d="M50 14 L50 4"/><path d="M50 96 L50 86"/> <path d="M14 50 L4 50"/><path d="M96 50 L86 50"/> <path d="M24 24 L17 17"/><path d="M83 83 L76 76"/> <path d="M76 24 L83 17"/><path d="M17 83 L24 76"/></g></g><g transform="translate(87.9 234.3) rotate(9) scale(0.384) translate(-50 -50)" stroke-width="4.01"><g class="toy" style="animation-delay:-0.37s"><path d="M50 12 C31 12 22 27 23 41 C24 57 39 68 50 70 C61 68 76 57 77 41 C78 26 68 12 50 12 Z"/> <path d="M46 70 L54 70 L50 77 Z"/> <path d="M50 77 C43 85 57 90 50 99"/></g></g><g transform="translate(87.9 292.9) rotate(-9) scale(0.375) translate(-50 -50)" stroke-width="3.68"><g class="toy" style="animation-delay:-0.12s"><path d="M12 68 C12 58 14 54 19 52 L27 52 C28 42 34 36 43 36 L59 36 C68 36 74 42 75 52 L83 52 C88 54 90 58 90 68 L76 68 C75 57 57 57 56 68 L46 68 C45 57 27 57 26 68 Z"/> <path d="M26 68 C26 80 46 80 46 68"/> <path d="M56 68 C56 80 76 80 76 68"/> <path d="M50 36 L50 52"/> <path d="M33 52 C34 45 38 42 43 42"/></g></g><g transform="translate(87.9 351.4) rotate(-9) scale(0.393) translate(-50 -50)" stroke-width="4.38"><g class="toy" style="animation-delay:-1.62s"><path d="M50 8 C62 20 68 38 68 56 L68 72 L32 72 L32 56 C32 38 38 20 50 8 Z"/> <circle cx="50" cy="40" r="8"/> <path d="M32 54 L18 70 L18 84 L32 72 Z"/> <path d="M68 54 L82 70 L82 84 L68 72 Z"/> <path d="M42 72 L42 84 C42 90 46 94 50 96 C54 94 58 90 58 84 L58 72"/></g></g><g transform="translate(87.9 0.0) rotate(-9) scale(0.388) translate(-50 -50)" stroke-width="4.09"><g class="toy" style="animation-delay:-1.37s"><path d="M28 47 C26 37 30 30 36 28 C30 22 33 13 41 13 C48 13 50 21 45 27 C48 25 52 25 55 27 C50 21 52 13 59 13 C67 13 70 22 64 28 C70 30 74 37 72 47 C72 59 62 67 50 67 C38 67 28 59 28 47 Z"/> <circle cx="41" cy="42" r="2.8"/><circle cx="59" cy="42" r="2.8"/> <path d="M44 53 C47 56 53 56 56 53"/> <path d="M34 63 C26 69 24 83 32 89 C38 93 45 94 50 94 C55 94 62 93 68 89 C76 83 74 69 66 63"/> <path d="M30 68 C22 71 20 79 24 84"/><path d="M70 68 C78 71 80 79 76 84"/></g></g><g transform="translate(146.4 29.3) rotate(3) scale(0.358) translate(-50 -50)" stroke-width="4.19"><g class="toy" style="animation-delay:-1.00s"><path d="M50 8 L84 44 L50 88 L16 44 Z"/> <path d="M50 8 L50 88"/><path d="M16 44 L84 44"/> <path d="M50 88 C43 93 57 97 50 102"/></g></g><g transform="translate(146.4 87.9) rotate(-9) scale(0.391) translate(-50 -50)" stroke-width="4.39"><g class="toy" style="animation-delay:-0.75s"><path d="M64 14 C40 18 24 38 26 60 C28 82 48 96 70 92 C54 84 44 68 45 53 C46 36 53 22 64 14 Z"/></g></g><g transform="translate(146.4 146.4) rotate(3) scale(0.391) translate(-50 -50)" stroke-width="3.90"><g class="toy" style="animation-delay:-0.50s"><path d="M14 66 L86 66 L74 88 L26 88 Z"/> <path d="M50 64 L50 14"/> <path d="M53 18 L78 56 L53 56 Z"/></g></g><g transform="translate(146.4 205.0) rotate(3) scale(0.366) translate(-50 -50)" stroke-width="4.45"><g class="toy" style="animation-delay:-0.25s"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g></g><g transform="translate(146.4 263.6) rotate(3) scale(0.382) translate(-50 -50)" stroke-width="4.09"><g class="toy" style="animation-delay:-0.00s"><path d="M12 78 C13 44 38 24 50 24 C63 24 87 43 88 78"/> <path d="M26 79 C27 53 40 38 50 38 C61 38 74 52 75 79"/> <path d="M40 80 C41 63 45 52 50 52 C56 52 61 62 62 80"/></g></g><g transform="translate(146.4 322.1) rotate(6) scale(0.359) translate(-50 -50)" stroke-width="4.15"><g class="toy" style="animation-delay:-1.50s"><path d="M34 22 L66 22 L66 74 L50 92 L34 74 Z"/> <path d="M34 36 L66 36"/> <path d="M34 74 L66 74"/> <path d="M50 44 L50 66"/></g></g><g transform="translate(146.4 380.7) rotate(6) scale(0.364) translate(-50 -50)" stroke-width="4.22"><g class="toy" style="animation-delay:-1.25s"><path d="M50 12 L61 39 L90 41 L67 59 L75 88 L50 71 L25 88 L33 59 L10 40 L39 38 Z"/></g></g><g transform="translate(205.0 58.6) rotate(9) scale(0.379) translate(-50 -50)" stroke-width="4.50"><g class="toy" style="animation-delay:-0.62s"><path d="M56 22 C44 22 36 31 36 42 C36 47 38 51 41 54 C30 58 22 66 22 74 C22 82 32 88 48 88 C68 88 82 78 82 62 C82 52 76 44 68 40 C68 30 63 22 56 22 Z"/> <circle cx="52" cy="36" r="2.8"/> <path d="M36 34 L22 38 L36 43"/> <path d="M40 88 L40 94"/><path d="M58 88 L58 94"/></g></g><g transform="translate(205.0 117.1) rotate(3) scale(0.381) translate(-50 -50)" stroke-width="4.32"><g class="toy" style="animation-delay:-0.38s"><path d="M28 74 C18 74 12 66 14 58 C16 50 24 46 30 48 C31 34 42 26 54 28 C66 30 73 40 72 50 C82 48 90 54 90 63 C90 70 84 74 76 74 Z"/></g></g><g transform="translate(205.0 175.7) rotate(-9) scale(0.377) translate(-50 -50)" stroke-width="4.16"><g class="toy" style="animation-delay:-0.13s"><path d="M50 26 C42 18 28 16 16 18 L16 78 C28 76 42 78 50 86 C58 78 72 76 84 78 L84 18 C72 16 58 18 50 26 Z"/> <path d="M50 26 L50 86"/> <path d="M25 34 C32 33 39 34 43 37"/> <path d="M57 37 C61 34 68 33 75 34"/></g></g><g transform="translate(205.0 234.3) rotate(6) scale(0.388) translate(-50 -50)" stroke-width="4.45"><g class="toy" style="animation-delay:-1.62s"><path d="M50 32 C42 24 26 26 22 42 C18 58 28 82 40 88 C46 91 50 87 50 87 C50 87 54 91 60 88 C72 82 82 58 78 42 C74 26 58 24 50 32 Z"/> <path d="M50 32 L50 16"/> <path d="M50 20 C58 12 70 14 70 14 C70 14 68 24 58 24 C53 24 50 20 50 20 Z"/></g></g><g transform="translate(205.0 292.9) rotate(6) scale(0.394) translate(-50 -50)" stroke-width="4.39"><g class="toy" style="animation-delay:-1.37s"><rect x="14" y="52" width="34" height="33" rx="4"/> <rect x="52" y="52" width="34" height="33" rx="4"/> <rect x="33" y="16" width="34" height="33" rx="4"/></g></g><g transform="translate(205.0 351.4) rotate(9) scale(0.391) translate(-50 -50)" stroke-width="3.85"><g class="toy" style="animation-delay:-1.13s"><circle cx="50" cy="50" r="22"/> <path d="M50 14 L50 4"/><path d="M50 96 L50 86"/> <path d="M14 50 L4 50"/><path d="M96 50 L86 50"/> <path d="M24 24 L17 17"/><path d="M83 83 L76 76"/> <path d="M76 24 L83 17"/><path d="M17 83 L24 76"/></g></g><g transform="translate(205.0 0.0) rotate(3) scale(0.387) translate(-50 -50)" stroke-width="3.81"><g class="toy" style="animation-delay:-0.88s"><path d="M50 12 C31 12 22 27 23 41 C24 57 39 68 50 70 C61 68 76 57 77 41 C78 26 68 12 50 12 Z"/> <path d="M46 70 L54 70 L50 77 Z"/> <path d="M50 77 C43 85 57 90 50 99"/></g></g><g transform="translate(263.6 29.3) rotate(-9) scale(0.376) translate(-50 -50)" stroke-width="4.34"><g class="toy" style="animation-delay:-0.50s"><path d="M12 68 C12 58 14 54 19 52 L27 52 C28 42 34 36 43 36 L59 36 C68 36 74 42 75 52 L83 52 C88 54 90 58 90 68 L76 68 C75 57 57 57 56 68 L46 68 C45 57 27 57 26 68 Z"/> <path d="M26 68 C26 80 46 80 46 68"/> <path d="M56 68 C56 80 76 80 76 68"/> <path d="M50 36 L50 52"/> <path d="M33 52 C34 45 38 42 43 42"/></g></g><g transform="translate(263.6 87.9) rotate(6) scale(0.387) translate(-50 -50)" stroke-width="4.20"><g class="toy" style="animation-delay:-0.25s"><path d="M50 8 C62 20 68 38 68 56 L68 72 L32 72 L32 56 C32 38 38 20 50 8 Z"/> <circle cx="50" cy="40" r="8"/> <path d="M32 54 L18 70 L18 84 L32 72 Z"/> <path d="M68 54 L82 70 L82 84 L68 72 Z"/> <path d="M42 72 L42 84 C42 90 46 94 50 96 C54 94 58 90 58 84 L58 72"/></g></g><g transform="translate(263.6 146.4) rotate(6) scale(0.399) translate(-50 -50)" stroke-width="3.64"><g class="toy" style="animation-delay:-0.00s"><path d="M28 47 C26 37 30 30 36 28 C30 22 33 13 41 13 C48 13 50 21 45 27 C48 25 52 25 55 27 C50 21 52 13 59 13 C67 13 70 22 64 28 C70 30 74 37 72 47 C72 59 62 67 50 67 C38 67 28 59 28 47 Z"/> <circle cx="41" cy="42" r="2.8"/><circle cx="59" cy="42" r="2.8"/> <path d="M44 53 C47 56 53 56 56 53"/> <path d="M34 63 C26 69 24 83 32 89 C38 93 45 94 50 94 C55 94 62 93 68 89 C76 83 74 69 66 63"/> <path d="M30 68 C22 71 20 79 24 84"/><path d="M70 68 C78 71 80 79 76 84"/></g></g><g transform="translate(263.6 205.0) rotate(-9) scale(0.366) translate(-50 -50)" stroke-width="4.41"><g class="toy" style="animation-delay:-1.50s"><path d="M50 8 L84 44 L50 88 L16 44 Z"/> <path d="M50 8 L50 88"/><path d="M16 44 L84 44"/> <path d="M50 88 C43 93 57 97 50 102"/></g></g><g transform="translate(263.6 263.6) rotate(-3) scale(0.370) translate(-50 -50)" stroke-width="3.66"><g class="toy" style="animation-delay:-1.25s"><path d="M64 14 C40 18 24 38 26 60 C28 82 48 96 70 92 C54 84 44 68 45 53 C46 36 53 22 64 14 Z"/></g></g><g transform="translate(263.6 322.1) rotate(0) scale(0.390) translate(-50 -50)" stroke-width="3.65"><g class="toy" style="animation-delay:-1.00s"><path d="M14 66 L86 66 L74 88 L26 88 Z"/> <path d="M50 64 L50 14"/> <path d="M53 18 L78 56 L53 56 Z"/></g></g><g transform="translate(263.6 380.7) rotate(0) scale(0.377) translate(-50 -50)" stroke-width="4.27"><g class="toy" style="animation-delay:-0.75s"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g></g><g transform="translate(322.1 58.6) rotate(0) scale(0.366) translate(-50 -50)" stroke-width="3.79"><g class="toy" style="animation-delay:-0.13s"><path d="M12 78 C13 44 38 24 50 24 C63 24 87 43 88 78"/> <path d="M26 79 C27 53 40 38 50 38 C61 38 74 52 75 79"/> <path d="M40 80 C41 63 45 52 50 52 C56 52 61 62 62 80"/></g></g><g transform="translate(322.1 117.1) rotate(3) scale(0.387) translate(-50 -50)" stroke-width="4.51"><g class="toy" style="animation-delay:-1.63s"><path d="M34 22 L66 22 L66 74 L50 92 L34 74 Z"/> <path d="M34 36 L66 36"/> <path d="M34 74 L66 74"/> <path d="M50 44 L50 66"/></g></g><g transform="translate(322.1 175.7) rotate(-3) scale(0.385) translate(-50 -50)" stroke-width="3.83"><g class="toy" style="animation-delay:-1.38s"><path d="M50 12 L61 39 L90 41 L67 59 L75 88 L50 71 L25 88 L33 59 L10 40 L39 38 Z"/></g></g><g transform="translate(322.1 234.3) rotate(3) scale(0.358) translate(-50 -50)" stroke-width="3.81"><g class="toy" style="animation-delay:-1.13s"><path d="M56 22 C44 22 36 31 36 42 C36 47 38 51 41 54 C30 58 22 66 22 74 C22 82 32 88 48 88 C68 88 82 78 82 62 C82 52 76 44 68 40 C68 30 63 22 56 22 Z"/> <circle cx="52" cy="36" r="2.8"/> <path d="M36 34 L22 38 L36 43"/> <path d="M40 88 L40 94"/><path d="M58 88 L58 94"/></g></g><g transform="translate(322.1 292.9) rotate(6) scale(0.391) translate(-50 -50)" stroke-width="4.08"><g class="toy" style="animation-delay:-0.88s"><path d="M28 74 C18 74 12 66 14 58 C16 50 24 46 30 48 C31 34 42 26 54 28 C66 30 73 40 72 50 C82 48 90 54 90 63 C90 70 84 74 76 74 Z"/></g></g><g transform="translate(322.1 351.4) rotate(0) scale(0.377) translate(-50 -50)" stroke-width="4.58"><g class="toy" style="animation-delay:-0.63s"><path d="M50 26 C42 18 28 16 16 18 L16 78 C28 76 42 78 50 86 C58 78 72 76 84 78 L84 18 C72 16 58 18 50 26 Z"/> <path d="M50 26 L50 86"/> <path d="M25 34 C32 33 39 34 43 37"/> <path d="M57 37 C61 34 68 33 75 34"/></g></g><g transform="translate(322.1 0.0) rotate(9) scale(0.391) translate(-50 -50)" stroke-width="4.17"><g class="toy" style="animation-delay:-0.38s"><path d="M50 32 C42 24 26 26 22 42 C18 58 28 82 40 88 C46 91 50 87 50 87 C50 87 54 91 60 88 C72 82 82 58 78 42 C74 26 58 24 50 32 Z"/> <path d="M50 32 L50 16"/> <path d="M50 20 C58 12 70 14 70 14 C70 14 68 24 58 24 C53 24 50 20 50 20 Z"/></g></g><g transform="translate(380.7 29.3) rotate(-9) scale(0.399) translate(-50 -50)" stroke-width="3.81"><g class="toy" style="animation-delay:-0.00s"><rect x="14" y="52" width="34" height="33" rx="4"/> <rect x="52" y="52" width="34" height="33" rx="4"/> <rect x="33" y="16" width="34" height="33" rx="4"/></g></g><g transform="translate(380.7 87.9) rotate(-9) scale(0.395) translate(-50 -50)" stroke-width="3.91"><g class="toy" style="animation-delay:-1.50s"><circle cx="50" cy="50" r="22"/> <path d="M50 14 L50 4"/><path d="M50 96 L50 86"/> <path d="M14 50 L4 50"/><path d="M96 50 L86 50"/> <path d="M24 24 L17 17"/><path d="M83 83 L76 76"/> <path d="M76 24 L83 17"/><path d="M17 83 L24 76"/></g></g><g transform="translate(380.7 146.4) rotate(-3) scale(0.400) translate(-50 -50)" stroke-width="4.26"><g class="toy" style="animation-delay:-1.25s"><path d="M50 12 C31 12 22 27 23 41 C24 57 39 68 50 70 C61 68 76 57 77 41 C78 26 68 12 50 12 Z"/> <path d="M46 70 L54 70 L50 77 Z"/> <path d="M50 77 C43 85 57 90 50 99"/></g></g><g transform="translate(380.7 205.0) rotate(-9) scale(0.391) translate(-50 -50)" stroke-width="4.28"><g class="toy" style="animation-delay:-1.00s"><path d="M12 68 C12 58 14 54 19 52 L27 52 C28 42 34 36 43 36 L59 36 C68 36 74 42 75 52 L83 52 C88 54 90 58 90 68 L76 68 C75 57 57 57 56 68 L46 68 C45 57 27 57 26 68 Z"/> <path d="M26 68 C26 80 46 80 46 68"/> <path d="M56 68 C56 80 76 80 76 68"/> <path d="M50 36 L50 52"/> <path d="M33 52 C34 45 38 42 43 42"/></g></g><g transform="translate(380.7 263.6) rotate(9) scale(0.370) translate(-50 -50)" stroke-width="3.68"><g class="toy" style="animation-delay:-0.75s"><path d="M50 8 C62 20 68 38 68 56 L68 72 L32 72 L32 56 C32 38 38 20 50 8 Z"/> <circle cx="50" cy="40" r="8"/> <path d="M32 54 L18 70 L18 84 L32 72 Z"/> <path d="M68 54 L82 70 L82 84 L68 72 Z"/> <path d="M42 72 L42 84 C42 90 46 94 50 96 C54 94 58 90 58 84 L58 72"/></g></g><g transform="translate(380.7 322.1) rotate(9) scale(0.388) translate(-50 -50)" stroke-width="3.68"><g class="toy" style="animation-delay:-0.50s"><path d="M28 47 C26 37 30 30 36 28 C30 22 33 13 41 13 C48 13 50 21 45 27 C48 25 52 25 55 27 C50 21 52 13 59 13 C67 13 70 22 64 28 C70 30 74 37 72 47 C72 59 62 67 50 67 C38 67 28 59 28 47 Z"/> <circle cx="41" cy="42" r="2.8"/><circle cx="59" cy="42" r="2.8"/> <path d="M44 53 C47 56 53 56 56 53"/> <path d="M34 63 C26 69 24 83 32 89 C38 93 45 94 50 94 C55 94 62 93 68 89 C76 83 74 69 66 63"/> <path d="M30 68 C22 71 20 79 24 84"/><path d="M70 68 C78 71 80 79 76 84"/></g></g><g transform="translate(380.7 380.7) rotate(9) scale(0.383) translate(-50 -50)" stroke-width="4.10"><g class="toy" style="animation-delay:-0.25s"><path d="M50 8 L84 44 L50 88 L16 44 Z"/> <path d="M50 8 L50 88"/><path d="M16 44 L84 44"/> <path d="M50 88 C43 93 57 97 50 102"/></g></g><g transform="translate(29.3 439.3) rotate(-3) scale(0.396) translate(-50 -50)" stroke-width="4.56"><g class="toy" style="animation-delay:-1.50s"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g></g><g transform="translate(439.3 29.3) rotate(-6) scale(0.396) translate(-50 -50)" stroke-width="3.90"><g class="toy" style="animation-delay:-1.50s"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g></g><g transform="translate(439.3 439.3) rotate(-3) scale(0.385) translate(-50 -50)" stroke-width="4.10"><g class="toy" style="animation-delay:-1.50s"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g></g><g transform="translate(439.3 87.9) rotate(-6) scale(0.382) translate(-50 -50)" stroke-width="4.22"><g class="toy" style="animation-delay:-1.25s"><path d="M12 78 C13 44 38 24 50 24 C63 24 87 43 88 78"/> <path d="M26 79 C27 53 40 38 50 38 C61 38 74 52 75 79"/> <path d="M40 80 C41 63 45 52 50 52 C56 52 61 62 62 80"/></g></g><g transform="translate(439.3 146.4) rotate(-6) scale(0.366) translate(-50 -50)" stroke-width="4.57"><g class="toy" style="animation-delay:-1.00s"><path d="M34 22 L66 22 L66 74 L50 92 L34 74 Z"/> <path d="M34 36 L66 36"/> <path d="M34 74 L66 74"/> <path d="M50 44 L50 66"/></g></g><g transform="translate(439.3 205.0) rotate(-9) scale(0.369) translate(-50 -50)" stroke-width="3.69"><g class="toy" style="animation-delay:-0.75s"><path d="M50 12 L61 39 L90 41 L67 59 L75 88 L50 71 L25 88 L33 59 L10 40 L39 38 Z"/></g></g><g transform="translate(439.3 263.6) rotate(-6) scale(0.403) translate(-50 -50)" stroke-width="4.59"><g class="toy" style="animation-delay:-0.50s"><path d="M56 22 C44 22 36 31 36 42 C36 47 38 51 41 54 C30 58 22 66 22 74 C22 82 32 88 48 88 C68 88 82 78 82 62 C82 52 76 44 68 40 C68 30 63 22 56 22 Z"/> <circle cx="52" cy="36" r="2.8"/> <path d="M36 34 L22 38 L36 43"/> <path d="M40 88 L40 94"/><path d="M58 88 L58 94"/></g></g><g transform="translate(439.3 322.1) rotate(-3) scale(0.365) translate(-50 -50)" stroke-width="3.77"><g class="toy" style="animation-delay:-0.25s"><path d="M28 74 C18 74 12 66 14 58 C16 50 24 46 30 48 C31 34 42 26 54 28 C66 30 73 40 72 50 C82 48 90 54 90 63 C90 70 84 74 76 74 Z"/></g></g><g transform="translate(29.3 -29.3) rotate(0) scale(0.378) translate(-50 -50)" stroke-width="3.71"><g class="toy" style="animation-delay:-1.62s"><path d="M50 26 C42 18 28 16 16 18 L16 78 C28 76 42 78 50 86 C58 78 72 76 84 78 L84 18 C72 16 58 18 50 26 Z"/> <path d="M50 26 L50 86"/> <path d="M25 34 C32 33 39 34 43 37"/> <path d="M57 37 C61 34 68 33 75 34"/></g></g><g transform="translate(439.3 -29.3) rotate(-9) scale(0.401) translate(-50 -50)" stroke-width="3.85"><g class="toy" style="animation-delay:-1.62s"><path d="M50 26 C42 18 28 16 16 18 L16 78 C28 76 42 78 50 86 C58 78 72 76 84 78 L84 18 C72 16 58 18 50 26 Z"/> <path d="M50 26 L50 86"/> <path d="M25 34 C32 33 39 34 43 37"/> <path d="M57 37 C61 34 68 33 75 34"/></g></g><g transform="translate(439.3 380.7) rotate(-6) scale(0.361) translate(-50 -50)" stroke-width="3.77"><g class="toy" style="animation-delay:-0.00s"><path d="M50 26 C42 18 28 16 16 18 L16 78 C28 76 42 78 50 86 C58 78 72 76 84 78 L84 18 C72 16 58 18 50 26 Z"/> <path d="M50 26 L50 86"/> <path d="M25 34 C32 33 39 34 43 37"/> <path d="M57 37 C61 34 68 33 75 34"/></g></g><g transform="translate(87.9 410.0) rotate(-9) scale(0.368) translate(-50 -50)" stroke-width="3.96"><g class="toy" style="animation-delay:-1.37s"><path d="M28 47 C26 37 30 30 36 28 C30 22 33 13 41 13 C48 13 50 21 45 27 C48 25 52 25 55 27 C50 21 52 13 59 13 C67 13 70 22 64 28 C70 30 74 37 72 47 C72 59 62 67 50 67 C38 67 28 59 28 47 Z"/> <circle cx="41" cy="42" r="2.8"/><circle cx="59" cy="42" r="2.8"/> <path d="M44 53 C47 56 53 56 56 53"/> <path d="M34 63 C26 69 24 83 32 89 C38 93 45 94 50 94 C55 94 62 93 68 89 C76 83 74 69 66 63"/> <path d="M30 68 C22 71 20 79 24 84"/><path d="M70 68 C78 71 80 79 76 84"/></g></g><g transform="translate(146.4 439.3) rotate(3) scale(0.358) translate(-50 -50)" stroke-width="4.00"><g class="toy" style="animation-delay:-1.00s"><path d="M50 8 L84 44 L50 88 L16 44 Z"/> <path d="M50 8 L50 88"/><path d="M16 44 L84 44"/> <path d="M50 88 C43 93 57 97 50 102"/></g></g><g transform="translate(146.4 -29.3) rotate(-6) scale(0.382) translate(-50 -50)" stroke-width="4.44"><g class="toy" style="animation-delay:-1.62s"><path d="M50 12 L61 39 L90 41 L67 59 L75 88 L50 71 L25 88 L33 59 L10 40 L39 38 Z"/></g></g><g transform="translate(205.0 410.0) rotate(-6) scale(0.372) translate(-50 -50)" stroke-width="4.03"><g class="toy" style="animation-delay:-0.88s"><path d="M50 12 C31 12 22 27 23 41 C24 57 39 68 50 70 C61 68 76 57 77 41 C78 26 68 12 50 12 Z"/> <path d="M46 70 L54 70 L50 77 Z"/> <path d="M50 77 C43 85 57 90 50 99"/></g></g><g transform="translate(263.6 439.3) rotate(-3) scale(0.374) translate(-50 -50)" stroke-width="4.00"><g class="toy" style="animation-delay:-0.50s"><path d="M12 68 C12 58 14 54 19 52 L27 52 C28 42 34 36 43 36 L59 36 C68 36 74 42 75 52 L83 52 C88 54 90 58 90 68 L76 68 C75 57 57 57 56 68 L46 68 C45 57 27 57 26 68 Z"/> <path d="M26 68 C26 80 46 80 46 68"/> <path d="M56 68 C56 80 76 80 76 68"/> <path d="M50 36 L50 52"/> <path d="M33 52 C34 45 38 42 43 42"/></g></g><g transform="translate(263.6 -29.3) rotate(0) scale(0.370) translate(-50 -50)" stroke-width="3.83"><g class="toy" style="animation-delay:-1.62s"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g></g><g transform="translate(322.1 410.0) rotate(6) scale(0.402) translate(-50 -50)" stroke-width="4.01"><g class="toy" style="animation-delay:-0.38s"><path d="M50 32 C42 24 26 26 22 42 C18 58 28 82 40 88 C46 91 50 87 50 87 C50 87 54 91 60 88 C72 82 82 58 78 42 C74 26 58 24 50 32 Z"/> <path d="M50 32 L50 16"/> <path d="M50 20 C58 12 70 14 70 14 C70 14 68 24 58 24 C53 24 50 20 50 20 Z"/></g></g><g transform="translate(-29.3 29.3) rotate(9) scale(0.378) translate(-50 -50)" stroke-width="4.27"><g class="toy" style="animation-delay:-0.12s"><rect x="14" y="52" width="34" height="33" rx="4"/> <rect x="52" y="52" width="34" height="33" rx="4"/> <rect x="33" y="16" width="34" height="33" rx="4"/></g></g><g transform="translate(-29.3 439.3) rotate(0) scale(0.365) translate(-50 -50)" stroke-width="4.41"><g class="toy" style="animation-delay:-0.12s"><rect x="14" y="52" width="34" height="33" rx="4"/> <rect x="52" y="52" width="34" height="33" rx="4"/> <rect x="33" y="16" width="34" height="33" rx="4"/></g></g><g transform="translate(380.7 439.3) rotate(6) scale(0.365) translate(-50 -50)" stroke-width="3.72"><g class="toy" style="animation-delay:-0.00s"><rect x="14" y="52" width="34" height="33" rx="4"/> <rect x="52" y="52" width="34" height="33" rx="4"/> <rect x="33" y="16" width="34" height="33" rx="4"/></g></g><g transform="translate(-29.3 87.9) rotate(0) scale(0.361) translate(-50 -50)" stroke-width="4.07"><g class="toy" style="animation-delay:-0.38s"><circle cx="50" cy="50" r="22"/> <path d="M50 14 L50 4"/><path d="M50 96 L50 86"/> <path d="M14 50 L4 50"/><path d="M96 50 L86 50"/> <path d="M24 24 L17 17"/><path d="M83 83 L76 76"/> <path d="M76 24 L83 17"/><path d="M17 83 L24 76"/></g></g><g transform="translate(-29.3 146.4) rotate(-9) scale(0.385) translate(-50 -50)" stroke-width="4.50"><g class="toy" style="animation-delay:-0.62s"><path d="M50 12 C31 12 22 27 23 41 C24 57 39 68 50 70 C61 68 76 57 77 41 C78 26 68 12 50 12 Z"/> <path d="M46 70 L54 70 L50 77 Z"/> <path d="M50 77 C43 85 57 90 50 99"/></g></g><g transform="translate(-29.3 205.0) rotate(9) scale(0.392) translate(-50 -50)" stroke-width="4.29"><g class="toy" style="animation-delay:-0.88s"><path d="M12 68 C12 58 14 54 19 52 L27 52 C28 42 34 36 43 36 L59 36 C68 36 74 42 75 52 L83 52 C88 54 90 58 90 68 L76 68 C75 57 57 57 56 68 L46 68 C45 57 27 57 26 68 Z"/> <path d="M26 68 C26 80 46 80 46 68"/> <path d="M56 68 C56 80 76 80 76 68"/> <path d="M50 36 L50 52"/> <path d="M33 52 C34 45 38 42 43 42"/></g></g><g transform="translate(-29.3 263.6) rotate(3) scale(0.366) translate(-50 -50)" stroke-width="4.30"><g class="toy" style="animation-delay:-1.12s"><path d="M50 8 C62 20 68 38 68 56 L68 72 L32 72 L32 56 C32 38 38 20 50 8 Z"/> <circle cx="50" cy="40" r="8"/> <path d="M32 54 L18 70 L18 84 L32 72 Z"/> <path d="M68 54 L82 70 L82 84 L68 72 Z"/> <path d="M42 72 L42 84 C42 90 46 94 50 96 C54 94 58 90 58 84 L58 72"/></g></g><g transform="translate(-29.3 322.1) rotate(-9) scale(0.371) translate(-50 -50)" stroke-width="4.35"><g class="toy" style="animation-delay:-1.37s"><path d="M28 47 C26 37 30 30 36 28 C30 22 33 13 41 13 C48 13 50 21 45 27 C48 25 52 25 55 27 C50 21 52 13 59 13 C67 13 70 22 64 28 C70 30 74 37 72 47 C72 59 62 67 50 67 C38 67 28 59 28 47 Z"/> <circle cx="41" cy="42" r="2.8"/><circle cx="59" cy="42" r="2.8"/> <path d="M44 53 C47 56 53 56 56 53"/> <path d="M34 63 C26 69 24 83 32 89 C38 93 45 94 50 94 C55 94 62 93 68 89 C76 83 74 69 66 63"/> <path d="M30 68 C22 71 20 79 24 84"/><path d="M70 68 C78 71 80 79 76 84"/></g></g><g transform="translate(-29.3 -29.3) rotate(-3) scale(0.376) translate(-50 -50)" stroke-width="4.16"><g class="toy" style="animation-delay:-1.62s"><path d="M50 8 L84 44 L50 88 L16 44 Z"/> <path d="M50 8 L50 88"/><path d="M16 44 L84 44"/> <path d="M50 88 C43 93 57 97 50 102"/></g></g><g transform="translate(-29.3 380.7) rotate(3) scale(0.398) translate(-50 -50)" stroke-width="3.70"><g class="toy" style="animation-delay:-1.62s"><path d="M50 8 L84 44 L50 88 L16 44 Z"/> <path d="M50 8 L50 88"/><path d="M16 44 L84 44"/> <path d="M50 88 C43 93 57 97 50 102"/></g></g><g transform="translate(380.7 -29.3) rotate(9) scale(0.363) translate(-50 -50)" stroke-width="3.95"><g class="toy" style="animation-delay:-1.62s"><path d="M50 8 L84 44 L50 88 L16 44 Z"/> <path d="M50 8 L50 88"/><path d="M16 44 L84 44"/> <path d="M50 88 C43 93 57 97 50 102"/></g></g></g></pattern><mask id="toyMask" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%"><rect width="100%" height="100%" fill="url(#toyTile)"/></mask></defs><rect width="100%" height="100%" fill="url(#toyFlow)" mask="url(#toyMask)"/></svg>
 <div class="grain" aria-hidden="true"></div>
 <div class="vignette" aria-hidden="true"></div>
 <div class="agh-topline" aria-hidden="true"><i class="agh-progress"></i></div>
@@ -3705,6 +3874,61 @@ html[data-theme="dark"] .chart-tab.is-on { color: #100d18; }
       requestAnimationFrame(progress);
     }
     requestAnimationFrame(progress);
+  }
+
+  /* ---- The deck bar: out of the way going down, back on the way up ----
+     Reads lenis.scroll, the SAME number the reading line and the field read,
+     so the bar can never disagree with either about where the page is. Falls
+     back to pageYOffset if lenis has not booted.
+
+     Three constants, and each one is answering a specific failure:
+       ARM   the bar never hides inside the first screen. Without it a short
+             flick on the hero takes the controls away before the reader has
+             touched anything.
+       DEAD  a movement smaller than this is not a decision. Trackpads and
+             momentum scrolling emit sub-pixel reversals constantly, and
+             acting on them makes the bar flutter.
+       STUCK where the glass comes in. Deliberately below ARM so the ground
+             arrives before the hide behavior does, rather than both at once.
+
+     Under reduced motion the bar stays put and only takes its ground - a
+     control strip that vanishes is exactly what that preference is asking us
+     not to do. */
+  var deckBar = document.querySelector('.deck-bar');
+  if (deckBar) {
+    var docEl = document.documentElement;
+    var STUCK = 30, ARM = 120, DEAD = 7;
+    var lastY = 0, hidden = false, stuck = false;
+
+    function barY() {
+      var L = window.lenis;
+      return (L && typeof L.scroll === 'number')
+        ? L.scroll
+        : (window.pageYOffset || docEl.scrollTop || 0);
+    }
+
+    function barStep() {
+      var y = barY();
+      var d = y - lastY;
+
+      var wantStuck = y > STUCK;
+      if (wantStuck !== stuck) { stuck = wantStuck; docEl.classList.toggle('is-stuck', stuck); }
+
+      if (!reduced) {
+        var wantHidden = hidden;
+        if (y <= ARM) wantHidden = false;
+        else if (Math.abs(d) > DEAD) wantHidden = d > 0;
+        if (wantHidden !== hidden) { hidden = wantHidden; docEl.classList.toggle('nav-hidden', hidden); }
+      }
+
+      /* only bank the position once the move cleared the deadzone, or the
+         reference creeps forward one sub-pixel at a time and DEAD never trips */
+      if (Math.abs(d) > DEAD) lastY = y;
+      requestAnimationFrame(barStep);
+    }
+
+    lastY = barY();
+    requestAnimationFrame(barStep);
   }
 
   /* ---- Count-ups ---- */
