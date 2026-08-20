@@ -409,23 +409,28 @@ html.is-loading { overflow: hidden; }
   display: grid;
   place-items: center;
   opacity: 1;
-  transition: opacity 0.7s var(--ease-satisfying);
+  /* The panel LIFTS off the top rather than dissolving. Transform only, so it
+     runs on the compositor and never repaints the deck underneath.
+
+     It needs the shadow. The curtain is the same cream as the page, so a bare
+     slide is cream traveling over cream - invisible, and all you would read
+     is the wordmark flying upward on its own. The shadow gives the panel a
+     bottom EDGE, so what crosses the screen is an object with a near side
+     casting onto the deck it is uncovering. It sits below the fold until the
+     lift starts, so it costs nothing before then. */
+  transform: translateY(0);
+  transition: transform 0.7s var(--ease-soft);
+  will-change: transform;
+  box-shadow: 0 18px 44px rgba(72, 46, 92, 0.20);
 }
 
-/* The content clears BEFORE the ground does. Both are the same cream, so a
-   straight crossfade showed the hero reading through the wordmark for the
-   whole 0.7s - two headlines stacked on each other. */
 html.is-ready .agh-curtain {
-  opacity: 0;
+  transform: translateY(-100%);
   pointer-events: none;
-  transition-delay: 0.14s;
 }
 
-html.is-ready .agh-curtain .ld-layer {
-  opacity: 0;
-  transform: translateY(-9px);
-  transition-duration: 0.3s;
-}
+/* The wordmark RIDES the panel out. Fading it separately emptied the panel
+   before it left, so a blank cream rectangle did the traveling. */
 
 .ld-layer {
   grid-area: 1 / 1;
