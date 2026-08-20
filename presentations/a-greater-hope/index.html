@@ -468,29 +468,25 @@ html[data-theme="dark"] .theme-btn[aria-pressed="true"] {
 }
 
 /* ---------- The toy monogram ----------
-   A dense half-drop repeat of small OUTLINED motifs - backpack, apple,
-   crayon, book, rainbow, cloud, teddy bear, moon, star, rocket, car, kite,
-   duck, balloon, blocks, sailboat, sun - fading in from almost nothing at the
-   top of the viewport to full strength at the bottom.
+   A monogram in the reference's sense: a dense half-drop repeat of small
+   OUTLINED motifs - backpack, apple, crayon, book, rainbow, cloud, teddy
+   bear, moon, star, rocket, car, kite, duck, balloon, blocks, sailboat, sun -
+   fading in from almost nothing at the top of the viewport to full strength
+   at the bottom, which is the thing the shirt does.
 
-   TWO MOTIONS, ONE SPEED, AND NEITHER IS UNIFORM.
+   THE ARCHITECTURE IS A PERFORMANCE DECISION, measured not assumed. The first
+   build animated inside a full-viewport SVG <mask>; a mask whose CONTENTS
+   move has to be re-rendered every single frame and it measured 33fps idle.
+   Held static the same mask measures 60fps. So the mask stopped moving and
+   the COLOR moves underneath it instead:
 
-   The COLOR is a single band for the whole screen, not one per tile. The
-   gradient lives in VIEWPORT space and the tile is used as a MASK over it -
-   referenced from inside the <pattern> it resolved in pattern space instead,
-   which gave every tile an identical copy and made each outline look like it
-   was cycling on its own. It spans four tiles so neighbouring motifs share a
-   hue, and travels one span every 7s.
+     .toys      static mask - the toy tile, plus the fade, composited together
+     .toy-flow  one repeating gradient, moved by TRANSFORM only, which the
+                compositor handles without repainting anything
 
-   The MOVEMENT is a WAVE, not a drift. Every motif carries its own
-   animation-delay taken from its own y, so the lift ripples upward through
-   the field instead of the whole layer breathing as one body. An earlier
-   build moved the entire layer together and that is exactly the thing this is
-   not.
-
-   They share a speed BY CONSTRUCTION: the band covers 1640px in 7s and the
-   wave covers one 410px tile in 1.75s - both 234 px/s. That is what keeps a
-   toy lifting as the color reaches it rather than drifting out of phase. */
+   The gradient is a CSS gradient on an HTML element rather than an SVG one,
+   so its stops read the --toy-* tokens directly and both themes still come
+   from a single source. */
 .toys {
   position: fixed;
   inset: 0;
@@ -505,8 +501,13 @@ html[data-theme="dark"] .theme-btn[aria-pressed="true"] {
     transparent 0%, rgba(0,0,0,0.16) 26%, rgba(0,0,0,0.52) 56%, #000 100%);
 }
 
-/* the ripple. Transform only, and small - about 2px at a 38px motif, so it
-   reads as the field breathing rather than icons hopping behind the copy. */
+/* The ripple. Every motif carries its own animation-delay taken from its own
+   y, so a crest travels UPWARD through the field. An earlier build moved the
+   whole layer as one body, which is the thing this is not.
+
+   Color and wave share a speed by construction: the band covers 1640px in 7s
+   and the wave covers one 410px tile in 1.75s, both 234 px/s, so a toy lifts
+   as the color reaches it. */
 .toy {
   transform-box: fill-box;
   transform-origin: center;
@@ -520,8 +521,934 @@ html[data-theme="dark"] .theme-btn[aria-pressed="true"] {
   100% { transform: translateY(0) scale(1); }
 }
 
+/* ONE band for the whole screen, not one per tile. It spans four tiles so
+   neighboring motifs share a color and the field moves as one body rather
+   than each outline cycling on its own. */
+
+
+
 @media (prefers-reduced-motion: reduce) {
   .toy { animation: none; }
+}
+
+}
+
+body > main,
+body > footer,
+.agh-topline { position: relative; z-index: 1; }
+
+body {
+  background: var(--paper);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(0.975rem, 0.93rem + 0.2vw, 1.0625rem);
+  line-height: 1.62;
+  letter-spacing: 0.005em;
+}
+
+ul { padding-left: 0; list-style: none; }
+
+/* The brand sweep as the page's top edge. This is the one device the
+   whole identity hangs on: aghope.org wears it as its nav band. Widened
+   to the full five-stop wash so the warm half of the palette is present
+   from the very first pixel. */
+/* The top edge is the reading position. The whole sweep is always there
+   but held back, and the portion already read comes up to full strength -
+   so the bar fills as the deck is worked through rather than appearing and
+   disappearing. Width only, so it is a transform-cheap paint. */
+.agh-topline {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 5px;
+  background: var(--sweep-decor);
+  opacity: 0.18;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.agh-progress {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  background: var(--sweep-decor);
+  background-size: 100vw 100%;
+  background-attachment: fixed;
+  box-shadow: 0 0 14px rgba(110, 40, 119, 0.35);
+}
+
+/* ---------- Layout ---------- */
+
+/* The container. This rule went missing when the arc block was removed, and
+   with max-width:none / padding:0 every section ran edge to edge. AG holds a
+   measured gutter at every width: --safe-edge from ag-tokens at the narrow
+   end, 5vw through the middle, capped at 56px. */
+.wrap {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: clamp(var(--safe-edge), 5vw, 56px);
+}
+
+section { position: relative; }
+
+.pad-section { padding-block: var(--v-section); }
+
+/* Sections carry NO surface of their own. Tinted panels were tried and
+   removed: at 74% opacity they washed the background back out to near-white,
+   which is the exact problem the background exists to solve. The weave runs
+   unbroken from the first pixel to the last and only the content cards float
+   on it. Section separation comes from the flow, not from boxes. */
+.band {
+  position: relative;
+  background: transparent;
+  /* The copy scrim below feathers 8% past this box on each side. Without
+     clipping that pushed the page 84px wide at 1200 and 1px at 1366 - a real
+     horizontal pan. The scrim has nothing to escape for. */
+  overflow: hidden;
+}
+
+/* The scrim: a soft ground under each block of copy. HER-10's pattern. The
+   field varies frame to frame, so copy gets its own ground rather than
+   trusting the background to stay quiet where it matters. This is the layer
+   that protects gradient-filled headlines, which cannot carry a halo. */
+.band > .wrap::before,
+.hero > .wrap::before {
+  content: "";
+  position: absolute;
+  inset: -6% -8%;
+  background: radial-gradient(66% 56% at 50% 50%,
+    rgba(var(--scrim-rgb), 0.88) 0%,
+    rgba(var(--scrim-rgb), 0.62) 48%,
+    rgba(var(--scrim-rgb), 0) 80%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.band > .wrap,
+.hero > .wrap { position: relative; z-index: 1; }
+
+/* Every non-gradient text run wears the mist. Listed explicitly rather than
+   applied globally so gradient-filled headlines are never caught by it. */
+.sec-eyebrow,
+.sec-label,
+.sec-sub,
+.statement,
+.hero-lede,
+.hero-line,
+.hero-title .l1 .t,
+.sec-title .t,
+.fig-desc,
+.chart-eyebrow,
+.chart-tick,
+.sprint-marks span,
+.foot-line { text-shadow: var(--mist); }
+
+/* ---------- The curtain ----------
+   The house AG report curtain (lifted from presentations/arbor-growth-roadmap,
+   same two-phase boot -> brand structure, same fail-open contract, same
+   ag:ready event), re-skinned onto this deck's identity.
+
+   It opens on PAPER, not on the house navy. The deck's first frame is a cream
+   ground, so a dark curtain would flash light at the exact moment the client
+   first sees the work. Lifting from paper to paper makes the mark the only
+   thing that changes.
+
+   Second visit is short. The full sequence is a first-impression device, and
+   sitting through it again on every reload is friction, so a returning view
+   in the same session gets the brand phase only. */
+html.is-loading { overflow: hidden; }
+
+.agh-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483645;
+  background: var(--paper);
+  display: grid;
+  place-items: center;
+  opacity: 1;
+  /* The panel LIFTS off the top rather than dissolving. Transform only, so it
+     runs on the compositor and never repaints the deck underneath.
+
+     It needs the shadow. The curtain is the same cream as the page, so a bare
+     slide is cream traveling over cream - invisible, and all you would read
+     is the wordmark flying upward on its own. The shadow gives the panel a
+     bottom EDGE, so what crosses the screen is an object with a near side
+     casting onto the deck it is uncovering. It sits below the fold until the
+     lift starts, so it costs nothing before then. */
+  transform: translateY(0);
+  transition: transform 0.7s var(--ease-soft);
+  will-change: transform;
+  box-shadow: 0 18px 44px rgba(72, 46, 92, 0.20);
+}
+
+html.is-ready .agh-curtain {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+/* The wordmark RIDES the panel out. Fading it separately emptied the panel
+   before it left, so a blank cream rectangle did the traveling. */
+
+.ld-layer {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-soft), transform 0.6s var(--ease-satisfying);
+  pointer-events: none;
+}
+
+.agh-curtain[data-phase="boot"]  .ld-boot  { opacity: 1; }
+.agh-curtain[data-phase="brand"] .ld-brand { opacity: 1; }
+.agh-curtain[data-phase="brand"] .ld-boot  { opacity: 0; transform: scale(0.94); }
+
+/* ---- phase one: the mark, and a bar that fills ---- */
+.ld-mark {
+  width: clamp(74px, 8vw, 104px);
+  height: auto;
+  filter: drop-shadow(0 8px 26px rgba(64, 40, 72, 0.22));
+  animation: ld-pulse 2.1s var(--ease-soft) infinite;
+}
+
+@keyframes ld-pulse {
+  0%, 100% { transform: scale(1);    filter: drop-shadow(0 8px 26px rgba(64, 40, 72, 0.20)); }
+  50%      { transform: scale(1.04); filter: drop-shadow(0 10px 34px rgba(64, 40, 72, 0.34)); }
+}
+
+.ld-bar {
+  width: clamp(140px, 26vw, 220px);
+  height: 3px;
+  margin-top: clamp(22px, 3vh, 34px);
+  border-radius: var(--radius-pill);
+  background: rgba(96, 68, 116, 0.14);
+  overflow: hidden;
+}
+
+.ld-bar i {
+  display: block;
+  height: 100%;
+  width: 6%;
+  border-radius: var(--radius-pill);
+  background: var(--sweep-decor);
+  /* LINEAR, and no delay. On the expo-out curve the fill was at half width
+     within 60ms and then crawled - a progress bar that opens at 50% reads as
+     already finished, not as loading. A determinate bar has to move evenly. */
+  animation: ld-fill var(--ld-bar-dur, 1.4s) linear 0s forwards;
+}
+
+@keyframes ld-fill { to { width: 100%; } }
+
+/* ---- phase two: their name, in their own sweep ---- */
+.ld-wm {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 1rem + 3vw, 3.2rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: var(--sweep-ink);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: var(--agh-indigo);
+}
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .ld-wm { -webkit-text-fill-color: transparent; }
+}
+
+.agh-curtain[data-phase="brand"] .ld-wm {
+  animation: ld-rise 0.9s var(--ease-satisfying) both;
+}
+
+@keyframes ld-rise {
+  from { opacity: 0; transform: translateY(12px); filter: blur(7px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+
+.ld-rule {
+  width: 0;
+  height: 3px;
+  margin-top: clamp(13px, 1.8vh, 20px);
+  border-radius: var(--radius-pill);
+  background: var(--sweep-decor);
+}
+
+.agh-curtain[data-phase="brand"] .ld-rule {
+  animation: ld-draw 0.7s var(--ease-satisfying) 0.28s both;
+}
+
+@keyframes ld-draw { from { width: 0; } to { width: clamp(110px, 22vw, 190px); } }
+
+.ld-sub {
+  margin-top: clamp(11px, 1.6vh, 16px);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.625rem, 0.6rem + 0.16vw, 0.75rem);
+  letter-spacing: 0.34em;
+  padding-left: 0.34em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0;
+  word-break: normal;
+}
+
+.agh-curtain[data-phase="brand"] .ld-sub {
+  animation: ld-sub-in 0.7s var(--ease-satisfying) 0.42s both;
+}
+
+@keyframes ld-sub-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- The live edge ----------
+   Hover or press any container and a full-spectrum ring runs around its
+   whole perimeter, in the logo's own five stops.
+
+   The ring is a conic gradient on a pseudo-element, masked by two stacked
+   layers - one clipped to the content box, one to the border box - composited
+   with xor so everything except the border band is punched out. That is what
+   makes it follow the container's own border-radius exactly instead of being
+   a rectangle behind it.
+
+   --ring-ang is declared with @property. An unregistered custom property is
+   just a string, so an angle inside a gradient cannot be interpolated and the
+   animation would snap from 0 to 360 with nothing in between. Registering it
+   as an <angle> is what makes it turn. Where @property is unsupported the
+   ring still paints, it just holds still - so the interaction degrades to a
+   static colored edge rather than disappearing. */
+@property --ring-ang {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.pane, .sys, .chart-wrap, .ledger, .road-card, .kpi { position: relative; }
+
+.pane::after,
+.sys::after,
+.chart-wrap::after,
+.ledger::after,
+.kpi::after,
+.road-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.6px;
+  background: conic-gradient(from var(--ring-ang),
+    var(--agh-purple), var(--agh-indigo), var(--agh-blue),
+    var(--agh-teal), var(--agh-green), var(--agh-purple));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 4;
+  transition: opacity var(--duration-quick) var(--ease-soft);
+}
+
+@keyframes ring-turn { to { --ring-ang: 360deg; } }
+
+@media (hover: hover) {
+  .pane:hover::after,
+  .sys:hover::after,
+  .chart-wrap:hover::after,
+  .ledger:hover::after,
+  .kpi:hover::after,
+  .road-card:hover::before {
+    opacity: 1;
+    animation: ring-turn 4.2s linear infinite;
+  }
+}
+
+/* press. Works on touch too, which is the only edge treatment a phone gets. */
+.pane:active::after,
+.sys:active::after,
+.chart-wrap:active::after,
+.ledger:active::after,
+.kpi:active::after,
+.road-card:active::before {
+  opacity: 1;
+  animation: ring-turn 1.4s linear infinite;
+}
+
+/* the step you are on wears it permanently, so the road always reads */
+.road-node[data-on="true"] .road-card::before {
+  opacity: 0.85;
+  animation: ring-turn 6.3s linear infinite;
+}
+
+/* ---------- Depth and arrival ----------
+   Two things here.
+
+   THE LIFT. Panes tilt very slightly toward the pointer on hover and rise
+   off the page. The rotation is deliberately tiny - 1.6 degrees - because
+   anything more reads as a novelty rather than as weight. Transform and
+   shadow only, so it stays on the compositor.
+
+   THE ARRIVAL. Cards come in from alternating sides and fade out as they
+   leave the top. Sideways arrivals normally trip MOT-10, but this deck
+   already shipped exactly this pattern (commit 9de7496, "containers slide in
+   from alternating sides and fade out on the way up"), so it is a
+   re-instated approved behavior rather than new drift. The exit fade rides
+   a scroll-driven timeline where the browser supports one, which keeps it
+   off the main thread; where it does not, nothing fades and nothing breaks. */
+
+.sys, .road-card, .chart-wrap, .pane, .ledger, .bento-card {
+  transform-origin: center;
+}
+
+@media (hover: hover) {
+  .sys:hover,
+  .chart-wrap:hover {
+    transform: perspective(1100px) translate3d(0, -7px, 0) rotateX(1.6deg);
+    box-shadow: var(--shadow-lift);
+    border-color: #ffffff;
+  }
+  .pane:hover {
+    transform: perspective(1100px) translate3d(0, -4px, 0) rotateX(1.2deg);
+    box-shadow: var(--shadow-lift);
+  }
+  .sys, .chart-wrap, .pane {
+    transition:
+      transform var(--duration-quick) var(--ease-satisfying),
+      box-shadow var(--duration-quick) var(--ease-satisfying),
+      border-color var(--duration-quick) var(--ease-soft);
+  }
+}
+
+/* alternating arrival, on the existing IntersectionObserver */
+.reveal-stagger > *:nth-child(odd)  { transform: translate3d(-46px, 14px, 0); }
+.reveal-stagger > *:nth-child(even) { transform: translate3d(46px, 14px, 0); }
+.reveal-stagger.in-view > *          { transform: none; }
+
+/* the headline owns its own entrance, so it must not also slide */
+.reveal-stagger > .hero-title,
+.reveal-stagger.in-view > .hero-title { transform: none; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .system-grid, .chart-wrap, .roadmap, .ledger, .sec-head, .statement {
+      animation: lift-away linear both;
+      animation-timeline: view();
+      animation-range: exit 10% exit 90%;
+    }
+  }
+}
+
+@keyframes lift-away {
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to   { opacity: 0; transform: translate3d(0, -54px, 0); }
+}
+
+/* ---------- Copy panes ----------
+   Loose text sitting straight on the field was the last thing without a
+   surface of its own. Same glass as the cards, so the whole deck reads as
+   panes resting on one continuous ground. */
+.pane {
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  padding: clamp(22px, 2.6vw, 38px) clamp(20px, 2.4vw, 40px);
+}
+
+.sec-head.pane {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.statement.pane {
+  max-width: 56ch;
+  padding: clamp(18px, 2vw, 28px) clamp(22px, 2.6vw, 38px);
+}
+
+/* ---------- Section headers ---------- */
+
+.sec-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--v-sm);
+  margin-bottom: var(--v-lg);
+}
+
+.sec-rule {
+  width: 72px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--sweep-decor);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--duration-medium, 600ms) var(--ease-satisfying, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.in-view .sec-rule { transform: scaleX(1); }
+
+.sec-eyebrow {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.75rem, 0.71rem + 0.18vw, 0.875rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  word-break: normal;
+}
+
+.sec-label {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.0625rem, 0.98rem + 0.42vw, 1.3125rem);
+  line-height: 1.2;
+  color: var(--agh-plum);
+  word-break: normal;
+}
+
+.sec-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  /* vw-keyed, same reason as the hero. The factor is MEASURED, not guessed:
+     the longest line, "BUILT TO FILL YOUR PROGRAMS", renders at 13.08em in
+     Fira Sans Condensed 800. The container is 0.90vw wide below 1120px, so
+     0.90 / 13.08 = 6.88vw is the fitting ceiling; 6.6vw keeps 4% headroom
+     for a fallback face. A 7.6vw guess here overflowed by 15px at 350px. */
+  font-size: min(3.5rem, 6.6vw);
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ink);
+  max-width: 100%;
+  text-wrap: balance;
+}
+
+/* Headline lines break where the copy breaks, never anywhere else. Same
+   masked-slide construction as the hero. */
+.sec-title .l1,
+.sec-title .l2 { display: block; overflow: hidden; padding-bottom: 0.06em; margin-bottom: -0.06em; }
+
+/* ---------- The line slide ----------
+   Transform only, vertical only (MOT-10 forbids arrivals from the sides),
+   on the canonical tokens. The line boxes above clip; these slide. */
+.hero-title .t,
+.sec-title .t {
+  display: block;
+  white-space: nowrap;
+  transform: translateY(108%);
+  transition: transform var(--duration-long) var(--ease-satisfying);
+  will-change: transform;
+}
+
+.in-view .hero-title .t,
+.in-view .sec-title .t { transform: translateY(0); }
+
+/* second line lands a beat later - 126ms is MOT-08's stagger ceiling */
+.hero-title .l2 .t,
+.sec-title .l2 .t { transition-delay: 126ms; }
+
+/* the headline does not ALSO rise as a stagger child; the mask owns its
+   entrance, and running both at once just muddies it */
+.reveal-stagger > .hero-title { opacity: 1; transform: none; }
+
+
+.sec-sub {
+  font-weight: 400;
+  font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.375rem);
+  line-height: 1.42;
+  letter-spacing: 0.015em;
+  color: var(--agh-sky);
+  max-width: 40ch;
+  text-wrap: pretty;
+}
+
+/* A statement line, set the way their interior pages set one: centered,
+   sky blue, light, generous tracking. */
+.statement {
+  text-align: center;
+  font-weight: 400;
+  font-size: clamp(1.0625rem, 0.93rem + 0.62vw, 1.4375rem);
+  line-height: 1.42;
+  letter-spacing: 0.015em;
+  color: var(--agh-sky);
+  max-width: 44ch;
+  margin-inline: auto;
+  text-wrap: pretty;
+}
+
+.statement span { display: block; }
+.statement--quiet { color: var(--text-secondary); }
+
+/* Gradient type. Always fed an INK sweep, never a decorative one.
+   fit-content matters: as a full-width block, a centered line samples only
+   the middle of the gradient and comes out one flat color. */
+.grad {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  background: var(--sweep-ink);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: var(--agh-indigo);
+}
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .grad { -webkit-text-fill-color: transparent; }
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  min-height: 100dvh;
+  display: grid;
+  /* minmax(0,1fr), not auto. An auto track sizes to its content's max-content
+     width, and the ticker's track is very wide - so the hero column grew to
+     --max-w even on a 1000px viewport and the whole stack sat 90px off the
+     center axis, identically at 1000 and 1100 because it was no longer
+     viewport-relative at all. */
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+  /* Exactly one screen. The bottom side only has to clear the scroll cue,
+     which is pinned to the floor of the hero rather than sitting in the
+     flow - in the flow it pushed the stack off center by its own height. */
+  padding-block: calc(var(--v-section) + 14px) calc(var(--v-md) + 46px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero > .wrap { position: relative; z-index: 1; }
+
+.hero-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--v-md);
+}
+
+.hero-mark {
+  width: clamp(72px, 7.4vw, 100px);
+  height: auto;
+  filter: drop-shadow(0 6px 22px rgba(64, 40, 72, 0.18));
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  /* Keyed to vw so the longest line always holds one line down to 320px.
+     RE-MEASURED after "& Donors" went in: the longest line is no longer
+     "ARE ALREADY SCROLLING" at 10.515em, it is "THE FAMILIES & DONORS YOU
+     NEED" at 14.581em.
+
+     6.86vw was WRONG and so was the 6.5vw it produced. That measurement took
+     .wrap's BORDER box, which includes its padding, so it reported 900px of
+     room at a 900px viewport when the content box is 810. Measured against
+     the CONTENT box the ceiling is 6.17vw, and 6.5 overflowed at 768, 900,
+     1024 and 1100 - clipped rather than wrapped, because .l1 carries
+     overflow:hidden for the reveal, so the ends of the line were being cut
+     off instead of visibly breaking. 5.9vw keeps 4.4% headroom.
+
+     The 4.5rem cap still holds above the wrap's max-width: 72px x 14.581em
+     is 1050px against 1180px of container. */
+  font-size: min(4.5rem, 5.9vw);
+  line-height: 0.96;
+  letter-spacing: 0.008em;
+  text-transform: uppercase;
+  color: var(--ink);
+  max-width: 100%;
+}
+
+/* Each line of the headline is its own block and never wraps, so it breaks
+   where the copy breaks and nowhere else. Balance is off here on purpose:
+   it was pulling "ARE" down onto a line by itself.
+   The line is also the MASK for the slide: overflow hidden here, transform
+   on the inner .t, so each line rises out from behind its own edge. */
+.hero-title .l1,
+.hero-title .l2 { display: block; overflow: hidden; padding-bottom: 0.06em; margin-bottom: -0.06em; }
+
+.hero-rule {
+  width: 92px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--sweep-decor);
+}
+
+.hero-lede {
+  font-weight: 400;
+  font-size: clamp(1.0625rem, 0.9rem + 0.75vw, 1.5rem);
+  line-height: 1.42;
+  letter-spacing: 0.02em;
+  color: var(--agh-sky);
+  max-width: 30ch;
+  text-wrap: pretty;
+}
+
+.hero-line {
+  font-size: clamp(1rem, 0.94rem + 0.28vw, 1.125rem);
+  line-height: 1.55;
+  color: var(--text-secondary);
+  max-width: 42ch;
+  text-wrap: pretty;
+}
+
+/* ---------- Figure rows (hero band and cost band) ---------- */
+
+.figs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 34px);
+  width: 100%;
+  max-width: 760px;
+  margin-top: var(--v-sm);
+  padding-top: var(--v-md);
+  border-top: 1px solid var(--rule);
+}
+
+.fig { display: flex; flex-direction: column; align-items: center; gap: 3px; text-align: center; }
+
+.fig-term {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 1.05rem + 1.9vw, 2.625rem);
+  line-height: 1.04;
+  letter-spacing: 0.012em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  word-break: normal;
+}
+
+.fig-desc {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.75rem, 0.72rem + 0.16vw, 0.875rem);
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--muted);
+  word-break: normal;
+  text-wrap: balance;
+}
+
+/* ---------- The ticker ----------
+   The house jumbo marquee (cogentic .jumbo), retuned to this deck's tokens:
+   display face, uppercase, transparent fill with a stroke instead of a fill,
+   two identical groups translating by exactly -50% so the loop is seamless.
+   Every phrase is the deck's own approved copy; nothing here is new writing.
+
+   It is a direct child of .hero and absolutely positioned, NOT a child of
+   .wrap. Inside the padded container it could only ever be as wide as the
+   text column, and forcing 100vw there overflowed the padding and dragged
+   the hero stack 50px off its center axis. Taking it out of the flow
+   entirely is the only version that runs true edge to edge AND leaves the
+   hero's centering mathematically untouchable.
+
+   Transform only, so it stays on the compositor, and it stops dead under
+   reduced motion. */
+.ticker {
+  position: relative;
+  z-index: 1;
+  height: var(--tick-h);
+  overflow: hidden;
+  /* a narrow fade only - the words still reach both edges, they just do not
+     terminate on a hard chop */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
+}
+
+.tick-track {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: max-content;
+  animation: tick 42s linear infinite;
+}
+
+.tick-group { display: flex; align-items: center; flex-shrink: 0; }
+
+@keyframes tick {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+.tick-word {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.75rem, 0.9rem + 4vw, 4.375rem);
+  line-height: 1;
+  letter-spacing: 0.012em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding-inline: clamp(0.6rem, 0.35rem + 0.9vw, 1.3rem);
+  color: transparent;
+  -webkit-text-stroke: 1.4px var(--tick-stroke);
+}
+
+.tick-word.lit { -webkit-text-stroke: 1.6px var(--tick-stroke-lit); }
+
+/* the diamond between phrases, drawn rather than typed so it never depends
+   on a glyph the display face may not carry */
+.tick-sep {
+  flex: none;
+  width: clamp(6px, 0.55vw, 9px);
+  height: clamp(6px, 0.55vw, 9px);
+  background: var(--sweep-decor);
+  transform: rotate(45deg);
+  opacity: 0.72;
+}
+
+/* ---------- The platform carousel ----------
+   Icons lifted from the house OCS deck (presentations/americana-tax/ocs,
+   .arc-ocs1-platform--*), which already carries all seven as inline SVG. The
+   motion is this deck's own hero-marquee mechanic rather than a new one: the
+   row is duplicated and the track travels exactly -50%, so the loop closes on
+   itself with no seam. Transform only, one composited layer, nothing per
+   frame on the main thread.
+
+   It runs slower than the word marquee - these are objects to recognize, not
+   a texture to feel - and it holds still on hover so a reader can stop on a
+   platform they care about. */
+.plat-rail {
+  position: relative;
+  margin-top: clamp(26px, 3.2vw, 44px);
+  /* room for the hover lift and its shadow. Overflow clips at the padding
+     box, so this is clearance, not decoration - without it the tile rose 6px
+     into a hard edge and had its top sheared off. */
+  padding-block: 18px 30px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+
+.plat-track {
+  display: flex;
+  width: max-content;
+  /* 21s, half of 42. Both are AG timings; the platform row reads faster than
+     the word marquee because the tiles are wider than the words and a slower
+     cycle made the same seven icons feel becalmed. */
+  animation: plat-roll 21s linear infinite;
+}
+
+.plat-group { display: flex; align-items: stretch; flex-shrink: 0; }
+
+@keyframes plat-roll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (hover: hover) {
+  .plat-rail:hover .plat-track { animation-play-state: paused; }
+}
+
+.plat {
+  position: relative;
+  flex: none;
+  width: clamp(124px, 13vw, 168px);
+  margin-inline: clamp(6px, 0.8vw, 11px);
+  padding: clamp(18px, 2vw, 26px) 10px clamp(14px, 1.6vw, 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(10px, 1.2vw, 15px);
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  transition:
+    transform var(--duration-quick) var(--ease-satisfying),
+    box-shadow var(--duration-quick) var(--ease-satisfying);
+}
+
+@media (hover: hover) {
+  .plat:hover { transform: translateY(-6px); box-shadow: var(--shadow-lift); }
+}
+
+.plat-mark {
+  display: grid;
+  place-items: center;
+  width: clamp(38px, 4vw, 50px);
+  height: clamp(38px, 4vw, 50px);
+  border-radius: 50%;
+  background: var(--sweep-ink);
+  color: #ffffff;
+}
+
+.plat-mark svg { width: 54%; height: 54%; display: block; }
+
+.plat-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.75rem, 0.72rem + 0.16vw, 0.875rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  white-space: nowrap;
+  word-break: normal;
+}
+
+/* Two cards, side by side, both of them the section 2 card reused. */
+.org-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 22px);
+  align-items: stretch;
+  margin-top: clamp(26px, 3.2vw, 44px);
+}
+
+/* the numbers STACK inside their card. Three across in a half-width card put
+   the longest term under 150px, which is where it shatters; stacked, each one
+   gets the full card width and reads larger than it did in the wide row. */
+.sys--stats { gap: 0; justify-content: space-between; }
+
+.ostat { width: 100%; }
+.ostat + .ostat {
+  margin-top: clamp(14px, 1.8vw, 22px);
+  padding-top: clamp(14px, 1.8vw, 22px);
+  border-top: 1px solid var(--rule);
+}
+
+.ostat-fig {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.375rem);
+  line-height: 1.04;
+  letter-spacing: 0.012em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  word-break: normal;
+  /* .grad centers itself with margin-inline:auto, which left the numbers
+     centered above left-aligned labels. The section 2 card is left-aligned
+     content, so these are too. */
+  margin-inline: 0;
+}
+
+.ostat-sub {
+  margin-top: 3px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.6875rem, 0.66rem + 0.16vw, 0.8125rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  word-break: normal;
+}
+
+/* the sentence card centers its one line rather than hugging the top edge,
+   so it balances the three stacked numbers beside it */
+.sys--note { justify-content: center; }
+
+.sys-copy {
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.1875rem);
+  line-height: 1.55;
+  color: var(--text-primary);
+  text-wrap: pretty;
+  word-break: normal;
 }
 
 /* ---------- Scroll cue ---------- */
@@ -539,11 +1466,13 @@ html[data-theme="dark"] .theme-btn[aria-pressed="true"] {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 0;
   margin-top: var(--v-md);
 }
 
-.scroll-cue span {
+.scroll-cue > span:first-child { margin-bottom: 7px; }
+
+.scroll-cue > span:first-child {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 0.75rem;
@@ -553,30 +1482,31 @@ html[data-theme="dark"] .theme-btn[aria-pressed="true"] {
   word-break: normal;
 }
 
-.scroll-cue i {
+/* Three chevrons, small to large down the stack, so the eye is pulled
+   downward by the widening rather than by a moving part. They pulse in
+   sequence on the same 2100ms the old falling tick used, so the cue keeps its
+   cadence. Transform and opacity only.
+
+   Every rule is scoped to .scroll-cue: the label rule is .scroll-cue span at
+   (0,1,1) and outranked a bare .cue-chev at (0,1,0), so the chevrons all
+   inherited --muted instead of their brand hue - and the animation SHORTHAND
+   here resets animation-delay, so the per-chevron delays need the same
+   specificity or all three pulse in step. */
+.scroll-cue .cue-chev {
   display: block;
-  position: relative;
-  width: 1px;
-  height: 38px;
-  overflow: hidden;
-  background: var(--rule);
+  color: var(--agh-indigo);
+  animation: cue-pulse 2100ms var(--ease-soft, cubic-bezier(0.4, 0, 0.2, 1)) infinite;
 }
 
-.scroll-cue i::after {
-  content: "";
-  position: absolute;
-  inset: 0 auto auto 0;
-  width: 1px;
-  height: 15px;
-  background: var(--sweep-decor);
-  animation: cue-fall 2100ms var(--ease-soft, cubic-bezier(0.4, 0, 0.2, 1)) infinite;
-}
+.scroll-cue .cue-chev svg { display: block; stroke-width: 2.4; }
 
-@keyframes cue-fall {
-  0%   { transform: translateY(-17px); opacity: 0; }
-  30%  { opacity: 1; }
-  70%  { opacity: 1; }
-  100% { transform: translateY(38px); opacity: 0; }
+.scroll-cue .cue-chev--s { width: 13px; margin-top: 2px; animation-delay: 0ms; }
+.scroll-cue .cue-chev--m { width: 18px; margin-top: -4px; color: var(--agh-blue); animation-delay: 150ms; }
+.scroll-cue .cue-chev--l { width: 24px; margin-top: -5px; color: var(--agh-teal); animation-delay: 300ms; }
+
+@keyframes cue-pulse {
+  0%, 60%, 100% { opacity: 0.34; transform: translateY(0); }
+  22%           { opacity: 1;    transform: translateY(3px); }
 }
 
 /* ---------- What We Do: the road ----------
@@ -1574,7 +2504,7 @@ html[data-theme="dark"] .theme-btn[aria-pressed="true"] {
   .agh-topline { animation: none; background-position: 0 0; }
   .hero::after { animation: none; opacity: 0.85; }
   .sec-rule { transform: scaleX(1) !important; transition: none !important; }
-  .scroll-cue i::after { animation: none; opacity: 1; transform: translateY(12px); }
+  .scroll-cue .cue-chev { animation: none; opacity: 0.8; }
   .road-track, .road-fill, .road-card, .road-dot, .road-pip { transition: none !important; }
   .road-arrows { animation: none !important; opacity: 0.3 !important; }
   .sys { transition: none !important; }
@@ -1727,7 +2657,9 @@ html[data-theme="dark"] .theme-btn[aria-pressed="true"] {
 
     <div class="scroll-cue" aria-hidden="true">
       <span>Scroll</span>
-      <i></i>
+      <span class="cue-chev cue-chev--s"><svg viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 2 L12 11 L22 2"/></svg></span>
+      <span class="cue-chev cue-chev--m"><svg viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 2 L12 11 L22 2"/></svg></span>
+      <span class="cue-chev cue-chev--l"><svg viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 2 L12 11 L22 2"/></svg></span>
     </div>
   </section>
 
@@ -2091,25 +3023,32 @@ html[data-theme="dark"] .theme-btn[aria-pressed="true"] {
 
 
   /* ---- The monogram scale ----
-     A <pattern> in userSpaceOnUse cannot be re-scaled from a media query, so
-     the tile is scaled here. On a phone the 410px tile barely fits once and
-     you see about seven motifs; at 0.66 you see the set.
+     A <pattern> sized in userSpaceOnUse cannot be re-scaled from a media
+     query, so the tile is scaled here instead. On a phone the 410px tile
+     barely fits once across the screen and you see about seven motifs; at
+     0.66 you see the set rather than a sample of it.
 
      The wave duration scales with it. The color band travels in VIEWPORT
      space and is unaffected by the pattern scale, so leaving the wave at its
-     full-size duration would let the ripple and the color drift apart - a
-     smaller tile gives the wave less distance to cover. */
+     full-size duration would let the two drift apart - the wave has less
+     distance to cover per tile once the tile is smaller. */
   (function () {
-    var pat = document.getElementById('toyTile');
-    if (!pat) return;
-    var BASE_WAVE = 1.75;
     var t = 0;
 
     function apply() {
+      /* smaller tile on a phone, so the whole set is visible rather than a
+         sample of it - at 410px only about seven motifs fit across a 390px
+         screen. One CSS variable drives mask-size; nothing else changes. */
       var k = window.innerWidth <= 900 ? 0.66 : 1;
-      if (k === 1) pat.removeAttribute('patternTransform');
-      else pat.setAttribute('patternTransform', 'scale(' + k + ')');
-      document.documentElement.style.setProperty('--toy-wave-dur', (BASE_WAVE * k).toFixed(3) + 's');
+      var pat = document.getElementById('toyTile');
+      if (pat) {
+        if (k === 1) pat.removeAttribute('patternTransform');
+        else pat.setAttribute('patternTransform', 'scale(' + k + ')');
+      }
+      /* the wave duration scales with the tile. The color band travels in
+         VIEWPORT space and is unaffected by the pattern scale, so leaving the
+         wave at its full-size duration would let the two drift apart. */
+      document.documentElement.style.setProperty('--toy-wave-dur', (1.75 * k).toFixed(3) + 's');
     }
 
     apply();
