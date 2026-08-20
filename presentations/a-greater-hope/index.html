@@ -1234,6 +1234,7 @@ html.is-ready .agh-curtain {
 .road-node:nth-child(3) .road-dot { border-color: var(--agh-blue); }
 .road-node:nth-child(4) .road-dot { border-color: var(--agh-teal); }
 .road-node:nth-child(5) .road-dot { border-color: #5d9a2f; }
+.road-node:nth-child(6) .road-dot { border-color: var(--agh-plum); }
 
 .road-node[data-on="true"] .road-dot {
   transform: scale(1.5);
@@ -1368,7 +1369,12 @@ html.is-ready .agh-curtain {
 
 .system-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Two by two, not three across. A fourth card left a single orphan on a
+     second row, and the last-child rule that used to center that orphan now
+     has an even count to sit in. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 980px;
+  margin-inline: auto;
   /* column gap holds; the row gap opens up so stacked panes breathe */
   gap: clamp(26px, 3vw, 40px) clamp(14px, 1.6vw, 22px);
   align-items: stretch;
@@ -1973,7 +1979,7 @@ html.is-ready .agh-curtain {
     max-width: 820px;
     margin-inline: auto;
   }
-  .system-grid > :last-child { grid-column: 1 / -1; max-width: 50%; margin-inline: auto; }
+  /* four cards is even, so nothing is left over to center */
   .chart-wrap { max-width: 760px; }
   .road-node { width: 252px; }
   .sys:nth-child(1), .sys:nth-child(2), .sys:nth-child(3) { --slice: 50%; }
@@ -2251,7 +2257,7 @@ html.is-ready .agh-curtain {
           <span class="l1"><span class="t">Here's What We'd Build</span></span>
           <span class="l2"><span class="t">For A Greater Hope</span></span>
         </h2>
-        <p class="sec-sub">Meta only, Facebook and&nbsp;Instagram.</p>
+        <p class="sec-sub">Paid ads on Meta. Organic on 7&nbsp;platforms.</p>
       </header>
 
       <div class="roadmap reveal">
@@ -2297,6 +2303,13 @@ html.is-ready .agh-curtain {
                   <p class="road-text">Scale what works, cut what&nbsp;doesn't</p>
                 </div>
               </li>
+              <li class="road-node" data-i="5">
+                <span class="road-dot" aria-hidden="true"></span>
+                <div class="road-card">
+                  <p class="road-num">06</p>
+                  <p class="road-text">Organic posted twice a day on 7&nbsp;platforms</p>
+                </div>
+              </li>
             </ol>
           </div>
         </div>
@@ -2304,6 +2317,7 @@ html.is-ready .agh-curtain {
         <div class="road-controls">
           <button class="road-btn road-btn--prev" type="button" aria-label="Previous step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
           <div class="road-pips" aria-hidden="true">
+            <span class="road-pip"></span>
             <span class="road-pip"></span>
             <span class="road-pip"></span>
             <span class="road-pip"></span>
@@ -2361,6 +2375,17 @@ html.is-ready .agh-curtain {
             <li>Every 7 days once there is a&nbsp;winner</li>
             <li>Know which ads your leads are coming in&nbsp;from</li>
             <li>Coaching on speed to lead and follow&nbsp;up</li>
+          </ul>
+        </article>
+
+        <article class="sys">
+          <h3 class="sys-name">Organic&nbsp;Content</h3>
+          <ul>
+            <li>2 pieces a day, 60 a&nbsp;month</li>
+            <li>Every piece goes on all 7&nbsp;platforms</li>
+            <li>420 posts a&nbsp;month</li>
+            <li>Facebook, Instagram, TikTok, YouTube, LinkedIn, X and&nbsp;Threads</li>
+            <li>Ideation, scripting and distribution. We do not film or&nbsp;create</li>
           </ul>
         </article>
       </div>
@@ -2480,6 +2505,8 @@ html.is-ready .agh-curtain {
           <div class="lrow"><p class="lrow-term">Ads&nbsp;tested</p><p class="lrow-val">14 per&nbsp;cycle</p></div>
           <div class="lrow"><p class="lrow-term">Creative&nbsp;refresh</p><p class="lrow-val">Every 28&nbsp;days</p></div>
           <div class="lrow"><p class="lrow-term">Reporting</p><p class="lrow-val">Every 4 days while&nbsp;testing</p></div>
+          <div class="lrow"><p class="lrow-term">Organic&nbsp;posting</p><p class="lrow-val">2 a day, 7&nbsp;platforms</p></div>
+          <div class="lrow"><p class="lrow-term">Organic&nbsp;scope</p><p class="lrow-val">Ideation, scripting and&nbsp;distribution</p></div>
           <div class="lrow lrow--waived"><p class="lrow-term">Setup&nbsp;fee</p><p class="lrow-val">Waived</p></div>
           <div class="lrow lrow--waived"><p class="lrow-term">Content, 6 blog topics and 6 voiceover&nbsp;scripts</p><p class="lrow-val">Waived</p></div>
         </div>
