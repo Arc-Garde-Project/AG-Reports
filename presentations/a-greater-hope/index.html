@@ -790,12 +790,14 @@ html[data-theme="dark"] .fs-btn[aria-pressed="true"] {
    visible pop this is meant to avoid. */
 html.is-lifting .toy { animation-play-state: paused; }
 
-/* AND WHILE THE FIELD IS SCROLLING. The wave is an idle shimmer; the moment
-   the field is travelling under the reader there is nothing to see in it, and
-   leaving it running means the mask is invalidated twice per frame - once by
-   the wave and once by the scroll offset. Paused, not none: `animation: none`
-   snaps all 78 motifs back to their rest transform in a single frame, which
-   is the visible pop the curtain lift note above is about. */
+/* AND WHILE THE FIELD IS SCROLLING, which is a DESKTOP-ONLY state - the class
+   is never applied below 900, because the field does not travel there. The
+   wave is an idle shimmer; the moment the field is travelling under the reader
+   there is nothing to see in it, and leaving it running means the mask is
+   invalidated twice per frame, once by the wave and once by the scroll offset.
+   Paused, not none: `animation: none` snaps all 78 motifs back to their rest
+   transform in a single frame, which is the visible pop the curtain lift note
+   above is about. */
 html.is-scrolling .toy { animation-play-state: paused; }
 
 /* Pausing the wave was NOT enough on its own - measured, the frozen layer still
@@ -1393,12 +1395,27 @@ html[data-theme="dark"] .ld-rocket {
 .sec-title {
   font-family: var(--font-display);
   font-weight: 800;
-  /* vw-keyed, same reason as the hero. The factor is MEASURED, not guessed:
-     the longest line, "BUILT TO FILL YOUR PROGRAMS", renders at 13.08em in
-     Fira Sans Condensed 800. The container is 0.90vw wide below 1120px, so
-     0.90 / 13.08 = 6.88vw is the fitting ceiling; 6.6vw keeps 4% headroom
-     for a fallback face. A 7.6vw guess here overflowed by 15px at 350px. */
-  font-size: min(3.5rem, 6.6vw);
+  /* vw-keyed, same reason as the hero. The longest line in the deck is
+     "BUILT TO FILL YOUR PROGRAMS" at 13.08em in Fira Sans Condensed 800.
+
+     6.6vw WAS WRONG AND SHIPPED CLIPPED from 350 all the way to 850, worst
+     at 550 where 29.8px of "PROGRAMS" was cut off. The old note here divided
+     by 0.90vw, the width of .wrap - but this heading does not live in .wrap,
+     it lives in .sec-head, which is a .pane, and a pane adds
+     clamp(20px, 2.4vw, 40px) of padding on EACH side. At 350px that 20px
+     floor is 11% of the screen gone before the type starts.
+
+     And it was invisible to a width check, twice over: .t is nowrap so the
+     span is capped by its container while the letters spill past it, and .l2
+     carries overflow:hidden for the reveal, so the ends were CHOPPED rather
+     than pushed out where anything measuring the element would see them.
+     Only the GLYPH edge, via Range.getClientRects, reports the truth.
+
+     Re-measured against the real clip box at every width from 350 to 1240:
+     the tightest fit is 350px, where the line needs 302px of a 281px box, so
+     the fitting ceiling is 6.6 x 0.930 = 6.14vw. 5.89 keeps the house 4%
+     headroom for a fallback face. */
+  font-size: min(3.5rem, 5.89vw);
   line-height: 1.02;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -3525,7 +3542,7 @@ html[data-theme="dark"] .theme-glider { background: var(--sweep-ondark); }
   (function () {
     var t = 0;
     var grad = document.getElementById('toyFlow');
-    var moving = false;
+    var moving = false, travels = true;
     var root = document.documentElement;
 
     /* ---- THE FIELD SCROLLS ----
@@ -3558,6 +3575,18 @@ html[data-theme="dark"] .theme-glider { background: var(--sweep-ondark); }
     var AXIS   = 820;    /* one period along the diagonal, per axis */
     var flowMs = 7000;
 
+    /* ---- THE DRIFT ----
+       One tile every 42 seconds, which is 9.8 px/s downward, forever. Slow
+       enough that it is scenery and not an event: a motif takes a minute and
+       a half to cross a 900px screen. It is a multiple of 7, like everything
+       else that moves in this deck.
+
+       It costs nothing at idle. The mask is ALREADY re-rasterized every frame
+       by the wave, so moving the pattern on the same frames adds no new
+       invalidation - which is exactly why the drift stops under reduced
+       motion, where the wave is off and the mask would otherwise be static. */
+    var DRIFT_MS = 42000;
+
     function apply() {
       /* The monogram used to be drawn at 0.66 on a phone, which packed in more
          motifs but shrank every outline to two thirds of the desktop size and
@@ -3573,6 +3602,15 @@ html[data-theme="dark"] .theme-glider { background: var(--sweep-ondark); }
       var phone = window.matchMedia('(max-width: 900px)').matches;
       flowMs = phone ? 14000 : 7000;
       root.style.setProperty('--toy-wave-dur', (phone ? 3.5 : 1.75).toFixed(3) + 's');
+
+      /* THE FIELD ONLY TRAVELS ON DESKTOP. On a phone it reads as jitter
+         rather than as depth: touch scrolling arrives in coarse, uneven
+         momentum steps, and a field moving 1:1 with them stutters against
+         type that is being resampled at the same moment. It stays pinned
+         below 900, exactly as it always was - the wave is the only thing
+         moving there, at the halved 3.5s. */
+      travels = !phone;
+      if (!travels && moving) { moving = false; root.classList.remove('is-scrolling'); }
     }
 
     function scrollY() {
@@ -3590,18 +3628,31 @@ html[data-theme="dark"] .theme-glider { background: var(--sweep-ondark); }
 
       /* is the field actually travelling? Three settled frames before the
          wave is allowed back, so a single sub-pixel wobble at the end of a
-         flick does not flicker the class on and off. */
-      if (Math.abs(y - lastY) > 0.5) { still = 0; if (!moving) { moving = true; root.classList.add('is-scrolling'); } }
-      else if (moving && ++still > 3) { moving = false; root.classList.remove('is-scrolling'); }
+         flick does not flicker the class on and off.
+
+         Only while it TRAVELS. The pause exists to pay for the scroll offset
+         - it stops the mask being invalidated twice a frame. With the field
+         pinned there is no second invalidation to avoid, and a shimmer that
+         stops dead every time you touch the screen is its own glitch. */
+      if (travels) {
+        if (Math.abs(y - lastY) > 0.5) { still = 0; if (!moving) { moving = true; root.classList.add('is-scrolling'); } }
+        else if (moving && ++still > 3) { moving = false; root.classList.remove('is-scrolling'); }
+      }
       lastY = y;
 
-      var m410  = ((y % TILE_Y) + TILE_Y) % TILE_Y;
-      var m1640 = ((y % GRAD_Y) + GRAD_Y) % GRAD_Y;
+      /* Total vertical displacement of the field. The scroll term carries it
+         UP as the reader goes down, because it travels with the page; the
+         drift carries it DOWN forever. On a phone `travels` is false and the
+         drift is the only thing left, which is the whole of the motion there. */
+      var drift = reduced ? 0 : ((ts - t0) / DRIFT_MS) * TILE_Y;
+      var shift = drift - (travels ? y : 0);
+      var m410  = ((shift % TILE_Y) + TILE_Y) % TILE_Y;
+      var m1640 = ((shift % GRAD_Y) + GRAD_Y) % GRAD_Y;
 
       /* THE MOTIFS travel with the reader, wrapping at the tile - which the
          eye cannot see, because the tile is exactly what repeats. */
       if (pat) {
-        var ps = 'translate(0 ' + (-m410).toFixed(1) + ')';
+        var ps = 'translate(0 ' + m410.toFixed(1) + ')';
         if (ps !== lastP) { pat.setAttribute('patternTransform', ps); lastP = ps; }
       }
 
@@ -3617,7 +3668,7 @@ html[data-theme="dark"] .theme-glider { background: var(--sweep-ondark); }
          with the page is not an animation, it is what a background does. */
       if (grad) {
         var f = reduced ? 0 : ((ts - t0) % flowMs) / flowMs * AXIS;
-        var gy = f - m1640;
+        var gy = f + m1640;
         var gs = 'translate(' + f.toFixed(1) + ' ' + gy.toFixed(1) + ')';
         if (gs !== lastG) { grad.setAttribute('gradientTransform', gs); lastG = gs; }
       }
