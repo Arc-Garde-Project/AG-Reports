@@ -17,7 +17,7 @@
 <meta name="theme-color" content="#fffdfa">
 
 <title>A Greater Hope | Paid Ads System - Arc Garde</title>
-<meta name="description" content="Paid advertising system for A Greater Hope. Meta ads, a landing page and booking flow per engine, CRM, tracking and attribution, creative in English and Spanish. Built by Arc Garde.">
+<meta name="description" content="Paid advertising system for A Greater Hope. Meta ads, a landing page and booking flow per engine, CRM, tracking and attribution. Built by Arc Garde.">
 
 <!-- Banner law -->
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
@@ -884,10 +884,15 @@ html.is-ready .agh-curtain {
   font-family: var(--font-display);
   font-weight: 800;
   /* Keyed to vw so the longest line always holds one line down to 320px.
-     MEASURED: "ARE ALREADY SCROLLING" renders at 10.515em and the container
-     is 0.90vw, so 8.56vw is the ceiling. 8.2vw keeps 4% headroom for a
-     fallback face. */
-  font-size: min(4.5rem, 8.2vw);
+     RE-MEASURED after "& Donors" went in: the longest line is no longer
+     "ARE ALREADY SCROLLING" at 10.515em, it is "THE FAMILIES & DONORS YOU
+     NEED" at 14.581em. That moves the ceiling from 8.56vw to 6.86vw, so the
+     old 8.2vw would have overflowed every width below 1200. 6.5vw keeps 5%
+     headroom for a fallback face.
+
+     The 4.5rem cap still holds above the wrap's max-width: 72px x 14.581em
+     is 1050px against 1180px of container. */
+  font-size: min(4.5rem, 6.5vw);
   line-height: 0.96;
   letter-spacing: 0.008em;
   text-transform: uppercase;
@@ -1046,6 +1051,10 @@ html.is-ready .agh-curtain {
 .plat-rail {
   position: relative;
   margin-top: clamp(26px, 3.2vw, 44px);
+  /* room for the hover lift and its shadow. Overflow clips at the padding
+     box, so this is clearance, not decoration - without it the tile rose 6px
+     into a hard edge and had its top sheared off. */
+  padding-block: 18px 30px;
   overflow: hidden;
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
@@ -1116,15 +1125,63 @@ html.is-ready .agh-curtain {
   word-break: normal;
 }
 
-/* the organic figure row is a peer of the hero's, just spaced for its band */
-.figs--organic {
+/* Two cards, side by side, both of them the section 2 card reused. */
+.org-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 22px);
+  align-items: stretch;
   margin-top: clamp(26px, 3.2vw, 44px);
-  margin-inline: auto;
-  padding-top: var(--v-md);
-  /* 760 is the hero's cap and it strands this row's longest term at 1440 and
-     up. Measured requirement is 788px; 840 leaves headroom for a fallback
-     face rendering wider than Fira Sans Condensed. */
-  max-width: 840px;
+}
+
+/* the numbers STACK inside their card. Three across in a half-width card put
+   the longest term under 150px, which is where it shatters; stacked, each one
+   gets the full card width and reads larger than it did in the wide row. */
+.sys--stats { gap: 0; justify-content: space-between; }
+
+.ostat { width: 100%; }
+.ostat + .ostat {
+  margin-top: clamp(14px, 1.8vw, 22px);
+  padding-top: clamp(14px, 1.8vw, 22px);
+  border-top: 1px solid var(--rule);
+}
+
+.ostat-fig {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.375rem);
+  line-height: 1.04;
+  letter-spacing: 0.012em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  word-break: normal;
+  /* .grad centers itself with margin-inline:auto, which left the numbers
+     centered above left-aligned labels. The section 2 card is left-aligned
+     content, so these are too. */
+  margin-inline: 0;
+}
+
+.ostat-sub {
+  margin-top: 3px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.6875rem, 0.66rem + 0.16vw, 0.8125rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  word-break: normal;
+}
+
+/* the sentence card centers its one line rather than hugging the top edge,
+   so it balances the three stacked numbers beside it */
+.sys--note { justify-content: center; }
+
+.sys-copy {
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.1875rem);
+  line-height: 1.55;
+  color: var(--text-primary);
+  text-wrap: pretty;
+  word-break: normal;
 }
 
 /* ---------- Scroll cue ---------- */
@@ -2147,7 +2204,7 @@ html.is-ready .agh-curtain {
 
   /* 350-900 is the mobile standard: one column, everything centerd on the
      axis, no carve-outs. */
-  .system-grid { grid-template-columns: minmax(0, 1fr); max-width: 560px; }
+  .system-grid, .org-grid { grid-template-columns: minmax(0, 1fr); max-width: 560px; margin-inline: auto; }
   .system-grid > :last-child { grid-column: auto; max-width: none; }
   .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .chart-wrap { max-width: none; }
@@ -2295,14 +2352,11 @@ html.is-ready .agh-curtain {
              alt="A Greater Hope" fetchpriority="high" decoding="async">
 
         <h1 class="hero-title" id="deck-title">
-          <span class="l1"><span class="t">The Families You Need</span></span>
+          <span class="l1"><span class="t">The Families &amp; Donors You Need</span></span>
           <span class="l2"><span class="t grad">Are Already Scrolling</span></span>
         </h1>
 
         <div class="hero-rule" aria-hidden="true"></div>
-
-        <p class="hero-lede">They just haven't been asked&nbsp;yet.</p>
-        <p class="hero-line">We build the ads that ask, and we track every&nbsp;one.</p>
 
         <div class="figs">
           <div class="fig">
@@ -2330,8 +2384,8 @@ html.is-ready .agh-curtain {
 
   <div class="ticker" aria-hidden="true">
       <div class="tick-track">
-        <div class="tick-group"><span class="tick-word lit">Meta Only</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Facebook and Instagram</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">14 Ads Per Testing Cycle</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">English and Spanish</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">2 Ads Head to Head</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Every Step Tracked</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">7 Sprints Per Cycle</span><i class="tick-sep" aria-hidden="true"></i></div>
-        <div class="tick-group"><span class="tick-word lit">Meta Only</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Facebook and Instagram</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">14 Ads Per Testing Cycle</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">English and Spanish</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">2 Ads Head to Head</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Every Step Tracked</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">7 Sprints Per Cycle</span><i class="tick-sep" aria-hidden="true"></i></div>
+        <div class="tick-group"><span class="tick-word lit">Meta Only</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Facebook and Instagram</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">14 Ads Per Testing Cycle</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">2 Ads Head to Head</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Every Step Tracked</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">7 Sprints Per Cycle</span><i class="tick-sep" aria-hidden="true"></i></div>
+        <div class="tick-group"><span class="tick-word lit">Meta Only</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Facebook and Instagram</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">14 Ads Per Testing Cycle</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">2 Ads Head to Head</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word">Every Step Tracked</span><i class="tick-sep" aria-hidden="true"></i><span class="tick-word lit">7 Sprints Per Cycle</span><i class="tick-sep" aria-hidden="true"></i></div>
       </div>
   </div>
 
@@ -2382,7 +2436,7 @@ html.is-ready .agh-curtain {
                 <span class="road-dot" aria-hidden="true"></span>
                 <div class="road-card">
                   <p class="road-num">04</p>
-                  <p class="road-text">14 fresh ads every cycle, English and&nbsp;Spanish</p>
+                  <p class="road-text">14 fresh ads every&nbsp;cycle</p>
                 </div>
               </li>
               <li class="road-node" data-i="4">
@@ -2431,7 +2485,6 @@ html.is-ready .agh-curtain {
           <ul>
             <li>14 ads per testing&nbsp;cycle</li>
             <li>Scripts written word for word for every&nbsp;ad</li>
-            <li>English and&nbsp;Spanish</li>
             <li>2 ads head to head, 4 days per&nbsp;sprint</li>
             <li>7 sprints per cycle, 14 creatives over 28&nbsp;days</li>
           </ul>
@@ -2585,24 +2638,26 @@ html.is-ready .agh-curtain {
         </div>
       </div>
 
-      <div class="figs figs--organic reveal-stagger">
-        <div class="fig">
-          <p class="fig-term grad"><span data-count="2">2</span>&nbsp;A&nbsp;Day</p>
-          <p class="fig-desc">60 a&nbsp;month</p>
-        </div>
-        <div class="fig">
-          <p class="fig-term grad"><span data-count="7">7</span>&nbsp;Platforms</p>
-          <p class="fig-desc">Every piece on all&nbsp;7</p>
-        </div>
-        <div class="fig">
-          <p class="fig-term grad"><span data-count="420">420</span>&nbsp;Posts</p>
-          <p class="fig-desc">Every&nbsp;month</p>
-        </div>
-      </div>
+      <div class="org-grid reveal-stagger">
+        <article class="sys sys--stats">
+          <div class="ostat">
+            <p class="ostat-fig grad"><span data-count="2">2</span>&nbsp;A&nbsp;Day</p>
+            <p class="ostat-sub">60 a&nbsp;month</p>
+          </div>
+          <div class="ostat">
+            <p class="ostat-fig grad"><span data-count="7">7</span>&nbsp;Platforms</p>
+            <p class="ostat-sub">Every piece on all&nbsp;7</p>
+          </div>
+          <div class="ostat">
+            <p class="ostat-fig grad"><span data-count="420">420</span>&nbsp;Posts</p>
+            <p class="ostat-sub">Every&nbsp;month</p>
+          </div>
+        </article>
 
-      <p class="statement statement--quiet pane reveal">
-        <span>We will create the static images, so 30 statics per month and 30 talking head and voiceover&nbsp;scripts.</span>
-      </p>
+        <article class="sys sys--note">
+          <p class="sys-copy">We will create the static images, so 30 statics per month and 30 talking head and voiceover&nbsp;scripts.</p>
+        </article>
+      </div>
     </div>
   </section>
 
