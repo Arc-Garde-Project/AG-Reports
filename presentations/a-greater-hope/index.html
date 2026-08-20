@@ -469,7 +469,10 @@ html.is-ready .agh-curtain .ld-layer {
   width: 6%;
   border-radius: var(--radius-pill);
   background: var(--sweep-decor);
-  animation: ld-fill 1.4s var(--ease-satisfying) 0.14s forwards;
+  /* LINEAR, and no delay. On the expo-out curve the fill was at half width
+     within 60ms and then crawled - a progress bar that opens at 50% reads as
+     already finished, not as loading. A determinate bar has to move evenly. */
+  animation: ld-fill var(--ld-bar-dur, 1.4s) linear 0s forwards;
 }
 
 @keyframes ld-fill { to { width: 100%; } }
@@ -2117,14 +2120,20 @@ html.is-ready .agh-curtain .ld-layer {
   root.classList.add('is-loading');
 
   /* AG-DNA timing, multiples of 7 and 3 */
-  /* The brand frame is the one that carries words, so it is the one that has
-     to be READABLE. It used to hold for 700ms, which is under the time it
-     takes to read three lines. It now holds 2100ms on a first visit and
-     1400ms on a return. */
-  var MIN      = seen ? 1400 : 3500;
-  var BRAND_AT = seen ? 0    : 1400;
+  /* A return visit is SHORTER, not amputated. BRAND_AT of 0 flipped straight
+     to the brand frame, so the mark and the bar never ran - they appeared for
+     a single frame and then dissolved over the layer's own 0.6s fade. That is
+     what "the loading part doesn't load" was: measured, the boot phase was
+     visible 1708ms on a first view and 492ms of pure fade-out on a return.
+     Both phases now genuinely play, the return simply plays them faster. */
+  var MIN      = seen ? 2100 : 3500;
+  var BRAND_AT = seen ? 700  : 1400;
   var MAX      = 6000;
   var CLEANUP  = 900;
+  /* the bar fills across exactly the boot phase, so it completes as the brand
+     frame arrives rather than finishing early or being cut off part way */
+  C.style.setProperty('--ld-bar-dur', BRAND_AT + 'ms');
+
   var start = (window.performance && performance.now) ? performance.now() : Date.now();
   var done = false;
 
