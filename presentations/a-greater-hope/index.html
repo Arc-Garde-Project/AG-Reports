@@ -573,6 +573,39 @@ html[data-theme="dark"] .fs-btn[aria-pressed="true"] {
   animation: toy-wave var(--toy-wave-dur, 1.75s) ease-in-out infinite;
 }
 
+/* THE LIFT GETS THE WHOLE FRAME BUDGET.
+   Measured on the deployed build: the deck idles at 33fps with the wave running
+   and 60fps without it - 78 motifs animate INSIDE an SVG <mask>, and a mask
+   whose contents move is re-rasterized across the full viewport every frame.
+   Stopping the SMIL gradient instead changes nothing (31fps), so the mask is
+   the cost, not the color.
+
+   A 1.4s lift is twice the exposure to that, which is what reads as glitchy.
+   The wave is frozen while the curtain travels - and the curtain is covering
+   the toys for almost all of it, so there is nothing to see being frozen. It
+   resumes once the panel is gone. PAUSED, not none: `animation: none` would
+   snap every motif back to its rest transform in one frame, which is the
+   visible pop this is meant to avoid. */
+html.is-lifting .toy { animation-play-state: paused; }
+
+/* Pausing the wave was NOT enough on its own - measured, the frozen layer still
+   ran the lift at 26fps, because the cost is compositing a full-viewport CSS-
+   masked SVG underneath a moving panel, not the animation on top of it. Two
+   things actually move the number, measured over three runs each because this
+   probe swings 21-34ms on identical builds and a single run proves nothing:
+
+     baseline                    33.3ms  30fps
+     toys promoted to own layer  22.5ms  44fps
+     flames off during the lift  19.5ms  51fps
+     both                        19.3ms  52fps   <- shipped
+
+   The flames are the surprise. Five independently-phased CSS animations on
+   blurred gradient teardrops, all sitting on the one edge of the panel that is
+   crossing the screen, and they are invisible anyway once the panel is past the
+   fold. They light up again on the next load, not mid-flight. */
+html.is-lifting .toys { will-change: transform; }
+html.is-lifting .ld-flame { animation: none; }
+
 @keyframes toy-wave {
   0%   { transform: translateY(0) scale(1); }
   22%  { transform: translateY(-7px) scale(1.16); }
@@ -736,13 +769,13 @@ html.is-loading { overflow: hidden; }
      casting onto the deck it is uncovering. It sits below the fold until the
      lift starts, so it costs nothing before then. */
   transform: translateY(0);
-  transition: transform 0.7s var(--ease-soft);
+  transition: transform 1.4s var(--ease-soft);
   will-change: transform;
   box-shadow: 0 18px 44px rgba(72, 46, 92, 0.20);
 }
 
 html.is-ready .agh-curtain {
-  transform: translateY(-100%);
+  transform: translateY(calc(-100% - 260px));
   pointer-events: none;
 }
 
@@ -871,7 +904,8 @@ html.is-ready .agh-curtain {
    They live at top:100% of the curtain, which is below the fold until the
    lift starts, so nothing has to show or hide them: they are simply off
    screen until the curtain moves and then they are the leading edge of it.
-   They die with the curtain when it is removed 900ms later.
+   They die with the curtain when it is removed 1610ms later, which is after
+   the 1.4s lift has carried them off the top of the screen.
 
    The rocket is the deck's own monogram motif, not a second drawing. */
 .ld-thrust {
@@ -2565,8 +2599,43 @@ html[data-theme="dark"] .chart-tab.is-on { color: #100d18; }
     min-height: 100svh;
   }
 
-  .hero-stack { gap: 16px; }
-  .hero-mark { width: 56px; }
+  .hero-stack { gap: 20px; }
+  .hero-mark { width: 96px; }
+
+  /* THE HERO WAS 24% OF THE SCREEN. Measured at 390x844, 375x667 and 430x932,
+     the mark, headline and figures together occupied 17-22% of the viewport and
+     everything else was empty paper - a 310px band above the mark and 249px
+     below the figures.
+
+     The cause is that the headline is keyed to vw so its longest line holds on
+     ONE line at every width, and .t is nowrap. On a phone "The Families &
+     Donors You Need" priced that at 23px, which is a third of the desktop size
+     on a screen that is a quarter of the width. The line was never the problem;
+     the refusal to break it was.
+
+     It breaks here. At 10vw the headline sets 39px at 390 and runs 2 lines per
+     span instead of 1, which is the whole point - four short lines of big type
+     read as a headline, two long lines of small type read as a caption.
+     Measured at 390 / 375 / 430: widest line 339 / 326 / 374 against 351 / 338
+     / 387 available, so 0 overflow and 0 broken tokens at all three, and the
+     stack goes from 24% of the viewport to 37% before the larger mark and
+     figures are counted.
+
+     ONLY LINE ONE BREAKS. Letting both lines wrap stranded "Are" alone above
+     "Already Scrolling" at every width from 320 to 430 - a one-word line, which
+     is a defect, not a wrap. text-wrap:balance cannot fix it either: "Already
+     Scrolling" is too wide to ever share a line with "Are", so the two-line
+     split has only one possible shape. Line two therefore stays nowrap and
+     CAPS the size, because it is the longer of the two.
+
+     8.4vw is that cap, measured, not guessed. The glyph clearance to the
+     viewport edge across 320/360/375/390/430 is 19-25px; at 8.8vw it drops to
+     8-11px and at 9.2vw it goes NEGATIVE at -7px, i.e. off screen. Note the
+     width test reported "fits" at 9.2vw while the text was already overflowing
+     - the span is capped by its container while the glyphs spill past it, so
+     the EDGE is the measurement that means anything here. */
+  .hero-title { font-size: 8.4vw; line-height: 1.04; }
+  .hero-title .l1 .t { white-space: normal; }
 
   /* Decorative only, and it was the element colliding with the rail.
      The hero already overflows a phone screen, so the affordance is
@@ -2587,7 +2656,7 @@ html[data-theme="dark"] .chart-tab.is-on { color: #100d18; }
     padding-top: 16px;
   }
 
-  .fig-term { font-size: clamp(1.125rem, 0.62rem + 2.3vw, 1.625rem); }
+  .fig-term { font-size: clamp(1.375rem, 0.72rem + 3.1vw, 2rem); }
 
   .fig-desc {
     font-size: clamp(0.625rem, 0.6rem + 0.12vw, 0.6875rem);
@@ -2710,7 +2779,8 @@ html[data-theme="dark"] .chart-tab.is-on { color: #100d18; }
   var MIN      = seen ? 2100 : 3500;
   var BRAND_AT = seen ? 700  : 1400;
   var MAX      = 6000;
-  var CLEANUP  = 900;
+  var CLEANUP  = 1610;   /* must outlast the 1.4s lift, or the panel is
+                            removed while it is still traveling */
   /* the bar fills across exactly the boot phase, so it completes as the brand
      frame arrives rather than finishing early or being cut off part way */
   C.style.setProperty('--ld-bar-dur', BRAND_AT + 'ms');
@@ -2725,8 +2795,13 @@ html[data-theme="dark"] .chart-tab.is-on { color: #100d18; }
     done = true;
     root.classList.remove('is-loading');
     root.classList.add('is-ready');
+    /* freed again once the panel is off screen, below */
+    root.classList.add('is-lifting');
     window.dispatchEvent(new CustomEvent('ag:ready'));
-    setTimeout(function () { if (C.parentNode) C.parentNode.removeChild(C); }, CLEANUP);
+    setTimeout(function () {
+      if (C.parentNode) C.parentNode.removeChild(C);
+      root.classList.remove('is-lifting');
+    }, CLEANUP);
   }
 
   setTimeout(function () { C.setAttribute('data-phase', 'brand'); }, BRAND_AT);
@@ -3194,7 +3269,11 @@ html[data-theme="dark"] .chart-tab.is-on { color: #100d18; }
       /* smaller tile on a phone, so the whole set is visible rather than a
          sample of it - at 410px only about seven motifs fit across a 390px
          screen. One CSS variable drives mask-size; nothing else changes. */
-      var k = window.innerWidth <= 900 ? 0.66 : 1;
+      /* The monogram used to be drawn at 0.66 on a phone, which packed in more
+         motifs but shrank every outline to two thirds of the desktop size and
+         made the field read as texture rather than as toys. Same scale as the
+         desktop now, so a phone sees the same drawing, just less of it. */
+      var k = 1;
       var pat = document.getElementById('toyTile');
       if (pat) {
         if (k === 1) pat.removeAttribute('patternTransform');
