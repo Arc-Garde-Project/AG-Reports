@@ -30,7 +30,7 @@
     position: absolute;
     inset: 0 0 auto 0;
     height: 10px;
-    background: linear-gradient(90deg, #6e2877 0%, #0076bb 28%, #34998a 46%, #7fbc42 62%, #f5a578 84%, #ff5757 100%);
+    background: linear-gradient(90deg, #6e2877 0%, #37509a 26%, #0076bb 50%, #34998a 74%, #7fbc42 100%);
   }
 
   /* Same four washes as the deck hero, so the unfurl and the page match. */
@@ -40,7 +40,7 @@
     background:
       radial-gradient(58% 52% at 16% 22%, rgba(142, 237, 217, 0.40) 0%, rgba(142, 237, 217, 0) 70%),
       radial-gradient(52% 48% at 86% 16%, rgba(167, 199, 240, 0.36) 0%, rgba(167, 199, 240, 0) 70%),
-      radial-gradient(56% 52% at 82% 88%, rgba(245, 165, 120, 0.30) 0%, rgba(245, 165, 120, 0) 72%),
+      radial-gradient(56% 52% at 82% 88%, rgba(127, 188, 66, 0.26) 0%, rgba(127, 188, 66, 0) 72%),
       radial-gradient(50% 46% at 10% 86%, rgba(200, 160, 220, 0.28) 0%, rgba(200, 160, 220, 0) 72%);
   }
 
@@ -52,7 +52,7 @@
     height: 640px;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    background: linear-gradient(90deg, #6e2877, #0076bb, #34998a, #7fbc42, #f5a578, #ff5757);
+    background: linear-gradient(90deg, #6e2877 0%, #37509a 26%, #0076bb 50%, #34998a 74%, #7fbc42 100%);
     -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1.5px));
     mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1.5px));
     opacity: 0.22;
@@ -65,7 +65,9 @@
   h1 {
     font-family: 'Fira Sans Condensed', sans-serif;
     font-weight: 800;
-    font-size: 82px;
+    /* 68px: the long line measures 14.581em, so 1040px of usable width caps
+       it at 71px. */
+    font-size: 68px;
     line-height: 0.96;
     letter-spacing: 0.008em;
     text-transform: uppercase;
@@ -82,7 +84,7 @@
     -webkit-text-fill-color: transparent;
   }
 
-  .rule { width: 104px; height: 4px; border-radius: 999px; background: linear-gradient(90deg, #6e2877, #0076bb, #34998a, #7fbc42, #f5a578, #ff5757); }
+  .rule { width: 104px; height: 4px; border-radius: 999px; background: linear-gradient(90deg, #6e2877 0%, #37509a 26%, #0076bb 50%, #34998a 74%, #7fbc42 100%); }
 
   .foot {
     font-family: 'Fira Sans Condensed', sans-serif;
@@ -101,8 +103,8 @@
   <div class="inner">
     <img src="agh-logo-256.webp" alt="">
     <h1>
-      Paid Media For
-      <span class="grad">A Greater Hope</span>
+      The Families &amp; Donors You Need
+      <span class="grad">Are Already Scrolling</span>
     </h1>
     <div class="rule"></div>
     <p class="foot">Presented by Arc Garde</p>

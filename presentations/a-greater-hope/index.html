@@ -16,22 +16,22 @@
      cream now, not white, so the chrome follows it. -->
 <meta name="theme-color" content="#fffdfa">
 
-<title>A Greater Hope | Paid Ads System - Arc Garde</title>
-<meta name="description" content="Paid advertising system for A Greater Hope. Meta ads, a landing page and booking flow per engine, CRM, tracking and attribution. Built by Arc Garde.">
+<title>A Greater Hope | Paid Ads and Organic - Arc Garde</title>
+<meta name="description" content="Paid ads on Meta plus organic content twice a day on seven platforms, with a landing page and booking flow, CRM, tracking and attribution. One fixed monthly fee. Built by Arc Garde.">
 
 <!-- Banner law -->
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="canonical" href="https://ag-reports.vercel.app/presentations/a-greater-hope">
 <meta property="og:type" content="website">
-<meta property="og:title" content="A Greater Hope | Paid Ads System - Arc Garde">
-<meta property="og:description" content="The families you need are already scrolling. They just haven't been asked yet.">
+<meta property="og:title" content="A Greater Hope | Paid Ads and Organic - Arc Garde">
+<meta property="og:description" content="The families and donors you need are already scrolling.">
 <meta property="og:url" content="https://ag-reports.vercel.app/presentations/a-greater-hope">
-<meta property="og:image" content="https://ag-reports.vercel.app/presentations/a-greater-hope/og-banner.png">
+<meta property="og:image" content="https://ag-reports.vercel.app/presentations/a-greater-hope/og-banner.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://ag-reports.vercel.app/presentations/a-greater-hope/og-banner.png">
+<meta name="twitter:image" content="https://ag-reports.vercel.app/presentations/a-greater-hope/og-banner.png?v=2">
 
 <link rel="preload" as="image" href="agh-logo-256.webp" type="image/webp" fetchpriority="high">
 
@@ -250,10 +250,10 @@ html { background: var(--paper); }
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(126% 100% at 50% 42%,
-    rgba(96, 68, 116, 0) 62%,
-    rgba(96, 68, 116, 0.028) 82%,
-    rgba(72, 46, 92, 0.075) 100%);
+  background: radial-gradient(122% 98% at 50% 42%,
+    rgba(96, 68, 116, 0) 52%,
+    rgba(96, 68, 116, 0.055) 78%,
+    rgba(72, 46, 92, 0.135) 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2444,7 +2444,7 @@ html.is-ready .agh-curtain {
                 <span class="road-dot" aria-hidden="true"></span>
                 <div class="road-card">
                   <p class="road-num">03</p>
-                  <p class="road-text">Targeted to the areas you already&nbsp;serve</p>
+                  <p class="road-text">Targeted to the High Desert and the Inland&nbsp;Empire</p>
                 </div>
               </li>
               <li class="road-node" data-i="3">
@@ -3057,16 +3057,16 @@ html.is-ready .agh-curtain {
     /* the logo's own five stops, walked down the field so scrolling moves
        through the whole sweep rather than sitting in one hue */
     var STOPS = [[110, 40, 119], [55, 80, 154], [0, 118, 187], [52, 153, 138], [127, 188, 66]];
-    var BLOOMS = 18;
+    var BLOOMS = 24;
     w.globalCompositeOperation = 'multiply';
     for (var i = 0; i < BLOOMS; i++) {
       var t = (i + 0.5) / BLOOMS;
       var c = STOPS[Math.min(STOPS.length - 1, Math.floor(t * STOPS.length))];
       var cx = (0.5 + (rnd() - 0.5) * 1.7) * WW;
       var cy = (t + (rnd() - 0.5) * 0.06) * WH;
-      var r = (0.30 + rnd() * 0.34) * WW;
+      var r = (0.26 + rnd() * 0.32) * WW;
       var g = w.createRadialGradient(cx, cy, 0, cx, cy, r);
-      var a = 0.055 + rnd() * 0.055;
+      var a = 0.17 + rnd() * 0.13;
       g.addColorStop(0, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a.toFixed(3) + ')');
       g.addColorStop(1, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)');
       w.fillStyle = g;
