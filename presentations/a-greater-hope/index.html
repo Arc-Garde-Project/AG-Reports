@@ -1470,15 +1470,17 @@ html.is-ready .agh-curtain {
   margin-top: var(--v-md);
 }
 
-.scroll-cue > span:first-child { margin-bottom: 7px; }
+.scroll-cue > span:first-child { margin-bottom: 9px; }
 
 .scroll-cue > span:first-child {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 0.75rem;
-  letter-spacing: 0.24em;
+  font-size: 0.8125rem;
+  letter-spacing: 0.26em;
+  padding-left: 0.26em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--text-secondary);
+  text-shadow: var(--mist);
   word-break: normal;
 }
 
@@ -1495,18 +1497,25 @@ html.is-ready .agh-curtain {
 .scroll-cue .cue-chev {
   display: block;
   color: var(--agh-indigo);
+  /* the glow is what makes it read against a patterned ground - a flat
+     stroke at this weight disappears into the monogram behind it */
+  filter: drop-shadow(0 2px 5px rgba(64, 40, 72, 0.30));
   animation: cue-pulse 2100ms var(--ease-soft, cubic-bezier(0.4, 0, 0.2, 1)) infinite;
 }
 
-.scroll-cue .cue-chev svg { display: block; stroke-width: 2.4; }
+.scroll-cue .cue-chev svg { display: block; stroke-width: 3.1; }
 
-.scroll-cue .cue-chev--s { width: 13px; margin-top: 2px; animation-delay: 0ms; }
-.scroll-cue .cue-chev--m { width: 18px; margin-top: -4px; color: var(--agh-blue); animation-delay: 150ms; }
-.scroll-cue .cue-chev--l { width: 24px; margin-top: -5px; color: var(--agh-teal); animation-delay: 300ms; }
+.scroll-cue .cue-chev--s { width: 21px; margin-top: 3px; animation-delay: 0ms; }
+.scroll-cue .cue-chev--m { width: 30px; margin-top: -7px; color: var(--agh-blue); animation-delay: 150ms; }
+.scroll-cue .cue-chev--l { width: 40px; margin-top: -9px; color: var(--agh-teal); animation-delay: 300ms; }
+
+html[data-theme="dark"] .scroll-cue .cue-chev {
+  filter: drop-shadow(0 2px 7px rgba(0, 0, 0, 0.55));
+}
 
 @keyframes cue-pulse {
-  0%, 60%, 100% { opacity: 0.34; transform: translateY(0); }
-  22%           { opacity: 1;    transform: translateY(3px); }
+  0%, 60%, 100% { opacity: 0.42; transform: translateY(0); }
+  22%           { opacity: 1;    transform: translateY(5px); }
 }
 
 /* ---------- What We Do: the road ----------
