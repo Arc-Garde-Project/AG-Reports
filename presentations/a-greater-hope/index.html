@@ -217,7 +217,19 @@
   --v-lg: clamp(1.3125rem, 0.772rem + 2.471vw, 2.625rem);
   --v-section: clamp(1.75rem, 0.849rem + 4.118vw, 3.9375rem);
 
-  --field-comp: multiply;   /* how the seam map meets the ground */
+  /* the monogram's inks. Brand hues, held low enough that body copy sitting
+     on top of them still measures past the 4.5:1 floor. */
+  /* ONE token owns the chart's left gutter. The tick column, the rotated
+     axis name and the plot's inset all derive from it, so they cannot drift
+     apart - which is how "$2,400" ended up overflowing a 26px column and
+     printing straight through the word SPEND. Floor of 74px because the
+     widest tick measures 49px and the rotated label needs 26px beside it. */
+  --y-gutter: clamp(80px, 6.4vw, 92px);
+  --toy-a: rgba(110, 40, 119, 0.30);
+  --toy-b: rgba(55, 80, 154, 0.30);
+  --toy-c: rgba(0, 118, 187, 0.26);
+  --toy-d: rgba(52, 153, 138, 0.30);
+  --toy-e: rgba(127, 188, 66, 0.34);
   /* the copy scrim's ground, as channels so the gradient can vary its alpha */
   --scrim-rgb: 255, 253, 250;
   --tick-stroke: rgba(88, 66, 108, 0.55);
@@ -284,7 +296,13 @@ html { background: var(--paper); }
 html[data-theme="dark"] {
   --paper: #100d18;
   --ink: #f4f1f8;
-  --field-comp: lighter;
+
+  /* the same nine motifs, drawn in the light-on-dark run */
+  --toy-a: rgba(207, 150, 219, 0.26);
+  --toy-b: rgba(157, 178, 236, 0.26);
+  --toy-c: rgba(108, 196, 245, 0.24);
+  --toy-d: rgba(116, 220, 200, 0.26);
+  --toy-e: rgba(174, 228, 133, 0.28);
 
   --surface: rgba(255, 255, 255, 0.055);
   --surface-line: rgba(255, 255, 255, 0.13);
@@ -423,15 +441,25 @@ html[data-theme="dark"] .theme-btn[aria-pressed="true"] {
   .theme-btn { min-height: 49px; min-width: 49px; padding: 6px 11px; font-size: 0.625rem; letter-spacing: 0.06em; }
 }
 
-/* ---------- The backdrop ----------
-   One 2D canvas, fixed, z-index 0, pointer-events none, aria-hidden. It is
-   the page's single Tier 1 effect (AG-PREMIUM-EFFECTS-STANDARD v1.5 Tier 1
-   limit, MOT-17), so nothing else carries a second hero moment.
-   It IS scroll-coupled, at exactly 1:1. MOT-22 bans PARALLAX backgrounds,
-   meaning a layer traveling at its own rate; a field that matches the page
-   pixel for pixel is a long background, not a parallax layer. Content sits
-   above it per the AG-FOOTER-STANDARD watermark stacking. */
-.backdrop {
+/* ---------- The toy monogram ----------
+   A monogram in the reference's sense: a dense half-drop repeat of small
+   OUTLINED motifs - backpack, apple, crayon, banana, rainbow, cloud, teddy
+   bear, moon, star - fading in from almost nothing at the top of the viewport
+   to full strength at the bottom, which is the thing the shirt does.
+
+   One inline <svg> with a <pattern>, NOT a data-URI background-image: a data
+   URI cannot inherit a CSS custom property, and this deck has two themes.
+   Inline, every stroke reads a --toy-* token, so ONE source serves both the
+   cream and the near-black ground.
+
+   It is STATIC. It paints once and never repaints - the generated field it
+   replaces cost a 5ms canvas flush on every single frame.
+
+   The tile is 5 x 5 rather than 3 x 3 on purpose: with three columns every
+   third column carried the same motif and the field read as vertical stripes
+   of bananas. Five columns against nine motifs pushes the repeat period from
+   246px to 410px, past the width the eye locks onto. */
+.toys {
   position: fixed;
   inset: 0;
   width: 100%;
@@ -439,10 +467,11 @@ html[data-theme="dark"] .theme-btn[aria-pressed="true"] {
   display: block;
   z-index: 0;
   pointer-events: none;
-  /* The softness is baked into the light map, not applied here. As a CSS
-     filter it cost a full-screen blur every frame once the field started
-     breathing, which measured 30fps. */
-  opacity: 0.72;   /* never intercepts a click; input is read on window */
+  /* the fade IS the reference. Nothing at the top, full at the bottom. */
+  -webkit-mask-image: linear-gradient(to bottom,
+    transparent 0%, rgba(0,0,0,0.16) 26%, rgba(0,0,0,0.52) 56%, #000 100%);
+  mask-image: linear-gradient(to bottom,
+    transparent 0%, rgba(0,0,0,0.16) 26%, rgba(0,0,0,0.52) 56%, #000 100%);
 }
 
 body > main,
@@ -2015,7 +2044,7 @@ html.is-ready .agh-curtain {
    and never sit on top of the curve */
 .chart-box {
   position: relative;
-  padding-left: clamp(46px, 5vw, 62px);
+  padding-left: var(--y-gutter);
   padding-bottom: 4px;
 }
 
@@ -2042,15 +2071,20 @@ html.is-ready .agh-curtain {
   position: static;
   display: block;
   margin-top: 10px;
+  /* centered on the CARD, not on the plot. Inside the padded box it centered on
+     the plot and read 23-31px off-axis against everything else in the
+     container, which is what the eye actually compares it to. */
+  margin-left: calc(-1 * var(--y-gutter));
   text-align: center;
 }
 
 .chart-axis--y {
   position: absolute;
-  left: clamp(22px, 2.6vw, 32px);
+  left: 20px;
   top: 0;
   height: clamp(150px, 19vw, 250px);   /* the plot height, not the whole box */
-  width: clamp(20px, 2.2vw, 26px);
+  /* ends 8px short of the plot, whatever the gutter resolves to */
+  width: calc(var(--y-gutter) - 28px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2519,7 +2553,7 @@ html.is-ready .agh-curtain {
   <button class="theme-btn" type="button" data-set-theme="dark" aria-pressed="false">Dark</button>
 </div>
 
-<canvas class="backdrop" aria-hidden="true"></canvas>
+<svg class="toys" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><defs><pattern id="toyTile" x="0" y="0" width="410" height="410" patternUnits="userSpaceOnUse"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(41.0 41.0) rotate(-9) scale(0.524) translate(-50 -50)" stroke="var(--toy-a)" stroke-width="4.01"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g><g transform="translate(41.0 123.0) rotate(6) scale(0.538) translate(-50 -50)" stroke="var(--toy-b)" stroke-width="4.26"><path d="M50 32 C42 24 26 26 22 42 C18 58 28 82 40 88 C46 91 50 87 50 87 C50 87 54 91 60 88 C72 82 82 58 78 42 C74 26 58 24 50 32 Z"/> <path d="M50 32 L50 16"/> <path d="M50 20 C58 12 70 14 70 14 C70 14 68 24 58 24 C53 24 50 20 50 20 Z"/></g><g transform="translate(41.0 205.0) rotate(3) scale(0.501) translate(-50 -50)" stroke="var(--toy-c)" stroke-width="3.93"><path d="M34 22 L66 22 L66 74 L50 92 L34 74 Z"/> <path d="M34 36 L66 36"/> <path d="M34 74 L66 74"/> <path d="M50 44 L50 66"/></g><g transform="translate(41.0 287.0) rotate(6) scale(0.514) translate(-50 -50)" stroke="var(--toy-d)" stroke-width="3.67"><path d="M14 66 L20 50 C22 44 26 42 32 42 L68 42 C74 42 78 44 80 50 L86 66 L86 76 L14 76 Z"/> <path d="M32 42 L36 30 C37 26 40 24 44 24 L58 24 C62 24 65 26 66 30 L70 42"/> <circle cx="31" cy="78" r="9"/><circle cx="69" cy="78" r="9"/> <path d="M50 42 L50 24"/></g><g transform="translate(41.0 369.0) rotate(-3) scale(0.521) translate(-50 -50)" stroke="var(--toy-e)" stroke-width="4.39"><path d="M50 12 L61 39 L90 41 L67 59 L75 88 L50 71 L25 88 L33 59 L10 40 L39 38 Z"/></g><g transform="translate(123.0 82.0) rotate(3) scale(0.523) translate(-50 -50)" stroke="var(--toy-a)" stroke-width="4.03"><path d="M28 74 C18 74 12 66 14 58 C16 50 24 46 30 48 C31 34 42 26 54 28 C66 30 73 40 72 50 C82 48 90 54 90 63 C90 70 84 74 76 74 Z"/></g><g transform="translate(123.0 164.0) rotate(9) scale(0.492) translate(-50 -50)" stroke="var(--toy-b)" stroke-width="4.52"><path d="M12 78 C13 44 38 24 50 24 C63 24 87 43 88 78"/> <path d="M26 79 C27 53 40 38 50 38 C61 38 74 52 75 79"/> <path d="M40 80 C41 63 45 52 50 52 C56 52 61 62 62 80"/></g><g transform="translate(123.0 246.0) rotate(3) scale(0.532) translate(-50 -50)" stroke="var(--toy-c)" stroke-width="4.03"><circle cx="33" cy="30" r="10"/><circle cx="67" cy="30" r="10"/> <path d="M50 22 C34 22 26 34 27 46 C28 58 38 64 50 64 C63 64 72 57 73 46 C74 33 66 21 50 22 Z"/> <circle cx="42" cy="42" r="3"/><circle cx="58" cy="41" r="3"/> <path d="M45 52 C48 55 53 55 56 52"/> <path d="M36 66 C28 72 26 84 32 90 L68 90 C74 84 72 71 64 66"/></g><g transform="translate(123.0 328.0) rotate(-9) scale(0.507) translate(-50 -50)" stroke="var(--toy-d)" stroke-width="4.46"><path d="M20 26 C22 54 40 78 72 82 C82 83 88 78 88 72 C88 66 82 64 74 62 C50 58 36 42 33 24 C32 18 26 16 22 18 C18 20 19 22 20 26 Z"/> <path d="M74 62 C78 66 80 70 79 76"/></g><g transform="translate(123.0 0.0) rotate(6) scale(0.507) translate(-50 -50)" stroke="var(--toy-e)" stroke-width="4.29"><path d="M50 8 C62 20 68 38 68 56 L68 72 L32 72 L32 56 C32 38 38 20 50 8 Z"/> <circle cx="50" cy="40" r="8"/> <path d="M32 54 L18 70 L18 84 L32 72 Z"/> <path d="M68 54 L82 70 L82 84 L68 72 Z"/> <path d="M42 72 L42 84 C42 90 46 94 50 96 C54 94 58 90 58 84 L58 72"/></g><g transform="translate(205.0 41.0) rotate(-3) scale(0.541) translate(-50 -50)" stroke="var(--toy-a)" stroke-width="3.87"><path d="M64 14 C40 18 24 38 26 60 C28 82 48 96 70 92 C54 84 44 68 45 53 C46 36 53 22 64 14 Z"/></g><g transform="translate(205.0 123.0) rotate(-6) scale(0.500) translate(-50 -50)" stroke="var(--toy-b)" stroke-width="3.89"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g><g transform="translate(205.0 205.0) rotate(-3) scale(0.546) translate(-50 -50)" stroke="var(--toy-c)" stroke-width="4.37"><path d="M50 32 C42 24 26 26 22 42 C18 58 28 82 40 88 C46 91 50 87 50 87 C50 87 54 91 60 88 C72 82 82 58 78 42 C74 26 58 24 50 32 Z"/> <path d="M50 32 L50 16"/> <path d="M50 20 C58 12 70 14 70 14 C70 14 68 24 58 24 C53 24 50 20 50 20 Z"/></g><g transform="translate(205.0 287.0) rotate(9) scale(0.526) translate(-50 -50)" stroke="var(--toy-d)" stroke-width="4.01"><path d="M34 22 L66 22 L66 74 L50 92 L34 74 Z"/> <path d="M34 36 L66 36"/> <path d="M34 74 L66 74"/> <path d="M50 44 L50 66"/></g><g transform="translate(205.0 369.0) rotate(-9) scale(0.513) translate(-50 -50)" stroke="var(--toy-e)" stroke-width="3.68"><path d="M14 66 L20 50 C22 44 26 42 32 42 L68 42 C74 42 78 44 80 50 L86 66 L86 76 L14 76 Z"/> <path d="M32 42 L36 30 C37 26 40 24 44 24 L58 24 C62 24 65 26 66 30 L70 42"/> <circle cx="31" cy="78" r="9"/><circle cx="69" cy="78" r="9"/> <path d="M50 42 L50 24"/></g><g transform="translate(287.0 82.0) rotate(-9) scale(0.538) translate(-50 -50)" stroke="var(--toy-a)" stroke-width="4.38"><path d="M50 12 L61 39 L90 41 L67 59 L75 88 L50 71 L25 88 L33 59 L10 40 L39 38 Z"/></g><g transform="translate(287.0 164.0) rotate(-9) scale(0.531) translate(-50 -50)" stroke="var(--toy-b)" stroke-width="4.09"><path d="M28 74 C18 74 12 66 14 58 C16 50 24 46 30 48 C31 34 42 26 54 28 C66 30 73 40 72 50 C82 48 90 54 90 63 C90 70 84 74 76 74 Z"/></g><g transform="translate(287.0 246.0) rotate(3) scale(0.489) translate(-50 -50)" stroke="var(--toy-c)" stroke-width="4.19"><path d="M12 78 C13 44 38 24 50 24 C63 24 87 43 88 78"/> <path d="M26 79 C27 53 40 38 50 38 C61 38 74 52 75 79"/> <path d="M40 80 C41 63 45 52 50 52 C56 52 61 62 62 80"/></g><g transform="translate(287.0 328.0) rotate(-9) scale(0.536) translate(-50 -50)" stroke="var(--toy-d)" stroke-width="4.39"><circle cx="33" cy="30" r="10"/><circle cx="67" cy="30" r="10"/> <path d="M50 22 C34 22 26 34 27 46 C28 58 38 64 50 64 C63 64 72 57 73 46 C74 33 66 21 50 22 Z"/> <circle cx="42" cy="42" r="3"/><circle cx="58" cy="41" r="3"/> <path d="M45 52 C48 55 53 55 56 52"/> <path d="M36 66 C28 72 26 84 32 90 L68 90 C74 84 72 71 64 66"/></g><g transform="translate(287.0 0.0) rotate(3) scale(0.535) translate(-50 -50)" stroke="var(--toy-e)" stroke-width="3.90"><path d="M20 26 C22 54 40 78 72 82 C82 83 88 78 88 72 C88 66 82 64 74 62 C50 58 36 42 33 24 C32 18 26 16 22 18 C18 20 19 22 20 26 Z"/> <path d="M74 62 C78 66 80 70 79 76"/></g><g transform="translate(369.0 41.0) rotate(3) scale(0.501) translate(-50 -50)" stroke="var(--toy-a)" stroke-width="4.45"><path d="M50 8 C62 20 68 38 68 56 L68 72 L32 72 L32 56 C32 38 38 20 50 8 Z"/> <circle cx="50" cy="40" r="8"/> <path d="M32 54 L18 70 L18 84 L32 72 Z"/> <path d="M68 54 L82 70 L82 84 L68 72 Z"/> <path d="M42 72 L42 84 C42 90 46 94 50 96 C54 94 58 90 58 84 L58 72"/></g><g transform="translate(369.0 123.0) rotate(3) scale(0.522) translate(-50 -50)" stroke="var(--toy-b)" stroke-width="4.09"><path d="M64 14 C40 18 24 38 26 60 C28 82 48 96 70 92 C54 84 44 68 45 53 C46 36 53 22 64 14 Z"/></g><g transform="translate(369.0 205.0) rotate(6) scale(0.491) translate(-50 -50)" stroke="var(--toy-c)" stroke-width="4.15"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g><g transform="translate(369.0 287.0) rotate(6) scale(0.498) translate(-50 -50)" stroke="var(--toy-d)" stroke-width="4.22"><path d="M50 32 C42 24 26 26 22 42 C18 58 28 82 40 88 C46 91 50 87 50 87 C50 87 54 91 60 88 C72 82 82 58 78 42 C74 26 58 24 50 32 Z"/> <path d="M50 32 L50 16"/> <path d="M50 20 C58 12 70 14 70 14 C70 14 68 24 58 24 C53 24 50 20 50 20 Z"/></g><g transform="translate(369.0 369.0) rotate(9) scale(0.518) translate(-50 -50)" stroke="var(--toy-e)" stroke-width="4.50"><path d="M34 22 L66 22 L66 74 L50 92 L34 74 Z"/> <path d="M34 36 L66 36"/> <path d="M34 74 L66 74"/> <path d="M50 44 L50 66"/></g><g transform="translate(41.0 451.0) rotate(3) scale(0.522) translate(-50 -50)" stroke="var(--toy-a)" stroke-width="4.32"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g><g transform="translate(451.0 41.0) rotate(-9) scale(0.516) translate(-50 -50)" stroke="var(--toy-a)" stroke-width="4.16"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g><g transform="translate(451.0 451.0) rotate(6) scale(0.531) translate(-50 -50)" stroke="var(--toy-a)" stroke-width="4.45"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g><g transform="translate(451.0 123.0) rotate(6) scale(0.540) translate(-50 -50)" stroke="var(--toy-b)" stroke-width="4.39"><path d="M50 32 C42 24 26 26 22 42 C18 58 28 82 40 88 C46 91 50 87 50 87 C50 87 54 91 60 88 C72 82 82 58 78 42 C74 26 58 24 50 32 Z"/> <path d="M50 32 L50 16"/> <path d="M50 20 C58 12 70 14 70 14 C70 14 68 24 58 24 C53 24 50 20 50 20 Z"/></g><g transform="translate(451.0 205.0) rotate(9) scale(0.535) translate(-50 -50)" stroke="var(--toy-c)" stroke-width="3.85"><path d="M34 22 L66 22 L66 74 L50 92 L34 74 Z"/> <path d="M34 36 L66 36"/> <path d="M34 74 L66 74"/> <path d="M50 44 L50 66"/></g><g transform="translate(451.0 287.0) rotate(3) scale(0.530) translate(-50 -50)" stroke="var(--toy-d)" stroke-width="3.81"><path d="M14 66 L20 50 C22 44 26 42 32 42 L68 42 C74 42 78 44 80 50 L86 66 L86 76 L14 76 Z"/> <path d="M32 42 L36 30 C37 26 40 24 44 24 L58 24 C62 24 65 26 66 30 L70 42"/> <circle cx="31" cy="78" r="9"/><circle cx="69" cy="78" r="9"/> <path d="M50 42 L50 24"/></g><g transform="translate(41.0 -41.0) rotate(-9) scale(0.514) translate(-50 -50)" stroke="var(--toy-e)" stroke-width="4.34"><path d="M50 12 L61 39 L90 41 L67 59 L75 88 L50 71 L25 88 L33 59 L10 40 L39 38 Z"/></g><g transform="translate(451.0 -41.0) rotate(6) scale(0.529) translate(-50 -50)" stroke="var(--toy-e)" stroke-width="4.20"><path d="M50 12 L61 39 L90 41 L67 59 L75 88 L50 71 L25 88 L33 59 L10 40 L39 38 Z"/></g><g transform="translate(451.0 369.0) rotate(6) scale(0.545) translate(-50 -50)" stroke="var(--toy-e)" stroke-width="3.64"><path d="M50 12 L61 39 L90 41 L67 59 L75 88 L50 71 L25 88 L33 59 L10 40 L39 38 Z"/></g><g transform="translate(123.0 410.0) rotate(-9) scale(0.500) translate(-50 -50)" stroke="var(--toy-e)" stroke-width="4.41"><path d="M50 8 C62 20 68 38 68 56 L68 72 L32 72 L32 56 C32 38 38 20 50 8 Z"/> <circle cx="50" cy="40" r="8"/> <path d="M32 54 L18 70 L18 84 L32 72 Z"/> <path d="M68 54 L82 70 L82 84 L68 72 Z"/> <path d="M42 72 L42 84 C42 90 46 94 50 96 C54 94 58 90 58 84 L58 72"/></g><g transform="translate(205.0 451.0) rotate(-3) scale(0.506) translate(-50 -50)" stroke="var(--toy-a)" stroke-width="3.66"><path d="M64 14 C40 18 24 38 26 60 C28 82 48 96 70 92 C54 84 44 68 45 53 C46 36 53 22 64 14 Z"/></g><g transform="translate(205.0 -41.0) rotate(0) scale(0.534) translate(-50 -50)" stroke="var(--toy-e)" stroke-width="3.65"><path d="M14 66 L20 50 C22 44 26 42 32 42 L68 42 C74 42 78 44 80 50 L86 66 L86 76 L14 76 Z"/> <path d="M32 42 L36 30 C37 26 40 24 44 24 L58 24 C62 24 65 26 66 30 L70 42"/> <circle cx="31" cy="78" r="9"/><circle cx="69" cy="78" r="9"/> <path d="M50 42 L50 24"/></g><g transform="translate(287.0 410.0) rotate(0) scale(0.516) translate(-50 -50)" stroke="var(--toy-e)" stroke-width="4.27"><path d="M20 26 C22 54 40 78 72 82 C82 83 88 78 88 72 C88 66 82 64 74 62 C50 58 36 42 33 24 C32 18 26 16 22 18 C18 20 19 22 20 26 Z"/> <path d="M74 62 C78 66 80 70 79 76"/></g><g transform="translate(-41.0 41.0) rotate(0) scale(0.500) translate(-50 -50)" stroke="var(--toy-a)" stroke-width="3.79"><path d="M50 8 C62 20 68 38 68 56 L68 72 L32 72 L32 56 C32 38 38 20 50 8 Z"/> <circle cx="50" cy="40" r="8"/> <path d="M32 54 L18 70 L18 84 L32 72 Z"/> <path d="M68 54 L82 70 L82 84 L68 72 Z"/> <path d="M42 72 L42 84 C42 90 46 94 50 96 C54 94 58 90 58 84 L58 72"/></g><g transform="translate(-41.0 451.0) rotate(3) scale(0.529) translate(-50 -50)" stroke="var(--toy-a)" stroke-width="4.51"><path d="M50 8 C62 20 68 38 68 56 L68 72 L32 72 L32 56 C32 38 38 20 50 8 Z"/> <circle cx="50" cy="40" r="8"/> <path d="M32 54 L18 70 L18 84 L32 72 Z"/> <path d="M68 54 L82 70 L82 84 L68 72 Z"/> <path d="M42 72 L42 84 C42 90 46 94 50 96 C54 94 58 90 58 84 L58 72"/></g><g transform="translate(369.0 451.0) rotate(-3) scale(0.527) translate(-50 -50)" stroke="var(--toy-a)" stroke-width="3.83"><path d="M50 8 C62 20 68 38 68 56 L68 72 L32 72 L32 56 C32 38 38 20 50 8 Z"/> <circle cx="50" cy="40" r="8"/> <path d="M32 54 L18 70 L18 84 L32 72 Z"/> <path d="M68 54 L82 70 L82 84 L68 72 Z"/> <path d="M42 72 L42 84 C42 90 46 94 50 96 C54 94 58 90 58 84 L58 72"/></g><g transform="translate(-41.0 123.0) rotate(3) scale(0.490) translate(-50 -50)" stroke="var(--toy-b)" stroke-width="3.81"><path d="M64 14 C40 18 24 38 26 60 C28 82 48 96 70 92 C54 84 44 68 45 53 C46 36 53 22 64 14 Z"/></g><g transform="translate(-41.0 205.0) rotate(6) scale(0.535) translate(-50 -50)" stroke="var(--toy-c)" stroke-width="4.08"><path d="M26 38 C26 24 36 16 50 16 C64 16 74 24 74 38 L74 82 C74 88 70 92 64 92 L36 92 C30 92 26 88 26 82 Z"/> <path d="M38 38 C38 28 43 24 50 24 C57 24 62 28 62 38"/> <path d="M26 56 L74 56"/> <rect x="41" y="62" width="18" height="14" rx="3"/> <path d="M50 62 L50 76"/></g><g transform="translate(-41.0 287.0) rotate(0) scale(0.516) translate(-50 -50)" stroke="var(--toy-d)" stroke-width="4.58"><path d="M50 32 C42 24 26 26 22 42 C18 58 28 82 40 88 C46 91 50 87 50 87 C50 87 54 91 60 88 C72 82 82 58 78 42 C74 26 58 24 50 32 Z"/> <path d="M50 32 L50 16"/> <path d="M50 20 C58 12 70 14 70 14 C70 14 68 24 58 24 C53 24 50 20 50 20 Z"/></g><g transform="translate(-41.0 -41.0) rotate(9) scale(0.535) translate(-50 -50)" stroke="var(--toy-e)" stroke-width="4.17"><path d="M34 22 L66 22 L66 74 L50 92 L34 74 Z"/> <path d="M34 36 L66 36"/> <path d="M34 74 L66 74"/> <path d="M50 44 L50 66"/></g><g transform="translate(-41.0 369.0) rotate(-9) scale(0.546) translate(-50 -50)" stroke="var(--toy-e)" stroke-width="3.81"><path d="M34 22 L66 22 L66 74 L50 92 L34 74 Z"/> <path d="M34 36 L66 36"/> <path d="M34 74 L66 74"/> <path d="M50 44 L50 66"/></g><g transform="translate(369.0 -41.0) rotate(-9) scale(0.541) translate(-50 -50)" stroke="var(--toy-e)" stroke-width="3.91"><path d="M34 22 L66 22 L66 74 L50 92 L34 74 Z"/> <path d="M34 36 L66 36"/> <path d="M34 74 L66 74"/> <path d="M50 44 L50 66"/></g></g></pattern></defs><rect width="100%" height="100%" fill="url(#toyTile)"/></svg>
 <div class="grain" aria-hidden="true"></div>
 <div class="vignette" aria-hidden="true"></div>
 <div class="agh-topline" aria-hidden="true"><i class="agh-progress"></i></div>
@@ -2901,459 +2935,6 @@ html.is-ready .agh-curtain {
 
 
 
-<script>
-/* ===========================================================
-   THE FIELD - seams of color in a tessellated plane
-
-   From the reference image. The properties that matter:
-     - cells vary large to small but every edge is SHARED, so the plane
-       locks together with no gaps. A real Voronoi tessellation, built as a
-       Delaunay triangulation converted to its dual - not lines that happen
-       to meet.
-     - a seam is never a clean stroke. Each is a BUNDLE of filaments that
-       splay mid-span and curl off into wisps.
-     - filaments pinch back together and intensify where three cells meet.
-     - cell interiors stay empty. The ground is most of the picture.
-
-   LIGHT GROUND. The reference glows because light ADDS to dark. On a white
-   page additive compositing does nothing - white is already at maximum - so
-   the same structure is composited with 'multiply' instead and the seams
-   read as ink laid into paper rather than light escaping through rock. The
-   geometry is identical; only the physics of the composite inverted.
-
-   PERFORMANCE - the architecture, and why it changed three times.
-     v1 rebuilt every filament's geometry every frame: 4,270 strokes and
-        64,050 lineTo. Measured 33.3ms, 30fps.
-     v2 baked geometry into Path2D and only restyled: 1,076 strokes, 0
-        lineTo. STILL 33.3ms - the cost was never the JavaScript, it was
-        rasterizing a thousand strokes over 1440x900. Canvas flush measured
-        21.4ms against a 16.7ms budget, and an empty page in the same
-        browser held 60fps, so the number was real, not a harness artifact.
-     v3 rasterizes the whole field ONCE into an offscreen light map. A frame
-        is a handful of canvas operations and no strokes at all. 4.1ms.
-
-   Color: the tint gradient is rebuilt each frame from the logo sweep,
-   offset by scroll, so scrolling walks the sweep through the seams.
-
-   Scroll is 1:1, read from lenis.scroll - the same number the content is
-   transformed by - every frame. An easing lerp lived here once and was the
-   cause of the field visibly trailing the containers. MOT-22 bans parallax,
-   meaning a layer moving at its own rate; matching the page exactly is not
-   parallax.
-
-   Geometry comes from a seeded PRNG, never Math.random.
-   =========================================================== */
-(function () {
-  'use strict';
-
-  var cv = document.querySelector('.backdrop');
-  if (!cv || !cv.getContext) return;
-  var ctx = cv.getContext('2d', { alpha: false });
-  if (!ctx) return;
-
-  var _s = 0;
-  function seed(n) { _s = n >>> 0; }
-  function rnd() { _s = (_s * 1664525 + 1013904223) >>> 0; return _s / 4294967296; }
-
-  /* The logo sweep as INK. These are the brand hues at full strength; on a
-     light ground the seams are pigment, not glow, so they are not lifted. */
-  var HUES = [
-    [110, 40, 119], [55, 80, 154], [0, 118, 187],
-    [52, 153, 138], [127, 188, 66], [110, 40, 119]
-  ];
-  function sweep(u) {
-    u = u - Math.floor(u);
-    var g = u * (HUES.length - 1);
-    var i = g | 0, k = g - i;
-    var a = HUES[i], b = HUES[i + 1];
-    return [(a[0] + (b[0] - a[0]) * k) | 0, (a[1] + (b[1] - a[1]) * k) | 0, (a[2] + (b[2] - a[2]) * k) | 0];
-  }
-
-  /* The map rasterizes at a fraction of device pixels. The seams are soft,
-     so the upscale is invisible and it cuts fill cost and memory by half. */
-  var MAP_SCALE = 0.62;
-
-  var W = 0, H = 0, DPR = 1, FIELD_H = 0;
-  var map = null, mctx = null, MW = 0, MH = 0, GEO_W = 0;
-  var tmp = null, tctx = null, TW = 0, TH = 0;
-
-  var scrollY = 0;
-  var t = 0, raf = 0, running = false, touch = false;
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  var PAPER = '#fffdfa';
-  var COMP = 'multiply';
-
-  function readTheme() {
-    var cs = getComputedStyle(document.documentElement);
-    PAPER = cs.getPropertyValue('--paper').trim() || '#fffdfa';
-    COMP = cs.getPropertyValue('--field-comp').trim() || 'multiply';
-  }
-
-  function circumcenter(a, b, c) {
-    var ax = a[0], ay = a[1], bx = b[0], by = b[1], cx = c[0], cy = c[1];
-    var d = 2 * (ax * (by - cy) + bx * (cy - ay) + cx * (ay - by));
-    if (Math.abs(d) < 1e-9) return null;
-    var a2 = ax * ax + ay * ay, b2 = bx * bx + by * by, c2 = cx * cx + cy * cy;
-    return [
-      (a2 * (by - cy) + b2 * (cy - ay) + c2 * (ay - by)) / d,
-      (a2 * (cx - bx) + b2 * (ax - cx) + c2 * (bx - ax)) / d
-    ];
-  }
-
-  function triangulate(pts) {
-    var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity, i;
-    for (i = 0; i < pts.length; i++) {
-      if (pts[i][0] < minX) minX = pts[i][0];
-      if (pts[i][0] > maxX) maxX = pts[i][0];
-      if (pts[i][1] < minY) minY = pts[i][1];
-      if (pts[i][1] > maxY) maxY = pts[i][1];
-    }
-    var dm = Math.max(maxX - minX, maxY - minY) * 14;
-    var mx = (minX + maxX) / 2, my = (minY + maxY) / 2;
-    var P = pts.concat([[mx - dm, my - dm], [mx + dm, my - dm], [mx, my + dm]]);
-    var n = pts.length;
-    var tris = [[n, n + 1, n + 2]];
-
-    for (var p = 0; p < n; p++) {
-      var bad = [], keep = [];
-      for (var ti = 0; ti < tris.length; ti++) {
-        var tr = tris[ti];
-        var cc = circumcenter(P[tr[0]], P[tr[1]], P[tr[2]]);
-        if (!cc) { keep.push(tr); continue; }
-        var rr = (P[tr[0]][0] - cc[0]) * (P[tr[0]][0] - cc[0]) + (P[tr[0]][1] - cc[1]) * (P[tr[0]][1] - cc[1]);
-        var dd = (P[p][0] - cc[0]) * (P[p][0] - cc[0]) + (P[p][1] - cc[1]) * (P[p][1] - cc[1]);
-        if (dd < rr) bad.push(tr); else keep.push(tr);
-      }
-      var poly = [];
-      for (var bi = 0; bi < bad.length; bi++) {
-        var b = bad[bi];
-        var es = [[b[0], b[1]], [b[1], b[2]], [b[2], b[0]]];
-        for (var ei = 0; ei < 3; ei++) {
-          var e = es[ei], shared = false;
-          for (var bj = 0; bj < bad.length && !shared; bj++) {
-            if (bj === bi) continue;
-            var o = bad[bj];
-            var os = [[o[0], o[1]], [o[1], o[2]], [o[2], o[0]]];
-            for (var oi = 0; oi < 3; oi++) {
-              if ((os[oi][0] === e[0] && os[oi][1] === e[1]) ||
-                  (os[oi][0] === e[1] && os[oi][1] === e[0])) { shared = true; break; }
-            }
-          }
-          if (!shared) poly.push(e);
-        }
-      }
-      tris = keep;
-      for (var pi = 0; pi < poly.length; pi++) tris.push([poly[pi][0], poly[pi][1], p]);
-    }
-
-    var out = [];
-    for (var k = 0; k < tris.length; k++) {
-      if (tris[k][0] < n && tris[k][1] < n && tris[k][2] < n) out.push(tris[k]);
-    }
-    return { tris: out, P: P };
-  }
-
-  /* Rasterize one seam's filament bundle into the map, in white. Only the
-     ALPHA matters - color is applied later at composite time, which is what
-     lets the hue change with scroll without ever redrawing this. */
-  function paintSeam(ed) {
-    var dx = ed.x2 - ed.x1, dy = ed.y2 - ed.y1;
-    var L = ed.len || 1;
-    var nx = -dy / L, ny = dx / L;
-    var STR = 6, SEG = 26, s, k, u;   /* 15 faceted the arcs once they bowed */
-
-    for (s = 0; s < STR; s++) {
-      var lane = (s / (STR - 1) - 0.5);
-      mctx.beginPath();
-      for (k = 0; k <= SEG; k++) {
-        u = k / SEG;
-        /* pinch to nothing at both ends so strands converge at the junction */
-        var pinch = Math.sin(u * Math.PI);
-        var wob = Math.sin(u * 5.1 + ed.ph) * 0.55
-                + Math.sin(u * 11.3 - ed.ph * 1.7) * 0.30
-                + Math.sin(u * 2.3 + s * 1.9 + ed.ph * 0.6) * 0.5;
-        var bend = Math.sin(u * Math.PI) * ed.curve * L
-                 + Math.sin(u * 6.283) * ed.curve2 * L;
-        var off = (lane * 1.9 + wob * ed.amp * 2.6) * pinch * L * 0.16 + bend;
-        var x = ed.x1 + dx * u + nx * off;
-        var y = ed.y1 + dy * u + ny * off;
-        if (k === 0) mctx.moveTo(x, y); else mctx.lineTo(x, y);
-      }
-      var a = (0.068 + 0.118 * (1 - Math.abs(lane) * 1.7)) * ed.bright;
-      if (a < 0.004) continue;
-      mctx.strokeStyle = 'rgba(255,255,255,' + a.toFixed(4) + ')';
-      mctx.lineWidth = (s === 0 || s === STR - 1 ? 0.8 : 1.5) * MAP_SCALE * DPR;
-      mctx.stroke();
-    }
-
-    mctx.beginPath();
-    for (k = 0; k <= SEG; k++) {
-      u = k / SEG;
-      var p2 = Math.sin(u * Math.PI);
-      var o2 = Math.sin(u * 4.2 + ed.ph) * 0.4 * ed.amp * p2 * L * 0.13
-             + Math.sin(u * Math.PI) * ed.curve * L
-             + Math.sin(u * 6.283) * ed.curve2 * L;
-      var cx = ed.x1 + dx * u + nx * o2;
-      var cy = ed.y1 + dy * u + ny * o2;
-      if (k === 0) mctx.moveTo(cx, cy); else mctx.lineTo(cx, cy);
-    }
-    mctx.strokeStyle = 'rgba(255,255,255,' + (0.34 * ed.bright).toFixed(4) + ')';
-    mctx.lineWidth = 1.1 * MAP_SCALE * DPR;
-    mctx.stroke();
-  }
-
-  function bakeMap() {
-    MW = Math.max(2, Math.round(W * MAP_SCALE));
-    MH = Math.max(2, Math.round(FIELD_H * MAP_SCALE));
-    /* the width the PLATES are sized against. Floored at 1000 CSS px so the
-       field never zooms out past the desktop read; on anything wider this is
-       just MW and the desktop field is bit-for-bit what it already was. */
-    GEO_W = Math.max(MW, Math.round(1000 * DPR * MAP_SCALE));
-    map = document.createElement('canvas');
-    map.width = MW; map.height = MH;
-    mctx = map.getContext('2d');
-    /* TRANSPARENT, deliberately. Filling this opaque gives the map alpha=1
-       across its whole area, so the 'source-in' tint later keeps the gradient
-       EVERYWHERE and the cell structure disappears into a flat wash. The seam
-       shape lives in the alpha channel. */
-    mctx.globalCompositeOperation = 'lighter';
-    mctx.lineCap = 'round';
-    mctx.lineJoin = 'round';
-
-    seed(20260819);
-    var pts = [];
-    var y = -MH * 0.03;
-    var band = 0;
-    while (y < MH * 1.03) {
-      var scale = 0.62 + 0.58 * (0.5 + 0.5 * Math.sin(band * 0.83 + 1.7));
-      /* Cell size comes off GEO_W, not MW. Sizing it off the real map width
-         made a plate a fixed FRACTION of the viewport, so a 390px phone drew
-         the same count of cells as a 1440px desktop - each one 3.7x smaller.
-         That is what read as foam instead of rock. GEO_W floors the basis, so
-         a narrow screen shows a zoomed-in crop of the same field rather than
-         a shrunken copy of it. Above the floor nothing changes at all. */
-      var rowH = GEO_W * 0.135 * scale;
-      var cols = Math.max(3, Math.round(1 / (0.145 * scale)));
-      var colW = GEO_W / cols;
-      /* the count follows the REAL width, or a narrow screen would come up
-         short of its own right edge */
-      var span = Math.ceil(MW / colW);
-      var stagger = (band % 2) * 0.5;
-      for (var c = -1; c <= span + 1; c++) {
-        pts.push([
-          (c + stagger + (rnd() - 0.5) * 0.8) * colW,
-          y + (rnd() - 0.5) * rowH * 0.8
-        ]);
-      }
-      y += rowH;
-      band++;
-    }
-
-    var d = triangulate(pts);
-    var tris = d.tris, P = d.P;
-    var cc = [];
-    for (var i = 0; i < tris.length; i++) {
-      cc[i] = circumcenter(P[tris[i][0]], P[tris[i][1]], P[tris[i][2]]) || [0, 0];
-    }
-
-    var key = {}, verts = [], vseen = {};
-    for (var ti = 0; ti < tris.length; ti++) {
-      var tr = tris[ti];
-      var pairs = [[tr[0], tr[1]], [tr[1], tr[2]], [tr[2], tr[0]]];
-      for (var pi = 0; pi < 3; pi++) {
-        var a = Math.min(pairs[pi][0], pairs[pi][1]);
-        var b = Math.max(pairs[pi][0], pairs[pi][1]);
-        var kk = a + ':' + b;
-        if (key[kk] === undefined) { key[kk] = ti; continue; }
-        var p1 = cc[key[kk]], p2 = cc[ti];
-        var len = Math.hypot(p2[0] - p1[0], p2[1] - p1[1]);
-        if (len > 6 && len < MW * 0.8) {
-          var ed = {
-            x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], len: len,
-            ph: rnd() * 6.283, amp: 0.10 + rnd() * 0.17, bright: 0.5 + rnd() * 0.5,
-            /* the bow. Endpoints stay pinned to the Voronoi vertices so every
-               cell still closes; only the span between them arcs. That is what
-               makes the cells read as organic rather than as a wire diagram. */
-            curve: (rnd() - 0.5) * 0.46,
-            curve2: (rnd() - 0.5) * 0.20
-          };
-          paintSeam(ed);
-          var k1 = (ed.x1 | 0) + ',' + (ed.y1 | 0);
-          var k2 = (ed.x2 | 0) + ',' + (ed.y2 | 0);
-          if (!vseen[k1]) { vseen[k1] = 1; verts.push([ed.x1, ed.y1, 0.45 + rnd() * 0.55]); }
-          if (!vseen[k2]) { vseen[k2] = 1; verts.push([ed.x2, ed.y2, 0.45 + rnd() * 0.55]); }
-        }
-      }
-    }
-
-    /* junctions are the densest point of the bundle */
-    for (var v = 0; v < verts.length; v++) {
-      var r = (8 + 18 * verts[v][2]) * MAP_SCALE * DPR;
-      var g = mctx.createRadialGradient(verts[v][0], verts[v][1], 0, verts[v][0], verts[v][1], r);
-      g.addColorStop(0, 'rgba(255,255,255,' + (0.56 * verts[v][2]).toFixed(3) + ')');
-      g.addColorStop(0.4, 'rgba(255,255,255,' + (0.19 * verts[v][2]).toFixed(3) + ')');
-      g.addColorStop(1, 'rgba(255,255,255,0)');
-      mctx.fillStyle = g;
-      mctx.fillRect(verts[v][0] - r, verts[v][1] - r, r * 2, r * 2);
-    }
-
-    mctx.globalCompositeOperation = 'source-over';
-
-    /* Soften ONCE, here, rather than with a CSS filter on the canvas. As a
-       CSS filter it was nearly free while the field only repainted on
-       scroll, but the breath repaints every frame and a full-screen blur
-       per frame measured 33.3ms - half rate. Baked, it costs nothing. */
-    var soft = document.createElement('canvas');
-    soft.width = MW; soft.height = MH;
-    var sctx = soft.getContext('2d');
-    sctx.filter = 'blur(' + (2.6 * MAP_SCALE * DPR).toFixed(2) + 'px)';
-    sctx.drawImage(map, 0, 0);
-    sctx.filter = 'none';
-    map = soft;
-    mctx = sctx;
-  }
-
-  function build() {
-    var vw = Math.max(window.innerWidth, 1), vh = Math.max(window.innerHeight, 1);
-    DPR = Math.min(window.devicePixelRatio || 1, 1.5);
-    W = Math.round(vw * DPR); H = Math.round(vh * DPR);
-    cv.width = W; cv.height = H;
-    cv.style.width = vw + 'px'; cv.style.height = vh + 'px';
-    FIELD_H = Math.max(document.body.scrollHeight, vh) * DPR;
-
-    readTheme();
-
-    bakeMap();
-
-    TW = Math.max(2, Math.round(W * MAP_SCALE));
-    TH = Math.max(2, Math.round(H * MAP_SCALE));
-    tmp = document.createElement('canvas');
-    tmp.width = TW; tmp.height = TH;
-    tctx = tmp.getContext('2d');
-  }
-
-  /* Build the tint gradient for the current scroll position. Hue is driven
-     mostly by position DOWN the field, so scrolling walks the whole sweep. */
-  /* The breath. The geometry never moves - the seams and the junctions hold
-     their exact positions - but the ink rises and falls, so the field is
-     alive without anything sliding. Two waves at different periods so it
-     never lands on an obvious loop. */
-  function breath() {
-    if (reduced) return 1;
-    return 1 + 0.46 * Math.sin(t * 0.55) + 0.20 * Math.sin(t * 0.23 + 1.7);
-  }
-
-  function tintGradient(c2d, boost) {
-    var g = c2d.createLinearGradient(0, 0, 0, TH);
-    /* scroll position only. The time term is gone with the animation: the
-       hue still walks the whole logo sweep as the deck is scrolled, but the
-       field never changes on its own. */
-    var base = (scrollY * DPR * MAP_SCALE) / Math.max(1, MH) * 2.6;
-    for (var i = 0; i <= 8; i++) {
-      var f = i / 8;
-      var c = sweep(base + f * (TH / Math.max(1, MH)) * 2.6);
-      /* boost below 1 darkens the ink, which on a multiply composite reads
-         as the seam glowing stronger. Clamped so it never crushes to black. */
-      /* Opened from 0.55-1.45. The old window was narrower than the wave
-         that drove it, so the breath spent most of its time pinned against
-         a stop and the field read as barely moving. */
-      var k = Math.max(0.34, Math.min(1.66, boost));
-      g.addColorStop(f, 'rgb(' + Math.min(255, c[0] * k | 0) + ',' + Math.min(255, c[1] * k | 0) + ',' + Math.min(255, c[2] * k | 0) + ')');
-    }
-    return g;
-  }
-
-  function draw() {
-    var oy = scrollY * DPR * MAP_SCALE;
-
-    /* 1. the visible slice of the baked map, tinted through its own alpha.
-       One blit. A sine/cosine strip warp lived here and is gone: the field
-       is stationary, so the seams and the junctions where they meet hold
-       their exact positions. */
-    tctx.globalCompositeOperation = 'source-over';
-    tctx.clearRect(0, 0, TW, TH);
-    tctx.drawImage(map, 0, oy, TW, TH, 0, 0, TW, TH);
-
-    /* The TINT. The baked map is white and carries the seam shape only in
-       its alpha, so without this pass the whole field multiplies white onto
-       paper and disappears. It was lost when the sine warp was removed,
-       because the warp block and the tint block were adjacent. */
-    tctx.globalCompositeOperation = 'source-in';
-    tctx.fillStyle = tintGradient(tctx, 2 - breath());
-    tctx.fillRect(0, 0, TW, TH);
-
-    /* 2. lay it into the paper. MULTIPLY, not lighter: on a light ground the
-       seams are ink sinking into the page. Additive would be invisible here. */
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = PAPER;
-    ctx.fillRect(0, 0, W, H);
-    /* multiply on paper, 'lighter' on dark. Same baked map either way: on a
-       dark ground the seams stop being ink and become light coming THROUGH
-       the cracks, which is the picture this field was built from. */
-    ctx.globalCompositeOperation = COMP;
-    ctx.drawImage(tmp, 0, 0, TW, TH, 0, 0, W, H);
-
-    ctx.globalCompositeOperation = 'source-over';
-  }
-
-  /* The GEOMETRY is stationary - seams and junctions hold their exact
-     positions and nothing slides. The loop exists only for the breath: the
-     ink rises and falls while the shape stays put. One blit and one fill per
-     frame, both on a canvas at 0.62 scale, which is why it holds 60fps. */
-  function frame() {
-    t += 0.016;
-    readScroll();
-    draw();
-    raf = requestAnimationFrame(frame);
-  }
-  function start() { if (running || reduced) return; running = true; raf = requestAnimationFrame(frame); }
-  function stop() { running = false; if (raf) cancelAnimationFrame(raf); raf = 0; }
-
-  /* Lenis owns the page's scroll animation, so window.pageYOffset and the
-     position the content is actually drawn at can differ mid-glide. Taking
-     lenis.scroll binds the field to the exact number the containers are
-     transformed by, which is what keeps them locked together. */
-  function readScroll() {
-    /* On touch there is no Lenis (ag-scroll is pointer-fine gated), so a
-       scroll-coupled fixed canvas repaints AFTER the browser has already
-       composited the momentum scroll - which reads as the background
-       sliding underneath the content. On touch the field is pinned. */
-    if (touch) { scrollY = 0; return; }
-    var L = window.lenis;
-    if (L && typeof L.scroll === 'number') { scrollY = L.scroll; return; }
-    scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
-  }
-
-  /* the ground changed under us: re-read the tokens and repaint at once */
-  window.addEventListener('ag:theme', function () { readTheme(); draw(); });
-
-  touch = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 900;
-
-  build();
-  readScroll();
-  draw();
-
-  if (reduced) {
-    /* off is off: one settled frame, no loop, and it still tracks scroll */
-    if (!touch) window.addEventListener('scroll', function () { readScroll(); draw(); }, { passive: true });
-  } else {
-    start();
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden) stop(); else start();
-    });
-  }
-
-  var rt = 0;
-  window.addEventListener('resize', function () {
-    clearTimeout(rt);
-    rt = setTimeout(function () {
-      touch = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 900;
-      build(); readScroll(); draw();
-    }, 200);
-  }, { passive: true });
-})();
-</script>
 
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.min.js"
         integrity="sha384-ClD7pCgIUz5M81HT8aZmMxCsWmfsycmBiwL5gy1pUbdWHvICIbea22N9sTtAFotA"
