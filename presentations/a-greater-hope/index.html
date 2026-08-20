@@ -2866,24 +2866,42 @@ html.peek-open, html.peek-open body { overflow: hidden; }
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lift);
   padding: clamp(22px, 3vw, 44px);
+  /* the scrollbar track is reserved from frame one, so it can never pop in
+     and shove the content sideways */
+  scrollbar-gutter: stable;
   opacity: 0;
-  transform: translateY(14px) scale(0.985);
+  /* NO scale(). This panel is a SCROLL CONTAINER, and scaling a scroll
+     container scales its scrollbar and its contents along with it - MEASURED
+     at 762px -> 774px of rendered height, still creeping at 900ms, which is
+     the stretch that made the bar look like it was sliding in. A modal rises
+     and fades; it does not grow.
+     The transform also ran on --duration-medium while the opacity ran on
+     --duration-quick, so the panel was still moving 600ms after it had
+     finished appearing. One duration, one curve, one motion. */
+  transform: translateY(14px);
   transition: opacity var(--duration-quick) var(--ease-soft),
-              transform var(--duration-medium) var(--ease-satisfying);
+              transform var(--duration-quick) var(--ease-soft);
 }
 
 .peek.is-open .peek-veil { opacity: 1; }
 .peek.is-open .peek-panel { opacity: 1; transform: none; }
 
+/* PINNED, NOT FLOATED. As `float: right` this button was not just sitting in
+   the corner, it was TAKING SPACE: .book is a flex container, so it
+   establishes a block formatting context, and a BFC box refuses to overlap a
+   float. Measured: the book stage sat 32px left of the panel's centre, and the
+   nav under it inherited the same shift. Absolute takes it out of flow
+   entirely, the content re-centres, and overlapping the corner is fine. */
 .peek-x {
-  position: sticky;
-  top: 0;
-  float: right;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 4;
   min-width: 49px;
   min-height: 49px;
   display: grid;
   place-items: center;
-  margin: -6px -6px 0 12px;
+  margin: 0;
   border: 1px solid var(--surface-line);
   border-radius: var(--radius-pill);
   background: var(--surface);
@@ -2906,7 +2924,29 @@ html.peek-open, html.peek-open body { overflow: hidden; }
 
    transform-origin is the whole illusion. Rotating about the center reads as
    a card flip; rotating about the spine edge reads as a page. */
-.book { display: flex; flex-direction: column; gap: 16px; }
+/* THE TURN'S EASING. --ease-satisfying is an EXPO OUT and it is the deck
+   default, which is right for a reveal and wrong for a page. MEASURED off the
+   running animation: at 117ms of the 600ms transition the turn was already
+   74.2% done, at 250ms it was 94.7%, and the leaf crossed 90deg - where
+   backface-visibility hides it - inside the first fifth. So the reader got a
+   ~130ms flick and then 470ms of nothing, which reads as a CUT, not a turn.
+   A page accelerates under its own weight and settles; that is an ease-IN-out.
+   --ease-soft is ag-motion.css's own Material standard curve and is the right
+   existing token, so this aliases it rather than inventing a bezier. */
+.book {
+  --ease-page: var(--ease-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;         /* centre the stage and the nav in the container */
+  /* TOP ANCHORED, not centred. The close button is pinned at top:12px and is
+     49px tall, so it reaches 61px into the panel. Centring put the stage at
+     39px and the button clipped its top-right corner. Anchoring to the top and
+     clearing the button's full reach is deterministic, where nudging a centred
+     block only ever moves it by half of what you add. */
+  justify-content: flex-start;
+  padding-top: 30px;
+  gap: 26px;
+}
 
 .book-stage {
   position: relative;
@@ -2916,6 +2956,28 @@ html.peek-open, html.peek-open body { overflow: hidden; }
   perspective-origin: 0% 50%;
 }
 
+/* THE BASE STATE NEVER ANIMATES. This is the fix for the turn, 2026-08-20.
+   It used to carry `transition: transform 600ms, opacity 1ms linear 600ms`,
+   and that one line produced both halves of the broken effect. MEASURED with
+   getAnimations(), not guessed:
+
+     1. THE PAGE FLAPPED BACK. At the end of the turn the JS clears the class
+        (`a.className = 'book-leaf'`). With a transform transition on the base
+        rule, clearing it did not reset the leaf - it ANIMATED it back from
+        rotateY(-168deg) to 0 over another 600ms, in full view, because the
+        opacity fade was held off by a 600ms delay. Probe at +900ms: class was
+        already plain `book-leaf`, yet transform was still matrix3d(...) and
+        opacity still 1, with `transform:running` in getAnimations(). The
+        reader saw the page swing away and then swing back.
+
+     2. THE INCOMING PAGE WAS A HOLE. The next leaf is supposed to be sitting
+        underneath from frame one - the comment above says exactly that - but
+        it measured opacity 0 until roughly +300ms, so the outgoing page
+        rotated away over empty space and the next one popped in afterwards.
+
+   Both come from state living in the base rule. Now the base is STATIC and
+   every state owns its own motion, so removing a class snaps rather than
+   animates, and `is-on` is opaque immediately. */
 .book-leaf {
   position: absolute;
   inset: 0;
@@ -2928,29 +2990,58 @@ html.peek-open, html.peek-open body { overflow: hidden; }
   box-shadow: var(--shadow-card);
   opacity: 0;
   pointer-events: none;
-  transition: transform var(--duration-medium) var(--ease-satisfying),
-              opacity 1ms linear var(--duration-medium);
+  transition: none;
+  /* the turn is the only thing on screen; let it live on the compositor */
+  will-change: transform, opacity;
 }
 
 .book-leaf img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-/* the leaf on top */
+/* A PAGE DARKENS AS IT LIFTS. Without this the leaf keeps its full brightness
+   all the way round and reads as a flat card being spun rather than paper
+   coming off a stack. Painted along the turn axis so the outer edge is the
+   part that falls into shadow. */
+.book-leaf::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(96deg, rgba(28,18,34,0) 0%, rgba(28,18,34,0.10) 46%, rgba(28,18,34,0.42) 100%);
+  opacity: 0;
+  transition: opacity var(--duration-medium) var(--ease-page);
+}
+.book-leaf.is-turning::after,
+.book-leaf.is-parked::after { opacity: 1; }
+.book-leaf.is-returning::after { opacity: 0; }
+
+/* the leaf on top. Opaque with NO opacity transition, so the page waiting
+   underneath is already there the instant the turn starts. */
 .book-leaf.is-on {
   opacity: 1;
   transform: none;
   z-index: 2;
   pointer-events: auto;
-  transition: transform var(--duration-medium) var(--ease-satisfying),
-              opacity 1ms linear;
+  transition: transform var(--duration-medium) var(--ease-page);
 }
 
-/* the one being turned away, mid-flight */
+/* the one being turned away, mid-flight.
+
+   -168deg was throwing away half the animation. backface-visibility hides the
+   leaf the instant it passes 90deg, so everything past that was rotation
+   nobody could see - and the leaf did not fade out, it POPPED out of
+   existence mid-flight. That pop is the glitch that survived the easing fix.
+
+   So: turn to just past edge-on, and fade across the moment it gets there.
+   The opacity ramp is delayed so the page is solid for most of the turn and
+   only softens as it goes past vertical, which is what makes the exit read as
+   a page leaving rather than a frame being dropped. */
 .book-leaf.is-turning {
-  opacity: 1;
+  opacity: 0;
   z-index: 3;
-  transform: rotateY(-168deg);
-  transition: transform var(--duration-medium) var(--ease-satisfying),
-              opacity 1ms linear var(--duration-medium);
+  transform: rotateY(-104deg);
+  transition: transform var(--duration-medium) var(--ease-page),
+              opacity 210ms linear 330ms;
 }
 
 /* turning BACK: the previous page swings in from the left rather than the
@@ -2959,16 +3050,24 @@ html.peek-open, html.peek-open body { overflow: hidden; }
   opacity: 1;
   z-index: 3;
   transform: rotateY(0deg);
-  transition: transform var(--duration-medium) var(--ease-satisfying),
-              opacity 1ms linear;
+  transition: transform var(--duration-medium) var(--ease-page),
+              opacity 210ms linear 30ms;
 }
-.book-leaf.is-parked { transform: rotateY(-168deg); transition: none; opacity: 1; z-index: 3; }
+/* parked matches where a turned page ENDS, or the return starts from a
+   different angle than the turn finished at and the two read as different
+   moves. Starts invisible for the same reason the turn ends invisible. */
+.book-leaf.is-parked { transform: rotateY(-104deg); transition: none; opacity: 0; z-index: 3; }
 
 .book-nav {
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 18px;
+  /* pushed down off the stage, but still INSIDE the panel - the panel's own
+     padding is what keeps it on the container rather than hanging below it */
+  margin-top: 10px;
+  width: 100%;
 }
 
 .book-arrow {
@@ -3007,18 +3106,58 @@ html.peek-open, html.peek-open body { overflow: hidden; }
   .book-leaf, .book-leaf.is-on, .book-leaf.is-turning,
   .book-leaf.is-returning, .book-arrow { transition: none; }
   .book-leaf.is-turning, .book-leaf.is-parked { transform: none; opacity: 0; }
+  .book-leaf::after { display: none; }
 }
 
 /* ---------- Proof block: the report shown as itself ---------- */
 .proof {
   margin-top: var(--v-md);
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* auto-fit rather than a fixed 2, because the card count is not fixed: the
+     voice-scripts card only exists once there are scripts, and a hardcoded
+     two-column grid left a third card sitting alone with a hole beside it. */
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: clamp(14px, 1.8vw, 26px);
-  align-items: start;
+  /* stretch, not start: the three cards have to end up the same height, and
+     `start` sizes each one to its own content instead. */
+  align-items: stretch;
+}
+/* EVERY PREVIEW IS THE SAME SQUARE. The three were different shapes - a square
+   logo, a 4:3 sheet fan, a statics fan - so the cards could never match no
+   matter what the grid did. One aspect ratio for all three, and the label on
+   the report sits INSIDE its square rather than adding a strip below it. */
+.proof-mark, .voice-fan, .statics-fan { aspect-ratio: 1 / 1; }
+.proof .peek-card { height: 100%; }
+.proof .peek-card > .proof-cue { margin-top: auto; }
+
+/* TABLET: two up, the third centred beneath - the upside-down triangle.
+   auto-fit would hold three cramped columns at this width, so the count is
+   pinned to two and the third card spans the row and centres itself.
+
+   The voice card is LAST in the DOM deliberately: a hidden element still
+   counts for :nth-child, so with the card sitting second-of-three it would
+   have been the STATICS card that got centred whenever there were no
+   scripts. */
+@media (min-width: 821px) and (max-width: 1080px) {
+  .proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .proof > .peek-card:nth-child(3):last-child {
+    grid-column: 1 / -1;
+    width: calc(50% - (clamp(14px, 1.8vw, 26px) / 2));
+    margin-inline: auto;
+  }
 }
 
 @media (max-width: 820px) { .proof { grid-template-columns: minmax(0, 1fr); } }
+
+/* PHONE. A square stage on a 390px screen is only 320px of reading window, so
+   the book goes taller than wide and the panel takes the height it needs. The
+   nav stays inside the panel either way. */
+@media (max-width: 640px) {
+  .book-stage { aspect-ratio: 4 / 5; }
+  .book--docs .book-stage { aspect-ratio: 3 / 4; }
+  .book { padding-top: 26px; gap: 18px; }
+  .peek-panel--book, .peek-panel--docs { max-height: 92vh; }
+}
 
 .proof-card,
 .statics-card {
@@ -3033,7 +3172,14 @@ html.peek-open, html.peek-open body { overflow: hidden; }
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 1000 / 683;   /* matches the report cover, so the row is even */
+  /* square, like every other preview. This used to match the old report-cover
+     photo at 1000/683, but the cover is the logo now and all three previews
+     have to be identical, so the shared square wins. Declared HERE rather than
+     left to the grouped rule, because this rule sits later in the sheet and
+     was quietly overriding it - the cards matched on desktop only because the
+     grid row stretched them, and the mismatch showed the moment the phone put
+     each card in its own row. */
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-bottom: 1px solid var(--surface-line);
   background: var(--surface);
@@ -3061,7 +3207,33 @@ html.peek-open, html.peek-open body { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) { .statics-fan img { transition: none; } }
 
-.peek-panel--book { width: min(680px, 100%); }
+.peek-panel--book {
+  width: min(680px, 100%);
+  display: flex;
+  flex-direction: column;
+}
+.book { flex: 1 1 auto; min-height: 0; width: 100%; }
+
+/* THE STAGE IS SIZED BY WIDTH. Sizing it by height instead looked right in
+   principle and measured 591 x 653 - not square at all, because max-width
+   clamped the width while nothing clamped the height. Width-driven with an
+   aspect ratio is unambiguous, and the panel simply becomes as tall as the
+   square needs. */
+.book-stage {
+  flex: none;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+}
+
+/* THESE PANELS DO NOT SCROLL, so they must not reserve a scrollbar gutter.
+   The reserved 12px came off the content box on the RIGHT, which pushed the
+   book 5px left of centre after the float was already dealt with. */
+.peek-panel--book, .peek-panel--docs {
+  overflow: hidden;
+  scrollbar-gutter: auto;
+  max-height: min(92vh, 940px);
+}
 
 .proof-shot {
   display: block;
@@ -3090,6 +3262,147 @@ html.peek-open, html.peek-open body { overflow: hidden; }
 @media (hover: hover) { .proof-card:hover .proof-cue svg { transform: translateX(3px); } }
 @media (prefers-reduced-motion: reduce) { .proof-cue svg { transition: none; } }
 
+/* ---- the voice-scripts card: a stack of pages, drawn, no asset ---- */
+.voice-fan {
+  position: relative;
+  display: block;
+  background: linear-gradient(168deg, #f6f3ef 0%, #ece7e1 100%);
+  border-bottom: 1px solid var(--surface-line);
+  overflow: hidden;
+}
+.voice-sheet {
+  position: absolute;
+  left: 50%; top: 52%;
+  width: 46%; aspect-ratio: 3 / 4;
+  background: #fff;
+  border: 1px solid rgba(34,27,41,0.13);
+  border-radius: 4px;
+  box-shadow: 0 6px 18px rgba(64,40,72,0.14);
+  transform: translate(-50%, -50%) rotate(-9deg) translateX(-16%);
+}
+.voice-sheet:nth-child(2) { transform: translate(-50%, -50%) rotate(4deg) translateX(8%); }
+.voice-sheet:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(-1deg);
+  display: flex; flex-direction: column; justify-content: center; gap: 9%;
+  padding: 13% 12%;
+}
+.voice-rule { display: block; height: 5%; border-radius: 999px; background: rgba(78,81,149,0.30); }
+.voice-rule:nth-child(1) { width: 62%; background: rgba(78,81,149,0.62); height: 7%; }
+.voice-rule:nth-child(3) { width: 84%; }
+.voice-rule:nth-child(5) { width: 52%; }
+
+/* ---- a book of DOCUMENTS rather than pictures ----
+   Each leaf is a whole document in its own frame, so it scrolls on its own and
+   cannot inherit or leak styles. Only the leaf on top takes pointer events, so
+   the one in view is the only one that can be scrolled. */
+/* EXACTLY THE INFOGRAPHICS, with the page scrolling inside. Same panel width,
+   same width-driven square stage, same nav - the only difference is that each
+   leaf holds a document that scrolls rather than a picture that does not.
+   Giving the docs their own portrait geometry made them a second component to
+   keep in sync for no gain. */
+.peek-panel--docs { width: min(680px, 100%); }
+.book--docs .book-stage { aspect-ratio: 1 / 1; }
+.peek-panel--docs .peek-title { flex: none; align-self: flex-start; margin-bottom: 4px; }
+/* THE SCROLLBAR HAS TO LIVE INSIDE THE PAGE, NOT ON ITS EDGE. The leaf is a
+   rounded, clipped box, so a frame stretched flush to its bounds puts the
+   native bar right in the rounded corner, where it gets sliced. Inset the
+   frame by the corner radius and round it to match: the bar then sits inside
+   the page, clear of every corner, and nothing crosses the container edge. */
+.book--docs .book-leaf {
+  background: #fffdfa;
+  padding: 10px;
+}
+.book--docs .book-leaf iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 12px;
+  background: #fffdfa;
+}
+/* the shading pass must not sit over a document the reader is scrolling */
+.book--docs .book-leaf.is-on::after { opacity: 0; }
+.book--docs .book-leaf:not(.is-on) iframe { pointer-events: none; }
+
+/* ---- the Deep Waters card: the mark, and what it opens ---- */
+/* THE LOGO IS THE COVER. It is a full lockup on its own blue plate - iceberg,
+   wordmark and descender - so it does not need a mark-on-a-background
+   treatment, it needs to BE the cover. object-fit: contain rather than cover,
+   because cover crops, and the whole logo has to be on the preview. */
+.proof-mark {
+  position: relative;
+  display: block;
+  background: #0b1f2b;
+  border-bottom: 1px solid var(--surface-line);
+  overflow: hidden;
+}
+.proof-mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;   /* contain, never cover: the WHOLE logo has to show */
+}
+.proof-mark-t {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 11px 12px 13px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.9375rem);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.88);
+  background: rgba(7, 22, 32, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* ---- one scrollbar language, everywhere in the deck ----
+   The default Windows bar is a 17px grey slab and it was the loudest thing
+   inside the panel. Thin, on-brand, and it never changes the layout because
+   the gutter is already reserved. */
+.peek-panel, .peek-frame { scrollbar-width: thin; scrollbar-color: rgba(96,68,116,0.42) transparent; }
+.peek-panel::-webkit-scrollbar { width: 10px; height: 10px; }
+.peek-panel::-webkit-scrollbar-track { background: transparent; }
+.peek-panel::-webkit-scrollbar-thumb {
+  background: rgba(96, 68, 116, 0.34);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.peek-panel::-webkit-scrollbar-thumb:hover { background: rgba(96,68,116,0.52); background-clip: content-box; }
+
+/* ---- the live report embed ---- */
+.peek-live { display: block; }
+.peek-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #ffffff;
+}
+
+/* A DOCUMENT SHOULD FILL ITS WINDOW. The live panel stops being a padded card
+   and becomes a frame: a title strip that does not move, and the report taking
+   every remaining pixel. The panel itself never scrolls - one scrollbar, and it
+   belongs to the report. */
+.peek-panel--live {
+  overflow: hidden;
+  padding: 0;
+  height: min(86vh, 900px);
+  display: flex;
+  flex-direction: column;
+}
+.peek-panel--live .peek-title {
+  flex: none;
+  margin: 0;
+  padding: 16px 62px 14px 20px;
+  border-bottom: 1px solid var(--surface-line);
+}
+.peek-panel--live .peek-live { flex: 1 1 auto; min-height: 0; }
+/* .peek-x is pinned for every panel now, so no per-panel override is needed */
+
 /* a panel whose whole body is one tall image wants no padding fighting it */
 .peek-panel--shot { padding: clamp(14px, 1.6vw, 20px); }
 
@@ -3113,6 +3426,12 @@ html.peek-open, html.peek-open body { overflow: hidden; }
 }
 
 /* ---------- The preview card that opens one ---------- */
+/* [hidden] IS NOT ENOUGH ON ITS OWN. The UA sheet sets [hidden]{display:none}
+   at the lowest possible weight, and any class that sets `display` beats it -
+   so the voice-scripts card rendered with nothing behind it and opened an
+   empty book. */
+.peek-card[hidden] { display: none; }
+
 .peek-card {
   display: flex;
   flex-direction: column;
@@ -3792,9 +4111,11 @@ html.peek-open, html.peek-open body { overflow: hidden; }
       <div class="proof reveal">
         <button class="peek-card proof-card" type="button" data-peek="peek-deepwaters"
                 aria-label="Open the Deep Waters Recovery six-month organic report">
-          <img class="proof-shot" src="dw-cover.webp" width="1000" height="683"
-               alt="Cover of the Deep Waters Recovery six-month organic report"
-               loading="lazy" decoding="async">
+          <span class="proof-mark">
+            <img src="dw-logo.webp" width="720" height="720"
+                 alt="Deep Waters Recovery" loading="lazy" decoding="async">
+            <span class="proof-mark-t">Report</span>
+          </span>
           <span class="proof-cue">
             <span class="proof-cue-t">View the full report</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
@@ -3810,6 +4131,24 @@ html.peek-open, html.peek-open body { overflow: hidden; }
           </span>
           <span class="proof-cue">
             <span class="proof-cue-t">Three sample statics</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </button>
+        <button class="peek-card voice-card" type="button" data-peek="peek-voice"
+                data-voice-card hidden
+                aria-label="Open the voice scripts">
+          <span class="voice-fan" aria-hidden="true">
+            <span class="voice-sheet"></span>
+            <span class="voice-sheet"></span>
+            <span class="voice-sheet">
+              <span class="voice-rule"></span><span class="voice-rule"></span>
+              <span class="voice-rule"></span><span class="voice-rule"></span>
+              <span class="voice-rule"></span>
+            </span>
+          </span>
+          <span class="proof-cue">
+            <span class="proof-cue-t" data-voice-count>Voice scripts</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </span>
@@ -3847,6 +4186,32 @@ html.peek-open, html.peek-open body { overflow: hidden; }
     </div>
   </div>
 
+  <div class="peek" id="peek-voice" role="dialog" aria-modal="true"
+       aria-label="Voice scripts" hidden>
+    <div class="peek-veil" data-peek-close></div>
+    <div class="peek-panel peek-panel--book peek-panel--docs">
+      <button class="peek-x" type="button" data-peek-close aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+             stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <p class="peek-title" data-voice-title>Voice scripts</p>
+      <div class="book book--docs" data-book-docs>
+        <div class="book-stage" data-docs-stage></div>
+        <div class="book-nav">
+          <button class="book-arrow" type="button" data-book-prev aria-label="Previous script">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <p class="book-count" aria-live="polite"><span data-book-i>1</span>&nbsp;/&nbsp;<span data-book-n>1</span></p>
+          <button class="book-arrow" type="button" data-book-next aria-label="Next script">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="peek" id="peek-deepwaters" role="dialog" aria-modal="true"
        aria-labelledby="peek-deepwaters-t" hidden>
     <div class="peek-veil" data-peek-close></div>
@@ -3855,10 +4220,24 @@ html.peek-open, html.peek-open body { overflow: hidden; }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
              stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
-      <h3 class="peek-title" id="peek-deepwaters-t">Deep Waters Recovery &mdash; 6 Months of Consecutive Daily Posting, November 2025 to April&nbsp;2026</h3>
-      <img class="peek-shot" src="dw-report.webp" width="1100" height="4000"
-           alt="The full Deep Waters Recovery six-month organic report"
-           loading="lazy" decoding="async">
+      <h3 class="peek-title" id="peek-deepwaters-t">Deep Waters Recovery: 6 Months of Consecutive Daily Posting, November 2025 to April&nbsp;2026</h3>
+      <!-- LIVE, not a picture of the report. The report itself refused to be
+           iframed: ag-reports sets X-Frame-Options DENY and frame-ancestors
+           'none' on /(.*), which is why this was a flat WebP.
+
+           X-Frame-Options is a RESPONSE HEADER, so it only applies to a
+           document the browser FETCHES as a frame. An iframe fed through
+           srcdoc is never fetched - the markup is handed to it directly - so
+           the header never enters the picture. The report is fetched with
+           fetch(), which the header does not govern either, and injected.
+
+           The WebP stays underneath as the fallback: if the fetch fails the
+           reader still sees the report, just not scrollable. -->
+      <div class="peek-live" data-live="dw-report.html">
+        <img class="peek-shot" src="dw-report.webp" width="1100" height="4000"
+             alt="The full Deep Waters Recovery six-month organic report"
+             loading="lazy" decoding="async">
+      </div>
     </div>
   </div>
 
@@ -4576,6 +4955,172 @@ html.peek-open, html.peek-open body { overflow: hidden; }
       if (window.lenis && typeof window.lenis.stop === 'function') window.lenis.stop();
       var first = panel.querySelector(FOCUSABLE);
       if (first) first.focus();
+      live(panel);
+      if (panel.id === 'peek-voice') voice(panel);
+    }
+
+    /* Swap a preview image for the REAL document, once, on first open.
+       srcdoc rather than src: src would fetch the file as a frame and pick up
+       the deployment's X-Frame-Options DENY, which is the whole reason this
+       was a flat image. srcdoc content is handed to the frame directly, so
+       there is no response and no header to refuse. */
+    /* The report drives its own scrolling with Lenis. Inside a frame that
+       left it UNSCROLLABLE: Lenis takes the document over, and a copy of it
+       running in a srcdoc frame does not get the conditions it expects, so the
+       page just sat there. Strip Lenis out and let the frame scroll natively,
+       which is smoother in a frame anyway. A no-op shim stays behind so the
+       report's own `new Lenis(...)` call still resolves instead of throwing and
+       taking the rest of its scripts down with it. GSAP and ScrollTrigger are
+       LEFT ALONE - they work fine on native scroll, and they are what draws the
+       report's charts. */
+    function tame(html) {
+      html = html.replace(/<script[^>]+lenis[^>]*><\/script>/gi, '');
+      var inject =
+        '<style>' +
+        'html,body{overflow:auto !important;height:auto !important;}' +
+        'html{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.28) transparent;}' +
+        '::-webkit-scrollbar{width:10px;height:10px;}' +
+        '::-webkit-scrollbar-track{background:transparent;}' +
+        '::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.24);border-radius:999px;' +
+        'border:3px solid transparent;background-clip:content-box;}' +
+        '::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.4);background-clip:content-box;}' +
+        '</style>' +
+        '<script>window.Lenis=function(){return{raf:function(){},on:function(){},off:function(){},' +
+        'destroy:function(){},scrollTo:function(){},stop:function(){},start:function(){},resize:function(){}};};' +
+        'window.lenis=new window.Lenis();<\/script>';
+      return html.indexOf('</head>') > -1
+        ? html.replace('</head>', inject + '</head>')
+        : inject + html;
+    }
+
+    /* THE VOICE SCRIPTS. Built from voice-scripts.json rather than hardcoded,
+       so dropping a new Word file in and rerunning convert-voice-scripts.py is
+       the whole workflow: no edit to this file. The card stays hidden until
+       there is at least one script, because an empty book is worse than no
+       card at all. */
+    var voiceReady = false;
+    function voice(panel) {
+      if (voiceReady) return;
+      var stage = panel.querySelector('[data-docs-stage]');
+      var book = panel.querySelector('[data-book-docs]');
+      if (!stage || !book) return;
+      voiceReady = true;
+      fetch('voice-scripts.json', { credentials: 'same-origin' })
+        .then(function (r) { return r.ok ? r.json() : []; })
+        .then(function (list) {
+          if (!list || !list.length) return;
+          /* BUILD THE LEAVES IN ORDER FIRST, fill them as the fetches land.
+             Appending each figure inside its own .then() put the scripts in
+             whatever order the network returned them - measured as 02, 03, 01,
+             with `is-on` landing on the third leaf while the counter said 1.
+             The frame is created up front so position is fixed by the
+             manifest, never by timing. */
+          var figs = list.map(function (item, i) {
+            var fig = document.createElement('figure');
+            fig.className = 'book-leaf' + (i === 0 ? ' is-on' : '');
+            var f = document.createElement('iframe');
+            f.setAttribute('title', item.title || ('Voice script ' + (i + 1)));
+            f.setAttribute('loading', i === 0 ? 'eager' : 'lazy');
+            fig.appendChild(f);
+            stage.appendChild(fig);
+            bridgeCursor(f);
+            return f;
+          });
+          var nEl = panel.querySelector('[data-book-n]');
+          if (nEl) nEl.textContent = String(list.length);
+          book.setAttribute('data-book', '');
+          if (window.__initBook) window.__initBook(book);
+
+          list.forEach(function (item, i) {
+            fetch(item.file, { credentials: 'same-origin' })
+              .then(function (r) { return r.ok ? r.text() : ''; })
+              .then(function (html) { if (html) figs[i].srcdoc = html; })
+              .catch(function () {});
+          });
+        })
+        .catch(function () {});
+    }
+
+    /* show the card only once we know there is something behind it */
+    fetch('voice-scripts.json', { credentials: 'same-origin' })
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (list) {
+        if (!list || !list.length) return;
+        var card = document.querySelector('[data-voice-card]');
+        if (!card) return;
+        card.hidden = false;
+        var label = card.querySelector('[data-voice-count]');
+        if (label) label.textContent = list.length + (list.length === 1 ? ' voice script' : ' voice scripts');
+      })
+      .catch(function () {});
+
+    /* THE CURSOR HAS TO CROSS THE FRAME BOUNDARY.
+       The deck hides the native pointer (.ag-fine * { cursor: none }) and draws
+       its own, tracking `mousemove` on the window. A frame is a separate
+       document, so neither reaches inside it: the drawn cursor froze at the
+       frame edge and the OS arrow reappeared over the report. Two cursors, and
+       neither in the right place.
+
+       srcdoc frames are same-origin with the parent, so the fix is direct:
+       hide the pointer inside the frame too, and relay its pointer moves back
+       out as window events with the frame's offset added, which is exactly
+       what ag-cursor.js already listens for. Only wired when the deck is in
+       fine-pointer mode - on touch there is no cursor to move. */
+    function bridgeCursor(f) {
+      if (!document.documentElement.classList.contains('ag-fine')) return;
+      function wire() {
+        var d;
+        try { d = f.contentDocument; } catch (e) { return; }
+        if (!d || d.__agCursorBridged) return;
+        d.__agCursorBridged = true;
+        var st = d.createElement('style');
+        st.textContent = '*,*::before,*::after{cursor:none !important;}';
+        (d.head || d.documentElement).appendChild(st);
+        var relay = function (e) {
+          var r = f.getBoundingClientRect();
+          window.dispatchEvent(new MouseEvent('mousemove', {
+            clientX: e.clientX + r.left,
+            clientY: e.clientY + r.top,
+            bubbles: true,
+          }));
+        };
+        d.addEventListener('mousemove', relay, { passive: true });
+        d.addEventListener('pointermove', function (e) {
+          if (e.pointerType !== 'touch') relay(e);
+        }, { passive: true });
+      }
+      f.addEventListener('load', wire);
+      wire();   /* a srcdoc frame can already be parsed by the time we get here */
+    }
+
+    function live(panel) {
+      var host = panel && panel.querySelector('[data-live]');
+      if (!host || host.dataset.liveDone) return;
+      host.dataset.liveDone = '1';
+      var url = host.getAttribute('data-live');
+      fetch(url, { credentials: 'same-origin' })
+        .then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.text();
+        })
+        .then(function (html) {
+          html = tame(html);
+          var f = document.createElement('iframe');
+          f.className = 'peek-frame';
+          f.setAttribute('title', host.getAttribute('data-live-title') ||
+            'The full Deep Waters Recovery six-month organic report');
+          f.setAttribute('loading', 'eager');
+          f.srcdoc = html;
+          host.textContent = '';
+          host.appendChild(f);
+          bridgeCursor(f);
+          var p = panel.querySelector('.peek-panel');
+          if (p) p.classList.add('peek-panel--live');
+        })
+        .catch(function () {
+          /* the WebP underneath is still sitting there; leave it alone */
+          host.dataset.liveDone = '';
+        });
     }
 
     function hide() {
@@ -4622,9 +5167,9 @@ html.peek-open, html.peek-open body { overflow: hidden; }
      turned angle first with no transition so it has somewhere to come from.
      Animating the current one backwards instead reads as a rewind, not as
      turning back a page. */
-  (function () {
-    var book = document.querySelector('[data-book]');
-    if (!book) return;
+  function initBook(book) {
+    if (!book || book.dataset.bookReady) return;
+    book.dataset.bookReady = '1';
     var leaves = [].slice.call(book.querySelectorAll('.book-leaf'));
     var count  = book.querySelector('[data-book-i]');
     var TURN   = 600;                     /* --duration-medium */
@@ -4656,19 +5201,22 @@ html.peek-open, html.peek-open body { overflow: hidden; }
         }, TURN);
       } else {
         b.classList.add('is-parked');      /* pre-rotated, no transition */
-        /* two frames: one to commit the parked transform, one to start the
-           real one. A single frame gets coalesced and the leaf just appears. */
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            b.classList.remove('is-parked');
-            b.classList.add('is-returning');
-            setTimeout(function () {
-              a.className = 'book-leaf';
-              b.className = 'book-leaf is-on';
-              busy = false;
-            }, TURN);
-          });
-        });
+        /* A FORCED REFLOW, NOT TWO ANIMATION FRAMES. The parked transform only
+           needs to be COMMITTED before the real one starts, and reading a
+           layout property does that synchronously. Waiting on two rAF
+           callbacks made the backward turn depend on the frame rate: when
+           frames were slow the turn started late and still held the busy lock,
+           so the next click was swallowed and the counter repeated a page
+           (measured: 1,2,3,1,3,3,2 instead of 1,2,3,1,3,2,1). This is
+           frame-rate independent and starts immediately. */
+        void b.offsetWidth;
+        b.classList.remove('is-parked');
+        b.classList.add('is-returning');
+        setTimeout(function () {
+          a.className = 'book-leaf';
+          b.className = 'book-leaf is-on';
+          busy = false;
+        }, TURN);
       }
       i = to; paint();
     }
@@ -4680,13 +5228,17 @@ html.peek-open, html.peek-open body { overflow: hidden; }
 
     document.addEventListener('keydown', function (e) {
       var panel = book.closest('.peek');
-      if (!panel || panel.hidden) return;
+      if (!panel || panel.hidden || !panel.classList.contains('is-open')) return;
       if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
     });
 
     paint();
-  })();
+  }
+  /* every book on the page at load, plus any built later (the voice scripts
+     are fetched, so their leaves do not exist yet) */
+  [].slice.call(document.querySelectorAll('[data-book]')).forEach(initBook);
+  window.__initBook = initBook;
 
   /* ---- The deck bar: out of the way going down, back on the way up ----
      Reads lenis.scroll, the SAME number the reading line and the field read,
