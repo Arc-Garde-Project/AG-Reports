@@ -1089,22 +1089,12 @@ main.fading { opacity: 0.18; }
 <a class="skip-link" href="#cover">Skip to content</a>
 <div class="scroll-progress" id="scroll-progress"></div>
 
-<!-- REPORTS NAV -->
-<button class="reports-btn" onclick="toggleReportsNav()" aria-label="Open reports menu">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-  <span>Reports</span>
-</button>
-<div class="reports-overlay" id="reportsOverlay" onclick="closeReportsNav()"></div>
-<nav class="reports-nav" id="reportsNav" role="navigation" aria-label="Reports navigation">
-  <div class="reports-modal-header">
-    <img class="reports-modal-logo" src="https://ulhrqamsvaohirawndyu.supabase.co/storage/v1/object/public/AG%20-%20Assets/AG%20Dr%20Bob/Deepwaters%20Logo.png" alt="Deep Waters Recovery">
-    <button data-ag-center-exempt class="reports-modal-close" type="button" onclick="closeReportsNav()" aria-label="Close">&#10005;</button>
-  </div>
-  <div class="reports-modal-body" data-lenis-prevent>
-    <div class="reports-nav-group">Organic Reports</div>
-    <a href="/reports/deepwaters-recovery/6-month-2026" class="reports-nav-link active">6-Month Report<span>Nov 1, 2025 – Apr 30, 2026</span></a>
-  </div>
-</nav>
+<!-- REPORTS NAV REMOVED. The panel held exactly one link,
+     /reports/deepwaters-recovery/6-month-2026, which returns 404 - and it was
+     marked `active`, so the single destination was the page you were already
+     on. A control fixed over the whole report that opens a menu going nowhere
+     is worse than no control. The listeners that drove it are gone too; one of
+     them ran on every click anywhere in the document. -->
 
 <main>
 
@@ -1585,16 +1575,6 @@ main.fading { opacity: 0.18; }
     btn.addEventListener('click', () => setChartType(btn.dataset.type));
   });
 
-  // Reports modal
-  window.toggleReportsNav = function() {
-    document.getElementById('reportsNav').classList.toggle('open');
-    document.getElementById('reportsOverlay').classList.toggle('open');
-  };
-  window.closeReportsNav = function() {
-    document.getElementById('reportsNav').classList.remove('open');
-    document.getElementById('reportsOverlay').classList.remove('open');
-  };
-
   // Initial render
   setBrand('dw');
 
@@ -1754,20 +1734,6 @@ main.fading { opacity: 0.18; }
     }
   }
   makeParticles('cover-particles', 24);
-
-  // Click outside to close reports modal
-  document.addEventListener('click', e => {
-    const nav = document.getElementById('reportsNav');
-    const btn = document.querySelector('.reports-btn');
-    if (nav.classList.contains('open') && !nav.contains(e.target) && !btn.contains(e.target)) {
-      window.closeReportsNav();
-    }
-  });
-
-  // Escape key closes modal
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') window.closeReportsNav();
-  });
 
 })();
 </script>
