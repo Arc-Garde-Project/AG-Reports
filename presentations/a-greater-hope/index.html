@@ -3606,34 +3606,55 @@ html[data-theme="dark"] { --card-solid: #181327; --card-note: rgba(244, 241, 248
    object-fit:contain precisely so the WHOLE lockup shows. A flex column keeps
    the square (all three cards must stay identical) while giving the label its
    own band that the artwork is laid out above, so nothing overlaps. */
+/* NO PLATE. The card used to carry the logo on its own dark blue rectangle,
+   which was the right call while the artwork had that rectangle baked in. The
+   transparent mark is the one the report itself renders, so the logo can sit
+   straight on the card the way the statics and the scripts do, and the three
+   previews finally match.
+
+   TWO MARKS, ONE PER GROUND. The canonical logo is white-on-nothing: correct
+   on the dark ground and effectively invisible on the light one, so a single
+   asset cannot serve both. The light twin is the same artwork with its
+   luminance mapped into the deck's ink, so shape, proportion and alpha edges
+   are identical and only the value flips. */
 .proof-mark {
   position: relative;
   display: flex;
   flex-direction: column;
-  background: #0b1f2b;
-  border-bottom: 1px solid var(--surface-line);
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 1.8vw, 22px);
+  background: none;
+  border: 0;
   overflow: hidden;
 }
-.proof-mark img {
+.proof-mark .dw-mark {
   display: block;
-  flex: 1 1 auto;
-  min-height: 0;
-  width: 100%;
-  height: 100%;
+  width: auto;
+  max-width: 62%;
+  height: auto;
+  max-height: 66%;
   object-fit: contain;   /* contain, never cover: the WHOLE logo has to show */
-  padding: 7% 7% 2%;
 }
+/* MATCH THE SPECIFICITY OF THE RULE THEY OVERRIDE. `.proof-mark .dw-mark`
+   above is two classes; a bare `.dw-mark--light` is one, so its `display:none`
+   lost and BOTH marks painted, stacked. Every swap rule now carries the same
+   descendant, and the theme rules add an attribute on top of that. */
+.proof-mark .dw-mark--light { display: none; }
+html[data-theme="light"] .proof-mark .dw-mark--dark { display: none; }
+html[data-theme="light"] .proof-mark .dw-mark--light { display: block; }
 .proof-mark-t {
   flex: none;
-  padding: 10px 12px 12px;
+  padding: 0;
   text-align: center;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.9375rem);
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.88);
-  background: rgba(7, 22, 32, 0.92);
+  /* the strip is gone with the plate, so this is plain type on the card */
+  color: var(--text-secondary);
+  background: none;
 }
 
 /* ---- one scrollbar language, everywhere in the deck ----
@@ -4409,8 +4430,10 @@ html[data-theme="dark"] { --card-solid: #181327; --card-note: rgba(244, 241, 248
             <span class="card-note-b">Deepwaters did not have any videography at all throughout their engagement with us and they had zero presence on social media prior to working with us. Doing the best with what we had, we were able to get them a healthy amount of traction. Click below to see the results in full&nbsp;detail.</span>
           </span>
           <span class="proof-mark">
-            <img src="dw-logo.webp" width="720" height="720"
+            <img class="dw-mark dw-mark--dark" src="dw-logo.webp" width="571" height="760"
                  alt="Deep Waters Recovery" loading="lazy" decoding="async">
+            <img class="dw-mark dw-mark--light" src="dw-logo-light.webp" width="571" height="760"
+                 alt="" aria-hidden="true" loading="lazy" decoding="async">
             <span class="proof-mark-t">Report</span>
           </span>
           <span class="proof-cue">
