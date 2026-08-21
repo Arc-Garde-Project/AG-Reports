@@ -1,26 +1,74 @@
 [
   {
-    "file": "vs-01.html",
-    "title": "Voice Script 01"
+    "file": "AGH VO SCRIPT 1.pdf",
+    "title": "Graduation Celebration",
+    "pages": 1,
+    "pages_img": [
+      {
+        "img": "vs-01-p1.webp",
+        "w": 1592,
+        "h": 2060
+      }
+    ]
   },
   {
-    "file": "vs-02.html",
-    "title": "Voice Script 02"
+    "file": "AGH VO SCRIPT 2.pdf",
+    "title": "Back to School Bash",
+    "pages": 1,
+    "pages_img": [
+      {
+        "img": "vs-02-p1.webp",
+        "w": 1592,
+        "h": 2060
+      }
+    ]
   },
   {
-    "file": "vs-03.html",
-    "title": "Voice Script 03"
+    "file": "AGH VO SCRIPT 3.pdf",
+    "title": "Barstow Open House",
+    "pages": 1,
+    "pages_img": [
+      {
+        "img": "vs-03-p1.webp",
+        "w": 1592,
+        "h": 2060
+      }
+    ]
   },
   {
-    "file": "vs-04.html",
-    "title": "Voice Script 04"
+    "file": "AGH VO SCRIPT 4.pdf",
+    "title": "Foster Care Success Story (in the biological mom's words) -Two Alicias",
+    "pages": 1,
+    "pages_img": [
+      {
+        "img": "vs-04-p1.webp",
+        "w": 1592,
+        "h": 2060
+      }
+    ]
   },
   {
-    "file": "vs-05.html",
-    "title": "Voice Script 05"
+    "file": "AGH VO SCRIPT 5.pdf",
+    "title": "Kinship Care Success Story- Ti Marisol",
+    "pages": 1,
+    "pages_img": [
+      {
+        "img": "vs-05-p1.webp",
+        "w": 1592,
+        "h": 2060
+      }
+    ]
   },
   {
-    "file": "vs-06.html",
-    "title": "Voice Script 06"
+    "file": "AGH VO SCRIPT 6.pdf",
+    "title": "Kinship Care Success Stories- Mariella & Penepole",
+    "pages": 1,
+    "pages_img": [
+      {
+        "img": "vs-06-p1.webp",
+        "w": 1592,
+        "h": 2060
+      }
+    ]
   }
 ]

@@ -871,6 +871,14 @@ ul { padding-left: 0; list-style: none; }
   pointer-events: none;
 }
 
+/* NO SCROLLBAR ON THE PAGE. The reading line at the top is the position
+   indicator, so a second one down the right edge is saying the same thing
+   twice, less well. Scoped to the document only: the modal panels and the
+   script leaves keep their own bars, because inside those a reader genuinely
+   needs to know there is more below. */
+html { scrollbar-width: none; -ms-overflow-style: none; }
+html::-webkit-scrollbar { width: 0; height: 0; }
+
 .agh-progress {
   position: absolute;
   inset: 0 auto 0 0;
@@ -1824,7 +1832,17 @@ html[data-theme="dark"] .ld-rocket {
    centred above left-aligned labels. The cell is centred now, so the cancel is
    the only thing holding the numbers left. Scoped to .ostat-row so the
    left-aligned uses of .ostat-fig elsewhere are untouched. */
-.ostat-row .ostat-fig { margin-inline: auto; }
+.ostat-row .ostat-fig {
+  margin-inline: auto;
+  /* NEVER SPLIT A WORD. "7 Platforms" carries an &nbsp; between the figure and
+     the label, so the pair cannot separate - which means that once the box is
+     too narrow the browser has no legal break point left and splits the WORD,
+     giving "PLATFOR / MS". Locked shut here as a guard; the real fix is the
+     breakpoint below, which stops the box ever getting that narrow. */
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+}
 /* the figures divide with a vertical rule now they sit side by side, so the
    stacked rule the column layout used has to go */
 .ostat-row .ostat + .ostat {
@@ -1835,13 +1853,17 @@ html[data-theme="dark"] .ld-rocket {
 }
 .sys--wide .sys-copy {
   width: 100%;
+  text-align: center;
   margin-top: clamp(18px, 2.2vw, 28px);
   padding-top: clamp(18px, 2.2vw, 28px);
   border-top: 1px solid var(--rule);
 }
 
-/* phone: the three figures stack again, and the rule goes back to horizontal */
-@media (max-width: 700px) {
+/* STACK AT 1000px, NOT 700. Measured across ten widths: at 820-900px the
+   three-across row gave each figure a 173px box and "7 Platforms" broke
+   mid-word. 1024px was the narrowest width that still held it on one line, so
+   the row goes to a single column below 1000. */
+@media (max-width: 1000px) {
   .ostat-row { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .ostat-row .ostat { padding-inline: 0; }
   .ostat-row .ostat + .ostat {
@@ -3339,35 +3361,32 @@ html.peek-open, html.peek-open body { overflow: hidden; }
 /* THE SAME FAN AS THE STATICS. Same offsets, same rotations, same z-order,
    same easing token, and the same widening on hover - the two cards sit beside
    each other, so anything less than an exact match reads as a mistake. */
-.voice-sheet {
+/* THE CARD SHOWS THE ACTUAL SCRIPTS, the way the statics card shows the actual
+   graphics. Drawn placeholder sheets were fine while the scripts were
+   placeholders; now that they are real, a card that still shows blank paper is
+   the card lying about what is behind it. Same fan, same easing, same widening
+   on hover as the statics. */
+.voice-fan img {
   position: absolute;
-  top: 50%; left: 50%;
-  width: 46%; aspect-ratio: 3 / 4;
-  background: #fff;
-  border: 1px solid rgba(34,27,41,0.13);
+  top: 50%;
+  left: 50%;
+  width: 42%;
+  height: auto;
   border-radius: 10px;
+  border: 1px solid rgba(34,27,41,0.13);
   box-shadow: var(--shadow-card);
   transition: transform var(--duration-medium) var(--ease-settle);
 }
-.voice-sheet:nth-child(1) { transform: translate(-50%, -50%) translateX(-34%) rotate(-8deg); z-index: 1; }
-.voice-sheet:nth-child(2) { transform: translate(-50%, -50%) translateX(34%) rotate(8deg);  z-index: 2; }
-.voice-sheet:nth-child(3) {
-  transform: translate(-50%, -50%) rotate(0deg);
-  z-index: 3;
-  display: flex; flex-direction: column; justify-content: center; gap: 9%;
-  padding: 13% 12%;
-}
+.voice-fan img:nth-child(1) { transform: translate(-50%, -50%) translateX(-34%) rotate(-8deg); z-index: 1; }
+.voice-fan img:nth-child(2) { transform: translate(-50%, -50%) translateX(34%) rotate(8deg);  z-index: 2; }
+.voice-fan img:nth-child(3) { transform: translate(-50%, -50%) rotate(0deg);                   z-index: 3; }
 
 @media (hover: hover) {
-  .voice-card:hover .voice-sheet:nth-child(1) { transform: translate(-50%, -50%) translateX(-44%) rotate(-11deg); }
-  .voice-card:hover .voice-sheet:nth-child(2) { transform: translate(-50%, -50%) translateX(44%) rotate(11deg); }
+  .voice-card:hover .voice-fan img:nth-child(1) { transform: translate(-50%, -50%) translateX(-44%) rotate(-11deg); }
+  .voice-card:hover .voice-fan img:nth-child(2) { transform: translate(-50%, -50%) translateX(44%) rotate(11deg); }
 }
 
-@media (prefers-reduced-motion: reduce) { .voice-sheet { transition: none; } }
-.voice-rule { display: block; height: 5%; border-radius: 999px; background: rgba(78,81,149,0.30); }
-.voice-rule:nth-child(1) { width: 62%; background: rgba(78,81,149,0.62); height: 7%; }
-.voice-rule:nth-child(3) { width: 84%; }
-.voice-rule:nth-child(5) { width: 52%; }
+@media (prefers-reduced-motion: reduce) { .voice-fan img { transition: none; } }
 
 /* ---- a book of DOCUMENTS rather than pictures ----
    Each leaf is a whole document in its own frame, so it scrolls on its own and
@@ -3388,17 +3407,45 @@ html.peek-open, html.peek-open body { overflow: hidden; }
    frame by the corner radius and round it to match: the bar then sits inside
    the page, clear of every corner, and nothing crosses the container edge. */
 .book--docs .book-leaf {
-  background: #fffdfa;
-  padding: 10px;
+  background: #ffffff;
+  padding: 8px;
 }
-.book--docs .book-leaf iframe {
-  display: block;
+.leaf-scroll {
   width: 100%;
   height: 100%;
-  border: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
   border-radius: 12px;
-  background: #fffdfa;
+  background: #ffffff;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(96,68,116,0.34) transparent;
 }
+.leaf-scroll::-webkit-scrollbar { width: 9px; }
+.leaf-scroll::-webkit-scrollbar-track { background: transparent; }
+.leaf-scroll::-webkit-scrollbar-thumb {
+  background: rgba(96,68,116,0.30);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.leaf-scroll img { display: block; width: 100%; height: auto; }
+.leaf-src {
+  display: block;
+  padding: 14px 12px 18px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--agh-indigo);
+  text-decoration: none;
+}
+@media (hover: hover) { .leaf-src:hover { text-decoration: underline; } }
+/* only the leaf in view takes input, so one script scrolls at a time */
+.book--docs .book-leaf:not(.is-on) .leaf-scroll { pointer-events: none; }
 /* the shading pass must not sit over a document the reader is scrolling */
 .book--docs .book-leaf.is-on::after { opacity: 0; }
 .book--docs .book-leaf:not(.is-on) iframe { pointer-events: none; }
@@ -3435,28 +3482,125 @@ html.peek-open, html.peek-open body { overflow: hidden; }
   .reveal, .reveal-stagger > * { transition: none; transform: none; }
 }
 
+/* THE CONTEXT LIVES ON THE CARD IT DESCRIBES. It used to sit in the shared
+   header above all three, where the Deep Waters paragraph was doing the
+   talking for cards it had nothing to do with. Each card now says what it is.
+
+   The notes are very different lengths, so the PREVIEW is what has to line up,
+   not the text: the note block takes the slack (flex:1) and the preview and
+   the cue are fixed, which keeps the three cards identical in height with
+   their previews on the same line. */
+.card-note {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 auto;
+  text-align: center;
+}
+.card-note-t {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.9375rem, 0.9rem + 0.24vw, 1.0625rem);
+  line-height: 1.32;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.card-note-b {
+  font-size: clamp(0.8125rem, 0.79rem + 0.16vw, 0.9375rem);
+  line-height: 1.5;
+  /* NOT --text-secondary. That token is tuned for body copy on the deck's warm
+     paper; on the pure-white card it goes thin and washed out, and this text is
+     the thing explaining what the card is. Darker, and a shade heavier. */
+  color: #3a3242;
+  font-weight: 450;
+  text-wrap: pretty;
+}
+.proof .peek-card > .proof-mark,
+.proof .peek-card > .statics-fan,
+.proof .peek-card > .voice-fan { flex: none; }
+
+/* OPAQUE, NOT GLASS. --surface is rgba(255,255,255,0.62) and the page behind
+   this block is a dense icon pattern, so the pattern read straight through the
+   copy and the card labels. Scoped to this block: the rest of the deck keeps
+   the glass treatment, which works fine where it sits on flat ground. */
+.showcase { background: var(--paper); }
+.showcase .peek-card {
+  background: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-color: var(--rule);
+}
+
+/* ---- the show-and-tell block: one container around all three ---- */
+.showcase {
+  margin-top: clamp(30px, 3.6vw, 52px);
+  padding: clamp(24px, 2.6vw, 38px) clamp(20px, 2.4vw, 34px) clamp(24px, 2.6vw, 36px);
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+.showcase-head { max-width: 78ch; margin-inline: auto; text-align: center; }
+.showcase-eyebrow {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-micro, 0.75rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.showcase-title {
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.75rem);
+  line-height: 1.14;
+  letter-spacing: 0.008em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.showcase-sub + .showcase-sub { margin-top: 10px; }
+.showcase-sub--last { font-weight: 600; color: var(--ink); }
+.showcase-sub {
+  margin-top: 12px;
+  font-size: clamp(0.9375rem, 0.9rem + 0.24vw, 1.0625rem);
+  line-height: 1.58;
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+/* the cards sit inside the container, so their own top margin goes */
+.showcase .proof { margin-top: clamp(20px, 2.4vw, 32px); }
+
 /* ---- the Deep Waters card: the mark, and what it opens ---- */
 /* THE LOGO IS THE COVER. It is a full lockup on its own blue plate - iceberg,
    wordmark and descender - so it does not need a mark-on-a-background
    treatment, it needs to BE the cover. object-fit: contain rather than cover,
    because cover crops, and the whole logo has to be on the preview. */
+/* THE LABEL IS A STRIP, NOT AN OVERLAY. Absolutely positioned across the
+   bottom it covered the "recovery network" line of the logo - and the logo is
+   object-fit:contain precisely so the WHOLE lockup shows. A flex column keeps
+   the square (all three cards must stay identical) while giving the label its
+   own band that the artwork is laid out above, so nothing overlaps. */
 .proof-mark {
   position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
   background: #0b1f2b;
   border-bottom: 1px solid var(--surface-line);
   overflow: hidden;
 }
 .proof-mark img {
   display: block;
+  flex: 1 1 auto;
+  min-height: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;   /* contain, never cover: the WHOLE logo has to show */
+  padding: 7% 7% 2%;
 }
 .proof-mark-t {
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  padding: 11px 12px 13px;
+  flex: none;
+  padding: 10px 12px 12px;
   text-align: center;
   font-family: var(--font-display);
   font-weight: 700;
@@ -3464,9 +3608,7 @@ html.peek-open, html.peek-open body { overflow: hidden; }
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.88);
-  background: rgba(7, 22, 32, 0.82);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(7, 22, 32, 0.92);
 }
 
 /* ---- one scrollbar language, everywhere in the deck ----
@@ -4218,9 +4360,29 @@ html.peek-open, html.peek-open body { overflow: hidden; }
            is a recovery network, not a non-profit, so it cannot be introduced
            as one to a non-profit. It is honest as a finished six-month organic
            engagement; it is not honest as a sector match. -->
-      <div class="proof reveal">
+      <!-- WHAT THIS BLOCK IS, said out loud.
+           Without a heading the three cards sat in the middle of a pitch with
+           no frame around them, so a reader had to guess whether they were
+           capability claims, past clients, or what they were buying.
+
+           THE FRAMING HAS TO STAY EXACT. Only ONE of the three is past work:
+           the Deep Waters report is a finished six-month engagement for
+           another client. The statics are samples made for A Greater Hope, and
+           the scripts are samples too. Calling all three "past work" would be
+           a false claim, so the heading says both things. -->
+      <div class="showcase reveal">
+        <div class="showcase-head">
+          <p class="showcase-eyebrow">Show And Tell</p>
+          <h3 class="showcase-title">Past Work, And What Yours Would Look&nbsp;Like</h3>
+          <p class="showcase-sub">Past work, and examples of what your own deliverables would look&nbsp;like.</p>
+        </div>
+      <div class="proof">
         <button class="peek-card proof-card" type="button" data-peek="peek-deepwaters"
                 aria-label="Open the Deep Waters Recovery six-month organic report">
+          <span class="card-note">
+            <span class="card-note-t">Here are the results we generated via our organic content system for Deepwaters non&nbsp;profit.</span>
+            <span class="card-note-b">Deepwaters did not have any videography at all throughout their engagement with us and they had zero presence on social media prior to working with us. Doing the best with what we had, we were able to get them a healthy amount of traction. Click below to see the results in full&nbsp;detail.</span>
+          </span>
           <span class="proof-mark">
             <img src="dw-logo.webp" width="720" height="720"
                  alt="Deep Waters Recovery" loading="lazy" decoding="async">
@@ -4234,6 +4396,10 @@ html.peek-open, html.peek-open body { overflow: hidden; }
         </button>
         <button class="peek-card statics-card" type="button" data-peek="peek-statics"
                 aria-label="Open three sample static graphics">
+          <span class="card-note">
+            <span class="card-note-t">Here are 3 infographics, built for A Greater&nbsp;Hope.</span>
+            <span class="card-note-b">Rebuilt from your own recent posts, in your brand, using your own words. These are examples of the 30 statics a month we would be producing for you, ready to&nbsp;post.</span>
+          </span>
           <span class="statics-fan" aria-hidden="true">
             <img src="ig-3.webp" width="900" height="900" alt="" loading="lazy" decoding="async">
             <img src="ig-2.webp" width="900" height="900" alt="" loading="lazy" decoding="async">
@@ -4248,14 +4414,14 @@ html.peek-open, html.peek-open body { overflow: hidden; }
         <button class="peek-card voice-card" type="button" data-peek="peek-voice"
                 data-voice-card hidden
                 aria-label="Open the voice scripts">
+          <span class="card-note">
+            <span class="card-note-t">Here are 6 voice over scripts for your organic&nbsp;content.</span>
+            <span class="card-note-b">Charles Osborne paid for these on A Greater Hope&rsquo;s behalf. The finalized videos are currently in production and should be done/finalized soon. We still felt it would be a good idea to give you a sneak&nbsp;peek.</span>
+          </span>
           <span class="voice-fan" aria-hidden="true">
-            <span class="voice-sheet"></span>
-            <span class="voice-sheet"></span>
-            <span class="voice-sheet">
-              <span class="voice-rule"></span><span class="voice-rule"></span>
-              <span class="voice-rule"></span><span class="voice-rule"></span>
-              <span class="voice-rule"></span>
-            </span>
+            <img src="vs-03.webp" width="720" height="960" alt="" loading="lazy" decoding="async">
+            <img src="vs-02.webp" width="720" height="960" alt="" loading="lazy" decoding="async">
+            <img src="vs-01.webp" width="720" height="960" alt="" loading="lazy" decoding="async">
           </span>
           <span class="proof-cue">
             <span class="proof-cue-t" data-voice-count>Voice scripts</span>
@@ -4264,13 +4430,14 @@ html.peek-open, html.peek-open body { overflow: hidden; }
           </span>
         </button>
       </div>
+      </div>
     </div>
   </section>
 
   <div class="peek" id="peek-statics" role="dialog" aria-modal="true"
        aria-label="Three sample static graphics" hidden>
     <div class="peek-veil" data-peek-close></div>
-    <div class="peek-panel peek-panel--book">
+    <div class="peek-panel peek-panel--book" data-lenis-prevent>
       <button class="peek-x" type="button" data-peek-close aria-label="Close">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
              stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -4299,7 +4466,7 @@ html.peek-open, html.peek-open body { overflow: hidden; }
   <div class="peek" id="peek-voice" role="dialog" aria-modal="true"
        aria-label="Voice scripts" hidden>
     <div class="peek-veil" data-peek-close></div>
-    <div class="peek-panel peek-panel--book peek-panel--docs">
+    <div class="peek-panel peek-panel--book peek-panel--docs" data-lenis-prevent>
       <button class="peek-x" type="button" data-peek-close aria-label="Close">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
              stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -4324,7 +4491,7 @@ html.peek-open, html.peek-open body { overflow: hidden; }
   <div class="peek" id="peek-deepwaters" role="dialog" aria-modal="true"
        aria-labelledby="peek-deepwaters-t" hidden>
     <div class="peek-veil" data-peek-close></div>
-    <div class="peek-panel peek-panel--shot">
+    <div class="peek-panel peek-panel--shot" data-lenis-prevent>
       <button class="peek-x" type="button" data-peek-close aria-label="Close the report">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
              stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -5087,6 +5254,9 @@ html.peek-open, html.peek-open body { overflow: hidden; }
       var inject =
         '<style>' +
         'html,body{overflow:auto !important;height:auto !important;}' +
+        /* the report's own REPORTS menu is chrome for the standalone page. In
+           here it is a control that leads out of the deck, so it goes. */
+        '.reports-nav,.reports-nav-group{display:none !important;}' +
         'html{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.28) transparent;}' +
         '::-webkit-scrollbar{width:10px;height:10px;}' +
         '::-webkit-scrollbar-track{background:transparent;}' +
@@ -5124,28 +5294,52 @@ html.peek-open, html.peek-open body { overflow: hidden; }
              with `is-on` landing on the third leaf while the counter said 1.
              The frame is created up front so position is fixed by the
              manifest, never by timing. */
-          var figs = list.map(function (item, i) {
+          /* EACH LEAF IS THE PAGE AS TYPESET. Not a conversion of the words -
+             an image of the supplied PDF page, so the copy cannot differ from
+             the source because it was never re-set. A framed PDF was the first
+             attempt and is more faithful still, but it renders blank in
+             headless Chromium and unreliably in iOS Safari, and a deck sent by
+             link is opened on phones. The PDF stays in the deck and stays one
+             tap away underneath. */
+          list.map(function (item, i) {
             var fig = document.createElement('figure');
             fig.className = 'book-leaf' + (i === 0 ? ' is-on' : '');
-            var f = document.createElement('iframe');
-            f.setAttribute('title', item.title || ('Voice script ' + (i + 1)));
-            f.setAttribute('loading', i === 0 ? 'eager' : 'lazy');
-            fig.appendChild(f);
+            var scroll = document.createElement('div');
+            scroll.className = 'leaf-scroll';
+            /* LENIS HAS TO BE TOLD TO KEEP ITS HANDS OFF THIS BOX. lenis.stop()
+               stops Lenis SCROLLING, but its wheel listener is still attached
+               and still calls preventDefault, so the wheel never reaches the
+               native scroller underneath. Measured: a swipe scrolled the page
+               fine and a wheel moved it 0px. data-lenis-prevent is Lenis's own
+               opt-out and is read off the event target's ancestors. */
+            scroll.setAttribute('data-lenis-prevent', '');
+            (item.pages_img || []).forEach(function (pg, n) {
+              var im = document.createElement('img');
+              im.src = pg.img;
+              im.width = pg.w; im.height = pg.h;
+              im.loading = (i === 0 && n === 0) ? 'eager' : 'lazy';
+              im.decoding = 'async';
+              im.alt = (item.title || 'Voice script ' + (i + 1)) +
+                       ((item.pages_img.length > 1) ? ', page ' + (n + 1) : '');
+              scroll.appendChild(im);
+            });
+            var a = document.createElement('a');
+            a.className = 'leaf-src';
+            a.href = item.file;
+            a.target = '_blank';
+            a.rel = 'noopener';
+            a.textContent = 'Open the PDF';
+            scroll.appendChild(a);
+            fig.appendChild(scroll);
             stage.appendChild(fig);
-            bridgeCursor(f);
-            return f;
+            return fig;
           });
           var nEl = panel.querySelector('[data-book-n]');
           if (nEl) nEl.textContent = String(list.length);
           book.setAttribute('data-book', '');
           if (window.__initBook) window.__initBook(book);
 
-          list.forEach(function (item, i) {
-            fetch(item.file, { credentials: 'same-origin' })
-              .then(function (r) { return r.ok ? r.text() : ''; })
-              .then(function (html) { if (html) figs[i].srcdoc = html; })
-              .catch(function () {});
-          });
+
         })
         .catch(function () {});
     }
