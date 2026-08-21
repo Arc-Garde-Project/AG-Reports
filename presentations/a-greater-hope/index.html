@@ -1805,9 +1805,26 @@ html[data-theme="dark"] .ld-rocket {
 .ostat-row {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(16px, 2vw, 30px);
+  /* NO GAP, and equal padding inside each cell instead. With a gap plus a
+     left-padded border, the text sat off to one side of its own third: the
+     padding only existed on one edge, so "2 A Day" read as left aligned while
+     the divider looked like it belonged to the neighbour. Zero gap means each
+     cell is exactly a third, symmetric padding means the text centres inside
+     it, and the rules land precisely on the thirds. */
+  gap: 0;
   width: 100%;
 }
+.ostat-row .ostat {
+  text-align: center;
+  padding-inline: clamp(12px, 1.6vw, 24px);
+}
+/* .grad is width:fit-content and centres itself with margin-inline:auto, and
+   .ostat-fig deliberately cancelled that with margin-inline:0 - correct when
+   the card was left-aligned content, because an auto-centred number sat
+   centred above left-aligned labels. The cell is centred now, so the cancel is
+   the only thing holding the numbers left. Scoped to .ostat-row so the
+   left-aligned uses of .ostat-fig elsewhere are untouched. */
+.ostat-row .ostat-fig { margin-inline: auto; }
 /* the figures divide with a vertical rule now they sit side by side, so the
    stacked rule the column layout used has to go */
 .ostat-row .ostat + .ostat {
@@ -1815,7 +1832,6 @@ html[data-theme="dark"] .ld-rocket {
   padding-top: 0;
   border-top: 0;
   border-left: 1px solid var(--rule);
-  padding-left: clamp(16px, 2vw, 30px);
 }
 .sys--wide .sys-copy {
   width: 100%;
@@ -1827,6 +1843,7 @@ html[data-theme="dark"] .ld-rocket {
 /* phone: the three figures stack again, and the rule goes back to horizontal */
 @media (max-width: 700px) {
   .ostat-row { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ostat-row .ostat { padding-inline: 0; }
   .ostat-row .ostat + .ostat {
     border-left: 0;
     padding-left: 0;
