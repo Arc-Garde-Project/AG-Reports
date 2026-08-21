@@ -1317,10 +1317,15 @@ html[data-theme="dark"] .ld-rocket {
   }
 }
 
-/* alternating arrival, on the existing IntersectionObserver */
-.reveal-stagger > *:nth-child(odd)  { transform: translate3d(-46px, 14px, 0); }
-.reveal-stagger > *:nth-child(even) { transform: translate3d(46px, 14px, 0); }
-.reveal-stagger.in-view > *          { transform: none; }
+/* UP, NOT SIDEWAYS. This alternated -46px / +46px by odd/even. In a stacked
+   column that reads as a gentle weave, but the same rule drives `.system-grid`,
+   which is a THREE-ACROSS ROW on desktop: card 1 flew in from the left, card 2
+   from the right and card 3 from the left again, so the three cards crossed
+   paths on their way in. The horizontal component is gone; every child now
+   rises from the same place and the stagger alone carries the sequence. The
+   distance lives with the rest of the reveal machinery further down, so there
+   is one source for it rather than two. */
+.reveal-stagger.in-view > * { transform: none; }
 
 /* the headline owns its own entrance, so it must not also slide */
 .reveal-stagger > .hero-title,
@@ -3485,13 +3490,18 @@ html.peek-open, html.peek-open body { overflow: hidden; }
    with every other deck and this is one client's taste, not a system change. */
 .reveal,
 .reveal-stagger > * {
-  transition-duration: var(--duration-long);
+  /* PACE. Was --duration-long (900ms) with a 126ms step, which on a three-card
+     row meant the last card was still arriving most of a second after the
+     first. Medium plus a halved step lands all three inside ~730ms: still
+     unhurried, no longer a queue you wait through. */
+  transition-duration: var(--duration-medium);
   transition-timing-function: var(--ease-soft);
 }
 .reveal { transform: translateY(var(--dist-micro)); }
 .reveal-stagger > * {
-  transform: translateY(var(--dist-micro));
-  transition-delay: calc(var(--i, 0) * 126ms);   /* 7 x 18, up from 81ms */
+  /* the single source for the stagger's arrival distance, now purely vertical */
+  transform: translate3d(0, 26px, 0);
+  transition-delay: calc(var(--i, 0) * 63ms);   /* 7 x 9, down from 126ms */
 }
 .reveal.in-view,
 .reveal-stagger.in-view > * { transform: translateY(0); }
