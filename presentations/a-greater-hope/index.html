@@ -59,8 +59,10 @@
    default in place. */
 (function () {
   try {
+    /* DARK IS THE DEFAULT. Only an explicit stored 'light' opts out, so a
+       first-time reader lands on dark without a flash of the wrong ground. */
     var t = localStorage.getItem('agh-theme');
-    if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+    document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
   } catch (e) {}
 })();
 </script>
@@ -861,15 +863,21 @@ ul { padding-left: 0; list-style: none; }
    but held back, and the portion already read comes up to full strength -
    so the bar fills as the deck is worked through rather than appearing and
    disappearing. Width only, so it is a transform-cheap paint. */
+/* THE TRACK IS NOT THE FILL. This carried `opacity: 0.18` with the sweep as
+   its background, and element opacity applies to CHILDREN - so the progress
+   bar inside it could never paint above 18% either. On the dark ground a pale
+   sweep still reads as a line; on near-white paper it vanished, which is why
+   the fill "did not work on light". The track is now a neutral rule at full
+   element opacity, and the fill paints the sweep at full strength over it. */
 .agh-topline {
   position: fixed;
   inset: 0 0 auto 0;
   height: 5px;
-  background: var(--sweep-decor);
-  opacity: 0.18;
+  background: rgba(34, 27, 41, 0.12);
   z-index: 60;
   pointer-events: none;
 }
+html[data-theme="dark"] .agh-topline { background: rgba(255, 255, 255, 0.14); }
 
 /* NO SCROLLBAR ON THE PAGE. The reading line at the top is the position
    indicator, so a second one down the right edge is saying the same thing
@@ -3269,8 +3277,11 @@ html.peek-open, html.peek-open body { overflow: hidden; }
      each card in its own row. */
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  border-bottom: 1px solid var(--surface-line);
-  background: var(--surface);
+  /* NO PLATE. The fanned graphics sit straight on the card, so there is no
+     second surface behind them changing colour with the theme, and nothing to
+     go beige on one ground and grey on the other. */
+  background: none;
+  border: 0;
 }
 
 .statics-fan img {
@@ -3362,8 +3373,7 @@ html.peek-open, html.peek-open body { overflow: hidden; }
 .voice-fan {
   position: relative;
   display: block;
-  background: linear-gradient(168deg, #f6f3ef 0%, #ece7e1 100%);
-  border-bottom: 1px solid var(--surface-line);
+  background: none;
   overflow: hidden;
 }
 /* THE SAME FAN AS THE STATICS. Same offsets, same rotations, same z-order,
@@ -3516,10 +3526,10 @@ html.peek-open, html.peek-open body { overflow: hidden; }
 .card-note-b {
   font-size: clamp(0.8125rem, 0.79rem + 0.16vw, 0.9375rem);
   line-height: 1.5;
-  /* NOT --text-secondary. That token is tuned for body copy on the deck's warm
-     paper; on the pure-white card it goes thin and washed out, and this text is
-     the thing explaining what the card is. Darker, and a shade heavier. */
-  color: #3a3242;
+  /* NOT --text-secondary: that token is tuned for body copy on the deck's warm
+     paper and goes thin on a solid card. --card-note is the card-specific
+     value and it flips with the theme. */
+  color: var(--card-note);
   font-weight: 450;
   text-wrap: pretty;
 }
@@ -3531,9 +3541,16 @@ html.peek-open, html.peek-open body { overflow: hidden; }
    this block is a dense icon pattern, so the pattern read straight through the
    copy and the card labels. Scoped to this block: the rest of the deck keeps
    the glass treatment, which works fine where it sits on flat ground. */
+/* THEME-AWARE, NOT HARDCODED. The card was pinned to #ffffff while the note
+   heading used var(--ink) - which flips to near-white in dark mode, so the
+   heading went white-on-white and disappeared. Both sides are tokens now, and
+   both are opaque, because this block sits over the icon pattern. */
+:root { --card-solid: #ffffff; --card-note: #3a3242; }
+html[data-theme="dark"] { --card-solid: #181327; --card-note: rgba(244, 241, 248, 0.84); }
+
 .showcase { background: var(--paper); }
 .showcase .peek-card {
-  background: #ffffff;
+  background: var(--card-solid);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   border-color: var(--rule);
