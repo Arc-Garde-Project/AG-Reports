@@ -1808,7 +1808,15 @@ html[data-theme="dark"] .ld-rocket {
   margin-top: clamp(26px, 3.2vw, 44px);
 }
 
-.sys--wide { gap: 0; align-items: stretch; }
+/* .sys.sys--wide, not .sys--wide: the base .sys rule sets `padding` as a
+   SHORTHAND and sits later in the sheet, so at equal specificity it won and
+   the padding-inline here did nothing at all. Measured: the cell centres did
+   not move by a single pixel. */
+.sys.sys--wide {
+  gap: 0;
+  align-items: stretch;
+  padding-inline: clamp(28px, 3.6vw, 56px);
+}
 
 .ostat-row {
   display: grid;
