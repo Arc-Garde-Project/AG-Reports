@@ -1,0 +1,1342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/presentations/construction-unlimited/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Construction Unlimited | Website Build - Arc Garde</title>
+<meta name="description" content="A website build proposal prepared for Construction Unlimited by Arc Garde.">
+<link rel="canonical" href="https://ag-reports.vercel.app/presentations/construction-unlimited">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ag-reports.vercel.app/presentations/construction-unlimited">
+<meta property="og:title" content="Construction Unlimited | Website Build - Arc Garde">
+<meta property="og:description" content="A website build proposal prepared for Construction Unlimited by Arc Garde.">
+<meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#ffffff">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Construction Unlimited Website Build Proposal","author":{"@type":"Organization","name":"Arc Garde"}}</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
+
+<link rel="stylesheet" href="ag-defensive.css">
+<link rel="stylesheet" href="ag-responsive.css">
+<link rel="stylesheet" href="ag-typography.css">
+<link rel="stylesheet" href="ag-motion.css">
+<link rel="stylesheet" href="ag-scroll.css">
+<link rel="stylesheet" href="ag-cursor.css">
+
+<style>
+/* ============================================================
+   CONSTRUCTION UNLIMITED, proposal chrome.
+   Palette and type are the CLIENT's, measured off curoof.com
+   2026-08-21 and recorded in
+   _intake/Salvatore Cataldo/brandkit/BRANDKIT.md
+   AG primitive token NAMES are never renamed. Only values are
+   set, plus this page's own cu- namespace.
+
+   Design brief: this reads as a SHOP DRAWING, not a dashboard.
+   The audience is a roofer with 1,259 permits to his name who
+   reads section details every day. Ink on paper, measured rules,
+   real layer names. Nothing here is decorative for its own sake.
+   ============================================================ */
+:root{
+  /* --- client palette, all measured, never guessed --- */
+  --cu-red:        #d0202d;   /* Elementor primary, sampled from the logo phoenix */
+  --cu-red-lift:   #e2414d;   /* declared lighter red. DARK GROUND ONLY, 4.12:1 on white */
+  --cu-red-deep:   #9c1822;   /* derived shade for the price rule, holds on paper */
+  --cu-black:      #000000;   /* their footer field */
+  --cu-ink:        #333333;   /* real rendered body ink, 12.63:1 on paper */
+  --cu-ink-strong: #141414;   /* display type only, so headlines carry more weight */
+  --cu-paper:      #ffffff;
+  --cu-surface:    #f4f2ef;   /* warm drawing-paper tone, deliberately off their #f8f8f8
+                                 which sat 2% off white and read as a rendering fault */
+  --cu-muted:      #54595f;   /* 7.07:1 on paper. NOT #777e89, which fails AA */
+  --cu-line:       #e0dedb;
+  --cu-line-ink:   #c9c5c0;   /* drawing hairline on the paper field */
+  --cu-line-dark:  #262626;
+  --cu-muted-dark: #b4b4b4;
+
+  /* --- AG gold thread. Stays gold on client pages per the pitch skill --- */
+  --cu-gold:       #f5c842;
+
+  /* --- TYPE SCALE ---------------------------------------------------
+     Fluid range extended from 1400 to 1920. Every clamp previously topped
+     out at a 1400px viewport, so on the 1920 pitch screen the design stopped
+     scaling and sat in the middle 58 per cent at 18px body. Still clamp(),
+     so a later responsive pass inherits this rather than rebuilding it.
+     Ratio 1.333 (perfect fourth) off a 1.25rem base at 1920.            */
+  --cu-display:   clamp(2.50rem, 1.31rem + 4.96vw, 5.75rem);
+  --cu-display-2: clamp(1.30rem, 0.96rem + 1.41vw, 2.22rem);
+  --cu-h2:        clamp(1.85rem, 1.20rem + 2.71vw, 3.62rem);
+  --cu-h3:        clamp(1.15rem, 0.97rem + 0.76vw, 1.65rem);
+  --cu-body:      clamp(1.02rem, 0.93rem + 0.38vw, 1.27rem);
+  --cu-deck:      clamp(1.05rem, 0.92rem + 0.55vw, 1.41rem);
+  --cu-small:     clamp(0.84rem, 0.78rem + 0.24vw, 1.00rem);
+  --cu-eyebrow:   clamp(0.70rem, 0.66rem + 0.17vw, 0.81rem);
+  --cu-figure:    clamp(2.10rem, 1.42rem + 2.83vw, 3.95rem);
+  --cu-price:     clamp(3.40rem, 1.86rem + 6.42vw, 7.60rem);
+
+  /* --- MEASURE -------------------------------------------------------
+     70rem left 400px of dead margin either side at 1920. Fluid to 84rem. */
+  --cu-measure:   clamp(20rem, 62rem + 20vw, 88rem);
+
+  /* --- ELEVATION -----------------------------------------------------
+     NET-NEW. Grepped core/standards and sectors/web: AG defines no elevation
+     or shadow scale anywhere, only ad-hoc box-shadow values inside single
+     components. Defined here as tokens so depth is a system rather than a
+     per-element decision. Ambient + key light, warm-neutral to sit on the
+     paper field rather than a blue-grey cast.                            */
+  --cu-e0: none;
+  --cu-e1: 0 1px 2px rgba(20,16,12,.05), 0 2px 6px rgba(20,16,12,.04);
+  --cu-e2: 0 2px 4px rgba(20,16,12,.06), 0 8px 20px rgba(20,16,12,.07);
+  --cu-e3: 0 4px 8px rgba(20,16,12,.07), 0 18px 44px rgba(20,16,12,.11);
+  --cu-e-dark: 0 3px 8px rgba(0,0,0,.34), 0 20px 52px rgba(0,0,0,.42);
+
+  --cu-rule: 3px;
+  --cu-roof-h: clamp(9rem, 22vh, 15rem);
+
+  /* --- motion. Every value a multiple of 3 or 7, per AG DNA. --- */
+  --cu-t-tap:   210ms;   /* 3 x 70  */
+  --cu-t-lay:   700ms;   /* 7 x 100 */
+  --cu-t-set:  1050ms;   /* 3 x 350 */
+  --cu-t-rake:   21s;    /* 3 x 7   */
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ background:var(--cu-paper); }
+body{
+  margin:0;
+  background:var(--cu-paper);
+  color:var(--cu-ink);
+  font-family:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-weight:400;
+  font-size:var(--cu-body);
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+
+h1,h2,h3{ margin:0; font-weight:600; line-height:1.06; text-wrap:balance; color:var(--cu-ink-strong); }
+p{ margin:0; text-wrap:pretty; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:auto;
+  background:var(--cu-black); color:var(--cu-paper);
+  padding:var(--space-xs) var(--space-s);
+  font-size:var(--cu-small); z-index:var(--z-skip);
+}
+.skip-link:focus-visible{
+  left:var(--space-2xs); top:var(--space-2xs);
+  outline:2px solid var(--cu-gold); outline-offset:3px;
+  box-shadow:var(--cu-e3);
+}
+.skip-link:active{ transform:translateY(1px); }
+
+.cu-sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap;
+}
+
+/* ============================================================
+   THE DAY
+   A roofer starts at first light and finishes in the gold, and the page
+   runs the same day top to bottom: first light on the hero, hard
+   overhead on the black, warm afternoon over the schedule, golden hour
+   on the price.
+
+   The light is painted into each field's own background rather than
+   laid over the page. Two earlier versions did lay it over: a fixed
+   animated overlay, then a static document tall one. Both were measured
+   and the cost was isolated to a single cause, mix-blend-mode. The same
+   gradients with blend:normal ran at 33.4ms against a 33.3ms baseline,
+   with multiply 66.7ms and 192 of 198 frames over 20ms. Multiply is what
+   kept the warm light from fogging the black field grey, so instead of
+   paying for it the black field simply does not get the light: it has
+   its own rake, and this way the sun costs a paint that each section was
+   doing anyway.
+   ============================================================ */
+
+/* ---------- section furniture ---------- */
+.cu-sec{ padding-block:clamp(4rem,2.4rem + 6.4vw,8rem); position:relative; }
+/* golden hour. The last of the light, low and west, sitting on the number. */
+.cu-sec--gold{
+  background:
+    radial-gradient(54vmax 46vmax at 90% 62%,
+      rgba(255,170,92,.36) 0%, rgba(255,182,110,.13) 38%, transparent 68%),
+    radial-gradient(44vmax 38vmax at 24% 4%,
+      rgba(255,214,164,.20) 0%, rgba(255,220,176,.07) 40%, transparent 70%),
+    var(--cu-paper);
+}
+.cu-sec--surface{
+  background:
+    radial-gradient(52vmax 40vmax at 84% 88%,
+      rgba(255,196,124,.26) 0%, rgba(255,196,124,.09) 38%, transparent 68%),
+    radial-gradient(56vmax 44vmax at 34% 6%,
+      rgba(255,236,208,.30) 0%, rgba(255,240,220,.10) 38%, transparent 68%),
+    var(--cu-surface);
+}
+.cu-sec--dark{ background:var(--cu-black); color:var(--cu-paper); }
+.cu-sec--dark h2{ color:var(--cu-paper); }
+.cu-sec--dark .cu-eyebrow{ color:var(--cu-red-lift); }
+
+.cu-wrap{ width:min(100% - 3vw, var(--cu-measure)); margin-inline:auto; }
+
+/* Eyebrow carries a measured tick before it, the way a drawing labels a detail. */
+.cu-eyebrow{
+  display:flex; align-items:center; gap:0.7rem;
+  font-size:var(--cu-eyebrow); font-weight:700;
+  letter-spacing:0.24em; text-transform:uppercase;
+  color:var(--cu-red);
+  margin-bottom:var(--space-s);
+}
+.cu-eyebrow::before{
+  content:""; width:1.6rem; height:2px; background:currentColor; flex:none;
+}
+.cu-h2{ font-size:var(--cu-h2); max-width:20ch; letter-spacing:-0.015em; }
+
+/* A chalk line does not grow, it SNAPS. Expo-out, not the library's --ease-snap:
+   that curve carries a 1.2 overshoot, and elastic easing is banned on business
+   content. Expo-out is truer to a taut line anyway, fast off the mark and hard
+   into rest. The chalk puff lands at the strike point. */
+.cu-thread{
+  width:3.5rem; height:var(--cu-rule);
+  background:var(--cu-gold);
+  margin-top:var(--space-m);
+  transform-origin:left center;
+  transform:scaleX(0);
+  transition:transform 420ms var(--ease-satisfying);
+  position:relative;
+}
+.cu-thread.in-view{ transform:scaleX(1); }
+.cu-thread::after{
+  content:""; position:absolute; right:-4px; top:50%;
+  width:14px; height:14px; margin-top:-7px; border-radius:50%;
+  background:var(--cu-gold); filter:blur(5px);
+  opacity:0; transform:scale(.3);
+}
+.cu-thread.in-view::after{ animation:cu-puff 630ms var(--ease-soft) 336ms 1; }
+@keyframes cu-puff{
+  0%   { opacity:0;   transform:scale(.3); }
+  22%  { opacity:.85; transform:scale(1); }
+  100% { opacity:0;   transform:scale(2.1); }
+}
+
+/* ---------- roof-pitch edge, the page's structural motif ---------- */
+.cu-pitch{
+  display:block; width:100%; height:clamp(2.2rem,4.4vw,3.8rem);
+  fill:var(--cu-black);
+}
+.cu-pitch--up{ margin-bottom:-1px; }
+.cu-pitch--down{ margin-top:-1px; }
+
+/* Shingle-course texture on the dark field, with a slow rake of light across
+   it. The rake is what makes the black field feel like a surface catching sun
+   rather than a flat fill. 21s so it is felt, never watched. */
+.cu-sec--dark::before{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='168' height='84' viewBox='0 0 168 84'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.06' stroke-width='1'%3E%3Cpath d='M0 41.5h168M0 83.5h168'/%3E%3Cpath d='M42 42v41M126 42v41M84 0v41M0 0v41M168 0v41'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:clamp(196px,16vw,280px) auto;
+}
+.cu-sec--dark::after{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+  background:linear-gradient(104deg,
+    transparent 0%, transparent 34%,
+    rgba(226,65,77,.10) 46%, rgba(255,255,255,.05) 52%, rgba(226,65,77,.10) 58%,
+    transparent 70%, transparent 100%);
+  background-size:280% 100%;
+  animation:cu-rake var(--cu-t-rake) linear infinite;
+}
+@keyframes cu-rake{ from{ background-position:120% 0; } to{ background-position:-120% 0; } }
+.cu-sec--dark > *{ position:relative; z-index:1; }
+
+/* Underlayment on the process field. Every synthetic underlayment roll is
+   printed with a square grid and a heavier line where the next course laps
+   over it, because that is what the crew snaps and nails to. It is the layer
+   that goes UNDER everything, and this is the section about what happens
+   before anything is visible, so the material and the content agree.
+   Held far below the type: the whole field reads as tone, not as pattern. */
+.cu-sec--surface::before{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+  background-image:
+    /* the lap line, every sixth square, where the course above sits down */
+    repeating-linear-gradient(to bottom,
+      rgba(84,89,95,.085) 0 1px, transparent 1px 252px),
+    /* printed grid */
+    repeating-linear-gradient(to bottom,
+      rgba(84,89,95,.05) 0 1px, transparent 1px 42px),
+    repeating-linear-gradient(to right,
+      rgba(84,89,95,.05) 0 1px, transparent 1px 42px);
+  /* fade it out of the top and bottom edges so it never fights a section seam */
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 9%, #000 88%, transparent 100%);
+          mask-image:linear-gradient(to bottom, transparent 0, #000 9%, #000 88%, transparent 100%);
+}
+.cu-sec--surface > .cu-wrap{ position:relative; z-index:1; }
+
+/* ============================================================
+   HERO
+   Choreographed rather than revealed as one block. The mark
+   rises first, the headline sets, then the figures count.
+   ============================================================ */
+.cu-hero{
+  min-height:min(94svh,56rem);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center;
+  padding-top:clamp(3.5rem,2.2rem + 4.8vw,6.5rem);
+  padding-bottom:calc(var(--cu-roof-h) + clamp(1.5rem,3vw,3rem));
+  background:
+    radial-gradient(58vmax 42vmax at 13% 4%,
+      rgba(255,198,138,.34) 0%, rgba(255,206,150,.13) 38%, transparent 68%),
+    radial-gradient(120% 78% at 50% 0%, #ffffff 0%, #ffffff 52%, var(--cu-surface) 100%);
+  position:relative; overflow:hidden;
+}
+.cu-hero > *{ position:relative; z-index:1; }
+
+/* ============================================================
+   THE HERO ROOF
+   Alive, not animated-once. Three continuous systems layered on a
+   drawn shingle field. Every period is a multiple of 3 or 7 and
+   long enough to be felt rather than watched.
+   ============================================================ */
+.cu-roof{
+  position:absolute; inset:auto 0 0 0; height:var(--cu-roof-h);
+  z-index:0; pointer-events:none; overflow:hidden;
+  -webkit-mask-image:linear-gradient(to top, #000 0%, #000 62%, transparent 100%);
+          mask-image:linear-gradient(to top, #000 0%, #000 62%, transparent 100%);
+}
+/* The drone pass. 63s, so the field is never still but never asks to be watched. */
+.cu-roof__drift{
+  position:absolute; inset:0; width:126%;
+  animation:cu-drift 42s linear infinite alternate;
+}
+@keyframes cu-drift{ from{ transform:translate3d(-13%,0,0) scale(1.02); } to{ transform:translate3d(0,0,0) scale(1); } }
+.cu-roof__svg{ width:100%; height:100%; display:block; opacity:.85; }
+.cu-course{
+  opacity:0;
+  transform:translateY(26px);
+  transition:opacity var(--cu-t-lay) var(--ease-settle),
+             transform var(--cu-t-lay) var(--ease-settle);
+  /* laid from the eave up, the way courses actually go on */
+  transition-delay:calc(294ms + var(--c) * 49ms);
+}
+.cu-hero.in-view .cu-course{ opacity:1; transform:translateY(0); }
+
+/* The sun crossing the roof. This is the single most roofer thing on the page:
+   you work by where the light is. 27s. */
+/* WEATHER. Not a gradient sweep, two of them: a warm sun band running one way and
+   a cooler shade band running back the other, slower. Together they read as cloud
+   passing over a roof, which is the thing a roofer watches all day. This is the
+   page's main sign of life and it was measured, not eyeballed: at the previous
+   settings only 0.8 per cent of pixels changed over 7s, which is no life at all. */
+.cu-roof__sun{
+  position:absolute; inset:-25% -40%;
+  background:linear-gradient(74deg,
+    transparent 0 26%,
+    rgba(255,196,96,.00) 32%,
+    rgba(255,188,84,.62) 44%,
+    rgba(255,214,140,.30) 50%,
+    rgba(255,188,84,.62) 56%,
+    rgba(255,196,96,.00) 68%,
+    transparent 74% 100%);
+  background-size:230% 100%;
+  animation:cu-sun 21s linear infinite;
+  mix-blend-mode:multiply;
+}
+.cu-roof__shade{
+  position:absolute; inset:-25% -40%;
+  background:linear-gradient(74deg,
+    transparent 0 30%,
+    rgba(80,96,118,.00) 36%,
+    rgba(72,88,112,.30) 48%,
+    rgba(80,96,118,.00) 60%,
+    transparent 66% 100%);
+  background-size:270% 100%;
+  animation:cu-shade 33s linear infinite reverse;
+  mix-blend-mode:multiply;
+}
+@keyframes cu-shade{ from{ background-position:140% 0; } to{ background-position:-140% 0; } }
+@keyframes cu-sun{ from{ background-position:130% 0; } to{ background-position:-130% 0; } }
+
+/* A warm ground haze so the field sits in air rather than on a white sheet. */
+.cu-roof__haze{
+  position:absolute; inset:auto 0 0 0; height:60%;
+  background:linear-gradient(to top, rgba(244,242,239,.28), rgba(244,242,239,0));
+}
+
+/* The phoenix is a raster mark with no vector anywhere, so it cannot be
+   stroke-drawn. It wipes up from its own baseline instead, which reads as the
+   bird rising and costs nothing in fidelity. */
+.cu-hero__logo{
+  width:clamp(7.5rem,5.4rem + 8.4vw,11.5rem); height:auto; display:block;
+  clip-path:inset(100% 0 0 0);
+  opacity:0;
+  transform:translateY(10px);
+  transition:
+    clip-path var(--cu-t-set) var(--ease-satisfying),
+    opacity var(--duration-long) var(--ease-satisfying),
+    transform var(--cu-t-set) var(--ease-satisfying);
+}
+.cu-hero.in-view .cu-hero__logo{ clip-path:inset(0 0 0 0); opacity:1; transform:translateY(0); }
+
+/* Measure is set in rem, NOT ch. The h1 carries no font-size of its own, so a
+   ch measure here resolves against the inherited body size and clamps the
+   72px display line to roughly 216px, breaking it across 2 lines. */
+.cu-hero__title{
+  margin-top:var(--space-m);
+  max-width:min(94vw, 58rem);
+  margin-inline:auto;
+  letter-spacing:-0.02em;
+}
+.cu-hero__l1{
+  display:block;
+  font-size:var(--cu-display); font-weight:700; line-height:1.02;
+  opacity:0; transform:translateY(18px);
+  transition:opacity var(--duration-long) var(--ease-satisfying),
+             transform var(--duration-long) var(--ease-satisfying);
+  transition-delay:294ms;   /* 3 x 98 */
+}
+.cu-hero__l2{
+  display:block; margin-top:0.5em;
+  font-size:var(--cu-display-2); font-weight:500; line-height:1.22;
+  color:var(--cu-muted); letter-spacing:0;
+  opacity:0; transform:translateY(14px);
+  transition:opacity var(--duration-long) var(--ease-satisfying),
+             transform var(--duration-long) var(--ease-satisfying);
+  transition-delay:441ms;   /* 3 x 147 */
+}
+.cu-hero.in-view .cu-hero__l1,
+.cu-hero.in-view .cu-hero__l2{ opacity:1; transform:translateY(0); }
+
+.cu-hero__rule{
+  width:clamp(3rem,8vw,5rem); height:var(--cu-rule);
+  background:var(--cu-red); margin-block:var(--space-m);
+  transform:scaleX(0); transform-origin:center;
+  transition:transform var(--cu-t-lay) var(--ease-satisfying);
+  transition-delay:588ms;   /* 3 x 196 */
+}
+.cu-hero.in-view .cu-hero__rule{ transform:scaleX(1); }
+
+.cu-hero__deck{
+  font-size:var(--cu-deck); color:var(--cu-muted);
+  max-width:48ch; margin-inline:auto;
+  opacity:0; transform:translateY(12px);
+  transition:opacity var(--duration-medium) var(--ease-satisfying),
+             transform var(--duration-medium) var(--ease-satisfying);
+  transition-delay:735ms;   /* 3 x 245 */
+}
+.cu-hero.in-view .cu-hero__deck{ opacity:1; transform:translateY(0); }
+
+/* ---------- count-up figure row ---------- */
+.cu-figures{
+  display:flex; flex-wrap:wrap; justify-content:center;
+  gap:clamp(1.6rem,1rem + 3.2vw,4.5rem);
+  margin-top:clamp(2.4rem,1.6rem + 3.2vw,4rem);
+}
+/* The FIGURE never breaks. The LABEL is what gets bounded and wrapped.
+   Bounding the whole item broke "3 weeks" across two lines; leaving it
+   unbounded let "Revision rounds" set a 180px floor that overflowed at 390px. */
+.cu-fig{
+  text-align:center; min-width:0; position:relative;
+  padding-top:var(--space-s);
+  opacity:0; transform:translateY(12px);
+  transition:opacity var(--duration-medium) var(--ease-settle),
+             transform var(--duration-medium) var(--ease-settle);
+}
+.cu-hero.in-view .cu-fig{ opacity:1; transform:translateY(0); }
+.cu-hero.in-view .cu-fig:nth-child(1){ transition-delay:882ms; }  /* 3 x 294 */
+.cu-hero.in-view .cu-fig:nth-child(2){ transition-delay:945ms; }  /* 3 x 315 */
+.cu-hero.in-view .cu-fig:nth-child(3){ transition-delay:1008ms; } /* 3 x 336 */
+/* A short tick above each figure, the way a tape reads a measurement. */
+.cu-fig::before{
+  content:""; position:absolute; top:0; left:50%; width:1px; height:var(--space-s);
+  background:var(--cu-line-ink); transform:translateX(-50%);
+}
+.cu-fig__n{
+  font-size:var(--cu-figure); font-weight:800; line-height:1;
+  color:var(--cu-red); font-variant-numeric:tabular-nums;
+  white-space:nowrap; letter-spacing:-0.02em;
+}
+.cu-fig__l{
+  display:block; margin-top:var(--space-2xs);
+  font-size:var(--cu-eyebrow); font-weight:600;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--cu-muted);
+  max-width:9.5rem; margin-inline:auto; overflow-wrap:normal; text-wrap:balance;
+}
+
+/* The dimension run draws from both ends inward, then the arrowheads land. */
+.cu-dim{
+  display:block; width:min(100%,26rem); height:1.4rem;
+  margin:var(--space-m) auto 0 auto; color:var(--cu-line-ink);
+}
+.cu-dim__line{
+  stroke-dasharray:596; stroke-dashoffset:596;
+  transition:stroke-dashoffset var(--cu-t-set) var(--ease-satisfying);
+  transition-delay:1071ms;   /* 3 x 357, lands after the figures have counted */
+}
+.cu-hero.in-view .cu-dim__line{ stroke-dashoffset:0; }
+.cu-dim__arw{ opacity:0; transition:opacity var(--duration-medium) var(--ease-soft); transition-delay:1806ms; }
+.cu-hero.in-view .cu-dim__arw{ opacity:1; }
+
+/* ============================================================
+   DELIVERABLE CARDS
+   They lay in like courses: from below, with a slight set, the
+   lower row before the upper. A shingle is placed, not faded.
+   ============================================================ */
+.cu-grid{
+  display:grid; gap:clamp(1rem,0.7rem + 1.4vw,1.5rem);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,26rem),1fr));
+  margin-top:clamp(2.4rem,1.6rem + 3.2vw,3.5rem);
+  align-items:stretch;
+}
+/* The card is a LIGHT surface inside the dark section, so it must reset the
+   inherited colour or the h3 renders white on white. */
+.cu-card{
+  display:flex; flex-direction:column; align-items:flex-start;
+  background:var(--cu-paper); color:var(--cu-ink);
+  border:1px solid var(--cu-line);
+  border-top:var(--cu-rule) solid var(--cu-red);
+  padding:clamp(1.35rem,1.05rem + 1.2vw,2rem);
+  position:relative; overflow:hidden;
+  box-shadow:var(--cu-e-dark);
+  transition:transform var(--cu-t-tap) var(--ease-settle),
+             box-shadow var(--cu-t-tap) var(--ease-settle);
+}
+/* Courses are laid from the eave UP, so the lower row sets before the upper.
+   --row is assigned in JS off the element's actual grid position, so it stays
+   correct if the grid reflows. This is the section's one signature moment. */
+.cu-grid.reveal-stagger > *{
+  opacity:0;
+  transform:translateY(26px);
+  transition:opacity var(--cu-t-lay) var(--ease-settle),
+             transform var(--cu-t-lay) var(--ease-settle);
+  transition-delay:calc(var(--lay, 0) * 84ms);   /* 7 x 12 */
+}
+.cu-grid.reveal-stagger.in-view > *{ opacity:1; transform:translateY(0); }
+/* A hairline that runs the card's top edge on hover, like a chalk line snapped. */
+.cu-card::after{
+  content:""; position:absolute; left:0; top:0; height:var(--cu-rule); width:100%;
+  background:var(--cu-gold); transform:scaleX(0); transform-origin:left center;
+  transition:transform var(--cu-t-lay) var(--ease-satisfying);
+}
+.cu-card__n{
+  font-size:var(--cu-eyebrow); font-weight:700; letter-spacing:0.18em;
+  color:var(--cu-red); font-variant-numeric:tabular-nums;
+}
+.cu-card__t{ font-size:var(--cu-h3); font-weight:600; margin-top:var(--space-2xs); max-width:20ch; }
+.cu-card__b{ margin-top:var(--space-s); color:var(--cu-muted); font-size:var(--cu-body); max-width:38ch; }
+
+/* ============================================================
+   THE ROOF ASSEMBLY
+   The centrepiece. Six real layers in real build order, set down
+   one at a time as the three weeks scroll past. Ink on paper,
+   because that is what a section detail looks like on a job.
+   ============================================================ */
+.cu-assembly{
+  margin-top:clamp(2.4rem,1.6rem + 3.2vw,3.5rem);
+  display:grid; gap:clamp(1.5rem,1rem + 2.8vw,3.5rem);
+  grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);
+  align-items:start;
+}
+/* The drawing STAYS while the 3 weeks scroll past it. That is the whole point:
+   he is not looking at a picture of a roof, he is watching one get built as he
+   reads the schedule that builds it. Sticky only where there is travel to use. */
+.cu-assembly__fig{
+  position:sticky;
+  top:clamp(3rem,12vh,7rem);
+  padding-block:var(--space-s);
+}
+.cu-assembly__svg{ width:100%; height:auto; display:block; overflow:visible; }
+
+.cu-plate{
+  opacity:0;
+  transform:translateY(-38px);
+  transition:opacity var(--cu-t-lay) var(--ease-settle),
+             transform var(--cu-t-set) var(--ease-settle);
+}
+.cu-plate-label{
+  opacity:0;
+  transition:opacity var(--duration-medium) var(--ease-soft);
+}
+/* Stage gates. Each week sets the layers that week actually installs. */
+.cu-assembly__svg[data-stage="1"] .cu-plate[data-stage="1"],
+.cu-assembly__svg[data-stage="2"] .cu-plate[data-stage="1"],
+.cu-assembly__svg[data-stage="2"] .cu-plate[data-stage="2"],
+.cu-assembly__svg[data-stage="3"] .cu-plate{
+  opacity:1; transform:translateY(0);
+}
+.cu-assembly__svg[data-stage="1"] .cu-plate-label[data-stage="1"],
+.cu-assembly__svg[data-stage="2"] .cu-plate-label[data-stage="1"],
+.cu-assembly__svg[data-stage="2"] .cu-plate-label[data-stage="2"],
+.cu-assembly__svg[data-stage="3"] .cu-plate-label{ opacity:1; }
+/* Within a stage the courses set in sequence, not all at once. */
+.cu-plate[data-seq="1"]{ transition-delay:0ms; }
+.cu-plate[data-seq="2"]{ transition-delay:105ms; }  /* 3 x 35 */
+.cu-plate[data-seq="3"]{ transition-delay:210ms; }
+.cu-plate[data-seq="4"]{ transition-delay:315ms; }
+.cu-plate[data-seq="5"]{ transition-delay:420ms; }
+.cu-plate[data-seq="6"]{ transition-delay:525ms; }
+.cu-plate-label[data-seq="1"]{ transition-delay:210ms; }
+.cu-plate-label[data-seq="2"]{ transition-delay:315ms; }
+.cu-plate-label[data-seq="3"]{ transition-delay:420ms; }
+.cu-plate-label[data-seq="4"]{ transition-delay:525ms; }
+.cu-plate-label[data-seq="5"]{ transition-delay:630ms; }
+.cu-plate-label[data-seq="6"]{ transition-delay:735ms; }
+
+/* The drop travels the top face from the ridge down to the eave, then leaves at
+   the drip edge. Path is the ridge-cap plate's own upper-left face, so the water
+   is running on the roof rather than near it. */
+.cu-shed{ opacity:0; transition:opacity var(--duration-long) var(--ease-soft); }
+.cu-assembly__svg[data-stage="3"] .cu-shed{ opacity:1; transition-delay:1050ms; }
+.cu-drop{
+  offset-path:path("M268,108 L128,142 L40,186 L40,196");
+  offset-distance:0%;
+  opacity:0;
+  animation:cu-shed 4.2s linear infinite;
+  animation-delay:var(--dd);
+}
+@keyframes cu-shed{
+  0%   { offset-distance:0%;   opacity:0; }
+  10%  { opacity:.55; }
+  78%  { opacity:.55; }
+  92%  { offset-distance:96%;  opacity:.35; }
+  100% { offset-distance:100%; opacity:0; }
+}
+
+.cu-assembly__cap{
+  margin-top:var(--space-s);
+  font-size:var(--cu-small); color:var(--cu-muted);
+  max-width:40ch;
+}
+.cu-assembly__cap b{ color:var(--cu-ink); font-weight:600; }
+
+/* ---------- process steps ---------- */
+.cu-steps{ display:grid; gap:0; }
+.cu-step{
+  display:grid; gap:var(--space-s);
+  grid-template-columns:auto 1fr;
+  align-items:start;
+  padding-block:clamp(1.2rem,0.95rem + 1vw,1.8rem);
+  border-top:1px solid var(--cu-line-ink);
+  position:relative;
+}
+.cu-step:last-child{ border-bottom:1px solid var(--cu-line-ink); }
+/* The active week takes the red tick, so the drawing and the text agree. */
+.cu-step::before{
+  content:""; position:absolute; left:0; top:-1px; height:1px; width:0;
+  background:var(--cu-red);
+  transition:width var(--cu-t-set) var(--ease-satisfying);
+}
+.cu-step.in-view::before{ width:100%; }
+.cu-step__n{
+  font-size:var(--cu-h3); font-weight:800; color:var(--cu-red);
+  font-variant-numeric:tabular-nums; min-width:2.6rem; letter-spacing:-0.01em;
+}
+.cu-step__t{ font-size:var(--cu-h3); font-weight:600; color:var(--cu-ink-strong); max-width:26ch; }
+.cu-step__b{ margin-top:var(--space-2xs); color:var(--cu-muted); max-width:52ch; }
+
+/* ============================================================
+   PRICE
+   The single most important object on the page, so it is given
+   a moment: the figure counts, a rule draws under it, the label
+   arrives last.
+   ============================================================ */
+/* The offer panel. The single most consequential object in the document, so it
+   is the one thing given real isolation, the one deliberate accent wash, and the
+   top of the elevation scale. Everything below it is supporting detail and reads
+   subordinate by sitting flat on the sheet. */
+.cu-offer{
+  position:relative;
+  margin-top:clamp(2.5rem,1.6rem + 3.6vw,4.5rem);
+  padding:clamp(2.75rem,1.8rem + 4vw,5.5rem) clamp(1.5rem,1rem + 2vw,3rem);
+  background:var(--cu-paper);
+  border-top:var(--cu-rule) solid var(--cu-red);
+  box-shadow:var(--cu-e3);
+  isolation:isolate;
+}
+/* The ONE accent wash on the page. Restrained, and behind the panel rather than
+   under the type, so nothing loses contrast to it. */
+.cu-offer__wash{
+  position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(120% 130% at 50% 0%, rgba(208,32,45,.09) 0%, rgba(208,32,45,.03) 42%, transparent 72%);
+}
+.cu-price{ text-align:center; }
+.cu-price__n{
+  font-size:var(--cu-price);
+  font-weight:800; line-height:0.94; color:var(--cu-red);
+  font-variant-numeric:tabular-nums; letter-spacing:-0.035em;
+  display:inline-block;
+}
+.cu-price__bar{
+  width:min(20rem,62%); height:var(--cu-rule); margin:var(--space-m) auto 0 auto;
+  background:linear-gradient(90deg,var(--cu-red) 0%,var(--cu-red-deep) 100%);
+  transform:scaleX(0); transform-origin:center;
+  transition:transform var(--cu-t-set) var(--ease-satisfying);
+  transition-delay:420ms;
+}
+.cu-offer.in-view .cu-price__bar{ transform:scaleX(1); }
+.cu-price__l{
+  display:block; margin-top:var(--space-s);
+  font-size:var(--cu-eyebrow); font-weight:700;
+  letter-spacing:0.24em; text-transform:uppercase; color:var(--cu-muted);
+  opacity:0; transition:opacity var(--duration-medium) var(--ease-soft);
+  transition-delay:735ms;
+}
+.cu-offer.in-view .cu-price__l{ opacity:1; }
+
+.cu-ledger{
+  width:100%; border-collapse:collapse; margin-top:clamp(2.4rem,1.6rem + 3.2vw,3.5rem);
+  border-top:1px solid var(--cu-line-ink);
+}
+.cu-ledger caption{
+  text-align:left; padding-bottom:var(--space-2xs);
+  font-weight:600; color:var(--cu-ink-strong);
+}
+.cu-ledger th,.cu-ledger td{
+  text-align:left; padding:clamp(0.75rem,0.62rem + 0.42vw,1.05rem) 0;
+  border-bottom:1px solid var(--cu-line); vertical-align:top;
+}
+.cu-ledger th{
+  font-size:var(--cu-eyebrow); font-weight:700; letter-spacing:0.16em;
+  text-transform:uppercase; color:var(--cu-muted);
+}
+.cu-ledger tbody tr{ transition:background var(--cu-t-tap) var(--ease-soft); }
+.cu-ledger td:first-child{ font-weight:500; padding-right:var(--space-m); max-width:26rem; }
+.cu-ledger td:last-child{ text-align:right; color:var(--cu-muted); white-space:nowrap; }
+.cu-ledger tbody tr td:last-child{ font-weight:600; color:var(--cu-ink); }
+
+.cu-terms{
+  display:grid; gap:clamp(1rem,0.8rem + 0.84vw,1.6rem);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));
+  margin-top:clamp(2.4rem,1.6rem + 3.2vw,3.25rem);
+}
+.cu-term{ border-left:var(--cu-rule) solid var(--cu-gold); padding-left:var(--space-s); }
+.cu-term__t{
+  font-size:var(--cu-eyebrow); font-weight:700; letter-spacing:0.16em;
+  text-transform:uppercase; color:var(--cu-ink-strong);
+}
+.cu-term__b{ margin-top:var(--space-2xs); color:var(--cu-muted); font-size:var(--cu-small); max-width:34ch; }
+
+/* ---------- what we need ---------- */
+.cu-need{
+  margin-top:clamp(2.4rem,1.6rem + 3.2vw,3.25rem);
+  border-top:var(--cu-rule) solid var(--cu-red);
+  padding-top:clamp(1.35rem,1.05rem + 1.2vw,2rem);
+}
+.cu-need__t{
+  font-size:var(--cu-eyebrow); font-weight:700; letter-spacing:0.16em;
+  text-transform:uppercase; color:var(--cu-ink-strong);
+}
+.cu-need__intro{ margin-top:var(--space-2xs); color:var(--cu-muted); max-width:52ch; }
+.cu-need__list{
+  margin:var(--space-m) 0 0 0; padding:0; list-style:none;
+  display:grid; gap:var(--space-xs);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,21rem),1fr));
+}
+.cu-need__list li{
+  position:relative; padding-left:var(--space-m);
+  color:var(--cu-muted); max-width:46ch;
+}
+.cu-need__list li::before{
+  content:""; position:absolute; left:0; top:0.62em;
+  width:0.5rem; height:0.5rem; background:var(--cu-gold);
+  transform:rotate(45deg);
+}
+.cu-need__note{
+  margin-top:var(--space-m); font-size:var(--cu-small);
+  color:var(--cu-muted); font-style:italic; max-width:60ch;
+}
+
+.cu-close{
+  margin-top:clamp(2.8rem,2rem + 3.5vw,4.5rem);
+  font-size:var(--cu-display-2); font-weight:500;
+  color:var(--cu-ink-strong); line-height:1.32;
+  max-width:26ch; text-wrap:pretty;
+}
+
+/* ---------- title block ---------- */
+.cu-tblock{
+  width:min(100% - 3vw, var(--cu-measure));
+  margin:clamp(2.5rem,1.8rem + 3.2vw,4.5rem) auto clamp(1.5rem,1rem + 2vw,2.5rem) auto;
+  display:grid; grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--cu-line-ink);
+  font-size:var(--cu-eyebrow);
+}
+.cu-tblock__row{
+  padding:var(--space-xs) var(--space-s);
+  border-right:1px solid var(--cu-line-ink);
+  display:flex; flex-direction:column; gap:2px; min-width:0;
+}
+.cu-tblock__row:last-child{ border-right:0; }
+.cu-tblock__row span{
+  letter-spacing:0.18em; text-transform:uppercase; color:var(--cu-muted);
+  font-weight:600; font-size:0.86em;
+}
+.cu-tblock__row b{ color:var(--cu-ink-strong); font-weight:600; overflow-wrap:normal; }
+
+/* ---------- footer ---------- */
+.cu-foot{
+  background:var(--cu-black); color:var(--cu-muted-dark);
+  padding-block:clamp(2.8rem,2rem + 3.5vw,4.5rem);
+  text-align:center;
+}
+.cu-foot__logo{ width:clamp(6rem,4.5rem + 6.3vw,9rem); height:auto; margin-inline:auto; display:block; }
+.cu-foot__line{
+  margin-top:var(--space-m); font-size:var(--cu-small);
+  letter-spacing:0.06em; text-wrap:balance;
+}
+
+/* ---------- hover only where hover exists ---------- */
+.cu-card:focus-visible,
+.cu-ledger tbody tr:focus-visible{
+  outline:2px solid var(--cu-gold); outline-offset:2px;
+}
+
+@media (hover:hover){
+  .cu-card:hover{ transform:translateY(-5px); box-shadow:var(--cu-e-dark), 0 0 0 1px rgba(208,32,45,.35); }
+  .cu-card:hover::after{ transform:scaleX(1); }
+  .cu-ledger tbody tr:hover{ background:var(--cu-surface); }
+}
+
+/* ---------- layout shift only, per AG responsive law ---------- */
+@media (max-width:900px){
+  .cu-assembly{ grid-template-columns:1fr; }
+  .cu-assembly__fig{ position:static; top:auto; }
+  .cu-step{ grid-template-columns:1fr; gap:var(--space-2xs); }
+  .cu-ledger td:last-child{ text-align:left; }
+  .cu-ledger td:first-child{ padding-right:0; }
+  .cu-h2,.cu-card__b,.cu-step__b,.cu-close,.cu-term__b,.cu-assembly__cap{
+    margin-inline:auto; text-align:center;
+  }
+  .cu-thread,.cu-price__bar{ margin-inline:auto; }
+  .cu-eyebrow{ justify-content:center; }
+  .cu-card,.cu-term{ align-items:center; text-align:center; }
+  .cu-term{ border-left:0; border-top:var(--cu-rule) solid var(--cu-gold); padding-left:0; padding-top:var(--space-s); }
+  /* The need block centres as a composition, but its list items stay left
+     aligned. A centred list with a leading marker reads as ragged, not centred. */
+  .cu-need{ text-align:center; }
+  .cu-need__intro,.cu-need__note{ margin-inline:auto; }
+  .cu-need__list{ justify-items:center; }
+  .cu-need__list li{ text-align:left; }
+  .cu-tblock{ grid-template-columns:repeat(2,1fr); }
+  .cu-tblock__row:nth-child(2){ border-right:0; }
+  .cu-tblock__row:nth-child(-n+2){ border-bottom:1px solid var(--cu-line-ink); }
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important; animation-iteration-count:1 !important;
+    transition-duration:.01ms !important; transition-delay:0ms !important;
+    scroll-behavior:auto !important;
+  }
+  .cu-sec--dark::after{ animation:none; opacity:.35; }
+  .cu-roof__drift,.cu-roof__sun,.cu-roof__shade,.cu-drop{ animation:none !important; }
+  .cu-roof__shade{ opacity:.25; }
+  .cu-course{ opacity:1; transform:none; }
+  .cu-thread::after{ animation:none !important; opacity:0; }
+  .cu-shed{ opacity:1; }
+  .cu-card:hover{ transform:none; }
+  .cu-hero__logo{ clip-path:none; opacity:1; transform:none; }
+  .cu-hero__l1,.cu-hero__l2,.cu-hero__deck,.cu-fig{ opacity:1; transform:none; }
+  .cu-hero__rule,.cu-thread,.cu-price__bar{ transform:scaleX(1); }
+  .cu-price__l{ opacity:1; }
+  .cu-plate{ opacity:1; transform:none; }
+  .cu-plate-label{ opacity:1; }
+  .cu-step::before{ width:100%; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="ag-cursor" aria-hidden="true"></div>
+
+
+<main id="main">
+
+  <!-- ==================== HERO ==================== -->
+  <header class="cu-hero reveal">
+
+    <!-- The roof itself. Real 3-tab courses, staggered half a tab, laid from the
+         eave up. Drawn in line rather than photographed, so it stays inside the
+         shop-drawing world the rest of the page lives in. Three continuous
+         systems run on it: a slow drone drift, the sun raking across, and
+         granules lifting off the field. Decorative, so aria-hidden. -->
+    <div class="cu-roof" aria-hidden="true">
+      <div class="cu-roof__drift">
+        <svg class="cu-roof__svg" viewBox="0 0 1560 470" preserveAspectRatio="xMidYMax slice">
+          <g>
+      <g class="cu-course">
+        <rect x="-384" y="424" width="384" height="46" fill="#2b2b2b" fill-opacity="0.066"/><rect x="0" y="424" width="384" height="46" fill="#2b2b2b" fill-opacity="0.055"/><rect x="384" y="424" width="384" height="46" fill="#2b2b2b" fill-opacity="0.074"/><rect x="768" y="424" width="384" height="46" fill="#2b2b2b" fill-opacity="0.092"/><rect x="1152" y="424" width="384" height="46" fill="#2b2b2b" fill-opacity="0.07"/><rect x="1536" y="424" width="384" height="46" fill="#2b2b2b" fill-opacity="0.104"/><rect x="1920" y="424" width="384" height="46" fill="#2b2b2b" fill-opacity="0.054"/>
+        <path d="M-40,470 H1600 M-256,470 v-25 M-128,470 v-25 M128,470 v-25 M256,470 v-25 M512,470 v-25 M640,470 v-25 M896,470 v-25 M1024,470 v-25 M1280,470 v-25 M1408,470 v-25 M1664,470 v-25 M1792,470 v-25 M2048,470 v-25 M2176,470 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <g class="cu-course">
+        <rect x="-576" y="378" width="384" height="46" fill="#2b2b2b" fill-opacity="0.062"/><rect x="-192" y="378" width="384" height="46" fill="#2b2b2b" fill-opacity="0.075"/><rect x="192" y="378" width="384" height="46" fill="#2b2b2b" fill-opacity="0.104"/><rect x="576" y="378" width="384" height="46" fill="#2b2b2b" fill-opacity="0.09"/><rect x="960" y="378" width="384" height="46" fill="#2b2b2b" fill-opacity="0.078"/><rect x="1344" y="378" width="384" height="46" fill="#2b2b2b" fill-opacity="0.075"/><rect x="1728" y="378" width="384" height="46" fill="#2b2b2b" fill-opacity="0.095"/>
+        <path d="M-40,424 H1600 M-448,424 v-25 M-320,424 v-25 M-64,424 v-25 M64,424 v-25 M320,424 v-25 M448,424 v-25 M704,424 v-25 M832,424 v-25 M1088,424 v-25 M1216,424 v-25 M1472,424 v-25 M1600,424 v-25 M1856,424 v-25 M1984,424 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <g class="cu-course">
+        <rect x="-384" y="332" width="384" height="46" fill="#2b2b2b" fill-opacity="0.075"/><rect x="0" y="332" width="384" height="46" fill="#2b2b2b" fill-opacity="0.093"/><rect x="384" y="332" width="384" height="46" fill="#2b2b2b" fill-opacity="0.093"/><rect x="768" y="332" width="384" height="46" fill="#2b2b2b" fill-opacity="0.072"/><rect x="1152" y="332" width="384" height="46" fill="#2b2b2b" fill-opacity="0.059"/><rect x="1536" y="332" width="384" height="46" fill="#2b2b2b" fill-opacity="0.076"/><rect x="1920" y="332" width="384" height="46" fill="#2b2b2b" fill-opacity="0.066"/>
+        <path d="M-40,378 H1600 M-256,378 v-25 M-128,378 v-25 M128,378 v-25 M256,378 v-25 M512,378 v-25 M640,378 v-25 M896,378 v-25 M1024,378 v-25 M1280,378 v-25 M1408,378 v-25 M1664,378 v-25 M1792,378 v-25 M2048,378 v-25 M2176,378 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <g class="cu-course">
+        <rect x="-576" y="286" width="384" height="46" fill="#2b2b2b" fill-opacity="0.093"/><rect x="-192" y="286" width="384" height="46" fill="#2b2b2b" fill-opacity="0.058"/><rect x="192" y="286" width="384" height="46" fill="#2b2b2b" fill-opacity="0.08"/><rect x="576" y="286" width="384" height="46" fill="#2b2b2b" fill-opacity="0.1"/><rect x="960" y="286" width="384" height="46" fill="#2b2b2b" fill-opacity="0.104"/><rect x="1344" y="286" width="384" height="46" fill="#2b2b2b" fill-opacity="0.091"/><rect x="1728" y="286" width="384" height="46" fill="#2b2b2b" fill-opacity="0.088"/>
+        <path d="M-40,332 H1600 M-448,332 v-25 M-320,332 v-25 M-64,332 v-25 M64,332 v-25 M320,332 v-25 M448,332 v-25 M704,332 v-25 M832,332 v-25 M1088,332 v-25 M1216,332 v-25 M1472,332 v-25 M1600,332 v-25 M1856,332 v-25 M1984,332 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <g class="cu-course">
+        <rect x="-384" y="240" width="384" height="46" fill="#2b2b2b" fill-opacity="0.065"/><rect x="0" y="240" width="384" height="46" fill="#2b2b2b" fill-opacity="0.095"/><rect x="384" y="240" width="384" height="46" fill="#2b2b2b" fill-opacity="0.051"/><rect x="768" y="240" width="384" height="46" fill="#2b2b2b" fill-opacity="0.077"/><rect x="1152" y="240" width="384" height="46" fill="#2b2b2b" fill-opacity="0.052"/><rect x="1536" y="240" width="384" height="46" fill="#2b2b2b" fill-opacity="0.071"/><rect x="1920" y="240" width="384" height="46" fill="#2b2b2b" fill-opacity="0.093"/>
+        <path d="M-40,286 H1600 M-256,286 v-25 M-128,286 v-25 M128,286 v-25 M256,286 v-25 M512,286 v-25 M640,286 v-25 M896,286 v-25 M1024,286 v-25 M1280,286 v-25 M1408,286 v-25 M1664,286 v-25 M1792,286 v-25 M2048,286 v-25 M2176,286 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <g class="cu-course">
+        <rect x="-576" y="194" width="384" height="46" fill="#2b2b2b" fill-opacity="0.059"/><rect x="-192" y="194" width="384" height="46" fill="#2b2b2b" fill-opacity="0.097"/><rect x="192" y="194" width="384" height="46" fill="#2b2b2b" fill-opacity="0.046"/><rect x="576" y="194" width="384" height="46" fill="#2b2b2b" fill-opacity="0.047"/><rect x="960" y="194" width="384" height="46" fill="#2b2b2b" fill-opacity="0.048"/><rect x="1344" y="194" width="384" height="46" fill="#2b2b2b" fill-opacity="0.064"/><rect x="1728" y="194" width="384" height="46" fill="#2b2b2b" fill-opacity="0.067"/>
+        <path d="M-40,240 H1600 M-448,240 v-25 M-320,240 v-25 M-64,240 v-25 M64,240 v-25 M320,240 v-25 M448,240 v-25 M704,240 v-25 M832,240 v-25 M1088,240 v-25 M1216,240 v-25 M1472,240 v-25 M1600,240 v-25 M1856,240 v-25 M1984,240 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <g class="cu-course">
+        <rect x="-384" y="148" width="384" height="46" fill="#2b2b2b" fill-opacity="0.049"/><rect x="0" y="148" width="384" height="46" fill="#2b2b2b" fill-opacity="0.054"/><rect x="384" y="148" width="384" height="46" fill="#2b2b2b" fill-opacity="0.087"/><rect x="768" y="148" width="384" height="46" fill="#2b2b2b" fill-opacity="0.059"/><rect x="1152" y="148" width="384" height="46" fill="#2b2b2b" fill-opacity="0.1"/><rect x="1536" y="148" width="384" height="46" fill="#2b2b2b" fill-opacity="0.104"/><rect x="1920" y="148" width="384" height="46" fill="#2b2b2b" fill-opacity="0.05"/>
+        <path d="M-40,194 H1600 M-256,194 v-25 M-128,194 v-25 M128,194 v-25 M256,194 v-25 M512,194 v-25 M640,194 v-25 M896,194 v-25 M1024,194 v-25 M1280,194 v-25 M1408,194 v-25 M1664,194 v-25 M1792,194 v-25 M2048,194 v-25 M2176,194 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <g class="cu-course">
+        <rect x="-576" y="102" width="384" height="46" fill="#2b2b2b" fill-opacity="0.073"/><rect x="-192" y="102" width="384" height="46" fill="#2b2b2b" fill-opacity="0.068"/><rect x="192" y="102" width="384" height="46" fill="#2b2b2b" fill-opacity="0.092"/><rect x="576" y="102" width="384" height="46" fill="#2b2b2b" fill-opacity="0.065"/><rect x="960" y="102" width="384" height="46" fill="#2b2b2b" fill-opacity="0.063"/><rect x="1344" y="102" width="384" height="46" fill="#2b2b2b" fill-opacity="0.089"/><rect x="1728" y="102" width="384" height="46" fill="#2b2b2b" fill-opacity="0.088"/>
+        <path d="M-40,148 H1600 M-448,148 v-25 M-320,148 v-25 M-64,148 v-25 M64,148 v-25 M320,148 v-25 M448,148 v-25 M704,148 v-25 M832,148 v-25 M1088,148 v-25 M1216,148 v-25 M1472,148 v-25 M1600,148 v-25 M1856,148 v-25 M1984,148 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <g class="cu-course">
+        <rect x="-384" y="56" width="384" height="46" fill="#2b2b2b" fill-opacity="0.09"/><rect x="0" y="56" width="384" height="46" fill="#2b2b2b" fill-opacity="0.076"/><rect x="384" y="56" width="384" height="46" fill="#2b2b2b" fill-opacity="0.083"/><rect x="768" y="56" width="384" height="46" fill="#2b2b2b" fill-opacity="0.055"/><rect x="1152" y="56" width="384" height="46" fill="#2b2b2b" fill-opacity="0.057"/><rect x="1536" y="56" width="384" height="46" fill="#2b2b2b" fill-opacity="0.054"/><rect x="1920" y="56" width="384" height="46" fill="#2b2b2b" fill-opacity="0.085"/>
+        <path d="M-40,102 H1600 M-256,102 v-25 M-128,102 v-25 M128,102 v-25 M256,102 v-25 M512,102 v-25 M640,102 v-25 M896,102 v-25 M1024,102 v-25 M1280,102 v-25 M1408,102 v-25 M1664,102 v-25 M1792,102 v-25 M2048,102 v-25 M2176,102 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <g class="cu-course">
+        <rect x="-576" y="10" width="384" height="46" fill="#2b2b2b" fill-opacity="0.092"/><rect x="-192" y="10" width="384" height="46" fill="#2b2b2b" fill-opacity="0.1"/><rect x="192" y="10" width="384" height="46" fill="#2b2b2b" fill-opacity="0.068"/><rect x="576" y="10" width="384" height="46" fill="#2b2b2b" fill-opacity="0.093"/><rect x="960" y="10" width="384" height="46" fill="#2b2b2b" fill-opacity="0.085"/><rect x="1344" y="10" width="384" height="46" fill="#2b2b2b" fill-opacity="0.101"/><rect x="1728" y="10" width="384" height="46" fill="#2b2b2b" fill-opacity="0.103"/>
+        <path d="M-40,56 H1600 M-448,56 v-25 M-320,56 v-25 M-64,56 v-25 M64,56 v-25 M320,56 v-25 M448,56 v-25 M704,56 v-25 M832,56 v-25 M1088,56 v-25 M1216,56 v-25 M1472,56 v-25 M1600,56 v-25 M1856,56 v-25 M1984,56 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <g class="cu-course">
+        <rect x="-384" y="-36" width="384" height="46" fill="#2b2b2b" fill-opacity="0.074"/><rect x="0" y="-36" width="384" height="46" fill="#2b2b2b" fill-opacity="0.095"/><rect x="384" y="-36" width="384" height="46" fill="#2b2b2b" fill-opacity="0.084"/><rect x="768" y="-36" width="384" height="46" fill="#2b2b2b" fill-opacity="0.061"/><rect x="1152" y="-36" width="384" height="46" fill="#2b2b2b" fill-opacity="0.085"/><rect x="1536" y="-36" width="384" height="46" fill="#2b2b2b" fill-opacity="0.099"/><rect x="1920" y="-36" width="384" height="46" fill="#2b2b2b" fill-opacity="0.103"/>
+        <path d="M-40,10 H1600 M-256,10 v-25 M-128,10 v-25 M128,10 v-25 M256,10 v-25 M512,10 v-25 M640,10 v-25 M896,10 v-25 M1024,10 v-25 M1280,10 v-25 M1408,10 v-25 M1664,10 v-25 M1792,10 v-25 M2048,10 v-25 M2176,10 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+          </g>
+        </svg>
+      </div>
+      <div class="cu-roof__sun"></div>
+      <div class="cu-roof__shade"></div>
+      <div class="cu-roof__haze"></div>
+    </div>
+
+    <img class="cu-hero__logo" src="assets/logo.png" width="118" height="84"
+         alt="Construction Unlimited" fetchpriority="high">
+
+    <h1 class="cu-hero__title">
+      <span class="cu-hero__l1">5 pages, 1 number.</span>
+      <span class="cu-hero__l2">Built to turn calls into booked&nbsp;jobs.</span>
+    </h1>
+
+    <div class="cu-hero__rule" aria-hidden="true"></div>
+
+    <p class="cu-hero__deck">1 site, 1 offer, 1 tracked line. Live in 3 weeks, and yours to&nbsp;keep.</p>
+
+    <div class="cu-figures">
+      <div class="cu-fig">
+        <div class="cu-fig__n" data-countup="5">0</div>
+        <span class="cu-fig__l">Pages built</span>
+      </div>
+      <div class="cu-fig">
+        <div class="cu-fig__n" data-countup="2">0</div>
+        <span class="cu-fig__l">Revision rounds</span>
+      </div>
+      <div class="cu-fig">
+        <div class="cu-fig__n" data-countup="3" data-suffix=" weeks">0</div>
+        <span class="cu-fig__l">Start to live</span>
+      </div>
+    </div>
+
+    <!-- An overall dimension across the three figures, terminated and ticked the
+         way a drawing dimensions a run. He reads these. Decorative, so hidden. -->
+    <svg class="cu-dim" viewBox="0 0 600 22" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path d="M2,4 V18 M598,4 V18" stroke="currentColor" stroke-width="1.5"/>
+      <path class="cu-dim__line" d="M2,11 H598" stroke="currentColor" stroke-width="1.5"/>
+      <path class="cu-dim__arw" d="M2,11 L14,7.5 L14,14.5 Z M598,11 L586,7.5 L586,14.5 Z" fill="currentColor" stroke="none"/>
+    </svg>
+  </header>
+
+  <svg class="cu-pitch cu-pitch--up" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <polygon points="0,60 600,0 1200,60"></polygon>
+  </svg>
+
+  <!-- ==================== 1. WHAT WE DO ==================== -->
+  <section class="cu-sec cu-sec--dark" aria-labelledby="what-h">
+    <div class="cu-wrap">
+      <span class="cu-eyebrow">What we do</span>
+      <h2 class="cu-h2 reveal" id="what-h">6 pieces, built once, working together on every&nbsp;page.</h2>
+      <div class="cu-thread reveal" aria-hidden="true"></div>
+
+      <div class="cu-grid reveal-stagger">
+        <article class="cu-card">
+          <span class="cu-card__n">01</span>
+          <h3 class="cu-card__t">The pages</h3>
+          <p class="cu-card__b">5 pages, custom coded. Home, roofing, the quote page, an about page, contact.</p>
+        </article>
+        <article class="cu-card">
+          <span class="cu-card__n">02</span>
+          <h3 class="cu-card__t">1 offer, 1 number</h3>
+          <p class="cu-card__b">The offer and the financing figure read the same on every page and in every ad.</p>
+        </article>
+        <article class="cu-card">
+          <span class="cu-card__n">03</span>
+          <h3 class="cu-card__t">Call tracking</h3>
+          <p class="cu-card__b">1 tracked number so every call is attributed to the campaign that produced it.</p>
+        </article>
+        <article class="cu-card">
+          <span class="cu-card__n">04</span>
+          <h3 class="cu-card__t">The quote flow</h3>
+          <p class="cu-card__b">A quote form that works on a phone and lands where your team already looks.</p>
+        </article>
+        <article class="cu-card">
+          <span class="cu-card__n">05</span>
+          <h3 class="cu-card__t">Built to be found</h3>
+          <p class="cu-card__b">Titles, schema, sitemap and speed done properly at build time.</p>
+        </article>
+        <article class="cu-card">
+          <span class="cu-card__n">06</span>
+          <h3 class="cu-card__t">Yours on day one</h3>
+          <p class="cu-card__b">Every file, account and domain stays in your name.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <svg class="cu-pitch cu-pitch--down" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <polygon points="0,0 600,60 1200,0"></polygon>
+  </svg>
+
+  <!-- ==================== 2. HOW IT RUNS ==================== -->
+  <section class="cu-sec cu-sec--surface" aria-labelledby="how-h">
+    <div class="cu-wrap">
+      <span class="cu-eyebrow">How it runs</span>
+      <h2 class="cu-h2 reveal" id="how-h">No surprises. 3 weeks, 3 stages, 2 rounds to get it&nbsp;right.</h2>
+      <div class="cu-thread reveal" aria-hidden="true"></div>
+
+      <div class="cu-assembly">
+        <div class="cu-assembly__fig">
+          <svg class="cu-assembly__svg" id="cu-assembly" viewBox="0 0 760 470" role="img"
+               aria-label="Exploded roof assembly. Decking, underlayment, drip edge, starter course, shingle courses and ridge cap, set in build order.">
+            <defs>
+              <linearGradient id="cuPlateFill" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+                <stop offset="1" stop-color="#ddd8d1" stop-opacity="0.98"/>
+              </linearGradient>
+            </defs>
+
+            <!-- ground shadow, so the stack reads as having weight -->
+            <ellipse cx="255" cy="470" rx="196" ry="20" fill="#2b2b2b" fill-opacity="0.10"/>
+
+            <!-- 6 real layers, bottom to top, in the order they are actually installed -->
+            <g class="cu-plate" data-stage="1" data-seq="1">
+              <polygon points="40,392 268,336 470,392 242,448" fill="url(#cuPlateFill)" stroke="#2b2b2b" stroke-width="2"/>
+              <polygon points="40,392 242,448 242,462 40,406" fill="#333333" fill-opacity="0.16"/>
+              <polygon points="470,392 242,448 242,462 470,406" fill="#333333" fill-opacity="0.09"/>
+            </g>
+            <g class="cu-plate" data-stage="2" data-seq="2">
+              <polygon points="40,330 268,274 470,330 242,386" fill="url(#cuPlateFill)" stroke="#2b2b2b" stroke-width="2" stroke-dasharray="7 5"/>
+            </g>
+            <g class="cu-plate" data-stage="2" data-seq="3">
+              <polygon points="40,282 268,226 470,282 242,338" fill="url(#cuPlateFill)" stroke="#d0202d" stroke-width="2.4"/>
+              <path d="M40,282 L242,338" stroke="#d0202d" stroke-width="3" fill="none"/>
+            </g>
+            <g class="cu-plate" data-stage="2" data-seq="4">
+              <polygon points="40,234 268,178 470,234 242,290" fill="url(#cuPlateFill)" stroke="#2b2b2b" stroke-width="2"/>
+            </g>
+            <g class="cu-plate" data-stage="2" data-seq="5">
+              <polygon points="40,186 268,130 470,186 242,242" fill="url(#cuPlateFill)" stroke="#2b2b2b" stroke-width="2"/>
+              <!-- Course lines run PARALLEL to the eave and must terminate on the
+                   plate's own edges. Plate vertices are (40,186) (268,130) (470,186)
+                   (242,242); a line starting at (40+228t, 186-56t) lands exactly on
+                   (242+228t, 242-56t). t = 0.25 / 0.50 / 0.75. -->
+              <path d="M97,172 L299,228 M154,158 L356,214 M211,144 L413,200" stroke="#2b2b2b" stroke-opacity="0.42" stroke-width="1" fill="none"/>
+            </g>
+            <g class="cu-plate" data-stage="3" data-seq="6">
+              <polygon points="128,142 268,108 382,142 242,176" fill="#d0202d" fill-opacity="0.92" stroke="#9c1822" stroke-width="2"/>
+            </g>
+
+            <!-- Once the roof is built, water runs it. This is WHY the order matters,
+                 and it is the one thing on the page a roofer will check us on:
+                 the drop crosses the field, reaches the drip edge, and leaves.
+                 Only runs at stage 3, because before that there is no roof. -->
+            <g class="cu-shed">
+              <circle class="cu-drop"    r="4.5" fill="#3d7fb0"/>
+              <circle class="cu-drop" r="3.5" fill="#3d7fb0"/>
+              <circle class="cu-drop" r="4"   fill="#3d7fb0"/>
+            </g>
+
+            <!-- leader lines and layer names, in the trade's own words -->
+            <g font-family="Figtree, sans-serif" font-size="19" font-weight="600" fill="#2b2b2b">
+              <g class="cu-plate-label" data-stage="1" data-seq="1">
+                <path d="M474,392 L516,392" stroke="#c9c5c0" stroke-width="1"/>
+                <text x="526" y="397">Decking</text>
+              </g>
+              <g class="cu-plate-label" data-stage="2" data-seq="2">
+                <path d="M474,330 L516,330" stroke="#c9c5c0" stroke-width="1"/>
+                <text x="526" y="335">Underlayment</text>
+              </g>
+              <g class="cu-plate-label" data-stage="2" data-seq="3">
+                <path d="M474,282 L516,282" stroke="#c9c5c0" stroke-width="1"/>
+                <text x="526" y="287" fill="#d0202d">Drip edge</text>
+              </g>
+              <g class="cu-plate-label" data-stage="2" data-seq="4">
+                <path d="M474,234 L516,234" stroke="#c9c5c0" stroke-width="1"/>
+                <text x="526" y="239">Starter course</text>
+              </g>
+              <g class="cu-plate-label" data-stage="2" data-seq="5">
+                <path d="M474,186 L516,186" stroke="#c9c5c0" stroke-width="1"/>
+                <text x="526" y="191">Shingle courses</text>
+              </g>
+              <g class="cu-plate-label" data-stage="3" data-seq="6">
+                <path d="M386,142 L516,142" stroke="#c9c5c0" stroke-width="1"/>
+                <text x="526" y="147">Ridge cap</text>
+              </g>
+            </g>
+          </svg>
+          <p class="cu-assembly__cap"><b>Same order, every time.</b> Nothing goes on until what is under it is right.</p>
+        </div>
+
+        <div class="cu-steps">
+          <div class="cu-step" data-stage="1">
+            <span class="cu-step__n">01</span>
+            <div>
+              <h3 class="cu-step__t">Week 1, structure</h3>
+              <p class="cu-step__b">Structure gets locked first. Every page gets mapped against the offer and the quote flow: what a homeowner needs to see, and in what order, to pick up the phone or fill out the form. Copy and structure are approved before anything gets designed.</p>
+            </div>
+          </div>
+          <div class="cu-step" data-stage="2">
+            <span class="cu-step__n">02</span>
+            <div>
+              <h3 class="cu-step__t">Week 2, build</h3>
+              <p class="cu-step__b">Pages get built. 5 pages coded, the quote form wired to route to your team, call tracking installed and tested, mobile checked on real phones.</p>
+            </div>
+          </div>
+          <div class="cu-step" data-stage="3">
+            <span class="cu-step__n">03</span>
+            <div>
+              <h3 class="cu-step__t">Week 3, revisions and launch</h3>
+              <p class="cu-step__b">2 rounds of revisions: word changes, image swaps, layout adjustments inside the built structure. Once approved, the site goes live, DNS is pointed, and every tracked piece is confirmed working before we call it done.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cu-terms">
+        <div class="cu-term">
+          <div class="cu-term__t">Reporting</div>
+          <p class="cu-term__b">A short update at the end of each week: what's built, what's next, and a live link to review it yourself. No dashboard login required.</p>
+        </div>
+        <div class="cu-term">
+          <div class="cu-term__t">No projections</div>
+          <p class="cu-term__b">Arc Garde does not guarantee a specific number of leads, calls or jobs.</p>
+        </div>
+      </div>
+
+      <div class="cu-need reveal">
+        <h3 class="cu-need__t">What we need</h3>
+        <p class="cu-need__intro">Access and material required to start.</p>
+        <ul class="cu-need__list">
+          <li>Domain registrar access or DNS login</li>
+          <li>Current hosting details, if the site already lives somewhere</li>
+          <li>Logo and any existing brand assets</li>
+          <li>Photos of finished roofs and crew, or approval to use stock until your own are ready</li>
+          <li>Licenses, certifications, or reviews you want featured</li>
+          <li>The number and the financing offer the site and ads will run on</li>
+          <li>CRM login or API access, if you already run one, so the quote form can route into it</li>
+        </ul>
+        <p class="cu-need__note">CRM is your cost, not part of this build. GoHighLevel is recommended if you don't already have one, but the build works with any established CRM.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 3. WHAT IT COSTS ==================== -->
+  <section class="cu-sec cu-sec--gold" aria-labelledby="cost-h">
+    <div class="cu-wrap">
+      <h2 class="cu-sr-only" id="cost-h">What it costs</h2>
+      <span class="cu-eyebrow">What it costs</span>
+
+      <div class="cu-offer reveal">
+        <div class="cu-offer__wash" aria-hidden="true"></div>
+        <div class="cu-price">
+          <div class="cu-price__n"><span data-countup="1400" data-prefix="$" data-comma="1">$0</span></div>
+          <div class="cu-price__bar" aria-hidden="true"></div>
+          <span class="cu-price__l">One time. Website build.</span>
+        </div>
+      </div>
+
+      <table class="cu-ledger reveal">
+        <caption>Included in the build</caption>
+        <thead>
+          <tr><th scope="col">Deliverable</th><th scope="col">Included</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Custom coded pages</td><td>5</td></tr>
+          <tr><td>Revision rounds</td><td>2</td></tr>
+          <tr><td>Timeline, start to live</td><td>3 weeks</td></tr>
+          <tr><td>Mobile build and device testing</td><td>Included</td></tr>
+          <tr><td>Quote form and lead routing</td><td>Included</td></tr>
+          <tr><td>Call tracking install</td><td>Included</td></tr>
+          <tr><td>Search setup, titles, schema, sitemap</td><td>Included</td></tr>
+          <tr><td>Speed and accessibility pass</td><td>Included</td></tr>
+          <tr><td>Handover, every file and account in your name</td><td>Included</td></tr>
+        </tbody>
+      </table>
+
+      <div class="cu-terms">
+        <div class="cu-term">
+          <div class="cu-term__t">Not included</div>
+          <p class="cu-term__b">Hosting. Domain renewal. The call tracking subscription. Ad spend. Work on pages outside the 5.</p>
+        </div>
+        <div class="cu-term">
+          <div class="cu-term__t">Pass through</div>
+          <p class="cu-term__b">Hosting and the call tracking subscription are paid direct by you, in your own name, and never through Arc Garde.</p>
+        </div>
+        <div class="cu-term">
+          <div class="cu-term__t">Terms</div>
+          <p class="cu-term__b">$1,400 to begin work. Payment locks the start date.</p>
+        </div>
+      </div>
+
+      <p class="cu-close reveal">3 weeks from now, this is what answers the&nbsp;phone.</p>
+    </div>
+  </section>
+
+  <!-- Title block. Every sheet in a real set carries one, bottom right. It is the
+       fastest possible signal that this is a drawing set and not a web page. -->
+  <div class="cu-tblock" aria-hidden="true">
+    <div class="cu-tblock__row"><span>Project</span><b>Website build</b></div>
+    <div class="cu-tblock__row"><span>Client</span><b>Construction Unlimited</b></div>
+    <div class="cu-tblock__row"><span>Sheet</span><b>1 of 1</b></div>
+    <div class="cu-tblock__row"><span>Issued</span><b>Aug 2026</b></div>
+  </div>
+
+  <svg class="cu-pitch cu-pitch--up" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <polygon points="0,60 600,0 1200,60"></polygon>
+  </svg>
+
+</main>
+
+
+<footer class="cu-foot">
+  <img class="cu-foot__logo" src="assets/home-footer-logo.png" width="208" height="145"
+       alt="Construction Unlimited" loading="lazy">
+  <p class="cu-foot__line">Presentation made by Arc Garde &nbsp;//&nbsp; Prepared for Construction&nbsp;Unlimited &nbsp;//&nbsp; August&nbsp;2026</p>
+</footer>
+
+<!-- Lenis 1.3.25, vendored in-folder rather than loaded from a CDN.
+     AG-WEB-PREFLIGHT section 2 forbids external-host assets, and a self-hosted
+     copy also removes the CDN-compromise surface that SRI exists to cover. -->
+<script src="lenis.min.js" defer></script>
+<script src="ag-scroll.js" defer></script>
+<script src="ag-motion.js" defer></script>
+<script src="ag-cursor.js" defer></script>
+<script src="ag-typography.js" defer></script>
+
+<script>
+/* ------------------------------------------------------------------
+   Net-new, with reason. The AG library ships no counter and no
+   scroll-linked diagram, so both are written here against the same
+   IntersectionObserver pattern ag-motion.js uses, and both honour
+   reduced motion by painting their end state immediately.
+   ------------------------------------------------------------------ */
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasIO  = 'IntersectionObserver' in window;
+
+  /* ---- 0. index the generated sets -------------------------------
+     Custom properties are DATA, not styling, so they are assigned here rather
+     than as inline style attributes. This is the pattern ag-motion.js already
+     uses to index its stagger children, and it keeps the markup at 0 inline
+     styles against the house cap of 3. */
+  document.querySelectorAll('.cu-course').forEach(function(el, i){
+    el.style.setProperty('--c', i);
+  });
+  /* Lay the cards bottom row first. Read the real grid rows off offsetTop so a
+     reflow cannot desync the order from what is actually on screen. */
+  (function(){
+    var grid = document.querySelector('.cu-grid');
+    if (!grid) return;
+    var kids = Array.prototype.slice.call(grid.children);
+    var rows = {};
+    kids.forEach(function(el){ (rows[el.offsetTop] = rows[el.offsetTop] || []).push(el); });
+    var tops = Object.keys(rows).map(Number).sort(function(a,b){ return b - a; });
+    var n = 0;
+    tops.forEach(function(t){ rows[t].forEach(function(el){ el.style.setProperty('--lay', n++); }); });
+  })();
+
+  document.querySelectorAll('.cu-drop').forEach(function(el, i){
+    el.style.setProperty('--dd', (i * -1.4) + 's');   /* 3 drops across a 4.2s loop */
+  });
+
+  /* ---- 1. the hero arrival gate ---------------------------------- */
+  var hero = document.querySelector('.cu-hero');
+  if (hero) { requestAnimationFrame(function(){ hero.classList.add('in-view'); }); }
+
+  /* ---- 2. count-ups ---------------------------------------------- */
+  function paint(el, v){
+    var pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+    el.textContent = pre + (el.dataset.comma ? v.toLocaleString('en-US') : String(v)) + suf;
+  }
+  function run(el, delay){
+    var target = parseInt(el.dataset.countup, 10);
+    if (isNaN(target)) return;
+    if (reduce){ paint(el, target); return; }
+    var dur = 1050, t0 = null;                    /* 3 x 350, matches --cu-t-set */
+    function frame(t){
+      if (t0 === null) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      paint(el, Math.round(target * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    setTimeout(function(){ requestAnimationFrame(frame); }, delay || 0);
+  }
+  var counters = document.querySelectorAll('[data-countup]');
+  if (!hasIO || reduce){
+    counters.forEach(function(el){ paint(el, parseInt(el.dataset.countup,10)); });
+  } else {
+    var cio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        /* In the hero the figures are still arriving, so the count waits for
+           them rather than running underneath a fade. */
+        var inHero = !!e.target.closest('.cu-hero');
+        run(e.target, inHero ? 882 : 0);
+        cio.unobserve(e.target);
+      });
+    }, { threshold: 0.4 });
+    counters.forEach(function(el){ cio.observe(el); });
+  }
+
+  /* ---- 3. the roof assembly, gated by the 3 weeks ----------------- */
+  var svg   = document.getElementById('cu-assembly');
+  var steps = document.querySelectorAll('.cu-step[data-stage]');
+  if (svg){
+    if (!hasIO || reduce){
+      svg.setAttribute('data-stage','3');
+      steps.forEach(function(s){ s.classList.add('in-view'); });
+    } else {
+      var highest = 0;
+      var sio = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (!e.isIntersecting) return;
+          e.target.classList.add('in-view');
+          var st = parseInt(e.target.dataset.stage, 10);
+          /* Only ever advances. Scrolling back up must not dismantle the roof. */
+          if (st > highest){ highest = st; svg.setAttribute('data-stage', String(st)); }
+          sio.unobserve(e.target);
+        });
+      }, { threshold: 0.35, rootMargin: '0px 0px -12% 0px' });
+      steps.forEach(function(s){ sio.observe(s); });
+    }
+  }
+})();
+</script>
+</body>
+</html>

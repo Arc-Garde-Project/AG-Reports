@@ -1,0 +1,210 @@
+/* ==========================================================================
+   ag-responsive.css — AG layout + spacing primitive
+   Version 1.0 · 2026-08-18
+   --------------------------------------------------------------------------
+   WHY THIS EXISTS
+   The library shipped 9 primitives (cursor, curtain, header, scroll, footer,
+   motion, button, typography, defensive) and layout was never one of them. The
+   responsive rule lived only in AG RESPONSIVE-SYSTEM.md as 441 lines of prose,
+   so every build re-derived it by hand and then had to be MEASURED to find out
+   whether it landed. A census of 601 AG-authored CSS files on 2026-08-18 found
+   831 canonical breakpoint uses against 881 off-standard ones, including 71
+   uses of 901px and 13 of 1199px — the signature of nudging a layout instead
+   of owning a token.
+
+   This file is the fix. Import it and the responsive rule is true by
+   construction. Nothing to remember, nothing to re-measure.
+
+   SCOPE
+   Owns: container widths, gutters, the fluid spacing scale, the two canonical
+         breakpoints, and the stacking doctrine.
+   Does NOT own: type scale. AG-TYPOGRAPHY-STANDARD is the single source for
+         that — see ag-typography.css. Never redefine --text-* here.
+
+   RANGE  350px to 1400px, correct at every pixel in between.
+   CASCADE  DESKTOP-FIRST. Exactly two breakpoints: 1200px and 900px.
+            Enforced by validate-fluid-sizing.sh (blocks 899/901/1199/1201).
+
+   USAGE
+     <link rel="stylesheet" href="ag-responsive.css">   (before ag-typography)
+     <div class="ag-container">
+       <div class="ag-row">…</div>          auto-stacks, no breakpoint needed
+       <p class="ag-measure">…</p>          capped line length
+     </div>
+   ========================================================================== */
+
+:root {
+  /* --- the two canonical breakpoints, as tokens ------------------------- */
+  /* Declared so nothing has to remember them. Media queries cannot consume a
+     custom property, so the literals below are the ONLY place 900/1200 appear
+     as numbers in an AG build. */
+  --bp-mobile: 900px;
+  --bp-tablet: 1200px;
+
+  /* --- container ------------------------------------------------------- */
+  --container-max: 1280px;   /* content width ceiling */
+  --container-wide: 1400px;  /* full-bleed sections */
+  --container-narrow: 720px; /* long-form reading column */
+
+  /* Gutter scales 20px at 350 to 48px at 1400. */
+  --gutter: clamp(1.25rem, 0.667rem + 2.67vw, 3rem);
+
+  /* --- fluid spacing scale --------------------------------------------- */
+  /* Every value scales smoothly across the full range. Sizing NEVER needs a
+     media query; breakpoints are for layout SHIFTS only. */
+  --space-3xs: clamp(0.25rem, 0.208rem + 0.19vw, 0.375rem); /*  4 ->   6 */
+  --space-2xs: clamp(0.5rem,  0.417rem + 0.38vw, 0.75rem);  /*  8 ->  12 */
+  --space-xs:  clamp(0.75rem, 0.667rem + 0.38vw, 1rem);     /* 12 ->  16 */
+  --space-s:   clamp(1rem,    0.833rem + 0.76vw, 1.5rem);   /* 16 ->  24 */
+  --space-m:   clamp(1.5rem,  1.333rem + 0.76vw, 2rem);     /* 24 ->  32 */
+  --space-l:   clamp(2rem,    1.667rem + 1.52vw, 3rem);     /* 32 ->  48 */
+  --space-xl:  clamp(3rem,    2.5rem   + 2.29vw, 4.5rem);   /* 48 ->  72 */
+  --space-2xl: clamp(4rem,    3.333rem + 3.05vw, 6rem);     /* 64 ->  96 */
+  --space-3xl: clamp(6rem,    5rem     + 4.57vw, 9rem);     /* 96 -> 144 */
+
+  /* Vertical rhythm between major sections. */
+  --section-y: var(--space-2xl);
+
+  /* Minimum column width before a row is allowed to stack. Override per row
+     with style="--col-min: 24rem". */
+  --col-min: 18rem;
+
+  /* NOTE: --measure / .ag-measure are NOT defined here. ag-typography.css owns the whole
+     measure family (--measure-body/-tight/-display/-statement and .ag-measure*), and its
+     version additionally guards with min(..., 100%). Defining a second .ag-measure here
+     created a real collision, found 2026-08-19 by composing the primitives in one page
+     instead of testing this file in isolation. Single source: AG-TYPOGRAPHY-STANDARD. */
+}
+
+/* ==========================================================================
+   CONTAINER
+   ========================================================================== */
+
+/* box-sizing is set on the primitive's own classes rather than assumed from the
+   host page. Without it, `width: 100%` plus `padding-inline: var(--gutter)`
+   overflows by exactly one gutter on both sides — measured as 40px of
+   horizontal scroll at 350px and 85px at 1200px before this line existed.
+   A drop-in primitive cannot rely on the host having a global reset. */
+.ag-container,
+.ag-container *,
+.ag-row, .ag-split, .ag-stack,
+.ag-section {
+  box-sizing: border-box;
+}
+
+.ag-container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.ag-container--wide   { max-width: var(--container-wide); }
+.ag-container--narrow { max-width: var(--container-narrow); }
+.ag-container--bleed  { max-width: none; padding-inline: 0; }
+
+.ag-section { padding-block: var(--section-y); }
+
+/* ==========================================================================
+   STACKING DOCTRINE
+   "The longer the width the more we can do; the shorter, the more we stack."
+
+   .ag-row encodes that with ZERO breakpoints. auto-fit + minmax means columns
+   are added as width allows and removed as it runs out, continuously. The
+   min(100%, …) guard is what stops a column overflowing a narrow viewport —
+   without it, a 18rem minimum on a 350px screen forces a horizontal scrollbar.
+   ========================================================================== */
+
+.ag-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--col-min)), 1fr));
+  gap: var(--space-m);
+  align-items: start;
+}
+
+.ag-row--tight { gap: var(--space-s); }
+.ag-row--loose { gap: var(--space-l); }
+
+/* Explicit two-up that becomes one-up below the mobile breakpoint. Use only
+   where the two sides are NOT interchangeable (e.g. copy beside an image) and
+   auto-fit would reorder them wrongly. */
+.ag-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-l);
+  align-items: center;
+}
+
+.ag-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;   /* declared, never defaulted (stretch-prevention rule) */
+  gap: var(--space-s);
+}
+
+/* ==========================================================================
+   THE FOUR VARIABLES
+   Everything else between 350 and 1400 is invariant. These four are the only
+   elements whose behavior genuinely changes with width.
+   ========================================================================== */
+
+/* 1. TEXT CONTAINER — owned by ag-typography.css (.ag-measure and its --tight/--display/
+   --statement variants). Only the LAYOUT modifier lives here, which is additive and does
+   not redefine the class. */
+.ag-measure--center { margin-inline: auto; }
+
+/* 2. LOGO — scales within bounds and never distorts. */
+.ag-logo {
+  display: block;
+  width: auto;
+  height: clamp(1.75rem, 1.5rem + 1.14vw, 2.75rem);  /* 28 -> 44 */
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* 3. IMAGE WITH BACKGROUND — the full-bleed plate.
+   NEVER scale or rotate this element: a transform on a full-bleed plate
+   exposes the edge and forces a re-render of the whole section. Change the
+   aspect-ratio or the object-position instead. */
+.ag-media {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+}
+.ag-media--portrait { aspect-ratio: 3 / 4; }
+.ag-media--square   { aspect-ratio: 1 / 1; }
+.ag-media--plate    { aspect-ratio: auto; min-height: clamp(18rem, 12rem + 27vw, 40rem); }
+
+/* 4. HEADER — owned by ag-header.css. Declared here only so the two agree on
+   the same offset token. */
+:root { --header-h: clamp(3.5rem, 3rem + 2.29vw, 5rem); }   /* 56 -> 80 */
+.ag-header-offset { padding-top: var(--header-h); }
+
+/* ==========================================================================
+   LAYOUT SHIFTS — the only two media queries in this file.
+   Sizing is already fluid above; these change STRUCTURE, which is the one
+   legitimate use of a breakpoint.
+   ========================================================================== */
+
+@media (max-width: 1200px) {
+  .ag-split { gap: var(--space-m); }
+}
+
+@media (max-width: 900px) {
+  /* Below the mobile boundary everything that was side-by-side stacks. */
+  .ag-split { grid-template-columns: 1fr; }
+  .ag-row--nostack-desktop { grid-template-columns: 1fr; }
+  .ag-media { aspect-ratio: 4 / 3; }   /* taller crop reads better on phones */
+  .ag-hide-mobile { display: none; }
+}
+
+/* ==========================================================================
+   DEFENSIVE
+   ========================================================================== */
+
+/* Nothing in a fluid layout may cause a horizontal scrollbar. */
+.ag-container, .ag-row, .ag-split, .ag-stack { min-width: 0; }
+.ag-row > *, .ag-split > *, .ag-stack > * { min-width: 0; }
