@@ -1,0 +1,136 @@
+/* =========================================================== */
+/* AG Typography Contract v1.0 — CANONICAL DROP-IN             */
+/* Load AFTER ag-defensive.css, BEFORE component styles.       */
+/*                                                             */
+/* WHY THIS EXISTS. A portfolio sweep of 33 client homepages    */
+/* (reports/orphan-allpages-BEFORE-2026-08-01.md) measured 4,105 orphan */
+/* blockers against three rules that were already written down  */
+/* and enforced only by declaring text-wrap and then looking:   */
+/*   WIDOW 1948 . INTERIOR 1273 . HYPHEN-BREAK 478 .            */
+/*   NUMBER-SPLIT 282 . WORD-BREAK 91 . GLYPH 33                */
+/* text-wrap: balance/pretty cannot fix any of the last three,  */
+/* and cannot fix INTERIOR at all.                              */
+/*                                                             */
+/* THE SPLIT OF LABOR (from the data, not from taste):         */
+/*   INTERIOR is a SIZING defect. The type is too big for its   */
+/*     container, so the line cannot hold two words. No amount  */
+/*     of gluing fixes it. This file fixes it, with a measure   */
+/*     contract and a display-size ceiling.                     */
+/*   WIDOW / HYPHEN-BREAK / NUMBER-SPLIT are GLUE defects. The  */
+/*     size is fine, the break lands in the wrong place. CSS    */
+/*     cannot insert a non-breaking character into existing     */
+/*     copy, so ag-typography.js does those. This file ships    */
+/*     the utility classes that JS (or an author) applies.      */
+/* =========================================================== */
+
+:root {
+  /* ---- MEASURE (line length) ----
+     Body stays in ch: ch resolves against the element's OWN font-size,
+     which is what you want when that size is close to the root size.
+
+     Display measures are PX, deliberately. The single most common cause
+     of a one-word-per-line tower in AG builds is `width: min(NNch, 100%)`
+     set on a PARENT whose font-size is the body size, while the display
+     child renders 3-4x larger. 30ch of a 1.3rem container is ~300px; a
+     3.7rem headline needs far more, so it wraps to one or two words per
+     line and the section balloons. A px measure cannot be mis-resolved
+     against the wrong font-size. */
+  --measure-body: 65ch;      /* AG-TYPOGRAPHY-STANDARD Pillar 5 */
+  --measure-tight: 46ch;     /* captions, cards, sidebars */
+  --measure-display: clamp(320px, 46vw, 760px);
+  --measure-statement: clamp(320px, 60vw, 980px);
+}
+
+/* ---- Measure utilities. Put these on the element that CARRIES the
+   font-size, never on an ancestor with a different one. ---- */
+.ag-measure            { max-width: min(var(--measure-body), 100%); }
+.ag-measure--tight     { max-width: min(var(--measure-tight), 100%); }
+.ag-measure--display   { max-width: min(var(--measure-display), 100%); }
+.ag-measure--statement { max-width: min(var(--measure-statement), 100%); }
+
+/* ===========================================================
+   THE DISPLAY SIZE CEILING (the INTERIOR fix)
+
+   A line needs roughly 18 characters to hold three words
+   (~5 chars per word plus a space). In a proportional face an
+   average glyph is about half the font-size, so a measure M at
+   font-size F holds about 2M/F characters. Requiring 18 gives:
+
+       F <= M / 9
+
+   That is the whole rule. At the 760px display measure the
+   ceiling is ~84px; at a 400px mobile measure it is ~44px.
+   Exceed it and the block cannot physically hold three words on
+   a line, which is what every INTERIOR finding in the sweep is.
+
+   The clamps below encode the ceiling against the measure they
+   are paired with. They are maximums, not targets.
+
+   `calc(<length> / <number>)` is valid CSS and resolves at used-value
+   time, so the ceiling tracks the measure's own clamp automatically as
+   the viewport changes. Do NOT reintroduce a second "resolved" custom
+   property to hold it: an undefined var() silently falls back and the
+   declaration computes without ever painting the intended value, which
+   is the quietest way to ship a rule that does nothing.
+   =========================================================== */
+.ag-display {
+  font-size: min(var(--text-hero, clamp(2.625rem, 2.333rem + 1.333vw, 3.5rem)),
+                 calc(var(--measure-display) / 9));
+  max-width: min(var(--measure-display), 100%);
+  text-wrap: balance;
+}
+
+.ag-statement {
+  /* Big pull-quote / manifesto type. Ceiling derived from the wider
+     statement measure. */
+  font-size: min(var(--text-h2, clamp(1.75rem, 1.458rem + 1.333vw, 2.625rem)),
+                 calc(var(--measure-statement) / 9));
+  max-width: min(var(--measure-statement), 100%);
+  text-wrap: balance;
+}
+
+/* ---- GLUE UTILITIES ----
+   Applied by ag-typography.js, or by hand when the copy is known.
+   .ag-nowrap is the blunt instrument: use it on a figure, a unit
+   pair, a phone number, a price. Never on a whole sentence, or it
+   will overflow instead of wrapping. */
+.ag-nowrap { white-space: nowrap; }
+
+/* Numeric values must never split from their unit or across lines.
+   Stat cards are the repeat offender: a figure too wide for its card
+   wraps to two lines and reads as broken. Cap the font so the widest
+   value fits the tightest card, and keep the value unbreakable. */
+.ag-stat-value,
+.ag-figure {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- MICRO ELEMENTS: deliberately NOT blanket-nowrapped ----
+   Buttons, badges, nav items and labels are short strings where
+   text-wrap does nothing, and a two-line button is a layout failure
+   rather than a typographic one. The obvious move is
+   `.ag-button { white-space: nowrap }`, and it is the wrong one:
+   MICRO-WRAP was the SMALLEST class in the sweep (8 warnings out of
+   774 findings), while forcing nowrap on every button across 33 live
+   builds risks turning a wrapped label into horizontal overflow, which
+   is a worse and harder-to-see defect. Trading a real overflow risk
+   for 8 warnings is a bad deal.
+
+   So: apply `.ag-nowrap` to the specific control whose label must hold
+   one line, and let the sweep tell you which those are. */
+
+/* ---- NEVER BREAK A WORD ----
+   Restates the standing rule at the primitive layer so a component
+   cannot quietly reintroduce it. `overflow-wrap: break-word` on body
+   (ag-defensive) is the safety net for URLs; hyphenation and
+   break-all are not permitted anywhere. */
+h1, h2, h3, h4, h5, h6, p, li, blockquote, figcaption, a, button, label {
+  hyphens: none;
+  -webkit-hyphens: none;
+  word-break: normal;
+}
+
+/* Long unbroken strings that are NOT prose (URLs, tokens, IDs) are the
+   one place a break is allowed, and only here. */
+.ag-breakable { overflow-wrap: anywhere; }
