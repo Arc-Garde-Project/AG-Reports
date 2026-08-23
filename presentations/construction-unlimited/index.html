@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="is-loading">
 <head>
 <base href="/presentations/construction-unlimited/">
 <meta charset="utf-8">
@@ -13,11 +13,11 @@
 <meta property="og:url" content="https://ag-reports.vercel.app/presentations/construction-unlimited">
 <meta property="og:title" content="Construction Unlimited | Website Build - Arc Garde">
 <meta property="og:description" content="A website build proposal prepared for Construction Unlimited by Arc Garde.">
-<meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+<meta property="og:image" content="https://ag-reports.vercel.app/assets/og-website.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
+<meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-website.png">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <meta name="theme-color" content="#ffffff">
@@ -67,6 +67,12 @@
 
   /* --- AG gold thread. Stays gold on client pages per the pitch skill --- */
   --cu-gold:       #f5c842;
+  --cu-siding-red: #661017;   /* deeper than barn: the brand red taken to an oxblood ground */
+  --cu-siding: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%271440%27%20height%3D%27468%27%20viewBox%3D%270%200%201440%20468%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27lap%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%270%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270.50%27%2F%3E%3Cstop%20offset%3D%270.45%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270.14%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%270%27%20y%3D%270%27%20width%3D%271440%27%20height%3D%2778%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.016%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%2757.6%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.01%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%2759.9%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.014%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%2742.8%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.012%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%278.7%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.015%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%2758.2%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.01%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%2710.5%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.011%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%2749.1%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.014%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%2778%27%20width%3D%271440%27%20height%3D%2778%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.016%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27103.6%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.009%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27110.4%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.009%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27139.2%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.009%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27118.9%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.008%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27131.9%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.008%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%2788.1%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.012%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27142.1%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.013%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27156%27%20width%3D%271440%27%20height%3D%2778%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.021%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27191.0%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.016%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27177.4%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.007%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27199.3%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.012%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27174.7%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.008%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27200.0%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.009%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27171.0%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.016%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27224.4%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.008%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27234%27%20width%3D%271440%27%20height%3D%2778%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.014%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27287.2%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.011%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27287.7%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.007%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27299.0%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.014%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27296.7%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.007%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27274.0%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.015%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27243.1%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.013%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27274.5%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.012%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27312%27%20width%3D%271440%27%20height%3D%2778%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.019%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27344.1%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.014%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27346.2%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.013%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27367.9%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.012%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27336.0%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.015%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27380.9%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.009%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27330.0%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.01%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27350.2%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.012%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27390%27%20width%3D%271440%27%20height%3D%2778%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.024%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27440.6%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.012%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27409.4%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.011%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27452.3%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.012%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27397.3%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.01%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27398.6%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.012%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27454.9%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.015%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27398.1%27%20width%3D%271440%27%20height%3D%270.8%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.015%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%2776%27%20width%3D%271440%27%20height%3D%272%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%2778%27%20width%3D%271440%27%20height%3D%2715%27%20fill%3D%27url%28%23lap%29%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27154%27%20width%3D%271440%27%20height%3D%272%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27156%27%20width%3D%271440%27%20height%3D%2715%27%20fill%3D%27url%28%23lap%29%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27232%27%20width%3D%271440%27%20height%3D%272%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27234%27%20width%3D%271440%27%20height%3D%2715%27%20fill%3D%27url%28%23lap%29%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27310%27%20width%3D%271440%27%20height%3D%272%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27312%27%20width%3D%271440%27%20height%3D%2715%27%20fill%3D%27url%28%23lap%29%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27388%27%20width%3D%271440%27%20height%3D%272%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27390%27%20width%3D%271440%27%20height%3D%2715%27%20fill%3D%27url%28%23lap%29%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27466%27%20width%3D%271440%27%20height%3D%272%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%270%27%20width%3D%271440%27%20height%3D%2715%27%20fill%3D%27url%28%23lap%29%27%2F%3E%3C%2Fsvg%3E");
+  --cu-siding-size: clamp(1100px,82vw,1580px) auto;
+  --cu-concrete-grey: #1a1c1f;   /* very dark grey, clear of the shingle field's true black */
+  --cu-concrete: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%271440%27%20height%3D%27400%27%20viewBox%3D%270%200%201440%20400%27%3E%3Cdefs%3E%3CradialGradient%20id%3D%27mot%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23fff%27%20stop-opacity%3D%270.055%27%2F%3E%3Cstop%20offset%3D%270.6%27%20stop-color%3D%27%23fff%27%20stop-opacity%3D%270.018%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23fff%27%20stop-opacity%3D%270%27%2F%3E%3C%2FradialGradient%3E%3CradialGradient%20id%3D%27mod%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270.16%27%2F%3E%3Cstop%20offset%3D%270.6%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270.05%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270%27%2F%3E%3C%2FradialGradient%3E%3C%2Fdefs%3E%3Cellipse%20cx%3D%27459%27%20cy%3D%2743%27%20rx%3D%27276%27%20ry%3D%27118%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27459%27%20cy%3D%27443%27%20rx%3D%27276%27%20ry%3D%27118%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27614%27%20cy%3D%27-35%27%20rx%3D%27115%27%20ry%3D%27147%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27614%27%20cy%3D%27365%27%20rx%3D%27115%27%20ry%3D%27147%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27993%27%20cy%3D%27193%27%20rx%3D%27234%27%20ry%3D%27163%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27609%27%20cy%3D%27-11%27%20rx%3D%27150%27%20ry%3D%27153%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27609%27%20cy%3D%27389%27%20rx%3D%27150%27%20ry%3D%27153%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27-69%27%20cy%3D%2790%27%20rx%3D%27244%27%20ry%3D%2774%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271371%27%20cy%3D%2790%27%20rx%3D%27244%27%20ry%3D%2774%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27-128%27%20cy%3D%2720%27%20rx%3D%27190%27%20ry%3D%2799%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27-128%27%20cy%3D%27420%27%20rx%3D%27190%27%20ry%3D%2799%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271312%27%20cy%3D%2720%27%20rx%3D%27190%27%20ry%3D%2799%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271312%27%20cy%3D%27420%27%20rx%3D%27190%27%20ry%3D%2799%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27395%27%20cy%3D%27-17%27%20rx%3D%27131%27%20ry%3D%27132%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27395%27%20cy%3D%27383%27%20rx%3D%27131%27%20ry%3D%27132%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27179%27%20cy%3D%27129%27%20rx%3D%27186%27%20ry%3D%2771%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%271619%27%20cy%3D%27129%27%20rx%3D%27186%27%20ry%3D%2771%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27-113%27%20cy%3D%27-90%27%20rx%3D%27137%27%20ry%3D%27103%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27-113%27%20cy%3D%27310%27%20rx%3D%27137%27%20ry%3D%27103%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%271327%27%20cy%3D%27-90%27%20rx%3D%27137%27%20ry%3D%27103%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%271327%27%20cy%3D%27310%27%20rx%3D%27137%27%20ry%3D%27103%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27-79%27%20cy%3D%27207%27%20rx%3D%27113%27%20ry%3D%27159%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271361%27%20cy%3D%27207%27%20rx%3D%27113%27%20ry%3D%27159%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27578%27%20cy%3D%27274%27%20rx%3D%27239%27%20ry%3D%2788%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27-49%27%20cy%3D%27204%27%20rx%3D%27300%27%20ry%3D%2799%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%271391%27%20cy%3D%27204%27%20rx%3D%27300%27%20ry%3D%2799%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27265%27%20cy%3D%27-8%27%20rx%3D%27124%27%20ry%3D%27141%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27265%27%20cy%3D%27392%27%20rx%3D%27124%27%20ry%3D%27141%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27791%27%20cy%3D%27-91%27%20rx%3D%27225%27%20ry%3D%27125%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27791%27%20cy%3D%27309%27%20rx%3D%27225%27%20ry%3D%27125%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27-19%27%20cy%3D%27-23%27%20rx%3D%27175%27%20ry%3D%27105%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27-19%27%20cy%3D%27377%27%20rx%3D%27175%27%20ry%3D%27105%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271421%27%20cy%3D%27-23%27%20rx%3D%27175%27%20ry%3D%27105%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271421%27%20cy%3D%27377%27%20rx%3D%27175%27%20ry%3D%27105%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27298%27%20cy%3D%27246%27%20rx%3D%27251%27%20ry%3D%2787%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27966%27%20cy%3D%27115%27%20rx%3D%27244%27%20ry%3D%27136%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27966%27%20cy%3D%27515%27%20rx%3D%27244%27%20ry%3D%27136%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27-159%27%20cy%3D%27-64%27%20rx%3D%27244%27%20ry%3D%27103%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27-159%27%20cy%3D%27336%27%20rx%3D%27244%27%20ry%3D%27103%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271281%27%20cy%3D%27-64%27%20rx%3D%27244%27%20ry%3D%27103%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271281%27%20cy%3D%27336%27%20rx%3D%27244%27%20ry%3D%27103%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%2797%27%20cy%3D%27189%27%20rx%3D%27116%27%20ry%3D%27100%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%271537%27%20cy%3D%27189%27%20rx%3D%27116%27%20ry%3D%27100%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27735%27%20cy%3D%27-98%27%20rx%3D%27211%27%20ry%3D%27147%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27735%27%20cy%3D%27302%27%20rx%3D%27211%27%20ry%3D%27147%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27-257%27%20cy%3D%27-168%27%20rx%3D%27317%27%20ry%3D%27170%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27-257%27%20cy%3D%27232%27%20rx%3D%27317%27%20ry%3D%27170%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271183%27%20cy%3D%27-168%27%20rx%3D%27317%27%20ry%3D%27170%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271183%27%20cy%3D%27232%27%20rx%3D%27317%27%20ry%3D%27170%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271155%27%20cy%3D%27214%27%20rx%3D%27121%27%20ry%3D%27163%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27317%27%20cy%3D%27150%27%20rx%3D%27296%27%20ry%3D%27101%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%271090%27%20cy%3D%27170%27%20rx%3D%27201%27%20ry%3D%27143%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27593%27%20cy%3D%2733%27%20rx%3D%27186%27%20ry%3D%27121%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27593%27%20cy%3D%27433%27%20rx%3D%27186%27%20ry%3D%27121%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27185%27%20cy%3D%27248%27%20rx%3D%27151%27%20ry%3D%2789%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271244%27%20cy%3D%2760%27%20rx%3D%27137%27%20ry%3D%27164%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%271244%27%20cy%3D%27460%27%20rx%3D%27137%27%20ry%3D%27164%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27836%27%20cy%3D%27-37%27%20rx%3D%27203%27%20ry%3D%2761%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27836%27%20cy%3D%27363%27%20rx%3D%27203%27%20ry%3D%2761%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27706%27%20cy%3D%2723%27%20rx%3D%27166%27%20ry%3D%27139%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27706%27%20cy%3D%27423%27%20rx%3D%27166%27%20ry%3D%27139%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27-29%27%20cy%3D%27130%27%20rx%3D%27217%27%20ry%3D%27102%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271411%27%20cy%3D%27130%27%20rx%3D%27217%27%20ry%3D%27102%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27-267%27%20cy%3D%27-39%27%20rx%3D%27303%27%20ry%3D%27167%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27-267%27%20cy%3D%27361%27%20rx%3D%27303%27%20ry%3D%27167%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%271173%27%20cy%3D%27-39%27%20rx%3D%27303%27%20ry%3D%27167%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%271173%27%20cy%3D%27361%27%20rx%3D%27303%27%20ry%3D%27167%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27454%27%20cy%3D%278%27%20rx%3D%27173%27%20ry%3D%2761%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27454%27%20cy%3D%27408%27%20rx%3D%27173%27%20ry%3D%2761%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27275%27%20cy%3D%27129%27%20rx%3D%27268%27%20ry%3D%27163%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27275%27%20cy%3D%27529%27%20rx%3D%27268%27%20ry%3D%27163%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27303%27%20cy%3D%2752%27%20rx%3D%27308%27%20ry%3D%2768%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27303%27%20cy%3D%27452%27%20rx%3D%27308%27%20ry%3D%2768%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%271743%27%20cy%3D%2752%27%20rx%3D%27308%27%20ry%3D%2768%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%271743%27%20cy%3D%27452%27%20rx%3D%27308%27%20ry%3D%2768%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27-179%27%20cy%3D%27-54%27%20rx%3D%27246%27%20ry%3D%27137%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27-179%27%20cy%3D%27346%27%20rx%3D%27246%27%20ry%3D%27137%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%271261%27%20cy%3D%27-54%27%20rx%3D%27246%27%20ry%3D%27137%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%271261%27%20cy%3D%27346%27%20rx%3D%27246%27%20ry%3D%27137%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27628%27%20cy%3D%2727%27%20rx%3D%27301%27%20ry%3D%27157%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27628%27%20cy%3D%27427%27%20rx%3D%27301%27%20ry%3D%27157%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27979%27%20cy%3D%27-75%27%20rx%3D%27295%27%20ry%3D%27153%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27979%27%20cy%3D%27325%27%20rx%3D%27295%27%20ry%3D%27153%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27310%27%20cy%3D%27158%27%20rx%3D%27285%27%20ry%3D%27144%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%2720%27%20cy%3D%27239%27%20rx%3D%27235%27%20ry%3D%2779%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271460%27%20cy%3D%27239%27%20rx%3D%27235%27%20ry%3D%2779%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27416%27%20cy%3D%27-64%27%20rx%3D%27221%27%20ry%3D%2783%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27416%27%20cy%3D%27336%27%20rx%3D%27221%27%20ry%3D%2783%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27381%27%20cy%3D%27178%27%20rx%3D%27216%27%20ry%3D%27124%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27969%27%20cy%3D%27156%27%20rx%3D%27150%27%20ry%3D%27168%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27969%27%20cy%3D%27556%27%20rx%3D%27150%27%20ry%3D%27168%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27333%27%20cy%3D%27266%27%20rx%3D%27255%27%20ry%3D%27128%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%2726%27%20cy%3D%27-45%27%20rx%3D%27177%27%20ry%3D%27169%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%2726%27%20cy%3D%27355%27%20rx%3D%27177%27%20ry%3D%27169%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271466%27%20cy%3D%27-45%27%20rx%3D%27177%27%20ry%3D%27169%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%271466%27%20cy%3D%27355%27%20rx%3D%27177%27%20ry%3D%27169%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27997%27%20cy%3D%27144%27%20rx%3D%27163%27%20ry%3D%27167%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27997%27%20cy%3D%27544%27%20rx%3D%27163%27%20ry%3D%27167%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27220%27%20cy%3D%27-68%27%20rx%3D%27166%27%20ry%3D%27109%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27220%27%20cy%3D%27332%27%20rx%3D%27166%27%20ry%3D%27109%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27812%27%20cy%3D%27-93%27%20rx%3D%27117%27%20ry%3D%27130%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27812%27%20cy%3D%27307%27%20rx%3D%27117%27%20ry%3D%27130%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27482%27%20cy%3D%27199%27%20rx%3D%27306%27%20ry%3D%27144%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27327%27%20cy%3D%2710%27%20rx%3D%27177%27%20ry%3D%2794%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27327%27%20cy%3D%27410%27%20rx%3D%27177%27%20ry%3D%2794%27%20fill%3D%27url%28%23mot%29%27%2F%3E%3Cellipse%20cx%3D%27566%27%20cy%3D%27-12%27%20rx%3D%27173%27%20ry%3D%2768%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27566%27%20cy%3D%27388%27%20rx%3D%27173%27%20ry%3D%2768%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27903%27%20cy%3D%2758%27%20rx%3D%27187%27%20ry%3D%27169%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27903%27%20cy%3D%27458%27%20rx%3D%27187%27%20ry%3D%27169%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27-22%27%20cy%3D%2798%27%20rx%3D%27307%27%20ry%3D%27143%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%27-22%27%20cy%3D%27498%27%20rx%3D%27307%27%20ry%3D%27143%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%271418%27%20cy%3D%2798%27%20rx%3D%27307%27%20ry%3D%27143%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Cellipse%20cx%3D%271418%27%20cy%3D%27498%27%20rx%3D%27307%27%20ry%3D%27143%27%20fill%3D%27url%28%23mod%29%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27198.5%27%20width%3D%271440%27%20height%3D%271.5%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27200%27%20width%3D%271440%27%20height%3D%277%27%20fill%3D%27%23000%27%20fill-opacity%3D%270.30%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27398.5%27%20width%3D%271440%27%20height%3D%271.5%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27400%27%20width%3D%271440%27%20height%3D%270%27%20fill%3D%27%23000%27%20fill-opacity%3D%270.30%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%270%27%20width%3D%271440%27%20height%3D%277%27%20fill%3D%27%23000%27%20fill-opacity%3D%270.30%27%2F%3E%3Ccircle%20cx%3D%2790%27%20cy%3D%27100.0%27%20r%3D%274.2%27%20fill%3D%27%23000%27%20fill-opacity%3D%270.42%27%2F%3E%3Ccircle%20cx%3D%2790%27%20cy%3D%2798.6%27%20r%3D%274.2%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Ccircle%20cx%3D%27450%27%20cy%3D%27100.0%27%20r%3D%274.2%27%20fill%3D%27%23000%27%20fill-opacity%3D%270.42%27%2F%3E%3Ccircle%20cx%3D%27450%27%20cy%3D%2798.6%27%20r%3D%274.2%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Ccircle%20cx%3D%27810%27%20cy%3D%27100.0%27%20r%3D%274.2%27%20fill%3D%27%23000%27%20fill-opacity%3D%270.42%27%2F%3E%3Ccircle%20cx%3D%27810%27%20cy%3D%2798.6%27%20r%3D%274.2%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Ccircle%20cx%3D%271170%27%20cy%3D%27100.0%27%20r%3D%274.2%27%20fill%3D%27%23000%27%20fill-opacity%3D%270.42%27%2F%3E%3Ccircle%20cx%3D%271170%27%20cy%3D%2798.6%27%20r%3D%274.2%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Ccircle%20cx%3D%27270%27%20cy%3D%27300.0%27%20r%3D%274.2%27%20fill%3D%27%23000%27%20fill-opacity%3D%270.42%27%2F%3E%3Ccircle%20cx%3D%27270%27%20cy%3D%27298.6%27%20r%3D%274.2%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Ccircle%20cx%3D%27630%27%20cy%3D%27300.0%27%20r%3D%274.2%27%20fill%3D%27%23000%27%20fill-opacity%3D%270.42%27%2F%3E%3Ccircle%20cx%3D%27630%27%20cy%3D%27298.6%27%20r%3D%274.2%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Ccircle%20cx%3D%27990%27%20cy%3D%27300.0%27%20r%3D%274.2%27%20fill%3D%27%23000%27%20fill-opacity%3D%270.42%27%2F%3E%3Ccircle%20cx%3D%27990%27%20cy%3D%27298.6%27%20r%3D%274.2%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Ccircle%20cx%3D%271350%27%20cy%3D%27300.0%27%20r%3D%274.2%27%20fill%3D%27%23000%27%20fill-opacity%3D%270.42%27%2F%3E%3Ccircle%20cx%3D%271350%27%20cy%3D%27298.6%27%20r%3D%274.2%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3C%2Fsvg%3E");
+  --cu-concrete-size: clamp(900px,68vw,1300px) auto;
 
   /* --- TYPE SCALE ---------------------------------------------------
      Fluid range extended from 1400 to 1920. Every clamp previously topped
@@ -82,7 +88,6 @@
   --cu-deck:      clamp(1.05rem, 0.92rem + 0.55vw, 1.41rem);
   --cu-small:     clamp(0.84rem, 0.78rem + 0.24vw, 1.00rem);
   --cu-eyebrow:   clamp(0.70rem, 0.66rem + 0.17vw, 0.81rem);
-  --cu-figure:    clamp(2.10rem, 1.42rem + 2.83vw, 3.95rem);
   --cu-price:     clamp(3.40rem, 1.86rem + 6.42vw, 7.60rem);
 
   /* --- MEASURE -------------------------------------------------------
@@ -102,13 +107,18 @@
   --cu-e-dark: 0 3px 8px rgba(0,0,0,.34), 0 20px 52px rgba(0,0,0,.42);
 
   --cu-rule: 3px;
-  --cu-roof-h: clamp(9rem, 22vh, 15rem);
+  --cu-roof-h: clamp(13rem, 26vh, 22rem);
 
   /* --- motion. Every value a multiple of 3 or 7, per AG DNA. --- */
+  --cu-apex: clamp(2.2rem,4.4vw,3.8rem);   /* every section cut-off */
+  --cu-shingle: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2760%27%20height%3D%2760%27%20viewBox%3D%270%200%2060%2060%27%3E%3Crect%20x%3D%2758.9%27%20y%3D%2758.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.097%27%2F%3E%3Crect%20x%3D%2741.8%27%20y%3D%2718.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.048%27%2F%3E%3Crect%20x%3D%2717.1%27%20y%3D%274.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.091%27%2F%3E%3Crect%20x%3D%2723.6%27%20y%3D%2749.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.061%27%2F%3E%3Crect%20x%3D%2756.5%27%20y%3D%2750.0%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.03%27%2F%3E%3Crect%20x%3D%2712.4%27%20y%3D%2753.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.068%27%2F%3E%3Crect%20x%3D%2757.8%27%20y%3D%2723.4%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.036%27%2F%3E%3Crect%20x%3D%2737.1%27%20y%3D%2745.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.052%27%2F%3E%3Crect%20x%3D%275.1%27%20y%3D%2719.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.107%27%2F%3E%3Crect%20x%3D%2744.7%27%20y%3D%277.0%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%276.0%27%20y%3D%273.5%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.094%27%2F%3E%3Crect%20x%3D%2710.5%27%20y%3D%2733.0%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.066%27%2F%3E%3Crect%20x%3D%2711.3%27%20y%3D%2743.2%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.04%27%2F%3E%3Crect%20x%3D%2738.0%27%20y%3D%276.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.064%27%2F%3E%3Crect%20x%3D%2712.6%27%20y%3D%2715.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.108%27%2F%3E%3Crect%20x%3D%2747.4%27%20y%3D%2717.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.101%27%2F%3E%3Crect%20x%3D%2712.4%27%20y%3D%2723.3%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.098%27%2F%3E%3Crect%20x%3D%2737.9%27%20y%3D%275.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.109%27%2F%3E%3Crect%20x%3D%2712.6%27%20y%3D%2715.2%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.092%27%2F%3E%3Crect%20x%3D%2719.4%27%20y%3D%2717.5%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.036%27%2F%3E%3Crect%20x%3D%275.3%27%20y%3D%2734.4%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.049%27%2F%3E%3Crect%20x%3D%2735.5%27%20y%3D%2721.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.066%27%2F%3E%3Crect%20x%3D%2756.6%27%20y%3D%2728.5%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.076%27%2F%3E%3Crect%20x%3D%2751.1%27%20y%3D%2710.8%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.042%27%2F%3E%3Crect%20x%3D%2753.6%27%20y%3D%2748.3%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%2711.2%27%20y%3D%2743.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.105%27%2F%3E%3Crect%20x%3D%2711.6%27%20y%3D%2756.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.101%27%2F%3E%3Crect%20x%3D%2735.6%27%20y%3D%2724.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.038%27%2F%3E%3Crect%20x%3D%272.3%27%20y%3D%2756.8%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.049%27%2F%3E%3Crect%20x%3D%2741.6%27%20y%3D%2715.2%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.096%27%2F%3E%3Crect%20x%3D%2735.2%27%20y%3D%2717.3%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.044%27%2F%3E%3Crect%20x%3D%2742.5%27%20y%3D%274.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.048%27%2F%3E%3Crect%20x%3D%2733.0%27%20y%3D%2750.3%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.079%27%2F%3E%3Crect%20x%3D%2716.5%27%20y%3D%2754.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.046%27%2F%3E%3Crect%20x%3D%271.0%27%20y%3D%2715.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.066%27%2F%3E%3Crect%20x%3D%273.6%27%20y%3D%2710.4%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.06%27%2F%3E%3Crect%20x%3D%2733.8%27%20y%3D%277.8%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.059%27%2F%3E%3Crect%20x%3D%2752.6%27%20y%3D%2757.8%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.083%27%2F%3E%3Crect%20x%3D%2740.8%27%20y%3D%2734.5%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.041%27%2F%3E%3Crect%20x%3D%272.1%27%20y%3D%271.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.103%27%2F%3E%3Crect%20x%3D%2741.4%27%20y%3D%2756.8%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.032%27%2F%3E%3Crect%20x%3D%2737.5%27%20y%3D%2728.5%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.088%27%2F%3E%3Crect%20x%3D%2718.8%27%20y%3D%2759.0%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.036%27%2F%3E%3Crect%20x%3D%2732.2%27%20y%3D%2743.5%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.102%27%2F%3E%3Crect%20x%3D%2743.5%27%20y%3D%2741.5%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.093%27%2F%3E%3Crect%20x%3D%2754.0%27%20y%3D%2720.8%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.085%27%2F%3E%3Crect%20x%3D%2753.1%27%20y%3D%2751.4%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.063%27%2F%3E%3Crect%20x%3D%2746.6%27%20y%3D%2750.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.076%27%2F%3E%3Crect%20x%3D%2736.9%27%20y%3D%2722.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.077%27%2F%3E%3Crect%20x%3D%2735.9%27%20y%3D%274.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.081%27%2F%3E%3Crect%20x%3D%2758.6%27%20y%3D%2751.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.088%27%2F%3E%3Crect%20x%3D%2722.9%27%20y%3D%2743.4%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.076%27%2F%3E%3Crect%20x%3D%2726.0%27%20y%3D%2749.5%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.037%27%2F%3E%3Crect%20x%3D%2744.3%27%20y%3D%271.8%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.078%27%2F%3E%3Crect%20x%3D%2728.4%27%20y%3D%2713.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.086%27%2F%3E%3Crect%20x%3D%2729.3%27%20y%3D%2736.3%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.104%27%2F%3E%3Crect%20x%3D%2715.1%27%20y%3D%270.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.054%27%2F%3E%3Crect%20x%3D%2740.0%27%20y%3D%2712.0%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.044%27%2F%3E%3Crect%20x%3D%2753.4%27%20y%3D%2738.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.065%27%2F%3E%3Crect%20x%3D%2752.6%27%20y%3D%2719.3%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.083%27%2F%3E%3Crect%20x%3D%2711.7%27%20y%3D%2725.4%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.094%27%2F%3E%3Crect%20x%3D%2753.9%27%20y%3D%2751.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.061%27%2F%3E%3Crect%20x%3D%2734.4%27%20y%3D%2718.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.041%27%2F%3E%3Crect%20x%3D%2729.3%27%20y%3D%2749.4%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.098%27%2F%3E%3Crect%20x%3D%2742.0%27%20y%3D%2756.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.052%27%2F%3E%3Crect%20x%3D%2710.0%27%20y%3D%2726.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.052%27%2F%3E%3Crect%20x%3D%2712.6%27%20y%3D%2724.4%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.08%27%2F%3E%3Crect%20x%3D%2729.1%27%20y%3D%2718.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.097%27%2F%3E%3Crect%20x%3D%2757.9%27%20y%3D%2726.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.036%27%2F%3E%3Crect%20x%3D%271.9%27%20y%3D%2751.5%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.033%27%2F%3E%3Crect%20x%3D%2741.8%27%20y%3D%2733.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.055%27%2F%3E%3Crect%20x%3D%2746.7%27%20y%3D%271.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.041%27%2F%3E%3Crect%20x%3D%2726.8%27%20y%3D%271.5%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.096%27%2F%3E%3Crect%20x%3D%2714.0%27%20y%3D%278.3%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.034%27%2F%3E%3Crect%20x%3D%2737.1%27%20y%3D%2726.3%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.08%27%2F%3E%3Crect%20x%3D%2738.6%27%20y%3D%2747.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.107%27%2F%3E%3Crect%20x%3D%2740.4%27%20y%3D%2711.8%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.068%27%2F%3E%3Crect%20x%3D%2710.5%27%20y%3D%270.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.068%27%2F%3E%3Crect%20x%3D%2742.1%27%20y%3D%2710.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.052%27%2F%3E%3Crect%20x%3D%2720.4%27%20y%3D%2741.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.072%27%2F%3E%3Crect%20x%3D%2736.3%27%20y%3D%2744.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.061%27%2F%3E%3Crect%20x%3D%2746.7%27%20y%3D%2753.5%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.037%27%2F%3E%3Crect%20x%3D%2755.0%27%20y%3D%2742.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.04%27%2F%3E%3Crect%20x%3D%2726.8%27%20y%3D%2736.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.103%27%2F%3E%3Crect%20x%3D%2722.2%27%20y%3D%2733.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.1%27%2F%3E%3Crect%20x%3D%2747.0%27%20y%3D%2755.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.067%27%2F%3E%3Crect%20x%3D%2738.4%27%20y%3D%2712.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.088%27%2F%3E%3Crect%20x%3D%2748.3%27%20y%3D%2737.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.087%27%2F%3E%3Crect%20x%3D%2712.6%27%20y%3D%2753.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.108%27%2F%3E%3Crect%20x%3D%2757.7%27%20y%3D%2731.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.093%27%2F%3E%3Crect%20x%3D%2718.9%27%20y%3D%2753.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.098%27%2F%3E%3Crect%20x%3D%2720.6%27%20y%3D%274.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.065%27%2F%3E%3Crect%20x%3D%2732.5%27%20y%3D%2745.3%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.069%27%2F%3E%3Crect%20x%3D%271.7%27%20y%3D%2747.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.035%27%2F%3E%3Crect%20x%3D%2747.2%27%20y%3D%2710.2%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.057%27%2F%3E%3Crect%20x%3D%2746.5%27%20y%3D%278.3%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.042%27%2F%3E%3Crect%20x%3D%2730.5%27%20y%3D%2742.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.097%27%2F%3E%3Crect%20x%3D%2740.7%27%20y%3D%2755.8%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.069%27%2F%3E%3Crect%20x%3D%2756.0%27%20y%3D%275.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.048%27%2F%3E%3Crect%20x%3D%2731.1%27%20y%3D%2717.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.088%27%2F%3E%3Crect%20x%3D%2737.7%27%20y%3D%2730.8%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.097%27%2F%3E%3Crect%20x%3D%2733.0%27%20y%3D%2718.4%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.06%27%2F%3E%3Crect%20x%3D%2749.9%27%20y%3D%2753.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.047%27%2F%3E%3Crect%20x%3D%2750.2%27%20y%3D%2757.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.072%27%2F%3E%3Crect%20x%3D%2733.8%27%20y%3D%2711.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.073%27%2F%3E%3Crect%20x%3D%2729.7%27%20y%3D%2735.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.032%27%2F%3E%3Crect%20x%3D%2757.2%27%20y%3D%2730.4%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.062%27%2F%3E%3Crect%20x%3D%2747.3%27%20y%3D%2733.2%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.069%27%2F%3E%3Crect%20x%3D%2740.8%27%20y%3D%273.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.073%27%2F%3E%3Crect%20x%3D%2724.4%27%20y%3D%2756.5%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.104%27%2F%3E%3Crect%20x%3D%2715.9%27%20y%3D%2727.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.04%27%2F%3E%3Crect%20x%3D%2725.6%27%20y%3D%2748.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.102%27%2F%3E%3Crect%20x%3D%2728.1%27%20y%3D%2718.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.045%27%2F%3E%3Crect%20x%3D%2736.5%27%20y%3D%2754.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.04%27%2F%3E%3Crect%20x%3D%2746.0%27%20y%3D%271.3%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.046%27%2F%3E%3Crect%20x%3D%2713.4%27%20y%3D%2740.5%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.056%27%2F%3E%3Crect%20x%3D%2721.0%27%20y%3D%2736.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.038%27%2F%3E%3Crect%20x%3D%2743.1%27%20y%3D%277.2%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.071%27%2F%3E%3Crect%20x%3D%2714.8%27%20y%3D%2711.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.072%27%2F%3E%3Crect%20x%3D%2725.8%27%20y%3D%2722.2%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.063%27%2F%3E%3Crect%20x%3D%2731.2%27%20y%3D%279.4%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.046%27%2F%3E%3Crect%20x%3D%2737.2%27%20y%3D%2737.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.072%27%2F%3E%3Crect%20x%3D%2750.2%27%20y%3D%2736.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.099%27%2F%3E%3Crect%20x%3D%2713.7%27%20y%3D%2743.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.095%27%2F%3E%3Crect%20x%3D%2753.3%27%20y%3D%2718.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.055%27%2F%3E%3Crect%20x%3D%2754.4%27%20y%3D%2712.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.11%27%2F%3E%3Crect%20x%3D%2752.4%27%20y%3D%277.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.049%27%2F%3E%3Crect%20x%3D%2742.9%27%20y%3D%2715.3%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.038%27%2F%3E%3Crect%20x%3D%2749.1%27%20y%3D%2724.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.093%27%2F%3E%3Crect%20x%3D%277.4%27%20y%3D%2723.8%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.085%27%2F%3E%3Crect%20x%3D%271.0%27%20y%3D%2711.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.085%27%2F%3E%3Crect%20x%3D%2753.8%27%20y%3D%2757.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.039%27%2F%3E%3Crect%20x%3D%2729.8%27%20y%3D%2744.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.07%27%2F%3E%3Crect%20x%3D%2740.5%27%20y%3D%2711.2%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.036%27%2F%3E%3Crect%20x%3D%276.3%27%20y%3D%272.2%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.074%27%2F%3E%3Crect%20x%3D%2730.4%27%20y%3D%2733.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.042%27%2F%3E%3Crect%20x%3D%2710.9%27%20y%3D%2712.0%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.097%27%2F%3E%3Crect%20x%3D%2758.4%27%20y%3D%2754.7%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.038%27%2F%3E%3Crect%20x%3D%273.7%27%20y%3D%2756.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.067%27%2F%3E%3Crect%20x%3D%2745.1%27%20y%3D%2719.3%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.067%27%2F%3E%3Crect%20x%3D%2730.4%27%20y%3D%2725.4%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.078%27%2F%3E%3Crect%20x%3D%270.8%27%20y%3D%2741.4%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.098%27%2F%3E%3Crect%20x%3D%2710.7%27%20y%3D%2726.8%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.089%27%2F%3E%3Crect%20x%3D%2723.9%27%20y%3D%2711.5%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.043%27%2F%3E%3Crect%20x%3D%2730.2%27%20y%3D%270.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.101%27%2F%3E%3Crect%20x%3D%2747.3%27%20y%3D%2741.6%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.099%27%2F%3E%3Crect%20x%3D%2737.1%27%20y%3D%2723.9%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.078%27%2F%3E%3Crect%20x%3D%2729.8%27%20y%3D%2758.0%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.094%27%2F%3E%3Crect%20x%3D%2715.2%27%20y%3D%2753.8%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.09%27%2F%3E%3Crect%20x%3D%2745.9%27%20y%3D%2748.1%27%20width%3D%271%27%20height%3D%271%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.062%27%2F%3E%3C%2Fsvg%3E"), url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%271440%27%20height%3D%27300%27%20viewBox%3D%270%200%201440%20300%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27cs0%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%270%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270.62%27%2F%3E%3Cstop%20offset%3D%270.5%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270.18%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270%27%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient%20id%3D%27cs1%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%270%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270.55%27%2F%3E%3Cstop%20offset%3D%270.5%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270.15%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270%27%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient%20id%3D%27cs2%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%270%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270.46%27%2F%3E%3Cstop%20offset%3D%270.5%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270.12%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270%27%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient%20id%3D%27cs3%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%270%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270.38%27%2F%3E%3Cstop%20offset%3D%270.5%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270.09%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23000%27%20stop-opacity%3D%270%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%27-360%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.077%27%2F%3E%3Crect%20x%3D%27-240%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.075%27%2F%3E%3Crect%20x%3D%27-120%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.058%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%27120%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.053%27%2F%3E%3Crect%20x%3D%27240%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.044%27%2F%3E%3Crect%20x%3D%27360%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.033%27%2F%3E%3Crect%20x%3D%27480%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.028%27%2F%3E%3Crect%20x%3D%27600%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.033%27%2F%3E%3Crect%20x%3D%27720%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.018%27%2F%3E%3Crect%20x%3D%27840%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.032%27%2F%3E%3Crect%20x%3D%27960%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.025%27%2F%3E%3Crect%20x%3D%271080%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.054%27%2F%3E%3Crect%20x%3D%271200%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.045%27%2F%3E%3Crect%20x%3D%271320%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.039%27%2F%3E%3Crect%20x%3D%271440%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.062%27%2F%3E%3Crect%20x%3D%271560%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.064%27%2F%3E%3Crect%20x%3D%271680%27%20y%3D%270%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.063%27%2F%3E%3Crect%20x%3D%27-300%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.066%27%2F%3E%3Crect%20x%3D%27-180%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.074%27%2F%3E%3Crect%20x%3D%27-60%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.066%27%2F%3E%3Crect%20x%3D%2760%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.055%27%2F%3E%3Crect%20x%3D%27180%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.047%27%2F%3E%3Crect%20x%3D%27300%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.042%27%2F%3E%3Crect%20x%3D%27420%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.052%27%2F%3E%3Crect%20x%3D%27540%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.049%27%2F%3E%3Crect%20x%3D%27660%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.046%27%2F%3E%3Crect%20x%3D%27780%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.047%27%2F%3E%3Crect%20x%3D%27900%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.047%27%2F%3E%3Crect%20x%3D%271020%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%271140%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.055%27%2F%3E%3Crect%20x%3D%271260%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.053%27%2F%3E%3Crect%20x%3D%271380%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.053%27%2F%3E%3Crect%20x%3D%271500%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.023%27%2F%3E%3Crect%20x%3D%271620%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.029%27%2F%3E%3Crect%20x%3D%271740%27%20y%3D%2750%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.035%27%2F%3E%3Crect%20x%3D%27-360%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.038%27%2F%3E%3Crect%20x%3D%27-240%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.036%27%2F%3E%3Crect%20x%3D%27-120%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.036%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.061%27%2F%3E%3Crect%20x%3D%27120%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.055%27%2F%3E%3Crect%20x%3D%27240%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.052%27%2F%3E%3Crect%20x%3D%27360%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.065%27%2F%3E%3Crect%20x%3D%27480%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.068%27%2F%3E%3Crect%20x%3D%27600%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.055%27%2F%3E%3Crect%20x%3D%27720%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.059%27%2F%3E%3Crect%20x%3D%27840%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.052%27%2F%3E%3Crect%20x%3D%27960%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.06%27%2F%3E%3Crect%20x%3D%271080%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.044%27%2F%3E%3Crect%20x%3D%271200%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.024%27%2F%3E%3Crect%20x%3D%271320%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.032%27%2F%3E%3Crect%20x%3D%271440%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.034%27%2F%3E%3Crect%20x%3D%271560%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.031%27%2F%3E%3Crect%20x%3D%271680%27%20y%3D%27100%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.037%27%2F%3E%3Crect%20x%3D%27-300%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.071%27%2F%3E%3Crect%20x%3D%27-180%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.062%27%2F%3E%3Crect%20x%3D%27-60%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.072%27%2F%3E%3Crect%20x%3D%2760%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.056%27%2F%3E%3Crect%20x%3D%27180%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.069%27%2F%3E%3Crect%20x%3D%27300%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.056%27%2F%3E%3Crect%20x%3D%27420%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.025%27%2F%3E%3Crect%20x%3D%27540%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.034%27%2F%3E%3Crect%20x%3D%27660%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.028%27%2F%3E%3Crect%20x%3D%27780%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.077%27%2F%3E%3Crect%20x%3D%27900%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.061%27%2F%3E%3Crect%20x%3D%271020%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.058%27%2F%3E%3Crect%20x%3D%271140%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.042%27%2F%3E%3Crect%20x%3D%271260%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%271380%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.056%27%2F%3E%3Crect%20x%3D%271500%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.035%27%2F%3E%3Crect%20x%3D%271620%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.046%27%2F%3E%3Crect%20x%3D%271740%27%20y%3D%27150%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.036%27%2F%3E%3Crect%20x%3D%27-360%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%27-240%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.048%27%2F%3E%3Crect%20x%3D%27-120%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.054%27%2F%3E%3Crect%20x%3D%27120%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.061%27%2F%3E%3Crect%20x%3D%27240%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.064%27%2F%3E%3Crect%20x%3D%27360%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.048%27%2F%3E%3Crect%20x%3D%27480%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.05%27%2F%3E%3Crect%20x%3D%27600%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.052%27%2F%3E%3Crect%20x%3D%27720%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.061%27%2F%3E%3Crect%20x%3D%27840%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.061%27%2F%3E%3Crect%20x%3D%27960%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.067%27%2F%3E%3Crect%20x%3D%271080%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.034%27%2F%3E%3Crect%20x%3D%271200%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.027%27%2F%3E%3Crect%20x%3D%271320%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.032%27%2F%3E%3Crect%20x%3D%271440%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.057%27%2F%3E%3Crect%20x%3D%271560%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.073%27%2F%3E%3Crect%20x%3D%271680%27%20y%3D%27200%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.053%27%2F%3E%3Crect%20x%3D%27-300%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.052%27%2F%3E%3Crect%20x%3D%27-180%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.045%27%2F%3E%3Crect%20x%3D%27-60%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.052%27%2F%3E%3Crect%20x%3D%2760%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.046%27%2F%3E%3Crect%20x%3D%27180%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.052%27%2F%3E%3Crect%20x%3D%27300%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.036%27%2F%3E%3Crect%20x%3D%27420%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.049%27%2F%3E%3Crect%20x%3D%27540%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.035%27%2F%3E%3Crect%20x%3D%27660%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.051%27%2F%3E%3Crect%20x%3D%27780%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.039%27%2F%3E%3Crect%20x%3D%27900%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.028%27%2F%3E%3Crect%20x%3D%271020%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.034%27%2F%3E%3Crect%20x%3D%271140%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.035%27%2F%3E%3Crect%20x%3D%271260%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.049%27%2F%3E%3Crect%20x%3D%271380%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.044%27%2F%3E%3Crect%20x%3D%271500%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.057%27%2F%3E%3Crect%20x%3D%271620%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.058%27%2F%3E%3Crect%20x%3D%271740%27%20y%3D%27250%27%20width%3D%27120%27%20height%3D%2750%27%20fill%3D%27%23fff%27%20fill-opacity%3D%270.057%27%2F%3E%3Crect%20x%3D%27-360%27%20y%3D%2750%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs2%29%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%2750%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs2%29%27%2F%3E%3Crect%20x%3D%27360%27%20y%3D%2750%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs0%29%27%2F%3E%3Crect%20x%3D%27720%27%20y%3D%2750%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs1%29%27%2F%3E%3Crect%20x%3D%271080%27%20y%3D%2750%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs0%29%27%2F%3E%3Crect%20x%3D%271440%27%20y%3D%2750%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs3%29%27%2F%3E%3Cpath%20d%3D%27M-120%2049v-19M0%2049v-19M120%2049v-19M240%2049v-19M360%2049v-19M480%2049v-19M600%2049v-19M720%2049v-19M840%2049v-19M960%2049v-19M1080%2049v-19M1200%2049v-19M1320%2049v-19M1440%2049v-19M1560%2049v-19%27%20stroke%3D%27%23000%27%20stroke-opacity%3D%270.40%27%20stroke-width%3D%272.4%27%20fill%3D%27none%27%2F%3E%3Crect%20x%3D%27-300%27%20y%3D%27100%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs3%29%27%2F%3E%3Crect%20x%3D%2760%27%20y%3D%27100%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs0%29%27%2F%3E%3Crect%20x%3D%27420%27%20y%3D%27100%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs3%29%27%2F%3E%3Crect%20x%3D%27780%27%20y%3D%27100%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs3%29%27%2F%3E%3Crect%20x%3D%271140%27%20y%3D%27100%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs2%29%27%2F%3E%3Crect%20x%3D%271500%27%20y%3D%27100%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs2%29%27%2F%3E%3Cpath%20d%3D%27M-60%2099v-19M60%2099v-19M180%2099v-19M300%2099v-19M420%2099v-19M540%2099v-19M660%2099v-19M780%2099v-19M900%2099v-19M1020%2099v-19M1140%2099v-19M1260%2099v-19M1380%2099v-19M1500%2099v-19M1620%2099v-19%27%20stroke%3D%27%23000%27%20stroke-opacity%3D%270.40%27%20stroke-width%3D%272.4%27%20fill%3D%27none%27%2F%3E%3Crect%20x%3D%27-360%27%20y%3D%27150%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs3%29%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27150%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs2%29%27%2F%3E%3Crect%20x%3D%27360%27%20y%3D%27150%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs2%29%27%2F%3E%3Crect%20x%3D%27720%27%20y%3D%27150%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs2%29%27%2F%3E%3Crect%20x%3D%271080%27%20y%3D%27150%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs2%29%27%2F%3E%3Crect%20x%3D%271440%27%20y%3D%27150%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs1%29%27%2F%3E%3Cpath%20d%3D%27M-120%20149v-19M0%20149v-19M120%20149v-19M240%20149v-19M360%20149v-19M480%20149v-19M600%20149v-19M720%20149v-19M840%20149v-19M960%20149v-19M1080%20149v-19M1200%20149v-19M1320%20149v-19M1440%20149v-19M1560%20149v-19%27%20stroke%3D%27%23000%27%20stroke-opacity%3D%270.40%27%20stroke-width%3D%272.4%27%20fill%3D%27none%27%2F%3E%3Crect%20x%3D%27-300%27%20y%3D%27200%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs3%29%27%2F%3E%3Crect%20x%3D%2760%27%20y%3D%27200%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs0%29%27%2F%3E%3Crect%20x%3D%27420%27%20y%3D%27200%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs3%29%27%2F%3E%3Crect%20x%3D%27780%27%20y%3D%27200%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs3%29%27%2F%3E%3Crect%20x%3D%271140%27%20y%3D%27200%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs2%29%27%2F%3E%3Crect%20x%3D%271500%27%20y%3D%27200%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs2%29%27%2F%3E%3Cpath%20d%3D%27M-60%20199v-19M60%20199v-19M180%20199v-19M300%20199v-19M420%20199v-19M540%20199v-19M660%20199v-19M780%20199v-19M900%20199v-19M1020%20199v-19M1140%20199v-19M1260%20199v-19M1380%20199v-19M1500%20199v-19M1620%20199v-19%27%20stroke%3D%27%23000%27%20stroke-opacity%3D%270.40%27%20stroke-width%3D%272.4%27%20fill%3D%27none%27%2F%3E%3Crect%20x%3D%27-360%27%20y%3D%27250%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs0%29%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%27250%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs3%29%27%2F%3E%3Crect%20x%3D%27360%27%20y%3D%27250%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs1%29%27%2F%3E%3Crect%20x%3D%27720%27%20y%3D%27250%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs2%29%27%2F%3E%3Crect%20x%3D%271080%27%20y%3D%27250%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs1%29%27%2F%3E%3Crect%20x%3D%271440%27%20y%3D%27250%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs2%29%27%2F%3E%3Cpath%20d%3D%27M-120%20249v-19M0%20249v-19M120%20249v-19M240%20249v-19M360%20249v-19M480%20249v-19M600%20249v-19M720%20249v-19M840%20249v-19M960%20249v-19M1080%20249v-19M1200%20249v-19M1320%20249v-19M1440%20249v-19M1560%20249v-19%27%20stroke%3D%27%23000%27%20stroke-opacity%3D%270.40%27%20stroke-width%3D%272.4%27%20fill%3D%27none%27%2F%3E%3Crect%20x%3D%27-300%27%20y%3D%27300%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs0%29%27%2F%3E%3Crect%20x%3D%2760%27%20y%3D%27300%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs3%29%27%2F%3E%3Crect%20x%3D%27420%27%20y%3D%27300%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs0%29%27%2F%3E%3Crect%20x%3D%27780%27%20y%3D%27300%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs2%29%27%2F%3E%3Crect%20x%3D%271140%27%20y%3D%27300%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs3%29%27%2F%3E%3Crect%20x%3D%271500%27%20y%3D%27300%27%20width%3D%27360%27%20height%3D%2716%27%20fill%3D%27url%28%23cs0%29%27%2F%3E%3Cpath%20d%3D%27M-60%20299v-19M60%20299v-19M180%20299v-19M300%20299v-19M420%20299v-19M540%20299v-19M660%20299v-19M780%20299v-19M900%20299v-19M1020%20299v-19M1140%20299v-19M1260%20299v-19M1380%20299v-19M1500%20299v-19M1620%20299v-19%27%20stroke%3D%27%23000%27%20stroke-opacity%3D%270.40%27%20stroke-width%3D%272.4%27%20fill%3D%27none%27%2F%3E%3C%2Fsvg%3E");
+  --cu-shingle-size: 64px auto, clamp(1100px,82vw,1580px) auto;
+  --cu-t-wipe:  700ms;   /* 7 x 100 */
+  --cu-t-field: 420ms;   /* 3 x 140, the field's own entrance */
+  --cu-t-snap: 1400ms;   /* 7 x 200 */
   --cu-t-tap:   210ms;   /* 3 x 70  */
   --cu-t-lay:   700ms;   /* 7 x 100 */
   --cu-t-set:  1050ms;   /* 3 x 350 */
-  --cu-t-rake:   21s;    /* 3 x 7   */
 }
 
 *,*::before,*::after{ box-sizing:border-box; }
@@ -124,7 +134,12 @@ body{
   line-height:1.62;
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
-  overflow-x:hidden;
+  /* clip, not hidden. A non-visible value on one axis computes the other to
+     auto, which makes this element a scroll container; position:sticky inside
+     then resolves against it instead of the viewport and never engages. clip
+     stops horizontal overflow without creating a scroll container. */
+  overflow-x:clip;
+  overflow-y:visible;
 }
 
 h1,h2,h3{ margin:0; font-weight:600; line-height:1.06; text-wrap:balance; color:var(--cu-ink-strong); }
@@ -172,23 +187,45 @@ p{ margin:0; text-wrap:pretty; }
 /* golden hour. The last of the light, low and west, sitting on the number. */
 .cu-sec--gold{
   background:
-    radial-gradient(54vmax 46vmax at 90% 62%,
-      rgba(255,170,92,.36) 0%, rgba(255,182,110,.13) 38%, transparent 68%),
-    radial-gradient(44vmax 38vmax at 24% 4%,
-      rgba(255,214,164,.20) 0%, rgba(255,220,176,.07) 40%, transparent 70%),
-    var(--cu-paper);
+    radial-gradient(58vmax 44vmax at 88% 60%, rgba(255,170,92,.10) 0%, rgba(255,170,92,.03) 42%, transparent 72%),
+    radial-gradient(46vmax 40vmax at 20% 6%, rgba(255,255,255,.05) 0%, transparent 66%),
+    var(--cu-concrete-grey);
+  color:var(--cu-paper);
 }
+.cu-sec--gold::before{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+  background-image:var(--cu-concrete);
+  background-size:var(--cu-concrete-size);
+}
+/* ------------------------------------------------------------------
+   THE CONCRETE FIELD reads light, like the shingle and siding fields.
+   Scoped, not edited at source: the ledger, the terms and the closer
+   all run on paper in other decks built from these same primitives.
+   ------------------------------------------------------------------ */
+.cu-sec--gold .cu-eyebrow{ color:var(--cu-paper); }
+.cu-sec--gold .cu-eyebrow::before{ background:var(--cu-gold); }
+.cu-sec--gold .cu-ledger caption{ color:var(--cu-paper); }
+.cu-sec--gold .cu-ledger th{ color:rgba(255,255,255,.72); border-color:rgba(255,255,255,.22); }
+.cu-sec--gold .cu-ledger td{ color:var(--cu-paper); border-color:rgba(255,255,255,.14); }
+.cu-sec--gold .cu-ledger td:last-child{ color:rgba(255,255,255,.80); }
+.cu-sec--gold .cu-term__t{ color:var(--cu-paper); }
+.cu-sec--gold .cu-term__b{ color:rgba(255,255,255,.86); }
+.cu-sec--gold .cu-close{ color:var(--cu-paper); }
+/* the offer panel stays paper. It is the price, and on a foundation wall it
+   should read as the one poured slab that is finished */
+.cu-sec--gold .cu-offer{ box-shadow:var(--cu-e-dark); }
+.cu-sec--gold > .cu-wrap{ position:relative; z-index:1; }
 .cu-sec--surface{
   background:
-    radial-gradient(52vmax 40vmax at 84% 88%,
-      rgba(255,196,124,.26) 0%, rgba(255,196,124,.09) 38%, transparent 68%),
-    radial-gradient(56vmax 44vmax at 34% 6%,
-      rgba(255,236,208,.30) 0%, rgba(255,240,220,.10) 38%, transparent 68%),
-    var(--cu-surface);
+    radial-gradient(56vmax 42vmax at 84% 90%, rgba(0,0,0,.30) 0%, rgba(0,0,0,.10) 44%, transparent 74%),
+    radial-gradient(52vmax 40vmax at 26% 4%, rgba(255,214,164,.10) 0%, rgba(255,214,164,.03) 42%, transparent 72%),
+    var(--cu-siding-red);
+  color:var(--cu-paper);
 }
 .cu-sec--dark{ background:var(--cu-black); color:var(--cu-paper); }
 .cu-sec--dark h2{ color:var(--cu-paper); }
-.cu-sec--dark .cu-eyebrow{ color:var(--cu-red-lift); }
+.cu-sec--dark .cu-eyebrow{ color:var(--cu-paper); }
+.cu-sec--dark .cu-eyebrow::before{ background:var(--cu-red-lift); }
 
 .cu-wrap{ width:min(100% - 3vw, var(--cu-measure)); margin-inline:auto; }
 
@@ -209,23 +246,6 @@ p{ margin:0; text-wrap:pretty; }
    that curve carries a 1.2 overshoot, and elastic easing is banned on business
    content. Expo-out is truer to a taut line anyway, fast off the mark and hard
    into rest. The chalk puff lands at the strike point. */
-.cu-thread{
-  width:3.5rem; height:var(--cu-rule);
-  background:var(--cu-gold);
-  margin-top:var(--space-m);
-  transform-origin:left center;
-  transform:scaleX(0);
-  transition:transform 420ms var(--ease-satisfying);
-  position:relative;
-}
-.cu-thread.in-view{ transform:scaleX(1); }
-.cu-thread::after{
-  content:""; position:absolute; right:-4px; top:50%;
-  width:14px; height:14px; margin-top:-7px; border-radius:50%;
-  background:var(--cu-gold); filter:blur(5px);
-  opacity:0; transform:scale(.3);
-}
-.cu-thread.in-view::after{ animation:cu-puff 630ms var(--ease-soft) 336ms 1; }
 @keyframes cu-puff{
   0%   { opacity:0;   transform:scale(.3); }
   22%  { opacity:.85; transform:scale(1); }
@@ -233,31 +253,23 @@ p{ margin:0; text-wrap:pretty; }
 }
 
 /* ---------- roof-pitch edge, the page's structural motif ---------- */
-.cu-pitch{
-  display:block; width:100%; height:clamp(2.2rem,4.4vw,3.8rem);
-  fill:var(--cu-black);
+/* THE CUT-OFF
+   Every section is introduced by the same apex, peak in the centre tapering
+   down to the edges, cut into the section's OWN top edge. It is pulled up by
+   the apex height so the field above shows through the tapered flanks, and its
+   top padding grows by the same amount so no content sits inside the peak. */
+.cu-sec--apex{
+  clip-path:polygon(0 var(--cu-apex), 50% 0, 100% var(--cu-apex), 100% 100%, 0 100%);
+  margin-top:calc(-1 * var(--cu-apex));
+  padding-top:calc(clamp(4rem,2.4rem + 6.4vw,8rem) + var(--cu-apex));
+  position:relative;
 }
-.cu-pitch--up{ margin-bottom:-1px; }
-.cu-pitch--down{ margin-top:-1px; }
 
-/* Shingle-course texture on the dark field, with a slow rake of light across
-   it. The rake is what makes the black field feel like a surface catching sun
-   rather than a flat fill. 21s so it is felt, never watched. */
 .cu-sec--dark::before{
   content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='168' height='84' viewBox='0 0 168 84'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.06' stroke-width='1'%3E%3Cpath d='M0 41.5h168M0 83.5h168'/%3E%3Cpath d='M42 42v41M126 42v41M84 0v41M0 0v41M168 0v41'/%3E%3C/g%3E%3C/svg%3E");
-  background-size:clamp(196px,16vw,280px) auto;
+  background-image:var(--cu-shingle);
+  background-size:var(--cu-shingle-size);
 }
-.cu-sec--dark::after{
-  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
-  background:linear-gradient(104deg,
-    transparent 0%, transparent 34%,
-    rgba(226,65,77,.10) 46%, rgba(255,255,255,.05) 52%, rgba(226,65,77,.10) 58%,
-    transparent 70%, transparent 100%);
-  background-size:280% 100%;
-  animation:cu-rake var(--cu-t-rake) linear infinite;
-}
-@keyframes cu-rake{ from{ background-position:120% 0; } to{ background-position:-120% 0; } }
 .cu-sec--dark > *{ position:relative; z-index:1; }
 
 /* Underlayment on the process field. Every synthetic underlayment roll is
@@ -268,20 +280,32 @@ p{ margin:0; text-wrap:pretty; }
    Held far below the type: the whole field reads as tone, not as pattern. */
 .cu-sec--surface::before{
   content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
-  background-image:
-    /* the lap line, every sixth square, where the course above sits down */
-    repeating-linear-gradient(to bottom,
-      rgba(84,89,95,.085) 0 1px, transparent 1px 252px),
-    /* printed grid */
-    repeating-linear-gradient(to bottom,
-      rgba(84,89,95,.05) 0 1px, transparent 1px 42px),
-    repeating-linear-gradient(to right,
-      rgba(84,89,95,.05) 0 1px, transparent 1px 42px);
-  /* fade it out of the top and bottom edges so it never fights a section seam */
-  -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 9%, #000 88%, transparent 100%);
-          mask-image:linear-gradient(to bottom, transparent 0, #000 9%, #000 88%, transparent 100%);
+  background-image:var(--cu-siding);
+  background-size:var(--cu-siding-size);
 }
-.cu-sec--surface > .cu-wrap{ position:relative; z-index:1; }
+/* ------------------------------------------------------------------
+   THE SIDING FIELD reads light on red, the same way the shingle field
+   reads light on black. Every colour in this section is re-declared
+   here rather than edited at source, because the SAME components run
+   on paper elsewhere in the deck and must keep their ink there.
+   ------------------------------------------------------------------ */
+.cu-sec--surface .cu-eyebrow{ color:var(--cu-paper); }
+.cu-sec--surface .cu-eyebrow::before{ background:var(--cu-gold); }
+.cu-sec--surface .cu-h2{ color:var(--cu-paper); }
+.cu-sec--surface .cu-step__b{ color:rgba(255,255,255,.88); }
+.cu-sec--surface .cu-term__t{ color:var(--cu-paper); }
+.cu-sec--surface .cu-term__b{ color:rgba(255,255,255,.86); }
+.cu-sec--surface .cu-assembly__cap{ color:rgba(255,255,255,.84); }
+.cu-sec--surface .cu-assembly__cap b{ color:var(--cu-paper); }
+/* the diagram: its plates are light and hold on red, but the labels were
+   drawing in ink and the finished-surface plate was stroked in the brand red,
+   which is invisible against a brand-red ground */
+.cu-sec--surface .cu-plate-label text{ fill:var(--cu-paper); }
+.cu-sec--surface .cu-plate-label path{ stroke:rgba(255,255,255,.45); }
+.cu-sec--surface > .cu-wrap{
+  position:relative; z-index:1;
+  width:min(100% - 3vw, 68rem);
+}
 
 /* ============================================================
    HERO
@@ -289,11 +313,13 @@ p{ margin:0; text-wrap:pretty; }
    rises first, the headline sets, then the figures count.
    ============================================================ */
 .cu-hero{
-  min-height:min(94svh,56rem);
+  /* taller than the viewport by exactly the apex, so the cut-off is out of
+     sight on load and only shows once the reader moves */
+  min-height:calc(100svh + var(--cu-apex));
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   text-align:center;
   padding-top:clamp(3.5rem,2.2rem + 4.8vw,6.5rem);
-  padding-bottom:calc(var(--cu-roof-h) + clamp(1.5rem,3vw,3rem));
+  padding-bottom:clamp(11rem,5rem + 18vw,26rem);
   background:
     radial-gradient(58vmax 42vmax at 13% 4%,
       rgba(255,198,138,.34) 0%, rgba(255,206,150,.13) 38%, transparent 68%),
@@ -303,104 +329,134 @@ p{ margin:0; text-wrap:pretty; }
 .cu-hero > *{ position:relative; z-index:1; }
 
 /* ============================================================
-   THE HERO ROOF
-   Alive, not animated-once. Three continuous systems layered on a
-   drawn shingle field. Every period is a multiple of 3 or 7 and
-   long enough to be felt rather than watched.
+   THE HERO FIELD
+   Two frames of the job filling the bottom of the hero: the roof he
+   is replacing, and the roof he delivers, the second revealed by an
+   edge crossing the frame.
+
+   The order is deliberate. The hero sets, the field loads in, it is
+   allowed to sit, and only then does the edge run. Firing the wipe as
+   soon as the pixels arrive means the switch happens before anyone has
+   looked at what is switching, which reads as a glitch rather than as
+   a before and an after.
+
+   Nothing here is ever scaled or rotated. A full bleed photographic
+   plate that gets transformed resamples and softens, and at this size
+   it shows. Only clip-path, opacity and a translate move.
    ============================================================ */
 .cu-roof{
-  position:absolute; inset:auto 0 0 0; height:var(--cu-roof-h);
+  position:absolute; inset:0;
   z-index:0; pointer-events:none; overflow:hidden;
-  -webkit-mask-image:linear-gradient(to top, #000 0%, #000 62%, transparent 100%);
-          mask-image:linear-gradient(to top, #000 0%, #000 62%, transparent 100%);
 }
-/* The drone pass. 63s, so the field is never still but never asks to be watched. */
-.cu-roof__drift{
-  position:absolute; inset:0; width:126%;
-  animation:cu-drift 42s linear infinite alternate;
+.cu-roof__frame{ position:absolute; inset:0; }
+/* Shaped to the type, and dark rather than white: it saturates the roof rather
+   than washing it out. Sits ABOVE the frames and BELOW the content, so the
+   sweep still runs behind the headline. */
+.cu-roof::after{
+  content:""; position:absolute; inset:0; z-index:2;
+  background:
+    radial-gradient(78% 58% at 50% 48%,
+      rgba(10,9,7,.70)  0%,
+      rgba(10,9,7,.64) 40%,
+      rgba(10,9,7,.46) 64%,
+      rgba(10,9,7,.18) 84%,
+      rgba(10,9,7,0)  100%),
+    linear-gradient(to bottom,
+      rgba(12,10,8,.30)  0%,
+      rgba(12,10,8,.16) 50%,
+      rgba(12,10,8,.22) 100%);
 }
-@keyframes cu-drift{ from{ transform:translate3d(-13%,0,0) scale(1.02); } to{ transform:translate3d(0,0,0) scale(1); } }
-.cu-roof__svg{ width:100%; height:100%; display:block; opacity:.85; }
-.cu-course{
+/* Armed synchronously by the inline script below, before first paint. Everything
+   that HIDES the field hangs off .is-armed and nothing else, so with JavaScript
+   off there is no entrance, no wipe, and the finished roof is simply there. */
+.cu-roof.is-armed .cu-roof__frame{
+  opacity:0; transform:translateY(28px);
+  transition:opacity var(--cu-t-field) var(--ease-satisfying),
+             transform var(--cu-t-field) var(--ease-satisfying);
+}
+.cu-roof.is-armed.is-loaded .cu-roof__frame{ opacity:1; transform:none; }
+.cu-roof__img{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; object-position:50% 40%;   /* hold the roofline, not the lawn */
+  display:block;
+}
+/* The reveal. A window sliding in from the left with the frame inside it
+   sliding out by the same amount, which leaves the photograph stationary on
+   the page and moves only the window's edge.
+
+   This replaces an animated clip-path. clip-path repaints the element on
+   every frame; a transform does not, and the repaint is what showed as
+   choppiness. It also removes the last unit mismatch: the window, the inner
+   frame and the blade's track are all the same width and all travel exactly
+   100% of themselves, so nothing can drift by the width of a scrollbar the
+   way a vw-driven blade did against a percentage-driven edge. */
+.cu-roof__reveal{ position:absolute; inset:0; overflow:hidden; will-change:transform; }
+.cu-roof__slide { position:absolute; inset:0; will-change:transform; }
+.cu-roof__track { position:absolute; inset:0; will-change:transform; }
+
+.cu-roof.is-armed .cu-roof__reveal,
+.cu-roof.is-armed .cu-roof__track { transform:translateX(-100%); }
+.cu-roof.is-armed .cu-roof__slide { transform:translateX(100%); }
+
+.cu-roof.is-wiping .cu-roof__reveal,
+.cu-roof.is-wiping .cu-roof__track{ animation:cu-sweep var(--cu-t-wipe) var(--ease-soft) both; }
+.cu-roof.is-wiping .cu-roof__slide { animation:cu-sweep-in var(--cu-t-wipe) var(--ease-soft) both; }
+.cu-roof.is-wiping .cu-roof__blade { animation:cu-blade var(--cu-t-wipe) linear both; }
+
+@keyframes cu-sweep   { from{ transform:translateX(-100%); } to{ transform:translateX(0); } }
+@keyframes cu-sweep-in{ from{ transform:translateX(100%);  } to{ transform:translateX(0); } }
+
+/* The blade sits ON the seam, not behind it: centred on the track's leading
+   edge so its bright core covers the join in both directions and the change
+   happens underneath it rather than in front of the eye. */
+.cu-roof__blade{
+  position:absolute; top:0; bottom:0; right:0;
+  width:clamp(7rem,9vw,15rem);
+  margin-right:clamp(-7.5rem,-4.5vw,-3.5rem);
   opacity:0;
-  transform:translateY(26px);
-  transition:opacity var(--cu-t-lay) var(--ease-settle),
-             transform var(--cu-t-lay) var(--ease-settle);
-  /* laid from the eave up, the way courses actually go on */
-  transition-delay:calc(294ms + var(--c) * 49ms);
+  background:linear-gradient(90deg,
+    rgba(255,214,160,0)    0%,
+    rgba(255,220,172,.10) 26%,
+    rgba(255,238,208,.52) 42%,
+    rgba(255,252,246,.95) 50%,
+    rgba(255,236,204,.56) 58%,
+    rgba(255,198,132,.16) 74%,
+    rgba(0,0,0,.14)       90%,
+    rgba(0,0,0,0)        100%);
+  /* brighter through the middle of the stroke, the way a wiped edge catches */
+  -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,.55) 0%, #000 20%, #000 80%, rgba(0,0,0,.55) 100%);
+          mask-image:linear-gradient(180deg, rgba(0,0,0,.55) 0%, #000 20%, #000 80%, rgba(0,0,0,.55) 100%);
 }
-.cu-hero.in-view .cu-course{ opacity:1; transform:translateY(0); }
-
-/* The sun crossing the roof. This is the single most roofer thing on the page:
-   you work by where the light is. 27s. */
-/* WEATHER. Not a gradient sweep, two of them: a warm sun band running one way and
-   a cooler shade band running back the other, slower. Together they read as cloud
-   passing over a roof, which is the thing a roofer watches all day. This is the
-   page's main sign of life and it was measured, not eyeballed: at the previous
-   settings only 0.8 per cent of pixels changed over 7s, which is no life at all. */
-.cu-roof__sun{
-  position:absolute; inset:-25% -40%;
-  background:linear-gradient(74deg,
-    transparent 0 26%,
-    rgba(255,196,96,.00) 32%,
-    rgba(255,188,84,.62) 44%,
-    rgba(255,214,140,.30) 50%,
-    rgba(255,188,84,.62) 56%,
-    rgba(255,196,96,.00) 68%,
-    transparent 74% 100%);
-  background-size:230% 100%;
-  animation:cu-sun 21s linear infinite;
-  mix-blend-mode:multiply;
-}
-.cu-roof__shade{
-  position:absolute; inset:-25% -40%;
-  background:linear-gradient(74deg,
-    transparent 0 30%,
-    rgba(80,96,118,.00) 36%,
-    rgba(72,88,112,.30) 48%,
-    rgba(80,96,118,.00) 60%,
-    transparent 66% 100%);
-  background-size:270% 100%;
-  animation:cu-shade 33s linear infinite reverse;
-  mix-blend-mode:multiply;
-}
-@keyframes cu-shade{ from{ background-position:140% 0; } to{ background-position:-140% 0; } }
-@keyframes cu-sun{ from{ background-position:130% 0; } to{ background-position:-130% 0; } }
-
-/* A warm ground haze so the field sits in air rather than on a white sheet. */
-.cu-roof__haze{
-  position:absolute; inset:auto 0 0 0; height:60%;
-  background:linear-gradient(to top, rgba(244,242,239,.28), rgba(244,242,239,0));
-}
+/* linear, and only on the fade: the blade's POSITION is eased by its track, and
+   easing the opacity as well makes the ends read as a stutter. */
+@keyframes cu-blade{ 0%{opacity:0} 6%{opacity:1} 94%{opacity:1} 100%{opacity:0} }
 
 /* The phoenix is a raster mark with no vector anywhere, so it cannot be
    stroke-drawn. It wipes up from its own baseline instead, which reads as the
    bird rising and costs nothing in fidelity. */
 .cu-hero__logo{
-  width:clamp(7.5rem,5.4rem + 8.4vw,11.5rem); height:auto; display:block;
-  clip-path:inset(100% 0 0 0);
-  opacity:0;
-  transform:translateY(10px);
+  width:clamp(10.5rem,7.2rem + 12.4vw,16.5rem); height:auto; display:block;
   transition:
     clip-path var(--cu-t-set) var(--ease-satisfying),
     opacity var(--duration-long) var(--ease-satisfying),
     transform var(--cu-t-set) var(--ease-satisfying);
 }
-.cu-hero.in-view .cu-hero__logo{ clip-path:inset(0 0 0 0); opacity:1; transform:translateY(0); }
+.cu-hero.is-seq .cu-hero__logo{ clip-path:inset(100% 0 0 0); opacity:0; transform:translateY(10px); }
+.cu-hero.is-seq.is-set .cu-hero__logo{ clip-path:inset(0 0 0 0); opacity:1; transform:translateY(0); }
 
 /* Measure is set in rem, NOT ch. The h1 carries no font-size of its own, so a
    ch measure here resolves against the inherited body size and clamps the
    72px display line to roughly 216px, breaking it across 2 lines. */
 .cu-hero__title{
   margin-top:var(--space-m);
-  max-width:min(94vw, 58rem);
+  max-width:min(94vw, 72rem);
   margin-inline:auto;
   letter-spacing:-0.02em;
 }
 .cu-hero__l1{
   display:block;
   font-size:var(--cu-display); font-weight:700; line-height:1.02;
-  opacity:0; transform:translateY(18px);
+  color:var(--cu-paper);
   transition:opacity var(--duration-long) var(--ease-satisfying),
              transform var(--duration-long) var(--ease-satisfying);
   transition-delay:294ms;   /* 3 x 98 */
@@ -408,132 +464,201 @@ p{ margin:0; text-wrap:pretty; }
 .cu-hero__l2{
   display:block; margin-top:0.5em;
   font-size:var(--cu-display-2); font-weight:500; line-height:1.22;
-  color:var(--cu-muted); letter-spacing:0;
-  opacity:0; transform:translateY(14px);
+  color:rgba(255,255,255,.88); letter-spacing:0;
   transition:opacity var(--duration-long) var(--ease-satisfying),
              transform var(--duration-long) var(--ease-satisfying);
   transition-delay:441ms;   /* 3 x 147 */
 }
-.cu-hero.in-view .cu-hero__l1,
-.cu-hero.in-view .cu-hero__l2{ opacity:1; transform:translateY(0); }
+.cu-hero.is-seq .cu-hero__l1{ opacity:0; transform:translateY(18px); }
+.cu-hero.is-seq .cu-hero__l2{ opacity:0; transform:translateY(14px); }
+.cu-hero.is-seq.is-set .cu-hero__l1,
+.cu-hero.is-seq.is-set .cu-hero__l2{ opacity:1; transform:translateY(0); }
 
-.cu-hero__rule{
-  width:clamp(3rem,8vw,5rem); height:var(--cu-rule);
-  background:var(--cu-red); margin-block:var(--space-m);
-  transform:scaleX(0); transform-origin:center;
-  transition:transform var(--cu-t-lay) var(--ease-satisfying);
-  transition-delay:588ms;   /* 3 x 196 */
-}
-.cu-hero.in-view .cu-hero__rule{ transform:scaleX(1); }
 
-.cu-hero__deck{
-  font-size:var(--cu-deck); color:var(--cu-muted);
-  max-width:48ch; margin-inline:auto;
-  opacity:0; transform:translateY(12px);
-  transition:opacity var(--duration-medium) var(--ease-satisfying),
-             transform var(--duration-medium) var(--ease-satisfying);
-  transition-delay:735ms;   /* 3 x 245 */
-}
-.cu-hero.in-view .cu-hero__deck{ opacity:1; transform:translateY(0); }
 
-/* ---------- count-up figure row ---------- */
-.cu-figures{
-  display:flex; flex-wrap:wrap; justify-content:center;
-  gap:clamp(1.6rem,1rem + 3.2vw,4.5rem);
-  margin-top:clamp(2.4rem,1.6rem + 3.2vw,4rem);
+/* ---------- the scroll cue ---------- */
+/* Pinned to the foot of the FIRST screen, not the foot of the hero: the hero
+   runs an apex taller than the viewport, so anything at its bottom edge sits
+   below the fold and cues nothing. */
+.cu-scroll{
+  position:absolute; left:0; right:0;
+  bottom:calc(var(--cu-apex) + clamp(1.4rem,1vw + 0.8rem,2.2rem));
+  color:var(--cu-paper); opacity:.9;
+  display:flex; flex-direction:column; align-items:center;
+  gap:clamp(0.4rem,0.3rem + 0.3vw,0.7rem);
 }
-/* The FIGURE never breaks. The LABEL is what gets bounded and wrapped.
-   Bounding the whole item broke "3 weeks" across two lines; leaving it
-   unbounded let "Revision rounds" set a 180px floor that overflowed at 390px. */
-.cu-fig{
-  text-align:center; min-width:0; position:relative;
-  padding-top:var(--space-s);
-  opacity:0; transform:translateY(12px);
-  transition:opacity var(--duration-medium) var(--ease-settle),
-             transform var(--duration-medium) var(--ease-settle);
+.cu-scroll__w{
+  font-size:var(--cu-eyebrow); font-weight:700;
+  letter-spacing:0.22em; text-transform:uppercase;
 }
-.cu-hero.in-view .cu-fig{ opacity:1; transform:translateY(0); }
-.cu-hero.in-view .cu-fig:nth-child(1){ transition-delay:882ms; }  /* 3 x 294 */
-.cu-hero.in-view .cu-fig:nth-child(2){ transition-delay:945ms; }  /* 3 x 315 */
-.cu-hero.in-view .cu-fig:nth-child(3){ transition-delay:1008ms; } /* 3 x 336 */
-/* A short tick above each figure, the way a tape reads a measurement. */
-.cu-fig::before{
-  content:""; position:absolute; top:0; left:50%; width:1px; height:var(--space-s);
-  background:var(--cu-line-ink); transform:translateX(-50%);
+.cu-hero.is-seq .cu-scroll{
+  opacity:0; transform:translateY(10px) scale(.7);
+  transition:opacity var(--duration-quick) var(--ease-snap),
+             transform var(--duration-quick) var(--ease-snap);
+  transition-delay:840ms;   /* 7 x 120, lands after the figures */
 }
-.cu-fig__n{
-  font-size:var(--cu-figure); font-weight:800; line-height:1;
-  color:var(--cu-red); font-variant-numeric:tabular-nums;
-  white-space:nowrap; letter-spacing:-0.02em;
-}
-.cu-fig__l{
-  display:block; margin-top:var(--space-2xs);
-  font-size:var(--cu-eyebrow); font-weight:600;
-  letter-spacing:0.16em; text-transform:uppercase; color:var(--cu-muted);
-  max-width:9.5rem; margin-inline:auto; overflow-wrap:normal; text-wrap:balance;
+.cu-hero.is-seq.is-set .cu-scroll{ opacity:.9; transform:translateY(0) scale(1); }
+.cu-scroll svg{ width:clamp(1.7rem,1.3rem + 1.2vw,2.35rem); height:auto; display:block; margin-inline:auto;
+  filter:drop-shadow(0 2px 6px rgba(10,9,7,.55)); }
+.cu-scroll__c{ opacity:.3; animation:cu-chev 2.1s var(--ease-soft) infinite; }
+.cu-scroll__c:nth-child(1){ animation-delay:0ms; }
+.cu-scroll__c:nth-child(2){ animation-delay:210ms; }
+.cu-scroll__c:nth-child(3){ animation-delay:420ms; }
+/* a cascade down the three, so the cue reads as travel rather than a blink */
+@keyframes cu-chev{
+  0%,100%{ opacity:.28; transform:translateY(0); }
+  28%    { opacity:1;   transform:translateY(2px); }
+  56%    { opacity:.28; transform:translateY(0); }
 }
 
-/* The dimension run draws from both ends inward, then the arrowheads land. */
-.cu-dim{
-  display:block; width:min(100%,26rem); height:1.4rem;
-  margin:var(--space-m) auto 0 auto; color:var(--cu-line-ink);
+.cu-road{
+  margin-top:clamp(2.6rem,1.8rem + 3.2vw,4rem);
+  --rail-zone:clamp(2.4rem,1.8rem + 1.4vw,3.4rem);
+  --cell:clamp(19rem,15rem + 14vw,27rem);
 }
-.cu-dim__line{
-  stroke-dasharray:596; stroke-dashoffset:596;
-  transition:stroke-dashoffset var(--cu-t-set) var(--ease-satisfying);
-  transition-delay:1071ms;   /* 3 x 357, lands after the figures have counted */
+/* The frame. Masked at both edges so the road runs out of sight rather than
+   stopping, which is what stops it reading as a widget in a box. */
+.cu-road__view{
+  position:relative; overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+          mask-image:linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+  cursor:grab; touch-action:pan-y;
 }
-.cu-hero.in-view .cu-dim__line{ stroke-dashoffset:0; }
-.cu-dim__arw{ opacity:0; transition:opacity var(--duration-medium) var(--ease-soft); transition-delay:1806ms; }
-.cu-hero.in-view .cu-dim__arw{ opacity:1; }
-
-/* ============================================================
-   DELIVERABLE CARDS
-   They lay in like courses: from below, with a slight set, the
-   lower row before the upper. A shingle is placed, not faded.
-   ============================================================ */
-.cu-grid{
-  display:grid; gap:clamp(1rem,0.7rem + 1.4vw,1.5rem);
-  grid-template-columns:repeat(auto-fit,minmax(min(100%,26rem),1fr));
-  margin-top:clamp(2.4rem,1.6rem + 3.2vw,3.5rem);
-  align-items:stretch;
+.is-dragging .cu-road__view{ cursor:grabbing; }
+.cu-road__track{
+  position:relative; width:max-content;
+  transform:translate3d(var(--shift,0px),0,0);
+  transition:transform var(--duration-medium) var(--ease-soft);
+  will-change:transform;
 }
-/* The card is a LIGHT surface inside the dark section, so it must reset the
-   inherited colour or the h3 renders white on white. */
-.cu-card{
-  display:flex; flex-direction:column; align-items:flex-start;
+.is-dragging .cu-road__track{ transition:none; }
+.cu-road__nodes{
+  position:relative;
+  display:flex; list-style:none; margin:0; padding:0;
+}
+/* Every card sits ABOVE the line. The road is the constant; the cards hang
+   off it in one row so the eye tracks a single band, not a zigzag. */
+.cu-road__node{
+  position:relative; flex:0 0 auto;
+  width:var(--cell);
+  min-height:clamp(15rem,12rem + 9vw,20rem);
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding-bottom:var(--rail-zone);
+  padding-inline:clamp(0.6rem,0.4rem + 0.6vw,1rem);
+}
+/* the road and the struck line, running well past the track on both sides so
+   the frame's mask has something to fade */
+.cu-road__nodes::before,
+.cu-road__nodes::after{
+  content:""; position:absolute; left:-140vw; right:-140vw;
+  bottom:calc(var(--rail-zone) / 2); height:var(--cu-rule);
+  margin-bottom:calc(var(--cu-rule) / -2);
+}
+.cu-road__nodes::before{ background:rgba(255,255,255,.13); }
+.cu-road__nodes::after{
+  right:auto; width:0; background:var(--cu-red-lift);
+  transition:width var(--cu-t-snap) var(--ease-soft);
+}
+.cu-road.in-view .cu-road__nodes::after{ width:calc(280vw + 100%); }
+/* the mark. A square turned on its point, ringed in the field colour. */
+.cu-road__mark{
+  position:absolute; left:50%; bottom:calc(var(--rail-zone) / 2);
+  width:13px; height:13px; margin:0 0 -6.5px -6.5px;
+  background:var(--cu-red-lift);
+  box-shadow:0 0 0 5px var(--cu-black);
+  transform:rotate(45deg) scale(0);
+  transition:transform var(--duration-quick) var(--ease-snap),
+             box-shadow var(--duration-quick) var(--ease-soft);
+  z-index:2;
+}
+.cu-road.in-view .cu-road__mark{ transform:rotate(45deg) scale(1); }
+.cu-road.is-live .cu-road__node[data-on="true"] .cu-road__mark{
+  transform:rotate(45deg) scale(1.6);
+  box-shadow:0 0 0 5px var(--cu-black), 0 0 18px var(--cu-red-lift);
+}
+/* the stem from the card down to the road */
+.cu-road__card::after{
+  content:""; position:absolute; left:50%; top:100%; width:1px;
+  height:calc(var(--rail-zone) / 2);
+  background:rgba(255,255,255,.26);
+}
+.cu-road__card{
+  position:relative; display:block; width:100%; text-align:left; font:inherit;
   background:var(--cu-paper); color:var(--cu-ink);
   border:1px solid var(--cu-line);
   border-top:var(--cu-rule) solid var(--cu-red);
-  padding:clamp(1.35rem,1.05rem + 1.2vw,2rem);
-  position:relative; overflow:hidden;
+  padding:clamp(0.9rem,0.6rem + 0.9vw,1.35rem);
   box-shadow:var(--cu-e-dark);
-  transition:transform var(--cu-t-tap) var(--ease-settle),
-             box-shadow var(--cu-t-tap) var(--ease-settle);
-}
-/* Courses are laid from the eave UP, so the lower row sets before the upper.
-   --row is assigned in JS off the element's actual grid position, so it stays
-   correct if the grid reflows. This is the section's one signature moment. */
-.cu-grid.reveal-stagger > *{
-  opacity:0;
-  transform:translateY(26px);
+  cursor:pointer; -webkit-appearance:none; appearance:none;
+  opacity:0; transform:translateY(14px);
   transition:opacity var(--cu-t-lay) var(--ease-settle),
              transform var(--cu-t-lay) var(--ease-settle);
-  transition-delay:calc(var(--lay, 0) * 84ms);   /* 7 x 12 */
 }
-.cu-grid.reveal-stagger.in-view > *{ opacity:1; transform:translateY(0); }
-/* A hairline that runs the card's top edge on hover, like a chalk line snapped. */
-.cu-card::after{
-  content:""; position:absolute; left:0; top:0; height:var(--cu-rule); width:100%;
-  background:var(--cu-gold); transform:scaleX(0); transform-origin:left center;
-  transition:transform var(--cu-t-lay) var(--ease-satisfying);
+.cu-road.in-view .cu-road__card{ opacity:1; transform:translateY(0); }
+/* Only the centred one is lit. Everything else is on its way past. */
+.cu-road.is-live .cu-road__card{
+  opacity:.28;
+  transition:opacity var(--duration-medium) var(--ease-settle),
+             transform var(--duration-medium) var(--ease-settle),
+             box-shadow var(--cu-t-tap) var(--ease-settle);
 }
-.cu-card__n{
+.cu-road.is-live .cu-road__node[data-on="true"] .cu-road__card{
+  opacity:1; transform:translateY(-6px);
+  box-shadow:var(--cu-e-dark), 0 0 0 2px var(--cu-red-lift);
+}
+.cu-road__node:nth-child(1) .cu-road__mark{ transition-delay:105ms; }
+.cu-road__node:nth-child(2) .cu-road__mark{ transition-delay:336ms; }
+.cu-road__node:nth-child(3) .cu-road__mark{ transition-delay:567ms; }
+.cu-road__node:nth-child(4) .cu-road__mark{ transition-delay:798ms; }
+.cu-road__node:nth-child(5) .cu-road__mark{ transition-delay:1029ms; }
+.cu-road__node:nth-child(6) .cu-road__mark{ transition-delay:1260ms; }
+.cu-road__node:nth-child(1) .cu-road__card{ transition-delay:189ms; }
+.cu-road__node:nth-child(2) .cu-road__card{ transition-delay:420ms; }
+.cu-road__node:nth-child(3) .cu-road__card{ transition-delay:651ms; }
+.cu-road__node:nth-child(4) .cu-road__card{ transition-delay:882ms; }
+.cu-road__node:nth-child(5) .cu-road__card{ transition-delay:1113ms; }
+.cu-road__node:nth-child(6) .cu-road__card{ transition-delay:1344ms; }
+.cu-road.is-live .cu-road__card{ transition-delay:0ms !important; }
+.cu-road.is-live .cu-road__mark{ transition-delay:0ms !important; }
+
+/* controls. Hidden until .is-live, because without a script they would be
+   buttons that do nothing over a run that is already fully shown. */
+.cu-road__ctl{
+  display:none; align-items:center; justify-content:center;
+  gap:clamp(0.7rem,0.5rem + 0.6vw,1.1rem);
+  margin-top:clamp(1.4rem,1rem + 1.4vw,2.2rem);
+}
+.is-live > .cu-road__ctl{ display:flex; }
+.cu-road__btn{
+  width:2.6rem; height:2.6rem; display:grid; place-items:center;
+  background:transparent; color:var(--cu-paper);
+  border:1px solid var(--cu-line-dark);
+  cursor:pointer; -webkit-appearance:none; appearance:none;
+  transition:border-color var(--cu-t-tap) var(--ease-soft),
+             color var(--cu-t-tap) var(--ease-soft);
+}
+.cu-road__btn svg{ width:1rem; height:1rem; display:block; }
+.cu-road__btn[disabled]{ opacity:.3; cursor:default; }
+.cu-road__pips{ display:flex; gap:0.55rem; }
+.cu-road__pip{
+  width:11px; height:11px; padding:0;
+  background:var(--cu-line-dark); border:0;
+  cursor:pointer; -webkit-appearance:none; appearance:none;
+  transform:rotate(45deg);
+  transition:background var(--cu-t-tap) var(--ease-soft),
+             transform var(--cu-t-tap) var(--ease-snap);
+}
+.cu-road__pip[data-on="true"]{ background:var(--cu-red-lift); transform:rotate(45deg) scale(1.35); }
+.cu-road__card:focus-visible,
+.cu-road__btn:focus-visible,
+.cu-road__pip:focus-visible{ outline:2px solid var(--cu-gold); outline-offset:3px; }
+
+.cu-road__n{
   font-size:var(--cu-eyebrow); font-weight:700; letter-spacing:0.18em;
   color:var(--cu-red); font-variant-numeric:tabular-nums;
 }
-.cu-card__t{ font-size:var(--cu-h3); font-weight:600; margin-top:var(--space-2xs); max-width:20ch; }
-.cu-card__b{ margin-top:var(--space-s); color:var(--cu-muted); font-size:var(--cu-body); max-width:38ch; }
+.cu-road__t{ font-size:var(--cu-h3); font-weight:600; margin-top:var(--space-2xs); }
+.cu-road__b{ margin-top:var(--space-2xs); color:var(--cu-muted); font-size:var(--cu-small); }
 
 /* ============================================================
    THE ROOF ASSEMBLY
@@ -542,9 +667,9 @@ p{ margin:0; text-wrap:pretty; }
    because that is what a section detail looks like on a job.
    ============================================================ */
 .cu-assembly{
-  margin-top:clamp(2.4rem,1.6rem + 3.2vw,3.5rem);
-  display:grid; gap:clamp(1.5rem,1rem + 2.8vw,3.5rem);
-  grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);
+  margin-top:clamp(2rem,1.4rem + 2.4vw,2.8rem);
+  display:grid; gap:clamp(1.2rem,0.8rem + 1.6vw,2.2rem);
+  grid-template-columns:minmax(0,0.88fr) minmax(0,1fr);
   align-items:start;
 }
 /* The drawing STAYS while the 3 weeks scroll past it. That is the whole point:
@@ -557,48 +682,55 @@ p{ margin:0; text-wrap:pretty; }
 }
 .cu-assembly__svg{ width:100%; height:auto; display:block; overflow:visible; }
 
+/* THE ASSEMBLY
+   It arrives as a finished roof: three plates stacked flush, reading as one
+   solid thing. Then it comes apart, and each week lights the layer that week
+   installs. Plywood is week 1, underlayment week 2, shingles week 3, which is
+   the order they actually go on.
+
+   The collapse is a translate in USER UNITS, not pixels: plate spacing is 96
+   in the viewBox, so the outer two move 96 to meet the middle one. */
 .cu-plate{
-  opacity:0;
-  transform:translateY(-38px);
-  transition:opacity var(--cu-t-lay) var(--ease-settle),
-             transform var(--cu-t-set) var(--ease-settle);
+  opacity:1;
+  transition:opacity var(--duration-medium) var(--ease-soft),
+             transform var(--cu-t-set) var(--ease-satisfying);
 }
+.cu-plate[data-stage="1"]{ transform:translateY(-96px); }
+.cu-plate[data-stage="3"]{ transform:translateY(96px); }
+.cu-assembly__svg.is-open .cu-plate{ transform:translateY(0); }
+/* the outer plates travel furthest, so they leave first and land last */
+.cu-plate[data-stage="2"]{ transition-delay:0ms; }
+.cu-plate[data-stage="1"],
+.cu-plate[data-stage="3"]{ transition-delay:105ms; }
+
+/* labels only make sense once the stack is apart */
 .cu-plate-label{
   opacity:0;
   transition:opacity var(--duration-medium) var(--ease-soft);
 }
-/* Stage gates. Each week sets the layers that week actually installs. */
-.cu-assembly__svg[data-stage="1"] .cu-plate[data-stage="1"],
-.cu-assembly__svg[data-stage="2"] .cu-plate[data-stage="1"],
-.cu-assembly__svg[data-stage="2"] .cu-plate[data-stage="2"],
-.cu-assembly__svg[data-stage="3"] .cu-plate{
-  opacity:1; transform:translateY(0);
-}
-.cu-assembly__svg[data-stage="1"] .cu-plate-label[data-stage="1"],
-.cu-assembly__svg[data-stage="2"] .cu-plate-label[data-stage="1"],
-.cu-assembly__svg[data-stage="2"] .cu-plate-label[data-stage="2"],
-.cu-assembly__svg[data-stage="3"] .cu-plate-label{ opacity:1; }
-/* Within a stage the courses set in sequence, not all at once. */
-.cu-plate[data-seq="1"]{ transition-delay:0ms; }
-.cu-plate[data-seq="2"]{ transition-delay:105ms; }  /* 3 x 35 */
-.cu-plate[data-seq="3"]{ transition-delay:210ms; }
-.cu-plate[data-seq="4"]{ transition-delay:315ms; }
-.cu-plate[data-seq="5"]{ transition-delay:420ms; }
-.cu-plate[data-seq="6"]{ transition-delay:525ms; }
-.cu-plate-label[data-seq="1"]{ transition-delay:210ms; }
-.cu-plate-label[data-seq="2"]{ transition-delay:315ms; }
-.cu-plate-label[data-seq="3"]{ transition-delay:420ms; }
-.cu-plate-label[data-seq="4"]{ transition-delay:525ms; }
-.cu-plate-label[data-seq="5"]{ transition-delay:630ms; }
-.cu-plate-label[data-seq="6"]{ transition-delay:735ms; }
+.cu-assembly__svg.is-open .cu-plate-label{ opacity:1; }
+.cu-assembly__svg.is-open .cu-plate-label[data-seq="1"]{ transition-delay:294ms; }
+.cu-assembly__svg.is-open .cu-plate-label[data-seq="2"]{ transition-delay:378ms; }
+.cu-assembly__svg.is-open .cu-plate-label[data-seq="3"]{ transition-delay:462ms; }
 
-/* The drop travels the top face from the ridge down to the eave, then leaves at
-   the drip edge. Path is the ridge-cap plate's own upper-left face, so the water
-   is running on the roof rather than near it. */
+/* Once a week is being read, its layer is the one in focus. Nothing is hidden:
+   the others recede so the eye knows which piece the words are about. */
+.cu-assembly__svg.is-open[data-stage] .cu-plate{ opacity:.38; }
+.cu-assembly__svg.is-open[data-stage="1"] .cu-plate[data-stage="1"],
+.cu-assembly__svg.is-open[data-stage="2"] .cu-plate[data-stage="2"],
+.cu-assembly__svg.is-open[data-stage="3"] .cu-plate[data-stage="3"]{ opacity:1; }
+/* labels never dim: at 19px they fall under the body floor before they read as
+   de-emphasised, and the plates already carry the focus */
+.cu-assembly__svg.is-open[data-stage] .cu-plate-label[data-stage]{ opacity:1; }
+
+/* The drop runs the finished surface from the ridge down the slope and off the
+   eave. The path is the shingle plate's OWN upper-left edge, from its top vertex
+   to its left vertex, so the water is running on the roof rather than near it.
+   It used to leave at the drip edge; that plate is gone, so it leaves at the eave. */
 .cu-shed{ opacity:0; transition:opacity var(--duration-long) var(--ease-soft); }
-.cu-assembly__svg[data-stage="3"] .cu-shed{ opacity:1; transition-delay:1050ms; }
+.cu-assembly__svg.is-open[data-stage="3"] .cu-shed{ opacity:1; transition-delay:630ms; }
 .cu-drop{
-  offset-path:path("M268,108 L128,142 L40,186 L40,196");
+  offset-path:path("M268,144 L40,200 L40,215");
   offset-distance:0%;
   opacity:0;
   animation:cu-shed 4.2s linear infinite;
@@ -620,29 +752,68 @@ p{ margin:0; text-wrap:pretty; }
 .cu-assembly__cap b{ color:var(--cu-ink); font-weight:600; }
 
 /* ---------- process steps ---------- */
-.cu-steps{ display:grid; gap:0; }
+/* THE WEEKS
+   One run on a rail, not three blocks separated by rules. The rail is the same
+   idiom as the road in "What we do": a line, a diamond at each stop, and only
+   the part travelled painted in. The horizontal borders and the red tick that
+   drew across them are gone; the rail is the connector now, which is why the
+   line above week 1 could go without leaving the list looking unfinished. */
+.cu-steps{
+  --rail:clamp(1.9rem,1.4rem + 1.2vw,2.8rem);
+  display:grid; gap:0; position:relative;
+  padding-left:var(--rail);
+}
+.cu-steps::before,
+.cu-steps::after{
+  content:""; position:absolute; top:0.6em; bottom:0.9em;
+  left:calc(var(--rail) / 2 - 1px); width:2px;
+}
+.cu-steps::before{ background:rgba(255,255,255,.18); }
+.cu-steps::after{
+  background:var(--cu-gold); transform-origin:top center;
+  transform:scaleY(var(--run, 0));
+  transition:transform var(--cu-t-set) var(--ease-satisfying);
+}
 .cu-step{
   display:grid; gap:var(--space-s);
   grid-template-columns:auto 1fr;
   align-items:start;
-  padding-block:clamp(1.2rem,0.95rem + 1vw,1.8rem);
-  border-top:1px solid var(--cu-line-ink);
+  padding-block:clamp(1.7rem,1.2rem + 1.6vw,2.6rem);
   position:relative;
 }
-.cu-step:last-child{ border-bottom:1px solid var(--cu-line-ink); }
-/* The active week takes the red tick, so the drawing and the text agree. */
-.cu-step::before{
-  content:""; position:absolute; left:0; top:-1px; height:1px; width:0;
-  background:var(--cu-red);
-  transition:width var(--cu-t-set) var(--ease-satisfying);
-}
-.cu-step.in-view::before{ width:100%; }
+.cu-step:first-child{ padding-top:0; }
+/* the stop. A square on its point, ringed in the field so the rail runs behind. */
 .cu-step__n{
-  font-size:var(--cu-h3); font-weight:800; color:var(--cu-red);
+  position:relative;
+  font-size:var(--cu-h3); font-weight:800; color:var(--cu-gold);
   font-variant-numeric:tabular-nums; min-width:2.6rem; letter-spacing:-0.01em;
+  transition:color var(--duration-medium) var(--ease-soft);
 }
-.cu-step__t{ font-size:var(--cu-h3); font-weight:600; color:var(--cu-ink-strong); max-width:26ch; }
-.cu-step__b{ margin-top:var(--space-2xs); color:var(--cu-muted); max-width:52ch; }
+.cu-step__n::before{
+  content:""; position:absolute; top:0.42em;
+  left:calc(-1 * var(--rail) / 2 - 5.5px);
+  width:11px; height:11px; transform:rotate(45deg) scale(1);
+  background:var(--cu-gold);
+  box-shadow:0 0 0 5px var(--cu-siding-red);
+  transition:transform var(--duration-quick) var(--ease-snap),
+             box-shadow var(--duration-quick) var(--ease-soft);
+}
+.cu-step__t{
+  font-size:var(--cu-h3); font-weight:600; color:var(--cu-paper); max-width:26ch;
+  transition:color var(--duration-medium) var(--ease-soft);
+}
+.cu-step__b{ margin-top:var(--space-2xs); max-width:52ch; }
+/* Only once the run is live does anything recede, so no script means all three
+   weeks read at full strength. Inactive stays well above the contrast floor:
+   this is emphasis, not hiding. */
+.cu-steps.is-run .cu-step:not(.is-on) .cu-step__n{ color:rgba(255,255,255,.62); }
+.cu-steps.is-run .cu-step:not(.is-on) .cu-step__n::before{
+  background:rgba(255,255,255,.42); transform:rotate(45deg) scale(0.8);
+}
+.cu-steps.is-run .cu-step.is-on .cu-step__n::before{
+  transform:rotate(45deg) scale(1.45);
+  box-shadow:0 0 0 5px var(--cu-siding-red), 0 0 16px var(--cu-gold);
+}
 
 /* ============================================================
    PRICE
@@ -695,7 +866,8 @@ p{ margin:0; text-wrap:pretty; }
 .cu-offer.in-view .cu-price__l{ opacity:1; }
 
 .cu-ledger{
-  width:100%; border-collapse:collapse; margin-top:clamp(2.4rem,1.6rem + 3.2vw,3.5rem);
+  width:min(100%, 46rem); border-collapse:collapse;
+  margin:clamp(2.4rem,1.6rem + 3.2vw,3.5rem) auto 0 auto;
   border-top:1px solid var(--cu-line-ink);
 }
 .cu-ledger caption{
@@ -711,9 +883,39 @@ p{ margin:0; text-wrap:pretty; }
   text-transform:uppercase; color:var(--cu-muted);
 }
 .cu-ledger tbody tr{ transition:background var(--cu-t-tap) var(--ease-soft); }
-.cu-ledger td:first-child{ font-weight:500; padding-right:var(--space-m); max-width:26rem; }
-.cu-ledger td:last-child{ text-align:right; color:var(--cu-muted); white-space:nowrap; }
+/* The leader is a flex filler that occupies only the gap, so nothing has to be
+   masked. Painting a solid colour behind the label to hide dots running under
+   it left visible grey blocks on a textured ground. */
+.cu-ledger td:first-child{
+  font-weight:500; width:100%;
+  display:flex; align-items:baseline; gap:0.7rem;
+}
+.cu-ledger td:first-child > span{ flex:0 1 auto; }
+.cu-ledger td:first-child::after{
+  content:""; flex:1 1 auto; min-width:1.5rem;
+  align-self:flex-end; height:0.9em;
+  background-image:radial-gradient(circle at 1px calc(100% - 1px), currentColor 0.9px, transparent 1.2px);
+  background-size:7px 7px; background-repeat:repeat-x;
+  opacity:.42;
+}
+.cu-ledger td:last-child{
+  text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums;
+  padding-left:0.7rem;
+}
 .cu-ledger tbody tr td:last-child{ font-weight:600; color:var(--cu-ink); }
+
+/* the band. Full width by structure, not by a negative margin trick: it is a
+   direct child of the section, so it is already as wide as the page. */
+.cu-band{
+  position:relative; z-index:1;
+  margin-top:clamp(2.6rem,1.8rem + 3.2vw,4rem);
+  padding-block:clamp(1.8rem,1.3rem + 1.6vw,2.6rem);
+  background:rgba(0,0,0,.30);
+  border-top:1px solid rgba(255,255,255,.16);
+  border-bottom:1px solid rgba(255,255,255,.16);
+}
+.cu-band > .cu-wrap{ width:min(100% - 3vw, 68rem); }
+.cu-band .cu-terms{ margin-top:0; }
 
 .cu-terms{
   display:grid; gap:clamp(1rem,0.8rem + 0.84vw,1.6rem);
@@ -728,9 +930,53 @@ p{ margin:0; text-wrap:pretty; }
 .cu-term__b{ margin-top:var(--space-2xs); color:var(--cu-muted); font-size:var(--cu-small); max-width:34ch; }
 
 /* ---------- what we need ---------- */
+/* Colours live on the block, not on the field around it: this block has now
+   been moved between two dark fields and a scope tied to one of them broke on
+   the move. */
+.cu-need .cu-need__t{ color:var(--cu-paper); }
+.cu-need .cu-need__intro{ color:rgba(255,255,255,.88); }
+.cu-need .cu-need__note{ color:rgba(255,255,255,.82); }
+/* The need run. Same carousel as the road, and deliberately NOT edge to edge:
+   the band above it is the full-width element in this part of the page, and two
+   of them stacked would read as one long strip. */
+.cu-needrun{
+  position:relative;
+  margin-top:clamp(1.6rem,1.2rem + 1.2vw,2.4rem);
+  width:min(100%, 60rem);
+}
+.cu-needrun__items{
+  position:relative; display:flex; list-style:none; margin:0; padding:0;
+}
+.cu-needrun__node{
+  flex:0 0 auto; width:clamp(17rem,13rem + 13vw,25rem);
+  padding-inline:clamp(0.4rem,0.3rem + 0.4vw,0.7rem);
+}
+.cu-needrun__card{
+  display:grid; grid-template-columns:auto 1fr; gap:var(--space-s);
+  align-items:start; width:100%; text-align:left; font:inherit;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.16);
+  border-left:var(--cu-rule) solid var(--cu-gold);
+  padding:clamp(1rem,0.8rem + 0.7vw,1.5rem);
+  cursor:pointer; -webkit-appearance:none; appearance:none;
+  min-height:clamp(7rem,6rem + 3vw,9rem);
+  transition:opacity var(--duration-medium) var(--ease-settle),
+             transform var(--duration-medium) var(--ease-settle),
+             border-color var(--cu-t-tap) var(--ease-soft);
+}
+.cu-needrun__n{
+  font-size:var(--cu-eyebrow); font-weight:700; letter-spacing:0.16em;
+  color:var(--cu-gold); font-variant-numeric:tabular-nums;
+}
+.cu-needrun__b{ color:rgba(255,255,255,.92); font-size:var(--cu-body); }
+.cu-needrun.is-live .cu-needrun__card{ opacity:.42; }
+.cu-needrun.is-live .cu-needrun__node[data-on="true"] .cu-needrun__card{
+  opacity:1; transform:translateY(-4px); border-color:var(--cu-gold);
+}
+.cu-needrun .cu-road__ctl{ justify-content:flex-start; }
+
 .cu-need{
   margin-top:clamp(2.4rem,1.6rem + 3.2vw,3.25rem);
-  border-top:var(--cu-rule) solid var(--cu-red);
   padding-top:clamp(1.35rem,1.05rem + 1.2vw,2rem);
 }
 .cu-need__t{
@@ -738,20 +984,6 @@ p{ margin:0; text-wrap:pretty; }
   text-transform:uppercase; color:var(--cu-ink-strong);
 }
 .cu-need__intro{ margin-top:var(--space-2xs); color:var(--cu-muted); max-width:52ch; }
-.cu-need__list{
-  margin:var(--space-m) 0 0 0; padding:0; list-style:none;
-  display:grid; gap:var(--space-xs);
-  grid-template-columns:repeat(auto-fit,minmax(min(100%,21rem),1fr));
-}
-.cu-need__list li{
-  position:relative; padding-left:var(--space-m);
-  color:var(--cu-muted); max-width:46ch;
-}
-.cu-need__list li::before{
-  content:""; position:absolute; left:0; top:0.62em;
-  width:0.5rem; height:0.5rem; background:var(--cu-gold);
-  transform:rotate(45deg);
-}
 .cu-need__note{
   margin-top:var(--space-m); font-size:var(--cu-small);
   color:var(--cu-muted); font-style:italic; max-width:60ch;
@@ -765,24 +997,6 @@ p{ margin:0; text-wrap:pretty; }
 }
 
 /* ---------- title block ---------- */
-.cu-tblock{
-  width:min(100% - 3vw, var(--cu-measure));
-  margin:clamp(2.5rem,1.8rem + 3.2vw,4.5rem) auto clamp(1.5rem,1rem + 2vw,2.5rem) auto;
-  display:grid; grid-template-columns:repeat(4,1fr);
-  border:1px solid var(--cu-line-ink);
-  font-size:var(--cu-eyebrow);
-}
-.cu-tblock__row{
-  padding:var(--space-xs) var(--space-s);
-  border-right:1px solid var(--cu-line-ink);
-  display:flex; flex-direction:column; gap:2px; min-width:0;
-}
-.cu-tblock__row:last-child{ border-right:0; }
-.cu-tblock__row span{
-  letter-spacing:0.18em; text-transform:uppercase; color:var(--cu-muted);
-  font-weight:600; font-size:0.86em;
-}
-.cu-tblock__row b{ color:var(--cu-ink-strong); font-weight:600; overflow-wrap:normal; }
 
 /* ---------- footer ---------- */
 .cu-foot{
@@ -797,14 +1011,16 @@ p{ margin:0; text-wrap:pretty; }
 }
 
 /* ---------- hover only where hover exists ---------- */
-.cu-card:focus-visible,
+.cu-road__card:focus-visible,
 .cu-ledger tbody tr:focus-visible{
   outline:2px solid var(--cu-gold); outline-offset:2px;
 }
 
 @media (hover:hover){
-  .cu-card:hover{ transform:translateY(-5px); box-shadow:var(--cu-e-dark), 0 0 0 1px rgba(208,32,45,.35); }
-  .cu-card:hover::after{ transform:scaleX(1); }
+  .cu-road:not(.is-live) .cu-road__card:hover{ transform:translateY(-5px); box-shadow:var(--cu-e-dark), 0 0 0 1px var(--cu-red-lift); }
+  .cu-road.is-live .cu-road__card:hover{ opacity:.9; }
+  .cu-road.is-live .cu-road__node[data-on="true"] .cu-road__card:hover{ opacity:1; }
+  .cu-road__btn:hover{ border-color:var(--cu-red-lift); color:var(--cu-red-lift); }
   .cu-ledger tbody tr:hover{ background:var(--cu-surface); }
 }
 
@@ -815,22 +1031,56 @@ p{ margin:0; text-wrap:pretty; }
   .cu-step{ grid-template-columns:1fr; gap:var(--space-2xs); }
   .cu-ledger td:last-child{ text-align:left; }
   .cu-ledger td:first-child{ padding-right:0; }
-  .cu-h2,.cu-card__b,.cu-step__b,.cu-close,.cu-term__b,.cu-assembly__cap{
+  .cu-h2,.cu-road__b,.cu-step__b,.cu-close,.cu-term__b,.cu-assembly__cap{
     margin-inline:auto; text-align:center;
   }
-  .cu-thread,.cu-price__bar{ margin-inline:auto; }
+  .cu-price__bar{ margin-inline:auto; }
   .cu-eyebrow{ justify-content:center; }
-  .cu-card,.cu-term{ align-items:center; text-align:center; }
+  .cu-road__card,.cu-term{ text-align:center; }
   .cu-term{ border-left:0; border-top:var(--cu-rule) solid var(--cu-gold); padding-left:0; padding-top:var(--space-s); }
   /* The need block centres as a composition, but its list items stay left
      aligned. A centred list with a leading marker reads as ragged, not centred. */
-  .cu-need{ text-align:center; }
+  /* The need run. Same carousel as the road, and deliberately NOT edge to edge:
+   the band above it is the full-width element in this part of the page, and two
+   of them stacked would read as one long strip. */
+.cu-needrun{
+  position:relative;
+  margin-top:clamp(1.6rem,1.2rem + 1.2vw,2.4rem);
+  width:min(100%, 60rem);
+}
+.cu-needrun__items{
+  position:relative; display:flex; list-style:none; margin:0; padding:0;
+}
+.cu-needrun__node{
+  flex:0 0 auto; width:clamp(17rem,13rem + 13vw,25rem);
+  padding-inline:clamp(0.4rem,0.3rem + 0.4vw,0.7rem);
+}
+.cu-needrun__card{
+  display:grid; grid-template-columns:auto 1fr; gap:var(--space-s);
+  align-items:start; width:100%; text-align:left; font:inherit;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.16);
+  border-left:var(--cu-rule) solid var(--cu-gold);
+  padding:clamp(1rem,0.8rem + 0.7vw,1.5rem);
+  cursor:pointer; -webkit-appearance:none; appearance:none;
+  min-height:clamp(7rem,6rem + 3vw,9rem);
+  transition:opacity var(--duration-medium) var(--ease-settle),
+             transform var(--duration-medium) var(--ease-settle),
+             border-color var(--cu-t-tap) var(--ease-soft);
+}
+.cu-needrun__n{
+  font-size:var(--cu-eyebrow); font-weight:700; letter-spacing:0.16em;
+  color:var(--cu-gold); font-variant-numeric:tabular-nums;
+}
+.cu-needrun__b{ color:rgba(255,255,255,.92); font-size:var(--cu-body); }
+.cu-needrun.is-live .cu-needrun__card{ opacity:.42; }
+.cu-needrun.is-live .cu-needrun__node[data-on="true"] .cu-needrun__card{
+  opacity:1; transform:translateY(-4px); border-color:var(--cu-gold);
+}
+.cu-needrun .cu-road__ctl{ justify-content:flex-start; }
+
+.cu-need{ text-align:center; }
   .cu-need__intro,.cu-need__note{ margin-inline:auto; }
-  .cu-need__list{ justify-items:center; }
-  .cu-need__list li{ text-align:left; }
-  .cu-tblock{ grid-template-columns:repeat(2,1fr); }
-  .cu-tblock__row:nth-child(2){ border-right:0; }
-  .cu-tblock__row:nth-child(-n+2){ border-bottom:1px solid var(--cu-line-ink); }
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -839,24 +1089,127 @@ p{ margin:0; text-wrap:pretty; }
     transition-duration:.01ms !important; transition-delay:0ms !important;
     scroll-behavior:auto !important;
   }
-  .cu-sec--dark::after{ animation:none; opacity:.35; }
-  .cu-roof__drift,.cu-roof__sun,.cu-roof__shade,.cu-drop{ animation:none !important; }
-  .cu-roof__shade{ opacity:.25; }
-  .cu-course{ opacity:1; transform:none; }
-  .cu-thread::after{ animation:none !important; opacity:0; }
+  .cu-drop{ animation:none !important; }
+  .cu-roof__frame{ opacity:1 !important; transform:none !important; transition:none !important; }
+  .cu-roof__reveal,.cu-roof__slide,.cu-roof__track{ transform:none !important; animation:none !important; }
+  .cu-roof__blade{ display:none; }
   .cu-shed{ opacity:1; }
-  .cu-card:hover{ transform:none; }
+  .cu-road__card:hover{ transform:none; }
+  .cu-scroll{ opacity:.9 !important; transform:none !important; transition:none !important; }
+  .cu-scroll__c{ animation:none !important; opacity:.6; }
+  .cu-road__nodes::after{ width:100% !important; transition:none !important; }
+  .cu-road__mark{ transform:rotate(45deg) scale(1) !important; transition:none !important; }
+  .cu-road__card{ transform:none !important; transition:none !important; }
+  .cu-road:not(.is-live) .cu-road__card{ opacity:1 !important; }
+  .cu-road__mark,.cu-road__pip{ transition:none !important; }
+  .cu-steps::after{ transform:scaleY(1) !important; }
+  .cu-road__mark::after{ animation:none !important; opacity:0; }
   .cu-hero__logo{ clip-path:none; opacity:1; transform:none; }
-  .cu-hero__l1,.cu-hero__l2,.cu-hero__deck,.cu-fig{ opacity:1; transform:none; }
-  .cu-hero__rule,.cu-thread,.cu-price__bar{ transform:scaleX(1); }
+  .cu-hero__l1,.cu-hero__l2{ opacity:1; transform:none; }
+  .cu-hero.is-seq .cu-hero__logo,.cu-hero.is-seq .cu-hero__l1,
+  .cu-hero.is-seq .cu-hero__l2{ opacity:1; transform:none; clip-path:none; }
+  .cu-price__bar{ transform:scaleX(1); }
   .cu-price__l{ opacity:1; }
   .cu-plate{ opacity:1; transform:none; }
   .cu-plate-label{ opacity:1; }
-  .cu-step::before{ width:100%; }
+  .cu-steps::after{ transform:scaleY(1); transition:none !important; }
+  .cu-step__n::before{ transition:none !important; }
 }
+/* ===== AG REPORT CURTAIN (loading screen) ===== */
+html.is-loading { overflow: hidden; }
+.ag-curtain {
+  position: fixed; inset: 0; z-index: 2147483645;
+  background: var(--navy-deepest, #091422);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 1; pointer-events: auto;
+  transition: opacity 700ms cubic-bezier(0.16,1,0.3,1);
+}
+html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
+.ag-curtain::after { content:''; position:absolute; inset:0; pointer-events:none; z-index:5; opacity:0.05; mix-blend-mode:overlay; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.ld-layer { position:absolute; inset:0; display:grid; place-items:center; opacity:0; transition:opacity 600ms cubic-bezier(0.16,1,0.3,1); pointer-events:none; }
+.ag-curtain[data-phase="load"]  .ld-boot  { opacity:1; }
+.ag-curtain[data-phase="brand"] .ld-brand { opacity:1; }
+.ld-gold { background:linear-gradient(100deg,#b9965a 0%,#e3c489 26%,#fffdf6 48%,#e3c489 70%,#b9965a 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.ld-boot__in { display:flex; flex-direction:column; align-items:center; gap:clamp(20px,3.4vh,30px); transition:opacity 600ms cubic-bezier(0.16,1,0.3,1), transform 600ms cubic-bezier(0.16,1,0.3,1), filter 600ms ease; }
+.ag-curtain:not([data-phase="load"]) .ld-boot__in { opacity:0; transform:translateX(-26px) scale(0.96); filter:blur(4px); }
+.ld-mono { font-family:'Cinzel',serif; font-weight:600; font-size:clamp(2.6rem,8vw,4rem); letter-spacing:0.16em; padding-left:0.16em; line-height:1; animation:ld-mono-pulse 2.1s ease-in-out infinite; }
+@keyframes ld-mono-pulse { 0%,100%{ filter:drop-shadow(0 0 20px rgba(201,168,97,0.22)); } 50%{ filter:drop-shadow(0 0 34px rgba(201,168,97,0.44)); } }
+.ld-bar { width:clamp(150px,30vw,230px); height:2px; background:rgba(201,168,97,0.16); border-radius:2px; overflow:hidden; }
+.ld-bar i { display:block; height:100%; width:6%; border-radius:2px; background:linear-gradient(90deg,#b9965a,#fffdf6,#b9965a); animation:ld-fill 1.4s cubic-bezier(0.45,0.02,0.18,1) 0.15s forwards; }
+@keyframes ld-fill { to { width:100%; } }
+.ld-dots { display:flex; gap:9px; }
+.ld-dots b { width:6px; height:6px; border-radius:50%; background:#c9a861; opacity:0.3; animation:ld-dot 1.2s ease-in-out infinite; }
+.ld-dots b:nth-child(2){ animation-delay:0.16s; }
+.ld-dots b:nth-child(3){ animation-delay:0.32s; }
+@keyframes ld-dot { 0%,100%{ opacity:0.25; transform:translateY(0); } 50%{ opacity:1; transform:translateY(-4px); } }
+.ld-brand__in { display:flex; flex-direction:column; align-items:center; gap:clamp(11px,1.9vh,17px); }
+.ld-wm { position:relative; font-family:'Cinzel',serif; font-weight:600; font-size:clamp(2.1rem,9vw,4.6rem); letter-spacing:0.14em; margin-right:-0.14em; line-height:1; white-space:nowrap; }
+.ag-curtain[data-phase="brand"] .ld-wm { animation:ld-swoosh 900ms cubic-bezier(0.16,1,0.3,1) 0s both, ld-glare 1000ms linear 0.1s both; }
+@keyframes ld-swoosh { 0%{ opacity:0; transform:translateY(10px); filter:blur(8px); } 60%{ opacity:1; } 100%{ opacity:1; transform:translateY(0); filter:blur(0); } }
+.ld-wm.ld-gold { background-image:linear-gradient(100deg,transparent 28%,rgba(255,255,255,0.7) 40%,#ffffff 47%,#ffffff 53%,rgba(255,255,255,0.7) 60%,transparent 72%),linear-gradient(100deg,#b9965a 0%,#d8b06e 28%,#f2d9a0 50%,#d8b06e 72%,#b9965a 100%); background-repeat:no-repeat,no-repeat; background-size:220% 100%,100% 100%; background-position:-120% 0,0 0; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; }
+@keyframes ld-glare { 0%{ background-position:-120% 0,0 0; } 100%{ background-position:220% 0,0 0; } }
+.ld-rule { width:0; height:1px; background:linear-gradient(90deg, transparent, #c9a861, transparent); }
+.ag-curtain[data-phase="brand"] .ld-rule { animation:ld-rule-draw 700ms cubic-bezier(0.16,1,0.3,1) 260ms both; }
+@keyframes ld-rule-draw { from{ width:0; } to{ width:clamp(120px,26vw,200px); } }
+.ld-sub { font-family:'Inter',sans-serif; font-weight:500; font-size:clamp(0.7rem,1.7vw,0.84rem); letter-spacing:0.44em; text-transform:uppercase; color:#c9a861; padding-left:0.44em; opacity:0; }
+.ag-curtain[data-phase="brand"] .ld-sub { animation:ld-sub-in 700ms cubic-bezier(0.16,1,0.3,1) 380ms both; }
+@keyframes ld-sub-in { from{ opacity:0; transform:translateY(6px); } to{ opacity:0.92; transform:translateY(0); } }
 </style>
+<noscript><style>
+  html.is-loading{ overflow:visible !important; }
+  .ag-curtain{ display:none !important; }
+  /* Nothing on this page may depend on a script to become visible. */
+  .reveal, .reveal-hero, .reveal-cinematic, .reveal-stagger > *,
+  .cu-road__card, .cu-hero__logo, .cu-hero__l1, .cu-hero__l2,
+  .cu-plate, .cu-plate-label, .cu-scroll, .cu-shed{
+    opacity:1 !important; transform:none !important;
+    clip-path:none !important; transition:none !important;
+  }
+  .cu-road__mark{ transform:rotate(45deg) scale(1) !important; }
+  .cu-road__nodes::after{ width:100% !important; }
+  .cu-steps::after{ transform:scaleY(1) !important; }
+  .cu-price__bar{ transform:scaleX(1) !important; }
+  .cu-roof__frame{ opacity:1 !important; transform:none !important; }
+</style></noscript>
 </head>
 <body>
+<!-- AG REPORT CURTAIN — first child of body (paints before everything) -->
+<div class="ag-curtain" data-phase="load" aria-hidden="true">
+  <div class="ld-layer ld-boot">
+    <div class="ld-boot__in">
+      <div class="ld-mono ld-gold">AG</div>
+      <div class="ld-bar"><i></i></div>
+      <div class="ld-dots"><b></b><b></b><b></b></div>
+    </div>
+  </div>
+  <div class="ld-layer ld-brand">
+    <div class="ld-brand__in">
+      <div class="ld-wm ld-gold">ARC&nbsp;GARDE</div>
+      <div class="ld-rule"></div>
+      <div class="ld-sub">Website Build</div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var C = document.querySelector('.ag-curtain'), root = document.documentElement;
+  if (!C) { root.classList.remove('is-loading'); return; }
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var MIN = 2520, BRAND_AT = 1400, CLEANUP = 900, MAX = 6000, start = performance.now(), done = false;
+  function lift(){
+    if (done) return; done = true;
+    root.classList.remove('is-loading'); root.classList.add('is-ready');
+    window.dispatchEvent(new CustomEvent('ag:ready'));
+    setTimeout(function(){ if (C.parentNode) C.parentNode.removeChild(C); }, CLEANUP);
+  }
+  if (reduce) { lift(); return; }
+  setTimeout(function(){ C.setAttribute('data-phase','brand'); }, BRAND_AT);
+  function schedule(){ setTimeout(lift, Math.max(0, MIN - (performance.now() - start))); }
+  if (document.readyState === 'complete') schedule();
+  else window.addEventListener('load', schedule, { once:true });
+  setTimeout(lift, MAX); // fail-open
+})();
+</script>
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="ag-cursor" aria-hidden="true"></div>
 
@@ -871,159 +1224,161 @@ p{ margin:0; text-wrap:pretty; }
          shop-drawing world the rest of the page lives in. Three continuous
          systems run on it: a slow drone drift, the sun raking across, and
          granules lifting off the field. Decorative, so aria-hidden. -->
-    <div class="cu-roof" aria-hidden="true">
-      <div class="cu-roof__drift">
-        <svg class="cu-roof__svg" viewBox="0 0 1560 470" preserveAspectRatio="xMidYMax slice">
-          <g>
-      <g class="cu-course">
-        <rect x="-384" y="424" width="384" height="46" fill="#2b2b2b" fill-opacity="0.066"/><rect x="0" y="424" width="384" height="46" fill="#2b2b2b" fill-opacity="0.055"/><rect x="384" y="424" width="384" height="46" fill="#2b2b2b" fill-opacity="0.074"/><rect x="768" y="424" width="384" height="46" fill="#2b2b2b" fill-opacity="0.092"/><rect x="1152" y="424" width="384" height="46" fill="#2b2b2b" fill-opacity="0.07"/><rect x="1536" y="424" width="384" height="46" fill="#2b2b2b" fill-opacity="0.104"/><rect x="1920" y="424" width="384" height="46" fill="#2b2b2b" fill-opacity="0.054"/>
-        <path d="M-40,470 H1600 M-256,470 v-25 M-128,470 v-25 M128,470 v-25 M256,470 v-25 M512,470 v-25 M640,470 v-25 M896,470 v-25 M1024,470 v-25 M1280,470 v-25 M1408,470 v-25 M1664,470 v-25 M1792,470 v-25 M2048,470 v-25 M2176,470 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
-      </g>
-      <g class="cu-course">
-        <rect x="-576" y="378" width="384" height="46" fill="#2b2b2b" fill-opacity="0.062"/><rect x="-192" y="378" width="384" height="46" fill="#2b2b2b" fill-opacity="0.075"/><rect x="192" y="378" width="384" height="46" fill="#2b2b2b" fill-opacity="0.104"/><rect x="576" y="378" width="384" height="46" fill="#2b2b2b" fill-opacity="0.09"/><rect x="960" y="378" width="384" height="46" fill="#2b2b2b" fill-opacity="0.078"/><rect x="1344" y="378" width="384" height="46" fill="#2b2b2b" fill-opacity="0.075"/><rect x="1728" y="378" width="384" height="46" fill="#2b2b2b" fill-opacity="0.095"/>
-        <path d="M-40,424 H1600 M-448,424 v-25 M-320,424 v-25 M-64,424 v-25 M64,424 v-25 M320,424 v-25 M448,424 v-25 M704,424 v-25 M832,424 v-25 M1088,424 v-25 M1216,424 v-25 M1472,424 v-25 M1600,424 v-25 M1856,424 v-25 M1984,424 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
-      </g>
-      <g class="cu-course">
-        <rect x="-384" y="332" width="384" height="46" fill="#2b2b2b" fill-opacity="0.075"/><rect x="0" y="332" width="384" height="46" fill="#2b2b2b" fill-opacity="0.093"/><rect x="384" y="332" width="384" height="46" fill="#2b2b2b" fill-opacity="0.093"/><rect x="768" y="332" width="384" height="46" fill="#2b2b2b" fill-opacity="0.072"/><rect x="1152" y="332" width="384" height="46" fill="#2b2b2b" fill-opacity="0.059"/><rect x="1536" y="332" width="384" height="46" fill="#2b2b2b" fill-opacity="0.076"/><rect x="1920" y="332" width="384" height="46" fill="#2b2b2b" fill-opacity="0.066"/>
-        <path d="M-40,378 H1600 M-256,378 v-25 M-128,378 v-25 M128,378 v-25 M256,378 v-25 M512,378 v-25 M640,378 v-25 M896,378 v-25 M1024,378 v-25 M1280,378 v-25 M1408,378 v-25 M1664,378 v-25 M1792,378 v-25 M2048,378 v-25 M2176,378 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
-      </g>
-      <g class="cu-course">
-        <rect x="-576" y="286" width="384" height="46" fill="#2b2b2b" fill-opacity="0.093"/><rect x="-192" y="286" width="384" height="46" fill="#2b2b2b" fill-opacity="0.058"/><rect x="192" y="286" width="384" height="46" fill="#2b2b2b" fill-opacity="0.08"/><rect x="576" y="286" width="384" height="46" fill="#2b2b2b" fill-opacity="0.1"/><rect x="960" y="286" width="384" height="46" fill="#2b2b2b" fill-opacity="0.104"/><rect x="1344" y="286" width="384" height="46" fill="#2b2b2b" fill-opacity="0.091"/><rect x="1728" y="286" width="384" height="46" fill="#2b2b2b" fill-opacity="0.088"/>
-        <path d="M-40,332 H1600 M-448,332 v-25 M-320,332 v-25 M-64,332 v-25 M64,332 v-25 M320,332 v-25 M448,332 v-25 M704,332 v-25 M832,332 v-25 M1088,332 v-25 M1216,332 v-25 M1472,332 v-25 M1600,332 v-25 M1856,332 v-25 M1984,332 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
-      </g>
-      <g class="cu-course">
-        <rect x="-384" y="240" width="384" height="46" fill="#2b2b2b" fill-opacity="0.065"/><rect x="0" y="240" width="384" height="46" fill="#2b2b2b" fill-opacity="0.095"/><rect x="384" y="240" width="384" height="46" fill="#2b2b2b" fill-opacity="0.051"/><rect x="768" y="240" width="384" height="46" fill="#2b2b2b" fill-opacity="0.077"/><rect x="1152" y="240" width="384" height="46" fill="#2b2b2b" fill-opacity="0.052"/><rect x="1536" y="240" width="384" height="46" fill="#2b2b2b" fill-opacity="0.071"/><rect x="1920" y="240" width="384" height="46" fill="#2b2b2b" fill-opacity="0.093"/>
-        <path d="M-40,286 H1600 M-256,286 v-25 M-128,286 v-25 M128,286 v-25 M256,286 v-25 M512,286 v-25 M640,286 v-25 M896,286 v-25 M1024,286 v-25 M1280,286 v-25 M1408,286 v-25 M1664,286 v-25 M1792,286 v-25 M2048,286 v-25 M2176,286 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
-      </g>
-      <g class="cu-course">
-        <rect x="-576" y="194" width="384" height="46" fill="#2b2b2b" fill-opacity="0.059"/><rect x="-192" y="194" width="384" height="46" fill="#2b2b2b" fill-opacity="0.097"/><rect x="192" y="194" width="384" height="46" fill="#2b2b2b" fill-opacity="0.046"/><rect x="576" y="194" width="384" height="46" fill="#2b2b2b" fill-opacity="0.047"/><rect x="960" y="194" width="384" height="46" fill="#2b2b2b" fill-opacity="0.048"/><rect x="1344" y="194" width="384" height="46" fill="#2b2b2b" fill-opacity="0.064"/><rect x="1728" y="194" width="384" height="46" fill="#2b2b2b" fill-opacity="0.067"/>
-        <path d="M-40,240 H1600 M-448,240 v-25 M-320,240 v-25 M-64,240 v-25 M64,240 v-25 M320,240 v-25 M448,240 v-25 M704,240 v-25 M832,240 v-25 M1088,240 v-25 M1216,240 v-25 M1472,240 v-25 M1600,240 v-25 M1856,240 v-25 M1984,240 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
-      </g>
-      <g class="cu-course">
-        <rect x="-384" y="148" width="384" height="46" fill="#2b2b2b" fill-opacity="0.049"/><rect x="0" y="148" width="384" height="46" fill="#2b2b2b" fill-opacity="0.054"/><rect x="384" y="148" width="384" height="46" fill="#2b2b2b" fill-opacity="0.087"/><rect x="768" y="148" width="384" height="46" fill="#2b2b2b" fill-opacity="0.059"/><rect x="1152" y="148" width="384" height="46" fill="#2b2b2b" fill-opacity="0.1"/><rect x="1536" y="148" width="384" height="46" fill="#2b2b2b" fill-opacity="0.104"/><rect x="1920" y="148" width="384" height="46" fill="#2b2b2b" fill-opacity="0.05"/>
-        <path d="M-40,194 H1600 M-256,194 v-25 M-128,194 v-25 M128,194 v-25 M256,194 v-25 M512,194 v-25 M640,194 v-25 M896,194 v-25 M1024,194 v-25 M1280,194 v-25 M1408,194 v-25 M1664,194 v-25 M1792,194 v-25 M2048,194 v-25 M2176,194 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
-      </g>
-      <g class="cu-course">
-        <rect x="-576" y="102" width="384" height="46" fill="#2b2b2b" fill-opacity="0.073"/><rect x="-192" y="102" width="384" height="46" fill="#2b2b2b" fill-opacity="0.068"/><rect x="192" y="102" width="384" height="46" fill="#2b2b2b" fill-opacity="0.092"/><rect x="576" y="102" width="384" height="46" fill="#2b2b2b" fill-opacity="0.065"/><rect x="960" y="102" width="384" height="46" fill="#2b2b2b" fill-opacity="0.063"/><rect x="1344" y="102" width="384" height="46" fill="#2b2b2b" fill-opacity="0.089"/><rect x="1728" y="102" width="384" height="46" fill="#2b2b2b" fill-opacity="0.088"/>
-        <path d="M-40,148 H1600 M-448,148 v-25 M-320,148 v-25 M-64,148 v-25 M64,148 v-25 M320,148 v-25 M448,148 v-25 M704,148 v-25 M832,148 v-25 M1088,148 v-25 M1216,148 v-25 M1472,148 v-25 M1600,148 v-25 M1856,148 v-25 M1984,148 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
-      </g>
-      <g class="cu-course">
-        <rect x="-384" y="56" width="384" height="46" fill="#2b2b2b" fill-opacity="0.09"/><rect x="0" y="56" width="384" height="46" fill="#2b2b2b" fill-opacity="0.076"/><rect x="384" y="56" width="384" height="46" fill="#2b2b2b" fill-opacity="0.083"/><rect x="768" y="56" width="384" height="46" fill="#2b2b2b" fill-opacity="0.055"/><rect x="1152" y="56" width="384" height="46" fill="#2b2b2b" fill-opacity="0.057"/><rect x="1536" y="56" width="384" height="46" fill="#2b2b2b" fill-opacity="0.054"/><rect x="1920" y="56" width="384" height="46" fill="#2b2b2b" fill-opacity="0.085"/>
-        <path d="M-40,102 H1600 M-256,102 v-25 M-128,102 v-25 M128,102 v-25 M256,102 v-25 M512,102 v-25 M640,102 v-25 M896,102 v-25 M1024,102 v-25 M1280,102 v-25 M1408,102 v-25 M1664,102 v-25 M1792,102 v-25 M2048,102 v-25 M2176,102 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
-      </g>
-      <g class="cu-course">
-        <rect x="-576" y="10" width="384" height="46" fill="#2b2b2b" fill-opacity="0.092"/><rect x="-192" y="10" width="384" height="46" fill="#2b2b2b" fill-opacity="0.1"/><rect x="192" y="10" width="384" height="46" fill="#2b2b2b" fill-opacity="0.068"/><rect x="576" y="10" width="384" height="46" fill="#2b2b2b" fill-opacity="0.093"/><rect x="960" y="10" width="384" height="46" fill="#2b2b2b" fill-opacity="0.085"/><rect x="1344" y="10" width="384" height="46" fill="#2b2b2b" fill-opacity="0.101"/><rect x="1728" y="10" width="384" height="46" fill="#2b2b2b" fill-opacity="0.103"/>
-        <path d="M-40,56 H1600 M-448,56 v-25 M-320,56 v-25 M-64,56 v-25 M64,56 v-25 M320,56 v-25 M448,56 v-25 M704,56 v-25 M832,56 v-25 M1088,56 v-25 M1216,56 v-25 M1472,56 v-25 M1600,56 v-25 M1856,56 v-25 M1984,56 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
-      </g>
-      <g class="cu-course">
-        <rect x="-384" y="-36" width="384" height="46" fill="#2b2b2b" fill-opacity="0.074"/><rect x="0" y="-36" width="384" height="46" fill="#2b2b2b" fill-opacity="0.095"/><rect x="384" y="-36" width="384" height="46" fill="#2b2b2b" fill-opacity="0.084"/><rect x="768" y="-36" width="384" height="46" fill="#2b2b2b" fill-opacity="0.061"/><rect x="1152" y="-36" width="384" height="46" fill="#2b2b2b" fill-opacity="0.085"/><rect x="1536" y="-36" width="384" height="46" fill="#2b2b2b" fill-opacity="0.099"/><rect x="1920" y="-36" width="384" height="46" fill="#2b2b2b" fill-opacity="0.103"/>
-        <path d="M-40,10 H1600 M-256,10 v-25 M-128,10 v-25 M128,10 v-25 M256,10 v-25 M512,10 v-25 M640,10 v-25 M896,10 v-25 M1024,10 v-25 M1280,10 v-25 M1408,10 v-25 M1664,10 v-25 M1792,10 v-25 M2048,10 v-25 M2176,10 v-25" fill="none" stroke="#2b2b2b" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round"/>
-      </g>
-          </g>
-        </svg>
-      </div>
-      <div class="cu-roof__sun"></div>
-      <div class="cu-roof__shade"></div>
-      <div class="cu-roof__haze"></div>
-    </div>
+    <!-- The field. Two frames of the job: the roof he is replacing, and the
+         roof he delivers, the second revealed by an edge crossing the frame.
+         This is the drawn shingle field's slot. A drawing was standing in for
+         a roof; there is a real one now, so the drawing goes rather than the
+         two of them competing for the same idea in the same place.
 
-    <img class="cu-hero__logo" src="assets/logo.png" width="118" height="84"
+         No drift, no sun band, no shade band. Those existed to give a flat
+         drawing weather. A photograph arrives with its own light, and the
+         drift carried a scale(1.02) that would resample a full bleed
+         photographic plate for no gain. -->
+    <div class="cu-roof" aria-hidden="true">
+      <div class="cu-roof__frame">
+        <img class="cu-roof__img" src="assets/roof-before.webp" width="1600" height="800"
+             fetchpriority="high" decoding="async" alt="">
+        <!-- The reveal is a window that slides in from the left while the frame
+             inside it slides the opposite way by the same amount, so the
+             photograph never moves in page coordinates and the only thing that
+             travels is the window's edge. Two transforms, no clip-path. -->
+        <div class="cu-roof__reveal">
+          <div class="cu-roof__slide">
+            <img class="cu-roof__img" src="assets/roof-after.webp" width="1600" height="800"
+                 decoding="async" alt="">
+          </div>
+        </div>
+        <!-- The blade rides a track that runs the identical animation, so it can
+             never drift from the edge it is meant to be covering. -->
+        <div class="cu-roof__track"><div class="cu-roof__blade"></div></div>
+      </div>
+    </div>
+    <script>
+      /* Before first paint: without this the field paints, then hides itself to
+         animate in, which shows as a flash. */
+      (function(){
+        /* A deck always opens at the top. The browser restores the previous
+           scroll position on reload by default, which after a refresh drops the
+           reader partway down a presentation they have not started. */
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        addEventListener('load', function(){ scrollTo(0, 0); }, { once: true });
+        if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var r=document.querySelector('.cu-roof'); if(r) r.classList.add('is-armed');
+        var h=document.querySelector('.cu-hero'); if(h) h.classList.add('is-seq');
+      })();
+    </script>
+
+    <img class="cu-hero__logo" src="assets/home-footer-logo.png" width="208" height="145"
          alt="Construction Unlimited" fetchpriority="high">
 
     <h1 class="cu-hero__title">
-      <span class="cu-hero__l1">5 pages, 1 number.</span>
-      <span class="cu-hero__l2">Built to turn calls into booked&nbsp;jobs.</span>
+      <span class="cu-hero__l1">The Same Standard, Online.</span>
+      <span class="cu-hero__l2">Built to Turn Calls Into Booked&nbsp;Jobs.</span>
     </h1>
 
-    <div class="cu-hero__rule" aria-hidden="true"></div>
-
-    <p class="cu-hero__deck">1 site, 1 offer, 1 tracked line. Live in 3 weeks, and yours to&nbsp;keep.</p>
-
-    <div class="cu-figures">
-      <div class="cu-fig">
-        <div class="cu-fig__n" data-countup="5">0</div>
-        <span class="cu-fig__l">Pages built</span>
-      </div>
-      <div class="cu-fig">
-        <div class="cu-fig__n" data-countup="2">0</div>
-        <span class="cu-fig__l">Revision rounds</span>
-      </div>
-      <div class="cu-fig">
-        <div class="cu-fig__n" data-countup="3" data-suffix=" weeks">0</div>
-        <span class="cu-fig__l">Start to live</span>
-      </div>
     </div>
 
-    <!-- An overall dimension across the three figures, terminated and ticked the
-         way a drawing dimensions a run. He reads these. Decorative, so hidden. -->
-    <svg class="cu-dim" viewBox="0 0 600 22" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-      <path d="M2,4 V18 M598,4 V18" stroke="currentColor" stroke-width="1.5"/>
-      <path class="cu-dim__line" d="M2,11 H598" stroke="currentColor" stroke-width="1.5"/>
-      <path class="cu-dim__arw" d="M2,11 L14,7.5 L14,14.5 Z M598,11 L586,7.5 L586,14.5 Z" fill="currentColor" stroke="none"/>
-    </svg>
+    <!-- Three chevrons, the apex angle repeated. It arrives with the rest of
+         the type and then runs a slow cascade so the eye is told there is
+         more below without a word being spent on it. -->
+    <div class="cu-scroll" aria-hidden="true">
+      <span class="cu-scroll__w">Scroll</span>
+      <svg viewBox="0 0 26 38" fill="none" stroke="currentColor" stroke-width="2.6"
+           stroke-linecap="square" stroke-linejoin="miter" focusable="false">
+        <path class="cu-scroll__c" d="M3,3 L13,12 L23,3"/>
+        <path class="cu-scroll__c" d="M3,14 L13,23 L23,14"/>
+        <path class="cu-scroll__c" d="M3,25 L13,34 L23,25"/>
+      </svg>
+    </div>
+
   </header>
 
-  <svg class="cu-pitch cu-pitch--up" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-    <polygon points="0,60 600,0 1200,60"></polygon>
-  </svg>
 
   <!-- ==================== 1. WHAT WE DO ==================== -->
-  <section class="cu-sec cu-sec--dark" aria-labelledby="what-h">
+  <section class="cu-sec cu-sec--apex cu-sec--dark" aria-labelledby="what-h">
     <div class="cu-wrap">
       <span class="cu-eyebrow">What we do</span>
-      <h2 class="cu-h2 reveal" id="what-h">6 pieces, built once, working together on every&nbsp;page.</h2>
-      <div class="cu-thread reveal" aria-hidden="true"></div>
+      <h2 class="cu-h2 reveal" id="what-h">6 Pieces, Built Once, Working Together on Every&nbsp;Page.</h2>
 
-      <div class="cu-grid reveal-stagger">
-        <article class="cu-card">
-          <span class="cu-card__n">01</span>
-          <h3 class="cu-card__t">The pages</h3>
-          <p class="cu-card__b">5 pages, custom coded. Home, roofing, the quote page, an about page, contact.</p>
-        </article>
-        <article class="cu-card">
-          <span class="cu-card__n">02</span>
-          <h3 class="cu-card__t">1 offer, 1 number</h3>
-          <p class="cu-card__b">The offer and the financing figure read the same on every page and in every ad.</p>
-        </article>
-        <article class="cu-card">
-          <span class="cu-card__n">03</span>
-          <h3 class="cu-card__t">Call tracking</h3>
-          <p class="cu-card__b">1 tracked number so every call is attributed to the campaign that produced it.</p>
-        </article>
-        <article class="cu-card">
-          <span class="cu-card__n">04</span>
-          <h3 class="cu-card__t">The quote flow</h3>
-          <p class="cu-card__b">A quote form that works on a phone and lands where your team already looks.</p>
-        </article>
-        <article class="cu-card">
-          <span class="cu-card__n">05</span>
-          <h3 class="cu-card__t">Built to be found</h3>
-          <p class="cu-card__b">Titles, schema, sitemap and speed done properly at build time.</p>
-        </article>
-        <article class="cu-card">
-          <span class="cu-card__n">06</span>
-          <h3 class="cu-card__t">Yours on day one</h3>
-          <p class="cu-card__b">Every file, account and domain stays in your name.</p>
-        </article>
+      <div class="cu-road reveal">
+        <div class="cu-road__view">
+          <div class="cu-road__track">
+        <ol class="cu-road__nodes">
+        <li class="cu-road__node">
+          <button class="cu-road__card" type="button">
+            <span class="cu-road__n">01</span>
+            <h3 class="cu-road__t">The Pages</h3>
+            <p class="cu-road__b">5 pages, custom coded. Home, roofing, the quote page, an about page, contact.</p>
+          </button>
+          <span class="cu-road__mark" aria-hidden="true"></span>
+        </li>
+        <li class="cu-road__node">
+          <button class="cu-road__card" type="button">
+            <span class="cu-road__n">02</span>
+            <h3 class="cu-road__t">1 Offer, 1 Number</h3>
+            <p class="cu-road__b">The offer and the financing figure read the same on every page and in every ad.</p>
+          </button>
+          <span class="cu-road__mark" aria-hidden="true"></span>
+        </li>
+        <li class="cu-road__node">
+          <button class="cu-road__card" type="button">
+            <span class="cu-road__n">03</span>
+            <h3 class="cu-road__t">Lead Tracking</h3>
+            <p class="cu-road__b">Form submissions tracked and reported.</p>
+          </button>
+          <span class="cu-road__mark" aria-hidden="true"></span>
+        </li>
+        <li class="cu-road__node">
+          <button class="cu-road__card" type="button">
+            <span class="cu-road__n">04</span>
+            <h3 class="cu-road__t">The Quote Flow</h3>
+            <p class="cu-road__b">A quote form that works on a phone and lands where your team already looks.</p>
+          </button>
+          <span class="cu-road__mark" aria-hidden="true"></span>
+        </li>
+        <li class="cu-road__node">
+          <button class="cu-road__card" type="button">
+            <span class="cu-road__n">05</span>
+            <h3 class="cu-road__t">Built to Be Found</h3>
+            <p class="cu-road__b">Titles, schema, sitemap and speed done properly at build time.</p>
+          </button>
+          <span class="cu-road__mark" aria-hidden="true"></span>
+        </li>
+        <li class="cu-road__node">
+          <button class="cu-road__card" type="button">
+            <span class="cu-road__n">06</span>
+            <h3 class="cu-road__t">Yours on Day One</h3>
+            <p class="cu-road__b">Every file, account and domain stays in your name.</p>
+          </button>
+          <span class="cu-road__mark" aria-hidden="true"></span>
+        </li>
+        </ol>
+          </div>
+        </div>
+        <div class="cu-road__ctl">
+          <button class="cu-road__btn" type="button" data-run="prev" aria-label="Previous piece">
+            <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M12,3 L5,9 L12,15"/></svg>
+          </button>
+          <div class="cu-road__pips"></div>
+          <button class="cu-road__btn" type="button" data-run="next" aria-label="Next piece">
+            <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M6,3 L13,9 L6,15"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
 
-  <svg class="cu-pitch cu-pitch--down" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-    <polygon points="0,0 600,60 1200,0"></polygon>
-  </svg>
 
   <!-- ==================== 2. HOW IT RUNS ==================== -->
-  <section class="cu-sec cu-sec--surface" aria-labelledby="how-h">
+  <section class="cu-sec cu-sec--apex cu-sec--surface" aria-labelledby="how-h">
     <div class="cu-wrap">
       <span class="cu-eyebrow">How it runs</span>
-      <h2 class="cu-h2 reveal" id="how-h">No surprises. 3 weeks, 3 stages, 2 rounds to get it&nbsp;right.</h2>
-      <div class="cu-thread reveal" aria-hidden="true"></div>
+      <h2 class="cu-h2 reveal" id="how-h">No Surprises. 3 Weeks, 3&nbsp;Stages.</h2>
 
       <div class="cu-assembly">
         <div class="cu-assembly__fig">
           <svg class="cu-assembly__svg" id="cu-assembly" viewBox="0 0 760 470" role="img"
-               aria-label="Exploded roof assembly. Decking, underlayment, drip edge, starter course, shingle courses and ridge cap, set in build order.">
+               aria-label="Exploded roof assembly. Plywood, underlayment and shingles, set in build order.">
             <defs>
               <linearGradient id="cuPlateFill" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
@@ -1034,32 +1389,28 @@ p{ margin:0; text-wrap:pretty; }
             <!-- ground shadow, so the stack reads as having weight -->
             <ellipse cx="255" cy="470" rx="196" ry="20" fill="#2b2b2b" fill-opacity="0.10"/>
 
-            <!-- 6 real layers, bottom to top, in the order they are actually installed -->
+            <!-- 3 layers, bottom to top, in the order they are actually installed.
+                 Plate vertices are (40,Y) (268,Y-56) (470,Y) (242,Y+56); Y steps
+                 96 so the three sit evenly across the same height the six did. -->
             <g class="cu-plate" data-stage="1" data-seq="1">
               <polygon points="40,392 268,336 470,392 242,448" fill="url(#cuPlateFill)" stroke="#2b2b2b" stroke-width="2"/>
+              <!-- the deck is the only layer with real thickness, so it gets an edge -->
               <polygon points="40,392 242,448 242,462 40,406" fill="#333333" fill-opacity="0.16"/>
               <polygon points="470,392 242,448 242,462 470,406" fill="#333333" fill-opacity="0.09"/>
+              <!-- sheet joints: plywood arrives in sheets and a roofer reads the seams -->
+              <path d="M154,364 L356,420 M108.7,411 L336.7,355 M175.3,429.5 L403.3,373.5" stroke="#2b2b2b" stroke-opacity="0.34" stroke-width="1" fill="none"/>
             </g>
             <g class="cu-plate" data-stage="2" data-seq="2">
-              <polygon points="40,330 268,274 470,330 242,386" fill="url(#cuPlateFill)" stroke="#2b2b2b" stroke-width="2" stroke-dasharray="7 5"/>
+              <polygon points="40,296 268,240 470,296 242,352" fill="url(#cuPlateFill)" stroke="#2b2b2b" stroke-width="2" stroke-dasharray="7 5"/>
+              <!-- roll laps: a membrane goes down in courses that overlap up-slope -->
+              <path d="M117.5,277 L319.5,333 M192.8,258.5 L394.8,314.5" stroke="#2b2b2b" stroke-opacity="0.30" stroke-width="1" stroke-dasharray="5 4" fill="none"/>
             </g>
-            <g class="cu-plate" data-stage="2" data-seq="3">
-              <polygon points="40,282 268,226 470,282 242,338" fill="url(#cuPlateFill)" stroke="#d0202d" stroke-width="2.4"/>
-              <path d="M40,282 L242,338" stroke="#d0202d" stroke-width="3" fill="none"/>
-            </g>
-            <g class="cu-plate" data-stage="2" data-seq="4">
-              <polygon points="40,234 268,178 470,234 242,290" fill="url(#cuPlateFill)" stroke="#2b2b2b" stroke-width="2"/>
-            </g>
-            <g class="cu-plate" data-stage="2" data-seq="5">
-              <polygon points="40,186 268,130 470,186 242,242" fill="url(#cuPlateFill)" stroke="#2b2b2b" stroke-width="2"/>
-              <!-- Course lines run PARALLEL to the eave and must terminate on the
-                   plate's own edges. Plate vertices are (40,186) (268,130) (470,186)
-                   (242,242); a line starting at (40+228t, 186-56t) lands exactly on
-                   (242+228t, 242-56t). t = 0.25 / 0.50 / 0.75. -->
-              <path d="M97,172 L299,228 M154,158 L356,214 M211,144 L413,200" stroke="#2b2b2b" stroke-opacity="0.42" stroke-width="1" fill="none"/>
-            </g>
-            <g class="cu-plate" data-stage="3" data-seq="6">
-              <polygon points="128,142 268,108 382,142 242,176" fill="#d0202d" fill-opacity="0.92" stroke="#9c1822" stroke-width="2"/>
+            <g class="cu-plate" data-stage="3" data-seq="3">
+              <polygon points="40,200 268,144 470,200 242,256" fill="url(#cuPlateFill)" stroke="#f5c842" stroke-width="2.4"/>
+              <!-- courses parallel to the eave, with keyway notches cut up-slope
+                   from each one and offset half a tab course to course -->
+              <path d="M85.6,188.8 L287.6,244.8 M131.2,177.6 L333.2,233.6 M176.8,166.4 L378.8,222.4 M222.4,155.2 L424.4,211.2" stroke="#2b2b2b" stroke-opacity="0.46" stroke-width="1" fill="none"/>
+              <path d="M109.8,195.5 l12.5,-3.1 M144.2,205 l12.5,-3.1 M178.5,214.6 l12.5,-3.1 M212.9,224.1 l12.5,-3.1 M247.2,233.6 l12.5,-3.1 M172.6,189.1 l12.5,-3.1 M206.9,198.6 l12.5,-3.1 M241.3,208.1 l12.5,-3.1 M275.6,217.6 l12.5,-3.1 M310,227.2 l12.5,-3.1 M201,173.1 l12.5,-3.1 M235.4,182.6 l12.5,-3.1 M269.7,192.2 l12.5,-3.1 M304.1,201.7 l12.5,-3.1 M338.4,211.2 l12.5,-3.1 M263.8,166.7 l12.5,-3.1 M298.1,176.2 l12.5,-3.1 M332.5,185.7 l12.5,-3.1 M366.8,195.2 l12.5,-3.1 M401.2,204.8 l12.5,-3.1" stroke="#2b2b2b" stroke-opacity="0.30" stroke-width="1" stroke-linecap="round" fill="none"/>
             </g>
 
             <!-- Once the roof is built, water runs it. This is WHY the order matters,
@@ -1076,27 +1427,15 @@ p{ margin:0; text-wrap:pretty; }
             <g font-family="Figtree, sans-serif" font-size="19" font-weight="600" fill="#2b2b2b">
               <g class="cu-plate-label" data-stage="1" data-seq="1">
                 <path d="M474,392 L516,392" stroke="#c9c5c0" stroke-width="1"/>
-                <text x="526" y="397">Decking</text>
+                <text x="526" y="397">Plywood</text>
               </g>
               <g class="cu-plate-label" data-stage="2" data-seq="2">
-                <path d="M474,330 L516,330" stroke="#c9c5c0" stroke-width="1"/>
-                <text x="526" y="335">Underlayment</text>
+                <path d="M474,296 L516,296" stroke="#c9c5c0" stroke-width="1"/>
+                <text x="526" y="301">Underlayment</text>
               </g>
-              <g class="cu-plate-label" data-stage="2" data-seq="3">
-                <path d="M474,282 L516,282" stroke="#c9c5c0" stroke-width="1"/>
-                <text x="526" y="287" fill="#d0202d">Drip edge</text>
-              </g>
-              <g class="cu-plate-label" data-stage="2" data-seq="4">
-                <path d="M474,234 L516,234" stroke="#c9c5c0" stroke-width="1"/>
-                <text x="526" y="239">Starter course</text>
-              </g>
-              <g class="cu-plate-label" data-stage="2" data-seq="5">
-                <path d="M474,186 L516,186" stroke="#c9c5c0" stroke-width="1"/>
-                <text x="526" y="191">Shingle courses</text>
-              </g>
-              <g class="cu-plate-label" data-stage="3" data-seq="6">
-                <path d="M386,142 L516,142" stroke="#c9c5c0" stroke-width="1"/>
-                <text x="526" y="147">Ridge cap</text>
+              <g class="cu-plate-label" data-stage="3" data-seq="3">
+                <path d="M474,200 L516,200" stroke="#c9c5c0" stroke-width="1"/>
+                <text x="526" y="205" fill="#f5c842">Shingles</text>
               </g>
             </g>
           </svg>
@@ -1107,59 +1446,36 @@ p{ margin:0; text-wrap:pretty; }
           <div class="cu-step" data-stage="1">
             <span class="cu-step__n">01</span>
             <div>
-              <h3 class="cu-step__t">Week 1, structure</h3>
+              <h3 class="cu-step__t">Week 1, Structure</h3>
               <p class="cu-step__b">Structure gets locked first. Every page gets mapped against the offer and the quote flow: what a homeowner needs to see, and in what order, to pick up the phone or fill out the form. Copy and structure are approved before anything gets designed.</p>
             </div>
           </div>
           <div class="cu-step" data-stage="2">
             <span class="cu-step__n">02</span>
             <div>
-              <h3 class="cu-step__t">Week 2, build</h3>
-              <p class="cu-step__b">Pages get built. 5 pages coded, the quote form wired to route to your team, call tracking installed and tested, mobile checked on real phones.</p>
+              <h3 class="cu-step__t">Week 2, Build</h3>
+              <p class="cu-step__b">Pages get built. 5 pages coded, the quote form wired to route to your team, form submissions tracked and reported, mobile checked on real phones.</p>
             </div>
           </div>
           <div class="cu-step" data-stage="3">
             <span class="cu-step__n">03</span>
             <div>
-              <h3 class="cu-step__t">Week 3, revisions and launch</h3>
+              <h3 class="cu-step__t">Week 3, Revisions and Launch</h3>
               <p class="cu-step__b">2 rounds of revisions: word changes, image swaps, layout adjustments inside the built structure. Once approved, the site goes live, DNS is pointed, and every tracked piece is confirmed working before we call it done.</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="cu-terms">
-        <div class="cu-term">
-          <div class="cu-term__t">Reporting</div>
-          <p class="cu-term__b">A short update at the end of each week: what's built, what's next, and a live link to review it yourself. No dashboard login required.</p>
-        </div>
-        <div class="cu-term">
-          <div class="cu-term__t">No projections</div>
-          <p class="cu-term__b">Arc Garde does not guarantee a specific number of leads, calls or jobs.</p>
-        </div>
-      </div>
-
-      <div class="cu-need reveal">
-        <h3 class="cu-need__t">What we need</h3>
-        <p class="cu-need__intro">Access and material required to start.</p>
-        <ul class="cu-need__list">
-          <li>Domain registrar access or DNS login</li>
-          <li>Current hosting details, if the site already lives somewhere</li>
-          <li>Logo and any existing brand assets</li>
-          <li>Photos of finished roofs and crew, or approval to use stock until your own are ready</li>
-          <li>Licenses, certifications, or reviews you want featured</li>
-          <li>The number and the financing offer the site and ads will run on</li>
-          <li>CRM login or API access, if you already run one, so the quote form can route into it</li>
-        </ul>
-        <p class="cu-need__note">CRM is your cost, not part of this build. GoHighLevel is recommended if you don't already have one, but the build works with any established CRM.</p>
-      </div>
     </div>
+
   </section>
 
   <!-- ==================== 3. WHAT IT COSTS ==================== -->
-  <section class="cu-sec cu-sec--gold" aria-labelledby="cost-h">
+
+  <section class="cu-sec cu-sec--apex cu-sec--gold" aria-labelledby="cost-h">
     <div class="cu-wrap">
-      <h2 class="cu-sr-only" id="cost-h">What it costs</h2>
+      <h2 class="cu-sr-only" id="cost-h">What It Costs</h2>
       <span class="cu-eyebrow">What it costs</span>
 
       <div class="cu-offer reveal">
@@ -1172,31 +1488,31 @@ p{ margin:0; text-wrap:pretty; }
       </div>
 
       <table class="cu-ledger reveal">
-        <caption>Included in the build</caption>
+        <caption>Included in the Build</caption>
         <thead>
           <tr><th scope="col">Deliverable</th><th scope="col">Included</th></tr>
         </thead>
         <tbody>
-          <tr><td>Custom coded pages</td><td>5</td></tr>
-          <tr><td>Revision rounds</td><td>2</td></tr>
-          <tr><td>Timeline, start to live</td><td>3 weeks</td></tr>
-          <tr><td>Mobile build and device testing</td><td>Included</td></tr>
-          <tr><td>Quote form and lead routing</td><td>Included</td></tr>
-          <tr><td>Call tracking install</td><td>Included</td></tr>
-          <tr><td>Search setup, titles, schema, sitemap</td><td>Included</td></tr>
-          <tr><td>Speed and accessibility pass</td><td>Included</td></tr>
-          <tr><td>Handover, every file and account in your name</td><td>Included</td></tr>
+          <tr><td><span>Custom coded pages</span></td><td>5</td></tr>
+          <tr><td><span>Revision rounds</span></td><td>2</td></tr>
+          <tr><td><span>Timeline, start to live</span></td><td>3 weeks</td></tr>
+          <tr><td><span>Mobile build and device testing</span></td><td>Included</td></tr>
+          <tr><td><span>Quote form and lead routing</span></td><td>Included</td></tr>
+          <tr><td><span>Lead tracking setup</span></td><td>Included</td></tr>
+          <tr><td><span>Search setup, titles, schema, sitemap</span></td><td>Included</td></tr>
+          <tr><td><span>Speed and accessibility pass</span></td><td>Included</td></tr>
+          <tr><td><span>Handover, every file and account in your name</span></td><td>Included</td></tr>
         </tbody>
       </table>
 
       <div class="cu-terms">
         <div class="cu-term">
           <div class="cu-term__t">Not included</div>
-          <p class="cu-term__b">Hosting. Domain renewal. The call tracking subscription. Ad spend. Work on pages outside the 5.</p>
+          <p class="cu-term__b">Hosting. Domain renewal. Ad spend. Work on pages outside the 5.</p>
         </div>
         <div class="cu-term">
           <div class="cu-term__t">Pass through</div>
-          <p class="cu-term__b">Hosting and the call tracking subscription are paid direct by you, in your own name, and never through Arc Garde.</p>
+          <p class="cu-term__b">Hosting is paid direct by you, in your own name, and never through Arc Garde.</p>
         </div>
         <div class="cu-term">
           <div class="cu-term__t">Terms</div>
@@ -1206,25 +1522,101 @@ p{ margin:0; text-wrap:pretty; }
 
       <p class="cu-close reveal">3 weeks from now, this is what answers the&nbsp;phone.</p>
     </div>
+
+    <!-- A band, edge to edge. It sits OUTSIDE the wrap, because a block inside a
+         measured column cannot reach the edges of the page no matter what width
+         it is given. The pair centres back to the section's measure inside it. -->
+    <div class="cu-band">
+      <div class="cu-wrap">
+        <div class="cu-terms">
+          <div class="cu-term">
+            <div class="cu-term__t">Reporting</div>
+            <p class="cu-term__b">A short update at the end of each week: what's built, what's next, and a live link to review it yourself. No dashboard login required.</p>
+          </div>
+          <div class="cu-term">
+            <div class="cu-term__t">No projections</div>
+            <p class="cu-term__b">Arc Garde does not guarantee a specific number of leads, calls or jobs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Its own wrap. Moving this block between sections in an earlier pass left
+         it OUTSIDE the measured column, so its heading sat hard against the page
+         edge with no gutter at all. -->
+    <div class="cu-wrap">
+      <div class="cu-need reveal">
+        <h3 class="cu-need__t">What We Need</h3>
+        <p class="cu-need__intro">Access and material required to start.</p>
+        <div class="cu-needrun">
+          <div class="cu-road__view">
+            <div class="cu-road__track">
+              <ol class="cu-needrun__items">
+            <li class="cu-needrun__node">
+              <button class="cu-needrun__card" type="button">
+                <span class="cu-needrun__n">01</span>
+                <span class="cu-needrun__b">Domain registrar access or DNS login</span>
+              </button>
+            </li>
+            <li class="cu-needrun__node">
+              <button class="cu-needrun__card" type="button">
+                <span class="cu-needrun__n">02</span>
+                <span class="cu-needrun__b">Current hosting details, if the site already lives somewhere</span>
+              </button>
+            </li>
+            <li class="cu-needrun__node">
+              <button class="cu-needrun__card" type="button">
+                <span class="cu-needrun__n">03</span>
+                <span class="cu-needrun__b">Logo and any existing brand assets</span>
+              </button>
+            </li>
+            <li class="cu-needrun__node">
+              <button class="cu-needrun__card" type="button">
+                <span class="cu-needrun__n">04</span>
+                <span class="cu-needrun__b">Photos of finished roofs and crew, or approval to use stock until your own are ready</span>
+              </button>
+            </li>
+            <li class="cu-needrun__node">
+              <button class="cu-needrun__card" type="button">
+                <span class="cu-needrun__n">05</span>
+                <span class="cu-needrun__b">Licenses, certifications, or reviews you want featured</span>
+              </button>
+            </li>
+            <li class="cu-needrun__node">
+              <button class="cu-needrun__card" type="button">
+                <span class="cu-needrun__n">06</span>
+                <span class="cu-needrun__b">The number and the financing offer the site and ads will run on</span>
+              </button>
+            </li>
+            <li class="cu-needrun__node">
+              <button class="cu-needrun__card" type="button">
+                <span class="cu-needrun__n">07</span>
+                <span class="cu-needrun__b">CRM login or API access, if you already run one, so the quote form can route into it</span>
+              </button>
+            </li>
+              </ol>
+            </div>
+          </div>
+          <div class="cu-road__ctl">
+            <button class="cu-road__btn" type="button" data-run="prev" aria-label="Previous item">
+              <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M12,3 L5,9 L12,15"/></svg>
+            </button>
+            <div class="cu-road__pips"></div>
+            <button class="cu-road__btn" type="button" data-run="next" aria-label="Next item">
+              <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M6,3 L13,9 L6,15"/></svg>
+            </button>
+          </div>
+        </div>
+        <p class="cu-need__note">CRM is your cost, not part of this build. GoHighLevel is recommended if you don't already have one, but the build works with any established CRM.</p>
+      </div>
+    </div>
   </section>
 
-  <!-- Title block. Every sheet in a real set carries one, bottom right. It is the
-       fastest possible signal that this is a drawing set and not a web page. -->
-  <div class="cu-tblock" aria-hidden="true">
-    <div class="cu-tblock__row"><span>Project</span><b>Website build</b></div>
-    <div class="cu-tblock__row"><span>Client</span><b>Construction Unlimited</b></div>
-    <div class="cu-tblock__row"><span>Sheet</span><b>1 of 1</b></div>
-    <div class="cu-tblock__row"><span>Issued</span><b>Aug 2026</b></div>
-  </div>
-
-  <svg class="cu-pitch cu-pitch--up" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-    <polygon points="0,60 600,0 1200,60"></polygon>
-  </svg>
 
 </main>
 
 
-<footer class="cu-foot">
+<footer class="cu-foot cu-sec--apex">
   <img class="cu-foot__logo" src="assets/home-footer-logo.png" width="208" height="145"
        alt="Construction Unlimited" loading="lazy">
   <p class="cu-foot__line">Presentation made by Arc Garde &nbsp;//&nbsp; Prepared for Construction&nbsp;Unlimited &nbsp;//&nbsp; August&nbsp;2026</p>
@@ -1255,21 +1647,157 @@ p{ margin:0; text-wrap:pretty; }
      than as inline style attributes. This is the pattern ag-motion.js already
      uses to index its stagger children, and it keeps the markup at 0 inline
      styles against the house cap of 3. */
-  document.querySelectorAll('.cu-course').forEach(function(el, i){
-    el.style.setProperty('--c', i);
-  });
-  /* Lay the cards bottom row first. Read the real grid rows off offsetTop so a
-     reflow cannot desync the order from what is actually on screen. */
+  /* ---- 0b. THE RUN ----------------------------------------------------
+     A track carousel: one card centred and lit, the rest sliding past either
+     side. Written ONCE and used by both runs on the page. A second carousel
+     copied from this one would be two things to keep in step, and the second
+     copy is where the drift starts.
+
+     Fail-open everywhere: CSS shows every card lit and every rail whole.
+     .is-live is added here, and only then does anything dim or shift, so no
+     script means the static list rather than one card and the rest hidden. */
+  function initRun(cfg){
+    var root = document.querySelector(cfg.root);
+    if (!root) return;
+    var view  = root.querySelector(cfg.view);
+    var track = root.querySelector(cfg.track);
+    var nodes = [].slice.call(root.querySelectorAll(cfg.node));
+    var pipWrap = root.querySelector(cfg.pips);
+    if (!view || !track || !pipWrap || !nodes.length) return;
+
+    var at = 0, cell = 0, dragging = false, moved = false, startX = 0, startShift = 0, lastX = 0, vel = 0;
+
+    var pips = nodes.map(function(_, i){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = cfg.pipClass;
+      b.setAttribute('aria-label', cfg.label + ' ' + (i + 1) + ' of ' + nodes.length);
+      b.addEventListener('click', function(){ go(i); });
+      pipWrap.appendChild(b); return b;
+    });
+    var prev = root.querySelector('[data-run="prev"]');
+    var next = root.querySelector('[data-run="next"]');
+
+    function measure(){ cell = nodes[0].getBoundingClientRect().width; }
+    function shiftFor(i){ return view.clientWidth / 2 - (i * cell + cell / 2); }
+    function place(px){ track.style.setProperty('--shift', px.toFixed(1) + 'px'); }
+
+    function paint(){
+      measure();
+      place(shiftFor(at));
+      nodes.forEach(function(n, i){
+        n.setAttribute('data-on', i === at ? 'true' : 'false');
+        var c = n.querySelector(cfg.card);
+        if (c){ c.setAttribute('aria-current', i === at ? 'true' : 'false'); c.tabIndex = i === at ? 0 : -1; }
+      });
+      pips.forEach(function(p, i){ p.setAttribute('data-on', i === at ? 'true' : 'false'); });
+      if (prev) prev.disabled = at === 0;
+      if (next) next.disabled = at === nodes.length - 1;
+    }
+    function go(i){ at = Math.max(0, Math.min(nodes.length - 1, i)); paint(); }
+
+    nodes.forEach(function(n, i){
+      var c = n.querySelector(cfg.card);
+      if (c) c.addEventListener('click', function(e){
+        if (moved){ e.preventDefault(); return; }   /* a drag is not a click */
+        go(i);
+      });
+    });
+    if (prev) prev.addEventListener('click', function(){ go(at - 1); });
+    if (next) next.addEventListener('click', function(){ go(at + 1); });
+
+    root.addEventListener('keydown', function(e){
+      var k = e.key;
+      if (k === 'ArrowRight' || k === 'ArrowDown'){ go(at + 1); e.preventDefault(); }
+      else if (k === 'ArrowLeft' || k === 'ArrowUp'){ go(at - 1); e.preventDefault(); }
+      else if (k === 'Home'){ go(0); e.preventDefault(); }
+      else if (k === 'End'){ go(nodes.length - 1); e.preventDefault(); }
+    });
+
+    /* Pointer Events, so this is one code path for mouse, pen and touch. Gating
+       drag on a width breakpoint is the trap: a tablet is wide AND coarse. */
+    view.addEventListener('pointerdown', function(e){
+      if (e.button && e.button !== 0) return;
+      measure();
+      dragging = true; moved = false;
+      startX = lastX = e.clientX; vel = 0;
+      startShift = shiftFor(at);
+      root.classList.add('is-dragging');
+      view.setPointerCapture(e.pointerId);
+    });
+    view.addEventListener('pointermove', function(e){
+      if (!dragging) return;
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) > 8) moved = true;
+      vel = e.clientX - lastX; lastX = e.clientX;
+      var raw = startShift + dx;
+      var lo = shiftFor(nodes.length - 1), hi = shiftFor(0);
+      if (raw > hi) raw = hi + (raw - hi) * 0.35;
+      if (raw < lo) raw = lo + (raw - lo) * 0.35;
+      place(raw);
+    });
+    function release(e){
+      if (!dragging) return;
+      dragging = false;
+      root.classList.remove('is-dragging');
+      if (e && e.pointerId != null && view.hasPointerCapture(e.pointerId)) view.releasePointerCapture(e.pointerId);
+      if (!moved){ paint(); return; }
+      var dx = (e ? e.clientX : lastX) - startX;
+      go(Math.round(at - (dx + vel * 220) / cell));
+      setTimeout(function(){ moved = false; }, 0);
+    }
+    view.addEventListener('pointerup', release);
+    view.addEventListener('pointercancel', release);
+
+    var rt;
+    addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(paint, 105); });
+    root.classList.add('is-live');
+    paint();
+  }
+
+  initRun({ root:'.cu-road', view:'.cu-road__view', track:'.cu-road__track',
+            node:'.cu-road__node', card:'.cu-road__card', pips:'.cu-road__pips',
+            pipClass:'cu-road__pip', label:'Piece' });
+  initRun({ root:'.cu-needrun', view:'.cu-road__view', track:'.cu-road__track',
+            node:'.cu-needrun__node', card:'.cu-needrun__card', pips:'.cu-road__pips',
+            pipClass:'cu-road__pip', label:'Item' });
+
+  /* ---- 0a. the hero field ----------------------------------------
+     Order: the hero sets, the field loads in, it sits, then the edge runs.
+     The wipe waits on img.decode() for BOTH frames rather than on a timer,
+     because a timed guess can clear to an image that has not arrived, which
+     reads as a bug rather than as a finished roof. Every failure path still
+     runs the wipe: nobody should be stranded on the before shot. */
   (function(){
-    var grid = document.querySelector('.cu-grid');
-    if (!grid) return;
-    var kids = Array.prototype.slice.call(grid.children);
-    var rows = {};
-    kids.forEach(function(el){ (rows[el.offsetTop] = rows[el.offsetTop] || []).push(el); });
-    var tops = Object.keys(rows).map(Number).sort(function(a,b){ return b - a; });
-    var n = 0;
-    tops.forEach(function(t){ rows[t].forEach(function(el){ el.style.setProperty('--lay', n++); }); });
+    var roof = document.querySelector('.cu-roof');
+    if (!roof) return;
+    var imgs = [].slice.call(roof.querySelectorAll('img'));
+    if (reduce || !roof.classList.contains('is-armed')) return;
+    var wiped = false;
+    function wipe(){
+      if (wiped) return; wiped = true;
+      roof.classList.add('is-wiping');
+      /* the title arrives on the sweep finishing, not on a second guess at how
+         long the sweep takes; the timeout is only a backstop */
+      var rev = roof.querySelector('.cu-roof__reveal'), done = false;
+      function fin(){ if (done) return; done = true; settle(); }
+      rev.addEventListener('animationend', fin, {once:true});
+      setTimeout(fin, 2100);
+    }
+    var hero = document.querySelector('.cu-hero');
+    function settle(){ if (hero) hero.classList.add('is-set'); }
+    function loaded(){
+      if (roof.classList.contains('is-loaded')) return;
+      roof.classList.add('is-loaded');
+      /* field entrance, a short hold, then the sweep. Halved from 1470ms: the
+         complaint was never the sweep's speed, it was the wait before it. */
+      setTimeout(wipe, 420 + 105);   /* 525ms, 28% off 735. 3 x 140 + 3 x 35 */
+    }
+    Promise.all(imgs.map(function(i){
+      return (i.decode ? i.decode() : Promise.resolve()).catch(function(){});
+    })).then(function(){ requestAnimationFrame(loaded); });
+    setTimeout(function(){ loaded(); wipe(); settle(); }, 6300);   /* backstop, 3 x 2100 */
   })();
+
 
   document.querySelectorAll('.cu-drop').forEach(function(el, i){
     el.style.setProperty('--dd', (i * -1.4) + 's');   /* 3 drops across a 4.2s loop */
@@ -1316,24 +1844,60 @@ p{ margin:0; text-wrap:pretty; }
 
   /* ---- 3. the roof assembly, gated by the 3 weeks ----------------- */
   var svg   = document.getElementById('cu-assembly');
-  var steps = document.querySelectorAll('.cu-step[data-stage]');
+  /* Hold the finished roof for a beat before it comes apart. Opening it the
+     instant it appears means nobody sees the thing that is being taken apart. */
   if (svg){
+    if (reduce || !hasIO){ svg.classList.add('is-open'); }
+    else {
+      new IntersectionObserver(function(es, o){
+        es.forEach(function(e){
+          if (!e.isIntersecting) return;
+          setTimeout(function(){ svg.classList.add('is-open'); }, 630);
+          o.unobserve(e.target);
+        });
+      }, { threshold: 0.35 }).observe(svg);
+    }
+  }
+  var steps = [].slice.call(document.querySelectorAll('.cu-step[data-stage]'));
+  if (svg && steps.length){
     if (!hasIO || reduce){
       svg.setAttribute('data-stage','3');
       steps.forEach(function(s){ s.classList.add('in-view'); });
     } else {
-      var highest = 0;
-      var sio = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if (!e.isIntersecting) return;
-          e.target.classList.add('in-view');
-          var st = parseInt(e.target.dataset.stage, 10);
-          /* Only ever advances. Scrolling back up must not dismantle the roof. */
-          if (st > highest){ highest = st; svg.setAttribute('data-stage', String(st)); }
-          sio.unobserve(e.target);
+      /* The active week is the one nearest the middle of the screen, not the
+         furthest one seen. All three steps fit on a 1080 viewport at once, so a
+         highest-watermark observer jumped straight to week 3 and the layers
+         never walked. This follows the reader instead. */
+      var ticking = false;
+      function sync(){
+        ticking = false;
+        var mid = innerHeight / 2, best = null, bestD = Infinity;
+        steps.forEach(function(el){
+          var r = el.getBoundingClientRect();
+          if (r.bottom < 0 || r.top > innerHeight) return;
+          el.classList.add('in-view');
+          var d = Math.abs((r.top + r.bottom) / 2 - mid);
+          if (d < bestD){ bestD = d; best = el; }
         });
-      }, { threshold: 0.35, rootMargin: '0px 0px -12% 0px' });
-      steps.forEach(function(s){ sio.observe(s); });
+        if (!best) return;
+        svg.setAttribute('data-stage', best.dataset.stage);
+        /* the same active week drives the rail, so the drawing and the list
+           are never showing different things */
+        var wrap = best.parentElement;
+        wrap.classList.add('is-run');
+        steps.forEach(function(el){ el.classList.toggle('is-on', el === best); });
+        var wr = wrap.getBoundingClientRect();
+        var br = best.querySelector('.cu-step__n').getBoundingClientRect();
+        var run = (br.top + 0.42 * parseFloat(getComputedStyle(best.querySelector('.cu-step__n')).fontSize) - wr.top) / wr.height;
+        wrap.style.setProperty('--run', Math.max(0, Math.min(1, run)).toFixed(3));
+      }
+      addEventListener('scroll', function(){
+        if (ticking) return; ticking = true; requestAnimationFrame(sync);
+      }, { passive: true });
+      addEventListener('resize', function(){
+        if (ticking) return; ticking = true; requestAnimationFrame(sync);
+      }, { passive: true });
+      sync();
     }
   }
 })();
