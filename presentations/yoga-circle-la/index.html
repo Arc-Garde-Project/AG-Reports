@@ -3,35 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <!-- REQUIRED IN PRODUCTION. ag-reports sets "trailingSlash": false, so Vercel
-     308s /presentations/yogi-knekoh/ down to /presentations/yogi-knekoh and every
+     308s /presentations/yoga-circle-la/ down to /presentations/yoga-circle-la and every
      relative URL then resolves against /presentations/ instead of this folder.
      Without this the deck 404s live: every stylesheet, every script, the seal.
      It must stay first in <head>, ahead of anything with a relative href. -->
-<base href="/presentations/yogi-knekoh/">
+<base href="/presentations/yoga-circle-la/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
 <meta name="robots" content="noindex, nofollow">
 <!-- Chrome tint matches the top of the page. Warm paper, not white. -->
 <meta name="theme-color" content="#fbf8f3">
 
-<title>Yogi Knekoh | Paid Ads and Organic - Arc Garde</title>
-<meta name="description" content="Filling the group Zoom room. Meta ads on Facebook and Instagram with a custom funnel and retargeting, plus a refreshed Instagram built from your own class footage. Prepared by Arc Garde.">
+<title>Yoga Circle LA | Growth Proposal - Arc Garde</title>
+<meta name="description" content="Arc Garde growth proposal for Yoga Circle LA: filling the 99 seat group Zoom room. Meta ads on Facebook and Instagram, an entry level subscription offer, a custom coded funnel and checkout, 14 ads tested per 28 day cycle, retargeting, and about 12 organic videos a month. Three month minimum runway.">
 
 <!-- Banner law -->
 <link rel="icon" href="/assets/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<link rel="canonical" href="https://ag-reports.vercel.app/presentations/yogi-knekoh">
+<link rel="canonical" href="https://ag-reports.vercel.app/presentations/yoga-circle-la">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Yogi Knekoh | Paid Ads and Organic - Arc Garde">
-<meta property="og:description" content="Ninety nine seats are already paid for. Three to four of them are filled.">
-<meta property="og:url" content="https://ag-reports.vercel.app/presentations/yogi-knekoh">
-<meta property="og:image" content="https://ag-reports.vercel.app/presentations/yogi-knekoh/og-banner.png">
+<meta property="og:title" content="Yoga Circle LA | Growth Proposal - Arc Garde">
+<meta property="og:description" content="Meta ads and organic content to fill the group Zoom classes. Ninety nine seats are already paid for. Three to four of them are filled.">
+<meta property="og:url" content="https://ag-reports.vercel.app/presentations/yoga-circle-la">
+<meta property="og:image" content="https://ag-reports.vercel.app/presentations/yoga-circle-la/og-banner.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://ag-reports.vercel.app/presentations/yogi-knekoh/og-banner.png">
+<meta name="twitter:image" content="https://ag-reports.vercel.app/presentations/yoga-circle-la/og-banner.png">
 
-<link rel="preload" as="image" href="yk-seal-256.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="ycla-seal-256.webp" type="image/webp" fetchpriority="high">
 
 <!-- Cormorant Garamond + Inter are Yoga Circle's own pairing, read out of the
      AG-built site (Website/build/*.html loads exactly this stylesheet). The
@@ -56,7 +56,7 @@
    place. LIGHT IS THE DEFAULT here: the brand ground is warm paper. */
 (function () {
   try {
-    var t = localStorage.getItem('yk-theme');
+    var t = localStorage.getItem('ycla-theme');
     document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
   } catch (e) {}
 })();
@@ -64,7 +64,7 @@
 
 <style>
 /* ===========================================================
-   YOGI KNEKOH - deck design layer
+   YOGA CIRCLE LA - deck design layer
    Styled from two measured sources, never guessed:
      1. The mark: a single continuous orange line drawing - a lotus with a
         seated figure inside a ring. Sampled at #ea5604 off the transparent
@@ -82,45 +82,45 @@
 
 :root {
   /* ---- The mark ---- */
-  --yk-ember:      #ea5604;   /* the seal, sampled. DECORATIVE ONLY.
+  --ycla-ember:      #ea5604;   /* the seal, sampled. DECORATIVE ONLY.
                                  3.38:1 on paper - it cannot carry body text. */
-  --yk-ember-deep: #b23f02;   /* same hue, two steps down. 5.46:1 on paper.
+  --ycla-ember-deep: #b23f02;   /* same hue, two steps down. 5.46:1 on paper.
                                  This is the one that carries text on light. */
-  --yk-ember-soft: #f8dcc9;
+  --ycla-ember-soft: #f8dcc9;
 
   /* ---- The site's earth half ---- */
-  --yk-sage:       #4a6b5a;   /* 5.61:1 on paper */
-  --yk-sage-lt:    #6b8c7b;
-  --yk-sage-pale:  #dfe7e1;
-  --yk-gold:       #c9a861;   /* 2.14:1 - DECORATIVE ONLY */
-  --yk-gold-deep:  #8a6e2e;   /* 4.56:1 - the text-safe gold */
-  --yk-cocoa:      #3d3029;
+  --ycla-sage:       #4a6b5a;   /* 5.61:1 on paper */
+  --ycla-sage-lt:    #6b8c7b;
+  --ycla-sage-pale:  #dfe7e1;
+  --ycla-gold:       #c9a861;   /* 2.14:1 - DECORATIVE ONLY */
+  --ycla-gold-deep:  #8a6e2e;   /* 4.56:1 - the text-safe gold */
+  --ycla-cocoa:      #3d3029;
 
   /* ---- Grounds ---- */
-  --yk-paper:      #fbf8f3;
-  --yk-linen:      #f2ece1;
-  --yk-sand:       #e5e0d8;
-  --yk-ink:        #1a1511;
+  --ycla-paper:      #fbf8f3;
+  --ycla-linen:      #f2ece1;
+  --ycla-sand:       #e5e0d8;
+  --ycla-ink:        #1a1511;
 
   /* ---- Semantic slots. Everything below reads these, never the raw
           brand names, so the dark block only has to redefine these. ---- */
-  --ground:        var(--yk-paper);
-  --ground-2:      var(--yk-linen);
+  --ground:        var(--ycla-paper);
+  --ground-2:      var(--ycla-linen);
   --surface:       rgba(255, 255, 255, 0.72);
   --surface-solid: #fffdfa;
   --surface-line:  rgba(74, 107, 90, 0.18);
   --rule:          rgba(61, 48, 41, 0.14);
-  --ink:           var(--yk-ink);
+  --ink:           var(--ycla-ink);
   --body:          #3d3029;
   --muted:         #6b5d52;      /* 6.0:1 on paper */
-  --accent:        var(--yk-ember);
-  --accent-text:   var(--yk-ember-deep);
-  --calm:          var(--yk-sage);
-  --calm-soft:     var(--yk-sage-pale);
-  --metal:         var(--yk-gold);
-  --metal-text:    var(--yk-gold-deep);
+  --accent:        var(--ycla-ember);
+  --accent-text:   var(--ycla-ember-deep);
+  --calm:          var(--ycla-sage);
+  --calm-soft:     var(--ycla-sage-pale);
+  --metal:         var(--ycla-gold);
+  --metal-text:    var(--ycla-gold-deep);
   --seat-off:      rgba(74, 107, 90, 0.20);
-  --seat-on:       var(--yk-ember);
+  --seat-on:       var(--ycla-ember);
   --shadow-card:   0 1px 2px rgba(61, 48, 41, 0.05), 0 12px 34px -18px rgba(61, 48, 41, 0.22);
   --shadow-lift:   0 2px 6px rgba(61, 48, 41, 0.07), 0 26px 54px -22px rgba(61, 48, 41, 0.30);
   --glass:         saturate(1.06) blur(9px);
@@ -155,8 +155,8 @@
   --accent-text:   #ff7f3c;      /* ember is text-safe on dark: 5.3:1+ */
   --calm:          #8fb3a0;      /* 8.27:1 */
   --calm-soft:     rgba(143, 179, 160, 0.16);
-  --metal:         var(--yk-gold);
-  --metal-text:    var(--yk-gold);   /* 8.42:1 on dark */
+  --metal:         var(--ycla-gold);
+  --metal-text:    var(--ycla-gold);   /* 8.42:1 on dark */
   --seat-off:      rgba(143, 179, 160, 0.22);
   --seat-on:       #ff6a1c;
   --shadow-card:   0 1px 2px rgba(0, 0, 0, 0.30), 0 14px 38px -20px rgba(0, 0, 0, 0.70);
@@ -214,7 +214,7 @@ body::before {
     repeating-linear-gradient(0deg, rgba(242, 236, 225, 0.020) 0 1px, rgba(0, 0, 0, 0) 1px 3px);
 }
 
-::selection { background: var(--yk-ember-soft); color: var(--yk-ink); }
+::selection { background: var(--ycla-ember-soft); color: var(--ycla-ink); }
 :root[data-theme="dark"] ::selection { background: rgba(255, 106, 28, 0.34); color: #fffdfa; }
 
 /* ---------- Layout ---------- */
@@ -230,7 +230,7 @@ body::before {
 /* The skip link is the only thing above the fold that is not the hero. */
 .skip {
   position: absolute; left: -9999px; top: 0; z-index: 99;
-  background: var(--yk-ink); color: #fffdfa;
+  background: var(--ycla-ink); color: #fffdfa;
   padding: 12px 21px; border-radius: 0 0 12px 0;
   font-weight: 600; font-size: 0.875rem;
 }
@@ -900,11 +900,11 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
 
         <div class="hero-mark-wrap">
           <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
-          <img class="hero-mark" src="yk-seal-256.webp" width="256" height="256"
-               alt="Yogi Knekoh" fetchpriority="high" decoding="async">
+          <img class="hero-mark" src="ycla-seal-256.webp" width="256" height="256"
+               alt="Yoga Circle LA" fetchpriority="high" decoding="async">
         </div>
 
-        <p class="hero-name">Yogi&nbsp;Knekoh</p>
+        <p class="hero-name">Yoga Circle&nbsp;LA</p>
 
         <h1 class="hero-title" id="deck-title">
           <span class="l1"><span class="t">Filling Your Group</span></span>
@@ -1209,7 +1209,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
   <footer class="deck-foot">
     <div class="wrap">
       <div class="foot-rule" aria-hidden="true"></div>
-      <p class="foot-line">Presentation made by <b>Arc&nbsp;Garde</b> &nbsp;//&nbsp; Prepared for <b>Yogi&nbsp;Knekoh</b> &nbsp;//&nbsp; August&nbsp;2026</p>
+      <p class="foot-line">Presentation made by <b>Arc&nbsp;Garde</b> &nbsp;//&nbsp; Prepared for <b>Yoga Circle&nbsp;LA</b> &nbsp;//&nbsp; August&nbsp;2026</p>
     </div>
   </footer>
 
@@ -1262,7 +1262,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
       root.setAttribute('data-theme', next);
       var meta = document.querySelector('meta[name="theme-color"]');
       if (meta) meta.setAttribute('content', next === 'dark' ? '#14100c' : '#fbf8f3');
-      try { localStorage.setItem('yk-theme', next); } catch (e) {}
+      try { localStorage.setItem('ycla-theme', next); } catch (e) {}
     });
   }
 
