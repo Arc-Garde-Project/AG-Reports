@@ -350,9 +350,10 @@ p{ margin:0; text-wrap:pretty; }
      three-item panel a large empty bottom. Each sizes to its own content and
      the slot transitions between them. */
   position:absolute; left:0; right:0; top:0;
-  background:var(--cu-paper); color:var(--cu-ink);
+  color:var(--cu-ink);
   border-top:var(--cu-rule) solid var(--cu-red);
-  box-shadow:var(--cu-e-dark);
+  /* the sheet sits on the field rather than being pasted to it */
+  box-shadow:var(--cu-e-dark), 0 0 0 1px rgba(20,16,12,.10);
   opacity:0; visibility:hidden; pointer-events:none;
   transform:translate3d(0,var(--cu-stack-in,34px),0);
   transition:opacity var(--cu-t-lay) var(--ease-satisfying),
@@ -1529,10 +1530,16 @@ p{ margin:0; text-wrap:pretty; }
    the 49px minimum is met many times over and there is nothing small to hit. */
 .cu-week__cal{
   width:100%; font:inherit; text-align:inherit; color:var(--cu-ink);
-  background:var(--cu-paper);
   /* no outline: his kit records "no visible hairline system; separation is
      by colour field, not by rule". Paper on a dark field is the separation. */
-  box-shadow:var(--cu-e-dark);
+  /* A PAD, not a card. Two sheet edges sit behind and below it, drawn as
+     offset shadows so they cost no layout and cannot push the document wide.
+     A calendar you tear from has pages underneath it; this one now looks it. */
+  box-shadow:
+    var(--cu-e-dark),
+    0 0 0 1px rgba(20,16,12,.10),
+    5px 5px 0 -1px rgba(214,210,203,.90),
+    10px 10px 0 -2px rgba(184,180,173,.72);
   display:flex; flex-direction:column; align-items:stretch;
   cursor:pointer; -webkit-appearance:none; appearance:none;
   touch-action:manipulation; padding:0;
@@ -1752,6 +1759,29 @@ p{ margin:0; text-wrap:pretty; }
   .cu-stack__nav svg,.cu-road__btn svg{ transition:none; transform:none !important; }
 }
 
+/* THE PAPER ITSELF.
+   Every other surface on this deck is a material: shingle, lap siding, poured
+   concrete. The cards were the one flat #ffffff div in the whole thing, which
+   is why they read as generic. This gives them stock: an engineer's grid at
+   the threshold of visible, a little shade under the head where a sheet catches
+   the light, and a warm edge so the white is not the same white as the screen.
+   All of it is behind the type at ~3%, so nothing loses contrast to it. */
+.cu-paper-stock{
+  background-color:var(--cu-paper);
+  background-image:
+    linear-gradient(180deg, rgba(20,16,12,.055) 0%, rgba(20,16,12,0) 5.5rem),
+    linear-gradient(0deg,   rgba(20,16,12,.045) 0%, rgba(20,16,12,0) 3.5rem),
+    repeating-linear-gradient(0deg,  rgba(20,16,12,.030) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(90deg, rgba(20,16,12,.030) 0 1px, transparent 1px 22px);
+}
+
+/* the perforation: where the page would tear off the pad */
+.cu-week__cal::after{
+  content:""; display:block; height:0; margin-top:auto;
+  border-top:1px dashed rgba(20,16,12,.20);
+  margin-inline:clamp(0.7rem,1.4vw,1.1rem);
+}
+
 /* THE PAYMENT LINE.
    Directly under the figure, because the split is the second thing anyone
    looks for and it was buried in a container three blocks down. Weighted to
@@ -1840,20 +1870,25 @@ p{ margin:0; text-wrap:pretty; }
 .cu-ledger td:first-child::after{
   content:""; flex:1 1 auto; min-width:1.5rem;
   align-self:flex-end; height:0.9em;
-  background-image:radial-gradient(circle at 1px calc(100% - 1px), currentColor 0.9px, transparent 1.2px);
-  background-size:7px 7px; background-repeat:repeat-x;
+  /* THREE dot layers, not one. A single repeating row can only bob in unison,
+     which is not a wave; a wave needs neighbouring dots at DIFFERENT heights at
+     the same instant. So every third dot belongs to its own layer, each running
+     the same bob a third of a cycle apart, and the crest travels along the
+     leader. Same 7px spacing as before: 21px tile, three layers, offset 0/7/14. */
+  background-image:
+    radial-gradient(circle at 1px calc(100% - 1px), currentColor 0.9px, transparent 1.2px),
+    radial-gradient(circle at 1px calc(100% - 1px), currentColor 0.9px, transparent 1.2px),
+    radial-gradient(circle at 1px calc(100% - 1px), currentColor 0.9px, transparent 1.2px);
+  background-size:21px 7px, 21px 7px, 21px 7px;
+  background-repeat:repeat-x, repeat-x, repeat-x;
   opacity:.42;
-  /* One tile of travel with the row riding up and back down through it, so the
-     dots read as a slow ripple running along the leader rather than a march.
-     7px is the tile, so start and end are the same picture and it never seams. */
-  animation:cu-leader 2.1s linear infinite;   /* 3 x 700 */
+  animation:cu-leader 2.1s ease-in-out infinite;   /* 3 x 700 */
 }
 @keyframes cu-leader{
-  0%   { background-position:0px    0px; }
-  25%  { background-position:1.75px -1px; }
-  50%  { background-position:3.5px   0px; }
-  75%  { background-position:5.25px  1px; }
-  100% { background-position:7px     0px; }
+  0%   { background-position:0px  0px,  7px  2px, 14px -2px; }
+  33%  { background-position:0px -2px,  7px  0px, 14px  2px; }
+  66%  { background-position:0px  2px,  7px -2px, 14px  0px; }
+  100% { background-position:0px  0px,  7px  2px, 14px -2px; }
 }
 /* three phases down the list, so the ripple crosses the rows instead of every
    line moving as one block */
@@ -2435,7 +2470,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
       <div class="cu-stack reveal">
         <button class="cu-stack__nav cu-stack__nav--prev" type="button" data-stack="prev" aria-label="Previous piece"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M15 4.5 L8.5 4.5 L2.5 9 L8.5 13.5 L15 13.5 Z"/></svg></button>
         <div class="cu-stack__view">
-          <article class="cu-stack__panel" data-on="true">
+          <article class="cu-stack__panel cu-paper-stock" data-on="true">
             <div class="cu-stack__head">
               <span class="cu-stack__n">01</span>
               <span class="cu-stack__t">Before We Build</span>
@@ -2457,7 +2492,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
               </ul>
             </div>
           </article>
-          <article class="cu-stack__panel">
+          <article class="cu-stack__panel cu-paper-stock">
             <div class="cu-stack__head">
               <span class="cu-stack__n">02</span>
               <span class="cu-stack__t">The Build</span>
@@ -2487,7 +2522,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
               </ul>
             </div>
           </article>
-          <article class="cu-stack__panel">
+          <article class="cu-stack__panel cu-paper-stock">
             <div class="cu-stack__head">
               <span class="cu-stack__n">03</span>
               <span class="cu-stack__t">Launch Setup</span>
@@ -2549,7 +2584,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
         <ol class="cu-weeks__track">
           <li class="cu-week" data-stage="1">
             <span class="cu-week__mark" aria-hidden="true"></span>
-            <button class="cu-week__cal" type="button" aria-pressed="false">
+            <button class="cu-week__cal cu-paper-stock" type="button" aria-pressed="false">
               <div class="cu-week__head">
                 <span class="cu-week__rings" aria-hidden="true"><i></i><i></i></span>
                 <span class="cu-week__lbl">Week</span>
@@ -2564,7 +2599,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
           </li>
           <li class="cu-week" data-stage="2">
             <span class="cu-week__mark" aria-hidden="true"></span>
-            <button class="cu-week__cal" type="button" aria-pressed="false">
+            <button class="cu-week__cal cu-paper-stock" type="button" aria-pressed="false">
               <div class="cu-week__head">
                 <span class="cu-week__rings" aria-hidden="true"><i></i><i></i></span>
                 <span class="cu-week__lbl">Week</span>
@@ -2579,7 +2614,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
           </li>
           <li class="cu-week" data-stage="3">
             <span class="cu-week__mark" aria-hidden="true"></span>
-            <button class="cu-week__cal" type="button" aria-pressed="false">
+            <button class="cu-week__cal cu-paper-stock" type="button" aria-pressed="false">
               <div class="cu-week__head">
                 <span class="cu-week__rings" aria-hidden="true"><i></i><i></i></span>
                 <span class="cu-week__lbl">Week</span>
@@ -2634,7 +2669,6 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
           <tr><td><span>Revision rounds</span></td><td>2</td></tr>
           <tr><td><span>Timeline, start to live</span></td><td>3 weeks</td></tr>
           <tr><td><span>Mobile build and device testing</span></td><td>Included</td></tr>
-          <tr><td><span>Quote form and lead routing</span></td><td>Included</td></tr>
           <tr><td><span>Lead tracking setup</span></td><td>Included</td></tr>
           <tr><td><span>Search setup, titles, schema, sitemap</span></td><td>Included</td></tr>
           <tr><td><span>Speed and accessibility pass</span></td><td>Included</td></tr>
