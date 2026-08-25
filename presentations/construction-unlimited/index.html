@@ -119,6 +119,17 @@
   --cu-t-tap:   210ms;   /* 3 x 70  */
   --cu-t-lay:   700ms;   /* 7 x 100 */
   --cu-t-set:  1050ms;   /* 3 x 350 */
+  --cu-t-cycle:7406ms;   /* 3003 hold + 700 pass, both ways */
+  --cu-t-grade: 840ms;   /* 7 x 120, the grade burning in over the clean plate */
+  --cu-t-word:  560ms;   /* 7 x 80,  one word's pop */
+  /* Back-out. The overshoot is what makes a word POP rather than fade. */
+  --cu-pop: cubic-bezier(0.34,1.56,0.64,1);
+  --cu-icon-square: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='square'%3E%3Cpath d='M5 3v16h16'/%3E%3Cpath d='M5 9h4M5 14h4'/%3E%3C/svg%3E");
+  --cu-ridge-a: 4.8deg;  /* replaced at runtime with the measured apex angle */
+  --cu-ridge-strip: clamp(2.2rem,1.6rem + 2.1vw,3.2rem);  /* the band itself */
+  --cu-ridge-h: 6.3rem;  /* the run's depth below the apex. The section that
+                            carries it pads to the SAME token, so the band and
+                            the clearance under it can never drift apart. */
 }
 
 *,*::before,*::after{ box-sizing:border-box; }
@@ -185,6 +196,10 @@ p{ margin:0; text-wrap:pretty; }
 /* ---------- section furniture ---------- */
 .cu-sec{ padding-block:clamp(4rem,2.4rem + 6.4vw,8rem); position:relative; }
 /* golden hour. The last of the light, low and west, sitting on the number. */
+/* A straight cut instead of the apex. The rule is drawn rather than implied:
+   two fields meeting with no line between them reads as a rendering seam, and
+   a hairline on the join reads as trim. */
+.cu-sec--flat{ border-top:2px solid rgba(255,255,255,.22); }
 .cu-sec--gold{
   background:
     radial-gradient(58vmax 44vmax at 88% 60%, rgba(255,170,92,.10) 0%, rgba(255,170,92,.03) 42%, transparent 72%),
@@ -192,10 +207,22 @@ p{ margin:0; text-wrap:pretty; }
     var(--cu-concrete-grey);
   color:var(--cu-paper);
 }
+/* Grain over the mottle. The mottle alone reads as smoke; concrete needs the
+   fine speckle of aggregate and a little tooth, so a noise turbulence goes on
+   top of it at low opacity. Two layers rather than a redraw: the mottle is
+   what gives it depth and the grain is what gives it surface. */
+.cu-sec--gold::after{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+  opacity:.055; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size:180px 180px;
+}
+.cu-sec--gold > *{ position:relative; z-index:1; }
 .cu-sec--gold::before{
   content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
   background-image:var(--cu-concrete);
   background-size:var(--cu-concrete-size);
+  background-position:center top;   /* the concrete starts ON the same line */
 }
 /* ------------------------------------------------------------------
    THE CONCRETE FIELD reads light, like the shingle and siding fields.
@@ -213,7 +240,8 @@ p{ margin:0; text-wrap:pretty; }
 .cu-sec--gold .cu-close{ color:var(--cu-paper); }
 /* the offer panel stays paper. It is the price, and on a foundation wall it
    should read as the one poured slab that is finished */
-.cu-sec--gold .cu-offer{ box-shadow:var(--cu-e-dark); }
+/* the figure has no panel any more, so it has nothing to cast a shadow */
+.cu-sec--gold .cu-offer{ box-shadow:none; }
 .cu-sec--gold > .cu-wrap{ position:relative; z-index:1; }
 .cu-sec--surface{
   background:
@@ -237,8 +265,16 @@ p{ margin:0; text-wrap:pretty; }
   color:var(--cu-red);
   margin-bottom:var(--space-s);
 }
+/* A carpenter's square rather than a rule. Drawn as a MASK so it inherits the
+   eyebrow's own colour instead of carrying a second hard-coded one, and kept
+   geometric: a stroked L with two graduations, which is the same shop-drawing
+   idiom the rest of the page is built in. Left side only. */
 .cu-eyebrow::before{
-  content:""; width:1.6rem; height:2px; background:currentColor; flex:none;
+  content:""; width:1.15em; height:1.15em; flex:none; background:currentColor;
+  -webkit-mask-image:var(--cu-icon-square); mask-image:var(--cu-icon-square);
+  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+  -webkit-mask-position:center; mask-position:center;
+  -webkit-mask-size:contain; mask-size:contain;
 }
 .cu-h2{ font-size:var(--cu-h2); max-width:20ch; letter-spacing:-0.015em; }
 
@@ -265,6 +301,408 @@ p{ margin:0; text-wrap:pretty; }
   position:relative;
 }
 
+/* WHAT THEY GET, ONE AT A TIME.
+   Three panels side by side answered the question but asked the reader to
+   take thirteen lines in at once. One panel at a time, opened on demand:
+   the number and the name are the whole of it until someone asks for more.
+
+   The advance runs UPWARD. Courses go on a roof from the eave up, and the
+   hero above already says so in its own comment, so a new piece rising into
+   the frame is the motion this page has already committed to. */
+.cu-stack{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  grid-template-areas:"prev view next" ". pips .";
+  align-items:center;
+  gap:clamp(0.6rem,1.6vw,1.6rem);
+  max-width:56rem; margin-inline:auto;
+  margin-top:clamp(1.8rem,1.2rem + 2.4vw,3.2rem);
+}
+.cu-stack__view{
+  grid-area:view; position:relative;
+  /* The BOX gets out of the way first and the content fills in behind it. It
+     used to be the other way round: the height chased the body's animating
+     track on a polling interval, so the bottom edge always arrived late and
+     the panel looked like it was catching up with itself. */
+  transition:height 420ms var(--ease-satisfying);   /* 3 x 140 */
+}
+@media (prefers-reduced-motion:reduce){ .cu-stack__view{ transition:none; } }
+
+.cu-stack__panel{
+  /* bottom:0 as well as top:0, so every panel fills the slot and all three are
+     the same size. The slot is the tallest of them; the shorter two carry the
+     spare room, which is quieter than three boxes of three different heights. */
+  position:absolute; left:0; right:0; top:0; bottom:0;
+  background:var(--cu-paper); color:var(--cu-ink);
+  border:1px solid var(--cu-line);
+  border-top:var(--cu-rule) solid var(--cu-red);
+  box-shadow:var(--cu-e-dark);
+  opacity:0; visibility:hidden; pointer-events:none;
+  transform:translate3d(0,var(--cu-stack-in,34px),0);
+  transition:opacity var(--cu-t-lay) var(--ease-satisfying),
+             transform var(--cu-t-lay) var(--ease-satisfying),
+             visibility 0s linear var(--cu-t-lay);
+}
+.cu-stack__panel[data-on="true"]{
+  opacity:1; visibility:visible; pointer-events:auto;
+  transform:translate3d(0,0,0);
+  transition:opacity var(--cu-t-lay) var(--ease-satisfying),
+             transform var(--cu-t-lay) var(--ease-satisfying),
+             visibility 0s;
+}
+/* going back sends the outgoing panel down and brings the incoming from above */
+.cu-stack[data-dir="prev"] .cu-stack__panel{ --cu-stack-in:-34px; }
+
+.cu-stack__head{
+  display:grid; grid-template-columns:auto 1fr; gap:0.2rem clamp(0.7rem,1.4vw,1.2rem);
+  align-items:center;
+  width:100%; text-align:left;
+  padding:clamp(1.1rem,0.8rem + 1vw,1.7rem) clamp(1.1rem,0.8rem + 1vw,1.7rem)
+          clamp(0.4rem,0.3rem + 0.4vw,0.7rem);
+}
+.cu-stack__n{
+  grid-column:1; grid-row:1 / span 2;
+  font-size:clamp(1.5rem,1.2rem + 1.4vw,2.4rem); font-weight:700; line-height:1;
+  color:var(--cu-red); letter-spacing:-0.02em;
+}
+.cu-stack__t{
+  grid-column:2; grid-row:1;
+  font-size:clamp(1.2rem,1rem + 0.8vw,1.75rem); font-weight:700; line-height:1.14;
+  letter-spacing:-0.01em; text-wrap:balance;
+}
+.cu-stack__cue{
+  grid-column:2; grid-row:2;
+  display:inline-flex; align-items:center; gap:0.4em; width:fit-content;
+  margin-top:0.3em;
+  font-size:var(--cu-eyebrow); font-weight:700; letter-spacing:0.16em;
+  text-transform:uppercase; color:var(--cu-red);
+}
+
+/* 0fr to 1fr: the list measures itself, so nothing has to guess a max-height */
+/* Open, always. There is nothing to reveal on demand any more: the whole of
+   each piece is the point of it, and a reader should not have to discover a
+   control to see what they are buying. */
+.cu-stack__body{ display:grid; grid-template-rows:1fr; }
+/* min-height:0 is what makes 0fr actually mean zero. A grid item's implied
+   minimum is auto, so the track floors at the content's min-content height and
+   the first row stays visible under a "collapsed" panel. */
+.cu-stack__body > *{ overflow:hidden; min-height:0; }
+@media (prefers-reduced-motion:reduce){ .cu-stack__body{ transition:none; } }
+
+.cu-stack__list{
+  /* NO padding on the grid item. overflow:hidden clips CONTENT, not the box,
+     so padding on the collapsing element survives a 0fr track and leaves the
+     first row peeking out from under a shut panel. The inset moves onto the
+     rows, which are content and therefore actually get clipped. */
+  list-style:none; margin:0; padding:0;
+  display:flex; flex-direction:column; align-items:stretch;
+}
+.cu-stack__row{
+  padding:clamp(0.6rem,0.9vw,0.85rem) clamp(1.1rem,0.8rem + 1vw,1.7rem);
+  border-top:1px solid var(--cu-line);
+}
+.cu-stack__row:last-child{ padding-bottom:clamp(1.1rem,0.8rem + 1vw,1.7rem); }
+.cu-stack__item{
+  display:block;
+  font-size:clamp(0.92rem,0.86rem + 0.2vw,1.05rem); font-weight:700; line-height:1.3;
+}
+.cu-stack__d{
+  display:block; margin-top:0.28em; max-width:52ch;
+  font-size:clamp(0.84rem,0.8rem + 0.16vw,0.96rem); line-height:1.45;
+  color:var(--cu-ink-soft,rgba(20,16,12,.68)); text-wrap:pretty;
+}
+
+.cu-stack__nav{
+  /* 49px is the LOCKED tap minimum, so the floor is a px, not a rem: a rem
+     floor rides the root size and lands at 38px on a phone. */
+  width:clamp(49px,2rem + 1.4vw,3.4rem); min-height:49px; aspect-ratio:1;
+  display:grid; place-items:center;
+  touch-action:manipulation;
+  background:transparent; color:var(--cu-paper);
+  border:1px solid rgba(255,255,255,.28);
+  cursor:pointer; -webkit-appearance:none; appearance:none;
+  transition:background var(--cu-t-tap) var(--ease-soft),
+             border-color var(--cu-t-tap) var(--ease-soft);
+}
+.cu-stack__nav--prev{ grid-area:prev; }
+.cu-stack__nav--next{ grid-area:next; }
+.cu-stack__nav svg{ width:45%; height:45%; }
+@media (hover:hover){
+  .cu-stack__nav:hover{ background:var(--cu-red); border-color:var(--cu-red); }
+}
+
+.cu-stack__pips{
+  grid-area:pips; display:flex; justify-content:center; align-items:center;
+  gap:0; margin-top:clamp(0.4rem,0.8vw,0.7rem);
+}
+/* The MARK stays 9px; the BUTTON is 49px around it. Sizing the button to the
+   dot is what puts a 19px target on a phone, and the gap comes out because the
+   targets themselves now supply the spacing between the marks. */
+.cu-stack__pip{
+  width:49px; height:49px; padding:0; border:0; cursor:pointer;
+  background:none; -webkit-appearance:none; appearance:none;
+  display:grid; place-items:center; touch-action:manipulation;
+}
+.cu-stack__pip::before{
+  content:""; width:9px; height:9px;
+  background:rgba(255,255,255,.3); transform:rotate(45deg);
+  transition:background var(--cu-t-tap) var(--ease-soft),
+             transform var(--cu-t-tap) var(--ease-snap);
+}
+.cu-stack__pip[aria-selected="true"]::before{
+  background:var(--cu-red-lift); transform:rotate(45deg) scale(1.5);
+}
+
+@media (max-width:900px){
+  .cu-stack{
+    grid-template-columns:auto 1fr auto;
+    grid-template-areas:"view view view" "prev pips next";
+    gap:0.9rem;
+  }
+  .cu-stack__nav{ justify-self:start; }
+  .cu-stack__nav--next{ justify-self:end; }
+  /* AG-MOBILE-STANDARD 6C: literal centring at <=900. This component is new,
+     so it complies rather than inheriting the deck's left-aligned body. */
+  .cu-stack__head{ justify-items:center; text-align:center; }
+  .cu-stack__n{ grid-column:1 / -1; grid-row:1; }
+  .cu-stack__t{ grid-column:1 / -1; grid-row:2; }
+  .cu-stack__row{ text-align:center; }
+  .cu-stack__d{ margin-inline:auto; }
+}
+
+/* This section reads from the middle: one panel, centred, with the heading
+   over it. A left-aligned heading above a centred card looks like two
+   decisions rather than one. */
+.cu-sec--ridge .cu-eyebrow,
+.cu-sec--surface .cu-eyebrow,
+.cu-sec--gold .cu-eyebrow{ justify-content:center; text-align:center; }
+.cu-sec--ridge .cu-h2,
+.cu-sec--surface .cu-h2{ text-align:center; margin-inline:auto; }
+.cu-sec--surface > .cu-wrap > .cu-assembly__cap{ text-align:center; margin-inline:auto; }
+
+/* THE RIDGE RUN.
+   The apex is the page's structural motif, and until now it was a silent cut.
+   Two tapes of running text now lie ON it, one per flank, each rotated to the
+   MEASURED angle of the line it rides so the words are parallel to the cut
+   rather than merely near it. They run outward from the peak, the direction
+   water leaves a roof.
+
+   The angle is measured at runtime, not guessed: --cu-apex is a clamp against
+   vw, so the flank angle changes with the viewport and any hard-coded value
+   is wrong at every width but one.
+
+   Because each tape is exactly parallel to its flank, the section's own apex
+   clip takes a CONSTANT bite off its top edge along the whole length. That is
+   the property that makes this work: a tape at any other angle would be cut
+   into a wedge. The offset below the line is therefore a single number. */
+/* .cu-sec--dark > * sets position:relative on every direct child and outranks a
+   single class, so an absolutely positioned ridge silently fell into normal
+   flow and sat a padding-top BELOW the line it is supposed to ride. Scoped
+   here to win that cascade rather than to fight it with !important. */
+.cu-sec .cu-ridge{
+  position:absolute; left:0; right:0; top:0;
+  height:calc(var(--cu-apex) + var(--cu-ridge-h));
+  pointer-events:none; z-index:1; overflow:hidden;
+}
+.cu-ridge__side{
+  /* top:0 puts the box's top edge exactly ON the flank, because the rotation
+     origin is the peak and the box is turned to the flank's own angle. Any
+     gap here reads as a line running NEAR the transition instead of being it.
+     The notch variant below hangs from the apex depth instead, because there
+     the two flanks meet at the BOTTOM of the cut rather than the top. */
+  position:absolute; top:0;
+  width:56%;                      /* past the corner; the apex clip trims it */
+  height:var(--cu-ridge-strip);
+  /* The strip is DRAWN, not implied: a rule on the roof line and another
+     under it, both parallel to the cut because the box they sit on is. The
+     rules live out here rather than on the clip so the end-fade takes the
+     WORDS and leaves the lines running the full flank. */
+  /* matched pair: the band is bounded, not hung off one heavy line */
+  border-top:3px solid rgba(255,255,255,.86);
+  border-bottom:3px solid rgba(255,255,255,.86);
+}
+/* Both ends of the TEXT are faded, not cut. A tape clipped by a hard box edge
+   slices a word in half, and at the peak the two tapes slice one each and butt
+   the halves together, which reads as garbled type rather than as a run. */
+.cu-ridge__clip{
+  position:absolute; inset:0; overflow:hidden;
+  display:flex; align-items:center;
+}
+/* The fade is ASYMMETRIC. The outer end only has to leave the frame, so it
+   fades late and the run stays bright. The peak end has to dissolve BEFORE it
+   meets the other flank coming the other way, or the two tapes print over each
+   other on the ridge. Each side therefore fades hard on whichever end is the
+   peak: the right end for the left flank, the left end for the right. */
+.cu-ridge__side--l .cu-ridge__clip{
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 82%,transparent 98%);
+          mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 82%,transparent 98%);
+}
+.cu-ridge__side--r .cu-ridge__clip{
+  -webkit-mask-image:linear-gradient(90deg,transparent 2%,#000 18%,#000 93%,transparent 100%);
+          mask-image:linear-gradient(90deg,transparent 2%,#000 18%,#000 93%,transparent 100%);
+}
+/* THE JOINT.
+   A rotated box has a tilted end edge, so its far corner runs past the meeting
+   point by height x tan(angle) and the two strips cross instead of butting.
+   The clip is slanted by exactly that amount, which stands the edge upright
+   once the rotation is applied. --cu-ridge-slant is measured at runtime for
+   the same reason the angle is: both move with the viewport. */
+.cu-ridge__side--l{
+  clip-path:polygon(0 0, 100% 0, calc(100% - var(--cu-ridge-slant,0px)) 100%, 0 100%);
+}
+.cu-ridge__side--r{
+  clip-path:polygon(0 0, 100% 0, 100% 100%, var(--cu-ridge-slant,0px) 100%);
+}
+/* the notch variant pivots on its BOTTOM corners, so the overhang is up top */
+.cu-ridge--above .cu-ridge__side--l{
+  clip-path:polygon(0 0, calc(100% - var(--cu-ridge-slant,0px)) 0, 100% 100%, 0 100%);
+}
+.cu-ridge--above .cu-ridge__side--r{
+  clip-path:polygon(var(--cu-ridge-slant,0px) 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.cu-ridge__side--l{
+  /* anchored by its RIGHT edge to the peak, not by its left edge to the wall.
+     Sized from the left the two tapes overlap by the slack each one carries
+     past its corner, and they collide on top of each other at the apex. */
+  right:50%; transform-origin:100% 0;
+  transform:rotate(calc(-1 * var(--cu-ridge-a)));
+}
+.cu-ridge__side--r{
+  left:50%; transform-origin:0 0;
+  transform:rotate(var(--cu-ridge-a));
+}
+
+/* width:max-content is the whole loop. Without it the tape's BOX is clamped to
+   its container while its CONTENT runs many times wider, so translateX(-50%)
+   travels half the CONTAINER, not half the tape: the run restarts every few
+   hundred px with a visible jump, and the real speed has nothing to do with
+   the duration being set. Sized to its content, -50% lands exactly on the
+   second identical copy and the seam cannot be seen. */
+.cu-ridge__tape{
+  display:flex; flex:none; align-items:center;
+  width:max-content;
+  white-space:nowrap; will-change:transform;
+}
+/* Duration is SET FROM THE MEASURED WIDTH, never hard-coded. The tape travels
+   half of itself per cycle, so a fixed duration means the speed changes every
+   time the type size or the viewport changes: bigger words make a longer tape
+   and a longer tape covers more ground in the same 28s. Pinning px/sec instead
+   keeps the run reading at one pace at every breakpoint. */
+/* On the PEAK the tapes run outward, the way water leaves a roof. */
+.cu-ridge__side--l .cu-ridge__tape{ animation:cu-ridge-l var(--cu-ridge-dur,20s) linear infinite; }
+.cu-ridge__side--r .cu-ridge__tape{ animation:cu-ridge-r var(--cu-ridge-dur,20s) linear infinite; }
+
+/* THE NOTCH VARIANT.
+   Same component, inverted. The flanks fall toward the middle instead of
+   rising to it, so both rotations flip sign and the strip hangs from the apex
+   depth. The tapes run INWARD to match: a word leaves at the notch and the
+   next arrives from the outer wall, which reads as going out of view and
+   coming back. The heavy end-fade is already on the inner end of each side,
+   so it lands on the exit either way and needs no change. */
+.cu-ridge--notch .cu-ridge__side{ top:var(--cu-apex); }
+
+/* ABOVE THE LINE.
+   Anchored to the foot of its own section instead of the head, and rotated
+   about its BOTTOM corners, so the strip hangs upward off the cut rather than
+   down from it. The bottom edge is the line; everything else is on the field
+   above. Same angles, same directions, only the side it sits on changes. */
+/* scoped to .cu-sec to outrank `.cu-sec .cu-ridge{top:0}`, which is two
+   classes deep and otherwise keeps this pinned to the head of the section */
+.cu-sec .cu-ridge--above{ top:auto; bottom:0; }
+.cu-ridge--above .cu-ridge__side{ top:auto; bottom:0; }
+.cu-ridge--above .cu-ridge__side--l{
+  transform-origin:100% 100%; transform:rotate(var(--cu-ridge-a));
+}
+.cu-ridge--above .cu-ridge__side--r{
+  transform-origin:0 100%; transform:rotate(calc(-1 * var(--cu-ridge-a)));
+}
+.cu-ridge--notch .cu-ridge__side--l{ transform:rotate(var(--cu-ridge-a)); }
+.cu-ridge--notch .cu-ridge__side--r{ transform:rotate(calc(-1 * var(--cu-ridge-a))); }
+.cu-ridge--notch .cu-ridge__side--l .cu-ridge__tape{ animation-name:cu-ridge-r; }
+.cu-ridge--notch .cu-ridge__side--r .cu-ridge__tape{ animation-name:cu-ridge-l; }
+@media (prefers-reduced-motion:reduce){
+  .cu-ridge__side--l .cu-ridge__tape,
+  .cu-ridge__side--r .cu-ridge__tape{ animation:none; }
+}
+/* The travel is a MEASURED px distance, not -50%. A percentage is half the
+   tape's own box, and the box never lands exactly on the second copy: trailing
+   letter-spacing and the last mark's margin push it out by ~30px, which is a
+   visible hitch once per cycle. The distance from copy one to copy two is the
+   only value that loops with no seam, so that is what gets measured. */
+@keyframes cu-ridge-l{ from{ transform:translate3d(0,0,0); }
+                       to  { transform:translate3d(calc(-1 * var(--cu-ridge-travel,50%)),0,0); } }
+@keyframes cu-ridge-r{ from{ transform:translate3d(calc(-1 * var(--cu-ridge-travel,50%)),0,0); }
+                       to  { transform:translate3d(0,0,0); } }
+
+.cu-ridge__w{
+  /* sized OFF THE STRIP, so the words stand as tall as the band allows and
+     stay that way at every width instead of drifting against a second clamp */
+  font-size:calc(var(--cu-ridge-strip) * 0.5);
+  line-height:1;
+  font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
+  /* near-white rather than grey: the run should read as type on the ridge, not
+     as texture behind it */
+  color:rgba(255,255,255,.72);
+  padding:0 clamp(0.7rem,1.1vw,1.4rem);
+}
+/* The joint between words is the client's own mark rather than a drawn
+   chevron, so the run carries the brand instead of merely pointing at it.
+   The phoenix is cropped OUT of the lockup: the full lockup at this size
+   renders the wordmark as an unreadable smudge, repeated every few words. */
+.cu-ridge__m{
+  height:calc(var(--cu-ridge-strip) * 0.72); width:auto; flex:none; display:block;
+  margin:0 clamp(0.2rem,0.4vw,0.42rem);
+  opacity:.85;
+}
+
+/* THE RISE.
+   The run does not fade in, it comes UP out of the band. Each word starts
+   below the flank and climbs into place, clipped the whole way by the band's
+   own overflow, so the words look like they are being laid onto the roof line
+   rather than switched on over it. Staggered left to right, same direction the
+   line is read and the same direction the tape travels. */
+.cu-ridge.is-run .cu-ridge__w,
+.cu-ridge.is-run .cu-ridge__m{
+  animation:cu-ridge-rise 420ms var(--ease-satisfying) both;   /* 3 x 140 */
+  animation-delay:calc(var(--i,0) * 14ms);                     /* 7 x 2   */
+}
+.cu-ridge.is-settled .cu-ridge__w,
+.cu-ridge.is-settled .cu-ridge__m{ animation:none; opacity:1; transform:none; }
+@keyframes cu-ridge-rise{
+  from{ transform:translate3d(0,132%,0); opacity:0; }
+  to  { transform:translate3d(0,0,0);    opacity:1; }
+}
+/* Until it runs, the band is empty: the words wait below the line they will
+   ride. Hung off .is-armed so a script failure leaves them simply present. */
+.cu-ridge.is-armed .cu-ridge__w,
+.cu-ridge.is-armed .cu-ridge__m{ opacity:0; }
+
+/* A section carrying the run has to clear it. The apex padding alone is sized
+   for the cut, not for a band hung under it, so at narrow widths the eyebrow
+   came up UNDERNEATH the tape. Same token, plus a gap. */
+/* A section carrying a run has to clear it: the apex padding alone is sized
+   for the cut, not for a band hung under it. Same token, plus a gap. */
+/* The first run hangs BELOW its own cut, so that section pads at the top.
+   The second hangs ABOVE the next cut, which puts it at the foot of this same
+   section, so this one pads at the bottom too. The notch section itself needs
+   neither: nothing of the run is inside it. */
+.cu-sec--ridge{
+  padding-top:calc(var(--cu-apex) + var(--cu-ridge-h) + clamp(1.6rem,2vw,1.9rem));
+  padding-bottom:calc(var(--cu-apex) + var(--cu-ridge-h) + clamp(1.6rem,2vw,1.9rem));
+}
+
+/* THE NOTCH.
+   The second transition cuts DOWNWARD: flush at the corners, dipping to the
+   apex depth in the middle, the inverse of the peak the first one carries.
+   The field above shows through the notch rather than through the flanks.
+
+   Declared after .cu-sec--apex and at the same weight, so it is source order
+   that decides it: keep it below, or the peak comes back. */
+.cu-sec--notch{
+  clip-path:polygon(0 0, 50% var(--cu-apex), 100% 0, 100% 100%, 0 100%);
+}
+
 .cu-sec--dark::before{
   content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
   background-image:var(--cu-shingle);
@@ -282,6 +720,11 @@ p{ margin:0; text-wrap:pretty; }
   content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
   background-image:var(--cu-siding);
   background-size:var(--cu-siding-size);
+  /* Anchored to the BOTTOM of the section. The tile is exactly six lap boards
+     tall (468 / 78), so pinning its foot to the section's foot puts a board
+     edge precisely on the cut below. That is what makes a straight boundary
+     read as the wall ending at a course rather than as a crop through one. */
+  background-position:center bottom;
 }
 /* ------------------------------------------------------------------
    THE SIDING FIELD reads light on red, the same way the shingle field
@@ -366,6 +809,20 @@ p{ margin:0; text-wrap:pretty; }
       rgba(12,10,8,.16) 50%,
       rgba(12,10,8,.22) 100%);
 }
+/* THE GRADE.
+   The plate arrives CLEAN. Baking the grade into the loaded state means the
+   photograph is never once seen as it was shot, and the roof is the only real
+   thing on this page. So the overlay above holds at zero until the sweep has
+   finished, then settles in on its own: the look is applied in front of the
+   reader rather than presented as a finished treatment.
+   Gated on .is-armed like everything else, so with JavaScript off the grade
+   is simply there and nothing depends on a script to become legible. */
+.cu-roof.is-armed::after{
+  opacity:0;
+  transition:opacity var(--cu-t-grade) var(--ease-satisfying);
+}
+.cu-roof.is-armed.is-graded::after{ opacity:1; }
+
 /* Armed synchronously by the inline script below, before first paint. Everything
    that HIDES the field hangs off .is-armed and nothing else, so with JavaScript
    off there is no entrance, no wipe, and the finished roof is simply there. */
@@ -405,6 +862,50 @@ p{ margin:0; text-wrap:pretty; }
 
 @keyframes cu-sweep   { from{ transform:translateX(-100%); } to{ transform:translateX(0); } }
 @keyframes cu-sweep-in{ from{ transform:translateX(100%);  } to{ transform:translateX(0); } }
+
+/* THE BEFORE AND AFTER, ON A LOOP.
+   Once the entrance has landed the hero is a still photograph, and the single
+   most valuable thing in it is the difference between the two roofs. So the
+   reveal keeps running: it holds on the finished roof, runs the edge back to
+   show the one he is replacing, holds there, and lays the new one again.
+
+   It is the SAME mechanism as the entrance, not a second effect layered on
+   top. The window and the frame inside it still travel in opposite directions
+   by the same amount, so the photograph never moves on the page and the only
+   thing crossing the frame is the edge. Nothing is ever scaled or rotated.
+
+   One animation rather than a timer chain: a chain of setTimeouts drifts, and
+   two plates drifting apart puts the blade somewhere the seam is not. The
+   holds are 3003ms and each pass is the same 700ms the entrance used, which
+   is where the percentages come from. */
+.cu-roof.is-cycling .cu-roof__reveal,
+.cu-roof.is-cycling .cu-roof__track{
+  animation:cu-cycle var(--cu-t-cycle) var(--ease-soft) infinite both;
+}
+.cu-roof.is-cycling .cu-roof__slide{
+  animation:cu-cycle-in var(--cu-t-cycle) var(--ease-soft) infinite both;
+}
+.cu-roof.is-cycling .cu-roof__blade{
+  animation:cu-cycle-blade var(--cu-t-cycle) linear infinite both;
+}
+@keyframes cu-cycle{
+  0%,40.548%    { transform:translateX(0); }
+  50%,90.548%   { transform:translateX(-100%); }
+  100%          { transform:translateX(0); }
+}
+@keyframes cu-cycle-in{
+  0%,40.548%    { transform:translateX(0); }
+  50%,90.548%   { transform:translateX(100%); }
+  100%          { transform:translateX(0); }
+}
+/* the blade only exists while an edge is actually crossing */
+@keyframes cu-cycle-blade{
+  0%,40.548%    { opacity:0; }
+  41.5%,49%     { opacity:1; }
+  50%,90.548%   { opacity:0; }
+  91.5%,99%     { opacity:1; }
+  100%          { opacity:0; }
+}
 
 /* The blade sits ON the seam, not behind it: centred on the track's leading
    edge so its bright core covers the join in both directions and the change
@@ -473,6 +974,35 @@ p{ margin:0; text-wrap:pretty; }
 .cu-hero.is-seq .cu-hero__l2{ opacity:0; transform:translateY(14px); }
 .cu-hero.is-seq.is-set .cu-hero__l1,
 .cu-hero.is-seq.is-set .cu-hero__l2{ opacity:1; transform:translateY(0); }
+
+/* THE HEADLINE, WORD BY WORD.
+   The line used to arrive as one block, which is a fade, not an entrance. It
+   is split into words at runtime and each one is thrown in from the left on a
+   back-out curve, so the reading order and the motion order are the same
+   thing and the eye is carried across the line rather than handed it.
+
+   The split is done by script, so the un-split line stays the fallback and
+   the parent is stood down only once the words exist to carry it. Splitting
+   on the plain space alone leaves any non-breaking pair inside ONE word span,
+   so the orphan glue already in the copy survives the split intact. */
+.cu-hero.is-split .cu-hero__l1,
+.cu-hero.is-split .cu-hero__l2{
+  opacity:1 !important; transform:none !important;
+  transition:none !important; transition-delay:0ms !important;
+}
+.cu-w{ display:inline-block; white-space:pre; will-change:transform,opacity; }
+.cu-hero.is-seq.is-split .cu-w{
+  opacity:0;
+  transform:translate3d(-22px,12px,0) scale(.84);
+  filter:blur(7px);
+  transition:opacity 420ms var(--ease-satisfying),
+             transform var(--cu-t-word) var(--cu-pop),
+             filter 420ms var(--ease-satisfying);
+  transition-delay:calc(var(--i,0) * 42ms);   /* 3 x 14 */
+}
+.cu-hero.is-seq.is-split.is-set .cu-w{
+  opacity:1; transform:translate3d(0,0,0) scale(1); filter:blur(0);
+}
 
 
 
@@ -625,12 +1155,23 @@ p{ margin:0; text-wrap:pretty; }
    buttons that do nothing over a run that is already fully shown. */
 .cu-road__ctl{
   display:none; align-items:center; justify-content:center;
+  flex-wrap:wrap;
   gap:clamp(0.7rem,0.5rem + 0.6vw,1.1rem);
   margin-top:clamp(1.4rem,1rem + 1.4vw,2.2rem);
 }
+/* Six 49px targets plus two 49px buttons need 392px and a phone is 375px, so
+   in one row the LOCKED tap minimum and the viewport cannot both be satisfied.
+   The pips take their own line instead: 6 x 49 = 294px, which fits, and the
+   targets stay full size rather than being shaved to make the row work. */
+@media (max-width:560px){
+  .cu-road__pips{ order:3; flex-basis:100%; justify-content:center; }
+}
 .is-live > .cu-road__ctl{ display:flex; }
 .cu-road__btn{
-  width:2.6rem; height:2.6rem; display:grid; place-items:center;
+  /* 49px LOCKED tap minimum. A rem floor rides the root size and lands at
+     41px on a phone, which is why this was failing the device gate. */
+  width:clamp(49px,2.6rem,3.4rem); height:clamp(49px,2.6rem,3.4rem);
+  display:grid; place-items:center; touch-action:manipulation;
   background:transparent; color:var(--cu-paper);
   border:1px solid var(--cu-line-dark);
   cursor:pointer; -webkit-appearance:none; appearance:none;
@@ -639,16 +1180,22 @@ p{ margin:0; text-wrap:pretty; }
 }
 .cu-road__btn svg{ width:1rem; height:1rem; display:block; }
 .cu-road__btn[disabled]{ opacity:.3; cursor:default; }
-.cu-road__pips{ display:flex; gap:0.55rem; }
+.cu-road__pips{ display:flex; gap:0; align-items:center; }
+/* the MARK stays 11px, the BUTTON is 49px around it; the targets supply the
+   spacing that the gap used to, so the marks sit where they always did */
 .cu-road__pip{
-  width:11px; height:11px; padding:0;
-  background:var(--cu-line-dark); border:0;
+  width:49px; height:49px; padding:0;
+  background:none; border:0;
   cursor:pointer; -webkit-appearance:none; appearance:none;
-  transform:rotate(45deg);
+  display:grid; place-items:center; touch-action:manipulation;
+}
+.cu-road__pip::before{
+  content:""; width:11px; height:11px;
+  background:var(--cu-line-dark); transform:rotate(45deg);
   transition:background var(--cu-t-tap) var(--ease-soft),
              transform var(--cu-t-tap) var(--ease-snap);
 }
-.cu-road__pip[data-on="true"]{ background:var(--cu-red-lift); transform:rotate(45deg) scale(1.35); }
+.cu-road__pip[data-on="true"]::before{ background:var(--cu-red-lift); transform:rotate(45deg) scale(1.35); }
 .cu-road__card:focus-visible,
 .cu-road__btn:focus-visible,
 .cu-road__pip:focus-visible{ outline:2px solid var(--cu-gold); outline-offset:3px; }
@@ -744,6 +1291,9 @@ p{ margin:0; text-wrap:pretty; }
   100% { offset-distance:100%; opacity:0; }
 }
 
+.cu-sec--surface > .cu-wrap > .cu-assembly__cap{
+  max-width:60ch; margin-top:var(--space-s);
+}
 .cu-assembly__cap{
   margin-top:var(--space-s);
   font-size:var(--cu-small); color:var(--cu-muted);
@@ -763,9 +1313,14 @@ p{ margin:0; text-wrap:pretty; }
   display:grid; gap:0; position:relative;
   padding-left:var(--rail);
 }
+/* The rail ends AT the last stop. It used to run to within 0.9em of the list's
+   bottom edge, which is most of week 3's block below its own diamond, so the
+   run read as unfinished. --rail-end is measured at runtime because it depends
+   on where the last diamond actually lands, which depends on the wrapped text
+   above it. Falls back to the old value if the script never runs. */
 .cu-steps::before,
 .cu-steps::after{
-  content:""; position:absolute; top:0.6em; bottom:0.9em;
+  content:""; position:absolute; top:0.6em; bottom:var(--rail-end,0.9em);
   left:calc(var(--rail) / 2 - 1px); width:2px;
 }
 .cu-steps::before{ background:rgba(255,255,255,.18); }
@@ -816,6 +1371,187 @@ p{ margin:0; text-wrap:pretty; }
 }
 
 /* ============================================================
+   THE THREE WEEKS
+   Three calendar pages side by side, all three in frame at once: left,
+   middle, right. Stacked top to bottom below 900.
+
+   A rail runs across the tops on the wide layout with a stop over each page,
+   and only the part travelled is painted, so the row still reads as a run of
+   time rather than as three boxes that happen to be numbered. Below 900 the
+   pages stack and the rail goes: a horizontal line cannot connect a vertical
+   column, and a fake one that no longer joins the stops is worse than none.
+
+   Equal heights come from the grid, not from script. align-items:stretch is
+   chosen here rather than inherited: the AG no-stretch rule is about content
+   that gets pulled out of shape by a default, and this is the opposite, three
+   cards deliberately cut to one size. Weeks 2 and 3 carry the spare room.
+   ============================================================ */
+.cu-weeks{
+  --mark: 13px;
+  --railY: clamp(1.5rem,1.2rem + 1vw,2.1rem);
+  position:relative;
+  margin-top:clamp(2.6rem,1.8rem + 3vw,4.4rem);
+}
+
+.cu-weeks__rail{
+  position:absolute; top:var(--railY); height:2px;
+  left:var(--rail-a,0px); width:var(--rail-w,100%);
+  background:rgba(255,255,255,.20); pointer-events:none;
+}
+.cu-weeks__rail i{
+  position:absolute; inset:0; display:block; transform-origin:left center;
+  transform:scaleX(var(--run,0)); background:var(--cu-gold);
+  transition:transform var(--cu-t-set) var(--ease-satisfying);
+}
+@media (prefers-reduced-motion:reduce){ .cu-weeks__rail i{ transition:none; } }
+
+.cu-weeks__track{
+  list-style:none; margin:0; padding:0;
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:clamp(1rem,1.6vw,1.9rem);
+  align-items:stretch;            /* chosen: three pages, one size */
+}
+.cu-week{
+  position:relative; min-width:0;
+  padding-top:calc(var(--railY) + 1.5rem);
+  display:flex;
+}
+
+/* the stop on the rail, centred over its own page */
+.cu-week__mark{
+  position:absolute; top:var(--railY); left:50%;
+  width:var(--mark); height:var(--mark);
+  margin:calc(var(--mark) / -2) 0 0 calc(var(--mark) / -2);
+  background:rgba(255,255,255,.42);
+  box-shadow:0 0 0 5px var(--cu-siding-red);
+  transform:rotate(45deg) scale(.8);
+  transition:transform var(--duration-quick) var(--ease-snap),
+             background var(--duration-quick) var(--ease-soft),
+             box-shadow var(--duration-quick) var(--ease-soft);
+  z-index:2;
+}
+.cu-week.is-done .cu-week__mark{
+  background:var(--cu-gold);
+  transform:rotate(45deg) scale(1.45);
+  box-shadow:0 0 0 5px var(--cu-siding-red), 0 0 16px var(--cu-gold);
+}
+
+/* THE CALENDAR PAGE. A header block with two binding rings punched through it,
+   then the leaf. The rings are what make it read as a calendar rather than as
+   one more card, and they cost two pseudo-elements. */
+/* The page is pressed, not scrolled past. The whole card is the target, so
+   the 49px minimum is met many times over and there is nothing small to hit. */
+.cu-week__cal{
+  width:100%; font:inherit; text-align:inherit; color:var(--cu-ink);
+  background:var(--cu-paper);
+  border:1px solid var(--cu-line);
+  box-shadow:var(--cu-e-dark);
+  display:flex; flex-direction:column; align-items:stretch;
+  cursor:pointer; -webkit-appearance:none; appearance:none;
+  touch-action:manipulation; padding:0;
+  transition:transform var(--duration-medium) var(--ease-satisfying),
+             box-shadow var(--duration-medium) var(--ease-soft);
+}
+.cu-week__cal:focus-visible{ outline:2px solid var(--cu-gold); outline-offset:3px; }
+@media (hover:hover){
+  .cu-week__cal:hover{ transform:translateY(-4px); }
+}
+.cu-week__cal:active{ transform:translateY(-1px); }
+.cu-week.is-done .cu-week__cal{
+  transform:translateY(-6px);
+  box-shadow:var(--cu-e-dark), 0 0 0 2px var(--cu-gold);
+}
+@media (prefers-reduced-motion:reduce){
+  .cu-week__cal{ transition:none; }
+  .cu-week.is-done .cu-week__cal{ transform:none; }
+  .cu-week__cal:hover,.cu-week__cal:active{ transform:none; }
+}
+
+/* the check. Empty until the page is pressed, which is the whole affordance:
+   no instruction copy, just a box asking to be ticked. */
+.cu-week__tick{
+  position:absolute; right:clamp(0.7rem,1.4vw,1.1rem); top:50%;
+  width:1.15rem; height:1.15rem; margin-top:-0.575rem;
+  display:grid; place-items:center;
+  border:2px solid rgba(255,255,255,.55);
+  color:var(--cu-red); background:transparent;
+  transition:background var(--cu-t-tap) var(--ease-soft),
+             border-color var(--cu-t-tap) var(--ease-soft);
+}
+.cu-week__tick svg{ width:78%; height:78%; opacity:0; transform:scale(.6);
+  transition:opacity var(--cu-t-tap) var(--ease-soft),
+             transform var(--cu-t-tap) var(--ease-snap); }
+.cu-week.is-done .cu-week__tick{ background:var(--cu-paper); border-color:var(--cu-paper); }
+.cu-week.is-done .cu-week__tick svg{ opacity:1; transform:scale(1); }
+
+/* the burst. Brand confetti, thrown from the rail when the run completes. */
+.cu-weeks__burst{
+  position:absolute; left:0; right:0; top:var(--railY);
+  height:0; pointer-events:none; z-index:3;
+}
+.cu-conf{
+  position:absolute; left:var(--cx,50%); top:0;
+  width:7px; height:11px; opacity:0;
+  animation:cu-conf var(--dur,1120ms) var(--ease-soft) var(--del,0ms) forwards;
+}
+@keyframes cu-conf{
+  0%  { opacity:1; transform:translate3d(0,0,0) rotate(0deg) scale(1); }
+  100%{ opacity:0; transform:translate3d(var(--dx,0),var(--dy,220px),0)
+                             rotate(var(--rot,180deg)) scale(.7); }
+}
+@media (prefers-reduced-motion:reduce){ .cu-conf{ display:none; } }
+.cu-week__head{
+  position:relative;
+  background:var(--cu-red); color:var(--cu-paper);
+  padding:clamp(0.85rem,0.7rem + 0.5vw,1.15rem) clamp(1rem,0.8rem + 0.8vw,1.5rem)
+          clamp(0.55rem,0.45rem + 0.3vw,0.75rem);
+  display:flex; align-items:flex-end; justify-content:center;
+}
+.cu-week__rings{
+  position:absolute; top:-7px; left:0; right:0;
+  display:flex; justify-content:center; gap:clamp(2.2rem,7vw,3.6rem);
+}
+.cu-week__rings i{
+  width:10px; height:14px; border-radius:2px;
+  background:var(--cu-siding-red);
+  box-shadow:inset 0 0 0 2px rgba(0,0,0,.35);
+}
+.cu-week__lbl{
+  font-size:var(--cu-eyebrow); font-weight:700;
+  letter-spacing:0.26em; text-transform:uppercase;
+}
+.cu-week__pad{
+  flex:1; padding:clamp(1.1rem,0.9rem + 0.8vw,1.7rem);
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+}
+.cu-week__n{
+  font-size:clamp(2.5rem,1.9rem + 3vw,4rem); font-weight:800; line-height:1;
+  color:var(--cu-ink); font-variant-numeric:tabular-nums; letter-spacing:-0.03em;
+}
+.cu-week__t{
+  margin-top:0.3em; max-width:20ch;
+  font-size:clamp(1.1rem,0.98rem + 0.55vw,1.45rem); font-weight:700; line-height:1.18;
+  text-wrap:balance;
+}
+.cu-week__b{
+  margin-top:0.65em; max-width:42ch;
+  font-size:clamp(0.86rem,0.82rem + 0.18vw,0.98rem); line-height:1.52;
+  color:var(--cu-ink-soft,rgba(20,16,12,.7)); text-wrap:pretty;
+}
+
+@media (min-width:901px){
+  .cu-terms{ grid-template-columns:repeat(3,1fr); }
+}
+@media (max-width:900px){
+  .cu-weeks__track{
+    grid-template-columns:1fr;
+    gap:clamp(1.1rem,3vw,1.7rem);
+  }
+  .cu-week{ padding-top:0; }
+  .cu-weeks__rail, .cu-week__mark{ display:none; }
+}
+
+/* ============================================================
    PRICE
    The single most important object on the page, so it is given
    a moment: the figure counts, a rule draws under it, the label
@@ -825,14 +1561,30 @@ p{ margin:0; text-wrap:pretty; }
    is the one thing given real isolation, the one deliberate accent wash, and the
    top of the elevation scale. Everything below it is supporting detail and reads
    subordinate by sitting flat on the sheet. */
+/* No panel. The figure is the single most important object on the page and a
+   card around it only competes with it, so the number stands on the concrete
+   with nothing behind it. */
 .cu-offer{
   position:relative;
   margin-top:clamp(2.5rem,1.6rem + 3.6vw,4.5rem);
-  padding:clamp(2.75rem,1.8rem + 4vw,5.5rem) clamp(1.5rem,1rem + 2vw,3rem);
-  background:var(--cu-paper);
-  border-top:var(--cu-rule) solid var(--cu-red);
-  box-shadow:var(--cu-e3);
-  isolation:isolate;
+  padding:0;
+  background:none; border:0; box-shadow:none;
+}
+.cu-offer__wash{ display:none; }
+.cu-sec--gold .cu-price__n{
+  color:var(--cu-red-lift);
+  /* just enough lift off the wall to read as lit rather than printed */
+  text-shadow:0 2px 24px rgba(226,65,77,.34), 0 1px 0 rgba(0,0,0,.30);
+}
+.cu-sec--gold .cu-price__l{
+  color:rgba(255,255,255,.86);
+  letter-spacing:0.22em;
+}
+.cu-sec--gold .cu-price__bar{
+  background:linear-gradient(90deg,
+    rgba(226,65,77,0) 0%, var(--cu-red-lift) 22%,
+    var(--cu-gold) 50%, var(--cu-red-lift) 78%, rgba(226,65,77,0) 100%);
+  height:3px;
 }
 /* The ONE accent wash on the page. Restrained, and behind the panel rather than
    under the type, so nothing loses contrast to it. */
@@ -841,12 +1593,68 @@ p{ margin:0; text-wrap:pretty; }
   background:
     radial-gradient(120% 130% at 50% 0%, rgba(208,32,45,.09) 0%, rgba(208,32,45,.03) 42%, transparent 72%);
 }
-.cu-price{ text-align:center; }
+/* THE FIGURE, CALLED OUT AS A DIMENSION.
+   The page is built in a shop-drawing idiom the whole way down, so the number
+   is annotated the way a measurement is: extension arms running in from both
+   sides with arrowheads landing on the figure, and end ticks where the arms
+   start. It is the same language as the rails and the diamonds, spent on the
+   one object that matters most, rather than a decoration borrowed from
+   somewhere else on the internet.
+
+   A single low light sits behind it. The section is a wall at golden hour and
+   the figure is the thing lit; nothing else on the page carries a glow, which
+   is what keeps this one meaning something. */
+/* NOT clipped. Clipping this box to stop the glow spilling off a phone also
+   cut it VERTICALLY, which put a hard rectangular edge around the number: the
+   light stopped dead above and below the figure instead of falling away. The
+   bloom is free here and the width is constrained instead, further down, at
+   the only widths where it could ever reach the document edge. */
+.cu-price{ text-align:center; position:relative; isolation:isolate; }
+.cu-price__glow{
+  position:absolute; left:50%; top:44%; z-index:-1;
+  /* wider than its box on purpose, but never wider than the room it has:
+     120% of the wrap clears the viewport on a phone and drags the document
+     sideways, so below 900 it is held to its own box instead. */
+  width:100%; aspect-ratio:1.7/1;
+  transform:translate(-50%,-50%); pointer-events:none;
+  background:radial-gradient(closest-side,
+    rgba(255,190,110,.20) 0%,
+    rgba(255,170,92,.09) 44%,
+    rgba(255,170,92,0) 100%);
+}
+.cu-price__row{
+  display:flex; align-items:center; justify-content:center;
+  gap:clamp(0.9rem,2.4vw,2.4rem);
+}
+/* the arm: a rule with a tick at the outer end and a head at the figure */
+.cu-price__arm{
+  position:relative; flex:0 1 clamp(2.5rem,14vw,11rem); height:2px;
+  background:linear-gradient(90deg,
+    rgba(255,255,255,.10) 0%, rgba(255,255,255,.42) 100%);
+}
+.cu-price__arm--r{ transform:scaleX(-1); }
+.cu-price__arm::before{          /* the end tick */
+  content:""; position:absolute; left:0; top:50%;
+  width:2px; height:clamp(1.1rem,2.2vw,1.7rem);
+  transform:translateY(-50%);
+  background:rgba(255,255,255,.42);
+}
+.cu-price__arm::after{           /* the head, landing on the figure */
+  content:""; position:absolute; right:-1px; top:50%;
+  width:0; height:0; transform:translateY(-50%);
+  border-top:6px solid transparent;
+  border-bottom:6px solid transparent;
+  border-left:10px solid var(--cu-red-lift);
+}
+@media (min-width:901px){
+  .cu-price__glow{ width:min(124%,58rem); }
+}
+@media (max-width:520px){ .cu-price__arm{ display:none; } }
 .cu-price__n{
   font-size:var(--cu-price);
   font-weight:800; line-height:0.94; color:var(--cu-red);
   font-variant-numeric:tabular-nums; letter-spacing:-0.035em;
-  display:inline-block;
+  display:inline-block; flex:none;
 }
 .cu-price__bar{
   width:min(20rem,62%); height:var(--cu-rule); margin:var(--space-m) auto 0 auto;
@@ -865,14 +1673,25 @@ p{ margin:0; text-wrap:pretty; }
 }
 .cu-offer.in-view .cu-price__l{ opacity:1; }
 
-.cu-ledger{
-  width:min(100%, 46rem); border-collapse:collapse;
+/* The build list gets a frame of its own so it stops floating on the field.
+   Dark on dark rather than paper: the rows are already scoped light for this
+   section and a white panel would invert every one of them. */
+.cu-ledger__box{
+  width:min(100%, 52rem);
   margin:clamp(2.4rem,1.6rem + 3.2vw,3.5rem) auto 0 auto;
+  padding:clamp(1.2rem,0.9rem + 1.2vw,2rem) clamp(1.1rem,0.8rem + 1.2vw,1.9rem);
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.15);
+}
+.cu-ledger{
+  width:100%; border-collapse:collapse;
+  margin:0;
   border-top:1px solid var(--cu-line-ink);
 }
 .cu-ledger caption{
-  text-align:left; padding-bottom:var(--space-2xs);
-  font-weight:600; color:var(--cu-ink-strong);
+  text-align:center; padding-bottom:var(--space-s);
+  font-size:clamp(1.05rem,0.92rem + 0.6vw,1.45rem);
+  font-weight:700; color:var(--cu-ink-strong);
 }
 .cu-ledger th,.cu-ledger td{
   text-align:left; padding:clamp(0.75rem,0.62rem + 0.42vw,1.05rem) 0;
@@ -898,9 +1717,13 @@ p{ margin:0; text-wrap:pretty; }
   background-size:7px 7px; background-repeat:repeat-x;
   opacity:.42;
 }
-.cu-ledger td:last-child{
+/* The value column is only as wide as its widest value, so the figures sit
+   next to the deliverable rather than across a gulf from it, and the header
+   rides the same edge as the values under it. */
+.cu-ledger td:last-child,
+.cu-ledger th:last-child{
   text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums;
-  padding-left:0.7rem;
+  padding-left:0.7rem; width:1%;
 }
 .cu-ledger tbody tr td:last-child{ font-weight:600; color:var(--cu-ink); }
 
@@ -919,10 +1742,25 @@ p{ margin:0; text-wrap:pretty; }
 
 .cu-terms{
   display:grid; gap:clamp(1rem,0.8rem + 0.84vw,1.6rem);
+  /* three across only while three FIT. Forcing repeat(3,1fr) at every width
+     pushed the last container 12px past the document edge on a 350 phone. */
   grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));
+  width:min(100%, 60rem); margin-inline:auto;
+  align-items:stretch;
   margin-top:clamp(2.4rem,1.6rem + 3.2vw,3.25rem);
 }
-.cu-term{ border-left:var(--cu-rule) solid var(--cu-gold); padding-left:var(--space-s); }
+/* Three containers rather than three rules in space. Centred inside
+   themselves and held to three across, so Not included / Pass through /
+   Terms read as one row of equal statements. */
+.cu-term{
+  border:1px solid rgba(255,255,255,.15);
+  border-top:var(--cu-rule) solid var(--cu-gold);
+  background:rgba(255,255,255,.045);
+  padding:clamp(1rem,0.8rem + 0.8vw,1.5rem);
+  text-align:center;
+  display:flex; flex-direction:column; align-items:center;
+}
+.cu-term__b{ max-width:34ch; margin-inline:auto; }
 .cu-term__t{
   font-size:var(--cu-eyebrow); font-weight:700; letter-spacing:0.16em;
   text-transform:uppercase; color:var(--cu-ink-strong);
@@ -943,6 +1781,7 @@ p{ margin:0; text-wrap:pretty; }
   position:relative;
   margin-top:clamp(1.6rem,1.2rem + 1.2vw,2.4rem);
   width:min(100%, 60rem);
+  margin-inline:auto;              /* the run sits under its own heading */
 }
 .cu-needrun__items{
   position:relative; display:flex; list-style:none; margin:0; padding:0;
@@ -973,17 +1812,53 @@ p{ margin:0; text-wrap:pretty; }
 .cu-needrun.is-live .cu-needrun__node[data-on="true"] .cu-needrun__card{
   opacity:1; transform:translateY(-4px); border-color:var(--cu-gold);
 }
-.cu-needrun .cu-road__ctl{ justify-content:flex-start; }
+.cu-needrun .cu-road__ctl{ justify-content:center; }
+/* The controls sit on the same dark field as the cards and were drawn in
+   --cu-line-dark (#262626), which is very nearly the field itself. They steer
+   the run, so they have to read ABOVE it, not recede into it. */
+.cu-needrun .cu-road__btn{
+  border-color:rgba(255,255,255,.58);
+  color:var(--cu-paper);
+}
+.cu-needrun .cu-road__pip::before{
+  background:rgba(255,255,255,.52);
+  box-shadow:0 0 0 1px rgba(0,0,0,.35);
+}
+.cu-needrun .cu-road__pip[data-on="true"]::before{
+  background:var(--cu-gold);
+  box-shadow:0 0 0 1px rgba(0,0,0,.35), 0 0 12px var(--cu-gold);
+}
+@media (hover:hover){
+  .cu-needrun .cu-road__btn:hover{ border-color:var(--cu-gold); color:var(--cu-gold); }
+}
+/* The live card lifts 4px, and the view that frames the run clips at its own
+   top edge, so the lift was being shaved off. The headroom is added inside the
+   clip and taken back off the outside, which buys the room without moving the
+   run down the page. */
+.cu-needrun .cu-road__view{
+  padding-top:10px; margin-top:-10px;
+}
 
 .cu-need{
   margin-top:clamp(2.4rem,1.6rem + 3.2vw,3.25rem);
   padding-top:clamp(1.35rem,1.05rem + 1.2vw,2rem);
+  /* centred at EVERY width. This lived inside the 900 breakpoint, so the
+     section read centred on a phone and left-aligned on a desktop. */
+  text-align:center;
 }
+.cu-need__t{ text-align:center; }
 .cu-need__t{
-  font-size:var(--cu-eyebrow); font-weight:700; letter-spacing:0.16em;
+  /* was --cu-eyebrow, which tops out near 13px: too small to carry a section
+     of its own. Tracking eases off as the size goes up, or the caps sprawl. */
+  font-size:clamp(1.05rem,0.9rem + 0.7vw,1.5rem);
+  font-weight:700; letter-spacing:0.11em;
   text-transform:uppercase; color:var(--cu-ink-strong);
 }
-.cu-need__intro{ margin-top:var(--space-2xs); color:var(--cu-muted); max-width:52ch; }
+.cu-need__intro{
+  margin-top:var(--space-2xs); color:var(--cu-muted);
+  font-size:clamp(0.95rem,0.9rem + 0.24vw,1.1rem);
+  max-width:52ch; margin-inline:auto;
+}
 .cu-need__note{
   margin-top:var(--space-m); font-size:var(--cu-small);
   color:var(--cu-muted); font-style:italic; max-width:60ch;
@@ -1021,7 +1896,6 @@ p{ margin:0; text-wrap:pretty; }
   .cu-road.is-live .cu-road__card:hover{ opacity:.9; }
   .cu-road.is-live .cu-road__node[data-on="true"] .cu-road__card:hover{ opacity:1; }
   .cu-road__btn:hover{ border-color:var(--cu-red-lift); color:var(--cu-red-lift); }
-  .cu-ledger tbody tr:hover{ background:var(--cu-surface); }
 }
 
 /* ---------- layout shift only, per AG responsive law ---------- */
@@ -1047,6 +1921,7 @@ p{ margin:0; text-wrap:pretty; }
   position:relative;
   margin-top:clamp(1.6rem,1.2rem + 1.2vw,2.4rem);
   width:min(100%, 60rem);
+  margin-inline:auto;              /* the run sits under its own heading */
 }
 .cu-needrun__items{
   position:relative; display:flex; list-style:none; margin:0; padding:0;
@@ -1077,7 +1952,32 @@ p{ margin:0; text-wrap:pretty; }
 .cu-needrun.is-live .cu-needrun__node[data-on="true"] .cu-needrun__card{
   opacity:1; transform:translateY(-4px); border-color:var(--cu-gold);
 }
-.cu-needrun .cu-road__ctl{ justify-content:flex-start; }
+.cu-needrun .cu-road__ctl{ justify-content:center; }
+/* The controls sit on the same dark field as the cards and were drawn in
+   --cu-line-dark (#262626), which is very nearly the field itself. They steer
+   the run, so they have to read ABOVE it, not recede into it. */
+.cu-needrun .cu-road__btn{
+  border-color:rgba(255,255,255,.58);
+  color:var(--cu-paper);
+}
+.cu-needrun .cu-road__pip::before{
+  background:rgba(255,255,255,.52);
+  box-shadow:0 0 0 1px rgba(0,0,0,.35);
+}
+.cu-needrun .cu-road__pip[data-on="true"]::before{
+  background:var(--cu-gold);
+  box-shadow:0 0 0 1px rgba(0,0,0,.35), 0 0 12px var(--cu-gold);
+}
+@media (hover:hover){
+  .cu-needrun .cu-road__btn:hover{ border-color:var(--cu-gold); color:var(--cu-gold); }
+}
+/* The live card lifts 4px, and the view that frames the run clips at its own
+   top edge, so the lift was being shaved off. The headroom is added inside the
+   clip and taken back off the outside, which buys the room without moving the
+   run down the page. */
+.cu-needrun .cu-road__view{
+  padding-top:10px; margin-top:-10px;
+}
 
 .cu-need{ text-align:center; }
   .cu-need__intro,.cu-need__note{ margin-inline:auto; }
@@ -1092,6 +1992,8 @@ p{ margin:0; text-wrap:pretty; }
   .cu-drop{ animation:none !important; }
   .cu-roof__frame{ opacity:1 !important; transform:none !important; transition:none !important; }
   .cu-roof__reveal,.cu-roof__slide,.cu-roof__track{ transform:none !important; animation:none !important; }
+  .cu-roof.is-cycling .cu-roof__reveal,.cu-roof.is-cycling .cu-roof__slide,
+  .cu-roof.is-cycling .cu-roof__track,.cu-roof.is-cycling .cu-roof__blade{ animation:none !important; }
   .cu-roof__blade{ display:none; }
   .cu-shed{ opacity:1; }
   .cu-road__card:hover{ transform:none; }
@@ -1108,6 +2010,12 @@ p{ margin:0; text-wrap:pretty; }
   .cu-hero__l1,.cu-hero__l2{ opacity:1; transform:none; }
   .cu-hero.is-seq .cu-hero__logo,.cu-hero.is-seq .cu-hero__l1,
   .cu-hero.is-seq .cu-hero__l2{ opacity:1; transform:none; clip-path:none; }
+  .cu-w,.cu-hero.is-seq.is-split .cu-w{ opacity:1 !important; transform:none !important; filter:none !important; }
+  .cu-roof.is-armed::after{ opacity:1 !important; }
+  .cu-ridge__tape{ animation:none !important; }
+  .cu-ridge__w,.cu-ridge__m{ animation:none !important; opacity:1 !important; transform:none !important; }
+  .cu-ridge.is-armed .cu-ridge__w,
+  .cu-ridge.is-armed .cu-ridge__m{ opacity:1 !important; }
   .cu-price__bar{ transform:scaleX(1); }
   .cu-price__l{ opacity:1; }
   .cu-plate{ opacity:1; transform:none; }
@@ -1160,7 +2068,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
   .ag-curtain{ display:none !important; }
   /* Nothing on this page may depend on a script to become visible. */
   .reveal, .reveal-hero, .reveal-cinematic, .reveal-stagger > *,
-  .cu-road__card, .cu-hero__logo, .cu-hero__l1, .cu-hero__l2,
+  .cu-road__card, .cu-hero__logo, .cu-hero__l1, .cu-hero__l2, .cu-w,
   .cu-plate, .cu-plate-label, .cu-scroll, .cu-shed{
     opacity:1 !important; transform:none !important;
     clip-path:none !important; transition:none !important;
@@ -1295,175 +2203,181 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
 
 
   <!-- ==================== 1. WHAT WE DO ==================== -->
-  <section class="cu-sec cu-sec--apex cu-sec--dark" aria-labelledby="what-h">
+  <section class="cu-sec cu-sec--apex cu-sec--ridge cu-sec--dark" aria-labelledby="what-h">
+    <!-- The ridge run. Decorative and duplicated, so aria-hidden: the words are
+         the six card titles immediately below it, and a screen reader gets them
+         there, once, in their real context. The tape is written twice because a
+         seamless loop needs a second copy to travel into. -->
+    <div class="cu-ridge" data-ridge-src=".cu-stack__item" aria-hidden="true">
+      <div class="cu-ridge__side cu-ridge__side--l"><div class="cu-ridge__clip"><div class="cu-ridge__tape" data-ridge></div></div></div>
+      <div class="cu-ridge__side cu-ridge__side--r"><div class="cu-ridge__clip"><div class="cu-ridge__tape" data-ridge></div></div></div>
+    </div>
     <div class="cu-wrap">
       <span class="cu-eyebrow">What we do</span>
-      <h2 class="cu-h2 reveal" id="what-h">6 Pieces, Built Once, Working Together on Every&nbsp;Page.</h2>
+      <h2 class="cu-h2 reveal" id="what-h">3 Pieces, Built Once, Working Together on Every&nbsp;Page.</h2>
 
-      <div class="cu-road reveal">
-        <div class="cu-road__view">
-          <div class="cu-road__track">
-        <ol class="cu-road__nodes">
-        <li class="cu-road__node">
-          <button class="cu-road__card" type="button">
-            <span class="cu-road__n">01</span>
-            <h3 class="cu-road__t">The Pages</h3>
-            <p class="cu-road__b">5 pages, custom coded. Home, roofing, the quote page, an about page, contact.</p>
-          </button>
-          <span class="cu-road__mark" aria-hidden="true"></span>
-        </li>
-        <li class="cu-road__node">
-          <button class="cu-road__card" type="button">
-            <span class="cu-road__n">02</span>
-            <h3 class="cu-road__t">1 Offer, 1 Number</h3>
-            <p class="cu-road__b">The offer and the financing figure read the same on every page and in every ad.</p>
-          </button>
-          <span class="cu-road__mark" aria-hidden="true"></span>
-        </li>
-        <li class="cu-road__node">
-          <button class="cu-road__card" type="button">
-            <span class="cu-road__n">03</span>
-            <h3 class="cu-road__t">Lead Tracking</h3>
-            <p class="cu-road__b">Form submissions tracked and reported.</p>
-          </button>
-          <span class="cu-road__mark" aria-hidden="true"></span>
-        </li>
-        <li class="cu-road__node">
-          <button class="cu-road__card" type="button">
-            <span class="cu-road__n">04</span>
-            <h3 class="cu-road__t">The Quote Flow</h3>
-            <p class="cu-road__b">A quote form that works on a phone and lands where your team already looks.</p>
-          </button>
-          <span class="cu-road__mark" aria-hidden="true"></span>
-        </li>
-        <li class="cu-road__node">
-          <button class="cu-road__card" type="button">
-            <span class="cu-road__n">05</span>
-            <h3 class="cu-road__t">Built to Be Found</h3>
-            <p class="cu-road__b">Titles, schema, sitemap and speed done properly at build time.</p>
-          </button>
-          <span class="cu-road__mark" aria-hidden="true"></span>
-        </li>
-        <li class="cu-road__node">
-          <button class="cu-road__card" type="button">
-            <span class="cu-road__n">06</span>
-            <h3 class="cu-road__t">Yours on Day One</h3>
-            <p class="cu-road__b">Every file, account and domain stays in your name.</p>
-          </button>
-          <span class="cu-road__mark" aria-hidden="true"></span>
-        </li>
-        </ol>
-          </div>
+      <div class="cu-stack reveal">
+        <button class="cu-stack__nav cu-stack__nav--prev" type="button" data-stack="prev" aria-label="Previous piece"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M11 3L5 9l6 6"/></svg></button>
+        <div class="cu-stack__view">
+          <article class="cu-stack__panel" data-on="true">
+            <div class="cu-stack__head">
+              <span class="cu-stack__n">01</span>
+              <span class="cu-stack__t">Before We Build</span>
+            </div>
+            <div class="cu-stack__body" id="give-1">
+              <ul class="cu-stack__list">
+                <li class="cu-stack__row">
+                  <span class="cu-stack__item">Intake Forms</span>
+                  <span class="cu-stack__d">We send intake forms so we dial exactly what you want.</span>
+                </li>
+                <li class="cu-stack__row">
+                  <span class="cu-stack__item">The Brand Kit</span>
+                  <span class="cu-stack__d">We make sure the brand kit is perfectly specified.</span>
+                </li>
+                <li class="cu-stack__row">
+                  <span class="cu-stack__item">Logo Revamp</span>
+                  <span class="cu-stack__d">A revamp of the mark you already have, if you want one.</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+          <article class="cu-stack__panel">
+            <div class="cu-stack__head">
+              <span class="cu-stack__n">02</span>
+              <span class="cu-stack__t">The Build</span>
+            </div>
+            <div class="cu-stack__body" id="give-2">
+              <ul class="cu-stack__list">
+                <li class="cu-stack__row">
+                  <span class="cu-stack__item">The Pages</span>
+                  <span class="cu-stack__d">5 pages, custom coded. Home, roofing, the quote page, an about page, contact.</span>
+                </li>
+                <li class="cu-stack__row">
+                  <span class="cu-stack__item">Updates</span>
+                  <span class="cu-stack__d">You get updates while the build is moving.</span>
+                </li>
+                <li class="cu-stack__row">
+                  <span class="cu-stack__item">The Presentation</span>
+                  <span class="cu-stack__d">We present you the finished product.</span>
+                </li>
+                <li class="cu-stack__row">
+                  <span class="cu-stack__item">100% Satisfaction</span>
+                  <span class="cu-stack__d">We go through it with you and make sure you love it.</span>
+                </li>
+                <li class="cu-stack__row">
+                  <span class="cu-stack__item">Revisions for Life</span>
+                  <span class="cu-stack__d">Complimentary revisions for life on the website we build.</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+          <article class="cu-stack__panel">
+            <div class="cu-stack__head">
+              <span class="cu-stack__n">03</span>
+              <span class="cu-stack__t">Launch Setup</span>
+            </div>
+            <div class="cu-stack__body" id="give-3">
+              <ul class="cu-stack__list">
+                <li class="cu-stack__row">
+                  <span class="cu-stack__item">The Domain</span>
+                  <span class="cu-stack__d">We hook up the domain.</span>
+                </li>
+                <li class="cu-stack__row">
+                  <span class="cu-stack__item">Banner and Icon</span>
+                  <span class="cu-stack__d">Banner and icon configured.</span>
+                </li>
+                <li class="cu-stack__row">
+                  <span class="cu-stack__item">Metadata and Titles</span>
+                  <span class="cu-stack__d">Metadata and page titles configured.</span>
+                </li>
+                <li class="cu-stack__row">
+                  <span class="cu-stack__item">UTM Tracking</span>
+                  <span class="cu-stack__d">See where your traffic comes from and where it goes on the site.</span>
+                </li>
+                <li class="cu-stack__row">
+                  <span class="cu-stack__item">On-Site SEO</span>
+                  <span class="cu-stack__d">SEO and answer-engine optimization, everything the site itself can carry.</span>
+                </li>
+              </ul>
+            </div>
+          </article>
         </div>
-        <div class="cu-road__ctl">
-          <button class="cu-road__btn" type="button" data-run="prev" aria-label="Previous piece">
-            <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M12,3 L5,9 L12,15"/></svg>
-          </button>
-          <div class="cu-road__pips"></div>
-          <button class="cu-road__btn" type="button" data-run="next" aria-label="Next piece">
-            <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M6,3 L13,9 L6,15"/></svg>
-          </button>
-        </div>
+        <button class="cu-stack__nav cu-stack__nav--next" type="button" data-stack="next" aria-label="Next piece"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M7 3l6 6-6 6"/></svg></button>
+        <div class="cu-stack__pips" role="tablist" aria-label="Sections"></div>
       </div>
     </div>
-  </section>
+  
+
+    <!-- The second run rides the notch from ABOVE it. The cut belongs to the
+         siding section below, but the strip has to sit on the SHINGLE: a run
+         of words printed on lap siding reads as a sticker on a wall, and the
+         same words on the shingle field read as a course on the roof. So it
+         lives at the foot of this section and hangs upward off the line. -->
+    <div class="cu-ridge cu-ridge--notch cu-ridge--above" data-ridge-src=".cu-week__t" aria-hidden="true">
+      <div class="cu-ridge__side cu-ridge__side--l"><div class="cu-ridge__clip"><div class="cu-ridge__tape" data-ridge></div></div></div>
+      <div class="cu-ridge__side cu-ridge__side--r"><div class="cu-ridge__clip"><div class="cu-ridge__tape" data-ridge></div></div></div>
+    </div>
+</section>
 
 
   <!-- ==================== 2. HOW IT RUNS ==================== -->
-  <section class="cu-sec cu-sec--apex cu-sec--surface" aria-labelledby="how-h">
-    <div class="cu-wrap">
+  <section class="cu-sec cu-sec--apex cu-sec--notch cu-sec--surface" aria-labelledby="how-h">    <div class="cu-wrap">
       <span class="cu-eyebrow">How it runs</span>
       <h2 class="cu-h2 reveal" id="how-h">No Surprises. 3 Weeks, 3&nbsp;Stages.</h2>
 
-      <div class="cu-assembly">
-        <div class="cu-assembly__fig">
-          <svg class="cu-assembly__svg" id="cu-assembly" viewBox="0 0 760 470" role="img"
-               aria-label="Exploded roof assembly. Plywood, underlayment and shingles, set in build order.">
-            <defs>
-              <linearGradient id="cuPlateFill" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
-                <stop offset="1" stop-color="#ddd8d1" stop-opacity="0.98"/>
-              </linearGradient>
-            </defs>
+      <p class="cu-assembly__cap"><b>Same order, every time.</b> Nothing goes on until what is under it is right.</p>
 
-            <!-- ground shadow, so the stack reads as having weight -->
-            <ellipse cx="255" cy="470" rx="196" ry="20" fill="#2b2b2b" fill-opacity="0.10"/>
-
-            <!-- 3 layers, bottom to top, in the order they are actually installed.
-                 Plate vertices are (40,Y) (268,Y-56) (470,Y) (242,Y+56); Y steps
-                 96 so the three sit evenly across the same height the six did. -->
-            <g class="cu-plate" data-stage="1" data-seq="1">
-              <polygon points="40,392 268,336 470,392 242,448" fill="url(#cuPlateFill)" stroke="#2b2b2b" stroke-width="2"/>
-              <!-- the deck is the only layer with real thickness, so it gets an edge -->
-              <polygon points="40,392 242,448 242,462 40,406" fill="#333333" fill-opacity="0.16"/>
-              <polygon points="470,392 242,448 242,462 470,406" fill="#333333" fill-opacity="0.09"/>
-              <!-- sheet joints: plywood arrives in sheets and a roofer reads the seams -->
-              <path d="M154,364 L356,420 M108.7,411 L336.7,355 M175.3,429.5 L403.3,373.5" stroke="#2b2b2b" stroke-opacity="0.34" stroke-width="1" fill="none"/>
-            </g>
-            <g class="cu-plate" data-stage="2" data-seq="2">
-              <polygon points="40,296 268,240 470,296 242,352" fill="url(#cuPlateFill)" stroke="#2b2b2b" stroke-width="2" stroke-dasharray="7 5"/>
-              <!-- roll laps: a membrane goes down in courses that overlap up-slope -->
-              <path d="M117.5,277 L319.5,333 M192.8,258.5 L394.8,314.5" stroke="#2b2b2b" stroke-opacity="0.30" stroke-width="1" stroke-dasharray="5 4" fill="none"/>
-            </g>
-            <g class="cu-plate" data-stage="3" data-seq="3">
-              <polygon points="40,200 268,144 470,200 242,256" fill="url(#cuPlateFill)" stroke="#f5c842" stroke-width="2.4"/>
-              <!-- courses parallel to the eave, with keyway notches cut up-slope
-                   from each one and offset half a tab course to course -->
-              <path d="M85.6,188.8 L287.6,244.8 M131.2,177.6 L333.2,233.6 M176.8,166.4 L378.8,222.4 M222.4,155.2 L424.4,211.2" stroke="#2b2b2b" stroke-opacity="0.46" stroke-width="1" fill="none"/>
-              <path d="M109.8,195.5 l12.5,-3.1 M144.2,205 l12.5,-3.1 M178.5,214.6 l12.5,-3.1 M212.9,224.1 l12.5,-3.1 M247.2,233.6 l12.5,-3.1 M172.6,189.1 l12.5,-3.1 M206.9,198.6 l12.5,-3.1 M241.3,208.1 l12.5,-3.1 M275.6,217.6 l12.5,-3.1 M310,227.2 l12.5,-3.1 M201,173.1 l12.5,-3.1 M235.4,182.6 l12.5,-3.1 M269.7,192.2 l12.5,-3.1 M304.1,201.7 l12.5,-3.1 M338.4,211.2 l12.5,-3.1 M263.8,166.7 l12.5,-3.1 M298.1,176.2 l12.5,-3.1 M332.5,185.7 l12.5,-3.1 M366.8,195.2 l12.5,-3.1 M401.2,204.8 l12.5,-3.1" stroke="#2b2b2b" stroke-opacity="0.30" stroke-width="1" stroke-linecap="round" fill="none"/>
-            </g>
-
-            <!-- Once the roof is built, water runs it. This is WHY the order matters,
-                 and it is the one thing on the page a roofer will check us on:
-                 the drop crosses the field, reaches the drip edge, and leaves.
-                 Only runs at stage 3, because before that there is no roof. -->
-            <g class="cu-shed">
-              <circle class="cu-drop"    r="4.5" fill="#3d7fb0"/>
-              <circle class="cu-drop" r="3.5" fill="#3d7fb0"/>
-              <circle class="cu-drop" r="4"   fill="#3d7fb0"/>
-            </g>
-
-            <!-- leader lines and layer names, in the trade's own words -->
-            <g font-family="Figtree, sans-serif" font-size="19" font-weight="600" fill="#2b2b2b">
-              <g class="cu-plate-label" data-stage="1" data-seq="1">
-                <path d="M474,392 L516,392" stroke="#c9c5c0" stroke-width="1"/>
-                <text x="526" y="397">Plywood</text>
-              </g>
-              <g class="cu-plate-label" data-stage="2" data-seq="2">
-                <path d="M474,296 L516,296" stroke="#c9c5c0" stroke-width="1"/>
-                <text x="526" y="301">Underlayment</text>
-              </g>
-              <g class="cu-plate-label" data-stage="3" data-seq="3">
-                <path d="M474,200 L516,200" stroke="#c9c5c0" stroke-width="1"/>
-                <text x="526" y="205" fill="#f5c842">Shingles</text>
-              </g>
-            </g>
-          </svg>
-          <p class="cu-assembly__cap"><b>Same order, every time.</b> Nothing goes on until what is under it is right.</p>
-        </div>
-
-        <div class="cu-steps">
-          <div class="cu-step" data-stage="1">
-            <span class="cu-step__n">01</span>
-            <div>
-              <h3 class="cu-step__t">Week 1, Structure</h3>
-              <p class="cu-step__b">Structure gets locked first. Every page gets mapped against the offer and the quote flow: what a homeowner needs to see, and in what order, to pick up the phone or fill out the form. Copy and structure are approved before anything gets designed.</p>
-            </div>
-          </div>
-          <div class="cu-step" data-stage="2">
-            <span class="cu-step__n">02</span>
-            <div>
-              <h3 class="cu-step__t">Week 2, Build</h3>
-              <p class="cu-step__b">Pages get built. 5 pages coded, the quote form wired to route to your team, form submissions tracked and reported, mobile checked on real phones.</p>
-            </div>
-          </div>
-          <div class="cu-step" data-stage="3">
-            <span class="cu-step__n">03</span>
-            <div>
-              <h3 class="cu-step__t">Week 3, Revisions and Launch</h3>
-              <p class="cu-step__b">2 rounds of revisions: word changes, image swaps, layout adjustments inside the built structure. Once approved, the site goes live, DNS is pointed, and every tracked piece is confirmed working before we call it done.</p>
-            </div>
-          </div>
+      <div class="cu-weeks reveal">
+        <div class="cu-weeks__rail" aria-hidden="true"><i></i></div>
+        <div class="cu-weeks__burst" aria-hidden="true"></div>
+        <ol class="cu-weeks__track">
+          <li class="cu-week" data-stage="1">
+            <span class="cu-week__mark" aria-hidden="true"></span>
+            <button class="cu-week__cal" type="button" aria-pressed="false">
+              <div class="cu-week__head">
+                <span class="cu-week__rings" aria-hidden="true"><i></i><i></i></span>
+                <span class="cu-week__lbl">Week</span>
+                <span class="cu-week__tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M3 8.5l3.4 3.4L13 5.2"/></svg></span>
+              </div>
+              <div class="cu-week__pad">
+                <span class="cu-week__n">01</span>
+                <span class="cu-week__t">Structure</span>
+                <p class="cu-week__b">Structure gets locked first. Every page gets mapped against the offer and the quote flow: what a homeowner needs to see, and in what order, to pick up the phone or fill out the form. Copy and structure are approved before anything gets designed.</p>
+              </div>
+            </button>
+          </li>
+          <li class="cu-week" data-stage="2">
+            <span class="cu-week__mark" aria-hidden="true"></span>
+            <button class="cu-week__cal" type="button" aria-pressed="false">
+              <div class="cu-week__head">
+                <span class="cu-week__rings" aria-hidden="true"><i></i><i></i></span>
+                <span class="cu-week__lbl">Week</span>
+                <span class="cu-week__tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M3 8.5l3.4 3.4L13 5.2"/></svg></span>
+              </div>
+              <div class="cu-week__pad">
+                <span class="cu-week__n">02</span>
+                <span class="cu-week__t">Build</span>
+                <p class="cu-week__b">Pages get built. 5 pages coded, the quote form wired to route to your team, mobile checked on real phones.</p>
+              </div>
+            </button>
+          </li>
+          <li class="cu-week" data-stage="3">
+            <span class="cu-week__mark" aria-hidden="true"></span>
+            <button class="cu-week__cal" type="button" aria-pressed="false">
+              <div class="cu-week__head">
+                <span class="cu-week__rings" aria-hidden="true"><i></i><i></i></span>
+                <span class="cu-week__lbl">Week</span>
+                <span class="cu-week__tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M3 8.5l3.4 3.4L13 5.2"/></svg></span>
+              </div>
+              <div class="cu-week__pad">
+                <span class="cu-week__n">03</span>
+                <span class="cu-week__t">Revisions and Launch</span>
+                <p class="cu-week__b">After all revisions are done from the client, the website is fully deployed and good to go. UTM tracking and on-site SEO are configured. Revisions for life are complimentary.</p>
+              </div>
+            </button>
+          </li>
+        </ol>
+      </div>
         </div>
       </div>
 
@@ -1473,7 +2387,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
 
   <!-- ==================== 3. WHAT IT COSTS ==================== -->
 
-  <section class="cu-sec cu-sec--apex cu-sec--gold" aria-labelledby="cost-h">
+  <section class="cu-sec cu-sec--flat cu-sec--gold" aria-labelledby="cost-h">
     <div class="cu-wrap">
       <h2 class="cu-sr-only" id="cost-h">What It Costs</h2>
       <span class="cu-eyebrow">What it costs</span>
@@ -1481,14 +2395,20 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
       <div class="cu-offer reveal">
         <div class="cu-offer__wash" aria-hidden="true"></div>
         <div class="cu-price">
-          <div class="cu-price__n"><span data-countup="1400" data-prefix="$" data-comma="1">$0</span></div>
+          <div class="cu-price__glow" aria-hidden="true"></div>
+          <div class="cu-price__row">
+            <span class="cu-price__arm cu-price__arm--l" aria-hidden="true"></span>
+            <div class="cu-price__n"><span data-countup="1400" data-prefix="$" data-comma="1">$0</span></div>
+            <span class="cu-price__arm cu-price__arm--r" aria-hidden="true"></span>
+          </div>
           <div class="cu-price__bar" aria-hidden="true"></div>
           <span class="cu-price__l">One time. Website build.</span>
         </div>
       </div>
 
-      <table class="cu-ledger reveal">
-        <caption>Included in the Build</caption>
+      <div class="cu-ledger__box reveal">
+      <table class="cu-ledger">
+        <caption>Included In The Build</caption>
         <thead>
           <tr><th scope="col">Deliverable</th><th scope="col">Included</th></tr>
         </thead>
@@ -1504,42 +2424,27 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
           <tr><td><span>Handover, every file and account in your name</span></td><td>Included</td></tr>
         </tbody>
       </table>
+      </div>
 
       <div class="cu-terms">
         <div class="cu-term">
           <div class="cu-term__t">Not included</div>
-          <p class="cu-term__b">Hosting. Domain renewal. Ad spend. Work on pages outside the 5.</p>
+          <p class="cu-term__b">Domain renewal. Work on pages outside the 5.</p>
         </div>
         <div class="cu-term">
           <div class="cu-term__t">Pass through</div>
-          <p class="cu-term__b">Hosting is paid direct by you, in your own name, and never through Arc Garde.</p>
+          <p class="cu-term__b">The domain is paid direct by you, through a domain provider, in your own name, and never through Arc Garde.</p>
         </div>
         <div class="cu-term">
           <div class="cu-term__t">Terms</div>
-          <p class="cu-term__b">$1,400 to begin work. Payment locks the start date.</p>
+          <p class="cu-term__b">$700 to begin work. Payment locks the start date.</p>
         </div>
       </div>
-
-      <p class="cu-close reveal">3 weeks from now, this is what answers the&nbsp;phone.</p>
     </div>
 
     <!-- A band, edge to edge. It sits OUTSIDE the wrap, because a block inside a
          measured column cannot reach the edges of the page no matter what width
          it is given. The pair centres back to the section's measure inside it. -->
-    <div class="cu-band">
-      <div class="cu-wrap">
-        <div class="cu-terms">
-          <div class="cu-term">
-            <div class="cu-term__t">Reporting</div>
-            <p class="cu-term__b">A short update at the end of each week: what's built, what's next, and a live link to review it yourself. No dashboard login required.</p>
-          </div>
-          <div class="cu-term">
-            <div class="cu-term__t">No projections</div>
-            <p class="cu-term__b">Arc Garde does not guarantee a specific number of leads, calls or jobs.</p>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Its own wrap. Moving this block between sections in an earlier pass left
          it OUTSIDE the measured column, so its heading sat hard against the page
@@ -1555,46 +2460,40 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
             <li class="cu-needrun__node">
               <button class="cu-needrun__card" type="button">
                 <span class="cu-needrun__n">01</span>
-                <span class="cu-needrun__b">Domain registrar access or DNS login</span>
+                <span class="cu-needrun__b">Intake forms, both the copy intake and the website intake</span>
               </button>
             </li>
             <li class="cu-needrun__node">
               <button class="cu-needrun__card" type="button">
                 <span class="cu-needrun__n">02</span>
-                <span class="cu-needrun__b">Current hosting details, if the site already lives somewhere</span>
+                <span class="cu-needrun__b">Logo intake, if you want your mark revamped</span>
               </button>
             </li>
             <li class="cu-needrun__node">
               <button class="cu-needrun__card" type="button">
                 <span class="cu-needrun__n">03</span>
-                <span class="cu-needrun__b">Logo and any existing brand assets</span>
+                <span class="cu-needrun__b">Brand assets and logos</span>
               </button>
             </li>
             <li class="cu-needrun__node">
               <button class="cu-needrun__card" type="button">
                 <span class="cu-needrun__n">04</span>
-                <span class="cu-needrun__b">Photos of finished roofs and crew, or approval to use stock until your own are ready</span>
+                <span class="cu-needrun__b">Pictures of your work, job sites, and befores and afters</span>
               </button>
             </li>
             <li class="cu-needrun__node">
               <button class="cu-needrun__card" type="button">
                 <span class="cu-needrun__n">05</span>
-                <span class="cu-needrun__b">Licenses, certifications, or reviews you want featured</span>
+                <span class="cu-needrun__b">Certifications and licenses you need to display on the site legally</span>
               </button>
             </li>
             <li class="cu-needrun__node">
               <button class="cu-needrun__card" type="button">
                 <span class="cu-needrun__n">06</span>
-                <span class="cu-needrun__b">The number and the financing offer the site and ads will run on</span>
+                <span class="cu-needrun__b">Domain registrar access or DNS login, needed at the end of the build</span>
               </button>
             </li>
-            <li class="cu-needrun__node">
-              <button class="cu-needrun__card" type="button">
-                <span class="cu-needrun__n">07</span>
-                <span class="cu-needrun__b">CRM login or API access, if you already run one, so the quote form can route into it</span>
-              </button>
-            </li>
-              </ol>
+            </ol>
             </div>
           </div>
           <div class="cu-road__ctl">
@@ -1607,7 +2506,6 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
             </button>
           </div>
         </div>
-        <p class="cu-need__note">CRM is your cost, not part of this build. GoHighLevel is recommended if you don't already have one, but the build works with any established CRM.</p>
       </div>
     </div>
   </section>
@@ -1754,7 +2652,8 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
     paint();
   }
 
-  initRun({ root:'.cu-road', view:'.cu-road__view', track:'.cu-road__track',
+  /* the what-we-do section is three panels now, not a track */
+  initRun({ root:'.cu-road-retired', view:'.cu-road__view', track:'.cu-road__track',
             node:'.cu-road__node', card:'.cu-road__card', pips:'.cu-road__pips',
             pipClass:'cu-road__pip', label:'Piece' });
   initRun({ root:'.cu-needrun', view:'.cu-road__view', track:'.cu-road__track',
@@ -1779,12 +2678,31 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
       /* the title arrives on the sweep finishing, not on a second guess at how
          long the sweep takes; the timeout is only a backstop */
       var rev = roof.querySelector('.cu-roof__reveal'), done = false;
-      function fin(){ if (done) return; done = true; settle(); }
+      /* The sweep finishing is what CUES the grade, and the grade is what cues
+         the type. Three beats, in the order the reader is asked to take them:
+         the roof changes, the look lands on it, the words arrive on top. */
+      function fin(){ if (done) return; done = true; grade(); }
       rev.addEventListener('animationend', fin, {once:true});
       setTimeout(fin, 2100);
     }
     var hero = document.querySelector('.cu-hero');
     function settle(){ if (hero) hero.classList.add('is-set'); }
+    /* The grade settles over the clean plate, and the type follows PART-WAY
+       through it rather than after all of it: waiting for the grade to finish
+       reads as a stall, overlapping it reads as one continuous move. */
+    function grade(){
+      roof.classList.add('is-graded');
+      setTimeout(settle, 378);   /* 3 x 126 */
+      /* Three seconds after the entrance has landed, the reveal takes itself
+         over. is-wiping comes OFF as is-cycling goes on: both drive the same
+         transform, and leaving the finished one in place means two animations
+         arguing over one property. The loop opens on the finished roof, which
+         is exactly where the entrance left it, so the hand-off is invisible. */
+      setTimeout(function(){
+        roof.classList.remove('is-wiping');
+        roof.classList.add('is-cycling');
+      }, 378 + 3003);
+    }
     function loaded(){
       if (roof.classList.contains('is-loaded')) return;
       roof.classList.add('is-loaded');
@@ -1792,16 +2710,304 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
          complaint was never the sweep's speed, it was the wait before it. */
       setTimeout(wipe, 420 + 105);   /* 525ms, 28% off 735. 3 x 140 + 3 x 35 */
     }
+
+    /* The curtain owns the first ~2.5s. Decoding is fast, so the entrance and
+       the sweep used to run underneath it: the curtain lifted onto a roof that
+       had already changed, and the whole effect was spent on a screen nobody
+       was looking at. The sequence now waits on BOTH the frames decoding and
+       the curtain lifting, whichever lands last, then holds 350ms so the sweep
+       starts as the 700ms curtain fade clears. Every failure path still runs
+       it: no curtain, no ag:ready, no decode, each one falls through. */
+    var decoded = false, revealed = false, armed = false;
+    var LEAD = 350;                /* half the 700ms curtain fade */
+    function go(){
+      if (armed || !decoded || !revealed) return;
+      armed = true;
+      /* one timer only: loaded() schedules the wipe and the wipe schedules the
+         settle, so nothing downstream can stall. A second backstop here would
+         land the title early and cut the beat after the sweep. */
+      setTimeout(function(){ requestAnimationFrame(loaded); }, LEAD);
+    }
     Promise.all(imgs.map(function(i){
       return (i.decode ? i.decode() : Promise.resolve()).catch(function(){});
-    })).then(function(){ requestAnimationFrame(loaded); });
-    setTimeout(function(){ loaded(); wipe(); settle(); }, 6300);   /* backstop, 3 x 2100 */
+    })).then(function(){ decoded = true; go(); });
+    setTimeout(function(){ decoded = true; go(); }, 6300);   /* decode backstop, 3 x 2100 */
+
+    if (!document.documentElement.classList.contains('is-loading')) { revealed = true; go(); }
+    else {
+      window.addEventListener('ag:ready', function(){ revealed = true; go(); }, { once:true });
+      setTimeout(function(){ revealed = true; go(); }, 6600);   /* curtain fails open at 6000 */
+    }
   })();
 
 
   document.querySelectorAll('.cu-drop').forEach(function(el, i){
     el.style.setProperty('--dd', (i * -1.4) + 's');   /* 3 drops across a 4.2s loop */
   });
+
+  /* ---- 0b. the headline, split into words -------------------------
+     Done here rather than in the markup so the un-split line stays the
+     fallback: if this never runs, the copy is still a normal sentence.
+
+     The split is on the PLAIN space only. A non-breaking space is left inside
+     its word, so a glued pair travels as ONE span and the orphan guard already
+     in the copy is not undone by the animation. ag-typography is deferred and
+     runs later, so it sees the split; its widow fixer needs two plain-space
+     words inside one text node and will not find them, which is what keeps the
+     two passes from fighting over the same line. */
+  (function(){
+    var hero = document.querySelector('.cu-hero');
+    if (!hero) return;
+    var lines = hero.querySelectorAll('.cu-hero__l1, .cu-hero__l2');
+    if (!lines.length) return;
+    var i = 0;
+    Array.prototype.forEach.call(lines, function(line){
+      var words = line.textContent.split(' ');
+      line.textContent = '';
+      words.forEach(function(w, k){
+        if (!w) return;
+        var sp = document.createElement('span');
+        sp.className = 'cu-w';
+        sp.textContent = (k ? ' ' : '') + w;   /* the space rides WITH the word */
+        sp.style.setProperty('--i', i++);
+        line.appendChild(sp);
+      });
+    });
+    if (i) hero.classList.add('is-split');
+  })();
+
+  /* ---- 0b2. the one-up stack --------------------------------------
+     Three panels in one slot. Only the live one is reachable: the rest are
+     visibility:hidden so they leave the tab order and the accessibility tree
+     rather than sitting invisible on top of the page collecting focus.
+
+     The view's height is SET, not left to the content. The panels are taken
+     out of flow so they can cross-fade past each other, which means the slot
+     has no height of its own, and a slot that snaps between two heights while
+     a panel slides is the thing that makes this look cheap. It is measured on
+     every change: advance, open, close, resize, and once more when the fonts
+     land, because a panel measured on the fallback face is the wrong height. */
+  (function(){
+    var stack = document.querySelector('.cu-stack');
+    if (!stack) return;
+    var view   = stack.querySelector('.cu-stack__view');
+    var panels = [].slice.call(stack.querySelectorAll('.cu-stack__panel'));
+    var pipWrap= stack.querySelector('.cu-stack__pips');
+    if (!view || !panels.length) return;
+    var at = 0;
+
+    /* One height for all three, taken from the tallest. The panels hold
+       different numbers of lines, so sizing the slot to whichever is live
+       makes the box jump every time the reader advances. The shorter two
+       carry the spare room instead, which is the quieter of the two faults. */
+    function height(){
+      var tallest = 0;
+      panels.forEach(function(pn){
+        var head = pn.querySelector('.cu-stack__head');
+        var list = pn.querySelector('.cu-stack__list');
+        var cs = getComputedStyle(pn);
+        var h = (head ? head.offsetHeight : 0) + (list ? list.scrollHeight : 0)
+              + parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+        if (h > tallest) tallest = h;
+      });
+      if (tallest) view.style.height = tallest + 'px';
+    }
+
+    var pips = panels.map(function(_, i){
+      if (!pipWrap) return null;
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'cu-stack__pip'; b.setAttribute('role','tab');
+      b.setAttribute('aria-label', 'Piece ' + (i + 1) + ' of ' + panels.length);
+      b.addEventListener('click', function(){ go(i); });
+      pipWrap.appendChild(b); return b;
+    });
+
+    function paint(){
+      panels.forEach(function(panel, i){
+        var on = i === at;
+        if (on) panel.setAttribute('data-on','true');
+        else    panel.removeAttribute('data-on');
+        panel.setAttribute('aria-hidden', on ? 'false' : 'true');
+        var head = panel.querySelector('.cu-stack__head');
+        if (head) head.tabIndex = on ? 0 : -1;
+      });
+      pips.forEach(function(b, i){
+        if (b) b.setAttribute('aria-selected', i === at ? 'true' : 'false');
+      });
+      height();
+    }
+
+    function go(to){
+      var n = panels.length;
+      to = (to % n + n) % n;
+      if (to === at) return;
+      /* forward runs up the roof, back runs down it */
+      var fwd = (to > at && !(at === 0 && to === n - 1)) || (at === n - 1 && to === 0);
+      stack.setAttribute('data-dir', fwd ? 'next' : 'prev');
+      at = to;
+      paint();
+    }
+
+    var prev = stack.querySelector('[data-stack="prev"]');
+    var next = stack.querySelector('[data-stack="next"]');
+    if (prev) prev.addEventListener('click', function(){ go(at - 1); });
+    if (next) next.addEventListener('click', function(){ go(at + 1); });
+
+    paint();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(height).catch(function(){});
+    var rt = null;
+    addEventListener('resize', function(){
+      clearTimeout(rt); rt = setTimeout(height, 147);   /* 3 x 49 */
+    });
+  })();
+
+  /* ---- 0b3. the week rail stops at the last stop -------------------
+     Measured, not assumed: the last diamond's position depends on how the text
+     above it wrapped, so it moves with the viewport and cannot be a constant. */
+  (function(){
+    var steps = document.querySelector('.cu-steps');
+    if (!steps) return;
+    function endRail(){
+      var ns = steps.querySelectorAll('.cu-step__n');
+      if (!ns.length) return;
+      var last = ns[ns.length - 1];
+      var sr = steps.getBoundingClientRect(), lr = last.getBoundingClientRect();
+      /* the diamond sits at 0.42em down the number's own box */
+      var centre = lr.top + 0.42 * parseFloat(getComputedStyle(last).fontSize);
+      steps.style.setProperty('--rail-end', Math.max(0, sr.bottom - centre) + 'px');
+    }
+    endRail();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(endRail).catch(function(){});
+    var t = null;
+    addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(endRail, 147); });
+  })();
+
+  /* ---- 0c. the ridge run ------------------------------------------
+     Two things here have to be MEASURED rather than assumed.
+
+     The angle: --cu-apex is a clamp against vw, so the flank angle changes
+     with the viewport and any baked value is right at exactly one width. It
+     cannot be read off getComputedStyle either, which hands back the clamp()
+     expression rather than a resolved length. A hidden probe sized to the
+     token gives the real px, which is the only number atan can use.
+
+     The length: the tape travels -50% of itself, which only loops seamlessly
+     when its two halves are identical AND the half already over-runs the
+     visible flank. So the word list is repeated an EVEN number of times and
+     grown until it does. An odd count would jump every cycle. */
+  (function(){
+    var ridges = [].slice.call(document.querySelectorAll('.cu-ridge'));
+    if (!ridges.length) return;
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* One initialiser per run. There are two now, a peak and a notch, and they
+       differ only in CSS: the geometry, the direction and the words all come
+       off the element, so nothing here needs to know which is which. */
+    ridges.forEach(function(ridge){
+      var tapes = [].slice.call(ridge.querySelectorAll('[data-ridge]'));
+      var src   = ridge.getAttribute('data-ridge-src');
+      var words = src
+        ? [].slice.call(document.querySelectorAll(src))
+            .map(function(el){ return el.textContent.trim(); }).filter(Boolean)
+        : [];
+      if (!words.length || !tapes.length) return;
+
+      var SPEED = 150;                /* px per second, the run's reading pace */
+
+      /* --cu-apex is a clamp against vw, so the flank angle changes with the
+         viewport and any baked value is right at exactly one width. It cannot
+         be read off getComputedStyle either, which hands back the clamp()
+         expression rather than a resolved length, so a hidden probe sized to
+         the token gives the real px that atan can use. */
+      var probe = document.createElement('div');
+      probe.style.cssText = 'position:absolute;top:0;left:0;width:0;visibility:hidden;' +
+                            'pointer-events:none;height:var(--cu-apex);';
+      ridge.appendChild(probe);
+
+      function fill(tape, reps){
+        tape.textContent = '';
+        var n = 0;
+        for (var r = 0; r < reps; r++){
+          words.forEach(function(w){
+            var sp = document.createElement('span');
+            sp.className = 'cu-ridge__w'; sp.textContent = w;
+            sp.style.setProperty('--i', n++);
+            tape.appendChild(sp);
+            var m = document.createElement('img');
+            m.className = 'cu-ridge__m';
+            m.src = 'assets/logo-mark.png';
+            m.width = 134; m.height = 98;
+            m.alt = ''; m.setAttribute('aria-hidden','true');
+            m.decoding = 'async'; m.loading = 'lazy';
+            m.style.setProperty('--i', n++);
+            tape.appendChild(m);
+          });
+        }
+      }
+
+      function measure(){
+        var apexPx = probe.getBoundingClientRect().height;
+        var half   = ridge.getBoundingClientRect().width / 2;
+        if (!apexPx || !half) return;
+        var rad = Math.atan2(apexPx, half);
+        ridge.style.setProperty('--cu-ridge-a',
+          (rad * 180 / Math.PI).toFixed(3) + 'deg');
+        /* how far the tilted end edge overhangs the joint, in px */
+        var side = ridge.querySelector('.cu-ridge__side');
+        if (side) ridge.style.setProperty('--cu-ridge-slant',
+          (side.offsetHeight * Math.tan(rad)).toFixed(2) + 'px');
+
+        tapes.forEach(function(tape){
+          var need = tape.parentNode.getBoundingClientRect().width * 2;
+          var reps = 2;
+          fill(tape, reps);
+          while (tape.scrollWidth < need && reps < 16){ reps += 2; fill(tape, reps); }
+          /* The exact loop distance: where the second copy starts. Measured off
+             the DOM rather than derived from a width, so margins and letter
+             spacing cannot put a seam in the cycle. */
+          var kids = tape.children;
+          var travel = kids.length > 1
+            ? kids[kids.length / 2].offsetLeft - kids[0].offsetLeft
+            : tape.scrollWidth / 2;
+          tape.style.setProperty('--cu-ridge-travel', travel.toFixed(2) + 'px');
+          tape.style.setProperty('--cu-ridge-dur', (travel / SPEED).toFixed(2) + 's');
+        });
+      }
+
+      measure();
+      /* Webfonts change glyph metrics, so a tape measured on the fallback face
+         is a tape that never existed and the seam comes back. */
+      if (document.fonts && document.fonts.ready){
+        document.fonts.ready.then(measure).catch(function(){});
+      }
+
+      /* .reveal is not used here: it carries its own translateY, and these
+         words sit inside a flank that is already rotated. */
+      if (reduce || !('IntersectionObserver' in window)){
+        ridge.classList.add('is-run');
+      } else {
+        ridge.classList.add('is-armed');
+        new IntersectionObserver(function(es, o){
+          es.forEach(function(e){
+            if (!e.isIntersecting) return;
+            ridge.classList.add('is-run');
+            /* a resize refills the tape, which would replay the rise on brand
+               new spans. Once it has landed the entrance is spent. */
+            setTimeout(function(){
+              ridge.classList.remove('is-armed');
+              ridge.classList.add('is-settled');
+            }, 1400);
+            o.unobserve(e.target);
+          });
+        }, { threshold:0.25 }).observe(ridge);
+      }
+
+      var t = null;
+      addEventListener('resize', function(){
+        clearTimeout(t); t = setTimeout(measure, 147);   /* 3 x 49 */
+      });
+    });
+  })();
 
   /* ---- 1. the hero arrival gate ---------------------------------- */
   var hero = document.querySelector('.cu-hero');
@@ -1825,80 +3031,157 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
     }
     setTimeout(function(){ requestAnimationFrame(frame); }, delay || 0);
   }
-  var counters = document.querySelectorAll('[data-countup]');
+  /* THE COUNT.
+     Driven by a position test rather than by an observer alone. The observer
+     version reached the page dead: it was created, it was given the element,
+     and it never fired, so the figure sat on its markup value of $0 and the
+     one number that matters on this page never counted. A rAF-throttled check
+     against the viewport cannot silently fail to be registered, and it is
+     cheap because each element unsubscribes itself the moment it has run.
+
+     Guarded by a flag on the element, so the two paths can both be armed
+     without the count ever running twice. */
+  var counters = [].slice.call(document.querySelectorAll('[data-countup]'));
   if (!hasIO || reduce){
     counters.forEach(function(el){ paint(el, parseInt(el.dataset.countup,10)); });
   } else {
-    var cio = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if (!e.isIntersecting) return;
-        /* In the hero the figures are still arriving, so the count waits for
-           them rather than running underneath a fade. */
-        var inHero = !!e.target.closest('.cu-hero');
-        run(e.target, inHero ? 882 : 0);
-        cio.unobserve(e.target);
-      });
-    }, { threshold: 0.4 });
-    counters.forEach(function(el){ cio.observe(el); });
+    var pending = counters.slice();
+    var cTick = false;
+    /* Self-contained: it does its own timing and its own painting. Handing off
+       to the shared helper left the figure on $0 with the element flagged as
+       counted, so the count was being started and then losing its writes
+       somewhere it could not be seen. This owns the whole path. */
+    function fire(el){
+      if (el.dataset.counted) return;
+      el.dataset.counted = '1';
+      var target = parseInt(el.dataset.countup, 10);
+      if (isNaN(target)) return;
+      var pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+      var comma = !!el.dataset.comma;
+      function put(v){
+        el.textContent = pre + (comma ? v.toLocaleString('en-US') : String(v)) + suf;
+      }
+      if (reduce){ put(target); return; }
+      /* the hero's figures are still arriving, so a count in there waits */
+      var delay = el.closest('.cu-hero') ? 882 : 0;
+      var dur = 1050, t0 = null;               /* 3 x 350 */
+      function step(t){
+        if (t0 === null) t0 = t;
+        var q = Math.min((t - t0) / dur, 1);
+        put(Math.round(target * (1 - Math.pow(1 - q, 3))));
+        if (q < 1) requestAnimationFrame(step);
+      }
+      setTimeout(function(){ requestAnimationFrame(step); }, delay);
+    }
+    function cCheck(){
+      cTick = false;
+      for (var i = pending.length - 1; i >= 0; i--){
+        var el = pending[i];
+        var r = el.getBoundingClientRect();
+        if (!r.height) continue;
+        var shown = Math.min(r.bottom, innerHeight) - Math.max(r.top, 0);
+        if (shown / r.height >= 0.4){ fire(el); pending.splice(i, 1); }
+      }
+    }
+    addEventListener('scroll', function(){
+      if (cTick || !pending.length) return;
+      cTick = true; requestAnimationFrame(cCheck);
+    }, { passive: true });
+    addEventListener('resize', function(){
+      if (cTick || !pending.length) return;
+      cTick = true; requestAnimationFrame(cCheck);
+    }, { passive: true });
+    cCheck();
   }
 
-  /* ---- 3. the roof assembly, gated by the 3 weeks ----------------- */
-  var svg   = document.getElementById('cu-assembly');
-  /* Hold the finished roof for a beat before it comes apart. Opening it the
-     instant it appears means nobody sees the thing that is being taken apart. */
-  if (svg){
-    if (reduce || !hasIO){ svg.classList.add('is-open'); }
-    else {
-      new IntersectionObserver(function(es, o){
-        es.forEach(function(e){
-          if (!e.isIntersecting) return;
-          setTimeout(function(){ svg.classList.add('is-open'); }, 630);
-          o.unobserve(e.target);
-        });
-      }, { threshold: 0.35 }).observe(svg);
+  /* ---- 3. the three weeks ----------------------------------------
+     The rail fills ACROSS now rather than down, so the run is measured from
+     the first stop to the last rather than from the top of a list: --run is
+     the travelled fraction between the first diamond and the last, which is
+     the only span the gold is allowed to cover. Anything else either starts
+     the line short of week 1 or runs it past week 3.
+
+     The live week is the one nearest the middle of the screen, not the
+     furthest one seen. All three fit on one viewport, so a highest-watermark
+     observer jumps straight to week 3 and the run never walks. */
+  var weeksWrap = document.querySelector('.cu-weeks');
+  var weeks = weeksWrap ? [].slice.call(weeksWrap.querySelectorAll('.cu-week')) : [];
+  if (weeksWrap && weeks.length){
+    var railFill = weeksWrap.querySelector('.cu-weeks__rail i');
+    var burst    = weeksWrap.querySelector('.cu-weeks__burst');
+    var wasFull  = false;
+
+    /* Where the rail starts and ends, in the wrap's own px. The stops sit at
+       the centres of grid columns, which is not a fraction anything can be
+       hard-coded to, and it moves with the viewport and the loaded face. */
+    function rail(){
+      var wr = weeksWrap.getBoundingClientRect();
+      var a = weeks[0].querySelector('.cu-week__mark');
+      var b = weeks[weeks.length - 1].querySelector('.cu-week__mark');
+      if (!a || !b || !wr.width) return;
+      var ar = a.getBoundingClientRect(), br = b.getBoundingClientRect();
+      weeksWrap.style.setProperty('--rail-a',
+        (ar.left + ar.width / 2 - wr.left).toFixed(1) + 'px');
+      weeksWrap.style.setProperty('--rail-w',
+        Math.max(0, (br.left + br.width / 2) - (ar.left + ar.width / 2)).toFixed(1) + 'px');
     }
-  }
-  var steps = [].slice.call(document.querySelectorAll('.cu-step[data-stage]'));
-  if (svg && steps.length){
-    if (!hasIO || reduce){
-      svg.setAttribute('data-stage','3');
-      steps.forEach(function(s){ s.classList.add('in-view'); });
-    } else {
-      /* The active week is the one nearest the middle of the screen, not the
-         furthest one seen. All three steps fit on a 1080 viewport at once, so a
-         highest-watermark observer jumped straight to week 3 and the layers
-         never walked. This follows the reader instead. */
-      var ticking = false;
-      function sync(){
-        ticking = false;
-        var mid = innerHeight / 2, best = null, bestD = Infinity;
-        steps.forEach(function(el){
-          var r = el.getBoundingClientRect();
-          if (r.bottom < 0 || r.top > innerHeight) return;
-          el.classList.add('in-view');
-          var d = Math.abs((r.top + r.bottom) / 2 - mid);
-          if (d < bestD){ bestD = d; best = el; }
-        });
-        if (!best) return;
-        svg.setAttribute('data-stage', best.dataset.stage);
-        /* the same active week drives the rail, so the drawing and the list
-           are never showing different things */
-        var wrap = best.parentElement;
-        wrap.classList.add('is-run');
-        steps.forEach(function(el){ el.classList.toggle('is-on', el === best); });
-        var wr = wrap.getBoundingClientRect();
-        var br = best.querySelector('.cu-step__n').getBoundingClientRect();
-        var run = (br.top + 0.42 * parseFloat(getComputedStyle(best.querySelector('.cu-step__n')).fontSize) - wr.top) / wr.height;
-        wrap.style.setProperty('--run', Math.max(0, Math.min(1, run)).toFixed(3));
+
+    /* Brand confetti, thrown from the rail. Built and thrown away in one go:
+       nothing is left in the DOM to accumulate if the run is completed twice. */
+    function throwConfetti(){
+      if (reduce || !burst) return;
+      var tone = ['var(--cu-red)','var(--cu-gold)','var(--cu-paper)'];
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < 42; i++){          /* 7 x 6 */
+        var bit = document.createElement('i');
+        bit.className = 'cu-conf';
+        bit.style.background = tone[i % 3];
+        bit.style.setProperty('--cx',  (Math.random() * 100).toFixed(1) + '%');
+        bit.style.setProperty('--dx',  ((Math.random() - 0.5) * 320).toFixed(0) + 'px');
+        bit.style.setProperty('--dy',  (120 + Math.random() * 300).toFixed(0) + 'px');
+        bit.style.setProperty('--rot', (Math.random() * 720 - 360).toFixed(0) + 'deg');
+        bit.style.setProperty('--dur', (910 + Math.random() * 700).toFixed(0) + 'ms');
+        bit.style.setProperty('--del', (Math.random() * 210).toFixed(0) + 'ms');
+        frag.appendChild(bit);
       }
-      addEventListener('scroll', function(){
-        if (ticking) return; ticking = true; requestAnimationFrame(sync);
-      }, { passive: true });
-      addEventListener('resize', function(){
-        if (ticking) return; ticking = true; requestAnimationFrame(sync);
-      }, { passive: true });
-      sync();
+      burst.appendChild(frag);
+      setTimeout(function(){
+        [].slice.call(burst.querySelectorAll('.cu-conf')).forEach(function(n){
+          if (n.parentNode) n.parentNode.removeChild(n);
+        });
+      }, 2100);   /* 7 x 300, past the longest piece */
     }
+
+    function paint(){
+      var done = 0;
+      weeks.forEach(function(w){ if (w.classList.contains('is-done')) done++; });
+      var run = done / weeks.length;
+      weeksWrap.style.setProperty('--run', run.toFixed(3));
+      if (railFill) railFill.style.transform = 'scaleX(' + run.toFixed(3) + ')';
+      var full = done === weeks.length;
+      /* only on the TRANSITION into a full run, or un-ticking and re-ticking
+         one page would throw the confetti again on every press */
+      if (full && !wasFull) throwConfetti();
+      wasFull = full;
+    }
+
+    weeks.forEach(function(w){
+      var cal = w.querySelector('.cu-week__cal');
+      if (!cal) return;
+      cal.addEventListener('click', function(){
+        var on = w.classList.toggle('is-done');
+        cal.setAttribute('aria-pressed', on ? 'true' : 'false');
+        paint();
+      });
+    });
+
+    weeks.forEach(function(w){ w.classList.add('in-view'); });
+    rail();
+    paint();
+    var rt = null;
+    addEventListener('resize', function(){
+      clearTimeout(rt); rt = setTimeout(rail, 147);   /* 3 x 49 */
+    }, { passive: true });
   }
 })();
 </script>
