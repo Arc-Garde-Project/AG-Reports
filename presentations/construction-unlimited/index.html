@@ -349,26 +349,48 @@ p{ margin:0; text-wrap:pretty; }
      ever on screen, so equal height bought nothing visible and cost the
      three-item panel a large empty bottom. Each sizes to its own content and
      the slot transitions between them. */
-  position:absolute; left:0; right:0; top:0;
+  /* centred in the slot, not hung from its top. The slot is reserved at the
+     TALLEST piece, so a three-item sheet pinned to top:0 sat high with all the
+     spare room under it and read as misaligned against the other two. */
+  position:absolute; left:0; right:0; top:50%;
   color:var(--cu-ink);
   border-top:var(--cu-rule) solid var(--cu-red);
   /* the sheet sits on the field rather than being pasted to it */
   box-shadow:var(--cu-e-dark), 0 0 0 1px rgba(20,16,12,.10);
   opacity:0; visibility:hidden; pointer-events:none;
-  transform:translate3d(0,var(--cu-stack-in,34px),0);
+  /* sideways, in the direction the arrows point. Sliding vertically while the
+     control that moved you points left and right reads as two different ideas. */
+  transform:translate3d(var(--cu-stack-in,52px),-50%,0) scale(.985);
   transition:opacity var(--cu-t-lay) var(--ease-satisfying),
              transform var(--cu-t-lay) var(--ease-satisfying),
              visibility 0s linear var(--cu-t-lay);
 }
 .cu-stack__panel[data-on="true"]{
   opacity:1; visibility:visible; pointer-events:auto;
-  transform:translate3d(0,0,0);
+  transform:translate3d(0,-50%,0) scale(1);
   transition:opacity var(--cu-t-lay) var(--ease-satisfying),
              transform var(--cu-t-lay) var(--ease-satisfying),
              visibility 0s;
 }
-/* going back sends the outgoing panel down and brings the incoming from above */
-.cu-stack[data-dir="prev"] .cu-stack__panel{ --cu-stack-in:-34px; }
+/* going back brings the incoming sheet in from the left instead */
+.cu-stack[data-dir="prev"] .cu-stack__panel{ --cu-stack-in:-52px; }
+
+/* the rows arrive behind the sheet rather than with it, so the piece assembles
+   instead of appearing whole */
+.cu-stack__panel .cu-stack__row{
+  opacity:0; transform:translate3d(0,10px,0);
+  transition:opacity 420ms var(--ease-satisfying), transform 420ms var(--ease-satisfying);
+}
+.cu-stack__panel[data-on="true"] .cu-stack__row{ opacity:1; transform:none; }
+.cu-stack__panel[data-on="true"] .cu-stack__row:nth-child(1){ transition-delay:126ms; }
+.cu-stack__panel[data-on="true"] .cu-stack__row:nth-child(2){ transition-delay:189ms; }
+.cu-stack__panel[data-on="true"] .cu-stack__row:nth-child(3){ transition-delay:252ms; }
+.cu-stack__panel[data-on="true"] .cu-stack__row:nth-child(4){ transition-delay:315ms; }
+.cu-stack__panel[data-on="true"] .cu-stack__row:nth-child(5){ transition-delay:378ms; }
+@media (prefers-reduced-motion:reduce){
+  .cu-stack__panel .cu-stack__row{ opacity:1 !important; transform:none !important; transition:none !important; }
+  .cu-ledger td:first-child::after{ animation:none !important; -webkit-mask-image:none !important; mask-image:none !important; }
+}
 
 .cu-stack__head{
   display:grid; grid-template-columns:auto 1fr; gap:0.2rem clamp(0.7rem,1.4vw,1.2rem);
@@ -417,6 +439,7 @@ p{ margin:0; text-wrap:pretty; }
 .cu-stack__row{
   /* the gap is the separation, per his own system */
   padding:clamp(0.72rem,1.1vw,1rem) clamp(1.1rem,0.8rem + 1vw,1.7rem);
+  break-inside:avoid;
 }
 .cu-stack__row:last-child{ padding-bottom:clamp(1.1rem,0.8rem + 1vw,1.7rem); }
 .cu-stack__item{
@@ -787,14 +810,18 @@ p{ margin:0; text-wrap:pretty; }
 .cu-hero{
   /* taller than the viewport by exactly the apex, so the cut-off is out of
      sight on load and only shows once the reader moves */
-  /* dvh, not svh. svh is the SMALL viewport: the height with the browser
-     chrome showing. The moment the URL bar hides, the viewport grows past it
-     and the next section's run appears under the hero. dvh tracks the live
-     viewport, so the hero owns the whole first screen in either state and the
-     scroll cue, pinned to its foot, stays on the bottom edge of the screen.
-     svh first as the fallback for anything that does not know dvh. */
+  /* THE HERO OWNS THE FIRST SCREEN, AND HOLDS STILL.
+     svh is the SMALL viewport, the height with the browser chrome showing: the
+     moment the URL bar hides the viewport grows past it and the next section
+     appears under the hero. dvh fixes that but re-measures as the toolbar
+     slides, so the hero grows and shrinks under the reader and the plate
+     visibly shifts with it.
+     lvh is the viewport with the chrome HIDDEN. It is a fixed number, so the
+     hero never resizes, and because it is the largest of the three nothing
+     below it can show through either. svh first, as the fallback for anything
+     that does not know lvh. */
   min-height:calc(100svh + var(--cu-apex));
-  min-height:calc(100dvh + var(--cu-apex));
+  min-height:calc(100lvh + var(--cu-apex));
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   text-align:center;
   padding-top:clamp(3.5rem,2.2rem + 4.8vw,6.5rem);
@@ -1091,7 +1118,12 @@ p{ margin:0; text-wrap:pretty; }
    below the fold and cues nothing. */
 .cu-scroll{
   position:absolute; left:0; right:0;
+  /* The hero is now a fixed lvh tall, so its foot sits below the fold while the
+     toolbar is showing. The cue is lifted by exactly the difference between the
+     two viewports, which lands it on the bottom edge of the SMALL one: visible
+     with the chrome up, and still comfortably placed once it hides. */
   bottom:calc(var(--cu-apex) + clamp(1.4rem,1vw + 0.8rem,2.2rem));
+  bottom:calc(var(--cu-apex) + (100lvh - 100svh) + clamp(1.4rem,1vw + 0.8rem,2.2rem));
   color:var(--cu-paper); opacity:.9;
   display:flex; flex-direction:column; align-items:center;
   gap:clamp(0.4rem,0.3rem + 0.3vw,0.7rem);
@@ -1782,6 +1814,33 @@ p{ margin:0; text-wrap:pretty; }
   margin-inline:clamp(0.7rem,1.4vw,1.1rem);
 }
 
+/* THE SHEET'S TITLE BLOCK AND ITS SPEC LIST.
+   The panel was a wide white slab with the copy in its left half and a large
+   dead field on the right, which is why it read as unfinished rather than as
+   plain. Two things fix it: the head is closed off with a short rule in his
+   red so it reads as a title block, and the items run in TWO columns on a wide
+   sheet so the copy occupies the sheet instead of hugging one edge. */
+.cu-stack__head{ position:relative; }
+.cu-stack__head::after{
+  content:""; position:absolute; left:clamp(1.1rem,0.8rem + 1vw,1.7rem);
+  bottom:0; width:clamp(2.6rem,7vw,4.4rem); height:var(--cu-rule);
+  background:var(--cu-red);
+}
+@media (min-width:760px){
+  .cu-stack__list{
+    display:grid; grid-template-columns:1fr 1fr;
+    column-gap:clamp(1.4rem,3vw,2.8rem);
+    align-items:start;
+  }
+}
+/* a stop per item, the same square-on-its-point the rails use */
+.cu-stack__row{ position:relative; padding-left:clamp(1.9rem,1.6rem + 1vw,2.6rem); }
+.cu-stack__row::before{
+  content:""; position:absolute; left:clamp(1.1rem,0.8rem + 1vw,1.7rem); top:1.05em;
+  width:7px; height:7px; background:var(--cu-red);
+  transform:rotate(45deg);
+}
+
 /* THE PAYMENT LINE.
    Directly under the figure, because the split is the second thing anyone
    looks for and it was buried in a container three blocks down. Weighted to
@@ -1882,7 +1941,23 @@ p{ margin:0; text-wrap:pretty; }
   background-size:21px 7px, 21px 7px, 21px 7px;
   background-repeat:repeat-x, repeat-x, repeat-x;
   opacity:.42;
-  animation:cu-leader 2.1s ease-in-out infinite;   /* 3 x 700 */
+  /* Two motions at once. The three layers bob out of phase, which gives real
+     vertical movement; a mask band then sweeps left to right, lifting whatever
+     it is over. Neither alone is a wave: the bob without the sweep has no
+     direction, and the sweep without the bob is only a shimmer. Together the
+     crest starts at the left and runs to the right end. */
+  -webkit-mask-image:linear-gradient(90deg,
+    rgba(0,0,0,.45) 0%, rgba(0,0,0,.45) 34%, #000 46%, #000 54%, rgba(0,0,0,.45) 66%, rgba(0,0,0,.45) 100%);
+          mask-image:linear-gradient(90deg,
+    rgba(0,0,0,.45) 0%, rgba(0,0,0,.45) 34%, #000 46%, #000 54%, rgba(0,0,0,.45) 66%, rgba(0,0,0,.45) 100%);
+  -webkit-mask-size:260% 100%; mask-size:260% 100%;
+  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+  animation:cu-leader 2.1s ease-in-out infinite,
+            cu-leader-sweep 2.8s linear infinite;   /* 3 x 700, 7 x 400 */
+}
+@keyframes cu-leader-sweep{
+  from{ -webkit-mask-position:-160% 0; mask-position:-160% 0; }
+  to  { -webkit-mask-position: 160% 0; mask-position: 160% 0; }
 }
 @keyframes cu-leader{
   0%   { background-position:0px  0px,  7px  2px, 14px -2px; }
