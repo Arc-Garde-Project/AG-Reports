@@ -8,6 +8,12 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Construction Unlimited | Website Build - Arc Garde</title>
 <meta name="description" content="A website build proposal prepared for Construction Unlimited by Arc Garde.">
+<!-- The plates ARE the hero, and the curtain waits on window load, so every
+     millisecond they start late is a millisecond the loading screen sits
+     there. Preloaded per breakpoint so a phone never reaches for the 1600. -->
+<link rel="preload" as="image" href="assets/roof-before-900.webp" media="(max-width:900px)" fetchpriority="high">
+<link rel="preload" as="image" href="assets/roof-before.webp" media="(min-width:901px)" fetchpriority="high">
+<link rel="preload" as="image" href="assets/roof-after-900.webp" media="(max-width:900px)">
 <link rel="canonical" href="https://ag-reports.vercel.app/presentations/construction-unlimited">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ag-reports.vercel.app/presentations/construction-unlimited">
@@ -143,6 +149,11 @@ body{
   font-weight:400;
   font-size:var(--cu-body);
   line-height:1.62;
+  /* Grayscale smoothing is right for light type on the dark field, which is
+     most of this deck. It is an APPLE-ONLY switch: it does nothing on Windows,
+     so a Mac or iPhone renders every glyph lighter than the same page on a
+     Windows machine. On the paper cards, where the type is dark on white, it
+     reads as under-weight, so those opt back out below. */
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
   /* clip, not hidden. A non-visible value on one axis computes the other to
@@ -758,7 +769,14 @@ p{ margin:0; text-wrap:pretty; }
 .cu-hero{
   /* taller than the viewport by exactly the apex, so the cut-off is out of
      sight on load and only shows once the reader moves */
+  /* dvh, not svh. svh is the SMALL viewport: the height with the browser
+     chrome showing. The moment the URL bar hides, the viewport grows past it
+     and the next section's run appears under the hero. dvh tracks the live
+     viewport, so the hero owns the whole first screen in either state and the
+     scroll cue, pinned to its foot, stays on the bottom edge of the screen.
+     svh first as the fallback for anything that does not know dvh. */
   min-height:calc(100svh + var(--cu-apex));
+  min-height:calc(100dvh + var(--cu-apex));
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   text-align:center;
   padding-top:clamp(3.5rem,2.2rem + 4.8vw,6.5rem);
@@ -832,6 +850,8 @@ p{ margin:0; text-wrap:pretty; }
              transform var(--cu-t-field) var(--ease-satisfying);
 }
 .cu-roof.is-armed.is-loaded .cu-roof__frame{ opacity:1; transform:none; }
+.cu-roof__frame > picture,
+.cu-roof__slide > picture{ position:absolute; inset:0; display:block; }
 .cu-roof__img{
   position:absolute; inset:0; width:100%; height:100%;
   object-fit:cover; object-position:50% 40%;   /* hold the roofline, not the lawn */
@@ -1369,6 +1389,13 @@ p{ margin:0; text-wrap:pretty; }
   transform:rotate(45deg) scale(1.45);
   box-shadow:0 0 0 5px var(--cu-siding-red), 0 0 16px var(--cu-gold);
 }
+
+/* Dark ink on paper does not want grayscale smoothing: on Apple devices it
+   thins the stems and the headings stop reading as bold. Scoped to the cards
+   that actually sit on paper. */
+.cu-stack__panel,
+.cu-week__cal,
+.cu-road__card{ -webkit-font-smoothing:auto; }
 
 /* ============================================================
    THE THREE WEEKS
@@ -2103,7 +2130,12 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
   var C = document.querySelector('.ag-curtain'), root = document.documentElement;
   if (!C) { root.classList.remove('is-loading'); return; }
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var MIN = 2520, BRAND_AT = 1400, CLEANUP = 900, MAX = 6000, start = performance.now(), done = false;
+  /* MIN is counted from NAVIGATION, not from the moment this script happened
+     to parse. performance.now() is already relative to the time origin, so the
+     old `start = performance.now()` offset added however long the document took
+     to arrive on top of the hold: on a throttled phone that pushed the lift
+     ~1.8s past window load and the loader sat there for no reason. */
+  var MIN = 2520, BRAND_AT = 1400, CLEANUP = 900, MAX = 6000, done = false;
   function lift(){
     if (done) return; done = true;
     root.classList.remove('is-loading'); root.classList.add('is-ready');
@@ -2111,8 +2143,9 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
     setTimeout(function(){ if (C.parentNode) C.parentNode.removeChild(C); }, CLEANUP);
   }
   if (reduce) { lift(); return; }
-  setTimeout(function(){ C.setAttribute('data-phase','brand'); }, BRAND_AT);
-  function schedule(){ setTimeout(lift, Math.max(0, MIN - (performance.now() - start))); }
+  setTimeout(function(){ C.setAttribute('data-phase','brand'); },
+             Math.max(0, BRAND_AT - performance.now()));
+  function schedule(){ setTimeout(lift, Math.max(0, MIN - performance.now())); }
   if (document.readyState === 'complete') schedule();
   else window.addEventListener('load', schedule, { once:true });
   setTimeout(lift, MAX); // fail-open
@@ -2144,16 +2177,22 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
          photographic plate for no gain. -->
     <div class="cu-roof" aria-hidden="true">
       <div class="cu-roof__frame">
-        <img class="cu-roof__img" src="assets/roof-before.webp" width="1600" height="800"
-             fetchpriority="high" decoding="async" alt="">
+        <picture>
+          <source media="(max-width:900px)" srcset="assets/roof-before-900.webp" width="900" height="450">
+          <img class="cu-roof__img" src="assets/roof-before.webp" width="1600" height="800"
+               fetchpriority="high" decoding="async" alt="">
+        </picture>
         <!-- The reveal is a window that slides in from the left while the frame
              inside it slides the opposite way by the same amount, so the
              photograph never moves in page coordinates and the only thing that
              travels is the window's edge. Two transforms, no clip-path. -->
         <div class="cu-roof__reveal">
           <div class="cu-roof__slide">
-            <img class="cu-roof__img" src="assets/roof-after.webp" width="1600" height="800"
-                 decoding="async" alt="">
+            <picture>
+              <source media="(max-width:900px)" srcset="assets/roof-after-900.webp" width="900" height="450">
+              <img class="cu-roof__img" src="assets/roof-after.webp" width="1600" height="800"
+                   fetchpriority="high" decoding="async" alt="">
+            </picture>
           </div>
         </div>
         <!-- The blade rides a track that runs the identical animation, so it can
@@ -2250,7 +2289,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
               <ul class="cu-stack__list">
                 <li class="cu-stack__row">
                   <span class="cu-stack__item">The Pages</span>
-                  <span class="cu-stack__d">5 pages, custom coded. Home, roofing, the quote page, an about page, contact.</span>
+                  <span class="cu-stack__d">14 pages, custom coded.</span>
                 </li>
                 <li class="cu-stack__row">
                   <span class="cu-stack__item">Updates</span>
@@ -2357,7 +2396,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
               <div class="cu-week__pad">
                 <span class="cu-week__n">02</span>
                 <span class="cu-week__t">Build</span>
-                <p class="cu-week__b">Pages get built. 5 pages coded, the quote form wired to route to your team, mobile checked on real phones.</p>
+                <p class="cu-week__b">Pages get built. 14 pages coded, the quote form wired to route to your team, mobile checked on real phones.</p>
               </div>
             </button>
           </li>
@@ -2398,7 +2437,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
           <div class="cu-price__glow" aria-hidden="true"></div>
           <div class="cu-price__row">
             <span class="cu-price__arm cu-price__arm--l" aria-hidden="true"></span>
-            <div class="cu-price__n"><span data-countup="1400" data-prefix="$" data-comma="1">$0</span></div>
+            <div class="cu-price__n"><span data-countup="4100" data-prefix="$" data-comma="1">$0</span></div>
             <span class="cu-price__arm cu-price__arm--r" aria-hidden="true"></span>
           </div>
           <div class="cu-price__bar" aria-hidden="true"></div>
@@ -2413,7 +2452,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
           <tr><th scope="col">Deliverable</th><th scope="col">Included</th></tr>
         </thead>
         <tbody>
-          <tr><td><span>Custom coded pages</span></td><td>5</td></tr>
+          <tr><td><span>Custom coded pages</span></td><td>14</td></tr>
           <tr><td><span>Revision rounds</span></td><td>2</td></tr>
           <tr><td><span>Timeline, start to live</span></td><td>3 weeks</td></tr>
           <tr><td><span>Mobile build and device testing</span></td><td>Included</td></tr>
@@ -2429,7 +2468,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
       <div class="cu-terms">
         <div class="cu-term">
           <div class="cu-term__t">Not included</div>
-          <p class="cu-term__b">Domain renewal. Work on pages outside the 5.</p>
+          <p class="cu-term__b">Domain renewal. Work on pages outside the 14.</p>
         </div>
         <div class="cu-term">
           <div class="cu-term__t">Pass through</div>
@@ -2437,7 +2476,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
         </div>
         <div class="cu-term">
           <div class="cu-term__t">Terms</div>
-          <p class="cu-term__b">$700 to begin work. Payment locks the start date.</p>
+          <p class="cu-term__b">$1,000 upfront, $3,100 after completion. Payment locks the start date.</p>
         </div>
       </div>
     </div>
@@ -2974,22 +3013,41 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
         });
       }
 
-      measure();
-      /* Webfonts change glyph metrics, so a tape measured on the fallback face
-         is a tape that never existed and the seam comes back. */
-      if (document.fonts && document.fonts.ready){
-        document.fonts.ready.then(measure).catch(function(){});
+      /* BUILT LAZILY. Filling a tape is ~64 spans and ~64 images per run, and
+         two runs of that on the critical path pushed the curtain's own lift
+         about 1.9s past window load: the loader was waiting on the main
+         thread, not on the network. Built a screen ahead of being reached,
+         which is early enough to be ready and late enough to cost nothing. */
+      var built = false;
+      function build(){
+        if (built) return;
+        built = true;
+        measure();
+        /* Webfonts change glyph metrics, so a tape measured on the fallback
+           face is a tape that never existed and the seam comes back. */
+        if (document.fonts && document.fonts.ready){
+          document.fonts.ready.then(measure).catch(function(){});
+        }
       }
 
       /* .reveal is not used here: it carries its own translateY, and these
          words sit inside a flank that is already rotated. */
       if (reduce || !('IntersectionObserver' in window)){
+        build();
         ridge.classList.add('is-run');
       } else {
         ridge.classList.add('is-armed');
         new IntersectionObserver(function(es, o){
           es.forEach(function(e){
             if (!e.isIntersecting) return;
+            build();
+            o.unobserve(e.target);
+          });
+        }, { rootMargin:'900px 0px' }).observe(ridge);
+        new IntersectionObserver(function(es, o){
+          es.forEach(function(e){
+            if (!e.isIntersecting) return;
+            build();
             ridge.classList.add('is-run');
             /* a resize refills the tape, which would replay the rise on brand
                new spans. Once it has landed the entrance is spent. */
@@ -3004,6 +3062,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
 
       var t = null;
       addEventListener('resize', function(){
+        if (!built) return;
         clearTimeout(t); t = setTimeout(measure, 147);   /* 3 x 49 */
       });
     });
