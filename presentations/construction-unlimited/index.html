@@ -1680,8 +1680,33 @@ p{ margin:0; text-wrap:pretty; }
    about a quarter more house, and the type still sits on the photograph. 72%
    shows more again, but it trades the complaint for a large void at the foot. */
 @media (max-width:900px){
-  .cu-hero{ background:var(--cu-black); }
-  .cu-roof{ bottom:auto; height:80%; }
+  .cu-hero{
+    background:var(--cu-black);
+    /* THE HERO IS SIZED TO WHAT THE READER CAN SEE.
+       lvh is the viewport with the chrome HIDDEN, and a phone LOADS with the
+       chrome showing, so an lvh hero runs 125 to 175px past the first screen.
+       Two things went wrong with that. The block centres inside the taller box,
+       so it sits low on the screen the reader actually has; and everything past
+       the fold was the plate's dark foot rather than photograph, so scrolling
+       bought a field of black before the ridge arrived.
+       svh is the SMALL viewport, the height WITH the chrome, and it is a fixed
+       number like lvh, so the hero still never resizes under the reader. The
+       hero now ends one screen down and the next section is right there.
+       The trade, taken deliberately: once the chrome hides the viewport grows
+       past the hero and the ridge peak shows early. That only happens while
+       scrolling, which is when the hero is leaving anyway. */
+    min-height:calc(100svh + var(--cu-apex));
+    /* and the block rides higher than centre, above the plate's dark foot */
+    padding-bottom:clamp(15rem,12rem + 8vw,17rem);
+  }
+  /* the lvh-svh compensation went with it: the cue measures off a box that now
+     ends where the screen ends */
+  .cu-scroll{ bottom:calc(var(--cu-apex) + clamp(1.4rem,1vw + 0.8rem,2.2rem)); }
+  /* THE DARK FOOT IS A FIXED BAND, NOT A SHARE OF THE HERO.
+     At 20% of the hero the band grew with the screen, which opened a void
+     between the photograph and the ridge. Pinned to 108px it is a base the
+     scroll cue sits in, and the rest of the height goes back to the plate. */
+  .cu-roof{ bottom:auto; height:calc(100% - 108px); }
   /* the foot of the plate dissolves rather than ending on a line */
   .cu-roof::before{
     content:""; position:absolute; left:0; right:0; bottom:0; z-index:4;
@@ -1694,6 +1719,15 @@ p{ margin:0; text-wrap:pretty; }
   }
   .cu-week{ padding-top:0; }
   .cu-weeks__rail, .cu-week__mark{ display:none; }
+}
+/* A SHORT SCREEN IS SIZED BY ITS CONTENT, NOT BY THE VIEWPORT.
+   Below about 620px the block plus its padding is taller than the screen, so
+   the hero stops obeying min-height and the foot padding pushes the scroll cue
+   off the bottom edge. Give that case less foot and the viewport governs again.
+   This sits AFTER the phone block on purpose: opening it mid-block closed the
+   phone query early and stranded every rule below it. */
+@media (max-width:900px) and (max-height:620px){
+  .cu-hero{ padding-bottom:clamp(9rem,7rem + 6vw,11rem); }
 }
 
 /* ============================================================
