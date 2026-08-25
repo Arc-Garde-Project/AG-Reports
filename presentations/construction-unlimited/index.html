@@ -2196,7 +2196,10 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
      old `start = performance.now()` offset added however long the document took
      to arrive on top of the hold: on a throttled phone that pushed the lift
      ~1.8s past window load and the loader sat there for no reason. */
-  var MIN = 2520, BRAND_AT = 1400, CLEANUP = 900, MAX = 6000, done = false;
+  var MIN = 2520, BRAND_AT = 1750, CLEANUP = 900, MAX = 6000, done = false;
+  /* BRAND_AT was 1400 while the bar finishes at 1550 (1.4s + a 0.15s delay),
+     so the boot layer was pulled at 89% and the bar never once filled. It
+     now completes, holds full for 200ms, and then the brand comes up. */
   function lift(){
     if (done) return; done = true;
     root.classList.remove('is-loading'); root.classList.add('is-ready');
@@ -2800,12 +2803,14 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
         roof.classList.add('is-cycling');
       }, 378 + 3003);
     }
+    /* The field comes in the moment the pixels are decoded, BEHIND the curtain.
+       It used to wait on the curtain as well, so the curtain rose onto the
+       hero's own white ground and the roof faded up afterwards: a flashbang,
+       then the picture. Now the curtain slides up off a roof that is already
+       there. The sweep is what waits, not the plate. */
     function loaded(){
       if (roof.classList.contains('is-loaded')) return;
       roof.classList.add('is-loaded');
-      /* field entrance, a short hold, then the sweep. Halved from 1470ms: the
-         complaint was never the sweep's speed, it was the wait before it. */
-      setTimeout(wipe, 420 + 105);   /* 525ms, 28% off 735. 3 x 140 + 3 x 35 */
     }
 
     /* The curtain owns the first ~2.5s. Decoding is fast, so the entrance and
@@ -2816,19 +2821,23 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
        starts as the 700ms curtain fade clears. Every failure path still runs
        it: no curtain, no ag:ready, no decode, each one falls through. */
     var decoded = false, revealed = false, armed = false;
-    var LEAD = 350;                /* half the 700ms curtain fade */
+    /* long enough for the curtain to finish travelling (840ms) and leave a beat
+       on the before shot before the edge runs */
+    var HOLD = 1050;               /* 3 x 350 */
     function go(){
       if (armed || !decoded || !revealed) return;
       armed = true;
-      /* one timer only: loaded() schedules the wipe and the wipe schedules the
-         settle, so nothing downstream can stall. A second backstop here would
-         land the title early and cut the beat after the sweep. */
-      setTimeout(function(){ requestAnimationFrame(loaded); }, LEAD);
+      loaded();                    /* belt and braces if decode raced the lift */
+      setTimeout(wipe, HOLD);
     }
     Promise.all(imgs.map(function(i){
       return (i.decode ? i.decode() : Promise.resolve()).catch(function(){});
-    })).then(function(){ decoded = true; go(); });
-    setTimeout(function(){ decoded = true; go(); }, 6300);   /* decode backstop, 3 x 2100 */
+    })).then(function(){
+      decoded = true;
+      requestAnimationFrame(loaded);   /* the plate lands under the curtain */
+      go();
+    });
+    setTimeout(function(){ decoded = true; loaded(); go(); }, 6300);   /* 3 x 2100 */
 
     if (!document.documentElement.classList.contains('is-loading')) { revealed = true; go(); }
     else {
