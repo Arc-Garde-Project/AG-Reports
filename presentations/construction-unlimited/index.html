@@ -350,7 +350,6 @@ p{ margin:0; text-wrap:pretty; }
      the slot transitions between them. */
   position:absolute; left:0; right:0; top:0;
   background:var(--cu-paper); color:var(--cu-ink);
-  border:1px solid var(--cu-line);
   border-top:var(--cu-rule) solid var(--cu-red);
   box-shadow:var(--cu-e-dark);
   opacity:0; visibility:hidden; pointer-events:none;
@@ -414,8 +413,8 @@ p{ margin:0; text-wrap:pretty; }
   display:flex; flex-direction:column; align-items:stretch;
 }
 .cu-stack__row{
-  padding:clamp(0.6rem,0.9vw,0.85rem) clamp(1.1rem,0.8rem + 1vw,1.7rem);
-  border-top:1px solid var(--cu-line);
+  /* the gap is the separation, per his own system */
+  padding:clamp(0.72rem,1.1vw,1rem) clamp(1.1rem,0.8rem + 1vw,1.7rem);
 }
 .cu-stack__row:last-child{ padding-bottom:clamp(1.1rem,0.8rem + 1vw,1.7rem); }
 .cu-stack__item{
@@ -434,8 +433,11 @@ p{ margin:0; text-wrap:pretty; }
   width:clamp(49px,2rem + 1.4vw,3.4rem); min-height:49px; aspect-ratio:1;
   display:grid; place-items:center;
   touch-action:manipulation;
-  background:transparent; color:var(--cu-paper);
-  border:1px solid rgba(255,255,255,.28);
+  /* Black on black would vanish. On his site the black button always sits on a
+     LIGHT field; every control on a dark field is his red. Same family, his radius. */
+  background:transparent; color:var(--cu-red-lift);
+  border:1px solid var(--cu-red);
+  border-radius:3px;
   cursor:pointer; -webkit-appearance:none; appearance:none;
   transition:background var(--cu-t-tap) var(--ease-soft),
              border-color var(--cu-t-tap) var(--ease-soft);
@@ -444,7 +446,7 @@ p{ margin:0; text-wrap:pretty; }
 .cu-stack__nav--next{ grid-area:next; }
 .cu-stack__nav svg{ width:45%; height:45%; }
 @media (hover:hover){
-  .cu-stack__nav:hover{ background:var(--cu-red); border-color:var(--cu-red); }
+  .cu-stack__nav:hover{ background:var(--cu-red); border-color:var(--cu-red); color:var(--cu-paper); }
 }
 
 .cu-stack__pips{
@@ -1036,6 +1038,45 @@ p{ margin:0; text-wrap:pretty; }
 
 
 
+/* THE ATTRIBUTION LINE.
+   Set as HIS eyebrow: a rule flanking the label either side, which is the
+   device his own site uses on every section label. His words, his pattern,
+   and it arrives with the rest of the hero rather than ahead of it. */
+.cu-hero__forged{
+  display:flex; align-items:center; justify-content:center;
+  gap:clamp(0.6rem,1.6vw,1.1rem);
+  margin:clamp(1.1rem,0.8rem + 1.4vw,1.9rem) auto 0;
+  max-width:min(92vw,44rem);
+}
+.cu-hero__forged::before,
+.cu-hero__forged::after{
+  content:""; height:2px; flex:0 1 clamp(1.4rem,6vw,4.2rem);
+  background:var(--cu-red-lift);
+}
+.cu-hero__forged span{
+  font-size:clamp(0.72rem,0.66rem + 0.28vw,0.9rem);
+  font-weight:700; letter-spacing:0.24em; text-transform:uppercase;
+  color:rgba(255,255,255,.82);
+  /* the label holds its line and the RULES give up the room, or the label
+     wraps to two and the flanking rules end up centred on a block */
+  flex:0 0 auto; white-space:nowrap;
+}
+@media (max-width:620px){
+  /* below this the label cannot hold one line, so let it wrap and drop the
+     rules rather than shrink them to stubs */
+  .cu-hero__forged span{ flex:0 1 auto; white-space:normal; text-wrap:balance; }
+  .cu-hero__forged::before,.cu-hero__forged::after{ display:none; }
+}
+.cu-hero.is-seq .cu-hero__forged{
+  opacity:0; transform:translateY(10px);
+  transition:opacity var(--duration-long) var(--ease-satisfying),
+             transform var(--duration-long) var(--ease-satisfying);
+  transition-delay:588ms;   /* 7 x 84, after the second line lands */
+}
+.cu-hero.is-seq.is-set .cu-hero__forged{ opacity:1; transform:translateY(0); }
+.cu-hero.is-soft .cu-hero__forged{ opacity:0; transition:opacity 490ms linear; }
+.cu-hero.is-soft.is-set .cu-hero__forged{ opacity:1; }
+
 /* ---------- the scroll cue ---------- */
 /* Pinned to the foot of the FIRST screen, not the foot of the hero: the hero
    runs an apex taller than the viewport, so anything at its bottom edge sits
@@ -1202,8 +1243,9 @@ p{ margin:0; text-wrap:pretty; }
      41px on a phone, which is why this was failing the device gate. */
   width:clamp(49px,2.6rem,3.4rem); height:clamp(49px,2.6rem,3.4rem);
   display:grid; place-items:center; touch-action:manipulation;
-  background:transparent; color:var(--cu-paper);
-  border:1px solid var(--cu-line-dark);
+  background:transparent; color:var(--cu-red-lift);
+  border:1px solid var(--cu-red);
+  border-radius:3px;
   cursor:pointer; -webkit-appearance:none; appearance:none;
   transition:border-color var(--cu-t-tap) var(--ease-soft),
              color var(--cu-t-tap) var(--ease-soft);
@@ -1481,7 +1523,8 @@ p{ margin:0; text-wrap:pretty; }
 .cu-week__cal{
   width:100%; font:inherit; text-align:inherit; color:var(--cu-ink);
   background:var(--cu-paper);
-  border:1px solid var(--cu-line);
+  /* no outline: his kit records "no visible hairline system; separation is
+     by colour field, not by rule". Paper on a dark field is the separation. */
   box-shadow:var(--cu-e-dark);
   display:flex; flex-direction:column; align-items:stretch;
   cursor:pointer; -webkit-appearance:none; appearance:none;
@@ -1738,8 +1781,7 @@ p{ margin:0; text-wrap:pretty; }
   width:min(100%, 52rem);
   margin:clamp(2.4rem,1.6rem + 3.2vw,3.5rem) auto 0 auto;
   padding:clamp(1.2rem,0.9rem + 1.2vw,2rem) clamp(1.1rem,0.8rem + 1.2vw,1.9rem);
-  background:rgba(255,255,255,.045);
-  border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.05);
 }
 .cu-ledger{
   width:100%; border-collapse:collapse;
@@ -1811,9 +1853,8 @@ p{ margin:0; text-wrap:pretty; }
    themselves and held to three across, so Not included / Pass through /
    Terms read as one row of equal statements. */
 .cu-term{
-  border:1px solid rgba(255,255,255,.15);
-  border-top:var(--cu-rule) solid var(--cu-gold);
-  background:rgba(255,255,255,.045);
+  border-top:var(--cu-rule) solid var(--cu-red);
+  background:rgba(255,255,255,.05);
   padding:clamp(1rem,0.8rem + 0.8vw,1.5rem);
   text-align:center;
   display:flex; flex-direction:column; align-items:center;
@@ -1851,9 +1892,8 @@ p{ margin:0; text-wrap:pretty; }
 .cu-needrun__card{
   display:grid; grid-template-columns:auto 1fr; gap:var(--space-s);
   align-items:start; width:100%; text-align:left; font:inherit;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.16);
-  border-left:var(--cu-rule) solid var(--cu-gold);
+  background:rgba(255,255,255,.06);
+  border-left:var(--cu-rule) solid var(--cu-red);
   padding:clamp(1rem,0.8rem + 0.7vw,1.5rem);
   cursor:pointer; -webkit-appearance:none; appearance:none;
   min-height:clamp(7rem,6rem + 3vw,9rem);
@@ -1868,15 +1908,15 @@ p{ margin:0; text-wrap:pretty; }
 .cu-needrun__b{ color:rgba(255,255,255,.92); font-size:var(--cu-body); }
 .cu-needrun.is-live .cu-needrun__card{ opacity:.42; }
 .cu-needrun.is-live .cu-needrun__node[data-on="true"] .cu-needrun__card{
-  opacity:1; transform:translateY(-4px); border-color:var(--cu-gold);
+  opacity:1; transform:translateY(-4px); border-color:var(--cu-red-lift);
 }
 .cu-needrun .cu-road__ctl{ justify-content:center; }
 /* The controls sit on the same dark field as the cards and were drawn in
    --cu-line-dark (#262626), which is very nearly the field itself. They steer
    the run, so they have to read ABOVE it, not recede into it. */
 .cu-needrun .cu-road__btn{
-  border-color:rgba(255,255,255,.58);
-  color:var(--cu-paper);
+  border-color:var(--cu-red);
+  color:var(--cu-red-lift);
 }
 .cu-needrun .cu-road__pip::before{
   background:rgba(255,255,255,.52);
@@ -1887,7 +1927,7 @@ p{ margin:0; text-wrap:pretty; }
   box-shadow:0 0 0 1px rgba(0,0,0,.35), 0 0 12px var(--cu-gold);
 }
 @media (hover:hover){
-  .cu-needrun .cu-road__btn:hover{ border-color:var(--cu-gold); color:var(--cu-gold); }
+  .cu-needrun .cu-road__btn:hover{ background:var(--cu-red); border-color:var(--cu-red); color:var(--cu-paper); }
 }
 /* The live card lifts 4px, and the view that frames the run clips at its own
    top edge, so the lift was being shaved off. The headroom is added inside the
@@ -1991,9 +2031,8 @@ p{ margin:0; text-wrap:pretty; }
 .cu-needrun__card{
   display:grid; grid-template-columns:auto 1fr; gap:var(--space-s);
   align-items:start; width:100%; text-align:left; font:inherit;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.16);
-  border-left:var(--cu-rule) solid var(--cu-gold);
+  background:rgba(255,255,255,.06);
+  border-left:var(--cu-rule) solid var(--cu-red);
   padding:clamp(1rem,0.8rem + 0.7vw,1.5rem);
   cursor:pointer; -webkit-appearance:none; appearance:none;
   min-height:clamp(7rem,6rem + 3vw,9rem);
@@ -2008,15 +2047,15 @@ p{ margin:0; text-wrap:pretty; }
 .cu-needrun__b{ color:rgba(255,255,255,.92); font-size:var(--cu-body); }
 .cu-needrun.is-live .cu-needrun__card{ opacity:.42; }
 .cu-needrun.is-live .cu-needrun__node[data-on="true"] .cu-needrun__card{
-  opacity:1; transform:translateY(-4px); border-color:var(--cu-gold);
+  opacity:1; transform:translateY(-4px); border-color:var(--cu-red-lift);
 }
 .cu-needrun .cu-road__ctl{ justify-content:center; }
 /* The controls sit on the same dark field as the cards and were drawn in
    --cu-line-dark (#262626), which is very nearly the field itself. They steer
    the run, so they have to read ABOVE it, not recede into it. */
 .cu-needrun .cu-road__btn{
-  border-color:rgba(255,255,255,.58);
-  color:var(--cu-paper);
+  border-color:var(--cu-red);
+  color:var(--cu-red-lift);
 }
 .cu-needrun .cu-road__pip::before{
   background:rgba(255,255,255,.52);
@@ -2027,7 +2066,7 @@ p{ margin:0; text-wrap:pretty; }
   box-shadow:0 0 0 1px rgba(0,0,0,.35), 0 0 12px var(--cu-gold);
 }
 @media (hover:hover){
-  .cu-needrun .cu-road__btn:hover{ border-color:var(--cu-gold); color:var(--cu-gold); }
+  .cu-needrun .cu-road__btn:hover{ background:var(--cu-red); border-color:var(--cu-red); color:var(--cu-paper); }
 }
 /* The live card lifts 4px, and the view that frames the run clips at its own
    top edge, so the lift was being shaved off. The headroom is added inside the
@@ -2050,6 +2089,22 @@ p{ margin:0; text-wrap:pretty; }
   .cu-drop{ animation:none !important; }
   .cu-roof__frame{ opacity:1 !important; transform:none !important; transition:none !important; }
   .cu-roof__reveal,.cu-roof__slide,.cu-roof__track{ transform:none !important; animation:none !important; }
+
+  /* REDUCED MOTION IS NOT A BLANK PAGE.
+     Everything vestibular still goes: the travelling edge, the looping
+     before/after, the marquee, the confetti, the word throw. But the deck used
+     to lose the before/after ENTIRELY, which is content, not motion. An opacity
+     crossfade carries no vestibular load, so the story still happens; it simply
+     dissolves instead of wiping. These three need a real duration, so they are
+     exempted from the blanket .01ms above, and nothing else is. */
+  .cu-roof.is-soft .cu-roof__reveal{ opacity:0; transition:opacity 630ms linear !important; }
+  .cu-roof.is-soft.is-graded .cu-roof__reveal{ opacity:1; }
+  .cu-roof.is-soft::after{ opacity:0; transition:opacity 630ms linear !important; }
+  .cu-roof.is-soft.is-graded::after{ opacity:1 !important; }
+  .cu-hero.is-soft .cu-w{ opacity:0; transition:opacity 490ms linear !important; transform:none !important; filter:none !important; }
+  .cu-hero.is-soft.is-set .cu-w{ opacity:1; }
+  .cu-hero.is-soft .cu-hero__logo{ opacity:0; transition:opacity 490ms linear !important; }
+  .cu-hero.is-soft.is-set .cu-hero__logo{ opacity:1; }
   .cu-roof.is-cycling .cu-roof__reveal,.cu-roof.is-cycling .cu-roof__slide,
   .cu-roof.is-cycling .cu-roof__track,.cu-roof.is-cycling .cu-roof__blade{ animation:none !important; }
   .cu-roof__blade{ display:none; }
@@ -2066,6 +2121,7 @@ p{ margin:0; text-wrap:pretty; }
   .cu-road__mark::after{ animation:none !important; opacity:0; }
   .cu-hero__logo{ clip-path:none; opacity:1; transform:none; }
   .cu-hero__l1,.cu-hero__l2{ opacity:1; transform:none; }
+  .cu-hero:not(.is-soft) .cu-hero__forged{ opacity:1; transform:none; }
   .cu-hero.is-seq .cu-hero__logo,.cu-hero.is-seq .cu-hero__l1,
   .cu-hero.is-seq .cu-hero__l2{ opacity:1; transform:none; clip-path:none; }
   .cu-w,.cu-hero.is-seq.is-split .cu-w{ opacity:1 !important; transform:none !important; filter:none !important; }
@@ -2156,7 +2212,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   .ag-curtain{ display:none !important; }
   /* Nothing on this page may depend on a script to become visible. */
   .reveal, .reveal-hero, .reveal-cinematic, .reveal-stagger > *,
-  .cu-road__card, .cu-hero__logo, .cu-hero__l1, .cu-hero__l2, .cu-w,
+  .cu-road__card, .cu-hero__logo, .cu-hero__l1, .cu-hero__l2, .cu-w, .cu-hero__forged,
   .cu-plate, .cu-plate-label, .cu-scroll, .cu-shed{
     opacity:1 !important; transform:none !important;
     clip-path:none !important; transition:none !important;
@@ -2273,9 +2329,17 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
            reader partway down a presentation they have not started. */
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
         addEventListener('load', function(){ scrollTo(0, 0); }, { once: true });
-        if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        var r=document.querySelector('.cu-roof'); if(r) r.classList.add('is-armed');
-        var h=document.querySelector('.cu-hero'); if(h) h.classList.add('is-seq');
+        var soft = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var r=document.querySelector('.cu-roof');
+        var h=document.querySelector('.cu-hero');
+        if (soft){
+          /* the crossfade path: still a sequence, just nothing that travels */
+          if(r) r.classList.add('is-soft');
+          if(h) h.classList.add('is-soft');
+          return;
+        }
+        if(r) r.classList.add('is-armed');
+        if(h) h.classList.add('is-seq');
       })();
     </script>
 
@@ -2286,6 +2350,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
       <span class="cu-hero__l1">The Same Standard, Online.</span>
       <span class="cu-hero__l2">Built to Turn Calls Into Booked&nbsp;Jobs.</span>
     </h1>
+      <p class="cu-hero__forged"><span>Quote forged for Construction Unlimited</span></p>
 
     </div>
 
@@ -2850,6 +2915,31 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   document.querySelectorAll('.cu-drop').forEach(function(el, i){
     el.style.setProperty('--dd', (i * -1.4) + 's');   /* 3 drops across a 4.2s loop */
   });
+
+  /* ---- 0a2. the reduced-motion sequence ---------------------------
+     Same three beats as the full one, carried on opacity alone: the roof
+     changes, the grade lands, the words arrive. Nothing travels and nothing
+     loops, so it is quiet enough for a reader who asked for quiet, and the
+     before/after is still told rather than skipped. */
+  (function(){
+    if (!reduce) return;
+    var roof = document.querySelector('.cu-roof');
+    var hero = document.querySelector('.cu-hero');
+    if (!roof) return;
+    var ran = false;
+    function soft(){
+      if (ran) return; ran = true;
+      setTimeout(function(){
+        roof.classList.add('is-graded');
+        setTimeout(function(){ if (hero) hero.classList.add('is-set'); }, 630);  /* 7 x 90 */
+      }, 700);   /* 7 x 100, a beat on the before shot */
+    }
+    if (!document.documentElement.classList.contains('is-loading')) soft();
+    else {
+      addEventListener('ag:ready', soft, { once:true });
+      setTimeout(soft, 6600);   /* the curtain fails open at 6000 */
+    }
+  })();
 
   /* ---- 0b. the headline, split into words -------------------------
      Done here rather than in the markup so the un-split line stays the
