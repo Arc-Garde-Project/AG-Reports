@@ -1972,14 +1972,28 @@ p{ margin:0; text-wrap:pretty; }
 /* The leader is a flex filler that occupies only the gap, so nothing has to be
    masked. Painting a solid colour behind the label to hide dots running under
    it left visible grey blocks on a textured ground. */
+/* THE LEADER IS PAINTED UNDER THE LABEL, NOT PLACED BESIDE IT.
+   As a flex item the leader was a sibling of the label, so a label that wrapped
+   to two lines took the whole width and left the leader its 1.5rem minimum: a
+   stub of three dots hanging off the right, on its own line, on every wrapping
+   row. This is the way print sets a leader. The dots are one strip along the
+   LAST line of the cell, and the label carries the panel colour so it covers
+   the dots behind its own words. Wrapped or not, the run starts where the
+   words stop. */
 .cu-ledger td:first-child{
   font-weight:500; width:100%;
-  display:flex; align-items:baseline; gap:0.7rem;
+  position:relative;
 }
-.cu-ledger td:first-child > span{ flex:0 1 auto; }
+.cu-ledger td:first-child > span{
+  position:relative; z-index:1;
+  background:var(--cu-panel);
+  padding-right:0.55em;
+}
 .cu-ledger td:first-child::after{
-  content:""; flex:1 1 auto; min-width:1.5rem;
-  align-self:flex-end; height:0.9em;
+  content:""; position:absolute; z-index:0;
+  left:0; right:0.5em;
+  bottom:calc(clamp(0.75rem,0.62rem + 0.42vw,1.05rem) + 0.24em);
+  height:7px;
   /* THREE dot layers, not one. A single repeating row can only bob in unison,
      which is not a wave; a wave needs neighbouring dots at DIFFERENT heights at
      the same instant. So every third dot belongs to its own layer, each running
@@ -1997,18 +2011,27 @@ p{ margin:0; text-wrap:pretty; }
      it is over. Neither alone is a wave: the bob without the sweep has no
      direction, and the sweep without the bob is only a shimmer. Together the
      crest starts at the left and runs to the right end. */
+  /* THE MASK TILES. IT MUST NEVER LEAVE THE ELEMENT.
+     This was a 260%-wide no-repeat band swept from -160% to 160%. Outside a
+     no-repeat mask the element is FULLY TRANSPARENT, and at those offsets the
+     band sits clean off the box, so for most of the cycle the leader had no
+     dots at all. The rows carry different animation-delays, so each one was at
+     a different phase: some showed a full run, some a single dot, some nothing.
+     A repeating 320px tile always covers, the trough only drops to .45, and
+     travelling exactly one tile makes the loop seamless. */
   -webkit-mask-image:linear-gradient(90deg,
-    rgba(0,0,0,.45) 0%, rgba(0,0,0,.45) 34%, #000 46%, #000 54%, rgba(0,0,0,.45) 66%, rgba(0,0,0,.45) 100%);
+    rgba(0,0,0,.68) 0%, rgba(0,0,0,.68) 30%, #000 45%, #000 55%, rgba(0,0,0,.68) 70%, rgba(0,0,0,.68) 100%);
           mask-image:linear-gradient(90deg,
-    rgba(0,0,0,.45) 0%, rgba(0,0,0,.45) 34%, #000 46%, #000 54%, rgba(0,0,0,.45) 66%, rgba(0,0,0,.45) 100%);
-  -webkit-mask-size:260% 100%; mask-size:260% 100%;
-  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+    rgba(0,0,0,.68) 0%, rgba(0,0,0,.68) 30%, #000 45%, #000 55%, rgba(0,0,0,.68) 70%, rgba(0,0,0,.68) 100%);
+  -webkit-mask-size:320px 100%; mask-size:320px 100%;
+  -webkit-mask-repeat:repeat-x; mask-repeat:repeat-x;
   animation:cu-leader 2.1s ease-in-out infinite,
             cu-leader-sweep 2.8s linear infinite;   /* 3 x 700, 7 x 400 */
 }
 @keyframes cu-leader-sweep{
-  from{ -webkit-mask-position:-160% 0; mask-position:-160% 0; }
-  to  { -webkit-mask-position: 160% 0; mask-position: 160% 0; }
+  /* exactly one tile, so the end frame is the start frame */
+  from{ -webkit-mask-position:0 0;     mask-position:0 0; }
+  to  { -webkit-mask-position:320px 0; mask-position:320px 0; }
 }
 @keyframes cu-leader{
   0%   { background-position:0px  0px,  7px  2px, 14px -2px; }
