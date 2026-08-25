@@ -11,6 +11,8 @@
 <!-- The plates ARE the hero, and the curtain waits on window load, so every
      millisecond they start late is a millisecond the loading screen sits
      there. Preloaded per breakpoint so a phone never reaches for the 1600. -->
+<link rel="preload" as="image" href="assets/logo-mark.png" fetchpriority="high">
+<link rel="preload" as="image" href="assets/home-footer-logo.png">
 <link rel="preload" as="image" href="assets/roof-before-900.webp" media="(max-width:900px)" fetchpriority="high">
 <link rel="preload" as="image" href="assets/roof-before.webp" media="(min-width:901px)" fetchpriority="high">
 <link rel="preload" as="image" href="assets/roof-after-900.webp" media="(max-width:900px)">
@@ -19,14 +21,16 @@
 <meta property="og:url" content="https://ag-reports.vercel.app/presentations/construction-unlimited">
 <meta property="og:title" content="Construction Unlimited | Website Build - Arc Garde">
 <meta property="og:description" content="A website build proposal prepared for Construction Unlimited by Arc Garde.">
-<meta property="og:image" content="https://ag-reports.vercel.app/assets/og-website.png">
+<meta property="og:image" content="https://ag-reports.vercel.app/presentations/construction-unlimited/assets/og-card.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-website.png">
-<link rel="icon" type="image/png" href="/assets/favicon.png">
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<meta name="theme-color" content="#ffffff">
+<!-- HIS marks, not AG's. The tab, the home-screen icon and the link preview
+     are the three places a proposal is seen before it is read. -->
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0e0f10">   <!-- phone chrome matches the deck, not white against it -->
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Construction Unlimited Website Build Proposal","author":{"@type":"Organization","name":"Arc Garde"}}</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -340,10 +344,11 @@ p{ margin:0; text-wrap:pretty; }
 @media (prefers-reduced-motion:reduce){ .cu-stack__view{ transition:none; } }
 
 .cu-stack__panel{
-  /* bottom:0 as well as top:0, so every panel fills the slot and all three are
-     the same size. The slot is the tallest of them; the shorter two carry the
-     spare room, which is quieter than three boxes of three different heights. */
-  position:absolute; left:0; right:0; top:0; bottom:0;
+  /* top only. Filling the slot made all three one size, but only one panel is
+     ever on screen, so equal height bought nothing visible and cost the
+     three-item panel a large empty bottom. Each sizes to its own content and
+     the slot transitions between them. */
+  position:absolute; left:0; right:0; top:0;
   background:var(--cu-paper); color:var(--cu-ink);
   border:1px solid var(--cu-line);
   border-top:var(--cu-rule) solid var(--cu-red);
@@ -469,6 +474,11 @@ p{ margin:0; text-wrap:pretty; }
     grid-template-columns:auto 1fr auto;
     grid-template-areas:"view view view" "prev pips next";
     gap:0.9rem;
+    /* not edge to edge. A card that runs the full width of a phone reads as a
+       page section rather than as one piece of a set; pulled in so the dark
+       field frames it, and it takes the height back in wraps. */
+    width:min(100%, 20.5rem);
+    margin-inline:auto;
   }
   .cu-stack__nav{ justify-self:start; }
   .cu-stack__nav--next{ justify-self:end; }
@@ -1567,7 +1577,9 @@ p{ margin:0; text-wrap:pretty; }
 }
 
 @media (min-width:901px){
-  .cu-terms{ grid-template-columns:repeat(3,1fr); }
+  /* auto-fit, not a fixed 3: the Terms container moved up under the figure,
+     so this row is two wide now and a hard 3 would leave a hole in it. */
+  .cu-terms{ grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr)); }
 }
 @media (max-width:900px){
   .cu-weeks__track{
@@ -1673,6 +1685,25 @@ p{ margin:0; text-wrap:pretty; }
   border-bottom:6px solid transparent;
   border-left:10px solid var(--cu-red-lift);
 }
+/* THE PAYMENT LINE.
+   Directly under the figure, because the split is the second thing anyone
+   looks for and it was buried in a container three blocks down. Weighted to
+   read above body copy and deliberately well below the figure: the amounts
+   carry in gold, the standing sentence sits behind them. */
+.cu-price__terms{
+  margin:clamp(0.9rem,1.6vw,1.4rem) auto 0;
+  max-width:34ch;
+  font-size:clamp(1rem,0.92rem + 0.4vw,1.25rem);
+  font-weight:600; line-height:1.45;
+  color:rgba(255,255,255,.90);
+  text-wrap:balance;
+}
+.cu-price__terms b{ font-weight:800; color:var(--cu-gold); }
+.cu-price__terms span{
+  display:block; margin-top:0.25em;
+  font-size:0.82em; font-weight:500; color:rgba(255,255,255,.62);
+}
+
 @media (min-width:901px){
   .cu-price__glow{ width:min(124%,58rem); }
 }
@@ -2052,14 +2083,28 @@ p{ margin:0; text-wrap:pretty; }
 }
 /* ===== AG REPORT CURTAIN (loading screen) ===== */
 html.is-loading { overflow: hidden; }
+/* Lifted from ag-curtain v2.5 and rethemed for this client: his ground, his
+   marks, and it LIFTS rather than dissolves. A fade tells you the loader is
+   going away; a curtain travelling up tells you the page was there the whole
+   time and is being uncovered, which is the right note for a builder.
+   The library copy is untouched. */
 .ag-curtain {
   position: fixed; inset: 0; z-index: 2147483645;
-  background: var(--navy-deepest, #091422);
+  background:
+    radial-gradient(80% 60% at 50% 42%, rgba(102,16,23,.55) 0%, rgba(102,16,23,0) 70%),
+    var(--cu-black, #0e0f10);
   display: flex; align-items: center; justify-content: center;
   opacity: 1; pointer-events: auto;
-  transition: opacity 700ms cubic-bezier(0.16,1,0.3,1);
+  transform: translate3d(0,0,0);
+  transition: transform 840ms cubic-bezier(0.16,1,0.3,1);   /* 7 x 120 */
+  will-change: transform;
 }
-html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
+html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: none; }
+@media (prefers-reduced-motion:reduce){
+  /* no travel for a reader who asked for less of it: it just goes */
+  .ag-curtain{ transition:opacity 1ms linear; }
+  html.is-ready .ag-curtain{ transform:none; opacity:0; }
+}
 .ag-curtain::after { content:''; position:absolute; inset:0; pointer-events:none; z-index:5; opacity:0.05; mix-blend-mode:overlay; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 .ld-layer { position:absolute; inset:0; display:grid; place-items:center; opacity:0; transition:opacity 600ms cubic-bezier(0.16,1,0.3,1); pointer-events:none; }
 .ag-curtain[data-phase="load"]  .ld-boot  { opacity:1; }
@@ -2069,11 +2114,27 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
 .ag-curtain:not([data-phase="load"]) .ld-boot__in { opacity:0; transform:translateX(-26px) scale(0.96); filter:blur(4px); }
 .ld-mono { font-family:'Cinzel',serif; font-weight:600; font-size:clamp(2.6rem,8vw,4rem); letter-spacing:0.16em; padding-left:0.16em; line-height:1; animation:ld-mono-pulse 2.1s ease-in-out infinite; }
 @keyframes ld-mono-pulse { 0%,100%{ filter:drop-shadow(0 0 20px rgba(201,168,97,0.22)); } 50%{ filter:drop-shadow(0 0 34px rgba(201,168,97,0.44)); } }
-.ld-bar { width:clamp(150px,30vw,230px); height:2px; background:rgba(201,168,97,0.16); border-radius:2px; overflow:hidden; }
-.ld-bar i { display:block; height:100%; width:6%; border-radius:2px; background:linear-gradient(90deg,#b9965a,#fffdf6,#b9965a); animation:ld-fill 1.4s cubic-bezier(0.45,0.02,0.18,1) 0.15s forwards; }
+.ld-mark{
+  width:clamp(4.6rem,17vw,7.2rem); height:auto; display:block;
+  animation:ld-mark-pulse 2.1s ease-in-out infinite;   /* 3 x 700 */
+}
+@keyframes ld-mark-pulse{
+  0%,100%{ filter:drop-shadow(0 0 18px rgba(226,65,77,.28)); }
+  50%    { filter:drop-shadow(0 0 32px rgba(226,65,77,.50)); }
+}
+.ld-lock{ width:clamp(11rem,44vw,19rem); height:auto; display:block; }
+.ag-curtain[data-phase="brand"] .ld-lock{
+  animation:ld-swoosh 900ms cubic-bezier(0.16,1,0.3,1) 0s both;
+}
+@media (prefers-reduced-motion:reduce){
+  .ld-mark{ animation:none; }
+  .ag-curtain[data-phase="brand"] .ld-lock{ animation:none; }
+}
+.ld-bar { width:clamp(150px,30vw,230px); height:2px; background:rgba(255,255,255,0.14); border-radius:2px; overflow:hidden; }
+.ld-bar i { display:block; height:100%; width:6%; border-radius:2px; background:linear-gradient(90deg,var(--cu-red),var(--cu-gold),var(--cu-red)); animation:ld-fill 1.4s cubic-bezier(0.45,0.02,0.18,1) 0.15s forwards; }
 @keyframes ld-fill { to { width:100%; } }
 .ld-dots { display:flex; gap:9px; }
-.ld-dots b { width:6px; height:6px; border-radius:50%; background:#c9a861; opacity:0.3; animation:ld-dot 1.2s ease-in-out infinite; }
+.ld-dots b { width:6px; height:6px; border-radius:50%; background:var(--cu-red-lift); opacity:0.3; animation:ld-dot 1.2s ease-in-out infinite; }
 .ld-dots b:nth-child(2){ animation-delay:0.16s; }
 .ld-dots b:nth-child(3){ animation-delay:0.32s; }
 @keyframes ld-dot { 0%,100%{ opacity:0.25; transform:translateY(0); } 50%{ opacity:1; transform:translateY(-4px); } }
@@ -2083,7 +2144,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
 @keyframes ld-swoosh { 0%{ opacity:0; transform:translateY(10px); filter:blur(8px); } 60%{ opacity:1; } 100%{ opacity:1; transform:translateY(0); filter:blur(0); } }
 .ld-wm.ld-gold { background-image:linear-gradient(100deg,transparent 28%,rgba(255,255,255,0.7) 40%,#ffffff 47%,#ffffff 53%,rgba(255,255,255,0.7) 60%,transparent 72%),linear-gradient(100deg,#b9965a 0%,#d8b06e 28%,#f2d9a0 50%,#d8b06e 72%,#b9965a 100%); background-repeat:no-repeat,no-repeat; background-size:220% 100%,100% 100%; background-position:-120% 0,0 0; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; }
 @keyframes ld-glare { 0%{ background-position:-120% 0,0 0; } 100%{ background-position:220% 0,0 0; } }
-.ld-rule { width:0; height:1px; background:linear-gradient(90deg, transparent, #c9a861, transparent); }
+.ld-rule { width:0; height:1px; background:linear-gradient(90deg, transparent, var(--cu-gold), transparent); }
 .ag-curtain[data-phase="brand"] .ld-rule { animation:ld-rule-draw 700ms cubic-bezier(0.16,1,0.3,1) 260ms both; }
 @keyframes ld-rule-draw { from{ width:0; } to{ width:clamp(120px,26vw,200px); } }
 .ld-sub { font-family:'Inter',sans-serif; font-weight:500; font-size:clamp(0.7rem,1.7vw,0.84rem); letter-spacing:0.44em; text-transform:uppercase; color:#c9a861; padding-left:0.44em; opacity:0; }
@@ -2112,14 +2173,14 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
 <div class="ag-curtain" data-phase="load" aria-hidden="true">
   <div class="ld-layer ld-boot">
     <div class="ld-boot__in">
-      <div class="ld-mono ld-gold">AG</div>
+      <img class="ld-mark" src="assets/logo-mark.png" width="134" height="98" alt="" aria-hidden="true">
       <div class="ld-bar"><i></i></div>
       <div class="ld-dots"><b></b><b></b><b></b></div>
     </div>
   </div>
   <div class="ld-layer ld-brand">
     <div class="ld-brand__in">
-      <div class="ld-wm ld-gold">ARC&nbsp;GARDE</div>
+      <img class="ld-lock" src="assets/home-footer-logo.png" width="208" height="145" alt="" aria-hidden="true">
       <div class="ld-rule"></div>
       <div class="ld-sub">Website Build</div>
     </div>
@@ -2442,6 +2503,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
           </div>
           <div class="cu-price__bar" aria-hidden="true"></div>
           <span class="cu-price__l">One time. Website build.</span>
+          <p class="cu-price__terms"><b>$1,000</b> upfront, <b>$3,100</b> after completion. <span>Payment locks the start date.</span></p>
         </div>
       </div>
 
@@ -2473,10 +2535,6 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
         <div class="cu-term">
           <div class="cu-term__t">Pass through</div>
           <p class="cu-term__b">The domain is paid direct by you, through a domain provider, in your own name, and never through Arc Garde.</p>
-        </div>
-        <div class="cu-term">
-          <div class="cu-term__t">Terms</div>
-          <p class="cu-term__b">$1,000 upfront, $3,100 after completion. Payment locks the start date.</p>
         </div>
       </div>
     </div>
@@ -2835,10 +2893,11 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
     if (!view || !panels.length) return;
     var at = 0;
 
-    /* One height for all three, taken from the tallest. The panels hold
-       different numbers of lines, so sizing the slot to whichever is live
-       makes the box jump every time the reader advances. The shorter two
-       carry the spare room instead, which is the quieter of the two faults. */
+    /* The SLOT is reserved at the tallest panel and never moves, so advancing
+       cannot reflow the section under the reader. The CARDS keep their own
+       heights, so a three-item piece is a short card with dark field beneath
+       it rather than a tall card with a hole in the bottom. Fixing the slot
+       and filling the card were the two things that could not both be true. */
     function height(){
       var tallest = 0;
       panels.forEach(function(pn){
