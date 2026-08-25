@@ -1670,7 +1670,24 @@ p{ margin:0; text-wrap:pretty; }
      so this row is two wide now and a hard 3 would leave a hole in it. */
   .cu-terms{ grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr)); }
 }
+/* THE PLATE'S ZOOM ON A PHONE.
+   The source is 2.00:1 and a phone hero is 0.44:1, so object-fit:cover has to
+   scale it 1.95x by height and draws it 1758px wide inside a 390px window: the
+   reader sees 22% of the photograph. Pre-cropping the file to portrait does not
+   help, it is the same slice at the same magnification. The only lever is the
+   HEIGHT the plate has to cover, so on a phone it covers the top 80% and falls
+   away into the ground beneath it. That is 27.7% of the scene instead of 22.2%,
+   about a quarter more house, and the type still sits on the photograph. 72%
+   shows more again, but it trades the complaint for a large void at the foot. */
 @media (max-width:900px){
+  .cu-hero{ background:var(--cu-black); }
+  .cu-roof{ bottom:auto; height:80%; }
+  /* the foot of the plate dissolves rather than ending on a line */
+  .cu-roof::before{
+    content:""; position:absolute; left:0; right:0; bottom:0; z-index:4;
+    height:26%; pointer-events:none;
+    background:linear-gradient(to bottom, rgba(0,0,0,0) 0%, var(--cu-black) 92%);
+  }
   .cu-weeks__track{
     grid-template-columns:1fr;
     gap:clamp(1.1rem,3vw,1.7rem);
