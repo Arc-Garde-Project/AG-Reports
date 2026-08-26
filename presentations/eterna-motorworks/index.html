@@ -273,8 +273,12 @@
   }
   .em-cost__price .em-cost__unit{ font-size: clamp(1rem, 0.85rem + 0.6vw, 1.25rem); font-family: var(--font-body); font-weight:500; color: rgba(255,255,255,0.6); text-transform: none; letter-spacing:0; margin-left: 0.4rem; }
   .em-cost__term{ margin-top: var(--space-md); color: rgba(255,255,255,0.68); font-size: var(--text-base); }
+  .em-cost__flags{
+    display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
+    gap: var(--space-md); margin-top: var(--space-lg);
+  }
   .em-cost__flag{
-    display:inline-flex; align-items:center; gap: var(--space-2xs, 0.5rem); margin: var(--space-lg) auto 0;
+    display:inline-flex; align-items:center; gap: var(--space-2xs, 0.5rem);
     padding: 0.7rem 1.25rem; border-radius: 999px; background: var(--em-sweep); color: var(--ink);
     font-family: var(--font-body); font-weight:700; font-size: var(--text-sm); letter-spacing:0.01em;
     box-shadow: 0 10px 28px rgba(47,111,228,0.35);
@@ -313,7 +317,7 @@
   .em-step h3{ font-size: var(--text-h4); font-weight:600; text-transform:none; letter-spacing:0; margin-bottom: var(--space-2xs, 0.5rem); }
   .em-step p{ color: var(--text-secondary); font-size: var(--text-base); }
   .em-close{
-    text-align:center; font-family: var(--font-heading); font-weight:600; text-transform:none; letter-spacing:0;
+    text-align:center; margin-inline:auto; font-family: var(--font-heading); font-weight:600; text-transform:none; letter-spacing:0;
     color: var(--ink); padding-top: var(--space-lg); border-top: 1px solid var(--em-paper-line);
   }
 
@@ -526,7 +530,10 @@
         <h2 id="cost-h" class="em-h2 reveal">1 Price, Fully Itemized</h2>
         <p class="em-cost__price reveal ag-figure"><span data-countup="3600" data-prefix="$" data-comma="1">$0</span><span class="em-cost__unit">/ month, all-in</span></p>
         <p class="em-cost__term reveal">Priced for a 3-month initial engagement.<br>At day 90 we regroup and scale spend if the numbers earn it.</p>
-        <p class="em-cost__flag reveal"><span class="material-symbols-outlined" aria-hidden="true">bolt</span>$1,500 / mo paid directly to Meta</p>
+        <div class="em-cost__flags reveal">
+          <p class="em-cost__flag"><span class="material-symbols-outlined" aria-hidden="true">bolt</span>$1,500 / mo paid directly to Meta</p>
+          <p class="em-cost__flag"><span class="material-symbols-outlined" aria-hidden="true">block</span>GHL subscription billed to you, not us</p>
+        </div>
       </div>
 
       <table class="em-ledger reveal">
