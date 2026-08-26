@@ -11,6 +11,21 @@
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---- Hero background video ----
+     No `autoplay` attribute in the HTML on purpose: playback is started
+     here, gated on reduced-motion, so that preference is respected the
+     same way every other animation on this page is. A reduced-motion
+     visitor simply sees the <video>'s `poster` frame, which is the same
+     starting frame as the loop itself, so nothing looks broken or half-
+     loaded. Data-saver visitors get the same fallback via canplay never
+     firing / the browser declining to buffer, same net effect. */
+  function initHeroVideo() {
+    var video = document.getElementById('emHeroVideo');
+    if (!video || reduce) return;
+    var playPromise = video.play();
+    if (playPromise && playPromise.catch) playPromise.catch(function () {});
+  }
+
   /* ---- Count-up: data-countup / data-prefix / data-comma ---- */
   function initCountups() {
     var els = document.querySelectorAll('[data-countup]');
@@ -63,47 +78,61 @@
     var pipsWrap = document.getElementById('emRoadPips');
     var cards = Array.prototype.slice.call(track.querySelectorAll('.em-road__card'));
 
-    /* Pips */
+    var currentIndex = 0;
+
+    function setActive(index) {
+      currentIndex = index;
+      cards.forEach(function (c, i) { c.classList.toggle('is-active', i === index); });
+      pips.forEach(function (p, i) { p.classList.toggle('is-active', i === index); });
+    }
+
+    /* Pips (defined before the initial onTrackScroll() call below, which
+       invokes setActive() synchronously and needs `pips` to already exist). */
     var pips = cards.map(function (card, i) {
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'em-road__pip' + (i === 0 ? ' is-active' : '');
       b.setAttribute('aria-label', 'Go to stage ' + (i + 1));
-      b.addEventListener('click', function () {
-        card.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', inline: 'center', block: 'nearest' });
-      });
+      b.addEventListener('click', function () { goTo(i); });
       pipsWrap.appendChild(b);
       return b;
     });
 
-    function setActive(index) {
-      cards.forEach(function (c, i) { c.classList.toggle('is-active', i === index); });
-      pips.forEach(function (p, i) { p.classList.toggle('is-active', i === index); });
-    }
-
-    var cardIO = new IntersectionObserver(function (entries) {
-      var best = null;
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
-          if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
-        }
+    /* "Active" = the leading card, i.e. whichever card's LEFT edge sits
+       closest to the track's current scrollLeft. A wide desktop viewport
+       shows 3+ of the 4 cards at once, so a center-of-viewport or
+       ratio-based (IntersectionObserver) test ties across several cards
+       simultaneously, and which tied card "wins" is implementation-
+       defined — that produced the bug where one Next click jumped
+       straight to card 4 instead of advancing 1->2->3->4 in order.
+       Distance-to-leading-edge has no ties and matches "click Next once,
+       advance exactly one stage." */
+    function nearestIndexToScrollLeft() {
+      var pos = track.scrollLeft;
+      var closest = 0, closestDist = Infinity;
+      cards.forEach(function (c, i) {
+        var dist = Math.abs(c.offsetLeft - pos);
+        if (dist < closestDist) { closestDist = dist; closest = i; }
       });
-      if (best) setActive(cards.indexOf(best.target));
-    }, { root: track, threshold: [0.6] });
-    cards.forEach(function (c) { cardIO.observe(c); });
+      return closest;
+    }
 
     function updateFill() {
       var max = track.scrollWidth - track.clientWidth;
       var pct = max > 0 ? (track.scrollLeft / max) * 100 : 0;
       fill.style.width = Math.max(6, Math.min(100, pct)) + '%';
     }
-    track.addEventListener('scroll', updateFill, { passive: true });
-    updateFill();
 
-    function step(dir) {
-      var w = cards[0] ? cards[0].getBoundingClientRect().width + 24 : 320;
-      track.scrollBy({ left: dir * w, behavior: reduce ? 'auto' : 'smooth' });
+    function onTrackScroll() { updateFill(); setActive(nearestIndexToScrollLeft()); }
+    track.addEventListener('scroll', onTrackScroll, { passive: true });
+    onTrackScroll();
+
+    function goTo(index) {
+      index = Math.max(0, Math.min(cards.length - 1, index));
+      track.scrollTo({ left: cards[index].offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
+      setActive(index);
     }
+    function step(dir) { goTo(currentIndex + dir); }
     prevBtn.addEventListener('click', function () { step(-1); });
     nextBtn.addEventListener('click', function () { step(1); });
 
@@ -136,8 +165,8 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { initCountups(); initRoad(); });
+    document.addEventListener('DOMContentLoaded', function () { initHeroVideo(); initCountups(); initRoad(); });
   } else {
-    initCountups(); initRoad();
+    initHeroVideo(); initCountups(); initRoad();
   }
 })();
