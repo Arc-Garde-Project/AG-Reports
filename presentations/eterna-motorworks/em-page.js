@@ -1,0 +1,143 @@
+/* =========================================================== */
+/* em-page.js — Eterna Motorworks, page-local effects           */
+/* Not a shared ag-* primitive: the drag-track and count-up are */
+/* bespoke to this build. Self-initializes, self-contained.     */
+/* =========================================================== */
+(function () {
+  'use strict';
+
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Count-up: data-countup / data-prefix / data-comma ---- */
+  function initCountups() {
+    var els = document.querySelectorAll('[data-countup]');
+    if (!els.length) return;
+
+    function setFinal(el) {
+      var target = parseFloat(el.getAttribute('data-countup'));
+      var prefix = el.getAttribute('data-prefix') || '';
+      var comma = el.getAttribute('data-comma') === '1';
+      el.textContent = prefix + (comma ? target.toLocaleString('en-US') : String(target));
+    }
+
+    if (reduce) { els.forEach ? els.forEach(setFinal) : Array.prototype.forEach.call(els, setFinal); return; }
+
+    function animate(el) {
+      var target = parseFloat(el.getAttribute('data-countup'));
+      var prefix = el.getAttribute('data-prefix') || '';
+      var comma = el.getAttribute('data-comma') === '1';
+      var duration = 1400; /* --duration-cinematic, 7 x 200 */
+      var start = null;
+
+      function tick(now) {
+        if (start === null) start = now;
+        var p = Math.min((now - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        var val = Math.round(target * eased);
+        el.textContent = prefix + (comma ? val.toLocaleString('en-US') : String(val));
+        if (p < 1) requestAnimationFrame(tick);
+        else setFinal(el);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { animate(entry.target); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.6 });
+
+    Array.prototype.forEach.call(els, function (el) { io.observe(el); });
+  }
+
+  /* ---- Stage drag-track (HOW WE DO IT) ---- */
+  function initRoad() {
+    var track = document.getElementById('emRoadTrack');
+    if (!track) return;
+    var fill = document.getElementById('emRoadFill');
+    var prevBtn = document.getElementById('emRoadPrev');
+    var nextBtn = document.getElementById('emRoadNext');
+    var pipsWrap = document.getElementById('emRoadPips');
+    var cards = Array.prototype.slice.call(track.querySelectorAll('.em-road__card'));
+
+    /* Pips */
+    var pips = cards.map(function (card, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'em-road__pip' + (i === 0 ? ' is-active' : '');
+      b.setAttribute('aria-label', 'Go to stage ' + (i + 1));
+      b.addEventListener('click', function () {
+        card.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', inline: 'center', block: 'nearest' });
+      });
+      pipsWrap.appendChild(b);
+      return b;
+    });
+
+    function setActive(index) {
+      cards.forEach(function (c, i) { c.classList.toggle('is-active', i === index); });
+      pips.forEach(function (p, i) { p.classList.toggle('is-active', i === index); });
+    }
+
+    var cardIO = new IntersectionObserver(function (entries) {
+      var best = null;
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+          if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
+        }
+      });
+      if (best) setActive(cards.indexOf(best.target));
+    }, { root: track, threshold: [0.6] });
+    cards.forEach(function (c) { cardIO.observe(c); });
+
+    function updateFill() {
+      var max = track.scrollWidth - track.clientWidth;
+      var pct = max > 0 ? (track.scrollLeft / max) * 100 : 0;
+      fill.style.width = Math.max(6, Math.min(100, pct)) + '%';
+    }
+    track.addEventListener('scroll', updateFill, { passive: true });
+    updateFill();
+
+    function step(dir) {
+      var w = cards[0] ? cards[0].getBoundingClientRect().width + 24 : 320;
+      track.scrollBy({ left: dir * w, behavior: reduce ? 'auto' : 'smooth' });
+    }
+    prevBtn.addEventListener('click', function () { step(-1); });
+    nextBtn.addEventListener('click', function () { step(1); });
+
+    /* Pointer drag-to-scroll (mouse). Touch/trackpad keep native scroll. */
+    var dragging = false, startX = 0, startScroll = 0, moved = false;
+    track.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'touch') return;
+      dragging = true; moved = false;
+      startX = e.clientX; startScroll = track.scrollLeft;
+      track.classList.add('is-dragging');
+      track.setPointerCapture(e.pointerId);
+    });
+    track.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      track.scrollLeft = startScroll - dx;
+    });
+    function endDrag(e) {
+      if (!dragging) return;
+      dragging = false;
+      track.classList.remove('is-dragging');
+      if (e && e.pointerId !== undefined) { try { track.releasePointerCapture(e.pointerId); } catch (err) {} }
+    }
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+    track.addEventListener('pointerleave', function (e) { if (dragging) endDrag(e); });
+    /* Suppress the click that follows a real drag (prevents accidental card link activation). */
+    track.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { initCountups(); initRoad(); });
+  } else {
+    initCountups(); initRoad();
+  }
+})();

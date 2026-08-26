@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OG banner source</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@500;600&display=swap">
+<style>
+  /* Render source for og-banner.png, 1200x630. Eterna's own black/white
+     e-commerce palette with the proposal's blue sweep as the accent. */
+  * { margin: 0; box-sizing: border-box; }
+
+  html, body { width: 1200px; height: 630px; }
+
+  body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    background: #0a0a0a;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow: hidden;
+  }
+
+  .sweep {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 10px;
+    background: linear-gradient(90deg, #12285e 0%, #1c3f96 30%, #2f6fe4 60%, #7aa8ff 100%);
+  }
+
+  .ring {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 700px;
+    height: 700px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: linear-gradient(90deg, #12285e 0%, #1c3f96 30%, #2f6fe4 60%, #7aa8ff 100%);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1.5px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1.5px));
+    opacity: 0.18;
+  }
+
+  .inner { position: relative; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+
+  img { width: 360px; height: auto; display: block; }
+
+  h1 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 1.08;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fafafa;
+    white-space: nowrap;
+  }
+
+  h1 .grad {
+    display: block;
+    background: linear-gradient(90deg, #1c3f96 0%, #2f6fe4 55%, #7aa8ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .rule { width: 104px; height: 4px; border-radius: 999px; background: linear-gradient(90deg, #12285e 0%, #1c3f96 30%, #2f6fe4 60%, #7aa8ff 100%); }
+
+  .foot {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 19px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(250,250,250,0.55);
+  }
+</style>
+</head>
+<body>
+  <div class="sweep"></div>
+  <div class="ring"></div>
+  <div class="inner">
+    <img src="eterna-logo-white.png" alt="">
+    <h1>
+      Paid Ads Proposal
+      <span class="grad">For Eterna Motorworks</span>
+    </h1>
+    <div class="rule"></div>
+    <p class="foot">Presented by Arc Garde</p>
+  </div>
+</body>
+</html>

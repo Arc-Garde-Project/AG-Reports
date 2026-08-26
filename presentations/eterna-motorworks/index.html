@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/presentations/eterna-motorworks/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Eterna Motorworks | Paid Ads Proposal | Arc Garde</title>
+<meta name="description" content="A paid ads proposal prepared for Eterna Motorworks by Arc Garde: campaign management, GHL funnel build, and weekly reporting on where every dollar goes.">
+<link rel="canonical" href="https://ag-reports.vercel.app/presentations/eterna-motorworks">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ag-reports.vercel.app/presentations/eterna-motorworks">
+<meta property="og:title" content="Eterna Motorworks | Paid Ads Proposal | Arc Garde">
+<meta property="og:description" content="A paid ads proposal prepared for Eterna Motorworks by Arc Garde: campaign management, GHL funnel build, and weekly reporting on where every dollar goes.">
+<meta property="og:image" content="https://ag-reports.vercel.app/presentations/eterna-motorworks/og-banner.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0a0a0a">
+
+<link rel="preload" as="image" href="em-hero.webp" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet">
+
+<link rel="stylesheet" href="ag-defensive.css">
+<link rel="stylesheet" href="ag-tokens.css">
+<link rel="stylesheet" href="ag-responsive.css">
+<link rel="stylesheet" href="ag-typography.css">
+<link rel="stylesheet" href="ag-motion.css">
+<link rel="stylesheet" href="ag-scroll.css">
+<link rel="stylesheet" href="ag-cursor.css">
+
+<style>
+  /* =========================================================== */
+  /* Eterna Motorworks — page-specific system                    */
+  /* Namespaced --em-* tokens sit alongside the AG primitive      */
+  /* tokens (ag-tokens.css) without ever renaming them.           */
+  /* =========================================================== */
+  :root{
+    --em-sweep: linear-gradient(90deg, var(--brand-700) 0%, var(--brand) 52%, #7aa8ff 100%);
+    --em-sweep-ink: linear-gradient(90deg, #12285e 0%, var(--brand-700) 52%, var(--brand) 100%);
+    --em-surface: #121212;
+    --em-surface-line: rgba(255,255,255,0.09);
+    --em-paper-line: rgba(10,10,10,0.09);
+    --em-accent-light: #9fbcff;
+  }
+
+  html, body { background: var(--paper); }
+
+  .em-eyebrow{
+    display:block; font-family:var(--font-body); font-size:var(--text-eyebrow);
+    font-weight:700; letter-spacing:0.22em; text-transform:uppercase;
+    margin-bottom: var(--space-md);
+  }
+  section .em-eyebrow{ color: var(--brand); }
+  .em-dark .em-eyebrow{ color:#7aa8ff; }
+
+  h1,h2,h3{ font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.01em; }
+  h2.em-h2{ font-size: var(--text-h1); font-weight: var(--fw-hero); line-height: 1.04; margin-bottom: var(--space-lg); }
+  .em-grad{
+    background: var(--em-sweep); -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: var(--brand);
+  }
+
+  /* ---- Section rhythm ---- */
+  .em-section{ padding-block: var(--space-section); position: relative; }
+  .em-dark{ background: var(--ink); color: var(--paper); }
+  .em-dark .em-lede, .em-dark p{ color: rgba(255,255,255,0.72); }
+  .em-hairline{ position:absolute; inset:0 0 auto 0; height:3px; background: var(--em-sweep); }
+
+  .em-lede{ font-size: var(--text-lg); color: var(--text-secondary); max-width: min(var(--measure-body), 100%); margin-bottom: var(--space-lg); }
+
+  /* =========================================================== */
+  /* HERO                                                         */
+  /* =========================================================== */
+  .em-hero{
+    position: relative; min-height: 100svh; display:flex; align-items:flex-end;
+    background: var(--ink);
+    overflow: hidden;
+  }
+  .em-hero__media{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position: 62% 50%;
+  }
+  .em-hero__scrim{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.25) 32%, rgba(10,10,10,0.55) 68%, rgba(10,10,10,0.96) 100%),
+      linear-gradient(90deg, rgba(10,10,10,0.75) 0%, rgba(10,10,10,0.15) 46%, rgba(10,10,10,0.1) 100%);
+  }
+  .em-hero__inner{
+    position:relative; z-index:2; width:100%;
+    padding: clamp(6rem, 4rem + 8vw, 9rem) var(--section-padding-inline) clamp(3rem, 2rem + 4vw, 5rem);
+  }
+  .em-hero__mark{ height: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem); width:auto; display:block; margin-bottom: var(--space-lg); }
+  .em-hero__eyebrow{
+    font-family: var(--font-body); font-size: var(--text-eyebrow); font-weight:700;
+    letter-spacing: 0.24em; text-transform: uppercase; color:var(--em-accent-light); margin-bottom: var(--space-md);
+  }
+  .em-hero h1{
+    color: var(--paper); font-weight: var(--fw-hero); line-height: 0.98;
+    max-width: min(var(--measure-statement), 100%); margin-bottom: var(--space-lg);
+    /* AG-TYPOGRAPHY-STANDARD F <= M/9 ceiling: stops a mid-block line from holding one word. */
+    font-size: min(var(--text-hero), calc(var(--measure-statement) / 9));
+  }
+  .em-hero__sub{
+    color: rgba(255,255,255,0.78); font-size: var(--text-lg); max-width: min(46ch, 100%);
+    font-family: var(--font-body);
+  }
+  .em-hero__scroll{
+    position:absolute; right: var(--section-padding-inline); bottom: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    z-index:2; display:flex; align-items:center; gap: var(--space-2xs, 0.5rem);
+    color: rgba(255,255,255,0.6); font-size: var(--text-sm); letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .em-hero__scroll .material-symbols-outlined{ animation: em-bob 2100ms var(--ease-soft) infinite; font-size: 20px; }
+  @keyframes em-bob{ 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(6px);} }
+  @media (prefers-reduced-motion: reduce){ .em-hero__scroll .material-symbols-outlined{ animation:none; } }
+  @media (max-width: 900px){ .em-hero__scroll{ display:none; } }
+
+  /* =========================================================== */
+  /* WHAT WE DO — deliverable ledger                              */
+  /* =========================================================== */
+  .em-cards{ gap: var(--space-lg); }
+  .em-card{
+    background: var(--paper); border: 1px solid var(--em-paper-line); border-radius: var(--radius-md);
+    padding: var(--space-lg); transition: transform var(--duration-quick) var(--ease-settle), border-color var(--duration-quick) var(--ease-settle), box-shadow var(--duration-quick) var(--ease-settle);
+  }
+  @media (hover: hover) {
+    .em-card:hover{ transform: translateY(-4px); border-color: var(--brand); box-shadow: 0 14px 34px rgba(10,10,10,0.1); }
+  }
+  .em-card__num{
+    display:inline-block; font-family: var(--font-heading); font-weight:700; font-size: 0.8125rem;
+    letter-spacing: 0.12em; color: var(--brand); margin-bottom: var(--space-2xs, 0.5rem);
+  }
+  .em-card h3{ font-size: var(--text-h4); font-weight:600; text-transform:none; letter-spacing:0; margin-bottom: var(--space-2xs, 0.5rem); }
+  .em-card p{ color: var(--text-secondary); font-size: var(--text-base); }
+
+  /* =========================================================== */
+  /* IMAGE BREAK — full-bleed cinematic pause between sections    */
+  /* =========================================================== */
+  .em-break{
+    position: relative; min-height: clamp(20rem, 16rem + 18vw, 34rem);
+    display:flex; align-items:flex-end; justify-content:center; overflow:hidden;
+  }
+  .em-break__media{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position: center 30%; }
+  .em-break__scrim{
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(10,10,10,0.15) 0%, rgba(10,10,10,0.35) 55%, rgba(10,10,10,0.92) 100%);
+  }
+  .em-break__cap{
+    position:relative; z-index:2; padding: var(--space-xl, 3rem) var(--section-padding-inline);
+    text-align:center; color: var(--paper); font-family: var(--font-heading); text-transform: uppercase;
+    font-size: var(--text-h3); font-weight:600; letter-spacing:0.01em; max-width: min(var(--measure-statement), 100%);
+    margin-inline:auto;
+  }
+
+  /* =========================================================== */
+  /* PARTNER STRIP — platforms/brands credibility row              */
+  /* Logos are white/red ink on transparent (source black bg keyed */
+  /* out) — designed for a dark surface, matches their own site.  */
+  /* =========================================================== */
+  .em-partners{ padding-block: var(--space-xl, 3rem); text-align:center; border-top: 1px solid var(--em-surface-line); }
+  .em-partners__label{
+    display:block; font-family:var(--font-body); font-size:var(--text-eyebrow); font-weight:700;
+    letter-spacing:0.22em; text-transform:uppercase; color: var(--em-accent-light); margin-bottom: var(--space-lg);
+  }
+  .em-partners__row{
+    display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap: clamp(1.75rem, 1.2rem + 2.2vw, 3.25rem);
+  }
+  .em-partners__row img{ height: clamp(1.5rem, 1.2rem + 1vw, 2.25rem); width:auto; opacity:0.85; }
+
+  /* =========================================================== */
+  /* HOW WE DO IT — drag track                                    */
+  /* =========================================================== */
+  .em-road{ margin-top: var(--space-xl, 3rem); }
+  .em-road__viewport{ position: relative; }
+  .em-road__rail{
+    position: relative; height: 3px; background: var(--em-surface-line); border-radius: 999px;
+    margin-bottom: var(--space-lg); overflow: hidden;
+  }
+  .em-road__fill{ position:absolute; inset:0 auto 0 0; width: 25%; background: var(--em-sweep); border-radius: 999px; transition: width 120ms linear; }
+  .em-road__track{
+    display:flex; gap: var(--space-lg); overflow-x: auto; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; cursor: grab; padding-bottom: var(--space-xs);
+    scrollbar-width: none;
+  }
+  .em-road__track::-webkit-scrollbar{ display:none; }
+  .em-road__track.is-dragging{ cursor: grabbing; scroll-snap-type: none; }
+  .em-road__track.is-dragging .em-road__card{ transition: none; }
+  .em-road__card{
+    flex: 0 0 min(21rem, 82vw); scroll-snap-align: center;
+    background: var(--em-surface); border: 1px solid var(--em-surface-line); border-radius: var(--radius-md);
+    padding: var(--space-lg); transition: border-color var(--duration-quick) var(--ease-settle);
+  }
+  .em-road__card.is-active{ border-color: var(--brand); }
+  .em-road__num{
+    display:flex; align-items:center; justify-content:center; width: 2.75rem; height: 2.75rem;
+    border-radius: 50%; background: var(--em-sweep); color:#fff; font-family: var(--font-heading);
+    font-weight:700; font-size: 1rem; margin-bottom: var(--space-md);
+  }
+  .em-road__when{ font-size: var(--text-sm); letter-spacing: 0.1em; text-transform: uppercase; color:var(--em-accent-light); margin-bottom: var(--space-2xs, 0.5rem); }
+  .em-road__card h3{ font-size: var(--text-h4); font-weight:600; text-transform:none; letter-spacing:0; color:var(--paper); margin-bottom: var(--space-2xs, 0.5rem); }
+  .em-road__card p{ color: rgba(255,255,255,0.68); font-size: var(--text-base); }
+  .em-road__controls{ display:flex; align-items:center; justify-content:center; gap: var(--space-md); margin-top: var(--space-lg); }
+  .em-road__btn{
+    display:flex; align-items:center; justify-content:center; width: 49px; height:49px; border-radius: 50%;
+    border: 1px solid var(--em-surface-line); background: transparent; color: var(--paper);
+    transition: border-color var(--duration-quick) var(--ease-settle), background var(--duration-quick) var(--ease-settle);
+  }
+  @media (hover: hover) {
+    .em-road__btn:hover{ border-color: var(--brand); background: rgba(47,111,228,0.14); }
+  }
+  .em-road__pips{ display:flex; align-items:center; gap: 2px; }
+  .em-road__pip{
+    width:36px; height:36px; padding:0; background:transparent; display:flex; align-items:center; justify-content:center;
+  }
+  .em-road__pip::before{
+    content:''; display:block; width:8px; height:8px; border-radius:50%; background: var(--em-surface-line);
+    transition: background var(--duration-quick) var(--ease-settle), transform var(--duration-quick) var(--ease-settle);
+  }
+  .em-road__pip.is-active::before{ background: var(--brand); transform: scale(1.3); }
+  @media (max-width: 900px) {
+    .em-road__controls{ gap: var(--space-xs); }
+    .em-road__pip{ width:28px; height:28px; }
+  }
+  .em-road__note{
+    margin-top: var(--space-lg); font-size: var(--text-base); color: rgba(255,255,255,0.68);
+    max-width: min(var(--measure-body), 100%); margin-inline: auto; text-align: center;
+  }
+
+  /* =========================================================== */
+  /* WHY WE DO IT                                                 */
+  /* =========================================================== */
+  .em-why__split{ align-items: start; }
+  .em-why__copy p{ font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-md); }
+  .em-why__copy p:last-child{ margin-bottom:0; }
+  .ag-image-wrapper{ border-radius: var(--radius-md); overflow: hidden; }
+  .em-points{ margin-top: var(--space-xl, 3rem); gap: var(--space-lg); }
+  .em-point{ border-top: 3px solid var(--brand); padding-top: var(--space-md); }
+  .em-point strong{ display:block; font-family: var(--font-heading); font-size: var(--text-h4); margin-bottom: var(--space-2xs, 0.5rem); }
+  .em-point span{ color: var(--text-secondary); font-size: var(--text-base); }
+
+  /* =========================================================== */
+  /* WHAT IT COSTS                                                */
+  /* =========================================================== */
+  .em-cost__top{ text-align:center; margin-bottom: var(--space-xl, 3rem); }
+  .em-cost__price{
+    font-family: var(--font-heading); font-weight:700; font-size: clamp(3.5rem, 2.8rem + 3.5vw, 6rem);
+    line-height: 1; color: var(--paper);
+  }
+  .em-cost__price .em-cost__unit{ font-size: clamp(1rem, 0.85rem + 0.6vw, 1.25rem); font-family: var(--font-body); font-weight:500; color: rgba(255,255,255,0.6); text-transform: none; letter-spacing:0; margin-left: 0.4rem; }
+  .em-cost__term{ margin-top: var(--space-md); color: rgba(255,255,255,0.68); font-size: var(--text-base); }
+
+  .em-ledger{ width:100%; border-collapse: collapse; margin: 0 auto var(--space-xl, 3rem); max-width: 640px; }
+  .em-ledger caption{ text-align:left; font-size: var(--text-eyebrow); letter-spacing:0.18em; text-transform:uppercase; color:var(--em-accent-light); margin-bottom: var(--space-md); }
+  .em-ledger th, .em-ledger td{ padding: var(--space-md) 0; border-bottom: 1px solid var(--em-surface-line); text-align:left; font-size: var(--text-base); color: rgba(255,255,255,0.85); }
+  .em-ledger td:last-child, .em-ledger th:last-child{ text-align:right; }
+  .em-ledger tfoot th, .em-ledger tfoot td{ border-bottom:none; padding-top: var(--space-lg); font-family: var(--font-heading); font-size: var(--text-h4); color: var(--paper); text-transform: uppercase; letter-spacing: 0.02em; }
+
+  .em-included{ max-width: 640px; margin: 0 auto var(--space-xl, 3rem); list-style:none; }
+  .em-included li{ display:flex; align-items:flex-start; gap: var(--space-2xs, 0.5rem); padding: var(--space-2xs, 0.5rem) 0; color: rgba(255,255,255,0.82); font-size: var(--text-base); }
+  .em-included .material-symbols-outlined{ color: var(--brand); font-size: 20px; flex: none; margin-top: 2px; }
+
+  .em-terms{ max-width: 640px; margin: 0 auto; display:grid; gap: var(--space-md); }
+  .em-term{ border: 1px solid var(--em-surface-line); border-radius: var(--radius-md); padding: var(--space-md); }
+  .em-term__label{ display:block; font-size: var(--text-eyebrow); letter-spacing:0.16em; text-transform:uppercase; color:var(--em-accent-light); margin-bottom: 6px; }
+  .em-term p{ color: rgba(255,255,255,0.72); font-size: var(--text-sm); }
+
+  /* =========================================================== */
+  /* NEXT STEPS                                                   */
+  /* =========================================================== */
+  .em-steps{ counter-reset: em-step; gap: var(--space-lg); margin-bottom: var(--space-xl, 3rem); --col-min: 13rem; }
+  .em-step{ position:relative; padding-top: var(--space-lg); border-top: 1px solid var(--em-paper-line); }
+  .em-step::before{
+    counter-increment: em-step; content: counter(em-step, decimal-leading-zero);
+    display:block; font-family: var(--font-heading); font-weight:700; font-size: var(--text-h2);
+    background: var(--em-sweep-ink); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color: var(--brand);
+    margin-bottom: var(--space-2xs, 0.5rem);
+  }
+  .em-step h3{ font-size: var(--text-h4); font-weight:600; text-transform:none; letter-spacing:0; margin-bottom: var(--space-2xs, 0.5rem); }
+  .em-step p{ color: var(--text-secondary); font-size: var(--text-base); }
+  .em-close{
+    text-align:center; font-family: var(--font-heading); font-weight:600; text-transform:none; letter-spacing:0;
+    color: var(--ink); padding-top: var(--space-lg); border-top: 1px solid var(--em-paper-line);
+  }
+
+  /* =========================================================== */
+  /* FOOTER                                                       */
+  /* =========================================================== */
+  .em-foot{
+    background: var(--ink); text-align:center;
+    padding-block: var(--space-lg);
+    padding-inline: max(var(--safe-edge), env(safe-area-inset-left)) max(var(--safe-edge), env(safe-area-inset-right));
+    padding-bottom: max(var(--space-lg), env(safe-area-inset-bottom));
+  }
+  .em-foot__mark{ height: 1.1rem; width:auto; display:block; margin: 0 auto var(--space-md); opacity:0.85; }
+  .em-foot__line{ color: rgba(255,255,255,0.5); font-size: var(--text-sm); letter-spacing: 0.02em; }
+
+  /* =========================================================== */
+  /* AG-MOBILE-STANDARD v2.7 §6C — mandatory centering net        */
+  /* Literally everything centers at <=900, no carve-outs.        */
+  /* =========================================================== */
+  @media (max-width: 900px) {
+    main, section, .ag-container, .ag-content, footer, .em-foot {
+      text-align: center;
+    }
+    h1, h2, h3, h4, h5, h6, p, li, blockquote, figcaption {
+      text-align: center;
+    }
+    .ag-button, .ag-card, .em-card, .ag-image-wrapper, video, img {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+    .em-hero__mark, .em-foot__mark { margin-left: auto; margin-right: auto; }
+    [data-ag-center-exempt], [data-ag-center-exempt] * {
+      text-align: initial;
+    }
+  }
+
+  /* Active state on touch */
+  @media (hover: none) {
+    a:active, button:active, [role="button"]:active {
+      opacity: 0.63;
+      transition: opacity 0.21s var(--ease-settle, cubic-bezier(0.22, 1, 0.36, 1));
+    }
+  }
+</style>
+</head>
+<body>
+<a href="#main" class="ag-skip-link">Skip to content</a>
+
+<header class="em-hero" id="page-hero">
+  <img class="em-hero__media" src="em-hero.webp" alt="Widebody BMW M4 GTR built by Eterna Motorworks" width="2400" height="1349" fetchpriority="high">
+  <div class="em-hero__scrim" aria-hidden="true"></div>
+  <div class="em-hero__inner">
+    <img class="em-hero__mark reveal" src="eterna-logo-white.png" alt="Eterna Motorworks" width="1763" height="327">
+    <p class="em-hero__eyebrow reveal">Proposal Prepared For Eterna&nbsp;Motorworks</p>
+    <h1 class="reveal-hero">Scale<br><span class="em-grad">Without<br>Compromise</span></h1>
+    <p class="em-hero__sub reveal">A paid ads plan from Arc&nbsp;Garde, built to turn the audience you have already earned into revenue you can trace.</p>
+  </div>
+  <div class="em-hero__scroll" aria-hidden="true">
+    <span>Scroll</span><span class="material-symbols-outlined">arrow_downward</span>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ WHAT WE DO ============ -->
+  <section class="em-section" aria-labelledby="what-h">
+    <div class="ag-container">
+      <span class="em-eyebrow reveal">What We Do</span>
+      <h2 id="what-h" class="em-h2 reveal">Everything We Run, Every Month</h2>
+      <p class="em-lede reveal">One team, one monthly line, six things running at once.</p>
+
+      <div class="ag-row em-cards reveal-stagger">
+        <div class="em-card">
+          <span class="em-card__num">01</span>
+          <h3>Paid Social &amp; Search Campaigns</h3>
+          <p>Meta and Google campaigns built, launched, and managed end to end.</p>
+        </div>
+        <div class="em-card">
+          <span class="em-card__num">02</span>
+          <h3>Creative Production</h3>
+          <p>Ad creative shot, cut, and tested against your build catalog.</p>
+        </div>
+        <div class="em-card">
+          <span class="em-card__num">03</span>
+          <h3>GHL CRM &amp; Funnel Build</h3>
+          <p>Lead capture, follow-up, and booking, running in one system.</p>
+        </div>
+        <div class="em-card">
+          <span class="em-card__num">04</span>
+          <h3>Domain Connect</h3>
+          <p>Your funnel domain registered or pointed, live, and tracked.</p>
+        </div>
+        <div class="em-card">
+          <span class="em-card__num">05</span>
+          <h3>Conversion Tracking</h3>
+          <p>Every lead and sale tied back to the exact ad that earned it.</p>
+        </div>
+        <div class="em-card">
+          <span class="em-card__num">06</span>
+          <h3>Weekly Reporting</h3>
+          <p>A report every week, in plain numbers, no dashboard hunting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IMAGE BREAK ============ -->
+  <div class="em-break">
+    <img class="em-break__media" src="em-break.webp" alt="Blacked-out widebody BMW M4, front three-quarter studio shot" width="1600" height="2000" loading="lazy">
+    <div class="em-break__scrim" aria-hidden="true"></div>
+    <p class="em-break__cap reveal">Precision Builds, Precision Ads</p>
+  </div>
+
+  <!-- ============ HOW WE DO IT ============ -->
+  <section class="em-section em-dark" aria-labelledby="how-h">
+    <div class="em-hairline" aria-hidden="true"></div>
+    <div class="ag-container">
+      <span class="em-eyebrow reveal">How We Do It</span>
+      <h2 id="how-h" class="em-h2 reveal">The Process, In Full View</h2>
+      <p class="em-lede reveal">You will always know where the budget is and what stage we are in. The targeting and creative strategy are ours to run, the results are always yours to see.</p>
+
+      <div class="em-road">
+        <div class="em-road__viewport">
+          <div class="em-road__rail"><div class="em-road__fill" id="emRoadFill"></div></div>
+          <div class="em-road__track" id="emRoadTrack" tabindex="0" aria-label="Engagement stages, scroll or drag to browse">
+            <article class="em-road__card is-active" data-stage="1">
+              <span class="em-road__num">01</span>
+              <p class="em-road__when">Week One</p>
+              <h3>Foundation</h3>
+              <p>Accounts audited, tracking installed, GHL and your domain connected.</p>
+            </article>
+            <article class="em-road__card" data-stage="2">
+              <span class="em-road__num">02</span>
+              <p class="em-road__when">Week Two</p>
+              <h3>Launch</h3>
+              <p>Creative goes live and the first campaigns start spending.</p>
+            </article>
+            <article class="em-road__card" data-stage="3">
+              <span class="em-road__num">03</span>
+              <p class="em-road__when">Ongoing</p>
+              <h3>Report</h3>
+              <p>A plain-numbers report lands every week: spend, results, and what is next.</p>
+            </article>
+            <article class="em-road__card" data-stage="4">
+              <span class="em-road__num">04</span>
+              <p class="em-road__when">Day Ninety</p>
+              <h3>Regroup</h3>
+              <p>We review 90 days of real data together and decide how hard to scale.</p>
+            </article>
+          </div>
+          <div class="em-road__controls">
+            <button type="button" class="em-road__btn" id="emRoadPrev" aria-label="Previous stage"><span class="material-symbols-outlined" aria-hidden="true">arrow_back</span></button>
+            <div class="em-road__pips" id="emRoadPips"></div>
+            <button type="button" class="em-road__btn" id="emRoadNext" aria-label="Next stage"><span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></button>
+          </div>
+        </div>
+        <p class="em-road__note reveal">No projections, no promised numbers. We report exactly what happened and decide the next step from there, together.</p>
+      </div>
+
+      <div class="em-partners reveal">
+        <span class="em-partners__label">The Platforms Behind The Build</span>
+        <div class="em-partners__row">
+          <img src="partner-sema.webp" alt="SEMA, Specialty Equipment Market Association" width="176" height="240" loading="lazy">
+          <img src="partner-vorstiner.webp" alt="Vorstiner" width="390" height="240" loading="lazy">
+          <img src="partner-seibon.webp" alt="Seibon Carbon" width="1466" height="240" loading="lazy">
+          <img src="partner-mvforged.webp" alt="MV Forged" width="1954" height="240" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY WE DO IT ============ -->
+  <section class="em-section" aria-labelledby="why-h">
+    <div class="ag-container">
+      <span class="em-eyebrow reveal">Why We Do It</span>
+      <h2 id="why-h" class="em-h2 reveal">Why This Order, Why This Pace</h2>
+
+      <div class="ag-split em-why__split">
+        <div class="em-why__copy reveal">
+          <p>A catalog this deep and an audience this built deserve traffic that converts, not just traffic that clicks.</p>
+          <p>Ninety days is enough time to see a real signal without guessing on thin data.</p>
+          <p>We would rather prove the account small and scale it hard than promise a number we cannot back up.</p>
+          <p>Every dollar reported is a dollar you can trace, that is the entire point of the weekly report.</p>
+        </div>
+        <div class="ag-image-wrapper reveal-cinematic">
+          <img class="ag-media" src="em-widebody.webp" alt="Eterna Motorworks widebody BMW M4 build, studio shot" width="1400" height="875" loading="lazy">
+        </div>
+      </div>
+
+      <div class="ag-row em-points reveal-stagger">
+        <div class="em-point">
+          <strong>$1,500 / mo</strong>
+          <span>Ad spend paid direct to the platforms, not to Arc&nbsp;Garde.</span>
+        </div>
+        <div class="em-point">
+          <strong>Every Week</strong>
+          <span>A performance report, no exceptions, no skipped weeks.</span>
+        </div>
+        <div class="em-point">
+          <strong>Day 90</strong>
+          <span>A scheduled regroup before any spend increase, not a surprise upsell.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT IT COSTS ============ -->
+  <section class="em-section em-dark" aria-labelledby="cost-h">
+    <div class="em-hairline" aria-hidden="true"></div>
+    <div class="ag-container ag-container--narrow">
+      <div class="em-cost__top">
+        <span class="em-eyebrow reveal">What It Costs</span>
+        <h2 id="cost-h" class="em-h2 reveal">One Price, Fully Itemized</h2>
+        <p class="em-cost__price reveal ag-figure"><span data-countup="3600" data-prefix="$" data-comma="1">$0</span><span class="em-cost__unit">/ month, all-in</span></p>
+        <p class="em-cost__term reveal">Priced for a 3-month initial engagement. At day 90 we regroup and scale spend if the numbers earn it.</p>
+      </div>
+
+      <table class="em-ledger reveal">
+        <caption>Monthly investment</caption>
+        <thead>
+          <tr><th scope="col">Line item</th><th scope="col">Monthly</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ad Management, Arc&nbsp;Garde</td><td class="ag-figure">$2,100</td></tr>
+          <tr><td>Ad Spend, paid direct to platforms</td><td class="ag-figure">$1,500</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><th scope="row">Total Monthly Investment</th><td class="ag-figure">$3,600</td></tr>
+        </tfoot>
+      </table>
+
+      <ul class="em-included reveal-stagger">
+        <li><span class="material-symbols-outlined" aria-hidden="true">check</span>Domain connect, included</li>
+        <li><span class="material-symbols-outlined" aria-hidden="true">check</span>GHL CRM &amp; funnel build, included</li>
+        <li><span class="material-symbols-outlined" aria-hidden="true">check</span>Creative production, included</li>
+        <li><span class="material-symbols-outlined" aria-hidden="true">check</span>Weekly reporting, included</li>
+      </ul>
+
+      <div class="em-terms reveal">
+        <div class="em-term">
+          <span class="em-term__label">Pass-Through</span>
+          <p>The $1,500&nbsp;/&nbsp;mo ad spend is paid directly to Meta and Google, it never routes through Arc&nbsp;Garde.</p>
+        </div>
+        <div class="em-term">
+          <span class="em-term__label">Term</span>
+          <p>3&nbsp;months initial, then a scheduled regroup. No auto-renewal surprise, no lock-in past the term.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NEXT STEPS ============ -->
+  <section class="em-section" aria-labelledby="next-h">
+    <div class="ag-container ag-container--narrow">
+      <span class="em-eyebrow reveal">Next Steps</span>
+      <h2 id="next-h" class="em-h2 reveal">Where We Start</h2>
+
+      <div class="ag-row em-steps reveal-stagger">
+        <div class="em-step">
+          <h3>Approve &amp; Set A Date</h3>
+          <p>Scope approved, start date confirmed.</p>
+        </div>
+        <div class="em-step">
+          <h3>Connect The Accounts</h3>
+          <p>Domain, GHL, and ad accounts connected in week one.</p>
+        </div>
+        <div class="em-step">
+          <h3>Go Live</h3>
+          <p>Campaigns live, first report inside two weeks.</p>
+        </div>
+      </div>
+
+      <p class="em-close ag-statement reveal">Ninety days from launch, we look at the numbers together and decide how hard to press.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="em-foot">
+  <img class="em-foot__mark" src="eterna-logo-white.png" alt="" width="1763" height="327" aria-hidden="true">
+  <p class="em-foot__line">Presentation made by Arc&nbsp;Garde&nbsp;&nbsp;//&nbsp;&nbsp;Prepared for Eterna&nbsp;Motorworks&nbsp;&nbsp;//&nbsp;&nbsp;August&nbsp;2026</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.min.js"
+        integrity="sha384-ClD7pCgIUz5M81HT8aZmMxCsWmfsycmBiwL5gy1pUbdWHvICIbea22N9sTtAFotA"
+        crossorigin="anonymous"></script>
+<script src="ag-scroll.js"></script>
+<script src="ag-motion.js"></script>
+<script src="ag-cursor.js"></script>
+<script src="ag-typography.js"></script>
+<script src="em-page.js"></script>
+</body>
+</html>
