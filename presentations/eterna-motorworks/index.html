@@ -95,6 +95,12 @@
       padding-top: clamp(3.5rem, 2.75rem + 3vw, 5rem);
       padding-bottom: clamp(4rem, 3rem + 4vw, 6rem);
     }
+    /* text-align:center (from the sitewide mobile centering net) only
+       centers the TEXT inside a box. h1's own max-width (the F<=M/9
+       ceiling) can leave the box itself narrower than the container,
+       so without margin-inline:auto the box sits flush-left and the
+       centered text inside it still reads off-center on the page. */
+    .em-hero h1{ margin-inline: auto; }
   }
   .em-hero__scrim{
     position:absolute; inset:0;
