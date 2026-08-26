@@ -11,21 +11,6 @@
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---- Hero background video ----
-     No `autoplay` attribute in the HTML on purpose: playback is started
-     here, gated on reduced-motion, so that preference is respected the
-     same way every other animation on this page is. A reduced-motion
-     visitor simply sees the <video>'s `poster` frame, which is the same
-     starting frame as the loop itself, so nothing looks broken or half-
-     loaded. Data-saver visitors get the same fallback via canplay never
-     firing / the browser declining to buffer, same net effect. */
-  function initHeroVideo() {
-    var video = document.getElementById('emHeroVideo');
-    if (!video || reduce) return;
-    var playPromise = video.play();
-    if (playPromise && playPromise.catch) playPromise.catch(function () {});
-  }
-
   /* ---- Count-up: data-countup / data-prefix / data-comma ---- */
   function initCountups() {
     var els = document.querySelectorAll('[data-countup]');
@@ -165,8 +150,8 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { initHeroVideo(); initCountups(); initRoad(); });
+    document.addEventListener('DOMContentLoaded', function () { initCountups(); initRoad(); });
   } else {
-    initHeroVideo(); initCountups(); initRoad();
+    initCountups(); initRoad();
   }
 })();
