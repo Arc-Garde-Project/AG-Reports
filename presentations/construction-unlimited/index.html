@@ -2396,9 +2396,9 @@ html.is-loading { overflow: hidden; }
    The library copy is untouched. */
 .ag-curtain {
   position: fixed; inset: 0; z-index: 2147483645;
-  background:
-    radial-gradient(80% 60% at 50% 42%, rgba(102,16,23,.55) 0%, rgba(102,16,23,0) 70%),
-    var(--cu-black, #0e0f10);
+  /* Pitch black. The oxblood radial wash lifted the whole plate off black and
+     read as a tint behind the logo; the mark and the title carry it alone. */
+  background: #000;
   display: flex; align-items: center; justify-content: center;
   opacity: 1; pointer-events: auto;
   transform: translate3d(0,0,0);
