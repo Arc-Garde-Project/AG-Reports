@@ -62,7 +62,10 @@
   /* --- client palette, all measured, never guessed --- */
   --cu-red:        #d0202d;   /* Elementor primary, sampled from the logo phoenix */
   --cu-red-lift:   #e2414d;   /* declared lighter red. DARK GROUND ONLY, 4.12:1 on white */
-  --cu-red-deep:   #9c1822;   /* derived shade for the price rule, holds on paper */
+  --cu-red-deep:   #9c1822;
+  --cu-red-label:  #ff6f77;   /* SMALL red type on a dark panel. red-lift measures
+                                 3.69:1 there, under the 4.5 body floor. This clears it
+                                 while staying the same accent. Structure keeps red. */   /* derived shade for the price rule, holds on paper */
   --cu-black:      #000000;   /* their footer field */
   --cu-ink:        #333333;   /* real rendered body ink, 12.63:1 on paper */
   --cu-ink-strong: #141414;   /* display type only, so headlines carry more weight */
@@ -315,7 +318,7 @@ p{ margin:0; text-wrap:pretty; }
   margin-top:var(--space-2xs);
   max-width:62ch;
   font-size:var(--cu-body);
-  color:var(--cu-muted);
+  color:rgba(255,255,255,.80);   /* was --cu-muted: 2.97:1 once the ground darkened */
   /* balance, not pretty: pretty only rescues a one-word last line, and the
      orphan sweep flags this block for a 24% stub at 650px. At 3 lines it is
      inside Chromium's balance cap. */
@@ -871,6 +874,96 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
   .cu-inv__list--trio{ grid-template-columns:1fr; }
 }
 
+
+
+/* ============================================================
+   THE PLATFORM RUN. Seven marks travelling right, continuously.
+
+   Built on the same mechanics as the ridge tape already in this deck: the set is
+   duplicated once and the track translates exactly -50%, so the wrap lands on an
+   identical frame and there is no seam. Transform only, which is a compositor
+   move that repaints nothing.
+
+   The marks are simplified badges, NOT the official brand logos. A proposal
+   should not ship an approximated trademark, so these read as platform tokens
+   rather than pretending to be the real files.
+   ============================================================ */
+.cu-plat{
+  position:relative; margin-top:1.05rem;
+  overflow:hidden;
+  border-top:1px solid rgba(255,255,255,.14);
+  border-bottom:1px solid rgba(255,255,255,.14);
+  padding:.84rem 0;
+  /* fade both ends so the run has no hard cut */
+  -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+          mask-image:linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+.cu-plat__track{
+  display:flex; align-items:center; gap:2.1rem; width:max-content;
+  animation:cu-plat-run 21s linear infinite;
+  will-change:transform;
+}
+@keyframes cu-plat-run{
+  from{ transform:translate3d(0,0,0); }
+  to  { transform:translate3d(-50%,0,0); }
+}
+.cu-plat__i{
+  display:flex; align-items:center; gap:.56rem; flex:0 0 auto;
+}
+.cu-plat__m{
+  width:26px; height:26px; flex:0 0 auto;
+  fill:none; stroke:var(--cu-paper); stroke-width:1.6;
+  stroke-linecap:round; stroke-linejoin:round; opacity:.92;
+}
+.cu-plat__n{
+  font-size:var(--cu-eyebrow); letter-spacing:.14em; text-transform:uppercase;
+  font-weight:700; color:rgba(255,255,255,.82); white-space:nowrap;
+}
+@media (prefers-reduced-motion:reduce){
+  .cu-plat__track{ animation:none; }
+}
+
+/* the fixed schedule gets a real container, like every other block */
+.cu-fixedbox{
+  margin-top:var(--space-s);
+  padding:clamp(1.05rem,.7rem + 1.4vw,1.75rem);
+  background:var(--cu-panel);
+  border:1px solid var(--cu-red-deep);
+  box-shadow:var(--cu-e-dark);
+}
+.cu-fixedbox .cu-fixed{ margin-top:0; }
+
+/* ============================================================
+   THE VIDEOGRAPHY FLAG. Deliberately the loudest block in the section, because
+   it is the one obligation that sits with the CLIENT and the one thing that
+   stops the run if it is not sorted. It was a line inside a terms box, which is
+   where things go to be missed.
+   ============================================================ */
+.cu-flag{
+  position:relative; margin-top:var(--space-s);
+  padding:clamp(1.05rem,.7rem + 1.4vw,1.75rem);
+  padding-left:clamp(1.75rem,1.2rem + 2.1vw,2.8rem);
+  background:var(--cu-panel);
+  border:1px solid var(--cu-red-deep);
+  border-left:6px solid var(--cu-red);
+  box-shadow:var(--cu-e-dark);
+}
+.cu-flag__k{
+  display:block;
+  font-size:var(--cu-eyebrow); letter-spacing:.21em; text-transform:uppercase;
+  font-weight:700; color:var(--cu-red-label);
+}
+.cu-flag__t{
+  margin:.42rem 0 0;
+  font-size:var(--cu-h3); font-weight:700; color:var(--cu-paper);
+  letter-spacing:-.012em; text-wrap:balance;
+}
+.cu-flag__b{
+  margin:.56rem 0 0; max-width:68ch;
+  font-size:var(--cu-small); color:rgba(255,255,255,.88); text-wrap:pretty;
+}
+.cu-flag__b b{ color:var(--cu-paper); font-weight:700; }
+
 /* ============================================================
    THE TESTING CYCLE, DRAWN AS A DIMENSIONED RUN.
 
@@ -931,7 +1024,7 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
 .cu-cyc__n{
   display:block; margin-top:.42rem;
   font-size:var(--cu-eyebrow); letter-spacing:.14em; font-weight:700;
-  color:var(--cu-red-lift); font-variant-numeric:tabular-nums;
+  color:var(--cu-red-label); font-variant-numeric:tabular-nums;
 }
 .cu-cyc__v{
   display:block; margin-top:.28rem;
@@ -1036,7 +1129,7 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
   color:var(--cu-muted-dark); font-weight:600; text-wrap:balance;
 }
 .cu-pick__mix{
-  margin:1.05rem 0 0; font-size:var(--cu-small); color:var(--cu-muted);
+  margin:1.05rem 0 0; font-size:var(--cu-small); color:rgba(255,255,255,.80);
   text-wrap:pretty; max-width:62ch; transition:opacity 300ms linear;
 }
 .cu-pick.is-swapping .cu-pick__mix{ opacity:.28; }
@@ -1094,7 +1187,10 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
      shingle's own colour. Pure black killed the field entirely; concrete grey
      (26,28,31) went the other way and read as light grey once the blur lifted
      it. This sits between them. */
-  background:#121317;
+  /* Near-black. TWO things were lifting this toward grey and only one of them
+     was the ground: the scrim is a LIGHT blue-grey, which adds light to every
+     pixel of the field no matter how dark the base is. Both come down. */
+  background:#08090b;
 }
 .cu-ground__drift{
   position:absolute; left:0; right:0; top:0; bottom:-600px;
@@ -1130,7 +1226,10 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
    start and no end, so the sheet is continuous down the whole page. */
 .cu-ground__glass{ position:absolute; inset:0; display:none; }
 @media (min-width:900px){
-  .cu-ground__glass{ display:block; background:rgba(104,132,172,.115); }
+  /* A DARK cool tint, not a pale one. rgba(104,132,172,.115) was a light blue
+     wash sitting over the whole field and adding luminance. This darkens and
+     cools instead: the glass read without the lift. */
+  .cu-ground__glass{ display:block; background:rgba(16,26,42,.38); }
 }
 
 .cu-seam{
@@ -2907,7 +3006,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
 }
 .cu-inv__k{
   font-size:var(--cu-eyebrow); letter-spacing:.14em; font-weight:700;
-  color:var(--cu-red-lift); align-self:start;
+  color:var(--cu-red-label); align-self:start;
 }
 .cu-inv__n{
   font-size:clamp(3.1rem,2rem + 4.2vw,5.6rem); font-weight:700; line-height:.8;
@@ -3106,7 +3205,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   padding:.63rem 0; border-bottom:1px solid var(--cu-line);
 }
 .cu-buildup__r:last-of-type{ border-bottom:0; }
-.cu-buildup__k{ font-size:var(--cu-eyebrow); font-weight:700; letter-spacing:.14em; color:var(--cu-red); }
+.cu-buildup__k{ font-size:var(--cu-eyebrow); font-weight:700; letter-spacing:.14em; color:var(--cu-red-label); }
 .cu-buildup__t{ font-size:var(--cu-small); font-weight:600; color:var(--cu-ink-strong); }
 .cu-buildup__n{ font-size:var(--cu-small); color:var(--cu-muted); font-variant-numeric:tabular-nums; }
 .cu-buildup__p{
@@ -3936,8 +4035,8 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   <section class="cu-sec cu-sec--apex cu-sec--dark" aria-labelledby="inv-h">
     <div class="cu-wrap">
       <span class="cu-eyebrow reveal">The audit</span>
-      <h2 class="cu-h2 reveal" id="inv-h">We Audited Your Site First</h2>
-      <p class="cu-lead reveal">You asked whether we had audited your existing site. We had, on August 26, straight off your own sitemap. <b>96&nbsp;pages</b>, 8&nbsp;blog posts and 10&nbsp;category archives, <b>114&nbsp;URLs</b> live today. That is the site this quote is built on, and it is why 14 pages was light.</p>
+      <h2 class="cu-h2 reveal" id="inv-h">We Audited Your Site</h2>
+      <p class="cu-lead reveal">We found <b>96&nbsp;pages</b>, <b>8</b>&nbsp;blog posts and <b>10</b>&nbsp;category archives. That is <b>114&nbsp;URLs</b> live today, and it is the site this quote is built on.</p>
 
       <div class="cu-inv">
 
@@ -3994,7 +4093,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
             <span class="cu-inv__k">i</span>
             <span class="cu-inv__n">5</span>
             <div class="cu-inv__body">
-              <h3 class="cu-inv__t">Five Cities Dead End at the Hub</h3>
+              <h3 class="cu-inv__t">5 Cities Dead End at the Hub</h3>
               <p class="cu-inv__m">You run <b>15</b>&nbsp;city hubs with only <b>14</b>&nbsp;child pages between them. Groveland, Winter Springs, Winter Park, Ocoee and Deltona have nothing underneath them.</p>
             </div>
           </li>
@@ -4002,7 +4101,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
             <span class="cu-inv__k">ii</span>
             <span class="cu-inv__n">3</span>
             <div class="cu-inv__body">
-              <h3 class="cu-inv__t">One Page Type, Three URL Patterns</h3>
+              <h3 class="cu-inv__t">1 Page Type, 3 URL Patterns</h3>
               <p class="cu-inv__m">Roof replacement sits at <b>3</b>&nbsp;different addresses on your site. Those pages compete with each other instead of stacking.</p>
             </div>
           </li>
@@ -4025,7 +4124,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   <section class="cu-sec cu-sec--flat cu-sec--gold" aria-labelledby="cost-h">
     <div class="cu-wrap">
       <span class="cu-eyebrow reveal">What it costs</span>
-      <h2 class="cu-h2 reveal" id="cost-h">96 Pages, One Price</h2>
+      <h2 class="cu-h2 reveal" id="cost-h">96 Pages, 1 Price</h2>
 
       <div class="cu-buildup reveal">
         <div class="cu-buildup__r"><span class="cu-buildup__k">A</span><span class="cu-buildup__t">Core Pages</span><span class="cu-buildup__n">10 pages</span><span class="cu-buildup__p">$3,900</span></div>
@@ -4156,15 +4255,15 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
     <div class="cu-wrap">
       <span class="cu-eyebrow reveal">Paid ads</span>
       <h2 class="cu-h2 reveal" id="ads-h">Paid Ads System</h2>
-      <p class="cu-lead reveal">This is the standard paid ads engine, run on Meta. Every ad is a video, always. Nothing is guessed and nothing is left running on a hunch. Videos go head to head in sprints until the numbers name a winner, and then that winner is what runs.</p>
+      <p class="cu-lead reveal">This is the standard paid ads engine, run on Meta. Every ad is a static image, always. Nothing is guessed and nothing is left running on a hunch. Images go head to head in sprints until the numbers name a winner, and then that winner is what runs.</p>
 
-      <ol class="cu-inv__list ag-course reveal">
+      <ol class="cu-inv__list cu-inv__list--trio ag-course reveal">
         <li class="cu-inv__r">
           <span class="cu-inv__k">i</span>
           <span class="cu-inv__n">14</span>
           <div class="cu-inv__body">
             <h3 class="cu-inv__t">The Testing Cycle</h3>
-            <p class="cu-inv__m"><b>2</b>&nbsp;videos run head to head for <b>4</b>&nbsp;days. That is one sprint. <b>7</b>&nbsp;sprints make a cycle, so all <b>14</b>&nbsp;videos are tested over <b>28</b>&nbsp;days.</p>
+            <p class="cu-inv__m"><b>2</b>&nbsp;images run head to head for <b>4</b>&nbsp;days. That is one sprint. <b>7</b>&nbsp;sprints make a cycle, so all <b>14</b>&nbsp;images are tested over <b>28</b>&nbsp;days.</p>
           </div>
         </li>
         <li class="cu-inv__r">
@@ -4180,7 +4279,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
           <span class="cu-inv__n">1</span>
           <div class="cu-inv__body">
             <h3 class="cu-inv__t">Then the Winner Runs</h3>
-            <p class="cu-inv__m">The winning ad goes on and stays on. From there you scale it if you want to, and reporting moves from every <b>4</b>&nbsp;days to every <b>7</b>.</p>
+            <p class="cu-inv__m">The winning image goes on and stays on. From there you scale it if you want to, and reporting moves from every <b>4</b>&nbsp;days to every <b>7</b>.</p>
           </div>
         </li>
       </ol>
@@ -4192,22 +4291,22 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
            cycle rather than a list of seven things. -->
       <div class="cu-cyc reveal">
         <div class="cu-cyc__head">
-          <span class="cu-cyc__lbl">One testing cycle</span>
+          <span class="cu-cyc__lbl">1 testing cycle</span>
           <span class="cu-cyc__dim" aria-hidden="true"><i class="cu-cyc__ext"></i><i class="cu-cyc__line"></i><i class="cu-cyc__ext"></i></span>
           <span class="cu-cyc__len">28 days</span>
         </div>
         <ol class="cu-cyc__track">
-          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 0</span><span class="cu-cyc__n">S01</span><span class="cu-cyc__v">1 v 2</span><span class="cu-cyc__vk">videos</span></li>
-          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 4</span><span class="cu-cyc__n">S02</span><span class="cu-cyc__v">3 v 4</span><span class="cu-cyc__vk">videos</span></li>
-          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 8</span><span class="cu-cyc__n">S03</span><span class="cu-cyc__v">5 v 6</span><span class="cu-cyc__vk">videos</span></li>
-          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 12</span><span class="cu-cyc__n">S04</span><span class="cu-cyc__v">7 v 8</span><span class="cu-cyc__vk">videos</span></li>
-          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 16</span><span class="cu-cyc__n">S05</span><span class="cu-cyc__v">9 v 10</span><span class="cu-cyc__vk">videos</span></li>
-          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 20</span><span class="cu-cyc__n">S06</span><span class="cu-cyc__v">11 v 12</span><span class="cu-cyc__vk">videos</span></li>
-          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 24</span><span class="cu-cyc__n">S07</span><span class="cu-cyc__v">13 v 14</span><span class="cu-cyc__vk">videos</span></li>
+          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 0</span><span class="cu-cyc__n">S01</span><span class="cu-cyc__v">1 v 2</span><span class="cu-cyc__vk">images</span></li>
+          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 4</span><span class="cu-cyc__n">S02</span><span class="cu-cyc__v">3 v 4</span><span class="cu-cyc__vk">images</span></li>
+          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 8</span><span class="cu-cyc__n">S03</span><span class="cu-cyc__v">5 v 6</span><span class="cu-cyc__vk">images</span></li>
+          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 12</span><span class="cu-cyc__n">S04</span><span class="cu-cyc__v">7 v 8</span><span class="cu-cyc__vk">images</span></li>
+          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 16</span><span class="cu-cyc__n">S05</span><span class="cu-cyc__v">9 v 10</span><span class="cu-cyc__vk">images</span></li>
+          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 20</span><span class="cu-cyc__n">S06</span><span class="cu-cyc__v">11 v 12</span><span class="cu-cyc__vk">images</span></li>
+          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 24</span><span class="cu-cyc__n">S07</span><span class="cu-cyc__v">13 v 14</span><span class="cu-cyc__vk">images</span></li>
         </ol>
         <div class="cu-cyc__loop">
           <span class="cu-cyc__ret" aria-hidden="true"></span>
-          <span class="cu-cyc__loopt">Two fresh videos every <b>4</b>&nbsp;days, <b>7</b>&nbsp;sprints, all <b>14</b>&nbsp;tested. Then the cycle runs again, and again, until one video is clearly the winner. Realistically about <b>3</b>&nbsp;months.</span>
+          <span class="cu-cyc__loopt"><b>2</b>&nbsp;fresh images every <b>4</b>&nbsp;days, <b>7</b>&nbsp;sprints, all <b>14</b>&nbsp;tested. Then the cycle runs again, and again, until 1 image is clearly the winner. Realistically about <b>3</b>&nbsp;months.</span>
         </div>
       </div>
 
@@ -4220,12 +4319,12 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
         </thead>
         <tbody>
           <tr><td><span>Platform</span></td><td>Meta</td></tr>
-          <tr><td><span>Videos per testing cycle</span></td><td>14</td></tr>
+          <tr><td><span>Static images per testing cycle</span></td><td>14</td></tr>
           <tr><td><span>Length of a testing cycle</span></td><td>28 days</td></tr>
-          <tr><td><span>Videos running head to head</span></td><td>2</td></tr>
+          <tr><td><span>Images running head to head</span></td><td>2</td></tr>
           <tr><td><span>Days per sprint</span></td><td>4</td></tr>
           <tr><td><span>Sprints per cycle</span></td><td>7</td></tr>
-          <tr><td><span>Every ad is a video</span></td><td>Always</td></tr>
+          <tr><td><span>Every ad is a static image</span></td><td>Always</td></tr>
           <tr><td><span>Copy, scripted word for word</span></td><td>Included</td></tr>
           <tr><td><span>Funnel, landing page and booking flow</span></td><td>Included</td></tr>
           <tr><td><span>Leads land in the CRM live</span></td><td>Included</td></tr>
@@ -4264,6 +4363,12 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
       <h2 class="cu-h2 reveal" id="org-h">Organic Content System</h2>
       <p class="cu-lead reveal">Paid ads buy attention while they run. Organic builds the thing that keeps working after the spend stops. You pick the daily volume and you pick the mix, and it runs on a fixed cadence rather than whenever there is time.</p>
 
+      <div class="cu-flag reveal">
+        <span class="cu-flag__k">Read this one twice</span>
+        <p class="cu-flag__t">Videography is the one piece we do not cover.</p>
+        <p class="cu-flag__b">Everything else in this section is ours: the ideas, the scripts, the design, the edit, the captions and the posting. Filming is not. <b>You supply the videographer</b>, and <b>we vet them before a single frame is shot</b>, because footage we cannot cut stops the whole content run dead. Sort this first and nothing else here is at risk.</p>
+      </div>
+
       <!-- WHAT THE READER CONTROLS. Volume, mix and fee move together, so they
            live in one interactive block. What is fixed lives below it, locked. -->
       <div class="cu-pick reveal">
@@ -4291,14 +4396,32 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
           </div>
         </div>
 
-        <p class="cu-pick__mix" data-out="mix">Two a day can be 2 videos, or 1 video and 1 graphic. The split is yours to set.</p>
+        <p class="cu-pick__mix" data-out="mix">2 a day can be 2 videos, or 1 video and 1 graphic. The split is yours to set.</p>
       </div>
 
       <!-- SET IN STONE. None of this moves with the volume. -->
-      <div class="cu-fixed reveal">
+      <div class="cu-fixedbox reveal">
+        <div class="cu-fixed">
         <div class="cu-fixed__t">Fixed, whichever volume you pick</div>
+        <div class="cu-plat" role="img" aria-label="Facebook, Instagram, TikTok, YouTube, LinkedIn, X and Threads">
+          <div class="cu-plat__track">
+            <span class="cu-plat__i"><svg class="cu-plat__m" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M14.2 21v-6.4h2.1l.4-2.6h-2.5v-1.6c0-.75.3-1.2 1.3-1.2h1.3V7.1a15 15 0 0 0-2-.14c-2 0-3.3 1.2-3.3 3.4V12H9.2v2.6h2.3V21"/></svg><span class="cu-plat__n">Facebook</span></span>
+            <span class="cu-plat__i"><svg class="cu-plat__m" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg><span class="cu-plat__n">Instagram</span></span>
+            <span class="cu-plat__i"><svg class="cu-plat__m" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4v10.2a3.2 3.2 0 1 1-2.6-3.15"/><path d="M14 4c.4 2.2 2 3.7 4.3 3.9"/></svg><span class="cu-plat__n">TikTok</span></span>
+            <span class="cu-plat__i"><svg class="cu-plat__m" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10.4 9.4 15 12l-4.6 2.6z"/></svg><span class="cu-plat__n">YouTube</span></span>
+            <span class="cu-plat__i"><svg class="cu-plat__m" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7.4 10.5V17"/><circle cx="7.4" cy="7.6" r=".9" fill="currentColor" stroke="none"/><path d="M11.2 17v-3.6a2 2 0 0 1 4 0V17"/></svg><span class="cu-plat__n">LinkedIn</span></span>
+            <span class="cu-plat__i"><svg class="cu-plat__m" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.5 4.5 19.5 19.5"/><path d="M19.5 4.5 4.5 19.5"/></svg><span class="cu-plat__n">X</span></span>
+            <span class="cu-plat__i"><svg class="cu-plat__m" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15.6 11.6c-.2-3-1.8-4.3-3.8-4.3-1.6 0-2.7.8-3.1 1.9"/><path d="M12 20c-4.2 0-6.6-2.8-6.6-8S7.8 4 12 4s6.6 2.8 6.6 8c0 3.4-1.6 5.3-3.6 5.3-1.6 0-2.6-1-2.6-2.3 0-1.5 1.2-2.4 3-2.4 2.2 0 3.4 1.2 3.4 3"/></svg><span class="cu-plat__n">Threads</span></span>
+            <span class="cu-plat__i" aria-hidden="true"><svg class="cu-plat__m" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M14.2 21v-6.4h2.1l.4-2.6h-2.5v-1.6c0-.75.3-1.2 1.3-1.2h1.3V7.1a15 15 0 0 0-2-.14c-2 0-3.3 1.2-3.3 3.4V12H9.2v2.6h2.3V21"/></svg><span class="cu-plat__n">Facebook</span></span>
+            <span class="cu-plat__i" aria-hidden="true"><svg class="cu-plat__m" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg><span class="cu-plat__n">Instagram</span></span>
+            <span class="cu-plat__i" aria-hidden="true"><svg class="cu-plat__m" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4v10.2a3.2 3.2 0 1 1-2.6-3.15"/><path d="M14 4c.4 2.2 2 3.7 4.3 3.9"/></svg><span class="cu-plat__n">TikTok</span></span>
+            <span class="cu-plat__i" aria-hidden="true"><svg class="cu-plat__m" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10.4 9.4 15 12l-4.6 2.6z"/></svg><span class="cu-plat__n">YouTube</span></span>
+            <span class="cu-plat__i" aria-hidden="true"><svg class="cu-plat__m" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7.4 10.5V17"/><circle cx="7.4" cy="7.6" r=".9" fill="currentColor" stroke="none"/><path d="M11.2 17v-3.6a2 2 0 0 1 4 0V17"/></svg><span class="cu-plat__n">LinkedIn</span></span>
+            <span class="cu-plat__i" aria-hidden="true"><svg class="cu-plat__m" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.5 4.5 19.5 19.5"/><path d="M19.5 4.5 4.5 19.5"/></svg><span class="cu-plat__n">X</span></span>
+            <span class="cu-plat__i" aria-hidden="true"><svg class="cu-plat__m" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15.6 11.6c-.2-3-1.8-4.3-3.8-4.3-1.6 0-2.7.8-3.1 1.9"/><path d="M12 20c-4.2 0-6.6-2.8-6.6-8S7.8 4 12 4s6.6 2.8 6.6 8c0 3.4-1.6 5.3-3.6 5.3-1.6 0-2.6-1-2.6-2.3 0-1.5 1.2-2.4 3-2.4 2.2 0 3.4 1.2 3.4 3"/></svg><span class="cu-plat__n">Threads</span></span>
+          </div>
+        </div>
         <ul class="cu-fixed__list">
-          <li class="cu-fixed__i"><b>7</b> platforms: Facebook, Instagram, TikTok, YouTube, LinkedIn, X and Threads</li>
           <li class="cu-fixed__i">Every piece goes on all <b>7</b></li>
           <li class="cu-fixed__i">Ideas, scripting, design, editing, captions and the posting itself</li>
           <li class="cu-fixed__i">All <b>7</b> profiles matched and verified before anything goes live</li>
@@ -4307,6 +4430,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
           <li class="cu-fixed__i">A dedicated content manager</li>
           <li class="cu-fixed__i">Videography is yours, and we vet the videographer</li>
         </ul>
+      </div>
       </div>
 
       <!-- The organic ledger is gone: the picker carries every figure that
@@ -5136,11 +5260,11 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
 
   var TIERS = {
     '1': { month:'30', posts:'210', fee:'On request',
-           mix:'One a day is a video or a graphic, your call. The split is yours to set.' },
+           mix:'1 a day is a video or a graphic, your call. The split is yours to set.' },
     '2': { month:'60', posts:'420', fee:'$2,300',
-           mix:'Two a day can be 2 videos, or 1 video and 1 graphic. The split is yours to set.' },
+           mix:'2 a day can be 2 videos, or 1 video and 1 graphic. The split is yours to set.' },
     '3': { month:'90', posts:'630', fee:'$3,100',
-           mix:'Three a day can be 3 videos, 2 videos and 1 graphic, or 1 video and 2 graphics. The split is yours to set.' }
+           mix:'3 a day can be 3 videos, 2 videos and 1 graphic, or 1 video and 2 graphics. The split is yours to set.' }
   };
 
   var outs = {};
