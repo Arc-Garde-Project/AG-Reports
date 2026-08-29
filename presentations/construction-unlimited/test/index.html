@@ -260,12 +260,22 @@ p{ margin:0; text-wrap:pretty; }
    ------------------------------------------------------------------ */
 .cu-sec--gold .cu-eyebrow{ color:var(--cu-paper); }
 .cu-sec--gold .cu-eyebrow::before{ background:var(--cu-gold); }
-.cu-sec--gold .cu-ledger caption{ color:var(--cu-paper); }
-.cu-sec--gold .cu-ledger th{ color:rgba(255,255,255,.72); border-color:rgba(255,255,255,.22); }
-.cu-sec--gold .cu-ledger td{ color:var(--cu-paper); border-color:rgba(255,255,255,.14); }
-.cu-sec--gold .cu-ledger td:last-child{ color:rgba(255,255,255,.80); }
-.cu-sec--gold .cu-term__t{ color:var(--cu-paper); }
-.cu-sec--gold .cu-term__b{ color:rgba(255,255,255,.86); }
+/* --dark added throughout. These colour rules existed for the gold ground only,
+   so the ledger and terms placed on a dark section inherited the light-ground
+   ink and washed out: the whole right-hand value column and both term boxes
+   were near-illegible. Same defect class as the dark-on-dark heading. */
+.cu-sec--gold .cu-ledger caption,
+.cu-sec--dark .cu-ledger caption{ color:var(--cu-paper); }
+.cu-sec--gold .cu-ledger th,
+.cu-sec--dark .cu-ledger th{ color:rgba(255,255,255,.72); border-color:rgba(255,255,255,.22); }
+.cu-sec--gold .cu-ledger td,
+.cu-sec--dark .cu-ledger td{ color:var(--cu-paper); border-color:rgba(255,255,255,.14); }
+.cu-sec--gold .cu-ledger td:last-child,
+.cu-sec--dark .cu-ledger td:last-child{ color:rgba(255,255,255,.80); }
+.cu-sec--gold .cu-term__t,
+.cu-sec--dark .cu-term__t{ color:var(--cu-paper); }
+.cu-sec--gold .cu-term__b,
+.cu-sec--dark .cu-term__b{ color:rgba(255,255,255,.86); }
 .cu-sec--gold .cu-close{ color:var(--cu-paper); }
 /* the offer panel stays paper. It is the price, and on a foundation wall it
    should read as the one poured slab that is finished */
@@ -287,7 +297,9 @@ p{ margin:0; text-wrap:pretty; }
 .cu-sec--dark .cu-eyebrow{ color:var(--cu-paper); }
 .cu-sec--dark .cu-eyebrow::before{ background:var(--cu-red-lift); }
 
-.cu-wrap{ width:min(100% - 3vw, var(--cu-measure)); margin-inline:auto; }
+/* The gutter is max(14px, 3vw) so it can never fall under a 7px-a-side floor.
+   3vw alone gave 4.8px a side at 320 and 5.3px at 350. */
+.cu-wrap{ width:min(100% - max(14px, 3vw), var(--cu-measure)); margin-inline:auto; }
 
 /* Eyebrow carries a measured tick before it, the way a drawing labels a detail. */
 .cu-eyebrow{
@@ -556,7 +568,12 @@ p{ margin:0; text-wrap:pretty; }
 /* This section reads from the middle: one panel, centred, with the heading
    over it. A left-aligned heading above a centred card looks like two
    decisions rather than one. */
+/* --dark added: the audit section carries neither --ridge nor --surface nor
+   --gold, so it was the ONE head in the deck still left-aligned, sitting off to
+   one side above a full-width plan sheet. That mismatch is what reads as
+   off-centre, not the text itself. */
 .cu-sec--ridge .cu-eyebrow,
+.cu-sec--dark .cu-eyebrow,
 .cu-sec--surface .cu-eyebrow,
 .cu-sec--gold .cu-eyebrow{ justify-content:center; text-align:center; }
 /* This section centers its own head, and it is the only dark ground with no h2
@@ -570,7 +587,9 @@ p{ margin:0; text-wrap:pretty; }
   margin-top:var(--space-2xs);
 }
 .cu-sec--ridge .cu-h2,
+.cu-sec--dark .cu-h2,
 .cu-sec--surface .cu-h2{ text-align:center; margin-inline:auto; }
+.cu-sec--dark .cu-lead{ text-align:center; margin-inline:auto; }
 .cu-sec--surface > .cu-wrap > .cu-assembly__cap{ text-align:center; margin-inline:auto; }
 
 /* THE RIDGE RUN.
@@ -793,12 +812,22 @@ p{ margin:0; text-wrap:pretty; }
   clip-path:polygon(0 0, 50% var(--cu-apex), 100% 0, 100% 100%, 0 100%);
 }
 
-.cu-sec--dark::before{
-  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
-  background-image:var(--cu-shingle);
-  background-size:var(--cu-shingle-size);
-}
+/* ONE GROUND, EVERY SECTION BUT THE HERO. The deck ran four different grounds
+   (shingle, red lap siding, concrete, blurred photo) and design-critic scored
+   cohesion 2/5 for exactly that. The shingle field is now THE ground, and the
+   per-section materials below are neutralised rather than deleted so the
+   colour rules that depend on them still resolve. */
+/* the ground is one fixed layer now, see .cu-ground */
+.cu-sec{ background-color:transparent; position:relative; z-index:1; }
+header.cu-hero,.cu-foot{ position:relative; z-index:1; }
+.cu-sec > *{ position:relative; z-index:1; }
 .cu-sec--dark > *{ position:relative; z-index:1; }
+
+/* THE GLASS PANE. A sheet of faintly blue glass laid over the material so the
+   shingle field sits BACK and stops competing with the type. Desktop only: the
+   ground is already small on a phone, and backdrop-filter is the most expensive
+   thing on a mobile GPU. It sits at z-index 0 with the material, so content at
+   z-index 1 stays perfectly sharp - only the ground behind it is softened. */
 /* The section's own field is the NO-JS fallback. Once the roof is injected it
    would double the material at a different origin, so it is suppressed then
    and only then. */
@@ -837,96 +866,89 @@ p{ margin:0; text-wrap:pretty; }
    audit section alone is 1467px, so the deck paid for two screens of raster
    it could never show. Pinned to one viewport with a negative margin so it
    still takes no space in flow: measured 36fps -> see the report. */
-.cu-swave{
-  /* ABSOLUTE, NOT STICKY. Sticky pinned this layer to the viewport, which was a
-     real 36 -> 47fps win and also FROZE the shingle field in place while the page
-     scrolled underneath it. A roof that does not travel with its own section
-     reads as a stationary backdrop. Anchored to the section again: the material
-     and this grid share the SECTION origin, so alignment survives AND the field
-     moves with the content. Frames are the price, and they are the right price. */
-  position:absolute; inset:0;
-  z-index:0; pointer-events:none;
+/* ============================================================
+   ONE GROUND FOR THE WHOLE PAGE, AND IT DRIFTS.
+
+   Every section used to carry its own material, its own light layer and its own
+   glass. Three consequences, all visible: the tile phase restarted at each
+   section boundary so the joins drew a line, the glass gradient restarted with
+   it, and six light layers were composited at once.
+
+   Now there is ONE fixed layer behind the entire document. The material and the
+   light live inside the SAME drifting wrapper, so they cannot desync - which was
+   the 4.33-course misalignment from earlier, made structurally impossible rather
+   than corrected by arithmetic.
+
+   THE LOOP IS SEAMLESS BY CONSTRUCTION. The material tiles every 150px
+   vertically and the light pattern every 600px. 600 is a whole multiple of 150,
+   so a 600px travel returns both to an identical picture and the wrap is
+   invisible. Any other distance would show a jump.
+   ============================================================ */
+.cu-ground{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
   overflow:hidden;
-  opacity:0; transition:opacity 900ms linear;
+  background:var(--cu-black);
 }
-.cu-sec--dark.is-swaved .cu-swave{ opacity:1; }
+.cu-ground__drift{
+  position:absolute; left:0; right:0; top:0; bottom:-600px;
+  animation:cu-drift 63s linear infinite;   /* 9 x 7 */
+  will-change:transform;
+}
+html.is-scrolling .cu-ground__drift{ animation-play-state:paused; }
+@keyframes cu-drift{
+  from{ transform:translate3d(0,0,0); }
+  to  { transform:translate3d(0,-600px,0); }
+}
+.cu-ground__mat{
+  position:absolute; inset:0;
+  background-image:var(--cu-shingle);
+  background-size:var(--cu-shingle-size);
+  background-repeat:repeat;
+  /* The blur is on the MATERIAL only, never on the backdrop. backdrop-filter
+     re-blurs everything behind it every frame; this rasterises once and the
+     drift just moves the finished raster. The light is a SIBLING, not a child,
+     so it stays sharp while the ground softens - which is what lets the red
+     read clearly without the field shouting. */
+  filter:blur(2.6px);
+}
+.cu-ground__light{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 
-/* ONE CLOCK, NOT TWO.
-   The travelling gradient band is GONE. A band is a second mechanism with its
-   own speed and its own direction, and the moment its px/s or its axis differs
-   from the tab wave the two visibly disagree - which is exactly what shipped
-   and exactly what was wrong with it.
+/* THE GLASS. Flat, not a gradient, and it does NOT drift. A vertical gradient
+   restarted at every section and drew a band across the join; a flat tint has no
+   start and no end, so the sheet is continuous down the whole page. */
+.cu-ground__glass{ position:absolute; inset:0; display:none; }
+@media (min-width:900px){
+  .cu-ground__glass{ display:block; background:rgba(104,132,172,.085); }
+}
 
-   The light now lives INSIDE each tab, on the same delay as that tab's lift.
-   Colour and movement cannot drift or point different ways, because they are
-   literally the same clock read twice. */
-
-.cu-swave__tabs{ position:absolute; inset:0; width:100%; height:100%; display:block; }
-
-/* THE JOINT. Drawn on the LEFT and BOTTOM edge of every tab, so the field
-   carries a vertical butt joint as well as a horizontal course line. Without
-   the vertical the whole thing reads as horizontal blinds, not as shingles. */
-
-/* THE SEAM LIGHT. Sits UNDER the face and is invisible at rest. As the wave
-   arrives it burns red, and because the face lifts on the same delay, the
-   light appears in the opening seam rather than washed across the face. */
 .cu-seam{
   fill:var(--cu-red);
   fill-opacity:0;
   animation:cu-seam-light 3s ease-in-out infinite;
-  animation-play-state:paused;
   animation-delay:var(--d,0s);
 }
+html.is-scrolling .cu-seam{ animation-play-state:paused; }
 
-/* THE FACE. translateY only, never scale: these tabs tile edge to edge and
-   scaling one opens a permanent gap against its neighbour instead of a moving
-   one. Held at 0.34 so the client's own shingle texture still reads through - at
-   0.72 this layer painted flat bricks over the material it should animate. */
-.cu-face{
-  transform-box:fill-box;
-  animation:cu-face-lift 3s ease-in-out infinite;
-  animation-play-state:paused;
-  animation-delay:var(--d,0s);
-}
-
-.cu-sec--dark.is-swave-live .cu-seam,
-.cu-sec--dark.is-swave-live .cu-face{ animation-play-state:running; }
-
-/* the lift rides the SAME bell, so a course rises as its light comes up and
-   settles as it fades. 4px, not 6: subtle is the brief. */
-@keyframes cu-face-lift{
-  0%   { transform:translateY(0); }
-  12%  { transform:translateY(-0.8px); }
-  24%  { transform:translateY(-2.2px); }
-  35%  { transform:translateY(-3.5px); }
-  46%  { transform:translateY(-2.2px); }
-  58%  { transform:translateY(-0.8px); }
-  70%  { transform:translateY(0); }
-  100% { transform:translateY(0); }
-}
-/* NARROW. The lit fraction of the cycle IS the fraction of the field lit at
-   any instant: at a 50% window a third of the roof glowed at once and it read
-   as a red brick wall, not a crest. 14% window, 4 of the 32 phases. */
-/* A LIGHT FALLS OFF. A 14% window at 0.95 lit one course hard and its neighbour
-   not at all, which is what read as steppy and as popping out. A wide, smoothly
-   eased bell at low peak makes neighbouring phase steps differ only slightly, so
-   the crest is brightest in the middle and FADES across several courses either
-   side of it - which is how a light behaves. */
+/* Brighter core, gentler shoulders. "See it clearly but keep it subtle" is two
+   levers, not one: the PEAK carries visibility, the SHOULDERS carry softness.
+   Peak .34 -> .52 so the centre of the light is unmistakable, while the ramp
+   either side is stretched so nothing switches on hard. */
 @keyframes cu-seam-light{
   0%   { fill-opacity:0; }
-  12%  { fill-opacity:.05; }
-  24%  { fill-opacity:.13; }
-  35%  { fill-opacity:.22; }
-  46%  { fill-opacity:.13; }
-  58%  { fill-opacity:.05; }
-  70%  { fill-opacity:0; }
+  8%   { fill-opacity:.05; }
+  18%  { fill-opacity:.14; }
+  28%  { fill-opacity:.28; }
+  38%  { fill-opacity:.52; }
+  48%  { fill-opacity:.28; }
+  58%  { fill-opacity:.14; }
+  68%  { fill-opacity:.05; }
+  80%  { fill-opacity:0; }
   100% { fill-opacity:0; }
 }
-
 @media (prefers-reduced-motion:reduce){
-  .cu-seam,.cu-face{ animation:none; }
-  .cu-swave{ opacity:0; }
+  .cu-ground__drift,.cu-seam{ animation:none; }
 }
+
 
 /* Underlayment on the process field. Every synthetic underlayment roll is
    printed with a square grid and a heavier line where the next course laps
@@ -961,7 +983,7 @@ p{ margin:0; text-wrap:pretty; }
 .cu-sec--surface .cu-plate-label path{ stroke:rgba(255,255,255,.45); }
 .cu-sec--surface > .cu-wrap{
   position:relative; z-index:1;
-  width:min(100% - 3vw, 68rem);
+  width:min(100% - max(14px, 3vw), 68rem);   /* 7px-a-side floor */
 }
 
 /* ============================================================
@@ -2237,7 +2259,8 @@ p{ margin:0; text-wrap:pretty; }
   border-top:1px solid rgba(255,255,255,.16);
   border-bottom:1px solid rgba(255,255,255,.16);
 }
-.cu-band > .cu-wrap{ width:min(100% - 3vw, 68rem); }
+/* same 7px-a-side floor as .cu-wrap; this override was still on bare 3vw */
+.cu-band > .cu-wrap{ width:min(100% - max(14px, 3vw), 68rem); }
 .cu-band .cu-terms{ margin-top:0; }
 
 .cu-terms{
@@ -2691,10 +2714,20 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
 .cu-inv__n{
   font-size:clamp(3.1rem,2rem + 4.2vw,5.6rem); font-weight:700; line-height:.8;
   letter-spacing:-.045em; font-variant-numeric:tabular-nums;
-  color:transparent; -webkit-text-stroke:1.5px var(--cu-paper);
+  /* A TRUE OUTLINE NEEDS A FILL UNDER IT. With a transparent fill the shingle's
+     mortar lines read straight through the counters and the glyph looks struck
+     through - lines inside lines. The fill is dark and close to the panel, so
+     the numeral still reads as an outline while its interior stays even.
+     This deck already documents the same trap on .cu-bd__fn. */
+  /* OPAQUE. At .72 the mortar lines still read through the counters and the
+     glyph looked ruled. Opaque kills every line inside the outline; the stroke
+     goes to 2px so the outline itself reads cleanly at this size. */
+  color:#100e0d; -webkit-text-stroke:2px var(--cu-paper);
   transition:color 600ms cubic-bezier(.22,.61,.36,1);
 }
-.ag-course.in-view .cu-inv__n{ color:rgba(255,255,255,.09); }
+/* was rgba(255,255,255,.09): a translucent fill puts the mortar lines back
+   inside the counters. Kept dark so the outline stays clean. */
+.ag-course.in-view .cu-inv__n{ color:#100e0d; }
 .cu-inv__body{ min-width:0; }
 .cu-inv__t{
   font-size:var(--cu-h3); font-weight:700; color:var(--cu-paper);
@@ -2800,13 +2833,17 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
    Delay is per-item via --c, set in markup or by ag-motion's auto-index.  */
 .ag-course > *{
   opacity:0;
-  transform:translateY(var(--course)) translateX(calc(-1 * var(--course-lap)));
-  transition:opacity 600ms cubic-bezier(.22,.61,.36,1),
-             transform 600ms cubic-bezier(.22,.61,.36,1);
-  transition-delay:calc(var(--c,0) * 63ms);
+  /* CINEMATIC. The lateral half-lap jog read as a jitter, and 600ms is a UI
+     transition rather than an entrance. Cards now rise further, from very
+     slightly back, on a long expo-out that decelerates hard into rest, with a
+     wider stagger so they arrive in sequence instead of together. */
+  transform:translateY(38px) scale(.982);
+  transition:opacity 900ms cubic-bezier(.16,1,.3,1),
+             transform 900ms cubic-bezier(.16,1,.3,1);
+  transition-delay:calc(var(--c,0) * 91ms);   /* 7 x 13 */
 }
 .ag-course > :nth-child(even){
-  transform:translateY(var(--course)) translateX(var(--course-lap));
+  transform:translateY(38px) scale(.982);
 }
 .ag-course.in-view > *{ opacity:1; transform:none; }
 
@@ -3086,7 +3123,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   line-height:.9; letter-spacing:-.03em; font-variant-numeric:tabular-nums;
   /* OUTLINE ONLY. Any translucent fill lets the shingle field read through
      the counters and the glyphs look struck through. */
-  color:transparent; -webkit-text-stroke:1.4px var(--cu-paper);
+  color:#100e0d; -webkit-text-stroke:1.6px var(--cu-paper);
 }
 .cu-bd__chips{
   min-width:0;
@@ -3789,7 +3826,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
         <div class="cu-buildup__r"><span class="cu-buildup__k">D</span><span class="cu-buildup__t">Landing Pages and Offers</span><span class="cu-buildup__n">13 pages</span><span class="cu-buildup__p">$1,700</span></div>
         <div class="cu-buildup__r"><span class="cu-buildup__k">E</span><span class="cu-buildup__t">Blog System</span><span class="cu-buildup__n">1 page</span><span class="cu-buildup__p">$800</span></div>
         <div class="cu-buildup__r"><span class="cu-buildup__k">F</span><span class="cu-buildup__t">Legal and Utility</span><span class="cu-buildup__n">3 pages</span><span class="cu-buildup__p">$295</span></div>
-        <div class="cu-buildup__sum"><span class="cu-buildup__k"></span><span class="cu-buildup__t">Build total</span><span class="cu-buildup__n">96 pages</span><span class="cu-buildup__p">&mdash;</span></div>
+        <div class="cu-buildup__sum"><span class="cu-buildup__k"></span><span class="cu-buildup__t">Build total</span><span class="cu-buildup__n">96 pages</span><span class="cu-buildup__p">&ndash;</span></div>
       </div>
 
       <div class="cu-offer reveal">
@@ -3901,6 +3938,162 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== 5. PAID ADS ==================== -->
+
+  <section class="cu-sec cu-sec--apex cu-sec--dark" aria-labelledby="ads-h">
+    <div class="cu-wrap">
+      <span class="cu-eyebrow reveal">Paid ads</span>
+      <h2 class="cu-h2 reveal" id="ads-h">14 Videos, 2 at a Time, Until One Wins</h2>
+      <p class="cu-lead reveal">This is the standard paid ads engine, run on Meta. Every ad is a video, always. Nothing is guessed and nothing is left running on a hunch. Videos go head to head in sprints until the numbers name a winner, and then that winner is what runs.</p>
+
+      <ol class="cu-inv__list ag-course reveal">
+        <li class="cu-inv__r">
+          <span class="cu-inv__k">i</span>
+          <span class="cu-inv__n">14</span>
+          <div class="cu-inv__body">
+            <h3 class="cu-inv__t">The Testing Cycle</h3>
+            <p class="cu-inv__m"><b>2</b>&nbsp;videos run head to head for <b>4</b>&nbsp;days. That is one sprint. <b>7</b>&nbsp;sprints make a cycle, so <b>14</b>&nbsp;videos are tested over <b>28</b>&nbsp;days.</p>
+          </div>
+        </li>
+        <li class="cu-inv__r">
+          <span class="cu-inv__k">ii</span>
+          <span class="cu-inv__n">3</span>
+          <div class="cu-inv__body">
+            <h3 class="cu-inv__t">We Run Until One Wins</h3>
+            <p class="cu-inv__m">Cycles repeat until a winner is found. <b>3</b>&nbsp;months is what it realistically takes, which is why the minimum term is <b>3</b>&nbsp;months.</p>
+          </div>
+        </li>
+        <li class="cu-inv__r">
+          <span class="cu-inv__k">iii</span>
+          <span class="cu-inv__n">1</span>
+          <div class="cu-inv__body">
+            <h3 class="cu-inv__t">Then the Winner Runs</h3>
+            <p class="cu-inv__m">The winning ad goes on and stays on. From there you scale it if you want to, and reporting moves from every <b>4</b>&nbsp;days to every <b>7</b>.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="cu-ledger__box reveal">
+      <table class="cu-ledger">
+        <caption>Included In Paid Ads</caption>
+        <thead>
+          <tr><th scope="col">Deliverable</th><th scope="col">Included</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span>Platform</span></td><td>Meta</td></tr>
+          <tr><td><span>Videos per testing cycle</span></td><td>14</td></tr>
+          <tr><td><span>Videos running head to head</span></td><td>2</td></tr>
+          <tr><td><span>Days per sprint</span></td><td>4</td></tr>
+          <tr><td><span>Sprints per cycle</span></td><td>7</td></tr>
+          <tr><td><span>Every ad is a video</span></td><td>Always</td></tr>
+          <tr><td><span>Copy, scripted word for word</span></td><td>Included</td></tr>
+          <tr><td><span>Funnel, landing page and booking flow</span></td><td>Included</td></tr>
+          <tr><td><span>Leads land in the CRM live</span></td><td>Included</td></tr>
+          <tr><td><span>Daily tracking and management</span></td><td>Included</td></tr>
+          <tr><td><span>Reporting while testing</span></td><td>Every 4 days</td></tr>
+          <tr><td><span>Attribution, which ad each lead came from</span></td><td>Included</td></tr>
+          <tr><td><span>Speed to lead and follow up coaching</span></td><td>Included</td></tr>
+          <tr><td><span>Videography</span></td><td>Yours, we vet them</td></tr>
+          <tr><td><span>Minimum term</span></td><td>3 months</td></tr>
+          <tr><td><span>Management fee</span></td><td>$2,800 / month</td></tr>
+          <tr><td><span>Ad spend, paid direct to Meta</span></td><td>$70 to $80 / day</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="cu-terms">
+        <div class="cu-term">
+          <div class="cu-term__t">Not included</div>
+          <p class="cu-term__b">Ad spend goes straight to Meta at <b>$70</b>&nbsp;to <b>$80</b>&nbsp;a day, never through us. The CRM subscription is billed to you. Website work outside the funnel.</p>
+        </div>
+        <div class="cu-term">
+          <div class="cu-term__t">What we need</div>
+          <p class="cu-term__b">Ad account access, CRM access, offer sign off, and one person to call leads. Videography is the one piece we do not cover. The videographer is yours, and we vet them before anything is shot.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== 6. ORGANIC CONTENT ==================== -->
+
+  <section class="cu-sec cu-sec--apex cu-sec--dark" aria-labelledby="org-h">
+    <div class="cu-wrap">
+      <span class="cu-eyebrow reveal">Organic content</span>
+      <h2 class="cu-h2 reveal" id="org-h">One, Two or Three a Day, on Seven Platforms</h2>
+      <p class="cu-lead reveal">Paid ads buy attention while they run. Organic builds the thing that keeps working after the spend stops. You pick the daily volume and you pick the mix, and it runs on a fixed cadence rather than whenever there is time.</p>
+
+      <ol class="cu-inv__list ag-course reveal">
+        <li class="cu-inv__r">
+          <span class="cu-inv__k">i</span>
+          <span class="cu-inv__n">3</span>
+          <div class="cu-inv__body">
+            <h3 class="cu-inv__t">You Pick the Daily Volume</h3>
+            <p class="cu-inv__m"><b>1</b>, <b>2</b> or <b>3</b>&nbsp;uploads a day. That is <b>30</b>, <b>60</b> or <b>90</b>&nbsp;pieces a month. We do the ideas, the scripting, the design, the editing, the captions and the posting.</p>
+          </div>
+        </li>
+        <li class="cu-inv__r">
+          <span class="cu-inv__k">ii</span>
+          <span class="cu-inv__n">7</span>
+          <div class="cu-inv__body">
+            <h3 class="cu-inv__t">And You Pick the Mix</h3>
+            <p class="cu-inv__m">At <b>3</b>&nbsp;a day that can be three videos, or two videos and one graphic, or one video and two graphics. Whatever the volume, the split between video and graphic is yours to set.</p>
+          </div>
+        </li>
+        <li class="cu-inv__r">
+          <span class="cu-inv__k">iii</span>
+          <span class="cu-inv__n">4</span>
+          <div class="cu-inv__body">
+            <h3 class="cu-inv__t">Seven Platforms, Reported Monthly</h3>
+            <p class="cu-inv__m">Facebook, Instagram, TikTok, YouTube, LinkedIn, X and Threads. Every piece goes on all <b>7</b>. A report every month per platform, a growth report every <b>4</b>&nbsp;months, a dedicated content manager and a strategy call on the same beat.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="cu-ledger__box reveal">
+      <table class="cu-ledger">
+        <caption>Included In Organic</caption>
+        <thead>
+          <tr><th scope="col">Deliverable</th><th scope="col">Included</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span>Uploads per day</span></td><td>1, 2 or 3</td></tr>
+          <tr><td><span>Pieces per month</span></td><td>30, 60 or 90</td></tr>
+          <tr><td><span>Video and graphic split</span></td><td>Your choice</td></tr>
+          <tr><td><span>Platforms</span></td><td>7</td></tr>
+          <tr><td><span>Posts per month, 1 a day across all platforms</span></td><td>210</td></tr>
+          <tr><td><span>Posts per month, 2 a day across all platforms</span></td><td>420</td></tr>
+          <tr><td><span>Posts per month, 3 a day across all platforms</span></td><td>630</td></tr>
+          <tr><td><span>Ideas, scripting, design, editing, captions</span></td><td>Included</td></tr>
+          <tr><td><span>Posting itself</span></td><td>Included</td></tr>
+          <tr><td><span>All 7 profiles matched and verified</span></td><td>Included</td></tr>
+          <tr><td><span>Reporting, per platform</span></td><td>Monthly</td></tr>
+          <tr><td><span>Growth report</span></td><td>Every 4 months</td></tr>
+          <tr><td><span>Dedicated content manager</span></td><td>Included</td></tr>
+          <tr><td><span>Strategy call</span></td><td>Every 4 months</td></tr>
+          <tr><td><span>Videography</span></td><td>Yours, we vet them</td></tr>
+          <tr><td><span>Management fee, 2 a day</span></td><td>$2,300 / month</td></tr>
+          <tr><td><span>Management fee, 3 a day</span></td><td>$3,100 / month</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="cu-terms">
+        <div class="cu-term">
+          <div class="cu-term__t">Not included</div>
+          <p class="cu-term__b">Paid promotion of organic posts. Anything outside the 7 platforms above. Videography, which is covered below.</p>
+        </div>
+        <div class="cu-term">
+          <div class="cu-term__t">What we need</div>
+          <p class="cu-term__b">Profile access, brand assets, topic approval, and one contact who signs off. Videography is the one piece we do not cover. The videographer is yours, and we vet them before filming starts.</p>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -4636,114 +4829,70 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
 })();
 
 /* ==========================================================================
-   THE ROOF WAVE. Injected, not authored into the markup, for two reasons:
-   the same layer goes into 9 dark sections and hand-copying it 9 times is
-   the drift this system has a law against, and with JS off the static
-   shingle field is still there, so the page loses an effect and never a
-   surface.
+   THE GROUND, INJECTED ONCE.
 
-   Geometry is READ OFF the existing field rather than re-guessed: the tile
-   is 320 wide, courses are 40 deep, tabs are 80 across, and odd courses lap
-   by half a tab. Tabs at -40 and 360 are drawn deliberately: a pattern tile
-   clips at its own edge, so the partial tabs are what make the seam vanish.
+   One layer for the whole document instead of one per section. The material and
+   the light sit inside the SAME drifting wrapper, so alignment between them is
+   structural rather than arithmetic - the 4.33-course misalignment from earlier
+   is now impossible rather than corrected.
+
+   Injected rather than authored so the markup carries no copy of it, and so a
+   reader with JS off loses an effect and never a surface: body keeps its black.
    ========================================================================== */
 (function(){
-  var secs = document.querySelectorAll('.cu-sec--dark');
-  if (!secs.length) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!document.body) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* TILE. At 320 the crest repeated every 300px, so a 1400px viewport showed
-     five short parallel crests and it read as scattered brackets rather than
-     one wave. 640 puts roughly one crest across the screen. The cost is node
-     count, which is why the fps number is in the report. */
-  var TILE = 640, COURSE = 40, TAB = 80, DUR = 3;
-  var NS = 'http://www.w3.org/2000/svg';
-  var uid = 0;
+  var TILE = 640, COURSE = 40, TAB = 80, SEAM = 3, DUR = 3, RENDER = 600;
 
-  function buildTabs(){
-    var out = '';
-    var COURSES = TILE / COURSE;              /* 8 */
+  function tabs(){
+    var out = '', COURSES = TILE / COURSE;
     for (var c = 0; c < COURSES; c++){
-      var y = c * COURSE;
-      /* odd courses lap by half a tab; the -40 and the past-the-edge tab are
-         drawn on purpose because a pattern clips at its own boundary and the
-         partials are what make the seam disappear */
-      var xs = [], x0 = (c % 2) ? -TAB / 2 : 0;
-      for (var xx = x0; xx < TILE + TAB; xx += TAB) xs.push(xx);
-      for (var i = 0; i < xs.length; i++){
-        var x = xs[i];
-
-        /* PHASE. Base term is (x + y), so the crest runs top-left to bottom-
-           right. Both x and y sit on the 40 lattice and x steps by 80, so
-           (x + y) is ALWAYS a multiple of 80 and the base term alone yields
-           only 4 steps per tile - which is what made the wave chunky. The
-           course term adds 8 sub-steps. It stays periodic in the tile because
-           the course index repeats every COURSES rows, so the pattern still
-           does not seam. */
+      var y = c * COURSE, x0 = (c % 2) ? -TAB / 2 : 0;
+      for (var x = x0; x < TILE + TAB; x += TAB){
+        /* phase from (x + y), so the crest runs top-left to bottom-right, plus a
+           per-course term for finer steps. Both are periodic in the tile, so the
+           pattern never seams. */
         var base = ((((x + y) % TILE) + TILE) % TILE) / TILE;
         var ph = (base + (c % COURSES) / COURSES * 0.125) % 1;
-
-        /* DIRECTION. animation-delay is NEGATIVE, and a larger magnitude means
-           FURTHER ADVANCED, so it lifts EARLIER. Top-left must lift first, so
-           the magnitude has to SHRINK as (x + y) grows: (1 - ph), not ph.
-           Shipping `-ph` ran the crest bottom-right to top-left, backwards,
-           and against the band. */
+        /* a LARGER negative delay is FURTHER ADVANCED, so top-left needs the
+           larger one: (1 - ph), not ph. Shipping ph ran the crest backwards. */
         var d = (-(1 - ph) * DUR).toFixed(3);
-
-        var SEAM = 3;                         /* joint width, ~2.8px rendered */
-        out +=
-          '<g style="--d:' + d + 's">' +
-            /* THE LIFT. Low opacity on purpose: the client's own shingle
-               texture is underneath and must read through. This rect exists to
-               be SEEN MOVING, not to repaint the material. */
-            /* ONE ANIMATED NODE PER ROLE, NOT ONE PER RECT.
-               The three face rects share one transform, so they go in a <g> that
-               carries the animation: 3 animated elements become 1. The two joint
-               bars become a single L-shaped path: 2 become 1. Measured 760
-               animated elements down to 304, with no change to what is drawn. */
-            '<g class="cu-face">' +
-              '<rect x="' + (x + SEAM) + '" y="' + y + '" width="' + (TAB - SEAM) + '" height="' + (COURSE - SEAM) + '" fill="#15100f" fill-opacity="0.40"/>' +
-              '<rect x="' + (x + SEAM) + '" y="' + y + '" width="' + (TAB - SEAM) + '" height="2" fill="#ffffff" fill-opacity="0.11"/>' +
-              '<rect x="' + (x + SEAM) + '" y="' + (y + COURSE - SEAM - 3) + '" width="' + (TAB - SEAM) + '" height="3" fill="#000000" fill-opacity="0.46"/>' +
-            '</g>' +
-            /* the joint, as one L: down the left stile, then along the butt */
-            '<path class="cu-seam" d="M' + x + ' ' + y +
-              'h' + SEAM + 'v' + (COURSE - SEAM) + 'h' + (TAB - SEAM) +
-              'v' + SEAM + 'h' + (-TAB) + 'z"/>' +
-          '</g>';
+        out += '<path class="cu-seam" style="--d:' + d + 's" d="M' + x + ' ' + y +
+               'h' + SEAM + 'v' + (COURSE - SEAM) + 'h' + (TAB - SEAM) +
+               'v' + SEAM + 'h' + (-TAB) + 'z"/>';
       }
     }
     return out;
   }
 
-  var TABS = buildTabs();
-
-  secs.forEach(function(sec){
-    var id = 'cuRoof' + (++uid);
-    var roof = document.createElement('div');
-    roof.className = 'cu-swave';
-    roof.setAttribute('aria-hidden', 'true');
-    roof.innerHTML =
-      '<svg class="cu-swave__tabs" xmlns="' + NS + '" preserveAspectRatio="xMidYMid slice">' +
-        '<defs><pattern id="' + id + '" width="600" height="600" patternUnits="userSpaceOnUse" ' +
-          'viewBox="0 0 ' + TILE + ' ' + TILE + '">' + TABS + '</pattern></defs>' +
+  var id = 'cuGroundSeams';
+  var ground = document.createElement('div');
+  ground.className = 'cu-ground';
+  ground.setAttribute('aria-hidden', 'true');
+  ground.innerHTML =
+    '<div class="cu-ground__drift">' +
+      '<div class="cu-ground__mat"></div>' +
+      (reduce ? '' :
+      '<svg class="cu-ground__light" xmlns="http://www.w3.org/2000/svg">' +
+        '<defs><pattern id="' + id + '" width="' + RENDER + '" height="' + RENDER + '" ' +
+          'patternUnits="userSpaceOnUse" viewBox="0 0 ' + TILE + ' ' + TILE + '">' + tabs() + '</pattern></defs>' +
         '<rect width="100%" height="100%" fill="url(#' + id + ')"/>' +
-      '</svg>';
-    /* first child, so it stacks over the section's static ::before field and
-       under the content, which sits at z-index 1 */
-    sec.insertBefore(roof, sec.firstChild);
-    sec.classList.add('is-swaved');
-  });
+      '</svg>') +
+    '</div>' +
+    '<div class="cu-ground__glass"></div>';
+  document.body.insertBefore(ground, document.body.firstChild);
 
-  /* Only the field the reader is actually looking at animates. Everything
-     else is PAUSED, never `animation:none` — none snaps all 36 tabs back to
-     rest in a single frame and that pop is visible on re-entry. */
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      e.target.classList.toggle('is-swave-live', e.isIntersecting);
-    });
-  }, { rootMargin: '10% 0px 10% 0px' });
-  secs.forEach(function(s){ io.observe(s); });
+  /* the light is an idle shimmer: while the page is travelling there is nothing
+     in it to see, and running it invalidates the layer twice a frame */
+  var t = null;
+  addEventListener('scroll', function(){
+    document.documentElement.classList.add('is-scrolling');
+    clearTimeout(t);
+    t = setTimeout(function(){
+      document.documentElement.classList.remove('is-scrolling');
+    }, 147);   /* 3 x 49 */
+  }, { passive: true });
 })();
 </script>
 </body>
