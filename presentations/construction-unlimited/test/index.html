@@ -150,7 +150,7 @@
   --cu-pop: cubic-bezier(0.34,1.56,0.64,1);
   --cu-icon-square: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='square'%3E%3Cpath d='M5 3v16h16'/%3E%3Cpath d='M5 9h4M5 14h4'/%3E%3C/svg%3E");
   --cu-ridge-a: 0deg;    /* replaced at runtime with the measured apex angle; flat while apex is 0 */
-  --cu-ridge-strip: clamp(4.2rem,3.0rem + 4.2vw,7.0rem);  /* the band itself */
+  --cu-ridge-strip: clamp(3.6rem,2.6rem + 3.6vw,6.0rem);  /* the band itself, 14% shallower */
   --cu-ridge-h: clamp(5.6rem,4.2rem + 4.9vw,8.4rem);  /* the run's depth below the apex. The section that
                             carries it pads to the SAME token, so the band and
                             the clearance under it can never drift apart. */
@@ -876,6 +876,133 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
 
 
 
+
+
+/* ============================================================
+   THE PLAN CARDS OPEN. The face carries only what the group IS; the contents
+   live behind a click, so the plan reads as six groups rather than as a wall of
+   ninety-six chips. The card is a real <button>, so it is keyboard reachable
+   and announces itself, and the panel is a real <dialog>, which brings focus
+   trapping and Escape without any of it being hand-rolled.
+   ============================================================ */
+.cu-bd__f{
+  font:inherit; text-align:left; cursor:pointer; width:100%;
+  touch-action:manipulation;
+  transition:border-color 300ms cubic-bezier(.22,.61,.36,1),
+             transform 300ms cubic-bezier(.22,.61,.36,1);
+}
+@media (hover:hover){
+  .cu-bd__f:hover{ border-color:var(--cu-red); transform:translateY(-3px); }
+}
+.cu-bd__f:focus-visible{ outline:2px solid var(--cu-red-label); outline-offset:3px; }
+.cu-bd__sum{
+  margin-top:.7rem; font-size:var(--cu-small); color:rgba(255,255,255,.86);
+  font-variant-numeric:tabular-nums;
+}
+.cu-bd__sum i{ font-style:normal; color:var(--cu-red-label); padding:0 .28rem; }
+.cu-bd__cue{
+  margin-top:.84rem; padding-top:.56rem; align-self:stretch;
+  border-top:1px solid rgba(255,255,255,.18);
+  font-size:var(--cu-eyebrow); letter-spacing:.14em; text-transform:uppercase;
+  color:var(--cu-red-label); font-weight:700;
+}
+
+.cu-modal{
+  width:min(92vw, 42rem); max-height:82vh; padding:0; overflow:auto;
+  background:var(--cu-panel);
+  border:1px solid var(--cu-red-deep);
+  box-shadow:var(--cu-e-dark);
+  color:var(--cu-paper);
+}
+/* the ground behind is blurred, not merely dimmed */
+.cu-modal::backdrop{
+  background:rgba(0,0,0,.62);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+}
+.cu-modal__bar{
+  position:sticky; top:0; z-index:1;
+  display:flex; align-items:flex-start; gap:1.05rem;
+  padding:clamp(1.05rem,.8rem + 1.1vw,1.6rem);
+  background:var(--cu-panel);
+  border-bottom:1px solid rgba(255,255,255,.18);
+}
+.cu-modal__t{
+  font-size:var(--cu-h3); font-weight:700; color:var(--cu-paper);
+  letter-spacing:-.012em; text-wrap:balance;
+}
+.cu-modal__x{
+  margin-left:auto; flex:0 0 auto;
+  width:42px; height:42px; display:grid; place-items:center;
+  background:transparent; border:1px solid rgba(255,255,255,.24);
+  color:var(--cu-paper); cursor:pointer; touch-action:manipulation;
+  transition:border-color 300ms linear, color 300ms linear;
+}
+.cu-modal__x svg{ width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; }
+@media (hover:hover){ .cu-modal__x:hover{ border-color:var(--cu-red); color:var(--cu-red-label); } }
+.cu-modal__x:focus-visible{ outline:2px solid var(--cu-red-label); outline-offset:2px; }
+.cu-modal__meta{
+  margin:0; padding:1.05rem clamp(1.05rem,.8rem + 1.1vw,1.6rem) 0;
+  font-size:var(--cu-eyebrow); letter-spacing:.14em; text-transform:uppercase;
+  font-weight:700; color:var(--cu-red-label);
+}
+.cu-modal__body{ padding:.84rem clamp(1.05rem,.8rem + 1.1vw,1.6rem) clamp(1.05rem,.8rem + 1.1vw,1.6rem); }
+.cu-modal__body .cu-bd__chips{ margin-top:0; }
+@media (prefers-reduced-motion:reduce){
+  .cu-bd__f{ transition:none; }
+}
+
+/* ============================================================
+   THE HUB. The logo sits in the middle of the plan and travels DOWN with the
+   reader, and the page count climbs from 0 as each group arrives.
+
+   It is sticky rather than scroll-scrubbed: a scrubbed transform recalculates
+   every frame, a sticky element is a compositor position. The negative
+   margin-bottom is what keeps it out of the flow, so the rows either side run
+   past it instead of being pushed down by it.
+
+   The count is CUMULATIVE and the totals are read off the rows themselves, so
+   the number can never disagree with the cards it is counting.
+   ============================================================ */
+.cu-plan__hub{
+  position:sticky; top:38vh; z-index:2;
+  width:fit-content; margin:0 auto;
+  display:flex; flex-direction:column; align-items:center; gap:.28rem;
+  padding:.84rem 1.75rem;
+  background:var(--cu-panel);
+  border:1px solid var(--cu-red-deep);
+  box-shadow:var(--cu-e-dark);
+  text-align:center;
+}
+.cu-plan__logo{ width:clamp(3.5rem,2.8rem + 2.8vw,5.6rem); height:auto; display:block; }
+.cu-plan__count{
+  font-size:clamp(2.1rem,1.4rem + 2.8vw,3.5rem); font-weight:500; line-height:.9;
+  letter-spacing:-.035em; color:#100e0d;
+  -webkit-text-stroke:1.6px var(--cu-paper); paint-order:stroke fill;
+  font-variant-numeric:tabular-nums;
+}
+.cu-plan__ck{
+  font-size:var(--cu-eyebrow); letter-spacing:.21em; text-transform:uppercase;
+  font-weight:700; color:var(--cu-red-label);
+}
+
+/* the rows arrive from the side they sit on */
+.cu-plan__row > .cu-bd__f{
+  opacity:0; transform:translateX(-56px);
+  transition:opacity 900ms cubic-bezier(.16,1,.3,1),
+             transform 900ms cubic-bezier(.16,1,.3,1);
+}
+.cu-plan__row[data-side="r"] > .cu-bd__f{ transform:translateX(56px); }
+.cu-plan__row.is-in > .cu-bd__f{ opacity:1; transform:none; }
+@media (max-width:1200px){
+  .cu-plan__row > .cu-bd__f,
+  .cu-plan__row[data-side="r"] > .cu-bd__f{ transform:translateX(-40px); }
+  .cu-plan__row.is-in > .cu-bd__f{ transform:none; }
+}
+@media (prefers-reduced-motion:reduce){
+  .cu-plan__hub{ position:relative; top:auto; }
+  .cu-plan__row > .cu-bd__f{ opacity:1; transform:none; transition:none; }
+}
+
 /* ============================================================
    THE PLATFORM RUN. Seven marks travelling right, continuously.
 
@@ -942,27 +1069,33 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
 .cu-flag{
   position:relative; margin-top:var(--space-s);
   padding:clamp(1.05rem,.7rem + 1.4vw,1.75rem);
-  padding-left:clamp(1.75rem,1.2rem + 2.1vw,2.8rem);
-  background:var(--cu-panel);
-  border:1px solid var(--cu-red-deep);
-  border-left:6px solid var(--cu-red);
+  /* A FILLED block, not an outlined one. This is the only obligation that sits
+     with the client, so it is the only place on the page that inverts: deep red
+     ground, black type. Nothing else competes with it. */
+  /* The fill is --cu-red-lift, not --cu-red-deep. Black type on the deep red
+     measures 2.57:1 against a 4.5 floor, which is not readable at body size;
+     on this red it measures 5.10:1 and clears it. Deep red would only work
+     here with WHITE type (8.18:1). Measured, not guessed. */
+  background:var(--cu-red-lift);
+  border:0;
   box-shadow:var(--cu-e-dark);
+  text-align:center;
 }
 .cu-flag__k{
   display:block;
   font-size:var(--cu-eyebrow); letter-spacing:.21em; text-transform:uppercase;
-  font-weight:700; color:var(--cu-red-label);
+  font-weight:700; color:rgba(0,0,0,.72);
 }
 .cu-flag__t{
-  margin:.42rem 0 0;
-  font-size:var(--cu-h3); font-weight:700; color:var(--cu-paper);
-  letter-spacing:-.012em; text-wrap:balance;
+  margin:.42rem auto 0;
+  font-size:var(--cu-h3); font-weight:700; color:#000;
+  letter-spacing:-.012em; text-wrap:balance; max-width:24ch;
 }
 .cu-flag__b{
-  margin:.56rem 0 0; max-width:68ch;
-  font-size:var(--cu-small); color:rgba(255,255,255,.88); text-wrap:pretty;
+  margin:.56rem auto 0; max-width:62ch;
+  font-size:var(--cu-small); color:rgba(0,0,0,.86); text-wrap:pretty;
 }
-.cu-flag__b b{ color:var(--cu-paper); font-weight:700; }
+.cu-flag__b b{ color:#000; font-weight:700; }
 
 /* ============================================================
    THE TESTING CYCLE, DRAWN AS A DIMENSIONED RUN.
@@ -1190,7 +1323,9 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
   /* Near-black. TWO things were lifting this toward grey and only one of them
      was the ground: the scrim is a LIGHT blue-grey, which adds light to every
      pixel of the field no matter how dark the base is. Both come down. */
-  background:#08090b;
+  /* Darker again. The blur was reading as FOG rather than depth, so it comes
+     down with the ground rather than up. */
+  background:#050609;
 }
 .cu-ground__drift{
   position:absolute; left:0; right:0; top:0; bottom:-600px;
@@ -1217,7 +1352,7 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
      drift just moves the finished raster. The light is a SIBLING, not a child,
      so it stays sharp while the ground softens - which is what lets the red
      read clearly without the field shouting. */
-  filter:blur(5.6px);
+  filter:blur(3.2px);   /* 5.6px read as fog, not depth */
 }
 .cu-ground__light{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 
@@ -1229,7 +1364,7 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
   /* A DARK cool tint, not a pale one. rgba(104,132,172,.115) was a light blue
      wash sitting over the whole field and adding luminance. This darkens and
      cools instead: the glass read without the lift. */
-  .cu-ground__glass{ display:block; background:rgba(16,26,42,.38); }
+  .cu-ground__glass{ display:block; background:rgba(12,20,34,.42); }
 }
 
 .cu-seam{
@@ -3911,7 +4046,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
                 </li>
                 <li class="cu-stack__row">
                   <span class="cu-stack__item">Revisions for Life</span>
-                  <span class="cu-stack__d">Complimentary revisions for life on the website we build.</span>
+                  <span class="cu-stack__d">Complimentary revisions for life on the website.</span>
                 </li>
               </ul>
             </div>
@@ -3968,7 +4103,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   <!-- ==================== 2. HOW IT RUNS ==================== -->
   <section class="cu-sec cu-sec--apex cu-sec--notch cu-sec--surface" aria-labelledby="how-h">    <div class="cu-wrap">
       <span class="cu-eyebrow reveal">How it runs</span>
-      <h2 class="cu-h2 reveal" id="how-h">No Surprises, 3&nbsp;Stages</h2>
+      <h2 class="cu-h2 reveal" id="how-h">Here&rsquo;s the 3&nbsp;Stages</h2>
 
       <p class="cu-assembly__cap"><b>Same order, every time.</b> Nothing goes on until what is under it is right.</p>
 
@@ -3986,7 +4121,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
               <div class="cu-week__pad">
                 <span class="cu-week__n">01</span>
                 <span class="cu-week__t">Structure</span>
-                <p class="cu-week__b">Structure gets locked first. Every page gets mapped against the offer and the quote flow: what a homeowner needs to see, and in what order, to pick up the phone or fill out the form. Copy and structure are approved before anything gets designed.</p>
+                <p class="cu-week__b">Structure gets locked first.<br>Every page gets mapped against the offer and the quote flow: what a homeowner needs to see, and in what order, to pick up the phone or fill out the form.<br>Copy and structure are approved before anything gets designed.</p>
               </div>
             </button>
           </li>
@@ -4016,7 +4151,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
               <div class="cu-week__pad">
                 <span class="cu-week__n">03</span>
                 <span class="cu-week__t">Revisions and Launch</span>
-                <p class="cu-week__b">After all revisions are done from the client, the website is fully deployed and good to go. UTM tracking and on-site SEO are configured. Revisions for life are complimentary.</p>
+                <p class="cu-week__b">After all revisions are done from the client, the website is fully deployed and good to go.<br>UTM tracking and on-site SEO are configured.<br>Revisions for life are complimentary.</p>
               </div>
             </button>
           </li>
@@ -4035,18 +4170,14 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   <section class="cu-sec cu-sec--apex cu-sec--dark" aria-labelledby="inv-h">
     <div class="cu-wrap">
       <span class="cu-eyebrow reveal">The audit</span>
-      <h2 class="cu-h2 reveal" id="inv-h">We Audited Your Site</h2>
-      <p class="cu-lead reveal">We found <b>96&nbsp;pages</b>, <b>8</b>&nbsp;blog posts and <b>10</b>&nbsp;category archives. That is <b>114&nbsp;URLs</b> live today, and it is the site this quote is built on.</p>
+      <h2 class="cu-h2 reveal" id="inv-h">Here&rsquo;s What We Found</h2>
+      <p class="cu-lead reveal">Upon investigating, we found <b>96&nbsp;pages</b>, <b>8</b>&nbsp;blog posts and <b>10</b>&nbsp;category archives.<br>That is <b>114&nbsp;URLs</b> live today, so we now fully understand the layout.</p>
 
       <div class="cu-inv">
 
-        <div class="cu-msr ag-course reveal">
-          <div class="cu-msr__r" style="--w:84.2%;--c:0"><span class="cu-msr__lbl">Pages</span><span class="cu-msr__dim" aria-hidden="true"><i class="cu-msr__ext"></i><i class="cu-msr__line"></i><i class="cu-msr__ext"></i></span><span class="cu-msr__n">96</span></div>
-          <div class="cu-msr__r" style="--w:13.2%;--c:1"><span class="cu-msr__lbl">Layouts</span><span class="cu-msr__dim" aria-hidden="true"><i class="cu-msr__ext"></i><i class="cu-msr__line"></i><i class="cu-msr__ext"></i></span><span class="cu-msr__n">15</span></div>
-          <div class="cu-msr__r" style="--w:100.0%;--c:2"><span class="cu-msr__lbl">URLs live</span><span class="cu-msr__dim" aria-hidden="true"><i class="cu-msr__ext"></i><i class="cu-msr__line"></i><i class="cu-msr__ext"></i></span><span class="cu-msr__n">114</span></div>
-        </div>
-
-        <div class="cu-tape reveal" aria-hidden="true"><span class="cu-tape__hook"></span><span class="cu-tape__blade"></span><span class="cu-tape__end"></span></div>
+        <!-- The Pages / Layouts / URLs measure rows are gone: the site plan
+             below counts the same 96 as the reader scrolls it, so the strip was
+             stating the answer before the drawing could make it. -->
         <div class="cu-plan reveal">
           <span class="cu-plan__mark cu-plan__mark--tl" aria-hidden="true"></span>
           <span class="cu-plan__mark cu-plan__mark--tr" aria-hidden="true"></span>
@@ -4059,8 +4190,6 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
             <span class="cu-plan__spec">96 pages &middot; 15 layouts &middot; 114 URLs</span>
           </div>
 
-          <div class="cu-bd__home"><span class="cu-bd__hl">curoof.com</span><span class="cu-bd__hn">96</span><span class="cu-bd__hs">pages</span></div>
-          <div class="cu-bd__feed" aria-hidden="true"></div>
 
           <!-- ag-course and reveal MUST sit on the SAME element. `.ag-course > *`
                hides every child at opacity 0 and only `.ag-course.in-view > *`
@@ -4068,13 +4197,18 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
                `.reveal` nodes ONLY. Split across two elements, the whole plan
                stays invisible forever. -->
           <div class="cu-plan__body ag-course reveal"><span class="cu-plan__ridge" aria-hidden="true"></span>
+          <div class="cu-plan__hub">
+            <img class="cu-plan__logo" src="assets/logo-mark.png" width="208" height="145" alt="" loading="lazy">
+            <span class="cu-plan__count" data-plan-count>0</span>
+            <span class="cu-plan__ck">pages</span>
+          </div>
           <ol class="cu-plan__rows">
-            <li class="cu-plan__row" data-side="l" style="--d:0ms"><article class="cu-bd__f" style="--c:0"><header class="cu-bd__fh"><span class="cu-bd__rn">I</span><span class="cu-bd__ft">Core Pages</span><span class="cu-bd__fn">10</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Home</li><li class="cu-bd__chip">About</li><li class="cu-bd__chip">Contact</li><li class="cu-bd__chip">Reviews</li><li class="cu-bd__chip">Gallery</li><li class="cu-bd__chip">Past Projects</li><li class="cu-bd__chip">Resources</li><li class="cu-bd__chip">Customer Service</li><li class="cu-bd__chip">Careers</li><li class="cu-bd__chip">Service Areas</li></ul><footer class="cu-bd__fm">6 layouts</footer></article></li>
-            <li class="cu-plan__row" data-side="r" style="--d:140ms"><article class="cu-bd__f" style="--c:1"><header class="cu-bd__fh"><span class="cu-bd__rn">II</span><span class="cu-bd__ft">Service Pages</span><span class="cu-bd__fn">37</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Roofing 10</li><li class="cu-bd__chip">Windows 5</li><li class="cu-bd__chip">Siding 5</li><li class="cu-bd__chip">Storm Damage 5</li><li class="cu-bd__chip">Decks 4</li><li class="cu-bd__chip">Commercial 4</li><li class="cu-bd__chip">+4 hubs</li></ul><footer class="cu-bd__fm">1 layout</footer></article></li>
-            <li class="cu-plan__row" data-side="l" style="--d:280ms"><article class="cu-bd__f" style="--c:2"><header class="cu-bd__fh"><span class="cu-bd__rn">III</span><span class="cu-bd__ft">Location Pages and Micro-Sites</span><span class="cu-bd__fn">32</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Apopka 4</li><li class="cu-bd__chip">St Cloud 4</li><li class="cu-bd__chip">Oviedo 4</li><li class="cu-bd__chip">Lake Mary 3</li><li class="cu-bd__chip">6 cities x 2</li><li class="cu-bd__chip">5 hub-only</li></ul><footer class="cu-bd__fm">15 micro-sites</footer></article></li>
-            <li class="cu-plan__row" data-side="r" style="--d:420ms"><article class="cu-bd__f" style="--c:3"><header class="cu-bd__fh"><span class="cu-bd__rn">IV</span><span class="cu-bd__ft">Landing Pages and Offers</span><span class="cu-bd__fn">13</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Offer pages 5</li><li class="cu-bd__chip">Landing pages 3</li><li class="cu-bd__chip">Quote tool 1</li><li class="cu-bd__chip">Thank-you 4</li></ul><footer class="cu-bd__fm">4 layouts</footer></article></li>
-            <li class="cu-plan__row" data-side="l" style="--d:560ms"><article class="cu-bd__f" style="--c:4"><header class="cu-bd__fh"><span class="cu-bd__rn">V</span><span class="cu-bd__ft">Blog System</span><span class="cu-bd__fn">1</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Index 1</li><li class="cu-bd__chip">Posts 8</li><li class="cu-bd__chip">Archives 10</li></ul><footer class="cu-bd__fm">2 layouts</footer></article></li>
-            <li class="cu-plan__row" data-side="r" style="--d:700ms"><article class="cu-bd__f" style="--c:5"><header class="cu-bd__fh"><span class="cu-bd__rn">VI</span><span class="cu-bd__ft">Legal and Utility</span><span class="cu-bd__fn">3</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Privacy</li><li class="cu-bd__chip">Terms</li><li class="cu-bd__chip">Sitemap</li></ul><footer class="cu-bd__fm">1 layout</footer></article></li>
+            <li class="cu-plan__row" data-side="l" style="--d:0ms"><button class="cu-bd__f" type="button" style="--c:0" data-plan-card aria-haspopup="dialog" aria-label="1. Core Pages. 10 Pages, 6 layouts. Open detail"><header class="cu-bd__fh"><span class="cu-bd__rn">1.</span><span class="cu-bd__ft">Core Pages</span><span class="cu-bd__fn">10</span></header><span class="cu-bd__sum">10 Pages <i>&middot;</i> 6 layouts</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Home</li><li class="cu-bd__chip">About</li><li class="cu-bd__chip">Contact</li><li class="cu-bd__chip">Reviews</li><li class="cu-bd__chip">Gallery</li><li class="cu-bd__chip">Past Projects</li><li class="cu-bd__chip">Resources</li><li class="cu-bd__chip">Customer Service</li><li class="cu-bd__chip">Careers</li><li class="cu-bd__chip">Service Areas</li></ul></span></button></li>
+            <li class="cu-plan__row" data-side="r" style="--d:140ms"><button class="cu-bd__f" type="button" style="--c:1" data-plan-card aria-haspopup="dialog" aria-label="2. Service Pages. 37 Pages, 1 layout. Open detail"><header class="cu-bd__fh"><span class="cu-bd__rn">2.</span><span class="cu-bd__ft">Service Pages</span><span class="cu-bd__fn">37</span></header><span class="cu-bd__sum">37 Pages <i>&middot;</i> 1 layout</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Roofing 10</li><li class="cu-bd__chip">Windows 5</li><li class="cu-bd__chip">Siding 5</li><li class="cu-bd__chip">Storm Damage 5</li><li class="cu-bd__chip">Decks 4</li><li class="cu-bd__chip">Commercial 4</li><li class="cu-bd__chip">+4 hubs</li></ul></span></button></li>
+            <li class="cu-plan__row" data-side="l" style="--d:280ms"><button class="cu-bd__f" type="button" style="--c:2" data-plan-card aria-haspopup="dialog" aria-label="3. Location Pages and Micro-Sites. 32 Pages, 15 micro-sites. Open detail"><header class="cu-bd__fh"><span class="cu-bd__rn">3.</span><span class="cu-bd__ft">Location Pages and Micro-Sites</span><span class="cu-bd__fn">32</span></header><span class="cu-bd__sum">32 Pages <i>&middot;</i> 15 micro-sites</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Apopka 4</li><li class="cu-bd__chip">St Cloud 4</li><li class="cu-bd__chip">Oviedo 4</li><li class="cu-bd__chip">Lake Mary 3</li><li class="cu-bd__chip">6 cities x 2</li><li class="cu-bd__chip">5 hub-only</li></ul></span></button></li>
+            <li class="cu-plan__row" data-side="r" style="--d:420ms"><button class="cu-bd__f" type="button" style="--c:3" data-plan-card aria-haspopup="dialog" aria-label="4. Landing Pages and Offers. 13 Pages, 4 layouts. Open detail"><header class="cu-bd__fh"><span class="cu-bd__rn">4.</span><span class="cu-bd__ft">Landing Pages and Offers</span><span class="cu-bd__fn">13</span></header><span class="cu-bd__sum">13 Pages <i>&middot;</i> 4 layouts</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Offer pages 5</li><li class="cu-bd__chip">Landing pages 3</li><li class="cu-bd__chip">Quote tool 1</li><li class="cu-bd__chip">Thank-you 4</li></ul></span></button></li>
+            <li class="cu-plan__row" data-side="l" style="--d:560ms"><button class="cu-bd__f" type="button" style="--c:4" data-plan-card aria-haspopup="dialog" aria-label="5. Blog System. 1 Page, 2 layouts. Open detail"><header class="cu-bd__fh"><span class="cu-bd__rn">5.</span><span class="cu-bd__ft">Blog System</span><span class="cu-bd__fn">1</span></header><span class="cu-bd__sum">1 Page <i>&middot;</i> 2 layouts</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Index 1</li><li class="cu-bd__chip">Posts 8</li><li class="cu-bd__chip">Archives 10</li></ul></span></button></li>
+            <li class="cu-plan__row" data-side="r" style="--d:700ms"><button class="cu-bd__f" type="button" style="--c:5" data-plan-card aria-haspopup="dialog" aria-label="6. Legal and Utility. 3 Pages, 1 layout. Open detail"><header class="cu-bd__fh"><span class="cu-bd__rn">6.</span><span class="cu-bd__ft">Legal and Utility</span><span class="cu-bd__fn">3</span></header><span class="cu-bd__sum">3 Pages <i>&middot;</i> 1 layout</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Privacy</li><li class="cu-bd__chip">Terms</li><li class="cu-bd__chip">Sitemap</li></ul></span></button></li>
           </ol>
           </div>
 
@@ -4094,7 +4228,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
             <span class="cu-inv__n">5</span>
             <div class="cu-inv__body">
               <h3 class="cu-inv__t">5 Cities Dead End at the Hub</h3>
-              <p class="cu-inv__m">You run <b>15</b>&nbsp;city hubs with only <b>14</b>&nbsp;child pages between them. Groveland, Winter Springs, Winter Park, Ocoee and Deltona have nothing underneath them.</p>
+              <p class="cu-inv__m">You run <b>15</b>&nbsp;city hubs with only <b>14</b>&nbsp;child pages between them.<br>Groveland, Winter Springs, Winter Park, Ocoee and Deltona have nothing underneath them.</p>
             </div>
           </li>
           <li class="cu-inv__r">
@@ -4102,7 +4236,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
             <span class="cu-inv__n">3</span>
             <div class="cu-inv__body">
               <h3 class="cu-inv__t">1 Page Type, 3 URL Patterns</h3>
-              <p class="cu-inv__m">Roof replacement sits at <b>3</b>&nbsp;different addresses on your site. Those pages compete with each other instead of stacking.</p>
+              <p class="cu-inv__m">Roof replacement sits at <b>3</b>&nbsp;different addresses on your site.<br>Those pages compete with each other instead of stacking.</p>
             </div>
           </li>
           <li class="cu-inv__r">
@@ -4110,7 +4244,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
             <span class="cu-inv__n">79</span>
             <div class="cu-inv__body">
               <h3 class="cu-inv__t">79 of Your 96 Pages Repeat</h3>
-              <p class="cu-inv__m">They are instances of <b>4</b>&nbsp;patterns. That is why the rebuild is <b>15</b>&nbsp;layouts, and why 96&nbsp;pages does not cost 96&nbsp;times one page.</p>
+              <p class="cu-inv__m">They are instances of <b>4</b>&nbsp;patterns.<br>That is why the rebuild is <b>15</b>&nbsp;layouts, and why 96&nbsp;pages does not cost 96&nbsp;times one page.</p>
             </div>
           </li>
         </ol>
@@ -4177,7 +4311,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
       <div class="cu-terms">
         <div class="cu-term">
           <div class="cu-term__t">Not included</div>
-          <p class="cu-term__b">Hosting. Domain renewal. Any page added after the build starts.</p>
+          <p class="cu-term__b">Hosting.<br>Domain renewal.<br>Any page added after the build starts.</p>
         </div>
         <div class="cu-term">
           <div class="cu-term__t">Pass through</div>
@@ -4255,7 +4389,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
     <div class="cu-wrap">
       <span class="cu-eyebrow reveal">Paid ads</span>
       <h2 class="cu-h2 reveal" id="ads-h">Paid Ads System</h2>
-      <p class="cu-lead reveal">This is the standard paid ads engine, run on Meta. Every ad is a static image, always. Nothing is guessed and nothing is left running on a hunch. Images go head to head in sprints until the numbers name a winner, and then that winner is what runs.</p>
+      <p class="cu-lead reveal">This is the standard paid ads engine, run on Meta.<br>Every ad is a static image, always.<br>Nothing is guessed and nothing is left running on a hunch.<br>Images go head to head in sprints until the numbers name a winner, and then that winner is what runs.</p>
 
       <ol class="cu-inv__list cu-inv__list--trio ag-course reveal">
         <li class="cu-inv__r">
@@ -4263,7 +4397,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
           <span class="cu-inv__n">14</span>
           <div class="cu-inv__body">
             <h3 class="cu-inv__t">The Testing Cycle</h3>
-            <p class="cu-inv__m"><b>2</b>&nbsp;images run head to head for <b>4</b>&nbsp;days. That is one sprint. <b>7</b>&nbsp;sprints make a cycle, so all <b>14</b>&nbsp;images are tested over <b>28</b>&nbsp;days.</p>
+            <p class="cu-inv__m"><b>2</b>&nbsp;images run head to head for <b>4</b>&nbsp;days.<br>That is one sprint.<br><b>7</b>&nbsp;sprints make a cycle, so all <b>14</b>&nbsp;images are tested over <b>28</b>&nbsp;days.</p>
           </div>
         </li>
         <li class="cu-inv__r">
@@ -4271,7 +4405,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
           <span class="cu-inv__n">3</span>
           <div class="cu-inv__body">
             <h3 class="cu-inv__t">We Run Until One Wins</h3>
-            <p class="cu-inv__m">Cycles repeat until a winner is found. <b>3</b>&nbsp;months is what it realistically takes, which is why the minimum term is <b>3</b>&nbsp;months.</p>
+            <p class="cu-inv__m">Cycles repeat until a winner is found.<br><b>3</b>&nbsp;months is what it realistically takes, which is why the minimum term is <b>3</b>&nbsp;months.</p>
           </div>
         </li>
         <li class="cu-inv__r">
@@ -4279,7 +4413,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
           <span class="cu-inv__n">1</span>
           <div class="cu-inv__body">
             <h3 class="cu-inv__t">Then the Winner Runs</h3>
-            <p class="cu-inv__m">The winning image goes on and stays on. From there you scale it if you want to, and reporting moves from every <b>4</b>&nbsp;days to every <b>7</b>.</p>
+            <p class="cu-inv__m">The winning image goes on and stays on.<br>From there you scale it if you want to, and reporting moves from every <b>4</b>&nbsp;days to every <b>7</b>.</p>
           </div>
         </li>
       </ol>
@@ -4343,11 +4477,11 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
       <div class="cu-terms">
         <div class="cu-term">
           <div class="cu-term__t">Not included</div>
-          <p class="cu-term__b">Ad spend goes straight to Meta at <b>$70</b>&nbsp;to <b>$80</b>&nbsp;a day, never through us. The CRM subscription is billed to you. Website work outside the funnel.</p>
+          <p class="cu-term__b">Ad spend goes straight to Meta at <b>$70</b>&nbsp;to <b>$80</b>&nbsp;a day, never through us.<br>The CRM subscription is billed to you.<br>Website work outside the funnel.</p>
         </div>
         <div class="cu-term">
           <div class="cu-term__t">What we need</div>
-          <p class="cu-term__b">Ad account access, CRM access, offer sign off, and one person to call leads. Videography is the one piece we do not cover. The videographer is yours, and we vet them before anything is shot.</p>
+          <p class="cu-term__b">Ad account access, CRM access, offer sign off, and one person to call leads.<br>Videography is the one piece we do not cover.<br>The videographer is yours, and we vet them before anything is shot.</p>
         </div>
       </div>
 
@@ -4361,12 +4495,12 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
     <div class="cu-wrap">
       <span class="cu-eyebrow reveal">Organic content</span>
       <h2 class="cu-h2 reveal" id="org-h">Organic Content System</h2>
-      <p class="cu-lead reveal">Paid ads buy attention while they run. Organic builds the thing that keeps working after the spend stops. You pick the daily volume and you pick the mix, and it runs on a fixed cadence rather than whenever there is time.</p>
+      <p class="cu-lead reveal">Paid ads buy attention while they run.<br>Organic builds the thing that keeps working after the spend stops.<br>You pick the daily volume and you pick the mix, and it runs on a fixed cadence rather than whenever there is time.</p>
 
       <div class="cu-flag reveal">
         <span class="cu-flag__k">Read this one twice</span>
         <p class="cu-flag__t">Videography is the one piece we do not cover.</p>
-        <p class="cu-flag__b">Everything else in this section is ours: the ideas, the scripts, the design, the edit, the captions and the posting. Filming is not. <b>You supply the videographer</b>, and <b>we vet them before a single frame is shot</b>, because footage we cannot cut stops the whole content run dead. Sort this first and nothing else here is at risk.</p>
+        <p class="cu-flag__b">Everything else in this section is ours: the ideas, the scripts, the design, the edit, the captions and the posting.<br>Filming is not.<br><b>You supply the videographer</b>, and <b>we vet them before a single frame is shot</b>, because footage we cannot cut stops the whole content run dead.<br>Sort this first and nothing else here is at risk.</p>
       </div>
 
       <!-- WHAT THE READER CONTROLS. Volume, mix and fee move together, so they
@@ -4396,7 +4530,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
           </div>
         </div>
 
-        <p class="cu-pick__mix" data-out="mix">2 a day can be 2 videos, or 1 video and 1 graphic. The split is yours to set.</p>
+        <p class="cu-pick__mix" data-out="mix">2 a day can be 2 videos, or 1 video and 1 graphic.<br>The split is yours to set.</p>
       </div>
 
       <!-- SET IN STONE. None of this moves with the volume. -->
@@ -4440,17 +4574,28 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
       <div class="cu-terms">
         <div class="cu-term">
           <div class="cu-term__t">Not included</div>
-          <p class="cu-term__b">Paid promotion of organic posts. Anything outside the 7 platforms above.</p>
+          <p class="cu-term__b">Paid promotion of organic posts.<br>Anything outside the 7 platforms above.</p>
         </div>
         <div class="cu-term">
           <div class="cu-term__t">What we need</div>
-          <p class="cu-term__b">Profile access, brand assets, topic approval, and one contact who signs off. Videography is the one piece we do not cover. The videographer is yours, and we vet them before filming starts.</p>
+          <p class="cu-term__b">Profile access, brand assets, topic approval, and one contact who signs off.<br>Videography is the one piece we do not cover.<br>The videographer is yours, and we vet them before filming starts.</p>
         </div>
       </div>
 
     </div>
   </section>
 
+
+<dialog class="cu-modal" id="cu-modal" aria-labelledby="cu-modal-t">
+  <div class="cu-modal__bar">
+    <span class="cu-modal__t" id="cu-modal-t"></span>
+    <button class="cu-modal__x" type="button" aria-label="Close">
+      <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 4 16 16M16 4 4 16"/></svg>
+    </button>
+  </div>
+  <p class="cu-modal__meta"></p>
+  <div class="cu-modal__body"></div>
+</dialog>
 
 </main>
 
@@ -5204,11 +5349,12 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
     for (var c = 0; c < COURSES; c++){
       var y = c * COURSE, x0 = (c % 2) ? -TAB / 2 : 0;
       for (var x = x0; x < TILE + TAB; x += TAB){
-        /* phase from (x + y), so the crest runs top-left to bottom-right, plus a
-           per-course term for finer steps. Both are periodic in the tile, so the
-           pattern never seams. */
-        var base = ((((x + y) % TILE) + TILE) % TILE) / TILE;
-        var ph = (base + (c % COURSES) / COURSES * 0.125) % 1;
+        /* BOTTOM TO TOP. Phase is taken from y ALONE, and INVERTED: a course
+           lower down the page carries a smaller phase, so it peaks earlier and
+           the crest climbs. Dropping the x term is what turns the diagonal into
+           a level band. Still periodic in the tile, so nothing seams. */
+        var base = (((TILE - (y % TILE)) % TILE)) / TILE;
+        var ph = base;
         /* a LARGER negative delay is FURTHER ADVANCED, so top-left needs the
            larger one: (1 - ph), not ph. Shipping ph ran the crest backwards. */
         var d = (-(1 - ph) * DUR).toFixed(3);
@@ -5306,6 +5452,110 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
       next.focus();
       apply(next.getAttribute('data-v'));
     });
+  });
+})();
+
+/* ==========================================================================
+   THE PLAN COUNTER. Each group slides in from the side it sits on, and the hub
+   in the middle counts UP as it does.
+
+   The totals are read off the cards themselves rather than hardcoded here, so
+   the number the reader watches climb can never disagree with the cards it is
+   counting. It settles on whatever the cards actually sum to.
+
+   The count animates between steps rather than jumping: a figure that snaps
+   reads as a value being set, one that runs reads as a total being reached.
+   ========================================================================== */
+(function(){
+  var out  = document.querySelector('[data-plan-count]');
+  var rows = [].slice.call(document.querySelectorAll('.cu-plan__row'));
+  if (!out || !rows.length) return;
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* cumulative total at each row, taken from that row's own counter */
+  var running = 0;
+  var upto = rows.map(function(r){
+    var n = r.querySelector('.cu-bd__fn');
+    running += n ? (parseInt(n.textContent, 10) || 0) : 0;
+    return running;
+  });
+  var TOTAL = running;
+
+  var shown = 0, raf = null;
+  function runTo(target){
+    if (reduce){ out.textContent = target; shown = target; return; }
+    cancelAnimationFrame(raf);
+    var from = shown, t0 = performance.now(), dur = 630;   /* 9 x 70 */
+    (function step(now){
+      var k = Math.min(1, (now - t0) / dur);
+      var e = 1 - Math.pow(1 - k, 3);                      /* ease out */
+      out.textContent = Math.round(from + (target - from) * e);
+      if (k < 1) raf = requestAnimationFrame(step); else shown = target;
+    })(t0);
+  }
+
+  /* highest row reached so far: scrolling back up must not wind the count down
+     past groups the reader has already been shown */
+  var reached = -1;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      var i = rows.indexOf(e.target);
+      e.target.classList.add('is-in');
+      if (i > reached){ reached = i; runTo(upto[i]); }
+    });
+  }, { rootMargin: '0px 0px -28% 0px', threshold: 0.2 });
+
+  rows.forEach(function(r){ io.observe(r); });
+
+  /* if the whole plan is already behind the reader on load, show the total */
+  addEventListener('load', function(){
+    var last = rows[rows.length - 1].getBoundingClientRect();
+    if (last.bottom < 0){
+      rows.forEach(function(r){ r.classList.add('is-in'); });
+      reached = rows.length - 1;
+      out.textContent = TOTAL; shown = TOTAL;
+    }
+  });
+})();
+
+/* ==========================================================================
+   THE PLAN DETAIL PANEL. One dialog, filled from whichever card was pressed,
+   rather than six dialogs sitting in the markup.
+
+   <dialog>.showModal() is used deliberately: it brings the focus trap, the
+   inert background, Escape-to-close and focus restoration with it. Hand-rolling
+   those is where accessible modals usually go wrong.
+   ========================================================================== */
+(function(){
+  var dlg = document.getElementById('cu-modal');
+  if (!dlg || typeof dlg.showModal !== 'function') return;
+
+  var titleEl = dlg.querySelector('.cu-modal__t');
+  var metaEl  = dlg.querySelector('.cu-modal__meta');
+  var bodyEl  = dlg.querySelector('.cu-modal__body');
+
+  document.querySelectorAll('[data-plan-card]').forEach(function(card){
+    card.addEventListener('click', function(){
+      var rn = card.querySelector('.cu-bd__rn');
+      var ft = card.querySelector('.cu-bd__ft');
+      var sum = card.querySelector('.cu-bd__sum');
+      var detail = card.querySelector('.cu-bd__detail');
+      titleEl.textContent = (rn ? rn.textContent + ' ' : '') + (ft ? ft.textContent : '');
+      metaEl.textContent = sum ? sum.textContent : '';
+      bodyEl.innerHTML = detail ? detail.innerHTML : '';
+      dlg.showModal();
+    });
+  });
+
+  dlg.querySelector('.cu-modal__x').addEventListener('click', function(){ dlg.close(); });
+
+  /* clicking the backdrop closes it: the dialog box is the only thing inside
+     the element's own rect, so a press outside that rect is a backdrop press */
+  dlg.addEventListener('click', function(e){
+    var r = dlg.getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
   });
 })();
 </script>
