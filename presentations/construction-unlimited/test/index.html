@@ -230,29 +230,17 @@ p{ margin:0; text-wrap:pretty; }
    a hairline on the join reads as trim. */
 .cu-sec--flat{ border-top:2px solid rgba(255,255,255,.22); }
 .cu-sec--gold{
-  background:
-    radial-gradient(58vmax 44vmax at 88% 60%, rgba(255,170,92,.10) 0%, rgba(255,170,92,.03) 42%, transparent 72%),
-    radial-gradient(46vmax 40vmax at 20% 6%, rgba(255,255,255,.05) 0%, transparent 66%),
-    var(--cu-concrete-grey);
+  /* the concrete is gone: one ground for the whole page */
+  background:transparent;
   color:var(--cu-paper);
 }
 /* Grain over the mottle. The mottle alone reads as smoke; concrete needs the
    fine speckle of aggregate and a little tooth, so a noise turbulence goes on
    top of it at low opacity. Two layers rather than a redraw: the mottle is
    what gives it depth and the grain is what gives it surface. */
-.cu-sec--gold::after{
-  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
-  opacity:.055; mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-  background-size:180px 180px;
-}
+/* concrete grain removed: one ground */
 .cu-sec--gold > *{ position:relative; z-index:1; }
-.cu-sec--gold::before{
-  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
-  background-image:var(--cu-concrete);
-  background-size:var(--cu-concrete-size);
-  background-position:center top;   /* the concrete starts ON the same line */
-}
+/* concrete field removed: one ground */
 /* ------------------------------------------------------------------
    THE CONCRETE FIELD reads light, like the shingle and siding fields.
    Scoped, not edited at source: the ledger, the terms and the closer
@@ -286,10 +274,8 @@ p{ margin:0; text-wrap:pretty; }
    the material runs continuously down the page. The TILE and its size are the
    live values, restored verbatim from git HEAD. */
 .cu-sec--surface{
-  background:
-    radial-gradient(56vmax 42vmax at 84% 90%, rgba(0,0,0,.34) 0%, rgba(0,0,0,.12) 44%, transparent 74%),
-    radial-gradient(52vmax 40vmax at 26% 4%, rgba(255,214,164,.055) 0%, rgba(255,214,164,.018) 42%, transparent 72%),
-    var(--cu-black);
+  /* no ground of its own: the page has ONE, and it is .cu-ground */
+  background:transparent;
   color:var(--cu-paper);
 }
 .cu-sec--dark{ background:var(--cu-black); color:var(--cu-paper); }
@@ -866,6 +852,167 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
    audit section alone is 1467px, so the deck paid for two screens of raster
    it could never show. Pinned to one viewport with a negative margin so it
    still takes no space in flow: measured 36fps -> see the report. */
+
+
+/* ============================================================
+   THE LADDER. 14 videos, two at a time, seven sprints.
+
+   Each sprint puts two FRESH videos head to head for 4 days, so all 14 are
+   through in 7 sprints and a cycle is 28 days. Nothing carries forward inside a
+   cycle; cycles repeat until one video is clearly the winner, which is the
+   3-month figure stated above.
+
+   Drawn as a run of sprints rather than a bracket, because that is what it is:
+   seven independent pairings, not a knockout.
+   ============================================================ */
+.cu-lad{ position:relative; margin-top:var(--space-s); }
+.cu-lad__head{
+  display:flex; align-items:baseline; flex-wrap:wrap; gap:.56rem 1.4rem;
+  font-size:var(--cu-eyebrow); letter-spacing:.16em; text-transform:uppercase;
+  font-weight:600; color:var(--cu-muted-dark);
+  padding-bottom:.7rem; border-bottom:1px solid rgba(255,255,255,.18);
+}
+.cu-lad__head b{ color:var(--cu-red-lift); font-weight:700; }
+.cu-lad__rounds{
+  list-style:none; margin:1.05rem 0 0; padding:0;
+  /* FOUR, not auto-fill. auto-fill sized the track to the SHORTEST label, so the
+     two-digit sprints wrapped to a second line while the single-digit ones did
+     not and the run read ragged. Four fixed columns give every cell room for
+     one line at every width it is used. */
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:7px;
+}
+@media (max-width:1200px){ .cu-lad__rounds{ grid-template-columns:repeat(3,1fr); } }
+@media (max-width:900px){ .cu-lad__rounds{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:560px){ .cu-lad__rounds{ grid-template-columns:1fr; } }
+.cu-lad__r{
+  position:relative; min-width:0;
+  display:flex; align-items:center; gap:.7rem;
+  padding:.7rem .84rem;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.13);
+  border-left:3px solid var(--cu-red);
+}
+/* the champion's own entry reads differently: it is the only one that carries */
+.cu-lad__r--first{ border-left-color:var(--cu-red-lift); }
+.cu-lad__n{
+  font-size:var(--cu-eyebrow); font-weight:700; letter-spacing:.12em;
+  color:var(--cu-red-lift); font-variant-numeric:tabular-nums; flex:0 0 auto;
+}
+.cu-lad__v{
+  font-size:var(--cu-small); color:rgba(255,255,255,.88);
+  font-variant-numeric:tabular-nums; min-width:0;
+  white-space:nowrap;
+}
+.cu-lad__v b{ color:var(--cu-paper); font-weight:700; }
+.cu-lad__sum{
+  display:flex; align-items:baseline; flex-wrap:wrap; gap:.56rem 1.4rem;
+  margin-top:1.05rem; padding-top:.84rem;
+  border-top:1px solid rgba(255,255,255,.18);
+}
+.cu-lad__big{
+  font-size:clamp(2.1rem,1.4rem + 2.8vw,3.5rem); font-weight:700; line-height:.9;
+  letter-spacing:-.035em; color:#100e0d; -webkit-text-stroke:2px var(--cu-paper);
+  font-variant-numeric:tabular-nums;
+}
+.cu-lad__sk{
+  font-size:var(--cu-eyebrow); letter-spacing:.14em; text-transform:uppercase;
+  font-weight:600; color:var(--cu-muted-dark);
+}
+
+/* ============================================================
+   THE VOLUME PICKER. The one part of the deck the reader drives.
+
+   The split is the whole point: everything that MOVES with the choice sits in
+   this block, and everything FIXED sits in the locked container below it. A
+   reader comparing tiers should never have to work out which numbers changed.
+   ============================================================ */
+.cu-pick{
+  --hip:21px;
+  position:relative; margin-top:var(--space-s);
+  padding:clamp(1.05rem,.7rem + 1.4vw,1.75rem);
+  background:linear-gradient(160deg, rgba(255,255,255,.075) 0%, rgba(255,255,255,.028) 42%, rgba(255,255,255,.014) 100%);
+  -webkit-backdrop-filter:blur(10px) saturate(120%); backdrop-filter:blur(10px) saturate(120%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.21), inset 0 0 0 1px rgba(255,255,255,.07), 0 14px 28px rgba(0,0,0,.42);
+  clip-path:polygon(0 0, calc(100% - var(--hip)) 0, 100% var(--hip), 100% 100%, 0 100%);
+}
+.cu-pick::before{
+  content:""; position:absolute; left:0; top:14%; bottom:14%;
+  width:3px; background:var(--cu-red); opacity:.84;
+}
+.cu-pick__bar{
+  display:flex; align-items:center; flex-wrap:wrap; gap:.84rem 1.4rem;
+  padding-bottom:.84rem; border-bottom:1px solid rgba(255,255,255,.14);
+}
+.cu-pick__lbl{
+  font-size:var(--cu-eyebrow); letter-spacing:.16em; text-transform:uppercase;
+  font-weight:700; color:var(--cu-muted-dark);
+}
+.cu-pick__opts{ display:flex; gap:7px; margin-left:auto; }
+.cu-pick__opt{
+  min-width:49px; min-height:49px;
+  font:inherit; font-weight:700; font-size:var(--cu-h3);
+  color:var(--cu-paper); background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.18); cursor:pointer;
+  font-variant-numeric:tabular-nums;
+  touch-action:manipulation;
+  transition:background 300ms cubic-bezier(.22,.61,.36,1),
+             border-color 300ms cubic-bezier(.22,.61,.36,1),
+             color 300ms cubic-bezier(.22,.61,.36,1);
+}
+@media (hover:hover){ .cu-pick__opt:hover{ border-color:var(--cu-red-lift); } }
+.cu-pick__opt.is-on{ background:var(--cu-red); border-color:var(--cu-red); color:#fff; }
+.cu-pick__opt:focus-visible{ outline:2px solid var(--cu-red-lift); outline-offset:2px; }
+
+.cu-pick__grid{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-2xs);
+  margin-top:1.05rem;
+}
+.cu-pick__cell{ display:flex; flex-direction:column; gap:.28rem; min-width:0; }
+.cu-pick__n{
+  font-size:clamp(1.75rem,1.2rem + 2.1vw,2.8rem); font-weight:700; line-height:.95;
+  letter-spacing:-.03em; color:var(--cu-paper); font-variant-numeric:tabular-nums;
+  transition:opacity 300ms linear;
+}
+.cu-pick.is-swapping .cu-pick__n{ opacity:.28; }
+.cu-pick__k{
+  font-size:var(--cu-eyebrow); letter-spacing:.12em; text-transform:uppercase;
+  color:var(--cu-muted-dark); font-weight:600; text-wrap:balance;
+}
+.cu-pick__mix{
+  margin:1.05rem 0 0; font-size:var(--cu-small); color:var(--cu-muted);
+  text-wrap:pretty; max-width:62ch; transition:opacity 300ms linear;
+}
+.cu-pick.is-swapping .cu-pick__mix{ opacity:.28; }
+
+/* SET IN STONE. Deliberately NOT a glass panel: a plain ruled schedule, so it
+   reads as fixed rather than as another thing to poke at. */
+.cu-fixed{ margin-top:var(--space-s); }
+.cu-fixed__t{
+  font-size:var(--cu-eyebrow); letter-spacing:.16em; text-transform:uppercase;
+  font-weight:700; color:var(--cu-muted-dark);
+  padding-bottom:.56rem; border-bottom:1px solid rgba(255,255,255,.18);
+}
+.cu-fixed__list{ list-style:none; margin:0; padding:0; }
+.cu-fixed__i{
+  padding:.7rem 0 .7rem 1.75rem; position:relative;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  font-size:var(--cu-small); color:rgba(255,255,255,.86); text-wrap:pretty;
+}
+.cu-fixed__i b{ color:var(--cu-paper); font-weight:700; }
+.cu-fixed__i::before{
+  content:""; position:absolute; left:0; top:1.05em;
+  width:9px; height:9px; background:var(--cu-red); opacity:.9;
+  transform:rotate(45deg);
+}
+@media (max-width:900px){
+  .cu-pick__grid{ grid-template-columns:1fr; gap:1.05rem; }
+  .cu-pick__opts{ margin-left:0; }
+}
+@media (prefers-reduced-motion:reduce){
+  .cu-pick__n,.cu-pick__mix,.cu-pick__opt{ transition:none; }
+}
+
 /* ============================================================
    ONE GROUND FOR THE WHOLE PAGE, AND IT DRIFTS.
 
@@ -887,11 +1034,17 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
 .cu-ground{
   position:fixed; inset:0; z-index:0; pointer-events:none;
   overflow:hidden;
-  background:var(--cu-black);
+  /* DARK GREY, not black. The shingle art is a translucent texture, so whatever
+     sits under it IS the shingle colour. On pure black the field went almost to
+     nothing; on the concrete grey the shingles read as slate. */
+  background:var(--cu-concrete-grey);
 }
 .cu-ground__drift{
   position:absolute; left:0; right:0; top:0; bottom:-600px;
-  animation:cu-drift 63s linear infinite;   /* 9 x 7 */
+  /* 21s, not 63s. 600px over 63s is 9.5px a second, which is below the
+     threshold where the eye registers it as movement at all - it read as a
+     still image. 21s is 28.6px a second: clearly moving, still unhurried. */
+  animation:cu-drift 21s linear infinite;   /* 3 x 7 */
   will-change:transform;
 }
 html.is-scrolling .cu-ground__drift{ animation-play-state:paused; }
@@ -956,12 +1109,7 @@ html.is-scrolling .cu-seam{ animation-play-state:paused; }
    that goes UNDER everything, and this is the section about what happens
    before anything is visible, so the material and the content agree.
    Held far below the type: the whole field reads as tone, not as pattern. */
-.cu-sec--surface::before{
-  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
-  background-image:var(--cu-shingle);
-  background-size:var(--cu-shingle-size);
-  background-position:center top;
-}
+/* the underlayment field is gone: one ground, see .cu-ground */
 /* ------------------------------------------------------------------
    THE SIDING FIELD reads light on red, the same way the shingle field
    reads light on black. Every colour in this section is re-declared
@@ -3956,7 +4104,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
           <span class="cu-inv__n">14</span>
           <div class="cu-inv__body">
             <h3 class="cu-inv__t">The Testing Cycle</h3>
-            <p class="cu-inv__m"><b>2</b>&nbsp;videos run head to head for <b>4</b>&nbsp;days. That is one sprint. <b>7</b>&nbsp;sprints make a cycle, so <b>14</b>&nbsp;videos are tested over <b>28</b>&nbsp;days.</p>
+            <p class="cu-inv__m"><b>2</b>&nbsp;videos run head to head for <b>4</b>&nbsp;days. That is one sprint. <b>7</b>&nbsp;sprints make a cycle, so all <b>14</b>&nbsp;videos are tested over <b>28</b>&nbsp;days.</p>
           </div>
         </li>
         <li class="cu-inv__r">
@@ -3977,6 +4125,31 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
         </li>
       </ol>
 
+      <!-- THE LADDER. The winner staying is what makes this 13 rounds and 52
+           days rather than 7 and 28, so the carry-forward is drawn, not stated. -->
+      <div class="cu-lad reveal">
+        <div class="cu-lad__head">
+          <span><b>14</b> videos</span>
+          <span><b>2</b> head to head</span>
+          <span><b>4</b> days a sprint</span>
+          <span><b>7</b> sprints to a cycle</span>
+        </div>
+        <ol class="cu-lad__rounds">
+            <li class="cu-lad__r"><span class="cu-lad__n">01</span><span class="cu-lad__v"><b>Video&nbsp;1</b> v <b>Video&nbsp;2</b></span></li>
+            <li class="cu-lad__r"><span class="cu-lad__n">02</span><span class="cu-lad__v"><b>Video&nbsp;3</b> v <b>Video&nbsp;4</b></span></li>
+            <li class="cu-lad__r"><span class="cu-lad__n">03</span><span class="cu-lad__v"><b>Video&nbsp;5</b> v <b>Video&nbsp;6</b></span></li>
+            <li class="cu-lad__r"><span class="cu-lad__n">04</span><span class="cu-lad__v"><b>Video&nbsp;7</b> v <b>Video&nbsp;8</b></span></li>
+            <li class="cu-lad__r"><span class="cu-lad__n">05</span><span class="cu-lad__v"><b>Video&nbsp;9</b> v <b>Video&nbsp;10</b></span></li>
+            <li class="cu-lad__r"><span class="cu-lad__n">06</span><span class="cu-lad__v"><b>Video&nbsp;11</b> v <b>Video&nbsp;12</b></span></li>
+            <li class="cu-lad__r"><span class="cu-lad__n">07</span><span class="cu-lad__v"><b>Video&nbsp;13</b> v <b>Video&nbsp;14</b></span></li>
+        </ol>
+        <div class="cu-lad__sum">
+          <span class="cu-lad__big">7</span><span class="cu-lad__sk">sprints</span>
+          <span class="cu-lad__big">28</span><span class="cu-lad__sk">days to a cycle</span>
+        </div>
+      </div>
+
+
       <div class="cu-ledger__box reveal">
       <table class="cu-ledger">
         <caption>Included In Paid Ads</caption>
@@ -3986,6 +4159,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
         <tbody>
           <tr><td><span>Platform</span></td><td>Meta</td></tr>
           <tr><td><span>Videos per testing cycle</span></td><td>14</td></tr>
+          <tr><td><span>Length of a testing cycle</span></td><td>28 days</td></tr>
           <tr><td><span>Videos running head to head</span></td><td>2</td></tr>
           <tr><td><span>Days per sprint</span></td><td>4</td></tr>
           <tr><td><span>Sprints per cycle</span></td><td>7</td></tr>
@@ -4028,65 +4202,59 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
       <h2 class="cu-h2 reveal" id="org-h">One, Two or Three a Day, on Seven Platforms</h2>
       <p class="cu-lead reveal">Paid ads buy attention while they run. Organic builds the thing that keeps working after the spend stops. You pick the daily volume and you pick the mix, and it runs on a fixed cadence rather than whenever there is time.</p>
 
-      <ol class="cu-inv__list ag-course reveal">
-        <li class="cu-inv__r">
-          <span class="cu-inv__k">i</span>
-          <span class="cu-inv__n">3</span>
-          <div class="cu-inv__body">
-            <h3 class="cu-inv__t">You Pick the Daily Volume</h3>
-            <p class="cu-inv__m"><b>1</b>, <b>2</b> or <b>3</b>&nbsp;uploads a day. That is <b>30</b>, <b>60</b> or <b>90</b>&nbsp;pieces a month. We do the ideas, the scripting, the design, the editing, the captions and the posting.</p>
+      <!-- WHAT THE READER CONTROLS. Volume, mix and fee move together, so they
+           live in one interactive block. What is fixed lives below it, locked. -->
+      <div class="cu-pick reveal">
+        <div class="cu-pick__bar">
+          <span class="cu-pick__lbl">Uploads a day</span>
+          <div class="cu-pick__opts" role="radiogroup" aria-label="Uploads a day">
+            <button class="cu-pick__opt" type="button" role="radio" aria-checked="false" data-v="1">1</button>
+            <button class="cu-pick__opt is-on" type="button" role="radio" aria-checked="true" data-v="2">2</button>
+            <button class="cu-pick__opt" type="button" role="radio" aria-checked="false" data-v="3">3</button>
           </div>
-        </li>
-        <li class="cu-inv__r">
-          <span class="cu-inv__k">ii</span>
-          <span class="cu-inv__n">7</span>
-          <div class="cu-inv__body">
-            <h3 class="cu-inv__t">And You Pick the Mix</h3>
-            <p class="cu-inv__m">At <b>3</b>&nbsp;a day that can be three videos, or two videos and one graphic, or one video and two graphics. Whatever the volume, the split between video and graphic is yours to set.</p>
-          </div>
-        </li>
-        <li class="cu-inv__r">
-          <span class="cu-inv__k">iii</span>
-          <span class="cu-inv__n">4</span>
-          <div class="cu-inv__body">
-            <h3 class="cu-inv__t">Seven Platforms, Reported Monthly</h3>
-            <p class="cu-inv__m">Facebook, Instagram, TikTok, YouTube, LinkedIn, X and Threads. Every piece goes on all <b>7</b>. A report every month per platform, a growth report every <b>4</b>&nbsp;months, a dedicated content manager and a strategy call on the same beat.</p>
-          </div>
-        </li>
-      </ol>
+        </div>
 
-      <div class="cu-ledger__box reveal">
-      <table class="cu-ledger">
-        <caption>Included In Organic</caption>
-        <thead>
-          <tr><th scope="col">Deliverable</th><th scope="col">Included</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><span>Uploads per day</span></td><td>1, 2 or 3</td></tr>
-          <tr><td><span>Pieces per month</span></td><td>30, 60 or 90</td></tr>
-          <tr><td><span>Video and graphic split</span></td><td>Your choice</td></tr>
-          <tr><td><span>Platforms</span></td><td>7</td></tr>
-          <tr><td><span>Posts per month, 1 a day across all platforms</span></td><td>210</td></tr>
-          <tr><td><span>Posts per month, 2 a day across all platforms</span></td><td>420</td></tr>
-          <tr><td><span>Posts per month, 3 a day across all platforms</span></td><td>630</td></tr>
-          <tr><td><span>Ideas, scripting, design, editing, captions</span></td><td>Included</td></tr>
-          <tr><td><span>Posting itself</span></td><td>Included</td></tr>
-          <tr><td><span>All 7 profiles matched and verified</span></td><td>Included</td></tr>
-          <tr><td><span>Reporting, per platform</span></td><td>Monthly</td></tr>
-          <tr><td><span>Growth report</span></td><td>Every 4 months</td></tr>
-          <tr><td><span>Dedicated content manager</span></td><td>Included</td></tr>
-          <tr><td><span>Strategy call</span></td><td>Every 4 months</td></tr>
-          <tr><td><span>Videography</span></td><td>Yours, we vet them</td></tr>
-          <tr><td><span>Management fee, 2 a day</span></td><td>$2,300 / month</td></tr>
-          <tr><td><span>Management fee, 3 a day</span></td><td>$3,100 / month</td></tr>
-        </tbody>
-      </table>
+        <div class="cu-pick__grid">
+          <div class="cu-pick__cell">
+            <span class="cu-pick__n" data-out="month">60</span>
+            <span class="cu-pick__k">Pieces a month</span>
+          </div>
+          <div class="cu-pick__cell">
+            <span class="cu-pick__n" data-out="posts">420</span>
+            <span class="cu-pick__k">Posts a month, all 7 platforms</span>
+          </div>
+          <div class="cu-pick__cell">
+            <span class="cu-pick__n" data-out="fee">$2,300</span>
+            <span class="cu-pick__k">Management fee, a month</span>
+          </div>
+        </div>
+
+        <p class="cu-pick__mix" data-out="mix">Two a day can be 2 videos, or 1 video and 1 graphic. The split is yours to set.</p>
       </div>
+
+      <!-- SET IN STONE. None of this moves with the volume. -->
+      <div class="cu-fixed reveal">
+        <div class="cu-fixed__t">Fixed, whichever volume you pick</div>
+        <ul class="cu-fixed__list">
+          <li class="cu-fixed__i"><b>7</b> platforms: Facebook, Instagram, TikTok, YouTube, LinkedIn, X and Threads</li>
+          <li class="cu-fixed__i">Every piece goes on all <b>7</b></li>
+          <li class="cu-fixed__i">Ideas, scripting, design, editing, captions and the posting itself</li>
+          <li class="cu-fixed__i">All <b>7</b> profiles matched and verified before anything goes live</li>
+          <li class="cu-fixed__i">A report every month, per platform</li>
+          <li class="cu-fixed__i">A growth report and a strategy call every <b>4</b> months</li>
+          <li class="cu-fixed__i">A dedicated content manager</li>
+          <li class="cu-fixed__i">Videography is yours, and we vet the videographer</li>
+        </ul>
+      </div>
+
+      <!-- The organic ledger is gone: the picker carries every figure that
+           moves and the fixed list carries every figure that does not, so a
+           table repeating both was three statements of the same thing. -->
 
       <div class="cu-terms">
         <div class="cu-term">
           <div class="cu-term__t">Not included</div>
-          <p class="cu-term__b">Paid promotion of organic posts. Anything outside the 7 platforms above. Videography, which is covered below.</p>
+          <p class="cu-term__b">Paid promotion of organic posts. Anything outside the 7 platforms above.</p>
         </div>
         <div class="cu-term">
           <div class="cu-term__t">What we need</div>
@@ -4893,6 +5061,66 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
       document.documentElement.classList.remove('is-scrolling');
     }, 147);   /* 3 x 49 */
   }, { passive: true });
+})();
+
+/* ==========================================================================
+   THE VOLUME PICKER. Three tiers. The figures that depend on the choice are the
+   only things that move, and they live here as DATA rather than in the markup,
+   so the copy and the arithmetic cannot drift apart.
+   ========================================================================== */
+(function(){
+  var pick = document.querySelector('.cu-pick');
+  if (!pick) return;
+
+  var TIERS = {
+    '1': { month:'30', posts:'210', fee:'On request',
+           mix:'One a day is a video or a graphic, your call. The split is yours to set.' },
+    '2': { month:'60', posts:'420', fee:'$2,300',
+           mix:'Two a day can be 2 videos, or 1 video and 1 graphic. The split is yours to set.' },
+    '3': { month:'90', posts:'630', fee:'$3,100',
+           mix:'Three a day can be 3 videos, 2 videos and 1 graphic, or 1 video and 2 graphics. The split is yours to set.' }
+  };
+
+  var outs = {};
+  pick.querySelectorAll('[data-out]').forEach(function(el){
+    outs[el.getAttribute('data-out')] = el;
+  });
+  var opts = [].slice.call(pick.querySelectorAll('.cu-pick__opt'));
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function write(t){
+    Object.keys(t).forEach(function(k){ if (outs[k]) outs[k].textContent = t[k]; });
+  }
+
+  function apply(v){
+    var t = TIERS[v];
+    if (!t) return;
+    opts.forEach(function(o){
+      var on = o.getAttribute('data-v') === v;
+      o.classList.toggle('is-on', on);
+      o.setAttribute('aria-checked', on ? 'true' : 'false');
+    });
+    if (reduce) { write(t); return; }
+    /* fade the changing figures down, swap, fade back. A hard cut reads as a
+       glitch, and the point of the block is showing WHICH numbers moved. */
+    pick.classList.add('is-swapping');
+    setTimeout(function(){
+      write(t);
+      pick.classList.remove('is-swapping');
+    }, 210);   /* 3 x 70 */
+  }
+
+  opts.forEach(function(o){
+    o.addEventListener('click', function(){ apply(o.getAttribute('data-v')); });
+    o.addEventListener('keydown', function(e){
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      var i = opts.indexOf(o) + (e.key === 'ArrowRight' ? 1 : -1);
+      var next = opts[(i + opts.length) % opts.length];
+      next.focus();
+      apply(next.getAttribute('data-v'));
+    });
+  });
 })();
 </script>
 </body>
