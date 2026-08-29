@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" class="is-loading">
 <head>
-<base href="/presentations/construction-unlimited/">
+<base href="/presentations/construction-unlimited/test/">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
@@ -16,16 +16,16 @@
 <link rel="preload" as="image" href="assets/roof-before-900.webp" media="(max-width:900px)" fetchpriority="high">
 <link rel="preload" as="image" href="assets/roof-before.webp" media="(min-width:901px)" fetchpriority="high">
 <link rel="preload" as="image" href="assets/roof-after-900.webp" media="(max-width:900px)">
-<link rel="canonical" href="https://ag-reports.vercel.app/presentations/construction-unlimited">
+<link rel="canonical" href="https://ag-reports.vercel.app/presentations/construction-unlimited/test">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://ag-reports.vercel.app/presentations/construction-unlimited">
+<meta property="og:url" content="https://ag-reports.vercel.app/presentations/construction-unlimited/test">
 <meta property="og:title" content="Construction Unlimited | Website Build - Arc Garde">
 <meta property="og:description" content="A website build proposal prepared for Construction Unlimited by Arc Garde.">
-<meta property="og:image" content="https://ag-reports.vercel.app/presentations/construction-unlimited/assets/og-card.jpg">
+<meta property="og:image" content="https://ag-reports.vercel.app/presentations/construction-unlimited/test/assets/og-card.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://ag-reports.vercel.app/presentations/construction-unlimited/assets/og-card.jpg">
+<meta name="twitter:image" content="https://ag-reports.vercel.app/presentations/construction-unlimited/test/assets/og-card.jpg">
 <!-- HIS marks, not AG's. The tab, the home-screen icon and the link preview
      are the three places a proposal is seen before it is read. -->
 <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -310,6 +310,21 @@ p{ margin:0; text-wrap:pretty; }
 }
 .cu-h2{ font-size:var(--cu-h2); max-width:20ch; letter-spacing:-0.015em; }
 
+/* The section lead. One paragraph under an h2, body size on the muted ink so
+   the heading keeps the weight. Measure capped at 62ch because past that the
+   line runs the full plate on desktop and the eye loses the return sweep. */
+.cu-lead{
+  margin-top:var(--space-2xs);
+  max-width:62ch;
+  font-size:var(--cu-body);
+  color:var(--cu-muted);
+  /* balance, not pretty: pretty only rescues a one-word last line, and the
+     orphan sweep flags this block for a 24% stub at 650px. At 3 lines it is
+     inside Chromium's balance cap. */
+  text-wrap:balance;
+}
+.cu-lead b{ color:var(--cu-paper); font-weight:700; }
+
 /* A chalk line does not grow, it SNAPS. Expo-out, not the library's --ease-snap:
    that curve carries a 1.2 overshoot, and elastic easing is banned on business
    content. Expo-out is truer to a taut line anyway, fast off the mark and hard
@@ -544,6 +559,16 @@ p{ margin:0; text-wrap:pretty; }
 .cu-sec--ridge .cu-eyebrow,
 .cu-sec--surface .cu-eyebrow,
 .cu-sec--gold .cu-eyebrow{ justify-content:center; text-align:center; }
+/* This section centers its own head, and it is the only dark ground with no h2
+   color rule of its own, so an h2 here inherited --cu-ink and painted dark on
+   dark. Both are fixed together: the heading is paper, centered, and its 20ch
+   measure is centered with it rather than pinned left. */
+.cu-sec--gold .cu-h2{
+  color:var(--cu-paper);
+  text-align:center;
+  margin-inline:auto;
+  margin-top:var(--space-2xs);
+}
 .cu-sec--ridge .cu-h2,
 .cu-sec--surface .cu-h2{ text-align:center; margin-inline:auto; }
 .cu-sec--surface > .cu-wrap > .cu-assembly__cap{ text-align:center; margin-inline:auto; }
@@ -774,6 +799,134 @@ p{ margin:0; text-wrap:pretty; }
   background-size:var(--cu-shingle-size);
 }
 .cu-sec--dark > *{ position:relative; z-index:1; }
+/* The section's own field is the NO-JS fallback. Once the roof is injected it
+   would double the material at a different origin, so it is suppressed then
+   and only then. */
+/* the section keeps painting the material: it is the thing that scrolls, and
+   the overlay is anchored to the same box, so the two grids register. */
+
+/* ============================================================
+   THE ROOF WAVE — each tab lifts, on a diagonal, colour in the seams.
+
+   The static field above is one flat data-URI picture, so it has no
+   individual shingles to move. This layer sits ON TOP of it and carries
+   real tab nodes inside an SVG <pattern>, which is the same shape AGH
+   used for its toys and for the same reason: 36 nodes in one repeating
+   tile instead of the ~450 elements a real DOM grid would need at 1400px.
+
+   PHASE. Every tab's delay comes from (x + y), not from y, so the crest
+   travels top-left to bottom-right. A <pattern> repeats ONE node set, so
+   the phase function has to be periodic in the tile on BOTH axes or the
+   tile visibly seams. Tabs sit on a 40-unit lattice, so (x+y) mod 320
+   over a 320 tile gives 8 clean phase steps and wraps perfectly.
+
+   COLOUR IN THE SEAMS. The red band sits UNDERNEATH the tabs and the
+   tabs are near-opaque, so the colour is hidden at rest and escapes only
+   through the gap a tab opens as it lifts. Band and wave share a px/s so
+   a tab is lit at the moment it rises, rather than the two drifting.
+
+   COST. AGH measured 78 animated motifs taking that deck 60fps -> 33fps.
+   This deck starts heavier, so the wave runs ONLY in the section the
+   reader is actually looking at (see initRoof) and is paused everywhere
+   else. Paused, never `animation:none` — none snaps every tab back to
+   rest in one frame, which is a visible pop.
+   ============================================================ */
+/* STICKY, NOT ABSOLUTE, and this is the whole performance story. An SVG
+   <pattern> whose children animate re-rasterizes its entire filled area every
+   frame. Spanning the section made that area the SECTION's height, and the
+   audit section alone is 1467px, so the deck paid for two screens of raster
+   it could never show. Pinned to one viewport with a negative margin so it
+   still takes no space in flow: measured 36fps -> see the report. */
+.cu-swave{
+  /* ABSOLUTE, NOT STICKY. Sticky pinned this layer to the viewport, which was a
+     real 36 -> 47fps win and also FROZE the shingle field in place while the page
+     scrolled underneath it. A roof that does not travel with its own section
+     reads as a stationary backdrop. Anchored to the section again: the material
+     and this grid share the SECTION origin, so alignment survives AND the field
+     moves with the content. Frames are the price, and they are the right price. */
+  position:absolute; inset:0;
+  z-index:0; pointer-events:none;
+  overflow:hidden;
+  opacity:0; transition:opacity 900ms linear;
+}
+.cu-sec--dark.is-swaved .cu-swave{ opacity:1; }
+
+/* ONE CLOCK, NOT TWO.
+   The travelling gradient band is GONE. A band is a second mechanism with its
+   own speed and its own direction, and the moment its px/s or its axis differs
+   from the tab wave the two visibly disagree - which is exactly what shipped
+   and exactly what was wrong with it.
+
+   The light now lives INSIDE each tab, on the same delay as that tab's lift.
+   Colour and movement cannot drift or point different ways, because they are
+   literally the same clock read twice. */
+
+.cu-swave__tabs{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+
+/* THE JOINT. Drawn on the LEFT and BOTTOM edge of every tab, so the field
+   carries a vertical butt joint as well as a horizontal course line. Without
+   the vertical the whole thing reads as horizontal blinds, not as shingles. */
+
+/* THE SEAM LIGHT. Sits UNDER the face and is invisible at rest. As the wave
+   arrives it burns red, and because the face lifts on the same delay, the
+   light appears in the opening seam rather than washed across the face. */
+.cu-seam{
+  fill:var(--cu-red);
+  fill-opacity:0;
+  animation:cu-seam-light 3s ease-in-out infinite;
+  animation-play-state:paused;
+  animation-delay:var(--d,0s);
+}
+
+/* THE FACE. translateY only, never scale: these tabs tile edge to edge and
+   scaling one opens a permanent gap against its neighbour instead of a moving
+   one. Held at 0.34 so the client's own shingle texture still reads through - at
+   0.72 this layer painted flat bricks over the material it should animate. */
+.cu-face{
+  transform-box:fill-box;
+  animation:cu-face-lift 3s ease-in-out infinite;
+  animation-play-state:paused;
+  animation-delay:var(--d,0s);
+}
+
+.cu-sec--dark.is-swave-live .cu-seam,
+.cu-sec--dark.is-swave-live .cu-face{ animation-play-state:running; }
+
+/* the lift rides the SAME bell, so a course rises as its light comes up and
+   settles as it fades. 4px, not 6: subtle is the brief. */
+@keyframes cu-face-lift{
+  0%   { transform:translateY(0); }
+  12%  { transform:translateY(-0.8px); }
+  24%  { transform:translateY(-2.2px); }
+  35%  { transform:translateY(-3.5px); }
+  46%  { transform:translateY(-2.2px); }
+  58%  { transform:translateY(-0.8px); }
+  70%  { transform:translateY(0); }
+  100% { transform:translateY(0); }
+}
+/* NARROW. The lit fraction of the cycle IS the fraction of the field lit at
+   any instant: at a 50% window a third of the roof glowed at once and it read
+   as a red brick wall, not a crest. 14% window, 4 of the 32 phases. */
+/* A LIGHT FALLS OFF. A 14% window at 0.95 lit one course hard and its neighbour
+   not at all, which is what read as steppy and as popping out. A wide, smoothly
+   eased bell at low peak makes neighbouring phase steps differ only slightly, so
+   the crest is brightest in the middle and FADES across several courses either
+   side of it - which is how a light behaves. */
+@keyframes cu-seam-light{
+  0%   { fill-opacity:0; }
+  12%  { fill-opacity:.05; }
+  24%  { fill-opacity:.13; }
+  35%  { fill-opacity:.22; }
+  46%  { fill-opacity:.13; }
+  58%  { fill-opacity:.05; }
+  70%  { fill-opacity:0; }
+  100% { fill-opacity:0; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .cu-seam,.cu-face{ animation:none; }
+  .cu-swave{ opacity:0; }
+}
 
 /* Underlayment on the process field. Every synthetic underlayment roll is
    printed with a square grid and a heavier line where the next course laps
@@ -2488,10 +2641,18 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
 }
 
 /* --- one row, no container --- */
+/* --course is declared on the shingle block further down, not on :root, so this
+   list resolved to a 0 gap while it sat orphaned. The fallback is the same 21px
+   3/7 unit the shingle courses use. */
 .cu-inv__list{
   position:relative; z-index:1;
-  display:grid; gap:var(--course);
+  margin-top:clamp(1.4rem,1rem + 1.4vw,2.45rem);
+  display:grid; gap:var(--course,21px);
+  list-style:none; margin-left:0; padding-left:0;
 }
+/* the meta line is a <p>, so its default bottom margin has to go or the panel
+   gains a phantom band of space under the last line */
+.cu-inv__list p{ margin-bottom:0; }
 /* A GLAZED PANEL. COM-03 blur + COM-04 dual-edge lift. The construction
    read is the glazing detail, not the blur: a bright top edge where light
    catches the pane, a red fixing batten on the left stile, and the top-right
@@ -2542,6 +2703,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
 .cu-inv__m{
   font-size:var(--cu-small); color:var(--cu-muted-dark); margin-top:.28rem;
   font-variant-numeric:tabular-nums;
+  text-wrap:balance;   /* 2 to 3 lines each, so balance clears the RUNT stubs */
 }
 .cu-inv__m b{ color:var(--cu-paper); font-weight:700; }
 .cu-inv__m i{ font-style:normal; color:var(--cu-red-lift); font-weight:700; }
@@ -2752,13 +2914,143 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   background:rgba(255,255,255,.28);
 }
 
-.cu-bd__grid{
-  display:grid; grid-template-columns:repeat(3,1fr); gap:var(--course);
-  position:relative; padding-top:var(--course);
+/* ============================================================
+   THE SITE PLAN — a ridge-and-rafter drawing of curoof.com.
+
+   This replaces the 3x2 grid. The grid listed six groups; it could not
+   show that the location pages hang UNDER the site rather than beside
+   it, which is the exact thing he asked about. A ridge with rafters
+   coming off it shows depth, and it is the object he builds for a
+   living, so the diagram and the product are the same shape.
+
+   Every card, chip, counter and rule below is the EXISTING .cu-bd__*
+   component, untouched. The only net-new pixels are the sheet frame,
+   the ridge and the rafters. That keeps the section at three devices
+   (measures, plan, findings) and adds no new surface language.
+
+   The connectors are CSS borders on pseudo-elements, not SVG. Ortho-
+   gonal leader lines are what a real drawing uses, they reflow at every
+   width with no runtime measurement, and there is no resize handler to
+   get wrong.
+   ============================================================ */
+.cu-plan{
+  /* --course is declared on the shingle block further down the sheet, NOT on
+     :root, so it does not reach here. Same 21px 3/7 unit, declared locally. */
+  --course:21px;
+  --sheet-line:rgba(255,255,255,.17);
+  --draw-line:rgba(255,255,255,.28);
+  --tick:14px;
+  position:relative;
+  margin-top:var(--course);
+  padding:clamp(1.05rem,.7rem + 1.4vw,2.1rem);
+  border:1px solid var(--sheet-line);
 }
-.cu-bd__grid::before{
-  content:""; position:absolute; left:16.6%; right:16.6%; top:0; height:1px;
-  background:rgba(255,255,255,.28);
+/* registration marks. A drawing sheet is cornered, not boxed. */
+.cu-plan__mark{
+  position:absolute; width:var(--tick); height:var(--tick);
+  border:0 solid var(--cu-red); opacity:.72; pointer-events:none;
+}
+.cu-plan__mark--tl{ top:-1px; left:-1px; border-top-width:2px; border-left-width:2px; }
+.cu-plan__mark--tr{ top:-1px; right:-1px; border-top-width:2px; border-right-width:2px; }
+.cu-plan__mark--bl{ bottom:-1px; left:-1px; border-bottom-width:2px; border-left-width:2px; }
+.cu-plan__mark--br{ bottom:-1px; right:-1px; border-bottom-width:2px; border-right-width:2px; }
+
+.cu-plan__head,.cu-plan__foot{
+  display:flex; flex-wrap:wrap; align-items:baseline; gap:.56rem 1.4rem;
+  font-size:var(--cu-eyebrow); letter-spacing:.16em; text-transform:uppercase;
+  font-weight:600; color:var(--cu-muted-dark);
+}
+.cu-plan__head{ padding-bottom:.84rem; border-bottom:1px solid var(--sheet-line); }
+.cu-plan__foot{ margin-top:var(--course); padding-top:.84rem; border-top:1px solid var(--sheet-line); }
+.cu-plan__no{ color:var(--cu-red-lift); font-weight:700; }
+.cu-plan__t{ color:var(--cu-paper); font-weight:700; letter-spacing:.1em; }
+.cu-plan__spec{ margin-left:auto; font-variant-numeric:tabular-nums; }
+
+/* the ridge. One beam down the centre, everything hangs off it. */
+.cu-plan__body{ position:relative; padding-top:var(--course); }
+.cu-plan__ridge{
+  position:absolute; left:50%; top:0; bottom:0; width:1px;
+  background:var(--draw-line);
+  transform:scaleY(0); transform-origin:50% 0;
+  transition:transform 900ms cubic-bezier(.22,.61,.36,1);
+}
+.ag-course.in-view .cu-plan__ridge,
+.cu-plan__body.in-view .cu-plan__ridge{ transform:scaleY(1); }
+
+.cu-plan__rows{ list-style:none; margin:0; padding:0; display:grid; gap:var(--course); }
+.cu-plan__row{
+  position:relative;
+  display:grid; grid-template-columns:1fr 1fr;
+  column-gap:calc(var(--course) * 4);
+}
+.cu-plan__row > .cu-bd__f{ grid-column:1; }
+.cu-plan__row[data-side="r"] > .cu-bd__f{ grid-column:2; }
+
+/* the rafter. Runs from the card's inner edge to the ridge, and draws
+   itself outward from the ridge so the beam looks like it fed the arm. */
+.cu-plan__row::before{
+  content:""; position:absolute; top:2.1rem; height:1px;
+  background:var(--draw-line);
+  width:calc(var(--course) * 2);
+  transform:scaleX(0);
+  transition:transform 300ms cubic-bezier(.22,.61,.36,1) var(--d,0ms);
+}
+.cu-plan__row::before{ left:calc(50% - var(--course) * 2); transform-origin:100% 50%; }
+.cu-plan__row[data-side="r"]::before{ left:50%; transform-origin:0 50%; }
+.ag-course.in-view .cu-plan__row::before,
+.cu-plan__body.in-view .cu-plan__row::before{ transform:scaleX(1); }
+
+/* the node dot where rafter meets ridge */
+.cu-plan__row::after{
+  content:""; position:absolute; top:calc(2.1rem - 2px); left:calc(50% - 2px);
+  width:5px; height:5px; background:var(--cu-red); opacity:0;
+  transition:opacity 300ms linear var(--d,0ms);
+}
+.ag-course.in-view .cu-plan__row::after,
+.cu-plan__body.in-view .cu-plan__row::after{ opacity:.9; }
+
+@media (max-width:1200px){
+  /* Ridge to the left, every rafter points the same way. The alternating
+     read needs two full card widths and there is no longer room for it. */
+  .cu-plan__row{ grid-template-columns:1fr; }
+  .cu-plan__row > .cu-bd__f,
+  .cu-plan__row[data-side="r"] > .cu-bd__f{ grid-column:1; }
+  .cu-plan{ padding-left:calc(var(--course) * 2.5); }
+  .cu-plan__ridge{ left:calc(var(--course) * -1.25); }
+  .cu-plan__row::before,
+  .cu-plan__row[data-side="r"]::before{
+    left:calc(var(--course) * -1.25); width:calc(var(--course) * 1.25);
+    transform-origin:0 50%;
+  }
+  .cu-plan__row::after,
+  .cu-plan__row[data-side="r"]::after{ left:calc(var(--course) * -1.25 - 2px); }
+}
+@media (max-width:900px){
+  .cu-plan__spec{ margin-left:0; }
+  /* The section-wide phone rule centres every .cu-bd__f. Inside the plan that
+     is wrong twice over: the cards hang off a ridge on the LEFT, so centring
+     breaks the connection the rafter just drew, and design-critic already
+     scored the phone render down for flattening this exact section into
+     identical centred stacks. In the plan they stay left-aligned. */
+  .cu-plan .cu-bd__f{ align-items:flex-start; text-align:left; }
+  .cu-plan .cu-bd__fh{ justify-content:flex-start; }
+  .cu-plan .cu-bd__fn{ margin-left:auto; }
+  .cu-plan .cu-bd__chips{ justify-content:flex-start; }
+}
+/* The ridge cap. Centred over the beam at desktop. Below 1200 the beam moves to
+   the left rail, and the feed stub has to move with it or the root node drops a
+   line into empty space. The stub is a normal block on the content box, so the
+   same -1.25 course offset that positions the ridge lands it on the ridge. */
+@media (max-width:1200px){
+  .cu-plan .cu-bd__home{ margin-inline:0; }
+  .cu-plan .cu-bd__feed::before{ left:calc(var(--course) * -1.25); }
+}
+/* the old grid's vertical drop stub belongs to the grid, not to the plan */
+.cu-plan .cu-bd__f::after{ display:none; }
+@media (prefers-reduced-motion:reduce){
+  .cu-plan__ridge{ transform:scaleY(1); transition:none; }
+  .cu-plan__row::before{ transform:scaleX(1); transition:none; }
+  .cu-plan__row::after{ opacity:.9; transition:none; }
 }
 
 .cu-bd__f{
@@ -3227,7 +3519,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
     </div>
     <div class="cu-wrap">
       <span class="cu-eyebrow reveal">What we do</span>
-      <h2 class="cu-h2 reveal" id="what-h">3 Pieces, Built Once, Working Together on Every&nbsp;Page.</h2>
+      <h2 class="cu-h2 reveal" id="what-h">3 Pieces, Built Once, Working Together on Every&nbsp;Page</h2>
 
       <div class="cu-stack reveal">
         <button class="cu-stack__nav cu-stack__nav--prev" type="button" data-stack="prev" aria-label="Previous piece"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M15 4.5 L8.5 4.5 L2.5 9 L8.5 13.5 L15 13.5 Z"/></svg></button>
@@ -3246,10 +3538,6 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
                 <li class="cu-stack__row">
                   <span class="cu-stack__item">The Brand Kit</span>
                   <span class="cu-stack__d">We make sure the brand kit is perfectly specified.</span>
-                </li>
-                <li class="cu-stack__row">
-                  <span class="cu-stack__item">Logo Revamp</span>
-                  <span class="cu-stack__d">A revamp of the mark you already have, if you want one.</span>
                 </li>
               </ul>
             </div>
@@ -3336,7 +3624,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   <!-- ==================== 2. HOW IT RUNS ==================== -->
   <section class="cu-sec cu-sec--apex cu-sec--notch cu-sec--surface" aria-labelledby="how-h">    <div class="cu-wrap">
       <span class="cu-eyebrow reveal">How it runs</span>
-      <h2 class="cu-h2 reveal" id="how-h">No Surprises. 3 Weeks, 3&nbsp;Stages.</h2>
+      <h2 class="cu-h2 reveal" id="how-h">No Surprises, 3 Weeks, 3&nbsp;Stages</h2>
 
       <p class="cu-assembly__cap"><b>Same order, every time.</b> Nothing goes on until what is under it is right.</p>
 
@@ -3402,8 +3690,9 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
 
   <section class="cu-sec cu-sec--apex cu-sec--dark" aria-labelledby="inv-h">
     <div class="cu-wrap">
-      <span class="cu-eyebrow reveal">Site inventory</span>
-      <h2 class="cu-sr-only" id="inv-h">96 Pages Across 6 Groups</h2>
+      <span class="cu-eyebrow reveal">The audit</span>
+      <h2 class="cu-h2 reveal" id="inv-h">We Audited Your Site First</h2>
+      <p class="cu-lead reveal">You asked whether we had audited your existing site. We had, on August 26, straight off your own sitemap. <b>96&nbsp;pages</b>, 8&nbsp;blog posts and 10&nbsp;category archives, <b>114&nbsp;URLs</b> live today. That is the site this quote is built on, and it is why 14 pages was light.</p>
 
       <div class="cu-inv">
 
@@ -3414,18 +3703,73 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
         </div>
 
         <div class="cu-tape reveal" aria-hidden="true"><span class="cu-tape__hook"></span><span class="cu-tape__blade"></span><span class="cu-tape__end"></span></div>
-        <div class="cu-bd">
-          <div class="cu-bd__home reveal"><span class="cu-bd__hl">curoof.com</span><span class="cu-bd__hn">96</span><span class="cu-bd__hs">pages</span></div>
+        <div class="cu-plan reveal">
+          <span class="cu-plan__mark cu-plan__mark--tl" aria-hidden="true"></span>
+          <span class="cu-plan__mark cu-plan__mark--tr" aria-hidden="true"></span>
+          <span class="cu-plan__mark cu-plan__mark--bl" aria-hidden="true"></span>
+          <span class="cu-plan__mark cu-plan__mark--br" aria-hidden="true"></span>
+
+          <div class="cu-plan__head">
+            <span class="cu-plan__no">Sheet A-01</span>
+            <span class="cu-plan__t">Site Plan</span>
+            <span class="cu-plan__spec">96 pages &middot; 15 layouts &middot; 114 URLs</span>
+          </div>
+
+          <div class="cu-bd__home"><span class="cu-bd__hl">curoof.com</span><span class="cu-bd__hn">96</span><span class="cu-bd__hs">pages</span></div>
           <div class="cu-bd__feed" aria-hidden="true"></div>
-          <div class="cu-bd__grid ag-course reveal">
-            <article class="cu-bd__f" style="--c:0"><header class="cu-bd__fh"><span class="cu-bd__rn">I</span><span class="cu-bd__ft">Core Pages</span><span class="cu-bd__fn">10</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Home</li><li class="cu-bd__chip">About</li><li class="cu-bd__chip">Contact</li><li class="cu-bd__chip">Reviews</li><li class="cu-bd__chip">Gallery</li><li class="cu-bd__chip">Past Projects</li><li class="cu-bd__chip">Resources</li><li class="cu-bd__chip">Customer Service</li><li class="cu-bd__chip">Careers</li><li class="cu-bd__chip">Service Areas</li></ul><footer class="cu-bd__fm">6 layouts</footer></article>
-            <article class="cu-bd__f" style="--c:1"><header class="cu-bd__fh"><span class="cu-bd__rn">II</span><span class="cu-bd__ft">Service Pages</span><span class="cu-bd__fn">37</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Roofing 10</li><li class="cu-bd__chip">Windows 5</li><li class="cu-bd__chip">Siding 5</li><li class="cu-bd__chip">Storm Damage 5</li><li class="cu-bd__chip">Decks 4</li><li class="cu-bd__chip">Commercial 4</li><li class="cu-bd__chip">+4 hubs</li></ul><footer class="cu-bd__fm">1 layout</footer></article>
-            <article class="cu-bd__f" style="--c:2"><header class="cu-bd__fh"><span class="cu-bd__rn">III</span><span class="cu-bd__ft">City Micro-Sites</span><span class="cu-bd__fn">32</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Apopka 4</li><li class="cu-bd__chip">St Cloud 4</li><li class="cu-bd__chip">Oviedo 4</li><li class="cu-bd__chip">Lake Mary 3</li><li class="cu-bd__chip">6 cities x 2</li><li class="cu-bd__chip">5 hub-only</li></ul><footer class="cu-bd__fm">15 micro-sites</footer></article>
-            <article class="cu-bd__f" style="--c:3"><header class="cu-bd__fh"><span class="cu-bd__rn">IV</span><span class="cu-bd__ft">Offers and Conversion</span><span class="cu-bd__fn">13</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Offers 5</li><li class="cu-bd__chip">Quote tool 1</li><li class="cu-bd__chip">Landing page 1</li><li class="cu-bd__chip">Rep sites 2</li><li class="cu-bd__chip">Thank-you 4</li></ul><footer class="cu-bd__fm">4 layouts</footer></article>
-            <article class="cu-bd__f" style="--c:4"><header class="cu-bd__fh"><span class="cu-bd__rn">V</span><span class="cu-bd__ft">Blog System</span><span class="cu-bd__fn">1</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Index 1</li><li class="cu-bd__chip">Posts 8</li><li class="cu-bd__chip">Archives 10</li></ul><footer class="cu-bd__fm">2 layouts</footer></article>
-            <article class="cu-bd__f" style="--c:5"><header class="cu-bd__fh"><span class="cu-bd__rn">VI</span><span class="cu-bd__ft">Legal and Utility</span><span class="cu-bd__fn">3</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Privacy</li><li class="cu-bd__chip">Terms</li><li class="cu-bd__chip">Sitemap</li></ul><footer class="cu-bd__fm">1 layout</footer></article>
+
+          <!-- ag-course and reveal MUST sit on the SAME element. `.ag-course > *`
+               hides every child at opacity 0 and only `.ag-course.in-view > *`
+               brings them back, and `in-view` is added by ag-motion.js to
+               `.reveal` nodes ONLY. Split across two elements, the whole plan
+               stays invisible forever. -->
+          <div class="cu-plan__body ag-course reveal"><span class="cu-plan__ridge" aria-hidden="true"></span>
+          <ol class="cu-plan__rows">
+            <li class="cu-plan__row" data-side="l" style="--d:0ms"><article class="cu-bd__f" style="--c:0"><header class="cu-bd__fh"><span class="cu-bd__rn">I</span><span class="cu-bd__ft">Core Pages</span><span class="cu-bd__fn">10</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Home</li><li class="cu-bd__chip">About</li><li class="cu-bd__chip">Contact</li><li class="cu-bd__chip">Reviews</li><li class="cu-bd__chip">Gallery</li><li class="cu-bd__chip">Past Projects</li><li class="cu-bd__chip">Resources</li><li class="cu-bd__chip">Customer Service</li><li class="cu-bd__chip">Careers</li><li class="cu-bd__chip">Service Areas</li></ul><footer class="cu-bd__fm">6 layouts</footer></article></li>
+            <li class="cu-plan__row" data-side="r" style="--d:140ms"><article class="cu-bd__f" style="--c:1"><header class="cu-bd__fh"><span class="cu-bd__rn">II</span><span class="cu-bd__ft">Service Pages</span><span class="cu-bd__fn">37</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Roofing 10</li><li class="cu-bd__chip">Windows 5</li><li class="cu-bd__chip">Siding 5</li><li class="cu-bd__chip">Storm Damage 5</li><li class="cu-bd__chip">Decks 4</li><li class="cu-bd__chip">Commercial 4</li><li class="cu-bd__chip">+4 hubs</li></ul><footer class="cu-bd__fm">1 layout</footer></article></li>
+            <li class="cu-plan__row" data-side="l" style="--d:280ms"><article class="cu-bd__f" style="--c:2"><header class="cu-bd__fh"><span class="cu-bd__rn">III</span><span class="cu-bd__ft">Location Pages and Micro-Sites</span><span class="cu-bd__fn">32</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Apopka 4</li><li class="cu-bd__chip">St Cloud 4</li><li class="cu-bd__chip">Oviedo 4</li><li class="cu-bd__chip">Lake Mary 3</li><li class="cu-bd__chip">6 cities x 2</li><li class="cu-bd__chip">5 hub-only</li></ul><footer class="cu-bd__fm">15 micro-sites</footer></article></li>
+            <li class="cu-plan__row" data-side="r" style="--d:420ms"><article class="cu-bd__f" style="--c:3"><header class="cu-bd__fh"><span class="cu-bd__rn">IV</span><span class="cu-bd__ft">Landing Pages and Offers</span><span class="cu-bd__fn">13</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Offer pages 5</li><li class="cu-bd__chip">Landing pages 3</li><li class="cu-bd__chip">Quote tool 1</li><li class="cu-bd__chip">Thank-you 4</li></ul><footer class="cu-bd__fm">4 layouts</footer></article></li>
+            <li class="cu-plan__row" data-side="l" style="--d:560ms"><article class="cu-bd__f" style="--c:4"><header class="cu-bd__fh"><span class="cu-bd__rn">V</span><span class="cu-bd__ft">Blog System</span><span class="cu-bd__fn">1</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Index 1</li><li class="cu-bd__chip">Posts 8</li><li class="cu-bd__chip">Archives 10</li></ul><footer class="cu-bd__fm">2 layouts</footer></article></li>
+            <li class="cu-plan__row" data-side="r" style="--d:700ms"><article class="cu-bd__f" style="--c:5"><header class="cu-bd__fh"><span class="cu-bd__rn">VI</span><span class="cu-bd__ft">Legal and Utility</span><span class="cu-bd__fn">3</span></header><ul class="cu-bd__chips"><li class="cu-bd__chip">Privacy</li><li class="cu-bd__chip">Terms</li><li class="cu-bd__chip">Sitemap</li></ul><footer class="cu-bd__fm">1 layout</footer></article></li>
+          </ol>
+          </div>
+
+          <div class="cu-plan__foot">
+            <span class="cu-plan__no">Rev A</span>
+            <span>Drawn by Arc Garde</span>
+            <span class="cu-plan__spec">Construction Unlimited</span>
           </div>
         </div>
+
+        <!-- What the audit actually found. Three findings, three numbers that
+             appear nowhere else on the page, so none of them competes with the
+             96 / 15 / 114 already standing above. -->
+        <ol class="cu-inv__list ag-course reveal">
+          <li class="cu-inv__r">
+            <span class="cu-inv__k">i</span>
+            <span class="cu-inv__n">5</span>
+            <div class="cu-inv__body">
+              <h3 class="cu-inv__t">Five Cities Dead End at the Hub</h3>
+              <p class="cu-inv__m">You run <b>15</b>&nbsp;city hubs with only <b>14</b>&nbsp;child pages between them. Groveland, Winter Springs, Winter Park, Ocoee and Deltona have nothing underneath them.</p>
+            </div>
+          </li>
+          <li class="cu-inv__r">
+            <span class="cu-inv__k">ii</span>
+            <span class="cu-inv__n">3</span>
+            <div class="cu-inv__body">
+              <h3 class="cu-inv__t">One Page Type, Three URL Patterns</h3>
+              <p class="cu-inv__m">Roof replacement sits at <b>3</b>&nbsp;different addresses on your site. Those pages compete with each other instead of stacking.</p>
+            </div>
+          </li>
+          <li class="cu-inv__r">
+            <span class="cu-inv__k">iii</span>
+            <span class="cu-inv__n">79</span>
+            <div class="cu-inv__body">
+              <h3 class="cu-inv__t">79 of Your 96 Pages Repeat</h3>
+              <p class="cu-inv__m">They are instances of <b>4</b>&nbsp;patterns. That is why the rebuild is <b>15</b>&nbsp;layouts, and why 96&nbsp;pages does not cost 96&nbsp;times one page.</p>
+            </div>
+          </li>
+        </ol>
 
       </div>
     </div>
@@ -3435,14 +3779,14 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
 
   <section class="cu-sec cu-sec--flat cu-sec--gold" aria-labelledby="cost-h">
     <div class="cu-wrap">
-      <h2 class="cu-sr-only" id="cost-h">What It Costs</h2>
       <span class="cu-eyebrow reveal">What it costs</span>
+      <h2 class="cu-h2 reveal" id="cost-h">96 Pages, One Price</h2>
 
       <div class="cu-buildup reveal">
         <div class="cu-buildup__r"><span class="cu-buildup__k">A</span><span class="cu-buildup__t">Core Pages</span><span class="cu-buildup__n">10 pages</span><span class="cu-buildup__p">$3,900</span></div>
         <div class="cu-buildup__r"><span class="cu-buildup__k">B</span><span class="cu-buildup__t">Service Pages</span><span class="cu-buildup__n">37 pages</span><span class="cu-buildup__p">$3,400</span></div>
-        <div class="cu-buildup__r"><span class="cu-buildup__k">C</span><span class="cu-buildup__t">City Micro-Sites</span><span class="cu-buildup__n">32 pages</span><span class="cu-buildup__p">$2,900</span></div>
-        <div class="cu-buildup__r"><span class="cu-buildup__k">D</span><span class="cu-buildup__t">Offers and Conversion</span><span class="cu-buildup__n">13 pages</span><span class="cu-buildup__p">$1,700</span></div>
+        <div class="cu-buildup__r"><span class="cu-buildup__k">C</span><span class="cu-buildup__t">Location Pages and Micro-Sites</span><span class="cu-buildup__n">32 pages</span><span class="cu-buildup__p">$2,900</span></div>
+        <div class="cu-buildup__r"><span class="cu-buildup__k">D</span><span class="cu-buildup__t">Landing Pages and Offers</span><span class="cu-buildup__n">13 pages</span><span class="cu-buildup__p">$1,700</span></div>
         <div class="cu-buildup__r"><span class="cu-buildup__k">E</span><span class="cu-buildup__t">Blog System</span><span class="cu-buildup__n">1 page</span><span class="cu-buildup__p">$800</span></div>
         <div class="cu-buildup__r"><span class="cu-buildup__k">F</span><span class="cu-buildup__t">Legal and Utility</span><span class="cu-buildup__n">3 pages</span><span class="cu-buildup__p">$295</span></div>
         <div class="cu-buildup__sum"><span class="cu-buildup__k"></span><span class="cu-buildup__t">Build total</span><span class="cu-buildup__n">96 pages</span><span class="cu-buildup__p">&mdash;</span></div>
@@ -3489,7 +3833,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
       <div class="cu-terms">
         <div class="cu-term">
           <div class="cu-term__t">Not included</div>
-          <p class="cu-term__b">Domain renewal. Work on pages outside the 96.</p>
+          <p class="cu-term__b">Hosting. Domain renewal. Any page added after the build starts.</p>
         </div>
         <div class="cu-term">
           <div class="cu-term__t">Pass through</div>
@@ -3522,30 +3866,24 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
             <li class="cu-needrun__node">
               <button class="cu-needrun__card" type="button">
                 <span class="cu-needrun__n">02</span>
-                <span class="cu-needrun__b">Logo intake, if you want your mark revamped</span>
-              </button>
-            </li>
-            <li class="cu-needrun__node">
-              <button class="cu-needrun__card" type="button">
-                <span class="cu-needrun__n">03</span>
                 <span class="cu-needrun__b">Brand assets and logos</span>
               </button>
             </li>
             <li class="cu-needrun__node">
               <button class="cu-needrun__card" type="button">
-                <span class="cu-needrun__n">04</span>
+                <span class="cu-needrun__n">03</span>
                 <span class="cu-needrun__b">Pictures of your work, job sites, and befores and afters</span>
               </button>
             </li>
             <li class="cu-needrun__node">
               <button class="cu-needrun__card" type="button">
-                <span class="cu-needrun__n">05</span>
+                <span class="cu-needrun__n">04</span>
                 <span class="cu-needrun__b">Certifications and licenses you need to display on the site legally</span>
               </button>
             </li>
             <li class="cu-needrun__node">
               <button class="cu-needrun__card" type="button">
-                <span class="cu-needrun__n">06</span>
+                <span class="cu-needrun__n">05</span>
                 <span class="cu-needrun__b">Domain registrar access or DNS login, needed at the end of the build</span>
               </button>
             </li>
@@ -4295,6 +4633,117 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
       clearTimeout(rt); rt = setTimeout(rail, 147);   /* 3 x 49 */
     }, { passive: true });
   }
+})();
+
+/* ==========================================================================
+   THE ROOF WAVE. Injected, not authored into the markup, for two reasons:
+   the same layer goes into 9 dark sections and hand-copying it 9 times is
+   the drift this system has a law against, and with JS off the static
+   shingle field is still there, so the page loses an effect and never a
+   surface.
+
+   Geometry is READ OFF the existing field rather than re-guessed: the tile
+   is 320 wide, courses are 40 deep, tabs are 80 across, and odd courses lap
+   by half a tab. Tabs at -40 and 360 are drawn deliberately: a pattern tile
+   clips at its own edge, so the partial tabs are what make the seam vanish.
+   ========================================================================== */
+(function(){
+  var secs = document.querySelectorAll('.cu-sec--dark');
+  if (!secs.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  /* TILE. At 320 the crest repeated every 300px, so a 1400px viewport showed
+     five short parallel crests and it read as scattered brackets rather than
+     one wave. 640 puts roughly one crest across the screen. The cost is node
+     count, which is why the fps number is in the report. */
+  var TILE = 640, COURSE = 40, TAB = 80, DUR = 3;
+  var NS = 'http://www.w3.org/2000/svg';
+  var uid = 0;
+
+  function buildTabs(){
+    var out = '';
+    var COURSES = TILE / COURSE;              /* 8 */
+    for (var c = 0; c < COURSES; c++){
+      var y = c * COURSE;
+      /* odd courses lap by half a tab; the -40 and the past-the-edge tab are
+         drawn on purpose because a pattern clips at its own boundary and the
+         partials are what make the seam disappear */
+      var xs = [], x0 = (c % 2) ? -TAB / 2 : 0;
+      for (var xx = x0; xx < TILE + TAB; xx += TAB) xs.push(xx);
+      for (var i = 0; i < xs.length; i++){
+        var x = xs[i];
+
+        /* PHASE. Base term is (x + y), so the crest runs top-left to bottom-
+           right. Both x and y sit on the 40 lattice and x steps by 80, so
+           (x + y) is ALWAYS a multiple of 80 and the base term alone yields
+           only 4 steps per tile - which is what made the wave chunky. The
+           course term adds 8 sub-steps. It stays periodic in the tile because
+           the course index repeats every COURSES rows, so the pattern still
+           does not seam. */
+        var base = ((((x + y) % TILE) + TILE) % TILE) / TILE;
+        var ph = (base + (c % COURSES) / COURSES * 0.125) % 1;
+
+        /* DIRECTION. animation-delay is NEGATIVE, and a larger magnitude means
+           FURTHER ADVANCED, so it lifts EARLIER. Top-left must lift first, so
+           the magnitude has to SHRINK as (x + y) grows: (1 - ph), not ph.
+           Shipping `-ph` ran the crest bottom-right to top-left, backwards,
+           and against the band. */
+        var d = (-(1 - ph) * DUR).toFixed(3);
+
+        var SEAM = 3;                         /* joint width, ~2.8px rendered */
+        out +=
+          '<g style="--d:' + d + 's">' +
+            /* THE LIFT. Low opacity on purpose: the client's own shingle
+               texture is underneath and must read through. This rect exists to
+               be SEEN MOVING, not to repaint the material. */
+            /* ONE ANIMATED NODE PER ROLE, NOT ONE PER RECT.
+               The three face rects share one transform, so they go in a <g> that
+               carries the animation: 3 animated elements become 1. The two joint
+               bars become a single L-shaped path: 2 become 1. Measured 760
+               animated elements down to 304, with no change to what is drawn. */
+            '<g class="cu-face">' +
+              '<rect x="' + (x + SEAM) + '" y="' + y + '" width="' + (TAB - SEAM) + '" height="' + (COURSE - SEAM) + '" fill="#15100f" fill-opacity="0.40"/>' +
+              '<rect x="' + (x + SEAM) + '" y="' + y + '" width="' + (TAB - SEAM) + '" height="2" fill="#ffffff" fill-opacity="0.11"/>' +
+              '<rect x="' + (x + SEAM) + '" y="' + (y + COURSE - SEAM - 3) + '" width="' + (TAB - SEAM) + '" height="3" fill="#000000" fill-opacity="0.46"/>' +
+            '</g>' +
+            /* the joint, as one L: down the left stile, then along the butt */
+            '<path class="cu-seam" d="M' + x + ' ' + y +
+              'h' + SEAM + 'v' + (COURSE - SEAM) + 'h' + (TAB - SEAM) +
+              'v' + SEAM + 'h' + (-TAB) + 'z"/>' +
+          '</g>';
+      }
+    }
+    return out;
+  }
+
+  var TABS = buildTabs();
+
+  secs.forEach(function(sec){
+    var id = 'cuRoof' + (++uid);
+    var roof = document.createElement('div');
+    roof.className = 'cu-swave';
+    roof.setAttribute('aria-hidden', 'true');
+    roof.innerHTML =
+      '<svg class="cu-swave__tabs" xmlns="' + NS + '" preserveAspectRatio="xMidYMid slice">' +
+        '<defs><pattern id="' + id + '" width="600" height="600" patternUnits="userSpaceOnUse" ' +
+          'viewBox="0 0 ' + TILE + ' ' + TILE + '">' + TABS + '</pattern></defs>' +
+        '<rect width="100%" height="100%" fill="url(#' + id + ')"/>' +
+      '</svg>';
+    /* first child, so it stacks over the section's static ::before field and
+       under the content, which sits at z-index 1 */
+    sec.insertBefore(roof, sec.firstChild);
+    sec.classList.add('is-swaved');
+  });
+
+  /* Only the field the reader is actually looking at animates. Everything
+     else is PAUSED, never `animation:none` — none snaps all 36 tabs back to
+     rest in a single frame and that pop is visible on re-entry. */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      e.target.classList.toggle('is-swave-live', e.isIntersecting);
+    });
+  }, { rootMargin: '10% 0px 10% 0px' });
+  secs.forEach(function(s){ io.observe(s); });
 })();
 </script>
 </body>
