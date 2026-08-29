@@ -878,6 +878,9 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
 
 
 
+
+
+
 /* ============================================================
    THE PLAN CARDS OPEN. The face carries only what the group IS; the contents
    live behind a click, so the plan reads as six groups rather than as a wall of
@@ -3822,6 +3825,122 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
 .cu-bd__grid.ag-course > :nth-child(even){ transform:translateY(var(--course)); }
 .cu-bd__grid.ag-course.in-view > *{ transform:none; }
 
+
+/* Placed LAST on purpose. These override .cu-bd__f and .cu-bd__rn from the
+   original component block, and at equal specificity source order is what
+   decides. Sitting earlier, they lost silently. */
+/* ============================================================
+   THE ROMAN SITS BEHIND, NOT BESIDE.
+
+   The card carried its page count twice: once as a big outlined figure and
+   again in the summary line right under it. The figure goes, and the roman
+   becomes a full-height watermark centred behind the content rather than a
+   label beside it.
+
+   Stroke-only at low alpha, deliberately NOT a fill: a filled watermark, even
+   a faint one, lands on the same tonal step as the type over it and the two
+   fight. An outline reads as structure and leaves the words alone.
+   ============================================================ */
+.cu-bd__f{
+  position:relative; overflow:hidden;
+  align-items:center; text-align:center; justify-content:center;
+  min-height:11.2rem;
+}
+.cu-bd__rn{
+  position:absolute; inset:0; z-index:0;
+  display:grid; place-items:center;
+  margin:0; min-width:0;
+  font-size:clamp(5.6rem,4rem + 8.4vw,9.8rem);
+  font-weight:500; line-height:1; letter-spacing:.02em;
+  color:transparent;
+  -webkit-text-stroke:1.6px rgba(255,255,255,.15);
+  paint-order:stroke fill;
+  pointer-events:none;
+}
+.cu-bd__fh,.cu-bd__sum,.cu-bd__cue{ position:relative; z-index:1; }
+.cu-bd__fh{ justify-content:center; }
+.cu-bd__ft{ font-size:var(--cu-h3); }
+.cu-bd__cue{ text-align:center; }
+
+/* ============================================================
+   THE CHOOSER. Three systems, taken in any order.
+
+   All three destinations are structurally identical by design, so the only
+   things separating them are the label and the direction their light travels.
+   That is deliberate: it reads as one standard applied three times, not three
+   different offers.
+   ============================================================ */
+.cu-nav3{
+  list-style:none; margin:var(--space-s) 0 0; padding:0;
+  display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-2xs);
+}
+.cu-nav3 > li{ display:flex; min-width:0; }
+.cu-nav3__c{
+  position:relative; overflow:hidden;
+  flex:1 1 auto; min-width:0; min-height:11.2rem;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:.42rem; text-align:center;
+  padding:clamp(1.05rem,.7rem + 1.4vw,1.75rem);
+  font:inherit; cursor:pointer; touch-action:manipulation;
+  background:var(--cu-panel);
+  border:1px solid var(--cu-red-deep);
+  box-shadow:var(--cu-e-dark);
+  transition:border-color 300ms cubic-bezier(.22,.61,.36,1),
+             transform 300ms cubic-bezier(.22,.61,.36,1);
+}
+@media (hover:hover){ .cu-nav3__c:hover{ border-color:var(--cu-red); transform:translateY(-3px); } }
+.cu-nav3__c:focus-visible{ outline:2px solid var(--cu-red-label); outline-offset:3px; }
+.cu-nav3__n{
+  position:absolute; inset:0; z-index:0;
+  display:grid; place-items:center; pointer-events:none;
+  font-size:clamp(5.6rem,4rem + 8.4vw,9.8rem); font-weight:500; line-height:1;
+  color:transparent; -webkit-text-stroke:1.6px rgba(255,255,255,.15);
+  paint-order:stroke fill;
+}
+.cu-nav3__t,.cu-nav3__d,.cu-nav3__cue{ position:relative; z-index:1; }
+.cu-nav3__t{ font-size:var(--cu-h3); font-weight:700; color:var(--cu-paper); text-wrap:balance; }
+.cu-nav3__d{ font-size:var(--cu-small); color:rgba(255,255,255,.80); text-wrap:pretty; max-width:28ch; }
+.cu-nav3__cue{
+  margin-top:.42rem;
+  font-size:var(--cu-eyebrow); letter-spacing:.14em; text-transform:uppercase;
+  font-weight:700; color:var(--cu-red-label);
+}
+@media (max-width:900px){ .cu-nav3{ grid-template-columns:1fr; } }
+
+/* THE CHOOSER SITS ON BLACK. It is the one section that is a decision rather
+   than content, so it drops the shared ground entirely: nothing moving behind
+   three things you are being asked to choose between. Opaque, so the fixed
+   field does not read through it. */
+.cu-sec--void{ background:#000 !important; }
+
+/* THE TRANSITION. Cover, name the place, then lift off it.
+   The cover is what makes the jump legible: without it the page teleports and
+   the reader loses where they are. It fades IN, holds long enough to read the
+   label, and only then does the scroll happen underneath it. */
+.cu-warp{
+  position:fixed; inset:0; z-index:9000;
+  display:grid; place-items:center;
+  background:#050609;
+  opacity:0; pointer-events:none;
+  transition:opacity 300ms linear;
+}
+.cu-warp.is-on{ opacity:1; pointer-events:auto; }
+.cu-warp.is-lift{
+  transform:translateY(-100%);
+  transition:transform 700ms cubic-bezier(.16,1,.3,1);
+}
+.cu-warp__t{
+  font-size:clamp(1.85rem,1.2rem + 2.71vw,3.62rem); font-weight:700;
+  color:var(--cu-paper); letter-spacing:-.015em; text-align:center;
+  padding:0 var(--space-s);
+  opacity:0; transform:translateY(14px);
+  transition:opacity 300ms linear 140ms, transform 300ms cubic-bezier(.16,1,.3,1) 140ms;
+}
+.cu-warp.is-on .cu-warp__t{ opacity:1; transform:none; }
+@media (prefers-reduced-motion:reduce){
+  .cu-nav3__c{ transition:none; }
+  .cu-warp,.cu-warp__t{ transition:none; }
+}
 </style>
 <noscript><style>
   html.is-loading{ overflow:visible !important; }
@@ -4100,8 +4219,38 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
 </section>
 
 
+  <!-- ==================== 2. WHERE TO ==================== -->
+
+  <section class="cu-sec cu-sec--apex cu-sec--dark cu-sec--void" aria-labelledby="nav-h" data-light-dir="up">
+    <div class="cu-wrap">
+      <h2 class="cu-h2 reveal" id="nav-h">Explore the Atelier</h2>
+      <p class="cu-lead reveal">Undeniably stand out from your competition.</p>
+
+      <ul class="cu-nav3 ag-course reveal">
+        <li><button class="cu-nav3__c" type="button" data-goto="how-h" data-label="Website Build">
+          <span class="cu-nav3__n" aria-hidden="true">I</span>
+          <span class="cu-nav3__t">Website Build</span>
+          <span class="cu-nav3__d">96 pages, custom coded, one price.</span>
+          <span class="cu-nav3__cue">Go there</span>
+        </button></li>
+        <li><button class="cu-nav3__c" type="button" data-goto="ads-h" data-label="Paid Ads">
+          <span class="cu-nav3__n" aria-hidden="true">II</span>
+          <span class="cu-nav3__t">Paid Ads</span>
+          <span class="cu-nav3__d">14 images a cycle, tested until one wins.</span>
+          <span class="cu-nav3__cue">Go there</span>
+        </button></li>
+        <li><button class="cu-nav3__c" type="button" data-goto="org-h" data-label="Organic Content">
+          <span class="cu-nav3__n" aria-hidden="true">III</span>
+          <span class="cu-nav3__t">Organic Content</span>
+          <span class="cu-nav3__d">Up to 3 a day, on 7 platforms.</span>
+          <span class="cu-nav3__cue">Go there</span>
+        </button></li>
+      </ul>
+    </div>
+  </section>
+
   <!-- ==================== 2. HOW IT RUNS ==================== -->
-  <section class="cu-sec cu-sec--apex cu-sec--notch cu-sec--surface" aria-labelledby="how-h">    <div class="cu-wrap">
+  <section class="cu-sec cu-sec--apex cu-sec--notch cu-sec--surface" aria-labelledby="how-h" data-light-dir="up">    <div class="cu-wrap">
       <span class="cu-eyebrow reveal">How it runs</span>
       <h2 class="cu-h2 reveal" id="how-h">Here&rsquo;s the 3&nbsp;Stages</h2>
 
@@ -4203,12 +4352,12 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
             <span class="cu-plan__ck">pages</span>
           </div>
           <ol class="cu-plan__rows">
-            <li class="cu-plan__row" data-side="l" style="--d:0ms"><button class="cu-bd__f" type="button" style="--c:0" data-plan-card aria-haspopup="dialog" aria-label="1. Core Pages. 10 Pages, 6 layouts. Open detail"><header class="cu-bd__fh"><span class="cu-bd__rn">1.</span><span class="cu-bd__ft">Core Pages</span><span class="cu-bd__fn">10</span></header><span class="cu-bd__sum">10 Pages <i>&middot;</i> 6 layouts</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Home</li><li class="cu-bd__chip">About</li><li class="cu-bd__chip">Contact</li><li class="cu-bd__chip">Reviews</li><li class="cu-bd__chip">Gallery</li><li class="cu-bd__chip">Past Projects</li><li class="cu-bd__chip">Resources</li><li class="cu-bd__chip">Customer Service</li><li class="cu-bd__chip">Careers</li><li class="cu-bd__chip">Service Areas</li></ul></span></button></li>
-            <li class="cu-plan__row" data-side="r" style="--d:140ms"><button class="cu-bd__f" type="button" style="--c:1" data-plan-card aria-haspopup="dialog" aria-label="2. Service Pages. 37 Pages, 1 layout. Open detail"><header class="cu-bd__fh"><span class="cu-bd__rn">2.</span><span class="cu-bd__ft">Service Pages</span><span class="cu-bd__fn">37</span></header><span class="cu-bd__sum">37 Pages <i>&middot;</i> 1 layout</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Roofing 10</li><li class="cu-bd__chip">Windows 5</li><li class="cu-bd__chip">Siding 5</li><li class="cu-bd__chip">Storm Damage 5</li><li class="cu-bd__chip">Decks 4</li><li class="cu-bd__chip">Commercial 4</li><li class="cu-bd__chip">+4 hubs</li></ul></span></button></li>
-            <li class="cu-plan__row" data-side="l" style="--d:280ms"><button class="cu-bd__f" type="button" style="--c:2" data-plan-card aria-haspopup="dialog" aria-label="3. Location Pages and Micro-Sites. 32 Pages, 15 micro-sites. Open detail"><header class="cu-bd__fh"><span class="cu-bd__rn">3.</span><span class="cu-bd__ft">Location Pages and Micro-Sites</span><span class="cu-bd__fn">32</span></header><span class="cu-bd__sum">32 Pages <i>&middot;</i> 15 micro-sites</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Apopka 4</li><li class="cu-bd__chip">St Cloud 4</li><li class="cu-bd__chip">Oviedo 4</li><li class="cu-bd__chip">Lake Mary 3</li><li class="cu-bd__chip">6 cities x 2</li><li class="cu-bd__chip">5 hub-only</li></ul></span></button></li>
-            <li class="cu-plan__row" data-side="r" style="--d:420ms"><button class="cu-bd__f" type="button" style="--c:3" data-plan-card aria-haspopup="dialog" aria-label="4. Landing Pages and Offers. 13 Pages, 4 layouts. Open detail"><header class="cu-bd__fh"><span class="cu-bd__rn">4.</span><span class="cu-bd__ft">Landing Pages and Offers</span><span class="cu-bd__fn">13</span></header><span class="cu-bd__sum">13 Pages <i>&middot;</i> 4 layouts</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Offer pages 5</li><li class="cu-bd__chip">Landing pages 3</li><li class="cu-bd__chip">Quote tool 1</li><li class="cu-bd__chip">Thank-you 4</li></ul></span></button></li>
-            <li class="cu-plan__row" data-side="l" style="--d:560ms"><button class="cu-bd__f" type="button" style="--c:4" data-plan-card aria-haspopup="dialog" aria-label="5. Blog System. 1 Page, 2 layouts. Open detail"><header class="cu-bd__fh"><span class="cu-bd__rn">5.</span><span class="cu-bd__ft">Blog System</span><span class="cu-bd__fn">1</span></header><span class="cu-bd__sum">1 Page <i>&middot;</i> 2 layouts</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Index 1</li><li class="cu-bd__chip">Posts 8</li><li class="cu-bd__chip">Archives 10</li></ul></span></button></li>
-            <li class="cu-plan__row" data-side="r" style="--d:700ms"><button class="cu-bd__f" type="button" style="--c:5" data-plan-card aria-haspopup="dialog" aria-label="6. Legal and Utility. 3 Pages, 1 layout. Open detail"><header class="cu-bd__fh"><span class="cu-bd__rn">6.</span><span class="cu-bd__ft">Legal and Utility</span><span class="cu-bd__fn">3</span></header><span class="cu-bd__sum">3 Pages <i>&middot;</i> 1 layout</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Privacy</li><li class="cu-bd__chip">Terms</li><li class="cu-bd__chip">Sitemap</li></ul></span></button></li>
+            <li class="cu-plan__row" data-side="l" style="--d:0ms"><button class="cu-bd__f" type="button" style="--c:0" data-plan-card aria-haspopup="dialog" aria-label="1. Core Pages. 10 Pages, 6 layouts. Open detail"><span class="cu-bd__rn" aria-hidden="true">I</span><header class="cu-bd__fh"><span class="cu-bd__ft">Core Pages</span></header><span class="cu-bd__sum">10 Pages <i>&middot;</i> 6 layouts</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Home</li><li class="cu-bd__chip">About</li><li class="cu-bd__chip">Contact</li><li class="cu-bd__chip">Reviews</li><li class="cu-bd__chip">Gallery</li><li class="cu-bd__chip">Past Projects</li><li class="cu-bd__chip">Resources</li><li class="cu-bd__chip">Customer Service</li><li class="cu-bd__chip">Careers</li><li class="cu-bd__chip">Service Areas</li></ul></span></button></li>
+            <li class="cu-plan__row" data-side="r" style="--d:140ms"><button class="cu-bd__f" type="button" style="--c:1" data-plan-card aria-haspopup="dialog" aria-label="2. Service Pages. 37 Pages, 1 layout. Open detail"><span class="cu-bd__rn" aria-hidden="true">II</span><header class="cu-bd__fh"><span class="cu-bd__ft">Service Pages</span></header><span class="cu-bd__sum">37 Pages <i>&middot;</i> 1 layout</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Roofing 10</li><li class="cu-bd__chip">Windows 5</li><li class="cu-bd__chip">Siding 5</li><li class="cu-bd__chip">Storm Damage 5</li><li class="cu-bd__chip">Decks 4</li><li class="cu-bd__chip">Commercial 4</li><li class="cu-bd__chip">+4 hubs</li></ul></span></button></li>
+            <li class="cu-plan__row" data-side="l" style="--d:280ms"><button class="cu-bd__f" type="button" style="--c:2" data-plan-card aria-haspopup="dialog" aria-label="3. Location Pages and Micro-Sites. 32 Pages, 15 micro-sites. Open detail"><span class="cu-bd__rn" aria-hidden="true">III</span><header class="cu-bd__fh"><span class="cu-bd__ft">Location Pages and Micro-Sites</span></header><span class="cu-bd__sum">32 Pages <i>&middot;</i> 15 micro-sites</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Apopka 4</li><li class="cu-bd__chip">St Cloud 4</li><li class="cu-bd__chip">Oviedo 4</li><li class="cu-bd__chip">Lake Mary 3</li><li class="cu-bd__chip">6 cities x 2</li><li class="cu-bd__chip">5 hub-only</li></ul></span></button></li>
+            <li class="cu-plan__row" data-side="r" style="--d:420ms"><button class="cu-bd__f" type="button" style="--c:3" data-plan-card aria-haspopup="dialog" aria-label="4. Landing Pages and Offers. 13 Pages, 4 layouts. Open detail"><span class="cu-bd__rn" aria-hidden="true">IV</span><header class="cu-bd__fh"><span class="cu-bd__ft">Landing Pages and Offers</span></header><span class="cu-bd__sum">13 Pages <i>&middot;</i> 4 layouts</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Offer pages 5</li><li class="cu-bd__chip">Landing pages 3</li><li class="cu-bd__chip">Quote tool 1</li><li class="cu-bd__chip">Thank-you 4</li></ul></span></button></li>
+            <li class="cu-plan__row" data-side="l" style="--d:560ms"><button class="cu-bd__f" type="button" style="--c:4" data-plan-card aria-haspopup="dialog" aria-label="5. Blog System. 1 Page, 2 layouts. Open detail"><span class="cu-bd__rn" aria-hidden="true">V</span><header class="cu-bd__fh"><span class="cu-bd__ft">Blog System</span></header><span class="cu-bd__sum">1 Page <i>&middot;</i> 2 layouts</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Index 1</li><li class="cu-bd__chip">Posts 8</li><li class="cu-bd__chip">Archives 10</li></ul></span></button></li>
+            <li class="cu-plan__row" data-side="r" style="--d:700ms"><button class="cu-bd__f" type="button" style="--c:5" data-plan-card aria-haspopup="dialog" aria-label="6. Legal and Utility. 3 Pages, 1 layout. Open detail"><span class="cu-bd__rn" aria-hidden="true">VI</span><header class="cu-bd__fh"><span class="cu-bd__ft">Legal and Utility</span></header><span class="cu-bd__sum">3 Pages <i>&middot;</i> 1 layout</span><span class="cu-bd__cue">Open detail</span><span class="cu-bd__detail" hidden><ul class="cu-bd__chips"><li class="cu-bd__chip">Privacy</li><li class="cu-bd__chip">Terms</li><li class="cu-bd__chip">Sitemap</li></ul></span></button></li>
           </ol>
           </div>
 
@@ -4385,7 +4534,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
 
   <!-- ==================== 5. PAID ADS ==================== -->
 
-  <section class="cu-sec cu-sec--apex cu-sec--dark" aria-labelledby="ads-h">
+  <section class="cu-sec cu-sec--apex cu-sec--dark" aria-labelledby="ads-h" data-light-dir="rtl">
     <div class="cu-wrap">
       <span class="cu-eyebrow reveal">Paid ads</span>
       <h2 class="cu-h2 reveal" id="ads-h">Paid Ads System</h2>
@@ -4491,7 +4640,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
 
   <!-- ==================== 6. ORGANIC CONTENT ==================== -->
 
-  <section class="cu-sec cu-sec--apex cu-sec--dark" aria-labelledby="org-h">
+  <section class="cu-sec cu-sec--apex cu-sec--dark" aria-labelledby="org-h" data-light-dir="ltr">
     <div class="cu-wrap">
       <span class="cu-eyebrow reveal">Organic content</span>
       <h2 class="cu-h2 reveal" id="org-h">Organic Content System</h2>
@@ -4598,6 +4747,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
 </dialog>
 
 </main>
+<div class="cu-warp" aria-hidden="true"><span class="cu-warp__t"></span></div>
 
 
 <footer class="cu-foot cu-sec--apex">
@@ -5344,20 +5494,31 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
 
   var TILE = 640, COURSE = 40, TAB = 80, SEAM = 3, DUR = 3, RENDER = 600;
 
-  function tabs(){
-    var out = '', COURSES = TILE / COURSE;
+  /* THREE DIRECTIONS, ONE FIELD.
+     The light's direction is nothing but the phase function, so the three
+     variants are the same geometry with three different phase terms. Each
+     section swaps the covering rect's fill to the pattern it wants, which is an
+     attribute change on ONE element rather than three animated layers.
+
+       up  : phase falls as y grows, so a lower course peaks first and the band climbs
+       rtl : phase falls as x grows, so a righter tab peaks first and the band runs left
+       ltr : phase rises with x, so the band runs right
+
+     Every one of them is periodic in the tile, so none of them seams. */
+  var PHASE = {
+    up:  function(x, y){ return ((TILE - (y % TILE)) % TILE) / TILE; },
+    rtl: function(x, y){ return ((TILE - (((x % TILE) + TILE) % TILE)) % TILE) / TILE; },
+    ltr: function(x, y){ return ((((x % TILE) + TILE) % TILE)) / TILE; }
+  };
+
+  function tabs(dir){
+    var out = '', COURSES = TILE / COURSE, ph = PHASE[dir];
     for (var c = 0; c < COURSES; c++){
       var y = c * COURSE, x0 = (c % 2) ? -TAB / 2 : 0;
       for (var x = x0; x < TILE + TAB; x += TAB){
-        /* BOTTOM TO TOP. Phase is taken from y ALONE, and INVERTED: a course
-           lower down the page carries a smaller phase, so it peaks earlier and
-           the crest climbs. Dropping the x term is what turns the diagonal into
-           a level band. Still periodic in the tile, so nothing seams. */
-        var base = (((TILE - (y % TILE)) % TILE)) / TILE;
-        var ph = base;
-        /* a LARGER negative delay is FURTHER ADVANCED, so top-left needs the
-           larger one: (1 - ph), not ph. Shipping ph ran the crest backwards. */
-        var d = (-(1 - ph) * DUR).toFixed(3);
+        /* a LARGER negative delay is FURTHER ADVANCED, so it peaks EARLIER.
+           (1 - ph) is what makes a small phase lead rather than trail. */
+        var d = (-(1 - ph(x, y)) * DUR).toFixed(3);
         out += '<path class="cu-seam" style="--d:' + d + 's" d="M' + x + ' ' + y +
                'h' + SEAM + 'v' + (COURSE - SEAM) + 'h' + (TAB - SEAM) +
                'v' + SEAM + 'h' + (-TAB) + 'z"/>';
@@ -5366,7 +5527,12 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
     return out;
   }
 
-  var id = 'cuGroundSeams';
+  function pat(id, dir){
+    return '<pattern id="' + id + '" width="' + RENDER + '" height="' + RENDER + '" ' +
+           'patternUnits="userSpaceOnUse" viewBox="0 0 ' + TILE + ' ' + TILE + '">' +
+           tabs(dir) + '</pattern>';
+  }
+
   var ground = document.createElement('div');
   ground.className = 'cu-ground';
   ground.setAttribute('aria-hidden', 'true');
@@ -5375,9 +5541,8 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
       '<div class="cu-ground__mat"></div>' +
       (reduce ? '' :
       '<svg class="cu-ground__light" xmlns="http://www.w3.org/2000/svg">' +
-        '<defs><pattern id="' + id + '" width="' + RENDER + '" height="' + RENDER + '" ' +
-          'patternUnits="userSpaceOnUse" viewBox="0 0 ' + TILE + ' ' + TILE + '">' + tabs() + '</pattern></defs>' +
-        '<rect width="100%" height="100%" fill="url(#' + id + ')"/>' +
+        '<defs>' + pat('cuLightUp','up') + pat('cuLightRtl','rtl') + pat('cuLightLtr','ltr') + '</defs>' +
+        '<rect data-light width="100%" height="100%" fill="url(#cuLightUp)"/>' +
       '</svg>') +
     '</div>' +
     '<div class="cu-ground__glass"></div>';
@@ -5542,7 +5707,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
       var ft = card.querySelector('.cu-bd__ft');
       var sum = card.querySelector('.cu-bd__sum');
       var detail = card.querySelector('.cu-bd__detail');
-      titleEl.textContent = (rn ? rn.textContent + ' ' : '') + (ft ? ft.textContent : '');
+      titleEl.textContent = ft ? ft.textContent : '';
       metaEl.textContent = sum ? sum.textContent : '';
       bodyEl.innerHTML = detail ? detail.innerHTML : '';
       dlg.showModal();
@@ -5556,6 +5721,95 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   dlg.addEventListener('click', function(e){
     var r = dlg.getBoundingClientRect();
     if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
+  });
+})();
+
+/* ==========================================================================
+   THE LIGHT CHANGES DIRECTION PER SECTION. Three sections read as three
+   systems, so each gets its own travel: the website run climbs, paid ads runs
+   right to left, organic runs left to right. Structurally identical, which is
+   the point; only the direction separates them.
+
+   One attribute on one rect, not three layers.
+   ========================================================================== */
+(function(){
+  var rect = document.querySelector('[data-light]');
+  if (!rect) return;
+  var MAP = { up:'#cuLightUp', rtl:'#cuLightRtl', ltr:'#cuLightLtr' };
+  var current = 'up';
+
+  var secs = [].slice.call(document.querySelectorAll('[data-light-dir]'));
+  if (!secs.length) return;
+
+  function pick(){
+    var best = null, area = 0, vh = innerHeight;
+    secs.forEach(function(sec){
+      var r = sec.getBoundingClientRect();
+      var vis = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0));
+      if (vis > area) { area = vis; best = sec; }
+    });
+    var dir = best ? best.getAttribute('data-light-dir') : 'up';
+    if (!MAP[dir] || dir === current) return;
+    current = dir;
+    rect.setAttribute('fill', 'url(' + MAP[dir] + ')');
+  }
+
+  var t = null;
+  addEventListener('scroll', function(){
+    clearTimeout(t); t = setTimeout(pick, 147);   /* 3 x 49 */
+  }, { passive: true });
+  addEventListener('resize', pick, { passive: true });
+  pick();
+})();
+
+/* ==========================================================================
+   THE CHOOSER'S TRANSITION. Cover, name the destination, scroll underneath the
+   cover, then lift it.
+
+   The order matters: if the scroll happens BEFORE the cover is opaque the
+   reader sees the page teleport, which is the thing the cover exists to stop.
+   Lenis is asked to jump immediately where it is present, because a smooth
+   scroll running behind an opaque panel is time spent for nothing.
+   ========================================================================== */
+(function(){
+  var warp = document.querySelector('.cu-warp');
+  var label = warp ? warp.querySelector('.cu-warp__t') : null;
+  var btns = [].slice.call(document.querySelectorAll('[data-goto]'));
+  if (!warp || !btns.length) return;
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function jump(el){
+    if (window.lenis && typeof window.lenis.scrollTo === 'function'){
+      window.lenis.scrollTo(el, { immediate: true });
+    } else {
+      el.scrollIntoView({ behavior: 'auto', block: 'start' });
+    }
+  }
+
+  btns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var target = document.getElementById(btn.getAttribute('data-goto'));
+      if (!target) return;
+      var sec = target.closest('.cu-sec') || target;
+
+      if (reduce){ jump(sec); return; }
+
+      label.textContent = btn.getAttribute('data-label') || '';
+      warp.classList.remove('is-lift');
+      warp.classList.add('is-on');
+
+      /* 300 to fade + 600 to read it, then move while it is still covered */
+      setTimeout(function(){
+        jump(sec);
+        setTimeout(function(){
+          warp.classList.add('is-lift');
+          setTimeout(function(){
+            warp.classList.remove('is-on', 'is-lift');
+          }, 700);
+        }, 140);
+      }, 900);   /* 300 fade + 600 hold */
+    });
   });
 })();
 </script>
