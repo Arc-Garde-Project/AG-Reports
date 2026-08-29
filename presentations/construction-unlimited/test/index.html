@@ -854,70 +854,127 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
    still takes no space in flow: measured 36fps -> see the report. */
 
 
+
+/* THREE ACROSS, not three rows. As stacked rows each finding read as a separate
+   beat; side by side they read as one set of three, which is what they are.
+   The row's own 3-column layout (key, numeral, body) has to unstack for that,
+   so inside a card they run vertically instead. */
+.cu-inv__list--trio{ grid-template-columns:repeat(3,1fr); align-items:stretch; }
+.cu-inv__list--trio .cu-inv__r{
+  grid-template-columns:1fr;
+  align-items:start;
+  gap:.56rem;
+  padding:clamp(1.05rem,.7rem + 1.4vw,1.75rem);
+}
+.cu-inv__list--trio .cu-inv__n{ line-height:.85; }
+@media (max-width:900px){
+  .cu-inv__list--trio{ grid-template-columns:1fr; }
+}
+
 /* ============================================================
-   THE LADDER. 14 videos, two at a time, seven sprints.
+   THE TESTING CYCLE, DRAWN AS A DIMENSIONED RUN.
 
-   Each sprint puts two FRESH videos head to head for 4 days, so all 14 are
-   through in 7 sprints and a cycle is 28 days. Nothing carries forward inside a
-   cycle; cycles repeat until one video is clearly the winner, which is the
-   3-month figure stated above.
-
-   Drawn as a run of sprints rather than a bracket, because that is what it is:
-   seven independent pairings, not a knockout.
+   The first pass was a grid of seven cards, which reads as a LIST: seven things
+   that happen, with no sense of duration and no sense of return. A cycle has
+   both. This is drawn the way the rest of the deck measures anything - a rule
+   with extension ticks at each end, marked every 4 days - so the 28 days is a
+   LENGTH you can see rather than a number you are told, and the run closes with
+   the return that makes it a cycle rather than a list.
    ============================================================ */
-.cu-lad{ position:relative; margin-top:var(--space-s); }
-.cu-lad__head{
-  display:flex; align-items:baseline; flex-wrap:wrap; gap:.56rem 1.4rem;
+.cu-cyc{
+  position:relative; margin-top:var(--space-s);
+  padding:clamp(1.05rem,.7rem + 1.4vw,1.75rem);
+  background:var(--cu-panel);
+  border:1px solid var(--cu-red-deep);
+  box-shadow:var(--cu-e-dark);
+}
+
+/* the dimension line: exactly the device the measure rows use */
+.cu-cyc__head{ display:flex; align-items:center; gap:.84rem; }
+.cu-cyc__lbl,.cu-cyc__len{
   font-size:var(--cu-eyebrow); letter-spacing:.16em; text-transform:uppercase;
-  font-weight:600; color:var(--cu-muted-dark);
-  padding-bottom:.7rem; border-bottom:1px solid rgba(255,255,255,.18);
+  font-weight:700; white-space:nowrap;
 }
-.cu-lad__head b{ color:var(--cu-red-lift); font-weight:700; }
-.cu-lad__rounds{
+.cu-cyc__lbl{ color:var(--cu-muted-dark); }
+.cu-cyc__len{ color:var(--cu-paper); font-variant-numeric:tabular-nums; }
+.cu-cyc__dim{ flex:1 1 auto; display:flex; align-items:center; min-width:0; }
+.cu-cyc__ext{ width:1px; height:11px; background:var(--cu-red-lift); flex:0 0 auto; }
+.cu-cyc__line{
+  flex:1 1 auto; height:1px; background:rgba(255,255,255,.34);
+  transform:scaleX(0); transform-origin:0 50%;
+  transition:transform 900ms cubic-bezier(.16,1,.3,1) 147ms;
+}
+.reveal.in-view .cu-cyc__line,.cu-cyc.in-view .cu-cyc__line{ transform:scaleX(1); }
+
+/* the seven sprints, laid along the run */
+.cu-cyc__track{
   list-style:none; margin:1.05rem 0 0; padding:0;
-  /* FOUR, not auto-fill. auto-fill sized the track to the SHORTEST label, so the
-     two-digit sprints wrapped to a second line while the single-digit ones did
-     not and the run read ragged. Four fixed columns give every cell room for
-     one line at every width it is used. */
-  display:grid; grid-template-columns:repeat(4,1fr);
-  gap:7px;
+  display:grid; grid-template-columns:repeat(7,1fr);
+  border-top:1px solid rgba(255,255,255,.18);
 }
-@media (max-width:1200px){ .cu-lad__rounds{ grid-template-columns:repeat(3,1fr); } }
-@media (max-width:900px){ .cu-lad__rounds{ grid-template-columns:repeat(2,1fr); } }
-@media (max-width:560px){ .cu-lad__rounds{ grid-template-columns:1fr; } }
-.cu-lad__r{
+.cu-cyc__s{
   position:relative; min-width:0;
+  padding:1.05rem .56rem .84rem;
+  border-right:1px solid rgba(255,255,255,.09);
+}
+.cu-cyc__s:last-child{ border-right:0; }
+/* the day tick, sitting on the rule above */
+.cu-cyc__s::before{
+  content:""; position:absolute; left:0; top:0;
+  width:1px; height:11px; background:var(--cu-red);
+}
+.cu-cyc__day{
+  display:block; font-size:var(--cu-eyebrow); letter-spacing:.1em;
+  text-transform:uppercase; color:var(--cu-muted-dark); font-weight:600;
+  font-variant-numeric:tabular-nums;
+}
+.cu-cyc__n{
+  display:block; margin-top:.42rem;
+  font-size:var(--cu-eyebrow); letter-spacing:.14em; font-weight:700;
+  color:var(--cu-red-lift); font-variant-numeric:tabular-nums;
+}
+.cu-cyc__v{
+  display:block; margin-top:.28rem;
+  font-size:var(--cu-small); color:var(--cu-paper); font-weight:700;
+  font-variant-numeric:tabular-nums; white-space:nowrap;
+}
+.cu-cyc__vk{
+  display:block; margin-top:.14rem;
+  font-size:var(--cu-eyebrow); letter-spacing:.1em; text-transform:uppercase;
+  color:var(--cu-muted-dark); font-weight:600;
+}
+
+/* the return. Without this it is a timeline; with it, it is a cycle. */
+.cu-cyc__loop{
   display:flex; align-items:center; gap:.7rem;
-  padding:.7rem .84rem;
-  background:rgba(255,255,255,.045);
-  border:1px solid rgba(255,255,255,.13);
-  border-left:3px solid var(--cu-red);
-}
-/* the champion's own entry reads differently: it is the only one that carries */
-.cu-lad__r--first{ border-left-color:var(--cu-red-lift); }
-.cu-lad__n{
-  font-size:var(--cu-eyebrow); font-weight:700; letter-spacing:.12em;
-  color:var(--cu-red-lift); font-variant-numeric:tabular-nums; flex:0 0 auto;
-}
-.cu-lad__v{
-  font-size:var(--cu-small); color:rgba(255,255,255,.88);
-  font-variant-numeric:tabular-nums; min-width:0;
-  white-space:nowrap;
-}
-.cu-lad__v b{ color:var(--cu-paper); font-weight:700; }
-.cu-lad__sum{
-  display:flex; align-items:baseline; flex-wrap:wrap; gap:.56rem 1.4rem;
   margin-top:1.05rem; padding-top:.84rem;
   border-top:1px solid rgba(255,255,255,.18);
 }
-.cu-lad__big{
-  font-size:clamp(2.1rem,1.4rem + 2.8vw,3.5rem); font-weight:700; line-height:.9;
-  letter-spacing:-.035em; color:#100e0d; -webkit-text-stroke:2px var(--cu-paper);
-  font-variant-numeric:tabular-nums;
+.cu-cyc__ret{
+  flex:0 0 auto; width:21px; height:21px;
+  border:1px solid var(--cu-red-lift); border-right-color:transparent;
+  border-radius:50%;
+  position:relative;
 }
-.cu-lad__sk{
-  font-size:var(--cu-eyebrow); letter-spacing:.14em; text-transform:uppercase;
-  font-weight:600; color:var(--cu-muted-dark);
+.cu-cyc__ret::after{
+  content:""; position:absolute; right:-1px; top:2px;
+  border:4px solid transparent; border-bottom-color:var(--cu-red-lift);
+  transform:rotate(38deg);
+}
+.cu-cyc__loopt{ font-size:var(--cu-small); color:rgba(255,255,255,.86); text-wrap:pretty; }
+.cu-cyc__loopt b{ color:var(--cu-paper); font-weight:700; }
+
+@media (max-width:1100px){
+  .cu-cyc__track{ grid-template-columns:repeat(4,1fr); }
+  .cu-cyc__s{ border-bottom:1px solid rgba(255,255,255,.09); }
+}
+@media (max-width:640px){
+  .cu-cyc__track{ grid-template-columns:repeat(2,1fr); }
+  .cu-cyc__head{ flex-wrap:wrap; }
+  .cu-cyc__dim{ order:3; flex-basis:100%; }
+}
+@media (prefers-reduced-motion:reduce){
+  .cu-cyc__line{ transform:scaleX(1); transition:none; }
 }
 
 /* ============================================================
@@ -931,14 +988,13 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
   --hip:21px;
   position:relative; margin-top:var(--space-s);
   padding:clamp(1.05rem,.7rem + 1.4vw,1.75rem);
-  background:linear-gradient(160deg, rgba(255,255,255,.075) 0%, rgba(255,255,255,.028) 42%, rgba(255,255,255,.014) 100%);
-  -webkit-backdrop-filter:blur(10px) saturate(120%); backdrop-filter:blur(10px) saturate(120%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.21), inset 0 0 0 1px rgba(255,255,255,.07), 0 14px 28px rgba(0,0,0,.42);
-  clip-path:polygon(0 0, calc(100% - var(--hip)) 0, 100% var(--hip), 100% 100%, 0 100%);
-}
-.cu-pick::before{
-  content:""; position:absolute; left:0; top:14%; bottom:14%;
-  width:3px; background:var(--cu-red); opacity:.84;
+  /* SOLID, like every other card on the page. A translucent pane let the drifting
+     ground read straight through the figures, and the numbers are the whole
+     point of this block. Same --cu-panel and shadow the ledger and terms use,
+     with the deeper red as an outline rather than a glass edge. */
+  background:var(--cu-panel);
+  border:1px solid var(--cu-red-deep);
+  box-shadow:var(--cu-e-dark);
 }
 .cu-pick__bar{
   display:flex; align-items:center; flex-wrap:wrap; gap:.84rem 1.4rem;
@@ -1034,10 +1090,11 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
 .cu-ground{
   position:fixed; inset:0; z-index:0; pointer-events:none;
   overflow:hidden;
-  /* DARK GREY, not black. The shingle art is a translucent texture, so whatever
-     sits under it IS the shingle colour. On pure black the field went almost to
-     nothing; on the concrete grey the shingles read as slate. */
-  background:var(--cu-concrete-grey);
+  /* The shingle art is a TRANSLUCENT texture, so whatever sits under it is the
+     shingle's own colour. Pure black killed the field entirely; concrete grey
+     (26,28,31) went the other way and read as light grey once the blur lifted
+     it. This sits between them. */
+  background:#121317;
 }
 .cu-ground__drift{
   position:absolute; left:0; right:0; top:0; bottom:-600px;
@@ -1047,7 +1104,9 @@ header.cu-hero,.cu-foot{ position:relative; z-index:1; }
   animation:cu-drift 21s linear infinite;   /* 3 x 7 */
   will-change:transform;
 }
-html.is-scrolling .cu-ground__drift{ animation-play-state:paused; }
+/* The drift is NOT paused on scroll. It was, to save frames, and that is
+   exactly why the ground stopped moving the moment the page did. It runs
+   continuously now, scrolling or still. */
 @keyframes cu-drift{
   from{ transform:translate3d(0,0,0); }
   to  { transform:translate3d(0,-600px,0); }
@@ -1062,7 +1121,7 @@ html.is-scrolling .cu-ground__drift{ animation-play-state:paused; }
      drift just moves the finished raster. The light is a SIBLING, not a child,
      so it stays sharp while the ground softens - which is what lets the red
      read clearly without the field shouting. */
-  filter:blur(2.6px);
+  filter:blur(5.6px);
 }
 .cu-ground__light{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 
@@ -1071,7 +1130,7 @@ html.is-scrolling .cu-ground__drift{ animation-play-state:paused; }
    start and no end, so the sheet is continuous down the whole page. */
 .cu-ground__glass{ position:absolute; inset:0; display:none; }
 @media (min-width:900px){
-  .cu-ground__glass{ display:block; background:rgba(104,132,172,.085); }
+  .cu-ground__glass{ display:block; background:rgba(104,132,172,.115); }
 }
 
 .cu-seam{
@@ -1080,7 +1139,8 @@ html.is-scrolling .cu-ground__drift{ animation-play-state:paused; }
   animation:cu-seam-light 3s ease-in-out infinite;
   animation-delay:var(--d,0s);
 }
-html.is-scrolling .cu-seam{ animation-play-state:paused; }
+/* the light does not pause either: it is part of the background, and half of
+   the background freezing on scroll reads as a bug */
 
 /* Brighter core, gentler shoulders. "See it clearly but keep it subtle" is two
    levers, not one: the PEAK carries visibility, the SHOULDERS carry softness.
@@ -2835,23 +2895,13 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   grid-template-columns:2.8ch minmax(0,7.7rem) 1fr;
   gap:clamp(.84rem,.5rem + 1.4vw,2.1rem);
   padding:clamp(1.05rem,.7rem + 1.4vw,1.75rem) clamp(1.05rem,.7rem + 1.4vw,1.75rem);
-  background:linear-gradient(160deg, rgba(255,255,255,.075) 0%, rgba(255,255,255,.028) 42%, rgba(255,255,255,.014) 100%);
-  -webkit-backdrop-filter:blur(10px) saturate(120%);
-          backdrop-filter:blur(10px) saturate(120%);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.21),      /* glazing highlight, top edge */
-    inset 0 0 0 1px rgba(255,255,255,.07),    /* pane edge */
-    0 14px 28px rgba(0,0,0,.42);              /* the panel sits off the roof */
-  clip-path:polygon(0 0, calc(100% - var(--hip)) 0, 100% var(--hip), 100% 100%, 0 100%);
+  /* SOLID. These carry figures, and a glass pane over a drifting ground put the
+     shingle courses straight through them. */
+  background:var(--cu-panel);
+  border:1px solid var(--cu-red-deep);
+  box-shadow:var(--cu-e-dark);
 }
-/* the fixing batten on the left stile */
-.cu-inv__r::before{
-  content:""; position:absolute; left:0; top:14%; bottom:14%;
-  width:3px; background:var(--cu-red); opacity:.84;
-}
-@supports not ((backdrop-filter:blur(10px)) or (-webkit-backdrop-filter:blur(10px))){
-  .cu-inv__r{ background:rgba(30,28,26,.88); }
-}
+/* no glass fallback needed: .cu-inv__r is solid */
 @media (max-width:900px){
   .cu-bd__f{ -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); }
 }
@@ -2867,10 +2917,18 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
      through - lines inside lines. The fill is dark and close to the panel, so
      the numeral still reads as an outline while its interior stays even.
      This deck already documents the same trap on .cu-bd__fn. */
-  /* OPAQUE. At .72 the mortar lines still read through the counters and the
-     glyph looked ruled. Opaque kills every line inside the outline; the stroke
-     goes to 2px so the outline itself reads cleanly at this size. */
-  color:#100e0d; -webkit-text-stroke:2px var(--cu-paper);
+  /* A REAL OUTLINE NEEDS THREE THINGS, and the first two passes only had one.
+     1. An opaque fill, or the ground reads through the counters.
+     2. paint-order:stroke fill, so the stroke sits BEHIND the glyph instead of
+        being centred on its path. Centred, half the stroke eats inward: it
+        closes the counter of a 9, fills the gap in a 4 and turns a 1 into a slab,
+        which is exactly what looked wrong.
+     3. A lighter weight. An outline on a 700 is a fat band; at 500 the counters
+        stay open and the line reads as a line. */
+  font-weight:500;
+  color:#100e0d;
+  -webkit-text-stroke:1.6px var(--cu-paper);
+  paint-order:stroke fill;
   transition:color 600ms cubic-bezier(.22,.61,.36,1);
 }
 /* was rgba(255,255,255,.09): a translucent fill puts the mortar lines back
@@ -3271,7 +3329,9 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   line-height:.9; letter-spacing:-.03em; font-variant-numeric:tabular-nums;
   /* OUTLINE ONLY. Any translucent fill lets the shingle field read through
      the counters and the glyphs look struck through. */
-  color:#100e0d; -webkit-text-stroke:1.6px var(--cu-paper);
+  font-weight:500; color:#100e0d;
+  -webkit-text-stroke:1.4px var(--cu-paper);
+  paint-order:stroke fill;
 }
 .cu-bd__chips{
   min-width:0;
@@ -3809,7 +3869,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   <!-- ==================== 2. HOW IT RUNS ==================== -->
   <section class="cu-sec cu-sec--apex cu-sec--notch cu-sec--surface" aria-labelledby="how-h">    <div class="cu-wrap">
       <span class="cu-eyebrow reveal">How it runs</span>
-      <h2 class="cu-h2 reveal" id="how-h">No Surprises, 3 Weeks, 3&nbsp;Stages</h2>
+      <h2 class="cu-h2 reveal" id="how-h">No Surprises, 3&nbsp;Stages</h2>
 
       <p class="cu-assembly__cap"><b>Same order, every time.</b> Nothing goes on until what is under it is right.</p>
 
@@ -3821,7 +3881,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
             <button class="cu-week__cal" type="button" aria-pressed="false">
               <div class="cu-week__head">
                 <span class="cu-week__rings" aria-hidden="true"><i></i><i></i></span>
-                <span class="cu-week__lbl">Week</span>
+                <span class="cu-week__lbl">Stage</span>
                 <span class="cu-week__tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M3 8.5l3.4 3.4L13 5.2"/></svg></span>
               </div>
               <div class="cu-week__pad">
@@ -3836,7 +3896,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
             <button class="cu-week__cal" type="button" aria-pressed="false">
               <div class="cu-week__head">
                 <span class="cu-week__rings" aria-hidden="true"><i></i><i></i></span>
-                <span class="cu-week__lbl">Week</span>
+                <span class="cu-week__lbl">Stage</span>
                 <span class="cu-week__tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M3 8.5l3.4 3.4L13 5.2"/></svg></span>
               </div>
               <div class="cu-week__pad">
@@ -3851,7 +3911,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
             <button class="cu-week__cal" type="button" aria-pressed="false">
               <div class="cu-week__head">
                 <span class="cu-week__rings" aria-hidden="true"><i></i><i></i></span>
-                <span class="cu-week__lbl">Week</span>
+                <span class="cu-week__lbl">Stage</span>
                 <span class="cu-week__tick" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M3 8.5l3.4 3.4L13 5.2"/></svg></span>
               </div>
               <div class="cu-week__pad">
@@ -3929,7 +3989,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
         <!-- What the audit actually found. Three findings, three numbers that
              appear nowhere else on the page, so none of them competes with the
              96 / 15 / 114 already standing above. -->
-        <ol class="cu-inv__list ag-course reveal">
+        <ol class="cu-inv__list cu-inv__list--trio ag-course reveal">
           <li class="cu-inv__r">
             <span class="cu-inv__k">i</span>
             <span class="cu-inv__n">5</span>
@@ -4005,7 +4065,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
           <tr><td><span>Blog and archive templates</span></td><td>18 URLs</td></tr>
           <tr><td><span>Total URLs live</span></td><td>114</td></tr>
           <tr><td><span>Revision rounds</span></td><td>Unlimited</td></tr>
-          <tr><td><span>Timeline, start to live</span></td><td>3 weeks</td></tr>
+          <tr><td><span>Timeline, start to live</span></td><td>TBD</td></tr>
           <tr><td><span>Mobile build and device testing</span></td><td>Included</td></tr>
           <tr><td><span>Lead tracking setup</span></td><td>Included</td></tr>
           <tr><td><span>Search setup, titles, schema, sitemap</span></td><td>Included</td></tr>
@@ -4095,7 +4155,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   <section class="cu-sec cu-sec--apex cu-sec--dark" aria-labelledby="ads-h">
     <div class="cu-wrap">
       <span class="cu-eyebrow reveal">Paid ads</span>
-      <h2 class="cu-h2 reveal" id="ads-h">14 Videos, 2 at a Time, Until One Wins</h2>
+      <h2 class="cu-h2 reveal" id="ads-h">Paid Ads System</h2>
       <p class="cu-lead reveal">This is the standard paid ads engine, run on Meta. Every ad is a video, always. Nothing is guessed and nothing is left running on a hunch. Videos go head to head in sprints until the numbers name a winner, and then that winner is what runs.</p>
 
       <ol class="cu-inv__list ag-course reveal">
@@ -4127,25 +4187,27 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
 
       <!-- THE LADDER. The winner staying is what makes this 13 rounds and 52
            days rather than 7 and 28, so the carry-forward is drawn, not stated. -->
-      <div class="cu-lad reveal">
-        <div class="cu-lad__head">
-          <span><b>14</b> videos</span>
-          <span><b>2</b> head to head</span>
-          <span><b>4</b> days a sprint</span>
-          <span><b>7</b> sprints to a cycle</span>
+      <!-- The cycle drawn as a measured run: 28 days is a LENGTH here, not a
+           number in a table, and the return at the foot is what makes it a
+           cycle rather than a list of seven things. -->
+      <div class="cu-cyc reveal">
+        <div class="cu-cyc__head">
+          <span class="cu-cyc__lbl">One testing cycle</span>
+          <span class="cu-cyc__dim" aria-hidden="true"><i class="cu-cyc__ext"></i><i class="cu-cyc__line"></i><i class="cu-cyc__ext"></i></span>
+          <span class="cu-cyc__len">28 days</span>
         </div>
-        <ol class="cu-lad__rounds">
-            <li class="cu-lad__r"><span class="cu-lad__n">01</span><span class="cu-lad__v"><b>Video&nbsp;1</b> v <b>Video&nbsp;2</b></span></li>
-            <li class="cu-lad__r"><span class="cu-lad__n">02</span><span class="cu-lad__v"><b>Video&nbsp;3</b> v <b>Video&nbsp;4</b></span></li>
-            <li class="cu-lad__r"><span class="cu-lad__n">03</span><span class="cu-lad__v"><b>Video&nbsp;5</b> v <b>Video&nbsp;6</b></span></li>
-            <li class="cu-lad__r"><span class="cu-lad__n">04</span><span class="cu-lad__v"><b>Video&nbsp;7</b> v <b>Video&nbsp;8</b></span></li>
-            <li class="cu-lad__r"><span class="cu-lad__n">05</span><span class="cu-lad__v"><b>Video&nbsp;9</b> v <b>Video&nbsp;10</b></span></li>
-            <li class="cu-lad__r"><span class="cu-lad__n">06</span><span class="cu-lad__v"><b>Video&nbsp;11</b> v <b>Video&nbsp;12</b></span></li>
-            <li class="cu-lad__r"><span class="cu-lad__n">07</span><span class="cu-lad__v"><b>Video&nbsp;13</b> v <b>Video&nbsp;14</b></span></li>
+        <ol class="cu-cyc__track">
+          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 0</span><span class="cu-cyc__n">S01</span><span class="cu-cyc__v">1 v 2</span><span class="cu-cyc__vk">videos</span></li>
+          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 4</span><span class="cu-cyc__n">S02</span><span class="cu-cyc__v">3 v 4</span><span class="cu-cyc__vk">videos</span></li>
+          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 8</span><span class="cu-cyc__n">S03</span><span class="cu-cyc__v">5 v 6</span><span class="cu-cyc__vk">videos</span></li>
+          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 12</span><span class="cu-cyc__n">S04</span><span class="cu-cyc__v">7 v 8</span><span class="cu-cyc__vk">videos</span></li>
+          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 16</span><span class="cu-cyc__n">S05</span><span class="cu-cyc__v">9 v 10</span><span class="cu-cyc__vk">videos</span></li>
+          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 20</span><span class="cu-cyc__n">S06</span><span class="cu-cyc__v">11 v 12</span><span class="cu-cyc__vk">videos</span></li>
+          <li class="cu-cyc__s"><span class="cu-cyc__day">Day 24</span><span class="cu-cyc__n">S07</span><span class="cu-cyc__v">13 v 14</span><span class="cu-cyc__vk">videos</span></li>
         </ol>
-        <div class="cu-lad__sum">
-          <span class="cu-lad__big">7</span><span class="cu-lad__sk">sprints</span>
-          <span class="cu-lad__big">28</span><span class="cu-lad__sk">days to a cycle</span>
+        <div class="cu-cyc__loop">
+          <span class="cu-cyc__ret" aria-hidden="true"></span>
+          <span class="cu-cyc__loopt">Two fresh videos every <b>4</b>&nbsp;days, <b>7</b>&nbsp;sprints, all <b>14</b>&nbsp;tested. Then the cycle runs again, and again, until one video is clearly the winner. Realistically about <b>3</b>&nbsp;months.</span>
         </div>
       </div>
 
@@ -4199,7 +4261,7 @@ html.is-ready .ag-curtain { transform: translate3d(0,-100%,0); pointer-events: n
   <section class="cu-sec cu-sec--apex cu-sec--dark" aria-labelledby="org-h">
     <div class="cu-wrap">
       <span class="cu-eyebrow reveal">Organic content</span>
-      <h2 class="cu-h2 reveal" id="org-h">One, Two or Three a Day, on Seven Platforms</h2>
+      <h2 class="cu-h2 reveal" id="org-h">Organic Content System</h2>
       <p class="cu-lead reveal">Paid ads buy attention while they run. Organic builds the thing that keeps working after the spend stops. You pick the daily volume and you pick the mix, and it runs on a fixed cadence rather than whenever there is time.</p>
 
       <!-- WHAT THE READER CONTROLS. Volume, mix and fee move together, so they
