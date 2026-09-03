@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="is-loading">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
 <title>The Tooth Place - Ad Testing (Aug 27 - Sep 2, 2026) (W28)</title>
-<meta name="description" content="The Tooth Place W28, Aug 27 to Sep 2, 2026, the first week on the new Wednesday to Tuesday schedule. 4 GHL leads on $105.90 spend at a $26.48 blended CPL, against 4 leads at $29.52 the prior window. 9,631 impressions, 103 LP views, CTR 4.90%, CPC $0.22, CPM $11.00. Ad 11 came off on Aug 24, so Ad 4 ran the whole week alone. 3 of the 4 leads carry an ad tag.">
+<meta name="description" content="The Tooth Place W28, Aug 27 to Sep 2, 2026, the first week on the new Wednesday to Tuesday schedule. 4 GHL leads on $105.92 spend at a $26.48 blended CPL, against 4 leads at $29.52 the prior window. 9,632 impressions, 103 LP views, CTR 4.92%, CPC $0.22, CPM $11.00. Ad 11 came off on Aug 24, so Ad 4 ran the whole week alone. 3 of the 4 leads carry an ad tag.">
 <meta name="robots" content="noindex, nofollow">
 <meta property="og:title" content="The Tooth Place - Ad Testing (Aug 27 - Sep 2, 2026) (W28)">
-<meta property="og:description" content="W28 (Aug 27 to Sep 2, 2026). 4 GHL leads on $105.90 spend at a $26.48 blended CPL. One ad ran the whole week after Ad 11 came off on Aug 24.">
+<meta property="og:description" content="W28 (Aug 27 to Sep 2, 2026). 4 GHL leads on $105.92 spend at a $26.48 blended CPL. One ad ran the whole week after Ad 11 came off on Aug 24.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
 <meta property="og:image:width" content="1200">
@@ -16,7 +16,7 @@
 <meta property="og:image:alt" content="Arc Garde">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Tooth Place - Ad Testing (Aug 27 - Sep 2, 2026) (W28)">
-<meta name="twitter:description" content="W28 (Aug 27 to Sep 2): 4 leads on $105.90 spend at a $26.48 CPL. Ad 4 ran the week alone and landing page views cost $1.03 each.">
+<meta name="twitter:description" content="W28 (Aug 27 to Sep 2): 4 leads on $105.92 spend at a $26.48 CPL. Ad 4 ran the week alone and landing page views cost $1.03 each.">
 <meta name="twitter:image" content="https://ag-reports.vercel.app/assets/og-banner.png">
 <meta name="theme-color" content="#0A0A0A">
 <link rel="canonical" href="https://ag-reports.vercel.app/reports/tooth-place/w28">
@@ -29,8 +29,55 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Grotesk:wght@400;500;600;700&family=Cinzel:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
+html.is-loading { overflow: hidden; }
+.ag-curtain {
+  position: fixed; inset: 0; z-index: 2147483645;
+  background: var(--dark, #070605);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 1; pointer-events: auto;
+  transition: opacity 700ms cubic-bezier(0.16,1,0.3,1);
+}
+html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
+.ag-curtain::after { content:''; position:absolute; inset:0; pointer-events:none; z-index:5; opacity:0.05; mix-blend-mode:overlay; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.ld-layer { position:absolute; inset:0; display:grid; place-items:center; opacity:0; transition:opacity 600ms cubic-bezier(0.16,1,0.3,1); pointer-events:none; }
+.ag-curtain[data-phase="load"]  .ld-boot  { opacity:1; }
+.ag-curtain[data-phase="brand"] .ld-brand { opacity:1; }
+.ld-gold { background:linear-gradient(100deg,#b9965a 0%,#e3c489 26%,#fffdf6 48%,#e3c489 70%,#b9965a 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.ld-boot__in { display:flex; flex-direction:column; align-items:center; gap:clamp(20px,3.4vh,30px); transition:opacity 600ms cubic-bezier(0.16,1,0.3,1), transform 600ms cubic-bezier(0.16,1,0.3,1), filter 600ms ease; }
+.ag-curtain:not([data-phase="load"]) .ld-boot__in { opacity:0; transform:translateX(-26px) scale(0.96); filter:blur(4px); }
+.ld-mono { font-family:'Cinzel',serif; font-weight:600; font-size:clamp(2.6rem,8vw,4rem); letter-spacing:0.16em; padding-left:0.16em; line-height:1; animation:ld-mono-pulse 2.1s ease-in-out infinite; }
+@keyframes ld-mono-pulse { 0%,100%{ filter:drop-shadow(0 0 20px rgba(201,168,97,0.22)); } 50%{ filter:drop-shadow(0 0 34px rgba(201,168,97,0.44)); } }
+.ld-bar { width:clamp(150px,30vw,230px); height:2px; background:rgba(201,168,97,0.16); border-radius:2px; overflow:hidden; }
+.ld-bar i { display:block; height:100%; width:6%; border-radius:2px; background:linear-gradient(90deg,#b9965a,#fffdf6,#b9965a); animation:ld-fill 1.4s cubic-bezier(0.45,0.02,0.18,1) 0.15s forwards; }
+@keyframes ld-fill { to { width:100%; } }
+.ld-dots { display:flex; gap:9px; }
+.ld-dots b { width:6px; height:6px; border-radius:50%; background:#c9a861; opacity:0.3; animation:ld-dot 1.2s ease-in-out infinite; }
+.ld-dots b:nth-child(2){ animation-delay:0.16s; }
+.ld-dots b:nth-child(3){ animation-delay:0.32s; }
+@keyframes ld-dot { 0%,100%{ opacity:0.25; transform:translateY(0); } 50%{ opacity:1; transform:translateY(-4px); } }
+.ld-brand__in { display:flex; flex-direction:column; align-items:center; gap:clamp(11px,1.9vh,17px); }
+.ld-wm { position:relative; font-family:'Cinzel',serif; font-weight:600; font-size:clamp(2.1rem,9vw,4.6rem); letter-spacing:0.14em; margin-right:-0.14em; line-height:1; white-space:nowrap; }
+.ag-curtain[data-phase="brand"] .ld-wm { animation:ld-swoosh 900ms cubic-bezier(0.16,1,0.3,1) 0s both, ld-glare 1000ms linear 0.1s both; }
+@keyframes ld-swoosh { 0%{ opacity:0; transform:translateY(10px); filter:blur(8px); } 60%{ opacity:1; } 100%{ opacity:1; transform:translateY(0); filter:blur(0); } }
+.ld-wm.ld-gold { background-image:linear-gradient(100deg,transparent 28%,rgba(255,255,255,0.7) 40%,#ffffff 47%,#ffffff 53%,rgba(255,255,255,0.7) 60%,transparent 72%),linear-gradient(100deg,#b9965a 0%,#d8b06e 28%,#f2d9a0 50%,#d8b06e 72%,#b9965a 100%); background-repeat:no-repeat,no-repeat; background-size:220% 100%,100% 100%; background-position:-120% 0,0 0; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; }
+@keyframes ld-glare { 0%{ background-position:-120% 0,0 0; } 100%{ background-position:220% 0,0 0; } }
+.ld-rule { width:0; height:1px; background:linear-gradient(90deg, transparent, #c9a861, transparent); }
+.ag-curtain[data-phase="brand"] .ld-rule { animation:ld-rule-draw 700ms cubic-bezier(0.16,1,0.3,1) 260ms both; }
+@keyframes ld-rule-draw { from{ width:0; } to{ width:clamp(120px,26vw,200px); } }
+.ld-sub { font-family:'Inter',sans-serif; font-weight:500; font-size:clamp(0.7rem,1.7vw,0.84rem); letter-spacing:0.44em; text-transform:uppercase; color:#c9a861; padding-left:0.44em; opacity:0; }
+.ag-curtain[data-phase="brand"] .ld-sub { animation:ld-sub-in 700ms cubic-bezier(0.16,1,0.3,1) 380ms both; }
+@keyframes ld-sub-in { from{ opacity:0; transform:translateY(6px); } to{ opacity:0.92; transform:translateY(0); } }
+@media (prefers-reduced-motion:reduce){
+  .ag-curtain{ transition:none; }
+  .ld-layer{ transition:none; }
+  .ld-bar i{ width:100%!important; animation:none!important; }
+  .ld-wm,.ld-mono{ animation:none!important; }
+  .ld-rule{ width:clamp(120px,26vw,200px)!important; animation:none!important; }
+  .ld-sub{ opacity:0.92!important; animation:none!important; }
+}
+
 :root {
   /* ─── CLIENT BRAND TOKENS. TTP ─── */
   --font-display: 'Space Grotesk', system-ui, sans-serif;
@@ -4084,6 +4131,43 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
 </head>
 <body>
 
+<div class="ag-curtain" data-phase="load" aria-hidden="true">
+  <div class="ld-layer ld-boot">
+    <div class="ld-boot__in">
+      <div class="ld-mono ld-gold">AG</div>
+      <div class="ld-bar"><i></i></div>
+      <div class="ld-dots"><b></b><b></b><b></b></div>
+    </div>
+  </div>
+  <div class="ld-layer ld-brand">
+    <div class="ld-brand__in">
+      <div class="ld-wm ld-gold">ARC&nbsp;GARDE</div>
+      <div class="ld-rule"></div>
+      <div class="ld-sub">Report</div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var C = document.querySelector('.ag-curtain'), root = document.documentElement;
+  if (!C) { root.classList.remove('is-loading'); return; }
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var MIN = 2520, BRAND_AT = 1400, CLEANUP = 900, MAX = 6000, start = performance.now(), done = false;
+  function lift(){
+    if (done) return; done = true;
+    root.classList.remove('is-loading'); root.classList.add('is-ready');
+    window.dispatchEvent(new CustomEvent('ag:ready'));
+    setTimeout(function(){ if (C.parentNode) C.parentNode.removeChild(C); }, CLEANUP);
+  }
+  if (reduce) { lift(); return; }
+  setTimeout(function(){ C.setAttribute('data-phase','brand'); }, BRAND_AT);
+  function schedule(){ setTimeout(lift, Math.max(0, MIN - (performance.now() - start))); }
+  if (document.readyState === 'complete') schedule();
+  else window.addEventListener('load', schedule, { once:true });
+  setTimeout(lift, MAX); // fail-open
+})();
+</script>
+
 <!-- Reports Nav Modal -->
 <button class="reports-btn" onclick="toggleReportsNav()" aria-label="Open reports menu">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -4246,11 +4330,11 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
         <span class="tag tag--good">7&#8209;day&nbsp;week</span>
       </div>
       <div class="stat reveal">
-        <span class="stat-num" data-counter="9631">0</span>
+        <span class="stat-num" data-counter="9632">0</span>
         <span class="stat-lbl">Impressions</span>
       </div>
       <div class="stat reveal">
-        <span class="stat-num" data-counter="4.90" data-suffix="%">0%</span>
+        <span class="stat-num" data-counter="4.92" data-suffix="%">0%</span>
         <span class="stat-lbl">Avg CTR</span>
       </div>
       <div class="stat reveal">
@@ -4263,7 +4347,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
         <span class="tag tag--good">3 carry an ad&nbsp;tag</span>
       </div>
       <div class="stat reveal">
-        <span class="stat-num" data-counter="105.90" data-prefix="$">$0</span>
+        <span class="stat-num" data-counter="105.92" data-prefix="$">$0</span>
         <span class="stat-lbl">Total Spend</span>
       </div>
     </div>
@@ -4278,7 +4362,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
         <div class="mission-divider" aria-hidden="true"></div>
         <div class="mission-pillar">
           <span class="mission-verb">Held</span>
-          <span class="mission-body">4&nbsp;leads on $105.90&nbsp;spend at a $26.48 blended&nbsp;CPL &middot; $29.52&nbsp;the prior&nbsp;window</span>
+          <span class="mission-body">4&nbsp;leads on $105.92&nbsp;spend at a $26.48 blended&nbsp;CPL &middot; $29.52&nbsp;the prior&nbsp;window</span>
         </div>
       </div>
     </div>
@@ -4307,11 +4391,11 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
       <div class="diag-card reveal">
         <span class="diag-name">Force 3</span>
         <span class="diag-val">Page&nbsp;Views Cost&nbsp;More</span>
-        <span class="diag-what">Each landing page view cost $1.03 against $0.83 on Aug 14 to&nbsp;17.<span class="ag-break"></span>Click-through fell to 4.90% from 6.76% the prior&nbsp;window.</span>
+        <span class="diag-what">Each landing page view cost $1.03 against $0.83 on Aug 14 to&nbsp;17.<span class="ag-break"></span>Click-through fell to 4.92% from 6.76% the prior&nbsp;window.</span>
       </div>
     </div>
 
-    <p class="reveal" style="font-size: 16px; font-weight: 500; color: var(--text); margin-top: 28px; text-align: center; text-wrap: pretty;">$105.90&nbsp;spend across 103 LP&nbsp;views, 4&nbsp;leads at a $26.48 blended&nbsp;CPL. <strong style="color: var(--accent);">One ad ran the whole&nbsp;week &middot; 103&nbsp;page views against 97 on Aug 14 to&nbsp;17, and 4&nbsp;leads instead of 10.</strong></p>
+    <p class="reveal" style="font-size: 16px; font-weight: 500; color: var(--text); margin-top: 28px; text-align: center; text-wrap: pretty;">$105.92&nbsp;spend across 103 LP&nbsp;views, 4&nbsp;leads at a $26.48 blended&nbsp;CPL. <strong style="color: var(--accent);">One ad ran the whole&nbsp;week &middot; 103&nbsp;page views against 97 on Aug 14 to&nbsp;17, and 4&nbsp;leads instead of 10.</strong></p>
 
   </section>
 
@@ -4336,11 +4420,11 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
             </div>
             <div class="ring reveal" data-ring="100">
               <svg viewBox="-12 -12 124 124"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill" cx="50" cy="50" r="42"/></svg>
-              <div class="ring-inner"><span class="ring-v">$35.30</span><span class="ring-l">cost / lead</span></div>
+              <div class="ring-inner"><span class="ring-v">$35.31</span><span class="ring-l">cost / lead</span></div>
             </div>
             <div class="ring reveal" data-ring="90">
               <svg viewBox="-12 -12 124 124"><circle class="ring-track" cx="50" cy="50" r="42"/><circle class="ring-fill" cx="50" cy="50" r="42"/></svg>
-              <div class="ring-inner"><span class="ring-v">9,631</span><span class="ring-l">impressions</span></div>
+              <div class="ring-inner"><span class="ring-v">9,632</span><span class="ring-l">impressions</span></div>
             </div>
           </div>
         </div>
@@ -4373,7 +4457,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
           <article class="tc-card tc-card--winner" aria-roledescription="slide" aria-label="1 of 2">
             <span class="tc-card-status">3 of 4 Leads</span>
             <h3 class="tc-card-name">Ad 4 &middot; Aug 27 - Sep 2</h3>
-            <p class="tc-card-body"><strong>3 leads tagged</strong> &middot; $35.30 per tagged lead &middot; 4.90% CTR &middot; 103&nbsp;LP &middot; 9,631&nbsp;impressions &middot; 100%&nbsp;of the&nbsp;spend</p>
+            <p class="tc-card-body"><strong>3 leads tagged</strong> &middot; $35.31 per tagged lead &middot; 4.92% CTR &middot; 103&nbsp;LP &middot; 9,632&nbsp;impressions &middot; 100%&nbsp;of the&nbsp;spend</p>
           </article>
           <article class="tc-card" aria-roledescription="slide" aria-label="2 of 2">
             <span class="tc-card-status">Not Running</span>
@@ -4406,12 +4490,12 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
 
     <div class="funnel-wrap">
       <div class="f-row">
-        <div class="f-bar f-bar--1" data-width="100" style="width:100%"><span class="f-num">9,631</span></div>
+        <div class="f-bar f-bar--1" data-width="100" style="width:100%"><span class="f-num">9,632</span></div>
         <div class="f-label-bar" style="width:100%; --taper:12.5%"><span class="f-name">impressions</span></div>
       </div>
       <div class="f-row">
-        <div class="f-bar f-bar--2" data-width="75" style="width:75%"><span class="f-num">472</span></div>
-        <div class="f-label-bar" style="width:75%; --taper:16.67%"><span class="f-name">clicked &middot; 4.90% CTR</span></div>
+        <div class="f-bar f-bar--2" data-width="75" style="width:75%"><span class="f-num">474</span></div>
+        <div class="f-label-bar" style="width:75%; --taper:16.67%"><span class="f-name">clicked &middot; 4.92% CTR</span></div>
       </div>
       <div class="f-row">
         <div class="f-bar f-bar--3" data-width="50" style="width:50%"><span class="f-num">103</span></div>
@@ -4452,13 +4536,13 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
         <div class="ab-col ab-col--red reveal">
           <div class="ab-ad-name">Ad 4 &middot; Aug 27 - Sep 2</div>
           <div class="ab-kpis">
-            <div class="ab-kpi"><span class="ab-kpi-val">$105.90</span><span class="ab-kpi-label">spend</span></div>
-            <div class="ab-kpi ab-kpi--won"><span class="ab-kpi-val">9,631</span><span class="ab-kpi-label">impressions</span></div>
-            <div class="ab-kpi"><span class="ab-kpi-val">4.90%</span><span class="ab-kpi-label">CTR</span></div>
+            <div class="ab-kpi"><span class="ab-kpi-val">$105.92</span><span class="ab-kpi-label">spend</span></div>
+            <div class="ab-kpi ab-kpi--won"><span class="ab-kpi-val">9,632</span><span class="ab-kpi-label">impressions</span></div>
+            <div class="ab-kpi"><span class="ab-kpi-val">4.92%</span><span class="ab-kpi-label">CTR</span></div>
             <div class="ab-kpi ab-kpi--won"><span class="ab-kpi-val">103</span><span class="ab-kpi-label">LP views</span></div>
             <div class="ab-kpi"><span class="ab-kpi-val">$1.03</span><span class="ab-kpi-label">cost / LP</span></div>
             <div class="ab-kpi"><span class="ab-kpi-val">3</span><span class="ab-kpi-label">tagged leads</span></div>
-            <div class="ab-kpi ab-kpi--cpl"><span class="ab-kpi-val">$35.30</span><span class="ab-kpi-label">CPL</span></div>
+            <div class="ab-kpi ab-kpi--cpl"><span class="ab-kpi-val">$35.31</span><span class="ab-kpi-label">CPL</span></div>
           </div>
         </div>
 
@@ -4476,7 +4560,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
         </div>
       </div>
 
-      <p class="reveal" style="font-family: var(--font-body); font-size: 15px; color: var(--text60); line-height: 1.65; max-width: 720px; margin: 0 auto 14px; text-align: center; text-wrap: pretty;">Only one ad ran this&nbsp;week. Ad 11 came off on Aug 24, so the same Ad 4 video carried all 7 days on 100% of the&nbsp;budget. Against Aug 14 to 17, the week that video ran beside Ad&nbsp;11, it bought 103 landing page views instead of 34, but each one cost $1.03 instead of $0.83, and the click-through rate was 4.90% against 5.97%. Same creative, more money, dearer&nbsp;traffic.<span class="ag-break"></span>The window recorded 4 leads. 3 of them carry an ad tag and sit in the column above at $35.30 each; the 1 lead arrived without one, which is why the window total below reads 4 leads at a $26.48 blended&nbsp;CPL. Ad 11 is the ad that produced 3 of the prior window&rsquo;s 4 leads on 38% of the&nbsp;spend, and it has not been on air since Aug&nbsp;24.</p>
+      <p class="reveal" style="font-family: var(--font-body); font-size: 15px; color: var(--text60); line-height: 1.65; max-width: 720px; margin: 0 auto 14px; text-align: center; text-wrap: pretty;">Only one ad ran this&nbsp;week. Ad 11 came off on Aug 24, so the same Ad 4 video carried all 7 days on 100% of the&nbsp;budget. Against Aug 14 to 17, the week that video ran beside Ad&nbsp;11, it bought 103 landing page views instead of 34, but each one cost $1.03 instead of $0.83, and the click-through rate was 4.92% against 5.97%. Same creative, more money, dearer&nbsp;traffic.<span class="ag-break"></span>The window recorded 4 leads. 3 of them carry an ad tag and sit in the column above at $35.31 each; the 1 lead arrived without one, which is why the window total below reads 4 leads at a $26.48 blended&nbsp;CPL. Ad 11 is the ad that produced 3 of the prior window&rsquo;s 4 leads on 38% of the&nbsp;spend, and it has not been on air since Aug&nbsp;24.</p>
 
       <div class="rule reveal" style="margin: 36px auto; opacity: 0.15; max-width: 200px;"></div>
 
@@ -4493,7 +4577,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
           <div class="ab-col ab-col--blue">
             <div class="ab-ad-name">Reach</div>
             <div class="ab-kpis">
-              <div class="ab-kpi"><span class="ab-kpi-val">$105.90</span><span class="ab-kpi-label">total spend</span></div>
+              <div class="ab-kpi"><span class="ab-kpi-val">$105.92</span><span class="ab-kpi-label">total spend</span></div>
               <div class="ab-kpi"><span class="ab-kpi-val">$11.00</span><span class="ab-kpi-label">CPM</span></div>
             </div>
           </div>
@@ -4534,7 +4618,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
           <span class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--prev"></span>Prior 7 days (Aug 20 - 26)</span>
           <span class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--current" id="legend-current"></span>This window (Aug 27 - Sep 2)</span>
         </div>
-        <p class="chart-summary" id="chart-summary">$15.13/day&nbsp;avg.<span class="ag-break"></span>7 days &middot;&nbsp;$105.90&nbsp;total.</p>
+        <p class="chart-summary" id="chart-summary">$15.13/day&nbsp;avg.<span class="ag-break"></span>7 days &middot;&nbsp;$105.92&nbsp;total.</p>
       </div>
     </div>
 
@@ -4955,27 +5039,27 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   var chartMetrics = {
     spend: {
       labels: ['27', '28', '29', '30', '31', '1', '2'],
-      data: [14.36, 12.05, 13.24, 11.92, 19.33, 16.24, 18.76],
+      data: [14.36, 12.05, 13.24, 11.92, 19.33, 16.24, 18.78],
       prev: [11.3, 10.7, 13.27, 13.47, 17.17, 9.79, 11.38],
       prefix: '$', suffix: '',
       color: rgba(brandBlueBrightRGB, 1),
       colorFill: rgba(brandBlueRGB, 0.2),
       glowColor: rgba(brandBlueRGB, 0.3),
-      summary: '$15.13/day&nbsp;avg.<span class="ag-break"></span>7 days &middot;&nbsp;$105.90&nbsp;total &middot; one ad on air the whole&nbsp;week.'
+      summary: '$15.13/day&nbsp;avg.<span class="ag-break"></span>7 days &middot;&nbsp;$105.92&nbsp;total &middot; one ad on air the whole&nbsp;week.'
     },
     ctr: {
       labels: ['27', '28', '29', '30', '31', '1', '2'],
-      data: [4.41, 4.73, 4.56, 5.28, 5.09, 4.29, 5.97],
+      data: [4.41, 4.73, 4.56, 5.28, 5.09, 4.29, 6.17],
       prev: [6, 8.78, 8.08, 7.41, 6.05, 5.93, 5.54],
       prefix: '', suffix: '%',
       color: rgba(brandGreenRGB, 1),
       colorFill: rgba(brandGreenRGB, 0.12),
       glowColor: rgba(brandGreenRGB, 0.25),
-      summary: '4.90%&nbsp;blended.<span class="ag-break"></span>Down from 6.76% the prior window and 6.94% on Aug 14 to&nbsp;17.'
+      summary: '4.92%&nbsp;blended.<span class="ag-break"></span>Down from 6.76% the prior window and 6.94% on Aug 14 to&nbsp;17.'
     },
     cpc: {
       labels: ['27', '28', '29', '30', '31', '1', '2'],
-      data: [0.34, 0.29, 0.23, 0.15, 0.16, 0.22, 0.32],
+      data: [0.34, 0.29, 0.23, 0.15, 0.16, 0.22, 0.31],
       prev: [0.33, 0.16, 0.13, 0.11, 0.21, 0.16, 0.15],
       prefix: '$', suffix: '',
       color: rgba(brandAccentBrightRGB, 1),
@@ -4985,13 +5069,13 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
     },
     impressions: {
       labels: ['27', '28', '29', '30', '31', '1', '2'],
-      data: [952, 867, 1250, 1476, 2395, 1703, 988],
+      data: [952, 867, 1250, 1476, 2395, 1703, 989],
       prev: [567, 740, 1262, 1605, 1371, 1062, 1390],
       prefix: '', suffix: '',
       color: rgba(brandCreamRGB, 0.6),
       colorFill: rgba(brandCreamRGB, 0.06),
       glowColor: rgba(brandCreamRGB, 0.15),
-      summary: '9,631&nbsp;total.<span class="ag-break"></span>CPM $11.00 &middot; 103 of them reached the landing&nbsp;page.'
+      summary: '9,632&nbsp;total.<span class="ag-break"></span>CPM $11.00 &middot; 103 of them reached the landing&nbsp;page.'
     },
     leads: {
       labels: ['27', '28', '29', '30', '31', '1', '2'],
@@ -5011,7 +5095,7 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
       color: rgba(brandRedRGB, 1),
       colorFill: rgba(brandRedRGB, 0.1),
       glowColor: rgba(brandRedRGB, 0.2),
-      summary: '$26.48&nbsp;blended CPL.<span class="ag-break"></span>4 leads on $105.90 spend &middot; $29.52 the prior&nbsp;window.'
+      summary: '$26.48&nbsp;blended CPL.<span class="ag-break"></span>4 leads on $105.92 spend &middot; $29.52 the prior&nbsp;window.'
     }
   };
 
