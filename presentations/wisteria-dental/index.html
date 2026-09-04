@@ -1853,12 +1853,10 @@ html:not(.js) .sec-rule {
       panel.setAttribute('aria-labelledby', 'sp-tab-' + n);
       line.innerHTML = '<b>Sprint ' + n + '</b><span class="sp-day">Days ' + startDay + ' to ' + endDay + '</span>';
       /* CANON, lifted word for word from the approved /presentations/dental-ads
-         page. The numbering that used to be here ("Creatives 3 and 4") was MINE,
-         and canon never numbers creatives per sprint. It also made a real tension
-         falsifiable: if one ad holds and only the loser is replaced, a cycle burns
-         8 creatives, not the 14 the canon ledger states. That tension lives in
-         canon itself, on two live pages, so it is Quinten's to resolve. This page
-         no longer asserts either reading. */
+         page. The numbering that used to sit here ("Creatives 3 and 4") was MINE
+         and was wrong: it asserted a fresh PAIR every sprint, when the loser is
+         replaced from the cycle's batch and the winner holds. Canon never numbers
+         creatives per sprint, and this now carries canon's sentence unchanged. */
       body.textContent = n < 7
         ? '2 ads run head to head for 4 days. The loser is cut. A new challenger takes its place. Same budget, repeated. A written report follows on day ' + endDay + '.'
         : 'The last sprint closes the cycle on day ' + endDay + '. The winner holds and reporting moves to every 7 days.';
