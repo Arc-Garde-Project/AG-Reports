@@ -718,17 +718,6 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
   font-size: var(--text-lg); color: var(--ink-soft); line-height: 1.62;
   max-width: 40ch; margin: 0 auto; text-wrap: pretty;
 }
-.hero-meta {
-  margin-top: 34px; display: flex; gap: 10px 26px; flex-wrap: wrap;
-  align-items: center; justify-content: center;
-  font-size: clamp(0.6rem, 0.57rem + 0.16vw, 0.7rem);
-  letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint);
-}
-.hero-meta span { display: inline-flex; align-items: center; gap: 9px; }
-.hero-meta span::before {
-  content: ""; width: 5px; height: 5px; border-radius: 50%;
-  background: var(--gold); flex: 0 0 auto;
-}
 
 /* ── SIGNATURE DIAGRAM 1: the system architecture ─────────── */
 .arch { margin-top: 6px; }
@@ -764,7 +753,6 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
 .node--owned { border-color: rgba(201,163,106,0.42); }
 .node--owned .node-ico { border-color: rgba(201,163,106,0.5); background: rgba(201,163,106,0.14); }
 .node--owned .node-ico svg { stroke: var(--gold); }
-.arch-flow { display: none; }
 /* Real connectors, drawn INTO the 12px grid gap, desktop only. The previous
    strip rendered as underlines beneath each node, which said nothing. */
 @media (min-width: 901px) {
@@ -869,24 +857,20 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
         zigzagged. Stack them. The 7th sprint card was a lone orphan in a
         2-column grid, so it spans. */
   .step { grid-template-columns: 1fr; gap: 6px; justify-items: center; text-align: center; }
-  .hero-meta span::before { display: none; }
   .ribbon-track > :last-child { grid-column: 1 / -1; }
 
   .arch-note { border-left: 0; border-top: 2px solid var(--gold); padding: 13px 0 0; }
   .arch-grid { grid-template-columns: repeat(2, 1fr); }
-  .arch-flow { display: none; }
   .ribbon-track { grid-template-columns: repeat(4, 1fr); }
-  .stage { grid-template-columns: 38px 1fr; gap: 12px; }
 }
 @media (max-width: 560px) {
   .arch-grid { grid-template-columns: 1fr; }
   .ribbon-track { grid-template-columns: repeat(2, 1fr); }
-  .hero-meta { flex-direction: column; gap: 9px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .node, .sprint, .stage { transition: none; }
-  .node:hover, .sprint:hover, .stage:hover { transform: none; }
+  .node, .sprint { transition: none; }
+  .node:hover, .sprint:hover { transform: none; }
 }
 
 
@@ -899,7 +883,13 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
 
 /* 1. HIERARCHY INVERSION, repeated six times. The section numeral was
       52px against a 30px title, so the ornament outweighed the content. */
-.sec-num   { font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem); color: var(--wis-deep); }
+/* The section numerals are LARGE TEXT (36px desktop, 24px mobile, weight 600),
+   so their AAA floor is 4.5:1. At the brand primary --wis-deep they measured
+   3.57 against the composited section ground: AA-large passes, AAA-large does
+   not. #91719a is 25% along the brand primary-to-accent ramp, still plainly
+   their purple, and measures 4.74. Only the numeral moves; --wis-deep is
+   untouched everywhere else. */
+.sec-num   { font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem); color: #91719a; }
 .sec-title { font-size: clamp(1.5rem, 1.05rem + 1.9vw, 2.5rem); }
 
 /* 2. THE PRICE IS THE CLIMAX and it rendered at 24px, smaller than five
@@ -977,7 +967,6 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
   opacity: 0; transition: opacity var(--duration-cinematic, 1400ms) var(--ease-satisfying);
 }
 .field.lit { opacity: 1; }
-.field svg { width: 100%; height: 100%; display: block; }
 
 
 /* -- THE AURORA. The ground had color but no event. This is the movement.
@@ -1143,8 +1132,11 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
 /* -- 4. LIVING DRIFT, ambient layers only, never a figure. ----
    About 2px, de-synced phase per element. From the video standard:
    a held element is never dead-still, but keep it a breath and not
-   a jitter. No figure on this page drifts: $945.03, 87 and $1,500
-   hold perfectly still, which is the whole point of the rule.     */
+   a jitter. No figure on this page drifts: the price holds perfectly
+   still, which is the whole point of the rule.
+   (Two figures were named here and they were ANOTHER CLIENT'S, left
+   behind when the case study was cut. Comments ship in view-source on
+   a prospect's page. Never name a figure that is not this client's.) */
 @keyframes driftA { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, -2px, 0); } }
 @keyframes driftB { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, 2px, 0); } }
 /* THE NODES NO LONGER DRIFT. They used to be static text and a 2px float read
@@ -1233,7 +1225,7 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
      3. the panels were separate rounded boxes with a gap between them
    All three are neutralized here. The panels now run flush, corners are
    rounded only at the very top and the very bottom, and internal
-   horizontal borders are removed, so six sections read as one sheet of
+   horizontal borders are removed, so five sections read as one sheet of
    glass with the aurora moving behind the whole length of it. */
 .sec + .sec { border-top: 0; }
 .sec--band  { background: transparent; }
@@ -1246,7 +1238,7 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
    The previous build anchored it to .shell, whose box excludes the section's
    padding-block, so a gap of exactly that padding showed between every panel
    and the "one surface" read as six boxes. Anchoring to .sec closes it.
-   Capped top and bottom only, so six sections are one sheet of glass. */
+   Capped top and bottom only, so five sections are one sheet of glass. */
 .sec { position: relative; }
 .sec > * { position: relative; z-index: 1; }
 .sec::before {
@@ -1534,7 +1526,7 @@ html:not(.js) .sec-rule {
           <span class="node-k">The Ad</span>
           <span class="node-v">Facebook and Instagram. Written and built for each test.</span>
         </button>
-        <span class="node-more" id="node-the-ad" hidden>Written and shot as a pair, then run against each other. 14&nbsp;across a cycle.</span>
+        <span class="node-more" id="node-the-ad" hidden>Written as a pair, then run against each other. 14&nbsp;across a cycle.</span>
         </div>
         <div class="node-wrap">
           <button type="button" class="node node--owned" aria-expanded="false" aria-controls="node-landing-page">
@@ -1558,7 +1550,7 @@ html:not(.js) .sec-rule {
           <span class="node-k">Attribution</span>
           <span class="node-v">Each lead tied back to the ad that produced it.</span>
         </button>
-        <span class="node-more" id="node-attribution" hidden>Reported per ad, so you can see which creative produced which lead.</span>
+        <span class="node-more" id="node-attribution" hidden>Leads are tracked to the ad that produced them, through the CRM instead of the ad&nbsp;platform's own reporting.</span>
         </div>
         <div class="node-wrap">
           <button type="button" class="node" aria-expanded="false" aria-controls="node-the-report">
@@ -1600,11 +1592,18 @@ html:not(.js) .sec-rule {
   </div>
 </section>
 
-<!-- ══ 03 HOW IT RUNS. The build gate plus the 28-day sprint ribbon.
-     Test, Attribution and Reporting were CUT 2026-09-04: each restated a canon
-     ledger row in section 02 and a node in section 01, so the same fact was on
-     the page three times. Build stays because nothing else says the system is
-     built and proven before any ad spend goes live. ══ -->
+<!-- ══ 03 HOW IT RUNS. The 28-day sprint ribbon. ══
+     The four-stage stepper was removed entirely 2026-09-04. Test, Attribution
+     and Reporting each restated a canon ledger row in section 02 and a node in
+     section 01, so the same fact sat on the page three times. Build was cut with
+     them: kept alone it was a design pattern used once, and its solo variant
+     collapsed to a 14-line column below 900px and failed the orphan sweep with
+     6 INTERIOR blockers.
+     TWO CLAIMS DIED WITH IT and were never rehomed, both flagged to Quinten:
+     that the system is built and tested before any ad spend goes live, and that
+     attribution runs through the CRM rather than the ad platform's own
+     reporting. The second matters most: the platform Lead event cannot fire on
+     this vertical, so that line was what kept the attribution promise honest. -->
 <section class="sec sec--band">
   <div class="shell">
     <div class="sec-head">
@@ -1845,7 +1844,7 @@ html:not(.js) .sec-rule {
     var body = panel.querySelector('.sp-body');
 
     function show(i) {
-      var n = i + 1, a = 2 * n - 1, b = 2 * n, endDay = 4 * n, startDay = endDay - 3;
+      var n = i + 1, endDay = 4 * n, startDay = endDay - 3;
       tabs.forEach(function (t, k) {
         var on = k === i;
         t.setAttribute('aria-selected', on ? 'true' : 'false');
@@ -1853,9 +1852,16 @@ html:not(.js) .sec-rule {
       });
       panel.setAttribute('aria-labelledby', 'sp-tab-' + n);
       line.innerHTML = '<b>Sprint ' + n + '</b><span class="sp-day">Days ' + startDay + ' to ' + endDay + '</span>';
+      /* CANON, lifted word for word from the approved /presentations/dental-ads
+         page. The numbering that used to be here ("Creatives 3 and 4") was MINE,
+         and canon never numbers creatives per sprint. It also made a real tension
+         falsifiable: if one ad holds and only the loser is replaced, a cycle burns
+         8 creatives, not the 14 the canon ledger states. That tension lives in
+         canon itself, on two live pages, so it is Quinten's to resolve. This page
+         no longer asserts either reading. */
       body.textContent = n < 7
-        ? 'Creatives ' + a + ' and ' + b + ' run head to head on the same budget. The weaker one is cut, a fresh challenger takes its place, and a written report follows on day ' + endDay + '.'
-        : 'Creatives ' + a + ' and ' + b + ' close the cycle. That is 14 creatives across 28 days. The winner holds and reporting moves to every 7 days.';
+        ? '2 ads run head to head for 4 days. The loser is cut. A new challenger takes its place. Same budget, repeated. A written report follows on day ' + endDay + '.'
+        : 'The last sprint closes the cycle on day ' + endDay + '. The winner holds and reporting moves to every 7 days.';
     }
 
     tabs.forEach(function (t, i) {
