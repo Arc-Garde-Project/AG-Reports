@@ -14,23 +14,32 @@
   The page loads straight to the hero; the hero reveal-stagger IS the entrance.
 
   BESPOKE to this page, with reason (no primitive ships one):
-  the system-architecture diagram, the 28-day sprint ribbon, the build
-  stepper, and the proof funnel. These are the signature data-viz the
-  presentation standard requires be client-native rather than cloned.
+  the system-architecture diagram, the 28-day sprint ribbon and the
+  build stepper. These are the signature data-viz the presentation
+  standard requires be client-native rather than cloned.
+
+  CONTROLS. The sprint ribbon is a role=tablist of 7 real buttons and
+  the 5 system nodes are aria-expanded buttons. Both are keyboard
+  operable and both are ADDITIVE: nothing readable is hidden behind a
+  click, because this document is contract-shaped. They are selectors,
+  NOT a CTA, which is why ag-button v1.0 is deliberately not used.
 
   PALETTE. Wisteria's own brand, extracted from wisteriadental.com
   2026-09-03: primary #805D7E, accent #C5ADEE, secondary #69727D,
   heading face Barlow. Applied over the AG dark shell. The AG gold
   thread stays gold on client pages per the standard.
 
-  DATA LAW. Every figure in the proof section comes from the audited
-  case-study window report for that account, 144/144 checks PASS.
-  The internal path is deliberately NOT named here: this file is sent
-  to a prospect, and view-source should not expose another client's
-  internal file paths. The path lives in _source and in the registry.
-  Meta supplies spend and impressions only.
-  GHL is the sole source of truth for leads. Do not edit a figure
-  here; correct the source report and re-derive.
+  NO CASE STUDY. Section 01, another client's proof (funnel, six animated
+  figures, disclosures, verdict note), was REMOVED on Quinten's
+  instruction 2026-09-03. That client is deliberately NOT named anywhere in
+  this file: comments ship in view-source, and this page goes to a prospect. The page carries no proof and no third-party
+  client data of any kind. Sections were renumbered 01 to 05, the stem
+  went from six buds to five, frag-count.html is no longer spliced
+  because no .cnt element remains, and the dead proof CSS was removed.
+  The block is restorable from
+  frag-body.html.bak-2026-09-03-pre-sec01-removal.
+  The only numbers left on the page are the price and the cadence, both
+  of which are AG canon.
 
   COPY LAW. Section 2's ledger rows are AG canon, lifted word for word
   from the published Service Scope, with ONE DELIBERATE DIVERGENCE:
@@ -84,6 +93,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- THE html.js GUARD. ag-motion sets .reveal to opacity 0 and depends on its
+     IntersectionObserver to add .in-view. With JavaScript off nothing ever
+     reveals: measured 14 elements stuck at opacity 0, roughly a third of the
+     page invisible. This marks the document as JS-capable BEFORE first paint,
+     and the CSS below only hides revealables when this class is present.
+     Recorded scar: "opacity:0 as a default ships a BLANK page without an
+     html.js guard." The donor motion CSS is verbatim and is never edited. -->
+<script>document.documentElement.className += ' js';</script>
 
 <style>
 /* =========================================================== */
@@ -718,7 +736,7 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
 }
 .node {
   position: relative; text-align: center;
-  border: 1px solid var(--line); border-radius: 10px;
+  border: 1px solid var(--line); border-radius: 14px;
   background: linear-gradient(180deg, rgba(197,173,238,0.07), rgba(197,173,238,0.02));
   padding: 16px 10px 14px;
   transition: border-color .3s var(--ease-out, ease), transform .3s var(--ease-out, ease), background .3s ease;
@@ -747,13 +765,32 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
 /* Real connectors, drawn INTO the 12px grid gap, desktop only. The previous
    strip rendered as underlines beneath each node, which said nothing. */
 @media (min-width: 901px) {
-  .arch-grid > .node:not(:last-child)::after {
+  /* THE WRAP IS A PASS-THROUGH. .node-wrap exists only to tie a node to its
+     detail panel. Giving it a box made the five cards unequal in height
+     (measured 148/172/148/148/172) and started every panel at a different Y.
+     display:contents drops the box, so the nodes are real grid items on row 1,
+     equal height by stretch, and each panel sits on row 2 with its top aligned.
+     Placement is explicit because auto-placement would interleave a panel into
+     row 1 the moment one opened. Below 901px the wrap stays a flex column,
+     because there the nodes stack and a two-row grid would misplace them. */
+  /* Specificity, not order: `.node-wrap{display:flex}` is declared LATER in
+     frag-alive-css, so a bare `.node-wrap` here loses the cascade to it. */
+  .arch-grid > .node-wrap { display: contents; }
+  .arch-grid > .node-wrap > .node      { grid-row: 1; }
+  .arch-grid > .node-wrap > .node-more { grid-row: 2; }
+  .arch-grid > .node-wrap:nth-child(1) > * { grid-column: 1; }
+  .arch-grid > .node-wrap:nth-child(2) > * { grid-column: 2; }
+  .arch-grid > .node-wrap:nth-child(3) > * { grid-column: 3; }
+  .arch-grid > .node-wrap:nth-child(4) > * { grid-column: 4; }
+  .arch-grid > .node-wrap:nth-child(5) > * { grid-column: 5; }
+
+  .arch-grid > .node-wrap:not(:last-child) > .node::after {
     content: ""; position: absolute; z-index: 2;
     right: -12px; top: 50%; width: 12px; height: 1px;
     background: linear-gradient(90deg, var(--wis-deep), var(--gold));
     opacity: .7;
   }
-  .arch-grid > .node:not(:last-child)::before {
+  .arch-grid > .node-wrap:not(:last-child) > .node::before {
     content: ""; position: absolute; z-index: 3;
     right: -5px; top: 50%; width: 5px; height: 5px;
     transform: translateY(-50%) rotate(45deg);
@@ -804,67 +841,15 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
   color: var(--ink-faint); letter-spacing: 0.06em;
 }
 .ribbon-legend span { display: inline-flex; align-items: center; gap: 7px; }
-.ribbon-legend i { width: 9px; height: 9px; border-radius: 2px; display: block; }
+.ribbon-legend i { width: 9px; height: 9px; border-radius: 3px; display: block; }
 .ribbon-legend i.win { background: linear-gradient(180deg, var(--wis), var(--wis-deep)); }
 .ribbon-legend i.cut { background: transparent; border: 1px dashed rgba(243,237,247,0.34); }
-
-/* ── SIGNATURE DIAGRAM 3: the proof funnel ────────────────── */
-.proof { margin-top: 2px; }
-.proof-id {
-  font-size: clamp(0.58rem, 0.56rem + 0.12vw, 0.66rem);
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--ink-faint); text-align: center; margin-bottom: 26px;
-}
-.proof-id b { color: var(--wis); font-weight: 500; }
-.funnel { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-.fstep {
-  text-align: center; padding: 20px 10px 18px; border-radius: 10px;
-  border: 1px solid var(--line-soft);
-  background: linear-gradient(180deg, rgba(197,173,238,0.05), transparent);
-  position: relative;
-}
-.fstep--lead { border-color: rgba(201,163,106,0.4); background: linear-gradient(180deg, rgba(201,163,106,0.10), transparent); }
-.fstep-n {
-  font-family: var(--font-body); font-weight: 600; line-height: 1;
-  font-variant-numeric: tabular-nums lining-nums;
-  font-size: clamp(1.5rem, 1.05rem + 1.9vw, 2.5rem);
-  color: var(--ink); margin-bottom: 7px;
-}
-.fstep--lead .fstep-n {
-  font-size: clamp(1.75rem, 1.15rem + 2.5vw, 3rem);
-  background: linear-gradient(180deg, var(--gold-light), var(--gold));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-.fstep-k {
-  font-size: clamp(0.6rem, 0.58rem + 0.12vw, 0.68rem);
-  color: var(--ink-soft); letter-spacing: 0.04em; line-height: 1.4; text-wrap: pretty;
-}
-.fstep-c {
-  margin-top: 9px; font-size: clamp(0.58rem, 0.56rem + 0.1vw, 0.64rem);
-  color: var(--wis); font-variant-numeric: tabular-nums lining-nums;
-}
-.payoff {
-  margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-}
-/* DIRECT children only. A bare '.payoff div' matched .fstep-n and .fstep-k too
-   and drew a border around each nested child, which is the same defect class
-   recorded on the dental-ads build ('.kpi div' bordering nested children). */
-.payoff > div {
-  border: 1px solid var(--line); border-radius: 10px; padding: 18px 14px; text-align: center;
-  background: rgba(128,93,126,0.12);
-}
-.payoff > div .fstep-n { color: var(--wis); }
-.proof-foot {
-  margin-top: 18px; display: flex; flex-direction: column; gap: 5px;
-  font-size: clamp(0.56rem, 0.55rem + 0.1vw, 0.63rem);
-  color: var(--ink-faint); line-height: 1.5;
-}
 
 /* ── SIGNATURE DIAGRAM 4: the build stepper ───────────────── */
 .stepper { display: grid; gap: 9px; }
 .stage {
   display: grid; grid-template-columns: 44px 1fr; gap: 15px; align-items: start;
-  border: 1px solid var(--line-soft); border-radius: 9px; padding: 13px 15px;
+  border: 1px solid var(--line-soft); border-radius: 7px; padding: 13px 15px;
   background: rgba(197,173,238,0.03);
   transition: border-color .3s ease, background .3s ease, transform .3s ease;
 }
@@ -908,19 +893,14 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
   .hero-meta span::before { display: none; }
   .ribbon-track > :last-child { grid-column: 1 / -1; }
 
-  .hero, .hero-deck, .arch-note, .proof-foot { text-align: center; }
   .arch-note { border-left: 0; border-top: 2px solid var(--gold); padding: 13px 0 0; }
-  .proof-foot { align-items: center; }
   .arch-grid { grid-template-columns: repeat(2, 1fr); }
   .arch-flow { display: none; }
-  .funnel { grid-template-columns: repeat(2, 1fr); }
   .ribbon-track { grid-template-columns: repeat(4, 1fr); }
   .stage { grid-template-columns: 38px 1fr; gap: 12px; }
 }
 @media (max-width: 560px) {
   .arch-grid { grid-template-columns: 1fr; }
-  .funnel { grid-template-columns: 1fr; }
-  .payoff { grid-template-columns: 1fr; }
   .ribbon-track { grid-template-columns: repeat(2, 1fr); }
   .hero-meta { flex-direction: column; gap: 9px; }
 }
@@ -962,8 +942,6 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
 /* 62ch caps the measure, which was the real defect at ~190 characters a line.
    margin-inline stays 0: centering the block started it at x=450 while every
    other element on the page starts at x=210, which read as misalignment. */
-.proof-foot { font-size: clamp(0.72rem, 0.69rem + 0.14vw, 0.8rem); color: rgba(243, 237, 247, 0.60);
-              line-height: 1.55; gap: 7px; max-width: 62ch; margin-inline: 0; }
 .stage-v    { font-size: clamp(0.78rem, 0.74rem + 0.2vw, 0.9rem);  color: rgba(243, 237, 247, 0.62); }
 .node-v     { font-size: clamp(0.74rem, 0.71rem + 0.16vw, 0.84rem); color: rgba(243, 237, 247, 0.62); }
 
@@ -978,14 +956,7 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
 .hero       { min-height: clamp(440px, 66vh, 640px);
               padding-block: clamp(3rem, 9vw, 6rem) clamp(1.5rem, 3.5vw, 2.5rem); }
 
-/* 6. THE FUNNEL HAD NO PEAK. Five figures all at 40px, so nothing led.
-      87 leads keeps the gold and grows: the verdict copy says cost per lead
-      is what we control, so that is the honest peak. The payoff pair are
-      estimates and step down. */
-.fstep--lead .fstep-n { font-size: clamp(2rem, 1.2rem + 3.4vw, 3.75rem); }
-.payoff > div .fstep-n { font-size: clamp(1.375rem, 1.05rem + 1.4vw, 2rem); }
-
-/* 7. LAND THE CLOSE. Section 06's rule sat flush on step 01 at 0px measured,
+/* 7. LAND THE CLOSE. The Next Steps rule sat flush on step 01 at 0px measured,
       where every other section gets a note plus 32px or more. */
 .steps      { margin-top: clamp(1.5rem, 3vw, 2.25rem); }
 .step-n     { color: var(--wis); }
@@ -1156,8 +1127,6 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
 .led-v  { font-size: clamp(1.0rem, 0.9rem + 0.2vw, 1.02rem); }
 .node-v { font-size: clamp(0.88rem, 0.8rem + 0.16vw, 0.86rem); }
 .stage-v { font-size: clamp(0.94rem, 0.86rem + 0.2vw, 0.94rem); }
-.proof-foot { color: rgba(243, 237, 247, 0.68); }
-.fstep-k { color: rgba(243, 237, 247, 0.9); }
 
 /* -- 2. THE LIGHT SWEEP --------------------------------------
    feedback_no_living_camera rejects ambient whole-frame drift but
@@ -1201,10 +1170,13 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
    hold perfectly still, which is the whole point of the rule.     */
 @keyframes driftA { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, -2px, 0); } }
 @keyframes driftB { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, 2px, 0); } }
-.arch-grid > .node:nth-child(odd)  { animation: driftA 9s var(--ease-soft) infinite; }
-.arch-grid > .node:nth-child(even) { animation: driftB 12s var(--ease-soft) infinite; }
-.arch-grid > .node:nth-child(3n)   { animation-delay: 3s; }
-.arch-grid > .node:nth-child(5n)   { animation-delay: 6s; }
+/* THE NODES NO LONGER DRIFT. They used to be static text and a 2px float read
+   as life. They are BUTTONS now, and a control that never holds still is a
+   worse control: Playwright could not click one for 30s straight ("element is
+   not stable"), which is the automated version of a person missing the target.
+   The drift stays on .hero-sprig, which nobody has to hit. The connectors and
+   the flow pulse below are pseudo-elements, not the button box, so they keep
+   the section alive without moving anything you have to aim at. */
 .hero-sprig { animation: driftA 7s var(--ease-soft) infinite; }
 
 /* -- 5. THE FLOW PULSE. A lead traveling Ad to Report. -------
@@ -1214,17 +1186,17 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
    a horizontal hop would point at nothing.                        */
 .node-ico { position: relative; }
 @media (min-width: 901px) {
-  .arch-grid > .node:not(:last-child) .node-ico::after {
+  .arch-grid > .node-wrap:not(:last-child) > .node .node-ico::after {
     content: ""; position: absolute; left: 50%; top: 50%;
     width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; border-radius: 50%;
     background: var(--gold); box-shadow: 0 0 7px var(--gold);
     opacity: 0; animation: flowPulse 12s var(--ease-soft) infinite;
     will-change: transform, opacity;
   }
-  .arch-grid > .node:nth-child(1) .node-ico::after { animation-delay: 0s; }
-  .arch-grid > .node:nth-child(2) .node-ico::after { animation-delay: 0.9s; }
-  .arch-grid > .node:nth-child(3) .node-ico::after { animation-delay: 1.8s; }
-  .arch-grid > .node:nth-child(4) .node-ico::after { animation-delay: 2.7s; }
+  .arch-grid > .node-wrap:nth-child(1) > .node .node-ico::after { animation-delay: 0s; }
+  .arch-grid > .node-wrap:nth-child(2) > .node .node-ico::after { animation-delay: 0.9s; }
+  .arch-grid > .node-wrap:nth-child(3) > .node .node-ico::after { animation-delay: 1.8s; }
+  .arch-grid > .node-wrap:nth-child(4) > .node .node-ico::after { animation-delay: 2.7s; }
 }
 @keyframes flowPulse {
   0%   { opacity: 0; transform: translate3d(0, 0, 0) scale(0.6); }
@@ -1251,9 +1223,13 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
    verification step renders under prefers-reduced-motion and
    asserts every one of these is actually inert.                  */
 @media (prefers-reduced-motion: reduce) {
+  /* These two carried the pre-wrap selector and so matched NOTHING once the
+     nodes gained a .node-wrap parent: the flow pulse kept running under
+     reduced motion, shortened to 0.01s by the donor's global rule but still
+     infinite, which cycles the compositor forever instead of stopping. */
   .bloom, .aurora, .hero-sprig, .sweep,
-  .arch-grid > .node,
-  .arch-grid > .node .node-ico::after { animation: none !important; }
+  .arch-grid > .node-wrap > .node,
+  .arch-grid > .node-wrap > .node .node-ico::after { animation: none !important; }
   .sweep { display: none; }
   .field { opacity: 1; }
   .bloom { transform: none; opacity: 0.9; }
@@ -1262,13 +1238,13 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
   .ribbon.in-view .sprint-b em { animation: none !important; }
 }
 
-/* Mobile: the field goes static, drift and stem and sweep go off.
-   Battery and GPU are the binding constraint below 900px, and the
-   ground is small enough there that the motion earns nothing.     */
+/* Mobile: the field goes static, stem and sweep go off. Battery and GPU are
+   the binding constraint below 900px, and the ground is small enough there
+   that the motion earns nothing. The node-drift kill that used to sit here is
+   gone with the drift itself: the nodes are buttons now and never move. */
 @media (max-width: 900px) {
   .bloom, .aurora { animation: none; }
   .grain { opacity: 0.22; }
-  .arch-grid > .node { animation: none; }
   .stem, .sweep { display: none; }
 }
 
@@ -1278,7 +1254,7 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
      1. .sec + .sec carries a hairline border-top between every section
      2. .sec--band paints an alternating background, a horizontal band
      3. the panels were separate rounded boxes with a gap between them
-   All three are neutralised here. The panels now run flush, corners are
+   All three are neutralized here. The panels now run flush, corners are
    rounded only at the very top and the very bottom, and internal
    horizontal borders are removed, so six sections read as one sheet of
    glass with the aurora moving behind the whole length of it. */
@@ -1316,14 +1292,14 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
      boundary, which is the seam this whole change exists to remove. */
 }
 main > section.sec:first-of-type::before {
-  border-radius: 20px 20px 0 0;
+  border-radius: 21px 21px 0 0;
   border-top: 1px solid rgba(197, 173, 238, 0.18);
 }
 main > section.sec:last-of-type::before {
-  border-radius: 0 0 20px 20px;
+  border-radius: 0 0 21px 21px;
   border-bottom: 1px solid rgba(197, 173, 238, 0.14);
   box-shadow: inset 0 0 42px -18px rgba(197, 173, 238, 0.22),
-              0 34px 80px -38px rgba(0, 0, 0, 0.92);
+              0 14px 42px -21px rgba(0, 0, 0, 0.92);
 }
 /* One specular, at the very top of the sheet. Repeating it per section is
    exactly what would put the edges back. */
@@ -1335,7 +1311,7 @@ main > section.sec:first-of-type::after {
      percentage resolved against each gave the sheet two different widths
      that stepped in and out at every boundary. */
   width: min(calc(100vw - var(--space-container)), calc(var(--shell) + 2 * var(--space-container)));
-  border-radius: 20px 20px 0 0;
+  border-radius: 21px 21px 0 0;
   background: linear-gradient(152deg,
       rgba(233, 222, 252, 0.10) 0%,
       rgba(233, 222, 252, 0.03) 18%,
@@ -1349,10 +1325,6 @@ main > section.sec:first-of-type::after {
    where it was, meaning desktop does not move at all.
    Floors before this ranged 9.6px to 14.4px, which is small for a
    document someone reads on a phone. */
-.fstep-k    { font-size: clamp(0.8rem, 0.74rem + 0.16vw, 0.68rem); }
-.fstep-c    { font-size: clamp(0.78rem, 0.72rem + 0.14vw, 0.64rem); }
-.proof-foot { font-size: clamp(0.84rem, 0.78rem + 0.14vw, 0.8rem); }
-.proof-id   { font-size: clamp(0.72rem, 0.68rem + 0.12vw, 0.66rem); }
 .sprint-h   { font-size: clamp(0.62rem, 0.58rem + 0.1vw, 0.58rem); }
 .sprint-f   { font-size: clamp(0.6rem, 0.56rem + 0.1vw, 0.55rem); }
 .ribbon-legend { font-size: clamp(0.72rem, 0.68rem + 0.12vw, 0.66rem); }
@@ -1361,6 +1333,141 @@ main > section.sec:first-of-type::after {
 .led-k      { font-size: clamp(0.78rem, 0.74rem + 0.14vw, 0.8rem); }
 .band-k, .band-v { font-size: clamp(0.9rem, 0.85rem + 0.16vw, 1rem); }
 .hero-deck  { font-size: clamp(1.08rem, 1rem + 0.3vw, 1.19rem); }
+
+/* =========================================================== */
+/* THE CONTROLS. 2026-09-03.                                    */
+/* The page had ONE focusable element (the skip link) and zero  */
+/* buttons, so it was a document rather than an instrument, and */
+/* the AG cursor's hand state could never appear. Two elements  */
+/* that DESCRIBE a process now let the reader drive it.         */
+/*                                                              */
+/* NOT a CTA. feedback_presentation_format_locked bans a header */
+/* BAR and a CTA BAND. It is silent on selectors, and other AG  */
+/* presentations ship tablists, pagers and carousels. These are */
+/* selectors, which is why ag-button v1.0 is deliberately NOT   */
+/* used: its sheen sweep and arrow roll read as persuasion.     */
+/*                                                              */
+/* NOTHING IS HIDDEN THAT WAS VISIBLE. Every interaction ADDS   */
+/* detail. This document is contract-shaped, so concealing      */
+/* scope behind a click would be worse, not better.             */
+/* =========================================================== */
+
+/* Sprint tabs. The card was a div; it is now a real button, so the
+   layout has to be re-declared against the button box. */
+.ribbon-track .sprint {
+  display: block; width: 100%; font: inherit; color: inherit;
+  background: rgba(197, 173, 238, 0.04);
+  border: 1px solid var(--line); border-radius: 7px;
+  padding: 0; cursor: pointer; text-align: center;
+  transition: border-color .3s var(--ease-settle), background .3s var(--ease-settle),
+              transform .3s var(--ease-settle);
+}
+.ribbon-track .sprint:hover { border-color: rgba(197,173,238,0.55); background: rgba(197,173,238,0.10); transform: translateY(-3px); }
+.ribbon-track .sprint[aria-selected="true"] {
+  border-color: var(--gold); background: rgba(201, 163, 106, 0.12); transform: translateY(-3px);
+}
+.ribbon-track .sprint[aria-selected="true"] .sprint-h { color: var(--gold-light); }
+.ribbon-track .sprint[aria-selected="true"] .sprint-b em { background: linear-gradient(180deg, var(--gold-light), var(--gold-deep)); }
+.sprint-h, .sprint-f { display: block; }
+.sprint-b { display: flex; gap: 6px; padding: 14px 14px 9px; justify-content: center; align-items: flex-end; }
+
+/* The panel. Rendered server-side with sprint 1 already in it, so the page
+   reads correctly with JavaScript disabled. */
+.sprint-panel {
+  margin-top: 21px; padding: 21px; border-radius: 14px;
+  border: 1px solid var(--line); background: rgba(197, 173, 238, 0.05);
+}
+.sp-line { display: flex; align-items: baseline; gap: 14px; margin: 0 0 7px; }
+.sp-line b { font-family: var(--font-display); color: var(--gold-light);
+             font-size: clamp(0.94rem, 0.88rem + 0.2vw, 1.05rem); }
+.sp-day { font-size: clamp(0.7rem, 0.66rem + 0.12vw, 0.78rem);
+          letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); }
+.sp-body { margin: 0; font-size: clamp(0.9rem, 0.85rem + 0.2vw, 1rem);
+           color: rgba(243, 237, 247, 0.88); line-height: 1.6; text-wrap: balance; }
+
+/* Node buttons. Same visual as before, now operable. */
+.node-wrap { display: flex; flex-direction: column; }
+.arch-grid > .node-wrap > .node {
+  width: 100%; font: inherit; color: inherit; cursor: pointer; text-align: center;
+}
+.node-more {
+  display: block; margin-top: 7px; padding: 14px;
+  border-radius: 7px; border: 1px solid var(--line);
+  background: rgba(201, 163, 106, 0.07);
+  font-size: clamp(0.8rem, 0.76rem + 0.16vw, 0.88rem);
+  color: rgba(243, 237, 247, 0.88); line-height: 1.55; text-wrap: balance;
+}
+.arch-grid > .node-wrap > .node[aria-expanded="true"] { border-color: rgba(201,163,106,0.5); }
+/* THE [hidden] DEFEAT. .node-more sets display:block, and an AUTHOR rule always
+   beats the UA stylesheet's [hidden]{display:none}, so the hidden attribute the
+   controller toggles did NOTHING: all five detail panels rendered at once and the
+   buttons only changed a border color. Caught by LOOKING; no gate sees it.
+   Scoped to html.js for the same reason .reveal is: with JavaScript off nothing
+   can ever expand, so the panels must stay visible rather than collapse away. */
+html.js .node-more[hidden] { display: none; }
+
+/* THE AFFORDANCE. Nothing on the card said it could be opened, so the whole
+   control was invisible until someone happened to hover it. A chevron on its
+   own line under the copy, rotating 180 degrees when the panel opens.
+   .node::before and ::after are both spoken for by the connectors, and
+   .node-ico::after by the flow pulse, so this hangs off .node-v.
+   Scoped to html.js for the same reason the [hidden] rule is: with no JS every
+   panel is already open, and a chevron promising an action would be a lie.
+   1px borders and a 7px box keep the F7 grid intact. */
+html.js .node-v::after {
+  content: ""; display: block; width: 7px; height: 7px;
+  margin: 9px auto 0;
+  border-right: 1px solid rgba(201, 163, 106, 0.7);
+  border-bottom: 1px solid rgba(201, 163, 106, 0.7);
+  transform: rotate(45deg);
+  transition: transform 0.3s var(--ease-satisfying);
+}
+html.js .node[aria-expanded="true"] .node-v::after { transform: rotate(-135deg); }
+@media (prefers-reduced-motion: reduce) {
+  html.js .node-v::after { transition: none; }
+}
+
+
+/* Reduced motion: the controls still work, they just do not slide. */
+@media (prefers-reduced-motion: reduce) {
+  .ribbon-track .sprint { transition: none; }
+  .ribbon-track .sprint:hover,
+  .ribbon-track .sprint[aria-selected="true"] { transform: none; }
+}
+
+/* MOBILE: the sprints stay a WRAPPED GRID, not a horizontal snap strip.
+   A snap strip was built first and reverted. ag-mobile-proof reported 10
+   CRITICAL overflow findings against it (sp-tab-7 at 1057px inside a 339px
+   container), because the gate cannot tell an intentional scroller from a
+   layout blowout. A bounded carousel is precedented on the Eterna deck, but
+   a failing gate is not worth a horizontal strip that the existing grid
+   already replaces perfectly well. The timeline is still fully selectable
+   on mobile; it simply wraps instead of scrolling. */
+
+/* =========================================================== */
+/* F7 radii were corrected at their source declarations rather than
+   overridden here, because a duplicate declaration is exactly what the
+   "count distinct values per property" check penalises. */
+
+/* NO-JS SAFETY. Pairs with the html.js guard in the head. Without JavaScript
+   the reveal classes must not hide anything, or the page ships mostly blank. */
+html:not(.js) .reveal,
+html:not(.js) .reveal-hero,
+html:not(.js) .reveal-stagger > *,
+html:not(.js) .sec-rule {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* One column on a phone. As <div>s the sprints were not measured by the
+   gate's literal-centering rule; as <button>s they are, and a 2-column grid
+   put every cell 173px off-center in its container (12 WARN). Section 6C
+   wants content literally centered at <=900, so on a phone each control takes
+   the full measure. Seven short controls, not a 2-wide grid. */
+@media (max-width: 560px) {
+  .ribbon-track { grid-template-columns: 1fr; }
+  .ribbon-track > :last-child { grid-column: auto; }
+}
 
 </style>
 </head>
@@ -1405,11 +1512,10 @@ main > section.sec:first-of-type::after {
     <path class="stem-track" d="M 7 0 L 7 600"/>
     <path class="stem-live" id="stemLive" d="M 7 0 L 7 600"/>
     <circle class="stem-bud" data-bud="0" cx="7" cy="8.0" r="3"/>
-    <circle class="stem-bud" data-bud="1" cx="7" cy="124.8" r="3"/>
-    <circle class="stem-bud" data-bud="2" cx="7" cy="241.6" r="3"/>
-    <circle class="stem-bud" data-bud="3" cx="7" cy="358.4" r="3"/>
-    <circle class="stem-bud" data-bud="4" cx="7" cy="475.2" r="3"/>
-    <circle class="stem-bud" data-bud="5" cx="7" cy="592.0" r="3"/>
+    <circle class="stem-bud" data-bud="1" cx="7" cy="154.0" r="3"/>
+    <circle class="stem-bud" data-bud="2" cx="7" cy="300.0" r="3"/>
+    <circle class="stem-bud" data-bud="3" cx="7" cy="446.0" r="3"/>
+    <circle class="stem-bud" data-bud="4" cx="7" cy="592.0" r="3"/>
   </svg>
 </div>
 <main id="main">
@@ -1424,71 +1530,21 @@ main > section.sec:first-of-type::after {
   <p class="hero-deck">The advertising system we build, run and report on, and what it costs to run it for your practice.</p>
 </header>
 
-<!-- ══ 01 PROOF. Every figure from best-case-study-window-2026-07-31.md, 144/144 audited. ══ -->
-<section class="sec shell">
-  <div class="sec-head">
-    <span class="sec-num num">01</span>
-    <h2 class="sec-title">One Window</h2>
-  </div>
-  <div class="sec-rule reveal"></div>
+<!-- SECTION 01, another client's case study, was REMOVED on Quinten's
+     instruction 2026-09-03. It carried the only proof on the page: the
+     funnel, all six animated figures, the disclosures and the verdict
+     note. The page now opens on The System and has no case study.
+     Consequences handled in the same pass: sections renumbered 01-05,
+     the stem dropped from six buds to five, frag-count.html unspliced
+     because no .cnt element remains, and the now-dead proof/funnel CSS
+     removed. The audited source report is untouched and the block can be
+     restored from frag-body.html.bak-2026-09-03-pre-sec01-removal. -->
 
-  <div class="proof reveal">
-    <p class="proof-id">The Tooth Place <b>/</b> Lynwood,&nbsp;CA <b>/</b> April&nbsp;19 to May&nbsp;18,&nbsp;2026 <b>/</b> 30&nbsp;days</p>
-
-    <div class="funnel reveal-stagger">
-      <div class="fstep">
-        <div class="fstep-n num">$<span class="cnt" data-to="945.03" data-dec="2">945.03</span></div>
-        <div class="fstep-k">Ad spend, 30&nbsp;days</div>
-      </div>
-      <div class="fstep fstep--lead">
-        <div class="fstep-n num"><span class="cnt" data-to="87">87</span></div>
-        <div class="fstep-k">New patient leads</div>
-        <div class="fstep-c num">$10.86 each</div>
-      </div>
-      <div class="fstep">
-        <div class="fstep-n num"><span class="cnt" data-to="20">20</span></div>
-        <div class="fstep-k">Booked an&nbsp;appointment</div>
-        <div class="fstep-c num">$47.25 each &middot; 23% of leads</div>
-      </div>
-      <div class="fstep">
-        <div class="fstep-n num"><span class="cnt" data-to="9">9</span></div>
-        <div class="fstep-k">Sat in the&nbsp;chair</div>
-        <div class="fstep-c num">$105.00 each &middot; 10% of leads</div>
-      </div>
-    </div>
-
-    <div class="payoff">
-      <div>
-        <div class="fstep-n num">$<span class="cnt" data-to="13500">13,500</span></div>
-        <div class="fstep-k">Estimated lifetime value of those 9&nbsp;patients</div>
-      </div>
-      <div>
-        <div class="fstep-n num"><span class="cnt" data-to="14.3" data-dec="1">14.3</span>x</div>
-        <div class="fstep-k">Return on the ad&nbsp;spend</div>
-      </div>
-    </div>
-
-    <div class="proof-foot">
-      <span>Calculated on the practice's own $1,500 patient lifetime value, not ours. Our research puts this market at $4,570&nbsp;to&nbsp;$10,000.</span>
-      <span>One 30&nbsp;day window from one account, not a projection and not an&nbsp;average.</span>
-      <span>Across the full life of that account to date, 158&nbsp;leads at $20.21&nbsp;each.</span>
-      <span>Booked and attended are pipeline outcomes counted to 2026&#8209;07&#8209;31, not events inside the&nbsp;window.</span>
-    </div>
-  </div>
-
-  <div class="note reveal">
-    <b>The verdict</b>
-    <p>One account, one 30&nbsp;day window.</p>
-    <p>The cost per lead is what we control.</p>
-    <p>The number of leads that become patients depends on how fast your front desk picks up the phone.</p>
-  </div>
-</section>
-
-<!-- ══ 02 THE SYSTEM. Bespoke signature data-viz. Factual system description. ══ -->
+<!-- ══ 01 THE SYSTEM. Bespoke signature data-viz. Factual system description. ══ -->
 <section class="sec sec--band">
   <div class="shell">
     <div class="sec-head">
-      <span class="sec-num num">02</span>
+      <span class="sec-num num">01</span>
       <h2 class="sec-title">The System</h2>
     </div>
     <div class="sec-rule reveal"></div>
@@ -1496,33 +1552,47 @@ main > section.sec:first-of-type::after {
 
     <div class="arch reveal">
       <div class="arch-grid">
-        <div class="node">
-          <div class="node-ico"><svg viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M17 9a4 4 0 0 1 0 6"/></svg></div>
-          <div class="node-k">The Ad</div>
-          <div class="node-v">Facebook and Instagram. Written and built for each test.</div>
+        <div class="node-wrap">
+          <button type="button" class="node" aria-expanded="false" aria-controls="node-the-ad">
+          <span class="node-ico"><svg viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M17 9a4 4 0 0 1 0 6"/></svg></span>
+          <span class="node-k">The Ad</span>
+          <span class="node-v">Facebook and Instagram. Written and built for each test.</span>
+        </button>
+        <span class="node-more" id="node-the-ad" hidden>Written and shot as a pair, then run against each other. 14&nbsp;across a cycle.</span>
         </div>
-        <div class="node node--owned">
-          <div class="node-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></div>
-          <div class="node-k">Landing Page</div>
-          <div class="node-v">Custom coded, on your domain, carrying the form and the tags.</div>
+        <div class="node-wrap">
+          <button type="button" class="node node--owned" aria-expanded="false" aria-controls="node-landing-page">
+          <span class="node-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></span>
+          <span class="node-k">Landing Page</span>
+          <span class="node-v">Custom coded, on your domain, carrying the form and the tags.</span>
+        </button>
+        <span class="node-more" id="node-landing-page" hidden>Custom coded and hosted on your domain, so it carries the form and the tags. No separate build fee.</span>
         </div>
-        <div class="node node--owned">
-          <div class="node-ico"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg></div>
-          <div class="node-k">The CRM</div>
-          <div class="node-v">In your name. Leads land live and every stage is tracked.</div>
+        <div class="node-wrap">
+          <button type="button" class="node node--owned" aria-expanded="false" aria-controls="node-the-crm">
+          <span class="node-ico"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg></span>
+          <span class="node-k">The CRM</span>
+          <span class="node-v">In your name. Leads land live and every stage is tracked.</span>
+        </button>
+        <span class="node-more" id="node-the-crm" hidden>Opened in your practice name, not ours. You keep it if we ever stop working&nbsp;together.</span>
         </div>
-        <div class="node">
-          <div class="node-ico"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></div>
-          <div class="node-k">Attribution</div>
-          <div class="node-v">Each lead tied back to the ad that produced it.</div>
+        <div class="node-wrap">
+          <button type="button" class="node" aria-expanded="false" aria-controls="node-attribution">
+          <span class="node-ico"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></span>
+          <span class="node-k">Attribution</span>
+          <span class="node-v">Each lead tied back to the ad that produced it.</span>
+        </button>
+        <span class="node-more" id="node-attribution" hidden>Reported per ad, so you can see which creative produced which lead.</span>
         </div>
-        <div class="node">
-          <div class="node-ico"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 12v5M12 9v8M16 14v3"/></svg></div>
-          <div class="node-k">The Report</div>
-          <div class="node-v">A written window on real spend, published on a fixed day.</div>
+        <div class="node-wrap">
+          <button type="button" class="node" aria-expanded="false" aria-controls="node-the-report">
+          <span class="node-ico"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 12v5M12 9v8M16 14v3"/></svg></span>
+          <span class="node-k">The Report</span>
+          <span class="node-v">A written window on real spend, published on a fixed day.</span>
+        </button>
+        <span class="node-more" id="node-the-report" hidden>Every 4 days while a test is running, every 7&nbsp;once a winner holds. Numbers only.</span>
         </div>
       </div>
-      <div class="arch-flow" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
     </div>
 
     <!-- The arch-note block was REMOVED on Quinten's instruction 2026-09-03.
@@ -1531,10 +1601,10 @@ main > section.sec:first-of-type::after {
   </div>
 </section>
 
-<!-- ══ 03 WHAT WE DO. Ledger rows are AG canon, lifted word for word. ══ -->
+<!-- ══ 02 WHAT WE DO. Ledger rows are AG canon, lifted word for word. ══ -->
 <section class="sec shell">
   <div class="sec-head">
-    <span class="sec-num num">03</span>
+    <span class="sec-num num">02</span>
     <h2 class="sec-title">What We Do</h2>
     <span class="sec-price sec-price--soft">Meta only</span>
   </div>
@@ -1554,11 +1624,11 @@ main > section.sec:first-of-type::after {
   </div>
 </section>
 
-<!-- ══ 04 HOW IT RUNS. Four stages plus the 28-day sprint ribbon. ══ -->
+<!-- ══ 03 HOW IT RUNS. Four stages plus the 28-day sprint ribbon. ══ -->
 <section class="sec sec--band">
   <div class="shell">
     <div class="sec-head">
-      <span class="sec-num num">04</span>
+      <span class="sec-num num">03</span>
       <h2 class="sec-title">How It Runs</h2>
     </div>
     <div class="sec-rule reveal"></div>
@@ -1572,19 +1642,23 @@ main > section.sec:first-of-type::after {
     </div>
 
     <div class="ribbon reveal ribbon--spaced">
-      <div class="ribbon-track">
-        <div class="sprint"><div class="sprint-h">Sprint 1</div><div class="sprint-b"><em></em><em class="cut"></em></div><div class="sprint-f">4 days</div></div>
-        <div class="sprint"><div class="sprint-h">Sprint 2</div><div class="sprint-b"><em></em><em class="cut"></em></div><div class="sprint-f">4 days</div></div>
-        <div class="sprint"><div class="sprint-h">Sprint 3</div><div class="sprint-b"><em></em><em class="cut"></em></div><div class="sprint-f">4 days</div></div>
-        <div class="sprint"><div class="sprint-h">Sprint 4</div><div class="sprint-b"><em></em><em class="cut"></em></div><div class="sprint-f">4 days</div></div>
-        <div class="sprint"><div class="sprint-h">Sprint 5</div><div class="sprint-b"><em></em><em class="cut"></em></div><div class="sprint-f">4 days</div></div>
-        <div class="sprint"><div class="sprint-h">Sprint 6</div><div class="sprint-b"><em></em><em class="cut"></em></div><div class="sprint-f">4 days</div></div>
-        <div class="sprint"><div class="sprint-h">Sprint 7</div><div class="sprint-b"><em></em><em class="cut"></em></div><div class="sprint-f">4 days</div></div>
+      <div class="ribbon-track" role="tablist" aria-label="Testing sprints">
+        <button type="button" class="sprint" role="tab" id="sp-tab-1" aria-selected="true" aria-controls="sp-panel" tabindex="0" data-sprint="1"><span class="sprint-h">Sprint 1</span><span class="sprint-b"><em></em><em class="cut"></em></span><span class="sprint-f">4 days</span></button>
+        <button type="button" class="sprint" role="tab" id="sp-tab-2" aria-selected="false" aria-controls="sp-panel" tabindex="-1" data-sprint="2"><span class="sprint-h">Sprint 2</span><span class="sprint-b"><em></em><em class="cut"></em></span><span class="sprint-f">4 days</span></button>
+        <button type="button" class="sprint" role="tab" id="sp-tab-3" aria-selected="false" aria-controls="sp-panel" tabindex="-1" data-sprint="3"><span class="sprint-h">Sprint 3</span><span class="sprint-b"><em></em><em class="cut"></em></span><span class="sprint-f">4 days</span></button>
+        <button type="button" class="sprint" role="tab" id="sp-tab-4" aria-selected="false" aria-controls="sp-panel" tabindex="-1" data-sprint="4"><span class="sprint-h">Sprint 4</span><span class="sprint-b"><em></em><em class="cut"></em></span><span class="sprint-f">4 days</span></button>
+        <button type="button" class="sprint" role="tab" id="sp-tab-5" aria-selected="false" aria-controls="sp-panel" tabindex="-1" data-sprint="5"><span class="sprint-h">Sprint 5</span><span class="sprint-b"><em></em><em class="cut"></em></span><span class="sprint-f">4 days</span></button>
+        <button type="button" class="sprint" role="tab" id="sp-tab-6" aria-selected="false" aria-controls="sp-panel" tabindex="-1" data-sprint="6"><span class="sprint-h">Sprint 6</span><span class="sprint-b"><em></em><em class="cut"></em></span><span class="sprint-f">4 days</span></button>
+        <button type="button" class="sprint" role="tab" id="sp-tab-7" aria-selected="false" aria-controls="sp-panel" tabindex="-1" data-sprint="7"><span class="sprint-h">Sprint 7</span><span class="sprint-b"><em></em><em class="cut"></em></span><span class="sprint-f">4 days</span></button>
       </div>
       <div class="ribbon-legend">
         <span><i class="win"></i> Ad that holds</span>
         <span><i class="cut"></i> Ad that is cut</span>
         <span>14 creatives across 28&nbsp;days</span>
+      </div>
+      <div class="sprint-panel" id="sp-panel" role="tabpanel" aria-labelledby="sp-tab-1" aria-live="polite">
+        <p class="sp-line"><b>Sprint 1</b><span class="sp-day">Days 1 to 4</span></p>
+        <p class="sp-body">Creatives 1 and 2 run head to head on the same budget. The weaker one is cut, a fresh challenger takes its place, and a written report follows on day 4.</p>
       </div>
     </div>
 
@@ -1596,10 +1670,10 @@ main > section.sec:first-of-type::after {
   </div>
 </section>
 
-<!-- ══ 05 WHAT IT COSTS. Price is mandatory on every presentation. ══ -->
+<!-- ══ 04 WHAT IT COSTS. Price is mandatory on every presentation. ══ -->
 <section class="sec shell">
   <div class="sec-head">
-    <span class="sec-num num">05</span>
+    <span class="sec-num num">04</span>
     <h2 class="sec-title">What It Costs</h2>
     <span class="sec-price num">$1,500&nbsp;/&nbsp;month</span>
   </div>
@@ -1624,11 +1698,11 @@ main > section.sec:first-of-type::after {
   </div>
 </section>
 
-<!-- ══ 06 NEXT STEPS. Closes on a quiet line. No button, no CTA band. ══ -->
+<!-- ══ 05 NEXT STEPS. Closes on a quiet line. No button, no CTA band. ══ -->
 <section class="sec sec--band">
   <div class="shell">
     <div class="sec-head">
-      <span class="sec-num num">06</span>
+      <span class="sec-num num">05</span>
       <h2 class="sec-title">Next Steps</h2>
     </div>
     <div class="sec-rule reveal"></div>
@@ -1780,55 +1854,63 @@ main > section.sec:first-of-type::after {
 })();
 </script>
 <script>
-/* Count-up on the figures. The final figure is already in the HTML, so this is
-   pure enhancement: if the script never runs, the right number is on screen.
-   EXTENDED from the service-scope original to carry decimals - this page counts
-   $945.03 and $10.86, and the integer-only version rendered them as 945 and 11.
-   data-dec="2" fixes the places; absent, it counts as an integer exactly as before. */
+/* THE CONTROLS. Sprint tablist and expandable system nodes.
+   Extends the living-layer controller rather than adding a second script.
+
+   NOT gated behind the reduced-motion return above: motion is a preference,
+   operability is not. These must work either way, so this runs first. */
 (function () {
-  var els = document.querySelectorAll('.cnt');
-  if (!els.length) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  /* --- Sprint tablist. Sprint i runs creatives (2i-1) and (2i) and closes on
+     day 4i, so sprint 7 closes on day 28 with creative 14. Those are the canon
+     ledger's own numbers, which means the copy self-checks instead of being
+     invented. */
+  var tabs = [].slice.call(document.querySelectorAll('.ribbon-track .sprint'));
+  var panel = document.getElementById('sp-panel');
+  if (tabs.length && panel) {
+    var line = panel.querySelector('.sp-line');
+    var body = panel.querySelector('.sp-body');
 
-  var fmt = function (n, dec) {
-    return n.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
-  };
+    function show(i) {
+      var n = i + 1, a = 2 * n - 1, b = 2 * n, endDay = 4 * n, startDay = endDay - 3;
+      tabs.forEach(function (t, k) {
+        var on = k === i;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+      });
+      panel.setAttribute('aria-labelledby', 'sp-tab-' + n);
+      line.innerHTML = '<b>Sprint ' + n + '</b><span class="sp-day">Days ' + startDay + ' to ' + endDay + '</span>';
+      body.textContent = n < 7
+        ? 'Creatives ' + a + ' and ' + b + ' run head to head on the same budget. The weaker one is cut, a fresh challenger takes its place, and a written report follows on day ' + endDay + '.'
+        : 'Creatives ' + a + ' and ' + b + ' close the cycle. That is 14 creatives across 28 days. The winner holds and reporting moves to every 7 days.';
+    }
 
-  var run = function (el) {
-    var to  = parseFloat(el.getAttribute('data-to'));
-    var dec = parseInt(el.getAttribute('data-dec'), 10);
-    if (!isFinite(to)) return;
-    if (!isFinite(dec)) dec = 0;
-
-    /* Lock the box at its FINAL width before counting. Digit count changes as
-       it climbs, and a reflowing row would violate Hard Rule 5. */
-    el.style.display = 'inline-block';
-    el.style.minWidth = el.getBoundingClientRect().width + 'px';
-    el.style.textAlign = 'right';
-
-    var DUR = 900;                                   /* --duration-long */
-    var start = null;
-    var step = function (ts) {
-      if (start === null) start = ts;
-      var p = Math.min((ts - start) / DUR, 1);
-      var eased = (p === 1) ? 1 : 1 - Math.pow(2, -10 * p);   /* easeOutExpo */
-      el.textContent = fmt(to * eased, dec);
-      if (p < 1) requestAnimationFrame(step);
-      else el.textContent = fmt(to, dec);            /* always land exact */
-    };
-    requestAnimationFrame(step);
-  };
-
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) { run(e.target); io.unobserve(e.target); }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { show(i); });
+      t.addEventListener('keydown', function (e) {
+        var j = null;
+        if (e.key === 'ArrowRight') j = (i + 1) % tabs.length;
+        if (e.key === 'ArrowLeft') j = (i - 1 + tabs.length) % tabs.length;
+        if (e.key === 'Home') j = 0;
+        if (e.key === 'End') j = tabs.length - 1;
+        if (j === null) return;
+        e.preventDefault(); show(j); tabs[j].focus();
+      });
     });
-  }, { threshold: 0.6 });
+  }
 
-  els.forEach(function (el) { io.observe(el); });
+  /* --- Expandable nodes. Purely additive: .node-v stays visible at all times,
+     so nothing that is readable today gets hidden behind a click. */
+  [].slice.call(document.querySelectorAll('.arch-grid .node[aria-controls]')).forEach(function (btn) {
+    var more = document.getElementById(btn.getAttribute('aria-controls'));
+    if (!more) return;
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      more.hidden = open;
+    });
+  });
 })();
-</script>
-<script>
+
 /* THE LIVING LAYER controller.
    Three jobs: light the ambient layers, draw the stem from scroll, and
    hand the CSS the two measured values it cannot know (the node hop and
@@ -1838,7 +1920,7 @@ main > section.sec:first-of-type::after {
    carries no CSS transition, because a transition on a value a loop
    rewrites every frame fights itself (Learning Log 2026-08-28).
 
-   REDUCED MOTION. This whole file no-ops. The CSS also neutralises every
+   REDUCED MOTION. This whole file no-ops. The CSS also neutralizes every
    animation independently, so the page is correct with or without JS. */
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
