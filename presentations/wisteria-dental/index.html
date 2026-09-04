@@ -669,20 +669,22 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
 }
 .hero-mark {
   font-family: var(--font-mark);
-  font-size: clamp(0.8rem, 0.72rem + 0.34vw, 1rem);
-  letter-spacing: 0.42em; text-indent: 0.42em;
+  font-size: clamp(1rem, 0.86rem + 0.58vw, 1.44rem);
+  /* tracking eased as the size rises: 0.42em at a larger wordmark is what
+     overflowed 390px on the service-scope page. Measured here at 350. */
+  letter-spacing: 0.3em; text-indent: 0.3em;
   color: var(--gold); margin-bottom: 6px;
 }
 .hero-sub-mark {
-  font-size: clamp(0.56rem, 0.53rem + 0.16vw, 0.66rem);
-  letter-spacing: 0.34em; text-indent: 0.34em;
+  font-size: clamp(0.66rem, 0.62rem + 0.2vw, 0.8rem);
+  letter-spacing: 0.3em; text-indent: 0.3em;
   color: var(--ink-faint); text-transform: uppercase; margin-bottom: 30px;
 }
 .hero-sprig { width: 74px; height: 3px; margin: 0 auto 30px;
   background: linear-gradient(90deg, transparent, var(--wis-deep), var(--gold), var(--wis-deep), transparent); }
 .hero-kicker {
-  font-size: clamp(0.62rem, 0.58rem + 0.2vw, 0.74rem);
-  letter-spacing: 0.28em; text-indent: 0.28em; text-transform: uppercase;
+  font-size: clamp(0.76rem, 0.7rem + 0.28vw, 0.94rem);
+  letter-spacing: 0.26em; text-indent: 0.26em; text-transform: uppercase;
   color: var(--wis); margin-bottom: 20px;
 }
 .hero-title {
@@ -1151,9 +1153,9 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
   --ink-faint: rgba(243, 237, 247, 0.64);
 }
 .led-v, .stage-v, .node-v, .step-t, .sec-note { color: rgba(243, 237, 247, 0.88); }
-.led-v  { font-size: clamp(0.9rem, 0.86rem + 0.2vw, 1.02rem); }
-.node-v { font-size: clamp(0.76rem, 0.73rem + 0.16vw, 0.86rem); }
-.stage-v { font-size: clamp(0.82rem, 0.78rem + 0.2vw, 0.94rem); }
+.led-v  { font-size: clamp(1.0rem, 0.9rem + 0.2vw, 1.02rem); }
+.node-v { font-size: clamp(0.88rem, 0.8rem + 0.16vw, 0.86rem); }
+.stage-v { font-size: clamp(0.94rem, 0.86rem + 0.2vw, 0.94rem); }
 .proof-foot { color: rgba(243, 237, 247, 0.68); }
 .fstep-k { color: rgba(243, 237, 247, 0.9); }
 
@@ -1340,6 +1342,26 @@ main > section.sec:first-of-type::after {
       transparent 42%);
 }
 
+/* -- MOBILE READING SIZE ---------------------------------------
+   Quinten 2026-09-03: bigger text inside the containers on mobile.
+   Breakpoints stay layout-only per web-responsive, so this raises the
+   clamp FLOOR (which is what governs a phone) and leaves every ceiling
+   where it was, meaning desktop does not move at all.
+   Floors before this ranged 9.6px to 14.4px, which is small for a
+   document someone reads on a phone. */
+.fstep-k    { font-size: clamp(0.8rem, 0.74rem + 0.16vw, 0.68rem); }
+.fstep-c    { font-size: clamp(0.78rem, 0.72rem + 0.14vw, 0.64rem); }
+.proof-foot { font-size: clamp(0.84rem, 0.78rem + 0.14vw, 0.8rem); }
+.proof-id   { font-size: clamp(0.72rem, 0.68rem + 0.12vw, 0.66rem); }
+.sprint-h   { font-size: clamp(0.62rem, 0.58rem + 0.1vw, 0.58rem); }
+.sprint-f   { font-size: clamp(0.6rem, 0.56rem + 0.1vw, 0.55rem); }
+.ribbon-legend { font-size: clamp(0.72rem, 0.68rem + 0.12vw, 0.66rem); }
+.stage-k    { font-size: clamp(0.94rem, 0.88rem + 0.2vw, 0.96rem); }
+.node-k     { font-size: clamp(0.88rem, 0.82rem + 0.2vw, 0.88rem); }
+.led-k      { font-size: clamp(0.78rem, 0.74rem + 0.14vw, 0.8rem); }
+.band-k, .band-v { font-size: clamp(0.9rem, 0.85rem + 0.16vw, 1rem); }
+.hero-deck  { font-size: clamp(1.08rem, 1rem + 0.3vw, 1.19rem); }
+
 </style>
 </head>
 <body>
@@ -1400,11 +1422,6 @@ main > section.sec:first-of-type::after {
   <div class="hero-kicker">Scope of Work</div>
   <h1 class="hero-title">Paid Ads for Wisteria Dental&nbsp;Care</h1>
   <p class="hero-deck">The advertising system we build, run and report on, and what it costs to run it for your practice.</p>
-  <div class="hero-meta">
-    <span>Meta only</span>
-    <span>3 month minimum</span>
-    <span>September 2026</span>
-  </div>
 </header>
 
 <!-- ══ 01 PROOF. Every figure from best-case-study-window-2026-07-31.md, 144/144 audited. ══ -->
@@ -1454,7 +1471,7 @@ main > section.sec:first-of-type::after {
     <div class="proof-foot">
       <span>Calculated on the practice's own $1,500 patient lifetime value, not ours. Our research puts this market at $4,570&nbsp;to&nbsp;$10,000.</span>
       <span>One 30&nbsp;day window from one account, not a projection and not an&nbsp;average.</span>
-      <span>Across the full life of that account to date, 158 leads at $20.21&nbsp;each.</span>
+      <span>Across the full life of that account to date, 158&nbsp;leads at $20.21&nbsp;each.</span>
       <span>Booked and attended are pipeline outcomes counted to 2026&#8209;07&#8209;31, not events inside the&nbsp;window.</span>
     </div>
   </div>
@@ -1508,11 +1525,9 @@ main > section.sec:first-of-type::after {
       <div class="arch-flow" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
     </div>
 
-    <div class="arch-note reveal">
-      <p><b>Attribution runs through the CRM, not the ad platform.</b></p>
-      <p>Meta restricts conversion tracking on dental accounts, so the platform's own lead reporting cannot be relied on.</p>
-      <p>We learned that on a live dental account and built the system around it, which is why the CRM sits at the center rather than the pixel.</p>
-    </div>
+    <!-- The arch-note block was REMOVED on Quinten's instruction 2026-09-03.
+         Its .arch-note styles are intentionally left in the CSS so the block
+         can be restored without rebuilding it. -->
   </div>
 </section>
 
