@@ -14,9 +14,12 @@
   The page loads straight to the hero; the hero reveal-stagger IS the entrance.
 
   BESPOKE to this page, with reason (no primitive ships one):
-  the system-architecture diagram, the 28-day sprint ribbon and the
-  build stepper. These are the signature data-viz the presentation
-  standard requires be client-native rather than cloned.
+  the system-architecture diagram and the 28-day sprint ribbon. These are
+  the signature data-viz the presentation standard requires be client-native
+  rather than cloned. A build stepper was removed 2026-09-04: its four stages
+  each restated a canon ledger row in section 02 and a node in section 01, and
+  a one-off solo variant of it broke 6 orphan blockers on mobile. One design
+  language, used more than once, or it does not belong on the page.
 
   CONTROLS. The sprint ribbon is a role=tablist of 7 real buttons and
   the 5 system nodes are aria-expanded buttons. Both are keyboard
@@ -845,28 +848,6 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
 .ribbon-legend i.win { background: linear-gradient(180deg, var(--wis), var(--wis-deep)); }
 .ribbon-legend i.cut { background: transparent; border: 1px dashed rgba(243,237,247,0.34); }
 
-/* ── SIGNATURE DIAGRAM 4: the build stepper ───────────────── */
-.stepper { display: grid; gap: 9px; }
-.stage {
-  display: grid; grid-template-columns: 44px 1fr; gap: 15px; align-items: start;
-  border: 1px solid var(--line-soft); border-radius: 7px; padding: 13px 15px;
-  background: rgba(197,173,238,0.03);
-  transition: border-color .3s ease, background .3s ease, transform .3s ease;
-}
-.stage:hover { border-color: rgba(197,173,238,0.42); background: rgba(197,173,238,0.07); transform: translateX(3px); }
-.stage-n {
-  font-family: var(--font-body); font-variant-numeric: tabular-nums lining-nums;
-  font-size: clamp(0.86rem, 0.8rem + 0.28vw, 1.05rem); font-weight: 600;
-  color: var(--wis); border-right: 1px solid var(--line); padding-right: 12px; line-height: 1.5;
-}
-.stage-k {
-  font-family: var(--font-display); font-weight: 600; color: var(--ink);
-  font-size: clamp(0.82rem, 0.78rem + 0.2vw, 0.96rem); margin-bottom: 3px;
-}
-.stage-v {
-  font-size: clamp(0.66rem, 0.64rem + 0.14vw, 0.76rem);
-  color: var(--ink-faint); line-height: 1.55; text-wrap: pretty;
-}
 
 /* ── NEXT STEPS ───────────────────────────────────────────── */
 .steps { display: grid; gap: 11px; }
@@ -887,9 +868,7 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
   /* 8. The number columns kept a left rail against centered text, so the eye
         zigzagged. Stack them. The 7th sprint card was a lone orphan in a
         2-column grid, so it spans. */
-  .stage, .step { grid-template-columns: 1fr; gap: 6px; justify-items: center; text-align: center; }
-  .stage-n { border-right: 0; padding-right: 0; padding-bottom: 6px;
-             border-bottom: 1px solid var(--line); min-width: 52px; text-align: center; }
+  .step { grid-template-columns: 1fr; gap: 6px; justify-items: center; text-align: center; }
   .hero-meta span::before { display: none; }
   .ribbon-track > :last-child { grid-column: 1 / -1; }
 
@@ -942,7 +921,6 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
 /* 62ch caps the measure, which was the real defect at ~190 characters a line.
    margin-inline stays 0: centering the block started it at x=450 while every
    other element on the page starts at x=210, which read as misalignment. */
-.stage-v    { font-size: clamp(0.78rem, 0.74rem + 0.2vw, 0.9rem);  color: rgba(243, 237, 247, 0.62); }
 .node-v     { font-size: clamp(0.74rem, 0.71rem + 0.16vw, 0.84rem); color: rgba(243, 237, 247, 0.62); }
 
 /* 5. THE HERO VOID IS A LAYOUT SYMPTOM, so grow the element that belongs
@@ -1123,10 +1101,9 @@ h1, h2, h3, .sec-title, .hero-title { font-family: var(--font-display); }
   --ink-soft:  rgba(243, 237, 247, 0.86);
   --ink-faint: rgba(243, 237, 247, 0.64);
 }
-.led-v, .stage-v, .node-v, .step-t, .sec-note { color: rgba(243, 237, 247, 0.88); }
+.led-v, .node-v, .step-t, .sec-note { color: rgba(243, 237, 247, 0.88); }
 .led-v  { font-size: clamp(1.0rem, 0.9rem + 0.2vw, 1.02rem); }
 .node-v { font-size: clamp(0.88rem, 0.8rem + 0.16vw, 0.86rem); }
-.stage-v { font-size: clamp(0.94rem, 0.86rem + 0.2vw, 0.94rem); }
 
 /* -- 2. THE LIGHT SWEEP --------------------------------------
    feedback_no_living_camera rejects ambient whole-frame drift but
@@ -1328,7 +1305,6 @@ main > section.sec:first-of-type::after {
 .sprint-h   { font-size: clamp(0.62rem, 0.58rem + 0.1vw, 0.58rem); }
 .sprint-f   { font-size: clamp(0.6rem, 0.56rem + 0.1vw, 0.55rem); }
 .ribbon-legend { font-size: clamp(0.72rem, 0.68rem + 0.12vw, 0.66rem); }
-.stage-k    { font-size: clamp(0.94rem, 0.88rem + 0.2vw, 0.96rem); }
 .node-k     { font-size: clamp(0.88rem, 0.82rem + 0.2vw, 0.88rem); }
 .led-k      { font-size: clamp(0.78rem, 0.74rem + 0.14vw, 0.8rem); }
 .band-k, .band-v { font-size: clamp(0.9rem, 0.85rem + 0.16vw, 1rem); }
@@ -1624,7 +1600,11 @@ html:not(.js) .sec-rule {
   </div>
 </section>
 
-<!-- ══ 03 HOW IT RUNS. Four stages plus the 28-day sprint ribbon. ══ -->
+<!-- ══ 03 HOW IT RUNS. The build gate plus the 28-day sprint ribbon.
+     Test, Attribution and Reporting were CUT 2026-09-04: each restated a canon
+     ledger row in section 02 and a node in section 01, so the same fact was on
+     the page three times. Build stays because nothing else says the system is
+     built and proven before any ad spend goes live. ══ -->
 <section class="sec sec--band">
   <div class="shell">
     <div class="sec-head">
@@ -1634,12 +1614,6 @@ html:not(.js) .sec-rule {
     <div class="sec-rule reveal"></div>
     <p class="sec-note reveal">Every dollar is tracked from the ad to the lead.</p>
 
-    <div class="stepper reveal-stagger">
-      <div class="stage"><div class="stage-n num">01</div><div><div class="stage-k">Build</div><div class="stage-v">The offer, the audience, the landing page and the CRM are built and tested before a dollar of ad spend goes live.</div></div></div>
-      <div class="stage"><div class="stage-n num">02</div><div><div class="stage-k">Test</div><div class="stage-v">2&nbsp;ads run head to head for 4&nbsp;days. The loser is cut. A new challenger takes its place. Same budget, repeated.</div></div></div>
-      <div class="stage"><div class="stage-n num">03</div><div><div class="stage-k">Attribution</div><div class="stage-v">Leads are tracked to the ad that produced them, through the CRM instead of the ad platform's own reporting.</div></div></div>
-      <div class="stage"><div class="stage-n num">04</div><div><div class="stage-k">Reporting</div><div class="stage-v">A written report every 4&nbsp;days during testing, every 7&nbsp;days once a winner is holding. Numbers only.</div></div></div>
-    </div>
 
     <div class="ribbon reveal ribbon--spaced">
       <div class="ribbon-track" role="tablist" aria-label="Testing sprints">
