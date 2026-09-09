@@ -15,7 +15,7 @@
 <meta name="theme-color" content="#f7f5f0">
 
 <title>Yoga Circle LA | Growth Proposal - Arc Garde</title>
-<meta name="description" content="Arc Garde growth proposal for Yoga Circle LA. A six month plan in two phases that run one after the other: three months of organic content, 12 videos a month cut from your own classes, then three months of Facebook and Instagram ads, 14 ads tested every 28 day cycle, with a sign-up page and booking system built for you.">
+<meta name="description" content="Arc Garde growth proposal for Yoga Circle LA. Two phases over six months: three months of organic content, then three months of Meta ads, 14 per testing cycle.">
 
 <!-- Banner law -->
 <link rel="icon" href="/assets/favicon.png" type="image/png">
@@ -209,8 +209,9 @@ body::before {
 /* The skip link is the only thing above the fold that is not the hero. */
 .skip {
   position: absolute; left: -9999px; top: 0; z-index: 99;
-  background: var(--ycla-ink); color: #fffdfa;
-  padding: 12px 21px; border-radius: 0 0 12px 0;
+  background: var(--ycla-ink); color: var(--ycla-warm-white);
+  padding: 14px 21px; min-height: 48px; border-radius: 0 0 14px 0;
+  display: flex; align-items: center;
   font-weight: 600; font-size: 0.875rem;
 }
 .skip:focus { left: 0; }
@@ -813,7 +814,7 @@ body::before {
 
 /* ---------- Note strip ---------- */
 .note {
-  max-width: 760px; margin: var(--v-lg) auto 0;
+  max-width: 66ch; margin: var(--v-lg) auto 0;
   text-align: center;
   border-top: 1px solid var(--rule); padding-top: var(--v-md);
   font-size: clamp(0.875rem, 0.85rem + 0.16vw, 0.9375rem);
@@ -839,8 +840,8 @@ body::before {
 .price {
   text-align: center;
   font-family: var(--font-display); font-weight: 600;
-  font-size: clamp(2.25rem, 1.2rem + 4.4vw, 4.25rem);
-  line-height: 1.04; letter-spacing: -0.012em;
+  font-size: clamp(2rem, 1.2rem + 4.5vw, 5.25rem);
+  line-height: 1.02; letter-spacing: -0.018em;
   font-variant-numeric: tabular-nums;
   color: var(--ink); word-break: normal; text-wrap: balance;
 }
@@ -995,7 +996,7 @@ body::before {
    month scale underneath and by the key. MEASURED at 390: label 104px into a
    150px bar. */
 @media (max-width: 760px) {
-  .tl-bar { font-size: 0.625rem; letter-spacing: 0.06em; padding-inline: 10px; }
+  .tl-bar { font-size: 0.625rem; letter-spacing: 0.06em; padding-inline: 7px; }
   .tl-bar-p { display: none; }
 }
 @media (max-width: 380px) {
@@ -1021,8 +1022,8 @@ body::before {
      chip's hover lift and its shadow. Pad the clipped box vertically and pull
      the same amount off the margin, so the lift happens inside the clip and
      the rail still occupies its original height. */
-  padding-block: 16px;
-  margin-block: -16px;
+  padding-block: 14px;
+  margin-block: -14px;
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
           mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
 }
@@ -1219,7 +1220,7 @@ body::before {
 :focus-visible {
   outline: 2px solid var(--metal-text);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
 /* ---------- Narrow ----------
@@ -1260,7 +1261,7 @@ body::before {
   /* Seven columns hold fine at fourteen dots: at 330px each ring is still
      about 34px. Only the gap needs to come in. */
   .seat-grid { max-width: 300px; gap: 11px; }
-  .figs { gap: 10px; }
+  .figs { gap: 7px; }
 }
 @media (max-width: 420px) {
   .hero-title { font-size: min(10.5vw, 8.4vh); }
@@ -1361,7 +1362,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
 })();
 </script>
 
-<a class="skip" href="#what-we-do">Skip to content</a>
+<a class="skip" href="#the-plan">Skip to content</a>
 
 
 <main>
@@ -1449,6 +1450,12 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
         </div>
         <p class="seat-note">One phase at a time. The ads do not start until the content phase is&nbsp;finished.</p>
       </div>
+
+      <figure class="proof reveal">
+        <p class="proof-head">Proof It&nbsp;Works</p>
+        <blockquote>We&rsquo;ve been running ads since around March for another local client, a dentist, using this same approach: test, find what works, then spend more on it. Strong results so&nbsp;far.</blockquote>
+      </figure>
+
     </div>
   </section>
 
@@ -1484,10 +1491,6 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
         We film, edit and deliver. You&nbsp;post.<br>
         <strong>12 finished videos a month, cut from footage of your own&nbsp;classes.</strong></p>
 
-      <figure class="proof reveal">
-        <p class="proof-head">Proof It&nbsp;Works</p>
-        <blockquote>We&rsquo;ve been running ads since around March for another local client, a dentist, using this same approach: test, find what works, then spend more on it. Strong results so&nbsp;far.</blockquote>
-      </figure>
     </div>
   </section>
 
@@ -1641,7 +1644,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
         <p class="price-sub">Six month total, two phases run one after the&nbsp;other</p>
 
         <div class="ledger-block reveal-stagger">
-          <p class="ledger-head">Phase One &nbsp;/&nbsp; Months 1 to 3, organic only</p>
+          <p class="ledger-head">Phase One &nbsp;/&nbsp; Months 1 to&nbsp;3, organic&nbsp;only</p>
           <div class="lrow"><p class="lrow-term">Organic content package</p><p class="lrow-val">$750 a&nbsp;month</p></div>
           <div class="lrow"><p class="lrow-term">Content made</p><p class="lrow-val">12 videos a&nbsp;month</p></div>
           <div class="lrow"><p class="lrow-term">Content posted</p><p class="lrow-val">3 a week, on&nbsp;Instagram</p></div>
@@ -1649,7 +1652,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
         </div>
 
         <div class="ledger-block reveal-stagger">
-          <p class="ledger-head">Phase Two &nbsp;/&nbsp; Months 4 to 6, paid ads only</p>
+          <p class="ledger-head">Phase Two &nbsp;/&nbsp; Months 4 to&nbsp;6, paid ads&nbsp;only</p>
           <div class="lrow"><p class="lrow-term">Ads management retainer</p><p class="lrow-val">$1,500 a&nbsp;month</p></div>
           <div class="lrow"><p class="lrow-term">Meta ad spend</p><p class="lrow-val">$1,200 to $1,350 a&nbsp;month</p></div>
           <div class="lrow"><p class="lrow-term">Ads tested</p><p class="lrow-val">14 per testing&nbsp;cycle</p></div>
