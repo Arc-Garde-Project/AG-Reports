@@ -150,6 +150,21 @@ p{margin:0 auto;max-width:31rem;color:var(--muted);text-wrap:pretty}
 .brk{display:inline}
 @media (max-width:900px){.brk{display:none}}
 
+/* ---- EASTER EGG: hover the mark ---- */
+.mark__link{position:absolute;inset:0;border-radius:50%;display:block;
+text-decoration:none;-webkit-tap-highlight-color:transparent}
+.mark__link:focus-visible{outline:2px solid var(--gold-bright);outline-offset:6px}
+.pill{position:absolute;bottom:calc(100% + 14px);left:50%;
+transform:translate(-50%,5px);white-space:nowrap;
+font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+color:#0b0908;background:linear-gradient(176deg,#ffeecf 0%,#e8c795 55%,#cfa871 100%);
+padding:.46em .9em .42em;border-radius:999px;opacity:0;pointer-events:none;
+box-shadow:0 0 16px rgba(255,214,150,.34),0 2px 12px rgba(0,0,0,.55);
+transition:opacity .3s ease,transform .3s ease}
+/* hover is gated: on touch there is no real hover and the state can stick */
+@media (hover:hover){.mark__link:hover .pill{opacity:1;transform:translate(-50%,0)}}
+.mark__link:focus-visible .pill{opacity:1;transform:translate(-50%,0)}
+
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes breathe{0%,100%{opacity:.72}50%{opacity:1}}
 @keyframes halo{0%,100%{opacity:.62}50%{opacity:1}}
@@ -158,5 +173,6 @@ p{margin:0 auto;max-width:31rem;color:var(--muted);text-wrap:pretty}
 @keyframes fy{from{transform:translateY(calc(var(--dy) * -1))}to{transform:translateY(var(--dy))}}
 @keyframes pulse{0%,100%{opacity:.06}50%{opacity:var(--o)}}
 @media (prefers-reduced-motion:reduce){
-*{animation:none!important}
-.w,.mark{opacity:1;transform:none}}</style></head><body><div class="ground"></div><div class="w"><div class="mark"><div class="mark__field"></div><div class="mark__pool"></div><div class="mark__ring"></div><div class="mark__ag">AG</div></div><h1>Page not found</h1><p>The address may be incomplete, or this <br class="brk">page may have moved.</p></div><div class="dither"></div><div class="flies"><span class="ff f1"><i></i></span><span class="ff f2"><i></i></span><span class="ff f3"><i></i></span><span class="ff f4"><i></i></span><span class="ff f5"><i></i></span><span class="ff f6"><i></i></span><span class="ff f7"><i></i></span><span class="ff f8"><i></i></span><span class="ff f9"><i></i></span><span class="ff f10"><i></i></span><span class="ff f11"><i></i></span><span class="ff f12"><i></i></span><span class="ff f13"><i></i></span><span class="ff f14"><i></i></span><span class="ff f15"><i></i></span><span class="ff f16"><i></i></span><span class="ff f17"><i></i></span><span class="ff f18"><i></i></span><span class="ff f19"><i></i></span><span class="ff f20"><i></i></span><span class="ff f21"><i></i></span><span class="ff f22"><i></i></span><span class="ff f23"><i></i></span><span class="ff f24"><i></i></span><span class="ff f25"><i></i></span><span class="ff f26"><i></i></span></div></body></html>
+*{animation:none!important;transition:none!important}
+.w,.mark{opacity:1;transform:none}
+.pill{transform:translate(-50%,0)}}</style></head><body><div class="ground"></div><div class="w"><div class="mark"><div class="mark__field"></div><div class="mark__pool"></div><div class="mark__ring"></div><a class="mark__link" href="https://www.instagram.com/arcgardemedia/" target="_blank" rel="noopener noreferrer" aria-label="Click here for Arc Garde on Instagram"><span class="mark__ag">AG</span><span class="pill" aria-hidden="true">click here</span></a></div><h1>Page not found</h1><p>The address may be incomplete, or this <br class="brk">page may have moved.</p></div><div class="dither"></div><div class="flies"><span class="ff f1"><i></i></span><span class="ff f2"><i></i></span><span class="ff f3"><i></i></span><span class="ff f4"><i></i></span><span class="ff f5"><i></i></span><span class="ff f6"><i></i></span><span class="ff f7"><i></i></span><span class="ff f8"><i></i></span><span class="ff f9"><i></i></span><span class="ff f10"><i></i></span><span class="ff f11"><i></i></span><span class="ff f12"><i></i></span><span class="ff f13"><i></i></span><span class="ff f14"><i></i></span><span class="ff f15"><i></i></span><span class="ff f16"><i></i></span><span class="ff f17"><i></i></span><span class="ff f18"><i></i></span><span class="ff f19"><i></i></span><span class="ff f20"><i></i></span><span class="ff f21"><i></i></span><span class="ff f22"><i></i></span><span class="ff f23"><i></i></span><span class="ff f24"><i></i></span><span class="ff f25"><i></i></span><span class="ff f26"><i></i></span></div></body></html>
