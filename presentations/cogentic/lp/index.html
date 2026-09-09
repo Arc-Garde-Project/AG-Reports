@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#0F0E1A">
+
+<title>Free Predictive Assessment for Your Data | Cogentic</title>
+<meta name="description" content="Find out what your data can already predict, before you spend a dollar finding out. We organize what you have and set up models your team runs on your hardware.">
+<link rel="canonical" href="https://ag-reports.vercel.app/presentations/cogentic/lp">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free Predictive Assessment for Your Data | Cogentic">
+<meta property="og:description" content="Find out what your data can already predict, before you spend a dollar finding out. We organize what you have and set up models your team runs on your hardware.">
+<meta property="og:image" content="https://ag-reports.vercel.app/presentations/cogentic/lp/assets/vsl-poster.webp">
+<meta property="og:url" content="https://ag-reports.vercel.app/presentations/cogentic/lp">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap">
+<link rel="preload" as="image" href="assets/vsl-poster-yt.webp">
+
+<!-- ══ TOKENS ══ Cogentic values on the AG token names. Names bind the primitives; only values change. -->
+<style>
+:root{
+  /* Palette, INTAKE-DECLARED and BRANDKIT locked. */
+  --ink:#0F0E1A;
+  --ink-2:#17152A;
+  /* Comma-separated for rgba(var(--x), a). --ink-deep is the hero's edge fall-off:
+     darker than --ink and deliberately not #000, so the descending light still has
+     something to fall off INTO. Added 2026-09-08; the scrim previously hardcoded
+     rgba(15,14,26,...) inline, which was a hardcoded colour on the killers list. */
+  --ink-rgb:15,14,26;
+  --ink-deep:#08070E;
+  --ink-deep-rgb:8,7,14;
+  /* Band 4's ground. #1A1430 -> #120D24 on 2026-09-08 ("we also need the background
+     purple to be darker"): ~68% of the previous luminance, still unmistakably violet,
+     and now dark enough that the bolts walking the grid read as light on it rather than
+     competing with it. */
+  --ink-violet:#120D24;
+  --surface:#1C1A2E;
+  --paper:#F2F2F5;
+  --accent:#714EFF;
+  --violet-lift:#A796FF;
+  --pale:#EEEAFF;
+  /* Raised from #8A8A93 (5.38:1) to match the infographics, which record this move:
+     "the two-tone drop, 6.70:1 on ground". The two channels now agree on the token. */
+  --neutral-400:#9A9AA3;
+  --c-white:#ffffff;
+  --hairline:#272733;
+  --shade:#000000;
+
+  /* Greys are OPACITY on white, never named hex. ENTERPRISE-EFFECTS-GUIDE section 7:
+     headlines 1.0, body .55, labels .35, dividers .06-.10. Opacity adapts to any ground. */
+  --paper-soft:rgba(255,255,255,0.55);
+  --paper-mute:rgba(255,255,255,0.35);
+  --rule:rgba(255,255,255,0.10);
+  --rule-2:rgba(255,255,255,0.06);
+  /* THE DRAWN GRID IS VIOLET, NOT WHITE. Measured off the deck: every grid layer there
+     is rgba(124,107,247,α) — the hero grid, the circuit grid, all of it. This build had
+     them at white .095, which is why the ground read cold and technical while the deck
+     reads warm. One token, and it tints every band at once. */
+  --grid-ink:rgba(113,78,255,0.13);
+  --grid-node:rgba(113,78,255,0.22);
+
+  --glass-50:rgba(242,242,245,0.5);
+  --text-on-ink:var(--paper);
+  --aurora-sky:var(--violet-lift);
+  --c-mint:var(--accent);
+  --mint-glow:rgba(113,78,255,0.18);
+
+  /* Brand slot. --brand-rgb is SPACE separated for rgb(var(--brand-rgb) / a) in ag-button. */
+  --brand:#714EFF;
+  --brand-700:#5B3AE0;
+  --brand-rgb:113 78 255;
+  --brand-primary:var(--brand);
+  --accent-1:#714EFF;
+  --accent-1-rgb:113,78,255;
+  /* #A796FF as rgb, for the drifting gradient's second blob */
+  --violet-lift-rgb:167,150,255;
+
+  --text-primary:var(--paper);
+  --text-secondary:var(--neutral-400);
+
+  --on-ink:var(--paper);
+  --on-ink-soft:rgba(255,255,255,0.5);
+  --glass-06:rgba(255,255,255,0.06);
+  --glass-08:rgba(255,255,255,0.08);
+  --glass-12:rgba(255,255,255,0.12);
+  --glass-92:rgba(242,242,245,0.92);
+  --drawer-backdrop:rgba(15,14,26,0.55);
+  --drawer-close-border:rgba(255,255,255,0.16);
+  --scrim-45:rgba(15,14,26,0.45);
+
+  --header-bg:rgba(15,14,26,0.82);
+  --header-border:rgba(255,255,255,0.08);
+
+  --bg-footer:var(--ink);
+  --text-on-footer:var(--paper);
+  --text-muted-on-footer:var(--neutral-400);
+  --link-on-footer:var(--text-on-footer);
+
+  --logo-size:30px;
+  --max-w:1400px;
+  --maxw:var(--max-w);
+  /* Approved content widths only: 1400 locked; 1050 / 1176 / 1260 / 1470. */
+  --wrap:1176px;
+  --wrap-tight:1050px;
+  --measure:640px;
+  --section-padding-inline:clamp(21px,5vw,84px);
+  --section-pad-inline:var(--section-padding-inline);
+  --safe-edge:21px;
+  --radius-md:7px;
+  --sh-sm:0 1px 3px rgba(0,0,0,0.4);
+  --sh-card:inset 0 1px 0 0 rgba(255,255,255,0.06),0 24px 60px -30px rgba(0,0,0,0.85),0 0 0 1px rgba(255,255,255,0.04);
+
+  --font-heading:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+  --font-display:var(--font-heading);
+  --font-body:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
+  /* Large, light and tight. Weight 700 at display size is the generated tell. */
+  --fw-hero:700;
+  --fw-h2:700;
+  --fw-h3:700;
+
+  /* THE LOCKED AG SCALE, verbatim from AG-TYPOGRAPHY-STANDARD v2.4. Pure multiples
+     of 7. The previous build invented its own; the grammar template says in terms
+     "Do not invent a scale." Body at 14->21 is the standard's "magazine feel". */
+  /* MIN lowered from the locked 2.625rem. See DECISIONS.md #20: at 350px the
+     locked 42px min puts an 82-character two-tone headline at measure/size 8.0,
+     under the F <= M/9 floor. Max is unchanged at 56px. */
+  --text-hero:clamp(1.75rem,1.167rem + 2.667vw,3.5rem);
+  --text-h1:clamp(2.1875rem,1.896rem + 1.333vw,3.0625rem);
+  --text-h2:clamp(1.75rem,1.458rem + 1.333vw,2.625rem);
+  --text-h3:clamp(1.3125rem,1.021rem + 1.333vw,2.1875rem);
+  --text-h4:clamp(0.875rem,0.583rem + 1.333vw,1.75rem);
+  --text-base:clamp(0.875rem,0.729rem + 0.667vw,1.3125rem);
+  --text-sm:0.875rem;
+  --text-xs:0.875rem;
+  --text-eyebrow:0.75rem;
+
+  --space-md:clamp(0.875rem,0.6rem + 1.2vw,1.5rem);
+  --space-lg:clamp(1.25rem,0.9rem + 1.6vw,2.25rem);
+  --space-section:clamp(3rem,1.619rem + 5.89vw,6rem);
+  --space-container:clamp(1.125rem,0.262rem + 3.68vw,3rem);
+
+  /* THE MODULE. Every drawn grid on the page is on this pitch. With the canvases
+     removed the grid stops being weather and becomes the instrument's own rule. */
+  --pitch:46px;
+  /* section 17 sets 80-160px for this register. All values multiples of 7. */
+  --band-pad:clamp(84px,3.5rem + 5vw,154px);
+}
+@media (max-width:1200px){ :root{ --safe-edge:14px; --band-pad:clamp(70px,3rem + 4vw,112px); } }
+@media (max-width:900px) { :root{ --safe-edge:7px;  --band-pad:clamp(56px,2.5rem + 3vw,84px); } }
+</style>
+
+<!-- ══ AG PRIMITIVES ══ order is load-bearing.
+     defensive first; motion owns --duration/--ease/--dist and is consumed unfallbacked by
+     cursor/header/button/footer; cursor AFTER defensive, because defensive sets
+     svg{max-width:100%} and the cursor fights it with max-width:none at equal specificity. -->
+<!-- Swiper SELF-HOSTED, byte-identical to the CDN build (sha384 re-verified after copy).
+     ag-reports' shared CSP is style-src 'self' 'unsafe-inline' fonts.googleapis.com --
+     it does NOT allow jsdelivr for STYLES, only scripts, so the CDN stylesheet would have
+     been blocked and the carousel would have rendered unstyled while looking installed. -->
+<link rel="stylesheet" href="vendor/swiper-bundle.min.css">
+<link rel="stylesheet" href="ag/ag-defensive.css">
+<link rel="stylesheet" href="ag/ag-motion.css">
+<link rel="stylesheet" href="ag/ag-typography.css">
+<link rel="stylesheet" href="ag/ag-scroll.css">
+<link rel="stylesheet" href="ag/ag-button.css">
+<link rel="stylesheet" href="ag/ag-footer.css">
+<link rel="stylesheet" href="ag/ag-killline.css">
+<link rel="stylesheet" href="ag/ag-cursor.css">
+<link rel="stylesheet" href="ag/ag-scrollbar.css">
+
+<style>
+/* ══ THE LABEL LAYER ══ mono carries every label; sans carries every sentence.
+   Nothing else on the page does as much work. Overrides the ag-button primitive at
+   page level rather than editing it. */
+
+.ag-button{
+  font-family:var(--font-mono);font-weight:500;
+  font-size:var(--text-eyebrow);letter-spacing:.14em;text-transform:uppercase;
+}
+/* Radius as a SCALE with meaning, not one value everywhere: 0 structural, 3 chip,
+   7 panel. Measured on Oxide: 1607 elements at 0px and 3 pills on the whole page. */
+.ag-button{border-radius:0}
+.ag-button--sm{border-radius:0}
+
+/* ═══════════════ PAGE ═══════════════ */
+html{background-color:var(--ink)}
+body{background-color:var(--ink);color:var(--paper);font-family:var(--font-body)}
+main,footer{position:relative;z-index:1}
+
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--section-padding-inline)}
+.wrap-tight{max-width:var(--wrap-tight);margin-inline:auto;padding-inline:var(--section-padding-inline)}
+
+/* ── Mono label system. The voice of fact. Cogentic's infographics use exactly two
+   tracking values, 0.14em and 0.21em, both 3/7-clean. The site now uses the same two. ── */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-mono);font-weight:500;font-size:var(--text-eyebrow);
+  letter-spacing:.21em;text-transform:uppercase;color:var(--paper-mute);
+  margin:0 0 var(--space-md);
+}
+.eyebrow::before{
+  content:'';width:7px;height:7px;border-radius:50%;flex:none;
+  background-color:var(--accent);box-shadow:0 0 9px var(--accent);
+}
+.mono{
+  font-family:var(--font-mono);font-weight:500;font-size:var(--text-eyebrow);
+  letter-spacing:.21em;text-transform:uppercase;color:var(--paper-mute);
+  font-variant-numeric:tabular-nums;margin:0;
+}
+
+/* ── The two-tone statement. BRANDKIT distinctive asset 3: payload in paper, the
+   qualifier or counter-claim drops to mid-grey, IN ONE CONTINUOUS SENTENCE. ── */
+.statement{
+  font-family:var(--font-display);font-weight:var(--fw-h2);
+  font-size:var(--text-h2);line-height:1.06;letter-spacing:-.022em;
+  color:var(--paper);margin:0;
+}
+.statement .q{color:var(--violet-lift)}
+
+.lede{
+  font-family:var(--font-body);font-size:var(--text-base);line-height:1.8;
+  color:var(--paper-soft);max-width:var(--measure);
+}
+.lede p{margin:0 0 .7em}
+.lede p:last-child{margin-bottom:0}
+
+/* ── PROSE EMPHASIS, two tiers (Quinten, 2026-09-08). Body sits at --paper-soft, 55%
+   white, weight 400, so both tiers earn their emphasis from the gap to that baseline.
+   No new hex: --paper, --violet-lift and --accent-1-rgb are all already in :root.
+   TIER 1, strong: 100% white + weight 700. Colour and weight only, no ornament.
+   TIER 2, .hl: the mic drop. Violet-lift on a low-alpha violet wash. --violet-lift
+   measures 7.72:1 on the ground (base #714EFF is 3.86:1 and fails, never use it for
+   text). Radius 3 is from the approved set. Extends the .statement .q two-tone into
+   prose, which is BRANDKIT distinctive asset 3 and decision #35. ── */
+.lede strong,.step__b strong,.rcard__b strong,.close-body strong,.steps__line strong{
+  font-weight:var(--fw-h2);color:var(--paper);
+}
+.lede .hl,.step__b .hl,.rcard__b .hl,.close-body .hl,.steps__line .hl{
+  color:var(--violet-lift);font-weight:var(--fw-h2);
+  background:rgba(var(--accent-1-rgb),.14);
+  border-radius:3px;padding:.06em .14em;margin:0 -.14em;
+  box-decoration-break:clone;-webkit-box-decoration-break:clone;
+}
+
+/* ═══ BANDS ═══ section 16: every section is one of four layouts. ═══ */
+.band{position:relative;overflow:hidden;padding-block:var(--band-pad)}
+.band + .band{border-top:1px solid var(--rule-2)}
+/* ALL SECTIONS DARK (Quinten, 2026-09-07). The alternating --ink-2 ground is gone;
+   every band sits on --ink. The atmosphere below is applied UNIFORMLY rather than
+   alternating, so the page is one continuous dark ground instead of a stripe pattern. */
+.band--alt{background-color:var(--ink)}
+.band > .wrap, .band > .wrap-tight{position:relative;z-index:1}
+
+/* ═══ THE BLOOM SYSTEM ═══ ported from the client's own pitch deck, which is the
+   standing visual reference for Cogentic (feedback_client_artifact_outranks_generic_standard).
+   The 09-04 build had NO atmosphere at all: flat near-black top to bottom across 8,075px,
+   which is the largest single reason it read as a technical whitepaper.
+
+   The deck's recipe, measured off it rather than eyeballed: violet lives at alpha
+   0.06 to 0.22 and never higher, and EVERY glow layer is clipped by a radial mask so it
+   has no hard edge. Every value below derives from --accent-1-rgb, so the palette stays
+   single-sourced and there is no hardcoded hex. */
+
+/* SUBTRACT PASS, 2026-09-07. Quinten: "too much happening, keep it simple but unique."
+   He is right and this is the exact failure BUILD-PATH 5b and LEARNING-LOG:2820 describe:
+   a restraint rule checked one addition at a time never fires. Every layer below was
+   individually defensible against the deck and collectively they were noise.
+
+   REMOVED, and named so nobody re-adds them one at a time:
+     - concentric scan rings inside the band glow  (texture on top of texture)
+     - the 6s light sweep                          (a third moving thing)
+     - the 150vmax rotating ring-dot field         (most decorative, least meaning)
+     - bloom on the PLAIN bands                    (it made all five bands the same again,
+                                                    which is the problem it was meant to fix)
+     - the horizontal trace                        (redundant with the vertical one)
+
+   KEPT: ONE glow, on the alternating bands only, so the alternation actually reads. */
+/* REMOVED 2026-09-08. This was the static violet pool on the plain bands. After the
+   atmosphere pass every band carries a named treatment instead (2 = living light,
+   3 and 5 = lit ground, 4 = deep purple), so the selector matched nothing that still
+   wanted it, and on bands 3 and 5 it would have stacked a second violet wash under the
+   very surge light that replaced it. Deleting rather than leaving it dead: decision #34
+   already had to clean orphaned rules out of this build twice. */
+
+/* ═══ THE STROKED MARQUEE ═══ the deck's display band. Outlined letterforms via
+   -webkit-text-stroke on transparent fill, alternating paper / violet. The track holds
+   the group TWICE so a -50% translate loops seamlessly with no visible seam.
+   21s, the same house loop as the trace and the ring field. */
+.jumbo{
+  position:relative;overflow:hidden;background-color:var(--ink);
+  border-block:1px solid var(--rule-2);
+  padding-block:clamp(1.1rem,.7rem + 1.6vw,2rem);
+  -webkit-mask-image:linear-gradient(90deg,transparent,var(--shade) 7%,var(--shade) 93%,transparent);
+  mask-image:linear-gradient(90deg,transparent,var(--shade) 7%,var(--shade) 93%,transparent);
+}
+.jumbo-track{display:flex;width:max-content;animation:jumboRoll 21s linear infinite}
+.jumbo-group{display:flex;align-items:center;flex-shrink:0}
+.jumbo-word{
+  font-family:var(--font-display);font-weight:var(--fw-hero);
+  font-size:clamp(1.9rem,1.1rem + 4vw,4.4rem);line-height:1;letter-spacing:.01em;
+  text-transform:uppercase;white-space:nowrap;
+  padding-inline:clamp(.7rem,.4rem + 1vw,1.5rem);
+  color:transparent;-webkit-text-stroke:1.3px var(--paper-soft);
+}
+.jumbo-word.lit{-webkit-text-stroke:1.5px var(--violet-lift)}
+.jumbo-sep{color:var(--accent);font-size:clamp(.85rem,.5rem + 1.1vw,1.5rem)}
+@keyframes jumboRoll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* THE DRAWING GRID. Promoted from atmosphere to instrument rule now that no
+   particle field rides it. Vertical lines on the module, with coordinate ticks. */
+.grid-rule{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(90deg,var(--grid-ink) 1px,transparent 1px);
+  background-size:var(--pitch) 100%;
+  -webkit-mask-image:linear-gradient(180deg,transparent,var(--shade) 10%,var(--shade) 90%,transparent);
+  mask-image:linear-gradient(180deg,transparent,var(--shade) 10%,var(--shade) 90%,transparent);
+}
+.grid-rule--cross{
+  background-image:
+    linear-gradient(90deg,var(--grid-ink) 1px,transparent 1px),
+    linear-gradient(var(--grid-ink) 1px,transparent 1px);
+  background-size:var(--pitch) var(--pitch);
+  -webkit-mask-image:radial-gradient(ellipse 94% 86% at 50% 45%,var(--shade) 34%,transparent 100%);
+  mask-image:radial-gradient(ellipse 94% 86% at 50% 45%,var(--shade) 34%,transparent 100%);
+}
+/* registration dots at every module intersection: the grid reads as a drawing */
+.grid-rule--nodes{
+  background-image:
+    radial-gradient(circle at 1px 1px,var(--grid-node) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-ink) 1px,transparent 1px);
+  background-size:var(--pitch) var(--pitch),var(--pitch) 100%;
+}
+
+/* ═══ DRIFTING VIOLET GRADIENT ═══ Quinten, 2026-09-08: "the background on some
+   sections can just be a gradient purple moving like apple."
+
+   Three large soft violet blobs on the dark ground, blurred into each other and drifting
+   very slowly. The Apple quality comes from SLOWNESS and SOFTNESS, not from travel: the
+   blobs move a few percent over 42s, so it reads as light shifting rather than as
+   something animating. Scaled past the band edges (inset -30%) and radially masked, so no
+   blob edge ever reaches a boundary.
+
+   "Some sections", so it rides --alt only: bands 2 and 4. The other bands stay plain dark.
+   42s is 6x7, on the DNA grid. Colour is single-sourced from the accent tokens. */
+.band--alt::after{
+  content:'';position:absolute;inset:-30%;z-index:0;pointer-events:none;
+  background-image:
+    radial-gradient(38% 42% at 22% 30%,rgba(var(--accent-1-rgb),.30),transparent 62%),
+    radial-gradient(34% 38% at 78% 62%,rgba(var(--violet-lift-rgb),.22),transparent 64%),
+    radial-gradient(30% 34% at 55% 88%,rgba(var(--accent-1-rgb),.20),transparent 66%);
+  filter:blur(42px);
+  -webkit-mask-image:radial-gradient(ellipse 88% 78% at 50% 50%,var(--shade) 34%,transparent 100%);
+  mask-image:radial-gradient(ellipse 88% 78% at 50% 50%,var(--shade) 34%,transparent 100%);
+  animation:auroraRelocate 63s ease-in-out infinite;
+  will-change:transform;
+}
+/* ═══ SECTION 3: SOLID VIOLET GRADIENT, NO LINES ═══ Quinten, 2026-09-08.
+   A filled purple wash rather than the subtle drift the --alt bands carry, so this band
+   reads as a deliberate block of colour. Falls to --ink at the base so the band still
+   joins the dark page instead of ending on a hard edge. The drawn grid is removed from
+   the markup, and the plain-band glow is suppressed here because the gradient replaces it.
+   Darkened 2026-09-08. Top of the ramp now resolves to about rgb(50,37,108), a deeper
+   purple that still reads as purple rather than as tinted black. */
+/* ═══ BAND 4 · DEEP PURPLE, STILL (Quinten, 2026-09-08: "remove the light purple
+   flashlight effect so its just the deep dark purple with the grid").
+
+   This band previously wore .band--alt, the drifting blobs, which is the "flashlight"
+   being described: three soft violet lights wandering behind the copy. Gone here. What
+   is left is a FLAT deep purple ground with the crosshatch grid drawn ON it, visible.
+
+   It is the only still band on the page, and that is the point. Bands 1, 3 and 5 have a
+   light moving through them and band 2 has one breathing; if 4 moved too, the page would
+   be uniformly busy, which is exactly the flattening decision #46's subtract pass had to
+   reverse. The comparison rows are also the densest reading on the page and deserve a
+   ground that holds still under them.
+
+   Deep, not bright: #1A1430 is the violet-shifted ground, ~2.1x the luminance of --ink,
+   so it reads as a different room without becoming a colour field. Grid stays at the
+   normal --grid-ink, so on this band alone the lines are drawn rather than revealed. */
+.bolt-bg{position:absolute;inset:0;z-index:0;pointer-events:none;display:block}
+.band--deep{
+  /* FLAT, 2026-09-08: "the purple gets darker when you scroll down, can you make it that
+     dark on the whole section". The 163deg gradient laid .16 violet across the top and
+     faded to nothing by the bottom, so the band lightened at the head and darkened as you
+     read down it. The DARK end was the one being asked for, and that end is the bare
+     ground, so the overlay is deleted rather than re-balanced. One flat value now.
+     Also removes the last violet wash on the page, which is what DESIGN-GRAMMAR §6 asks
+     for: violet on CTAs and the payload marker, not spread across grounds. */
+  background-color:var(--ink-violet);
+
+  /* LINES MORE PURPLE THAN WHITE (same instruction). The crosshatch inherits the global
+     --grid-ink, which reads grey once it is this faint over a near-black ground: at .13
+     alpha the hue is barely present and the eye resolves it as white. Overridden here to a
+     more saturated violet at a higher alpha so the colour actually survives the blend.
+     This band can afford it: it is the only one with no moving wash competing for the
+     same tone. */
+  --grid-ink:rgba(128,96,255,0.19);
+  --grid-node:rgba(128,96,255,0.26);
+}
+
+/* ═══ BAND 5 · THE CLOSING ROOM. Wears the lit ground like the hero, one step darker,
+   because it is the last thing on the page and the glass card has to sit on something
+   that lets it read as glass. ═══ */
+.band--closing{background-color:var(--ink-deep)}
+.band--closing .bg-scrim{
+  background-image:radial-gradient(120% 82% at 50% 44%,
+    rgba(var(--ink-rgb),0.30),rgba(var(--ink-deep-rgb),0.97) 76%);
+}
+
+/* ═══ THE GLASS CARD ═══ Quinten, 2026-09-08: "nice glass morphism container".
+   Real glassmorphism is four things together, and dropping any one of them is what makes
+   a card read as "a grey box with rounded corners": a BLUR of what is behind it, a
+   translucent fill, a light TOP EDGE where the light catches, and a shadow that separates
+   it from the ground. The surge light passing behind it is what makes the blur legible,
+   which is why this card only works on a lit band.
+   14px radius is from the approved set. No new hex: fill and edge are white alphas. */
+.glass{
+  position:relative;z-index:1;
+  background:rgba(255,255,255,0.045);
+  -webkit-backdrop-filter:blur(21px) saturate(1.4);
+  backdrop-filter:blur(21px) saturate(1.4);
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:14px;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255,255,255,.09),
+    0 24px 60px -30px rgba(0,0,0,.85),
+    0 0 0 1px rgba(255,255,255,.03);
+  /* Min 21px, not 28px: at 350px the card's own padding was narrowing the rail
+     enough to strand "commitment" onto its own line. A container's padding is
+     part of the measure. */
+  padding:clamp(21px,1.4rem + 2.1vw,56px);
+}
+/* The catch-light along the top edge. Without it the card is a flat panel: glass is
+   read from where the light lands on its lip, not from the blur. */
+.glass::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background-image:linear-gradient(180deg,rgba(255,255,255,.07),transparent 34%);
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  /* No backdrop-filter (older Firefox with the flag off): a translucent panel with no
+     blur reads as haze, so fall back to an opaque raised surface instead. */
+  .glass{background:var(--ink-2)}
+}
+
+/* ═══ WHO IS ON THE OTHER END ═══ three facts as a row of figures rather than three
+   more sentences of body copy. The numeral carries the meaning and the label names it,
+   which is the deck's own treatment for its prices. Tabular figures so the row aligns. */
+/* 62ch -> 77ch, 2026-09-08. This block carried the build's two standing orphan BLOCKERS
+   (a WIDOW on "Engineers", an INTERIOR on "Contracted", both failing at all 22 widths).
+   The cause is measurable, not aesthetic: .who__k is MONO, uppercase, at .14em tracking,
+   so a character costs ~1.14x its own width, and at 62ch the three grid columns resolve
+   to about 20 characters each. "CONTRACTED ENGINEERS" is exactly 20, so it could never
+   sit on one line and the phrase always stranded a word.
+   Glue was the WRONG fix and was tried first: &nbsp; made the pair unbreakable, it
+   overflowed the column by a hair, and the browser broke the WORD instead, shipping
+   "ENGINE / ERS" — a WORD-BREAK, which outranks the widow it replaced. Exactly the trap
+   in reference_ag_typography_glue_container_overflow. Widen the container instead. */
+.who{margin:var(--space-lg) auto 0;padding-top:21px;border-top:1px solid var(--rule);max-width:100ch}
+.who__label{justify-content:center;margin:0 0 21px}
+.who__grid{
+  list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(21px,3vw,42px);
+}
+.who__item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px}
+.who__fig{
+  font-family:var(--font-display);font-weight:700;line-height:1;
+  font-size:clamp(1.75rem,1.3rem + 1.6vw,2.4rem);
+  color:var(--paper);font-variant-numeric:tabular-nums;letter-spacing:-.02em;
+}
+.who__op{color:var(--accent);margin-inline:.12em;font-weight:500}
+.who__k{
+  font-family:var(--font-mono);font-weight:500;font-size:var(--text-eyebrow);
+  letter-spacing:.14em;text-transform:uppercase;color:var(--violet-lift);
+  /* max-width REMOVED. It was 22ch, and it -- not the grid column -- was what forced
+     the three-line break: at .14em tracking a mono character costs ~1.14x its width,
+     so 22ch of cap held about 19 characters and the 31-character label could never
+     reach two lines. The column now governs. */
+  max-width:none;text-wrap:balance;
+}
+.who__v{font-size:var(--text-sm);line-height:1.5;color:var(--paper-mute);max-width:24ch}
+@media (max-width:900px){
+  .who__grid{grid-template-columns:1fr;gap:28px}
+}
+
+/* ═══ BAND 2 · THE LIVING LIGHT ═══ Quinten, 2026-09-08: "i like the light effect, lets
+   just have it fade and go somewhere else on the section, make it feel alive."
+
+   The old auroraDrift slid the same blobs a few percent and looped. Continuous travel at
+   a constant rate is the one thing that reads as MECHANICAL rather than alive, because
+   nothing in a room moves at a constant rate forever.
+
+   This relocates instead. The layer fades to nothing, and while it is invisible it JUMPS
+   to a new position and scale, then fades back up. You never see it travel, so you never
+   catch the loop: the light was over there, you looked away, now it is over here. That is
+   the difference between animation and presence.
+
+   Three moves per cycle at 63s (9x7, on the DNA grid). Each move is a fade-out, a
+   teleport at zero opacity, and a fade-in, so the opacity curve does the work and the
+   transform never shows. Peak alpha stays at 1 because the blob alphas themselves are
+   already .20-.30, inside the deck's measured 0.06-0.22 violet band once masked. */
+@keyframes auroraRelocate{
+  0%   {opacity:0; transform:translate3d(-14%,-8%,0) scale(1.00)}
+  7%   {opacity:1; transform:translate3d(-14%,-8%,0) scale(1.00)}
+  26%  {opacity:1; transform:translate3d(-13%,-7%,0) scale(1.04)}
+  33%  {opacity:0; transform:translate3d(-13%,-7%,0) scale(1.04)}
+
+  34%  {opacity:0; transform:translate3d(15%,6%,0)   scale(1.12)}
+  40%  {opacity:1; transform:translate3d(15%,6%,0)   scale(1.12)}
+  59%  {opacity:1; transform:translate3d(14%,7%,0)   scale(1.08)}
+  66%  {opacity:0; transform:translate3d(14%,7%,0)   scale(1.08)}
+
+  67%  {opacity:0; transform:translate3d(2%,-11%,0)  scale(1.06)}
+  73%  {opacity:1; transform:translate3d(2%,-11%,0)  scale(1.06)}
+  92%  {opacity:1; transform:translate3d(1%,-10%,0)  scale(1.02)}
+  100% {opacity:0; transform:translate3d(1%,-10%,0)  scale(1.02)}
+}
+@keyframes traceAcross{from{left:0}to{left:100%}}
+
+/* coordinate ticks along the top edge, one per module */
+.grid-rule::after{
+  content:'';position:absolute;left:0;right:0;top:0;height:7px;
+  background-image:linear-gradient(90deg,var(--rule) 1px,transparent 1px);
+  background-size:var(--pitch) 100%;
+}
+
+/* ═══ BAND 1 · HERO ═══ section 16 layout D. ═══ */
+.hero{
+  position:relative;overflow:hidden;background-color:var(--ink);
+  /* ONE VIEWPORT. Title, VSL and CTA all sit above the fold (Quinten, 2026-09-08), so
+     the hero is budgeted rather than padded: min-height fills the screen, the top pad is
+     modest, and the VSL is capped so the stack fits instead of pushing the CTA under. */
+  min-height:100svh;display:flex;align-items:center;
+  padding-block:clamp(1.4rem,0.9rem + 2.1vw,3.5rem) clamp(1.4rem,0.9rem + 2.1vw,3.5rem);
+}
+/* One canvas class, not one id. Band 3 reuses this ground (Quinten, 2026-09-08:
+   "3rd section, lets have the hero section background come back for this one"), so the
+   surge script drives EVERY .surge-bg on the page rather than a single #bg. */
+#bg,.surge-bg{position:absolute;inset:0;z-index:0;pointer-events:none;display:block}
+
+/* ═══ HERO GROUND (Quinten, 2026-09-08): "remove the purple background so it is darker,
+   but not pitch black. make the lines invisible but have the light going down on them
+   luminate, showing their surrounding and the line."
+
+   THE VIOLET BLOOM IS GONE. It was a .17-alpha violet radial filling the middle of the
+   first viewport, and it was the purple being described. Removing it also returns the
+   build to its OWN written grammar: DESIGN-GRAMMAR §6 says violet appears only on CTAs
+   and the live marker, which decision #38 had drifted away from. Violet still carries
+   the first viewport through the .q headline and the CTA, so the brand does not thin.
+
+   The ground now falls from --ink at the centre to --ink-deep at the edges. --ink-deep
+   is #08070E: measurably darker, and deliberately NOT #000, which would kill the
+   descending light's falloff and read as a hole rather than a room. */
+.bg-scrim{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  /* The scrim paints ON TOP of the canvas (DOM order: canvas -> grid -> scrim), so its
+     centre value is a direct dimmer on the light. First pass ran 0.42 centre and the
+     surges nearly vanished: the ground got darker and took the thing being asked for
+     with it. Centre pulled back to 0.30 so the light breathes in the middle third, edges
+     pushed to 0.96 so it still dies in the corners. Darker AND more visible are not in
+     conflict once the centre and the edges are tuned separately. */
+  background-image:radial-gradient(120% 75% at 50% 32%,
+    rgba(var(--ink-rgb),0.30),rgba(var(--ink-deep-rgb),0.96) 78%);
+}
+
+/* THE LINES ARE INVISIBLE UNTIL THE LIGHT REACHES THEM. --grid-ink and --rule are
+   overridden to transparent for the hero only, so the painted grid contributes nothing
+   on its own. What the eye reads as a line is the canvas surge lighting the column it
+   descends, on the SAME 46px pitch the grid paints, so a lit segment lands exactly
+   where a drawn line would be. Restored to a static faint grid under reduced motion
+   (below), because with the canvas off an invisible grid leaves the hero bare. */
+.lit-ground .grid-rule{--grid-ink:transparent;--rule:transparent}
+
+/* THE LIT GROUND, applied to bands 1, 3 and 5 (Quinten, 2026-09-08). One treatment
+   defined once and worn three times, so the page opens and closes on the same room.
+   Any band carrying it needs the three layers in this order:
+     <canvas class="surge-bg">  the light
+     <div class="grid-rule">    the invisible lines it reveals
+     <div class="bg-scrim">     the fall-off to --ink-deep
+   Bands 2 and 4 deliberately do NOT wear it: an effect on every band is the flattening
+   that decision #46's subtract pass already had to undo once. */
+.lit-ground{position:relative;overflow:hidden;background-color:var(--ink)}
+/* CENTERED, per the deck. This REVERSES DECISIONS #22 (the split header), and the
+   reversal is Quinten's call 2026-09-07: "follow the same design as the presentation".
+   #22 argued the centered hero is the structural tell of a generated page, citing
+   Linear/Oxide/Palantir. That argument is sound in GENERAL and loses HERE, because a
+   generic exemplar does not outrank this client's own approved artifact. The deck is
+   centered at every width and its composition is the thing being adopted. */
+.hero__in{
+  position:relative;z-index:1;max-width:var(--wrap);margin-inline:auto;
+  padding-inline:var(--section-padding-inline);
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:0;
+}
+.hero__head{display:flex;flex-direction:column;align-items:center;width:100%}
+.hero__aside{display:flex;flex-direction:column;align-items:center;width:100%;margin-top:clamp(14px,1.4vw,21px)}
+/* Sized against viewport HEIGHT so title + VSL + lede + CTA hold one screen. A width-only
+   cap fits a 900px viewport and pushes the CTA under the fold on a 720px one. The calc
+   reserves what the rest of the stack actually measures; floor 264px so it never becomes
+   a thumbnail. */
+.hero__media{
+  width:100%;
+  max-width:min(480px, max(264px, calc((100svh - 470px) * 1.778)));
+  margin-inline:auto;margin-top:clamp(14px,1.4vw,21px);
+}
+.hero__title{
+  font-family:var(--font-display);font-weight:var(--fw-hero);
+  font-size:var(--text-hero);line-height:1.02;letter-spacing:-.03em;
+  color:var(--paper);max-width:26ch;margin:0 auto;
+}
+/* THE DECK'S SIGNATURE. Line 1 paper, line 2 VIOLET. It was --neutral-400, which
+   killed the single most recognizable move in the reference artifact. */
+.hero__title .q{color:var(--violet-lift);display:block}
+.hero__lede{margin:0}
+/* CTAs centred. All three page CTAs share this container, so one rule does every one. */
+.hero__ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:clamp(14px,1.4vw,21px);align-items:center;justify-content:center}
+/* The CTA now sits BETWEEN the VSL and the support text, so it needs air on BOTH
+   sides or it reads as attached to the paragraph under it. 21px / 35px, 3-and-7 clean. */
+.hero__aside .hero__ctas{margin-block:clamp(21px,1.4rem + 1vw,35px)}
+/* the trust strip, under the CTAs */
+
+/* ── VSL facade. No iframe until click, so it can never block the load event. ── */
+.hero__media{position:relative}
+.vsl{
+  position:relative;aspect-ratio:16/9;border-radius:var(--radius-md);overflow:hidden;
+  background-color:var(--surface);border:1px solid var(--hairline);
+  box-shadow:var(--sh-card);
+}
+.vsl::after{
+  content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;z-index:1;
+  background-image:linear-gradient(158deg,rgba(113,78,255,0.26) 0%,rgba(113,78,255,0.06) 40%,rgba(15,14,26,0.55) 100%);
+  box-shadow:inset 0 0 0 1px rgba(113,78,255,0.30),inset 0 -90px 120px -80px rgba(113,78,255,0.55);
+}
+/* The poster is the ONLY photograph on a near-black page, so ungraded it is the
+   brightest object by a wide margin and it fights every other surface. Graded DOWN in
+   brightness, not desaturated to grey: the 09-04 pass took saturation to .42 and the
+   result read dead, which was one of the compounding changes that got rejected. This
+   keeps the colour alive and only takes the luminance out. */
+.vsl__poster{width:100%;height:100%;object-fit:cover;display:block;
+  filter:saturate(.72) contrast(1.06) brightness(.72)}
+.vsl__btn{
+  position:absolute;inset:0;width:100%;height:100%;display:grid;place-items:center;
+  background-color:rgba(15,14,26,0.28);border:0;cursor:pointer;padding:0;z-index:2;
+}
+/* SMALLER (Quinten, 2026-09-08). 58-84px down to 49-70px. 49 is 7x7 and is also the AG
+   touch-target floor, though the real tap target is .vsl__btn, which covers the whole video,
+   so the circle is free to be a visual mark rather than a hit area. */
+.vsl__play{
+  width:clamp(49px,4.2vw,70px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;
+  background-color:var(--accent);color:var(--c-white);
+  box-shadow:0 0 0 1px rgba(255,255,255,0.18),0 14px 48px -10px rgba(113,78,255,0.95);
+}
+/* THE TRIANGLE WAS OPTICALLY NUDGED TWICE, which is why it sat off-centre.
+   The path is `M8 5v14l11-7z`, so within a 0 0 24 24 viewBox it spans x=8 to x=19 and its
+   own centre is 13.5 against the box centre of 12 -- the glyph is ALREADY drawn 6.25% right
+   of centre, which is the standard optical correction for a play triangle. The stylesheet
+   then added margin-left:9% on top of it, measured as a further 2.6px shift on a 20px
+   triangle. Removing the margin leaves exactly one correction, the one baked into the
+   artwork. Verified after: triangle centre now sits on the circle centre. */
+.vsl__play svg{width:34%;height:34%;margin-left:0}
+@media (hover:hover){
+  .vsl__btn{transition:background-color .3s var(--ease-settle)}
+  .vsl__play{transition:transform .3s var(--ease-settle)}
+  .vsl__btn:hover{background-color:rgba(15,14,26,0.14)}
+  .vsl__btn:hover .vsl__play{transform:scale(1.03)}
+}
+.vsl iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:3;
+  opacity:0;transition:opacity .6s var(--ease-satisfying)}
+/* THE VIOLET WRAP OUTLIVES THE CLICK (Quinten, 2026-09-08: "just keep the purple wrapped
+   overlay instead of Youtubes when it first loads in"). The iframe sits at z-index 3, above
+   the .vsl::after wrap, so the moment it is appended the violet is covered -- and that is
+   precisely the window where YouTube paints its OWN loading frame and branding. Holding our
+   poster and wrap until the iframe reports `load`, then crossfading, means the brand surface
+   is what fills that gap instead of theirs.
+   is-playing is set on LOAD, never on click, which is the whole point. */
+.vsl.is-playing iframe{opacity:1}
+.vsl.is-playing::after{opacity:0;transition:opacity .6s var(--ease-satisfying)}
+.vsl.is-playing .vsl__poster{opacity:0;transition:opacity .6s var(--ease-satisfying)}
+@media (prefers-reduced-motion:reduce){
+  .vsl iframe,.vsl.is-playing::after,.vsl.is-playing .vsl__poster{transition:none}
+}
+
+/* ═══ BAND 2 · STATEMENT ═══ section 16 layout B: two-column editorial,
+   sticky left rail. "The capabilities pattern." ═══ */
+/* CENTERED HEAD over a centered body, which is the deck's section shape everywhere.
+   Was a two-column sticky-rail editorial. The rail is retired here rather than merely
+   re-aligned: a sticky left rail beside a right column is a fundamentally different
+   composition from the reference, and half-converting it would read as neither.
+   Measures are the deck's: 46ch on the head, 56ch on the prose. */
+.ed{display:block;text-align:center}
+.ed__rail{position:static;max-width:46ch;margin:0 auto clamp(1.8rem,1.2rem + 2vw,3rem)}
+.ed__rail .eyebrow{justify-content:center}
+.ed__rail .statement{margin-inline:auto}
+/* LEFT-ALIGNED SUPPORTING PROSE (Quinten, 2026-09-08). Desktop only: the block stays
+   centred, the text rags right. The head above it stays centred, which is the deck's
+   shape. Re-centred at <=1200 in the mobile block below, per AG-MOBILE-STANDARD 6C. */
+.ed__body{max-width:56ch;margin-inline:auto;text-align:center}
+/* SCOPED TO BAND 2. The instruction was "second section left align the supporting text",
+   and .ed__body is also worn by band 5, so an unscoped rule silently left-aligned the
+   closing section too. Caught 2026-09-08 while rebuilding band 5. */
+#why .ed__body{text-align:left}
+
+/* CENTERED SECTION HEADS everywhere, which is the deck's shape at every band.
+   Scoped to the DIRECT head children so the structured data below stays exactly as it
+   is: the tier ladder and the comparison rows carry meaning in their alignment and the
+   deck has no equivalent to borrow from. Measures are the deck's, 46ch on the lead. */
+.band > .wrap-tight > .eyebrow,
+.band > .wrap-tight > .statement,
+.band > .wrap-tight > .lede,
+.band > .wrap > .eyebrow,
+.band > .wrap > .statement,
+.band > .wrap > .lede{text-align:center;margin-inline:auto}
+.band > .wrap-tight > .eyebrow,
+.band > .wrap > .eyebrow{justify-content:center}
+.band > .wrap-tight > .statement,
+.band > .wrap > .statement{max-width:26ch}
+.band > .wrap-tight > .lede,
+.band > .wrap > .lede{max-width:46ch}
+
+/* One treatment, every band. Uniform, not alternating. */
+
+/* ═══ BAND 3 · HOW IT WORKS ═══ section 16 layout C: data display. ═══ */
+.pipe-intro{margin:0 0 var(--space-lg)}
+.pipe-close{
+  margin:var(--space-lg) 0 0;padding-top:21px;border-top:1px solid var(--rule-2);
+  font-size:var(--text-base);line-height:1.7;color:var(--paper-soft);max-width:var(--measure);
+}
+/* ══ FIGURES ══ */
+.fig{margin:var(--space-lg) 0 0;border:1px solid var(--rule);position:relative}
+.fig__bar{
+  display:flex;align-items:stretch;border-bottom:1px solid var(--rule);
+  font-family:var(--font-mono);font-weight:500;font-size:var(--text-eyebrow);
+  letter-spacing:.14em;text-transform:uppercase;font-variant-numeric:tabular-nums;
+}
+.fig__num{padding:9px 14px;border-right:1px solid var(--rule);color:var(--pale);flex:none}
+.fig__name{padding:9px 14px;color:var(--paper-mute)}
+/* Plate grid removed 2026-09-08 with the band's own lines. On the violet ground it read
+   as exactly the background lines that were just taken out, only inside a box. The plate
+   keeps its frame; the artwork carries the figure on its own. */
+.fig__plate{
+  position:relative;padding:clamp(21px,3vw,42px);
+}
+.fig__legend{
+  border-top:1px solid var(--rule);
+  display:grid;grid-template-columns:repeat(3,1fr);
+}
+.fig__item{padding:14px;border-right:1px solid var(--rule)}
+.fig__item:last-child{border-right:0}
+.fig__k{
+  display:flex;gap:9px;align-items:baseline;
+  font-family:var(--font-mono);font-weight:500;font-size:var(--text-eyebrow);
+  letter-spacing:.14em;text-transform:uppercase;font-variant-numeric:tabular-nums;
+  color:var(--paper);margin:0;
+}
+.fig__k b{color:var(--pale);font-weight:500}
+.fig__d{font-size:var(--text-sm);line-height:1.5;color:var(--paper-mute);margin:7px 0 0}
+@media (max-width:900px){ .fig__legend{grid-template-columns:1fr} .fig__item{border-right:0;border-bottom:1px solid var(--rule)} .fig__item:last-child{border-bottom:0} }
+
+.schematic{margin:0 auto;width:min(640px,100%);color:var(--pale)}
+.schematic svg{width:100%;height:auto;display:block;overflow:visible}
+.schematic .src{opacity:0}
+.schematic .edge{stroke-dasharray:210;stroke-dashoffset:210}
+.schematic .hub{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.4)}
+.schematic .beam{stroke-dasharray:150;stroke-dashoffset:150}
+.schematic .reticle{color:var(--pale);opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(1.35)}
+.fig.in-view .src{animation:sigFade .6s ease .3s forwards}
+.fig.in-view .edge{animation:sigDraw .9s var(--ease-satisfying) .3s forwards}
+.fig.in-view .hub{animation:sigPop .6s var(--ease-satisfying) .9s forwards}
+.fig.in-view .beam{animation:sigDraw .6s var(--ease-satisfying) 1.4s forwards}
+.fig.in-view .reticle{animation:sigLock .9s var(--ease-satisfying) 1.4s forwards}
+@keyframes sigDraw{to{stroke-dashoffset:0}}
+@keyframes sigFade{to{opacity:1}}
+@keyframes sigPop{to{opacity:1;transform:scale(1)}}
+@keyframes sigLock{to{opacity:1;transform:scale(1)}}
+.schematic .key text{
+  font-family:var(--font-mono);font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.schematic .flow circle{fill:var(--pale);opacity:0}
+.fig.in-view .flow .f1{animation:flowA 4.2s linear 0.3s infinite}
+.fig.in-view .flow .f2{animation:flowB 4.2s linear 0.9s infinite}
+.fig.in-view .flow .f3{animation:flowC 4.2s linear 1.4s infinite}
+.fig.in-view .flow .f4{animation:flowD 4.2s linear 2.1s infinite}
+@keyframes flowA{0%{transform:translate(0,0);opacity:0}14%{opacity:.9}86%{opacity:.9}100%{transform:translate(184px,39px);opacity:0}}
+@keyframes flowB{0%{transform:translate(0,0);opacity:0}14%{opacity:.9}86%{opacity:.9}100%{transform:translate(184px,0);opacity:0}}
+@keyframes flowC{0%{transform:translate(0,0);opacity:0}14%{opacity:.9}86%{opacity:.9}100%{transform:translate(184px,-39px);opacity:0}}
+@keyframes flowD{0%{transform:translate(0,0);opacity:0}14%{opacity:.9}86%{opacity:.9}100%{transform:translate(140px,0);opacity:0}}
+
+.schematic .callout rect{fill:var(--pale)}
+.schematic .callout text{
+  font-family:var(--font-mono);font-size:7px;font-weight:500;
+  fill:var(--ink);letter-spacing:.04em;
+}
+
+/* ═══ BAND 5 · CLOSE ═══ section 16 layout A: centered statement. ═══ */
+.close-body{margin-top:var(--space-lg);text-align:center}
+.micro{
+  margin-top:21px;font-family:var(--font-body);font-size:var(--text-sm);
+  color:var(--paper-mute);
+}
+
+/* ═══ ALL TEXT CENTERED ═══ Quinten, 2026-09-07: "the text on the landing pages all
+   needs to be centered." Applied at the BAND level so it cascades to every component
+   rather than being chased one class at a time, which is how the last pass left three
+   blocks behind. Grid and flex STRUCTURE is untouched; only inline content re-aligns. */
+main .band,
+main .band .wrap,
+main .band .wrap-tight{text-align:center}
+
+/* Components that set their own alignment, brought back in line. Measures keep their
+   caps and are centred in the column rather than left-packed. */
+.dg,.dg__row,.dg__what,.dg__title,
+.row,.kl,.kl__why,
+.pipe-intro,.pipe-close,
+.fig__cap,.fig__legend,
+.close-body,.close-who{text-align:center}
+
+.pipe-intro,.pipe-close,.dg__what,.kl__why,.close-body{margin-inline:auto}
+
+/* Flex rows that packed to the start now centre their own children. */
+main .band [class*="__row"],
+main .band .row{justify-content:center}
+
+@media (prefers-reduced-motion:reduce){
+  /* Every device added in the deck-register pass kills its own motion. The bloom
+     LAYERS stay: they are static atmosphere, not animation, and removing them would
+     take the page back to the flat ground that failed. Only the movement stops. */
+  .jumbo-track,.band--alt::after,.ag-footer-min .ag-footer-logo img{animation:none}
+  /* THE LIT GROUND NEEDS A STATIC FALLBACK, or it ships an empty room.
+     Bands 1, 3 and 5 hide their grid lines and let the canvas surge reveal them. The
+     surge script does not start under reduced motion (`if (!reduce)`), so without this
+     the lines would be transparent AND unlit: three bands of flat colour and nothing
+     else. Restored here as a faint drawn grid, which is what those bands looked like
+     before the light existed. Neutral white, not violet, matching the pass that took
+     the purple out of the ground. */
+  .lit-ground .grid-rule{--grid-ink:rgba(255,255,255,.05);--rule:rgba(255,255,255,.06)}
+  .schematic .flow circle{animation:none}
+  .schematic .flow circle{opacity:0}
+  .schematic .src,.schematic .edge,.schematic .hub,.schematic .beam,.schematic .reticle{
+    animation:none;stroke-dashoffset:0;opacity:1;transform:none;
+  }
+}
+
+/* ═══ RESPONSIVE. Two breakpoints, 1200 and 900. Layout only, never type or spacing.
+   The hero stacks at 1200: between 950 and 1250 the split column was too narrow for
+   the display type (F <= M/9), which stranded a word mid-block and towered the H1.
+   Stacking at the tablet breakpoint also satisfies AG-RESPONSIVE's
+   "Mobile AND Tablet are centered", which a 900-only rule missed. ═══ */
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   MINI-AUDIT PAGE COMPONENTS (2026-09-08). The offer changed from the demo to the
+   complimentary assessment, so the page is 7 bands with new patterns. Everything
+   below is built on existing tokens; zero new hex.
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── BAND 1. Single centred column, stacked title / VSL / CTA / support text (Quinten,
+   2026-09-08). The split-hero grid and the hero-figure rules that used to live here were
+   deleted with the markup that used them rather than left behind as dead selectors. ── */
+
+/* ── BAND 2 / 6 measures. The notes cap band 2 at 640px and make band 6 narrower still. ── */
+.ed__body--prose{max-width:640px}
+.ed__body--narrow{max-width:54ch}
+/* The turn. Same size as the body, lifted in value so the pivot in the argument is felt
+   before it is read. Not a heading: it is body copy doing a heading's job. */
+.turn{color:var(--paper);font-weight:500}
+
+/* ── BAND 4. Three numbered cards, horizontal on desktop, stacked on mobile. The mono
+   numeral is the device the notes name, so it carries the violet rather than the card. ── */
+.steps{
+  list-style:none;margin:var(--space-lg) 0 0;padding:0;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));
+  gap:clamp(21px,1.4rem + 1.4vw,42px);
+}
+/* GLASS (Quinten, 2026-09-08: "make those glass so the text is easier to read"). This band
+   runs the walking bolts BEHIND the cards, and unblurred moving light under body copy is
+   what was hurting legibility. backdrop-filter blurs the bolts where they pass under a
+   card, so the motion still reads at the edges but never competes with the text sitting on
+   it. Same four-part recipe as the band 7 card, because a translucent fill without the
+   blur and the catch-light reads as a grey box, not as glass. The violet top rule is kept:
+   it is this band's own device and it survives the change. */
+.step{
+  position:relative;
+  border:1px solid rgba(255,255,255,0.10);
+  border-top:1px solid rgba(var(--accent-1-rgb),.42);
+  background:rgba(255,255,255,0.045);
+  -webkit-backdrop-filter:blur(21px) saturate(1.4);
+  backdrop-filter:blur(21px) saturate(1.4);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255,255,255,.07),
+    0 24px 60px -30px rgba(0,0,0,.85);
+  border-radius:14px;
+  padding:clamp(21px,1.4rem + 1vw,35px);text-align:left;
+}
+/* The catch-light. Without it a blurred panel reads as haze rather than as a surface. */
+@media (hover:hover){
+  .step{transition:transform .3s var(--ease-satisfying),border-color .3s var(--ease-satisfying),
+                   background .3s var(--ease-satisfying),box-shadow .3s var(--ease-satisfying)}
+  .step:hover{
+    transform:translateY(-7px);
+    border-color:rgba(var(--accent-1-rgb),.55);
+    background:rgba(255,255,255,0.065);
+    box-shadow:inset 0 1px 0 0 rgba(255,255,255,.12),0 35px 70px -28px rgba(0,0,0,.9);
+  }
+  .step:hover .step__n{color:var(--paper)}
+}
+@media (prefers-reduced-motion:reduce){ .step,.step:hover{transition:none;transform:none} }
+.step::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background-image:linear-gradient(180deg,rgba(255,255,255,.06),transparent 34%);
+}
+.step > *{position:relative}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .step{background:var(--ink-2)}
+}
+.step__n{
+  display:block;font-family:var(--font-mono);font-weight:500;font-size:var(--text-eyebrow);
+  letter-spacing:.21em;color:var(--violet-lift);margin-bottom:14px;
+  font-variant-numeric:tabular-nums;
+}
+.step__t{
+  font-family:var(--font-display);font-weight:var(--fw-h3);font-size:var(--text-h4);
+  line-height:1.18;letter-spacing:-.018em;color:var(--paper);margin:0 0 9px;
+  text-wrap:balance;
+}
+.step__b{font-size:var(--text-sm);line-height:1.7;color:var(--paper-soft);margin:0}
+/* The closing line sits FULL WIDTH beneath the cards, not inside one (builder notes). */
+.steps__line{
+  margin:clamp(21px,1.4rem + 1vw,35px) auto 0;max-width:56ch;text-align:center;
+  font-size:var(--text-base);line-height:1.7;color:var(--paper);
+}
+
+/* ══ BAND 5 CAROUSEL (Quinten, 2026-09-08: "make that a carousel with a cool navigation
+   bar and cool effects"). Built on SWIPER 11.2.6, the Tier 2 Extended carousel the AG tier
+   system already sanctions, pinned with SRI per decision #18. Not hand-rolled: reinventing
+   a library component the system ships is a defect, and the budget check said it fits
+   (41KB gzipped against a 210KB gzipped ceiling, measured before adopting it).
+   Swiper supplies the track, drag, keyboard and a11y; everything below is the AG skin. ══ */
+.carousel{margin-top:var(--space-lg);position:relative}
+/* CDN-BLOCKED FALLBACK. Without this the slides stay in a wide flex row and four of the
+   five reasons are unreachable. Unwrapping to a stack loses the carousel and keeps the
+   content, which is the right way round for objection-handling copy. */
+.reasons-swiper.is-static .swiper-wrapper{display:block}
+.reasons-swiper.is-static .swiper-slide{opacity:1;transform:none;margin-bottom:21px}
+.reasons-swiper{overflow:hidden;padding-block:14px}
+.reasons-swiper .swiper-slide{
+  height:auto;display:flex;
+  /* Neighbours sit back so the active card is unambiguous at a glance. Scale and opacity
+     only, no blur: blurring a neighbouring CARD blurs its text, and half-legible copy beside
+     the copy you are reading is worse than a card that is simply quieter. */
+  opacity:.32;transform:scale(.94);
+  transition:opacity .6s var(--ease-satisfying),transform .6s var(--ease-satisfying);
+}
+.reasons-swiper .swiper-slide-active{opacity:1;transform:scale(1)}
+
+/* The card. Glass, matching band 4's cards so the page has ONE card language. */
+.rcard{
+  position:relative;overflow:hidden;width:100%;
+  /* CENTRED STACK (Quinten, 2026-09-08): "Reason # at the top center, Title below it center
+     and the text below center alignment". justify-content moves from flex-end to center,
+     which is also what removes the dead space he called out: the short cards were pinning a
+     three-line block to the bottom of a 336px box and leaving a hole above it.
+     align-items stays EXPLICIT rather than defaulting to stretch, per AG stretch-prevention. */
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  min-height:clamp(280px,15rem + 8vw,340px);
+  padding:clamp(24px,1.4rem + 1.4vw,42px);
+  border:1px solid rgba(255,255,255,0.10);
+  border-top:1px solid rgba(var(--accent-1-rgb),.42);
+  border-radius:14px;
+  background:rgba(255,255,255,0.045);
+  -webkit-backdrop-filter:blur(21px) saturate(1.4);
+  backdrop-filter:blur(21px) saturate(1.4);
+  box-shadow:inset 0 1px 0 0 rgba(255,255,255,.07),0 24px 60px -30px rgba(0,0,0,.85);
+}
+@media (hover:hover){
+  .swiper-slide-active .rcard{
+    transition:transform .3s var(--ease-satisfying),border-color .3s var(--ease-satisfying),
+               box-shadow .3s var(--ease-satisfying),background .3s var(--ease-satisfying);
+  }
+  .swiper-slide-active .rcard:hover{
+    transform:translateY(-7px);
+    border-color:rgba(var(--accent-1-rgb),.55);
+    background:rgba(255,255,255,0.065);
+    box-shadow:inset 0 1px 0 0 rgba(255,255,255,.12),
+               0 35px 70px -28px rgba(0,0,0,.9),
+               0 0 0 1px rgba(var(--accent-1-rgb),.22);
+  }
+  .swiper-slide-active .rcard:hover .rcard__ghost{color:rgba(var(--violet-lift-rgb),.16)}
+}
+@media (prefers-reduced-motion:reduce){
+  .swiper-slide-active .rcard,.swiper-slide-active .rcard:hover{transition:none;transform:none}
+}
+.rcard::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background-image:linear-gradient(180deg,rgba(255,255,255,.06),transparent 34%);
+}
+/* The ghost numeral. Oversized, clipped by the card, at the ink opacity the grammar already
+   reserves for ghost figures (0.22 white). It is the "cool effect" that costs nothing and
+   survives at thumbnail size, which a particle would not. */
+/* THE GHOST NUMERAL, full card height and OUTLINED (Quinten, 2026-09-08: "make it as tall
+   as the container and have the outline glow when on that container - just make sure it
+   isn't too much where the text is hard to read").
+
+   Outlined, not filled, and that is the whole reason it can be this big. A solid numeral at
+   card height sits as a large block of value directly behind the paragraph and the copy
+   fights it. A 2px stroke puts ink only on the letterform's edge, so the area behind the
+   text stays empty and the digit still reads at full scale. Same -webkit-text-stroke device
+   the marquee already uses, so it is the build's own language rather than a new one.
+
+   Centred by inset+flex rather than by corner offsets, so it grows with the card instead of
+   hanging off it. line-height:1 means the glyph box IS the font size, and the clamp is tuned
+   just above the card's own min-height so the numeral fills it top to bottom. */
+.rcard__ghost{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:var(--fw-hero);
+  /* Sized to sit FULLY INSIDE the card, not to overflow it. First cut ran 40rem against a
+     ~510px card, so the glyph box was clipped top and bottom and you saw FRAGMENTS: the
+     horizontal bars of a '1' landed beside lines of copy and read as stray boxes drawn
+     round the text, not as a numeral. A complete figure at ~70% of the card height reads
+     as a number; a clipped one at 100% reads as an artifact. */
+  font-size:clamp(17rem,13rem + 13vw,31rem);line-height:1;
+  /* 3px, not 2px. At this scale a 2px stroke at low alpha is too little ink to resolve as
+     a numeral: it read as stray lines crossing the paragraph rather than as a figure.
+     A THICKER stroke at a LOW alpha carries the shape while staying quiet, which is the
+     opposite trade from a thin stroke at high alpha, and it is the one that keeps the copy
+     readable. */
+  color:rgba(255,255,255,.045);
+  font-variant-numeric:tabular-nums;
+  transition:color .9s var(--ease-satisfying),filter .9s var(--ease-satisfying);
+}
+/* ACTIVE: the outline lights and gains a soft bloom. Alphas kept low on purpose -- the
+   stroke goes to .20 and the drop-shadow to .28, both under the 0.22-ish ambient ceiling
+   the rest of the page holds to, so the card lights up without competing with its own copy. */
+.swiper-slide-active .rcard__ghost{
+  color:rgba(var(--violet-lift-rgb),.10);
+  filter:drop-shadow(0 0 42px rgba(var(--accent-1-rgb),.22));
+}
+.rcard > :not(.rcard__ghost){position:relative;z-index:1}
+.rcard__n{
+  font-family:var(--font-mono);font-weight:500;font-size:var(--text-eyebrow);
+  letter-spacing:.21em;text-transform:uppercase;color:var(--violet-lift);margin:0 0 14px;
+}
+.rcard__t{
+  font-family:var(--font-display);font-weight:var(--fw-h3);
+  /* COMPONENT-SCOPED CLAMP, 21 -> 26px, instead of --text-h3's 21 -> 35px. Same precedent as
+     decision #21. At 1300+ the carousel shows 2.6 cards, so a card is ~440px, and a
+     31-character title at 35px needs ~527px. It could not hold two lines, and text-wrap
+     balance split it three ways with a single word on line 1: an INTERIOR blocker at 1300,
+     1350 and 1400. The locked scale assumes a full-width heading; this one lives in a card
+     whose width is set by slidesPerView. Capping the size is the fix the orphan standard
+     names for INTERIOR ("cap font-size AND set a real measure"). */
+  font-size:clamp(1.313rem,1.1rem + .7vw,1.625rem);
+  line-height:1.14;letter-spacing:-.022em;color:var(--paper);margin:0 0 12px;text-wrap:balance;
+}
+.rcard__n,.rcard__t,.rcard__b{width:100%}
+/* Lifted from --paper-soft (55%) to 72%: the copy now sits over an outlined numeral,
+   and the cheapest way to protect legibility is to raise the TEXT rather than dim the
+   device Quinten asked for. */
+.rcard__b{font-size:var(--text-base);line-height:1.7;color:rgba(255,255,255,.72);margin:0 auto;max-width:46ch}
+
+/* ══ THE NAVIGATION BAR ══ five labelled segments that ARE the progress rail. A dot row
+   tells you where you are and nothing else; a labelled segment tells you what you would be
+   jumping to, which is the whole reason to expose five objections as a carousel at all. ══ */
+.cnav{
+  display:flex;align-items:stretch;gap:14px;
+  margin-top:clamp(21px,1.4rem + 1vw,35px);
+}
+.cnav__arrow{
+  flex:none;width:49px;min-height:49px;                 /* AG 49px touch target */
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--paper-soft);
+  border:1px solid var(--rule-2);border-radius:3px;cursor:pointer;
+  transition:color .3s var(--ease-satisfying),border-color .3s var(--ease-satisfying),background .3s var(--ease-satisfying);
+}
+.cnav__arrow svg{width:19px;height:19px}
+.cnav__arrow[disabled]{opacity:.3;cursor:default}
+@media (hover:hover){
+  .cnav__arrow:not([disabled]):hover{color:var(--paper);border-color:rgba(var(--accent-1-rgb),.55);background:rgba(var(--accent-1-rgb),.10)}
+}
+.cnav__arrow:focus-visible{outline:2px solid var(--violet-lift);outline-offset:2px}
+
+.cnav__rail{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;flex:1 1 auto;min-width:0}
+.cnav__seg{
+  position:relative;overflow:hidden;min-height:49px;
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;
+  padding:9px 12px;text-align:left;cursor:pointer;
+  background:transparent;border:0;border-top:2px solid var(--rule-2);
+  color:var(--paper-mute);
+  transition:color .3s var(--ease-satisfying);
+}
+/* The fill IS the progress rail: a 2px bar that grows across the segment when it goes
+   active, so the nav reads as a timeline rather than as five buttons. */
+.cnav__segfill{
+  position:absolute;left:0;top:-2px;height:2px;width:100%;
+  background:var(--violet-lift);transform:scaleX(0);transform-origin:left center;
+  transition:transform .6s var(--ease-satisfying);
+}
+.cnav__seg[aria-selected="true"] .cnav__segfill{transform:scaleX(1)}
+.cnav__seg[aria-selected="true"]{color:var(--paper)}
+.cnav__segnum{
+  font-family:var(--font-mono);font-weight:500;font-size:var(--text-eyebrow);
+  letter-spacing:.14em;font-variant-numeric:tabular-nums;color:var(--violet-lift);
+}
+.cnav__seglabel{
+  font-size:var(--text-sm);line-height:1.2;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
+}
+@media (hover:hover){ .cnav__seg:hover{color:var(--paper)} }
+.cnav__seg:focus-visible{outline:2px solid var(--violet-lift);outline-offset:-2px}
+
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .rcard{background:var(--ink-2)}
+}
+
+/* Below 900 the five labels cannot hold their text, so the rail drops to numerals only and
+   the labels are hidden rather than truncated to nonsense. */
+@media (max-width:900px){
+  /* 6C: literal centring at <=900, no carve-outs. The step cards shipped text-align:left at
+     every width and the Mobile Proof gate flagged all nine of their text elements. Desktop
+     keeps the left alignment; mobile obeys the law. */
+  /* CTA 2 and 3 (band 3 + band 7) get 14px more height on mobile, all of it from internal
+     padding: 7px top and 7px bottom. Padding grows the BUTTON, so the glass panel around it
+     is untouched -- a margin here would have pushed the container instead. */
+  .ag-button--lg{padding-block:calc(clamp(14px,.9rem + .4vw,18px) + 7px)}
+  .step,.step__t,.step__b{text-align:center}
+  .step{align-items:center}
+  .cnav__seglabel{display:none}
+  .cnav__seg{align-items:center;padding:9px 4px}
+  .reasons-swiper .swiper-slide{opacity:.32}
+}
+
+@media (prefers-reduced-motion:reduce){
+  /* Every transition here is decorative. The carousel still works: Swiper's speed is set to
+     0 in the init below, so slides change instantly instead of sliding. */
+  .reasons-swiper .swiper-slide,
+  .rcard__ghost,.cnav__segfill,.cnav__arrow,.cnav__seg{transition:none}
+  .reasons-swiper .swiper-slide{opacity:1;transform:none}
+}
+
+/* ── BAND 7 extras. ── */
+.hero__ctas--centre{justify-content:center}
+/* Band 3's panel. Same glass as band 7, given breathing room because it is carrying the
+   band on its own until the cards exist. */
+.glass--cta{text-align:center;padding-block:clamp(35px,2.1rem + 3vw,70px)}
+.glass--cta .statement{margin-bottom:clamp(21px,1.4rem + 1vw,35px)}
+@media (hover:hover){
+  .glass--cta{transition:border-color .3s var(--ease-satisfying),background .3s var(--ease-satisfying)}
+  .glass--cta:hover{border-color:rgba(var(--accent-1-rgb),.42);background:rgba(255,255,255,0.058)}
+}
+.ag-button--lg{font-size:var(--text-sm);padding-block:clamp(14px,.9rem + .4vw,18px)}
+/* The mono footer strip. Muted by instruction, so it closes the page without competing
+   with the CTA directly above it. */
+.strip{
+  justify-content:center;margin:var(--space-lg) 0 0;color:var(--paper-mute);text-align:center;
+}
+
+/* ══ HOVER PILLS ══ builder notes: dotted underline, NO colour change, so a definition
+   never competes with the CTA for attention. The pill is a real <span role="button"> with
+   tabindex, because a definition that only opens on hover is invisible to keyboard and to
+   touch, and the notes call that out: "tap-to-open and tap-to-dismiss on mobile, or they're
+   invisible to half the traffic."
+   The panel is positioned by the pill, capped in width, and never traps focus. ══ */
+.pill{
+  position:relative;display:inline;color:inherit;cursor:help;
+  border-bottom:1px dotted rgba(255,255,255,.45);
+}
+.pill:focus-visible{outline:2px solid var(--violet-lift);outline-offset:3px;border-radius:3px}
+.pill::after{
+  content:attr(data-copy);
+  position:absolute;left:50%;bottom:calc(100% + 9px);translate:-50% 0;
+  width:max-content;max-width:min(280px,72vw);
+  font-family:var(--font-body);font-size:var(--text-sm);font-weight:400;line-height:1.5;
+  letter-spacing:normal;text-transform:none;text-align:left;color:var(--paper);
+  background:var(--ink-2);border:1px solid rgba(255,255,255,.12);border-radius:7px;
+  box-shadow:0 21px 42px -21px rgba(0,0,0,.9);
+  padding:12px 14px;z-index:30;
+  opacity:0;visibility:hidden;transition:opacity .21s var(--ease-satisfying);
+  pointer-events:none;
+}
+/* Hover is wrapped, per AG rule, so a touch device never gets a stuck hover state. The
+   .is-open class is the touch and keyboard path and works everywhere. */
+@media (hover:hover){
+  .pill:hover::after{opacity:1;visibility:visible}
+}
+.pill.is-open::after,
+.pill:focus-visible::after{opacity:1;visibility:visible}
+
+
+/* ══ CTA, MOBILE (Quinten, 2026-09-08) ══
+   TWO controlled lines instead of three ragged ones. The label was breaking as
+   "GET YOUR FREE / PREDICTIVE / ASSESSMENT" in the narrower buttons; this forces
+   "Get Your Free / Predictive Assessment". An AUTHORED <br> is a design decision, not a
+   wrap, so the orphan gate correctly leaves it alone.
+   The label is wrapped in a span first: .ag-button is a flex row, so a bare <br> among
+   anonymous text runs is not reliable, whereas inside one span it breaks normally.
+
+   THE ARROW WAS BEING SQUEEZED, NOT CLIPPED BY THE PAGE. .ag-button .arrow is an
+   inline-block with its own overflow:hidden, so as a flex item it shrank: measured 9x15
+   on the wrapped buttons against 12x13 on the unwrapped one. Compressed horizontally, a
+   RIGHT arrow becomes taller than it is wide and reads as pointing UP -- which is exactly
+   what it looked like -- and its own overflow:hidden cropped the rest. flex:none stops it
+   shrinking. Fixed HERE rather than in ag/ag-button.css, which is a registered primitive
+   and must not be forked inside one build. ══ */
+.ag-button .arrow{flex:none}
+.btn-t{display:inline}
+.cta-br{display:none}
+/* "Predictive Assessment" is glued so the SECOND line cannot split again. Wrapping the
+   label in a span made it a text block the orphan sweep can see for the first time, and it
+   immediately reported what was always true: at 350-400px the label broke three ways
+   ("Get Your Free / Predictive / Assessment"), stranding a word on the last line AND in the
+   middle. The authored <br> fixes line 1; the glue fixes line 2. */
+@media (min-width:901px){
+  /* Above mobile the break is off, so the label must hold ONE line. The button is
+     width:fit-content, so nowrap widens the button rather than overflowing it. */
+  .btn-t{white-space:nowrap}
+}
+@media (max-width:900px){
+  .cta-br{display:inline}
+}
+
+
+/* SCROLLBAR BUBBLE, MOBILE (Quinten, 2026-09-08: "the scroll bar text is kind of in the way,
+   just dont have it show words for mobile users"). The rail and its thumb stay; only the
+   name bubble is hidden. On a 390px screen that bubble covers a real slice of the reading
+   column, and the section name is redundant there because the whole section heading is
+   already on screen.
+   Overridden HERE rather than in ag/ag-scrollbar.css: that file is a registered primitive
+   (v2.0) and patching a build-local copy is the fork decision #44 had to undo. */
+@media (max-width:900px){
+  .ag-sb__label{display:none}
+}
+
+
+/* ── BAND 3 intro. The band now carries the most weight on the page, per the builder notes,
+   so the setup prose gets its own measure above the cards rather than sharing the head. ── */
+.find-intro{max-width:60ch;margin:var(--space-lg) auto 0;text-align:center}
+/* The example question, set apart. It is the single most concrete line on the page and the
+   thing a plant manager recognizes, so it reads as a quoted specimen rather than as prose. */
+.find-q{
+  color:var(--paper);font-style:normal;
+  border-left:2px solid rgba(var(--accent-1-rgb),.55);
+  padding:12px 0 12px 21px;margin-block:21px;text-align:left;
+  background:linear-gradient(90deg,rgba(var(--accent-1-rgb),.07),transparent 70%);
+}
+.find-lead{justify-content:center;margin:var(--space-lg) 0 0;color:var(--paper-mute)}
+@media (max-width:900px){
+  /* 6C, no carve-outs. */
+  .find-q{text-align:center;border-left:0;border-top:2px solid rgba(var(--accent-1-rgb),.55);padding:14px 0 0}
+}
+
+@media (max-width:1200px){
+  .hero__in{grid-template-columns:1fr;gap:var(--space-lg)}
+  /* HER section 9: title, then media, then the rest. */
+  .hero__head,.hero__aside{grid-column:1;align-items:center}
+  .hero__media{grid-column:1;margin-top:var(--space-lg)}
+  .hero__title{max-width:none}
+
+  .ed{grid-template-columns:1fr;gap:var(--space-lg)}
+  .ed__rail{position:static}
+
+  /* AG-MOBILE-STANDARD 6C: Mobile and Tablet are CENTERED.
+     display:contents promotes the hero copy to grid items, which blockifies
+     inline-flex, so the flex rows need justify-content rather than text-align. */
+  .hero__in,
+  .band .wrap,
+  .band .wrap-tight{text-align:center}
+  .eyebrow,
+  .hero__ctas,
+  .stamp{justify-content:center}
+  .hero__title,
+  .statement,
+  .lede,
+  .ed__body,
+  .pipe-close{margin-inline:auto}
+  /* 6C has no carve-outs, so the desktop left-align is reverted here explicitly.
+     text-align is inherited, so .ed__body's OWN declaration beats the centring
+     inherited from .band .wrap no matter the specificity. It has to be re-stated. */
+  .ed__body{text-align:center}
+    .ag-footer-logo img,
+  .ag-footer-identity img{margin-inline:auto}
+}
+
+/* Between 901 and 1200 the data grids still have real columns, so they hold left:
+   a struck line and a ghost numeral only read as a table when their edges align.
+   At 900 and below the rows collapse to a single stack and 6C centring applies. */
+@media (min-width:901px) and (max-width:1200px){
+  .dg,.dg__row,.close-body,.close-who{text-align:center}
+}
+
+/* ══ ACCESSIBILITY ══ measured, not assumed.
+   Base violet #714EFF is 3.86:1 on the ground and --brand-700 #5B3AE0 is 2.85:1,
+   both under the 4.5:1 floor. --violet-lift #A796FF is 7.72:1. */
+.ag-button--secondary{color:var(--violet-lift)}
+
+@media (min-width:901px){
+  .ag-footer-cols{grid-template-columns:2.2fr 1fr 1.1fr}
+}
+/* FOOTER, composed. Same three items Quinten asked for, but arranged: mark centred over a
+   hairline, then ONE mono row holding the copyright and the link. Mono because it is the
+   page's label voice, muted because a footer should close the page rather than compete with
+   the CTA above it. The row wraps to two centred lines on narrow widths. */
+.ag-footer-min{
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:21px;padding-block:clamp(28px,1.4rem + 2vw,42px);
+}
+.ag-footer-min .ag-footer-logo{margin:0;opacity:.9}
+/* THE MARK TURNS (Quinten, 2026-09-08). 21s linear, which is the house loop already used by
+   the marquee and by the deck's own ring field, so the page has one tempo rather than a new
+   one. Clockwise runs WITH the artwork: BRANDKIT records the mark as a 12-circle dotted ring
+   whose radius and opacity both decay clockwise, so turning it that way carries the decay
+   around instead of fighting it.
+   Linear, not eased: a logo that accelerates reads as a loading spinner. */
+.ag-footer-min .ag-footer-logo img{display:block;animation:markSpin 21s linear infinite}
+@keyframes markSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.ag-footer-row{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:7px 21px;width:100%;
+  padding-top:21px;border-top:1px solid var(--rule-2);
+}
+.ag-footer-min .ag-footer-copyright,
+.ag-footer-min .ag-footer-meta{
+  margin:0;font-family:var(--font-mono);font-weight:500;font-size:var(--text-eyebrow);
+  letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute);
+}
+.ag-footer-min .ag-footer-meta a{
+  color:var(--paper-soft);text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.22);padding-bottom:2px;
+  transition:color .3s var(--ease-satisfying),border-color .3s var(--ease-satisfying);
+}
+@media (hover:hover){
+  .ag-footer-min .ag-footer-meta a:hover{color:var(--paper);border-color:var(--violet-lift)}
+}
+
+/* Tap targets, AG locks 49px. ag-defensive ships the skip link at 44px and the
+   footer links resolve to 36px, the contact link to 16px. */
+.ag-skip-link{min-height:49px;display:inline-flex;align-items:center}
+.ag-footer-link,
+.ag-footer-meta a{display:inline-flex;align-items:center;min-height:49px}
+.ag-footer-social a{display:inline-flex;align-items:center;justify-content:center;min-width:49px;min-height:49px}
+</style>
+</head>
+
+<body>
+<a class="ag-skip-link" href="#main">Skip to content</a>
+
+<main id="main">
+
+  <!-- ═══ BAND 1 · HERO ═══ -->
+  <!-- ═══ BAND 1 · HERO ═══ Split: copy LEFT, workflow visual RIGHT (builder notes).
+       CTA sits ABOVE the lede, which is unusual and intentional per the notes, so it holds
+       above the fold on a laptop. No VSL: this page's offer is the assessment, and the
+       notes say the demo is a different job. ═══ -->
+  <section class="hero lit-ground" data-sb-label="Home">
+    <canvas id="bg" class="surge-bg" aria-hidden="true"></canvas>
+    <div class="grid-rule" aria-hidden="true"></div>
+    <div class="bg-scrim" aria-hidden="true"></div>
+
+    <div class="hero__in">
+      <div class="hero__head">
+        <p class="eyebrow reveal">Complimentary Assessment</p>
+        <h1 class="hero__title reveal-hero">Find Out What Your Data Can Already Predict
+          <span class="q">Before You Spend a Dollar Finding&nbsp;Out</span></h1>
+      </div>
+
+      <!-- ORDER IS QUINTEN'S, 2026-09-08: title, VSL, CTA, then the support text.
+           This REPLACES the split hero and the workflow figure. Two things it knowingly
+           overrides in the supplied builder notes, on Quinten's direct instruction:
+           "Split hero. Copy left, product or workflow visual right" and "No VSL on this
+           page unless one exists for the audit specifically". Recorded rather than
+           silently diverged from, so the notes file and the build do not disagree.
+           LIVE since 2026-09-08: data-yt carries GnRZOqydZVE, verified against YouTube's
+           oEmbed endpoint (200, title "Cogentic VSL") before it was wired in rather than
+           pasted on trust. Open item C is CLOSED. -->
+      <div class="hero__media reveal">
+        <div class="vsl" id="vsl" data-yt="GnRZOqydZVE">
+          <img class="vsl__poster" src="assets/vsl-poster-yt.webp"
+               srcset="assets/vsl-poster-yt-768.webp 768w, assets/vsl-poster-yt.webp 1280w"
+               sizes="(max-width: 900px) 348px, 590px" alt="Cogentic walkthrough: a raw spreadsheet becoming a validated prediction" width="1280" height="720" fetchpriority="high" decoding="async">
+          <button class="vsl__btn" type="button" aria-label="Play the Cogentic walkthrough">
+            <span class="vsl__play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hero__aside">
+        <!-- No .reveal on the CTA: ag-motion's observer uses rootMargin 0 0 -10% 0, so the
+             bottom tenth of the viewport never intersects and a revealed element there
+             stays at opacity 0 forever. A primary CTA must never depend on a trigger it
+             cannot satisfy. -->
+        <div class="hero__ctas">
+          <a class="ag-button ag-button--primary" href="https://cogentichq.com/mini-audit"><span class="btn-t">Get Your Free <br class="cta-br">Predictive&nbsp;Assessment</span><span class="arrow" aria-hidden="true"></span></a>
+        </div>
+
+        <div class="lede hero__lede reveal">
+          <p>We organize the data you already have, then set up <span class="pill" data-def="prediction-models" tabindex="0" role="button" aria-expanded="false">prediction models</span> your own team runs. Which jobs will scrap before you cut the material. Which machine needs service before it takes the shift down. What to reorder before the rush order costs you&nbsp;triple.</p>
+          <p>All of it on a machine inside your&nbsp;building.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══ BAND 2 · THE PROBLEM ═══ Single column, centred, 640px cap, prose only. No cards
+       and no icons by instruction: the disconnection IS the point, and a tidy grid here
+       would argue against the copy. Wears the living light. ═══ -->
+  <section class="band band--alt" id="problem" data-sb-label="The problem">
+    <div class="wrap">
+      <div class="ed">
+        <div class="ed__rail">
+          <h2 class="statement reveal">Nobody Can Get It&nbsp;Out</h2>
+        </div>
+        <div class="lede ed__body ed__body--prose reveal">
+          <p>Your records sit in systems that don't talk to each other. The <span class="pill" data-def="erp" tabindex="0" role="button" aria-expanded="false">ERP</span> <strong>doesn't see</strong> the <span class="pill" data-def="machine-logs" tabindex="0" role="button" aria-expanded="false">machine logs</span>. Inspections live in one spreadsheet, orders in another, and the copy everyone actually uses is on somebody's&nbsp;desktop.</p>
+          <p>So a simple question has no answer. Does this happen more on that machine? That lot? That shift? Three files, nothing shared between them, no way to check. So it happens again next month, and you find out the same way you found out last&nbsp;time.</p>
+          <p class="turn">You've probably been told your operation is <strong>too complicated</strong> for this. Or that your data is <strong>too messy to&nbsp;use</strong>.</p>
+          <p>Every year that goes unanswered is another year of the same mistakes and another year of records piling up in the same&nbsp;state.</p>
+          <p><span class="hl">Sorting that out is the job</span>. It's the part we&nbsp;do.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ BAND 3 · WHAT THE ASSESSMENT TELLS YOU ═══ THE SLOT IS EMPTY BY INSTRUCTION.
+       The supplied copy reads "Slot empty. Blocked pending answers from Aymane." The intake
+       names the mini-audit once, as a lead magnet at that URL, and says nothing about what
+       it does, so writing this band from guesswork would put invented product claims on a
+       live page. AG-CONTENT-FIDELITY-STANDARD forbids it and the no-placeholder ship gate
+       blocks it. The heading and the CTA are real and are placed; the three-or-four cards
+       the notes call for are NOT stubbed, because an empty card is a placeholder.
+       UNBLOCKS ON: what someone enters and how many fields · what comes back and whether a
+       person reviews it · how long it takes · whether they keep anything afterward. ═══ -->
+  <section class="band lit-ground" id="findout" data-sb-label="What you'll find out">
+    <canvas class="surge-bg" aria-hidden="true"></canvas>
+    <div class="grid-rule" aria-hidden="true"></div>
+    <div class="bg-scrim" aria-hidden="true"></div>
+    <!-- UNBLOCKED 2026-09-09. Quinten supplied this band; copy is verbatim from
+           COPY-MINI-AUDIT.md, which was written to disk BEFORE this build step.
+           Builder notes: "Three or four cards... this is the band that earns the form fill,
+           so it needs the most visual weight on the page." Three cards, and they REUSE the
+           .step component from band 4 rather than a new one: three numbered glass cards is
+           the same problem already solved, and a second card system would be drift. -->
+      <div class="wrap">
+        <h2 class="statement reveal">What You'll Find&nbsp;Out</h2>
+
+        <div class="lede find-intro reveal">
+          <p>Tell us the question you'd want answered on a Monday morning. <strong>Not what software you want, the actual&nbsp;question.</strong></p>
+          <p class="find-q">Do we scrap more on this alloy, on machine four, on second shift, right after a tool&nbsp;change?</p>
+          <p>Then tell us where your records live today. We'll look at it and tell you whether your data can answer&nbsp;it.</p>
+        </div>
+
+        <p class="eyebrow find-lead reveal">Three outcomes, and all three are worth knowing</p>
+
+        <ol class="steps reveal-stagger" role="list">
+          <li class="step">
+            <span class="step__n">01</span>
+            <h3 class="step__t">Yes, and here's roughly what it takes</h3>
+            <p class="step__b">The records exist and they can be joined. We'll tell you which sources carry the answer and what has to happen to get at&nbsp;it.</p>
+          </li>
+          <li class="step">
+            <span class="step__n">02</span>
+            <h3 class="step__t">Not yet, and here's what's missing</h3>
+            <p class="step__b">Usually one field nobody logs, or a source that was never kept. <strong>Knowing which one is the difference between a project and a&nbsp;guess.</strong></p>
+          </li>
+          <li class="step">
+            <span class="step__n">03</span>
+            <h3 class="step__t">Wrong question, better one nearby</h3>
+            <p class="step__b">Sometimes the thing you asked about is a symptom. The data points at what's actually driving it, and that's the question worth answering&nbsp;instead.</p>
+          </li>
+        </ol>
+
+        <p class="steps__line reveal"><span class="hl">Nothing gets uploaded to run this.</span> You're describing your setup, not sending your&nbsp;records.</p>
+
+        <div class="hero__ctas hero__ctas--centre reveal">
+          <a class="ag-button ag-button--primary ag-button--lg" href="https://cogentichq.com/mini-audit"><span class="btn-t">Get Your Free <br class="cta-br">Predictive&nbsp;Assessment</span><span class="arrow" aria-hidden="true"></span></a>
+        </div>
+      </div>
+  </section>
+
+  <!-- ═══ BAND 4 · WHAT HAPPENS IF YOU GO AHEAD ═══ Three numbered cards, horizontal on
+       desktop, stacked on mobile. Mono numerals in violet. The closing line sits FULL WIDTH
+       beneath the cards, not inside one, per the notes. Wears the walking bolts. ═══ -->
+  <section class="band band--deep" id="ahead" data-sb-label="What happens">
+    <div class="grid-rule grid-rule--cross" aria-hidden="true"></div>
+    <canvas class="bolt-bg" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <h2 class="statement reveal">What Happens If You Go&nbsp;Ahead</h2>
+      <ol class="steps reveal-stagger" role="list">
+        <li class="step">
+          <span class="step__n">01</span>
+          <h3 class="step__t">We organize your data</h3>
+          <p class="step__b">Every system, every export, and whatever is still on paper. All of it pulled into one place on your hardware and cleaned up, so the question you couldn't answer last quarter takes <strong>a minute this&nbsp;time</strong>.</p>
+        </li>
+        <li class="step">
+          <span class="step__n">02</span>
+          <h3 class="step__t">We build the prediction models</h3>
+          <p class="step__b"><span class="pill" data-def="trained-history" tabindex="0" role="button" aria-expanded="false">Trained on your own history</span>. Then checked against results you already know, so you can see whether they're right <strong>before you rely on&nbsp;them</strong>.</p>
+        </li>
+        <li class="step">
+          <span class="step__n">03</span>
+          <h3 class="step__t">Your team runs it</h3>
+          <p class="step__b">Upload, profile, train, predict. Your quality engineer or office manager does this. <strong>No coding, no data&nbsp;scientist</strong>.</p>
+        </li>
+      </ol>
+      <p class="steps__line reveal">It runs on a machine in your building, with <span class="hl">no internet connection&nbsp;needed</span>.</p>
+    </div>
+  </section>
+
+  <!-- ═══ BAND 5 · WHY NOTHING ELSE WORKED ═══ Stacked rows, hairline rule between,
+       numbered headings with body underneath. No cards and no columns by instruction: this
+       reads as a LIST, not a comparison table. Deliberately the still band. ═══ -->
+  <section class="band" id="reasons" data-sb-label="Why nothing else worked">
+    <div class="wrap-tight">
+      <h2 class="statement reveal">5 Reasons the Other Options Never&nbsp;Fit</h2>
+      <div class="carousel reveal">
+        <!-- data-ag-sweep-ignore is the mechanism ag-overflow-sweep DEFINES for legitimately
+             clipped components, not a way around it. detectContainerBleed flags any child
+             whose right edge passes a flex/grid parent and, unlike detectOverflow, carries
+             no ancestor-clip exemption -- so a carousel track trips it by construction.
+             Independently verified before applying: scrollWidth === clientWidth at 350 /
+             390 / 900 / 1400, and .reasons-swiper computes overflow:hidden, so the page
+             genuinely does not scroll horizontally. -->
+        <div class="swiper reasons-swiper" data-ag-sweep-ignore>
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <article class="rcard">
+                <span class="rcard__ghost" aria-hidden="true">1</span>
+                <p class="rcard__n">Reason 01</p>
+                <h3 class="rcard__t">Waiting until the data is clean</h3>
+                <p class="rcard__b">Most people think they need to get organized first. <span class="hl">The cleaning is the job</span>. Every quarter of waiting is another quarter of mess to sort out, and another quarter of the same problems catching you&nbsp;late.</p>
+              </article>
+            </div>
+
+            <div class="swiper-slide">
+              <article class="rcard">
+                <span class="rcard__ghost" aria-hidden="true">2</span>
+                <p class="rcard__n">Reason 02</p>
+                <h3 class="rcard__t">Expecting the ERP to handle it</h3>
+                <p class="rcard__b">It records what happened. It was <strong>never built to tell you what happens next</strong>, which is why you keep finding out after the part is already&nbsp;scrapped.</p>
+              </article>
+            </div>
+
+            <div class="swiper-slide">
+              <article class="rcard">
+                <span class="rcard__ghost" aria-hidden="true">3</span>
+                <p class="rcard__n">Reason 03</p>
+                <h3 class="rcard__t">Dashboards</h3>
+                <p class="rcard__b">They show the past. They also need clean, connected data, <strong>which is the part nobody has&nbsp;yet</strong>.</p>
+              </article>
+            </div>
+
+            <div class="swiper-slide">
+              <article class="rcard">
+                <span class="rcard__ghost" aria-hidden="true">4</span>
+                <p class="rcard__n">Reason 04</p>
+                <h3 class="rcard__t">Hiring for it</h3>
+                <p class="rcard__b"><strong>$150K a year.</strong> Six months of setup before any real work starts. Then it walks out the door with them, and you're back where you were with a year&nbsp;gone.</p>
+              </article>
+            </div>
+
+            <div class="swiper-slide">
+              <article class="rcard">
+                <span class="rcard__ghost" aria-hidden="true">5</span>
+                <p class="rcard__n">Reason 05</p>
+                <h3 class="rcard__t">Cloud tools</h3>
+                <p class="rcard__b">For most of the businesses we work with, sending the data out <strong>ends the&nbsp;call</strong>.</p>
+              </article>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- NAVIGATION BAR. Five labelled segments that double as the progress rail, plus
+             prev/next. Real <button>s with aria-current, not decorative dots: a carousel
+             whose controls are divs is unreachable by keyboard and unreadable by a screen
+             reader, and five objection-handlers are the last content on the page you want
+             to hide from anyone. -->
+        <!-- data-ag-center-exempt: the gate's own opt-out, same use as header chrome. A
+             segmented rail lays its controls ACROSS itself, so no single control is
+             centred within it and none should be. Scoped to the control bar ONLY; the
+             slides it drives stay centred and stay judged. -->
+        <div class="cnav" data-ag-center-exempt>
+          <button class="cnav__arrow" type="button" data-dir="prev" aria-label="Previous reason">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <div class="cnav__rail" role="tablist" aria-label="Choose a reason">
+            <button class="cnav__seg" type="button" role="tab" data-go="0" aria-selected="true">
+              <span class="cnav__segfill" aria-hidden="true"></span>
+              <span class="cnav__segnum">01</span>
+              <span class="cnav__seglabel">Waiting</span>
+            </button>
+            <button class="cnav__seg" type="button" role="tab" data-go="1" aria-selected="false">
+              <span class="cnav__segfill" aria-hidden="true"></span>
+              <span class="cnav__segnum">02</span>
+              <span class="cnav__seglabel">The ERP</span>
+            </button>
+            <button class="cnav__seg" type="button" role="tab" data-go="2" aria-selected="false">
+              <span class="cnav__segfill" aria-hidden="true"></span>
+              <span class="cnav__segnum">03</span>
+              <span class="cnav__seglabel">Dashboards</span>
+            </button>
+            <button class="cnav__seg" type="button" role="tab" data-go="3" aria-selected="false">
+              <span class="cnav__segfill" aria-hidden="true"></span>
+              <span class="cnav__segnum">04</span>
+              <span class="cnav__seglabel">Hiring</span>
+            </button>
+            <button class="cnav__seg" type="button" role="tab" data-go="4" aria-selected="false">
+              <span class="cnav__segfill" aria-hidden="true"></span>
+              <span class="cnav__segnum">05</span>
+              <span class="cnav__seglabel">Cloud tools</span>
+            </button>
+          </div>
+
+          <button class="cnav__arrow" type="button" data-dir="next" aria-label="Next reason">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ BAND 6 · WHO WE ARE ═══ Single column, narrower than band 2. Text-only: no
+       founder photograph has been supplied and the notes say to leave it text-only rather
+       than reach for stock. ═══ -->
+  <section class="band band--alt" id="who" data-sb-label="Who we are">
+    <div class="wrap">
+      <div class="ed">
+        <div class="ed__rail">
+          <h2 class="statement reveal">Engineers, Not a Sales&nbsp;Team</h2>
+        </div>
+        <div class="lede ed__body ed__body--narrow reveal">
+          <p>We spent years working in places where the data is valuable and not allowed to leave. Same story every time. Companies holding years of records they couldn't use, because every tool on the market wanted that data sent somewhere&nbsp;else.</p>
+          <p>2 founders and 5 contracted engineers. Both founders are doing an M.S. in Machine Learning at Georgia Tech. <span class="hl">You talk to the people who build it and install&nbsp;it</span>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ BAND 7 · CLOSE ═══ Centred and short. CTA large, micro-line small beneath, mono
+       footer strip muted. Glass card on the lit ground. ═══ -->
+  <section class="band lit-ground band--closing" id="start" data-sb-label="Start">
+    <canvas class="surge-bg" aria-hidden="true"></canvas>
+    <div class="grid-rule" aria-hidden="true"></div>
+    <div class="bg-scrim" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="ed">
+        <div class="ed__rail">
+          <div class="glass">
+            <h2 class="statement reveal">Start With What You Already&nbsp;Have</h2>
+            <div class="lede close-body reveal">
+              <p>The assessment <strong>costs nothing and commits you to nothing</strong>. Worst case, you find out what your records can and can't answer today, which is worth knowing before the next thing goes&nbsp;wrong.</p>
+            </div>
+            <div class="hero__ctas hero__ctas--centre reveal">
+              <a class="ag-button ag-button--primary ag-button--lg" href="https://cogentichq.com/mini-audit"><span class="btn-t">Get Your Free <br class="cta-br">Predictive&nbsp;Assessment</span><span class="arrow" aria-hidden="true"></span></a>
+            </div>
+            <p class="micro reveal">Your hardware. Your people. Nothing leaves your&nbsp;network.</p>
+          </div>
+        </div>
+      </div>
+      <p class="eyebrow strip reveal">Not manufacturing only &middot; Any business with data it cannot&nbsp;move</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="ag-footer">
+  <div class="ag-footer-inner">
+    <!-- STRIPPED 2026-09-08 (Quinten): logo, all rights reserved, website link, nothing else.
+         Removed with it: the tagline, the "not manufacturing only" mono line (it already
+         closes band 7, so the footer was repeating the page), the Company column, the social
+         icon, and the Pages nav. The nav was also BROKEN: it still pointed at #why, #how and
+         #versus, which stopped existing when the page was rebuilt to the mini-audit bands.
+         Three dead anchors were shipping in the footer until this pass. -->
+    <div class="ag-footer-min">
+      <p class="ag-footer-logo"><img src="assets/cogentic-mark-violet.svg" alt="Cogentic" width="42" height="42"></p>
+      <div class="ag-footer-row">
+        <p class="ag-footer-copyright">&copy; <span data-current-year>2026</span> Cogentic. All rights reserved.</p>
+        <p class="ag-footer-meta"><a href="https://cogentichq.com">cogentichq.com</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Cogentic","url":"https://cogentichq.com","logo":"https://cogentichq.com/assets/cogentic-mark-violet.svg","description":"Cogentic organizes the data a business already has and sets up prediction models its own team runs, on its own hardware.","address":{"@type":"PostalAddress","addressLocality":"San Francisco","addressRegion":"CA","addressCountry":"US"},"sameAs":["https://www.linkedin.com/company/cogenticai"]}
+</script>
+
+<script src="ag/ag-error-handler.js" data-project="Cogentic"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"
+        integrity="sha384-jqpi9VmOdhyLoLURgjCn7EpnG9BbnHW57ibIZoeaIU+erWDH3k8fQQg0xH2ySjnw"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="vendor/swiper-bundle.min.js" defer></script>
+<script src="ag/ag-scroll.js"></script>
+<script src="ag/ag-motion.js"></script>
+<script src="ag/ag-cursor.js"></script>
+<script src="ag/ag-footer.js"></script>
+<script src="ag/ag-scrollbar.js"></script>
+
+<script>
+/* ═══ Power surging down the circuit lines. Lifted from the Cogentic pitch deck.
+   Column positions use the SAME 46px pitch the grid paints, so the streaks ride the
+   drawn lines instead of floating over them. ═══ */
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* EVERY .surge-bg, not one #bg. Bands 1, 3 and 5 all wear the lit ground, so the
+     script drives a list. Each canvas keeps its OWN state and is sized to its OWN
+     parent, because these bands are wildly different heights. */
+  var nodes = [].slice.call(document.querySelectorAll('canvas.surge-bg'));
+  if (!nodes.length) return;
+
+  var GAP = 46, TAU = Math.PI * 2;
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+
+  function Field(c) {
+    this.c = c; this.ctx = c.getContext('2d');
+    this.W = 0; this.H = 0; this.dpr = 1; this.cols = []; this.surges = [];
+  }
+  Field.prototype.mk = function (seed) {
+    var cols = this.cols;
+    return { x: cols[(Math.random() * cols.length) | 0],
+             y: seed ? rnd(-this.H, 0) : -rnd(20, this.H * 0.55) * this.dpr,
+             sp: rnd(5, 11) * this.dpr, tail: rnd(90, 230) * this.dpr, b: rnd(0.5, 1) };
+  };
+  Field.prototype.resize = function () {
+    this.dpr = Math.min(devicePixelRatio || 1, 2);
+    var host = this.c.parentElement;
+    var cw = host.clientWidth || innerWidth, ch = host.clientHeight || innerHeight;
+    this.W = this.c.width = cw * this.dpr; this.H = this.c.height = ch * this.dpr;
+    var n = Math.max(4, Math.round(cw / GAP)); this.cols = [];
+    for (var i = 0; i <= n; i++) this.cols.push(i * GAP * this.dpr);
+    /* DENSITY SCALES WITH HEIGHT, not width alone. The original count came from the deck,
+       whose hero is exactly one viewport tall. Band 3 is ~2500px, so the same count spread
+       over 2.5x the area read as an almost-empty band with an occasional streak. Density
+       per unit AREA is what the eye judges, so height is folded in, capped at 3x so a very
+       long band cannot spawn an unbounded number. */
+    var density = Math.min(3, Math.max(1, ch / 900));
+    var count = Math.max(7, Math.round(n * 0.34 * density));
+    this.surges = []; for (var s = 0; s < count; s++) this.surges.push(this.mk(true));
+  };
+  Field.prototype.draw = function () {
+    var ctx = this.ctx, dpr = this.dpr;
+    ctx.clearRect(0, 0, this.W, this.H);
+    for (var i = 0; i < this.surges.length; i++) {
+      var s = this.surges[i]; s.y += s.sp;
+
+      /* 1. THE SURROUNDINGS. A soft radial pool travelling with the head, wider than the
+         line, so the light spills onto the ground either side of the column instead of
+         being a bare stripe. This is the half that makes it read as illumination rather
+         than as a drawn streak, and it is what the lines are revealed BY now that they
+         paint nothing themselves. */
+      var R = 104 * dpr * s.b;
+      var halo = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, R);
+      /* Brightness comes from moving toward WHITE, never from raising violet's alpha.
+         Measured off the deck: its ambient violet never exceeds alpha 0.22 anywhere,
+         and every bright value it uses is a near-white hue (rgb(214,206,255),
+         rgb(234,230,255)) rather than a stronger #714EFF. Copying the hue discipline is
+         what stops this reading as a cheap matrix effect. Halo peaks at 0.22, on that
+         ceiling, and gets its lift from the whiter inner stop instead. */
+      halo.addColorStop(0,    'rgba(196,184,255,' + (0.22 * s.b) + ')');
+      halo.addColorStop(0.38, 'rgba(150,130,255,' + (0.10 * s.b) + ')');
+      halo.addColorStop(1,    'rgba(113,78,255,0)');
+      ctx.fillStyle = halo;
+      ctx.beginPath(); ctx.arc(s.x, s.y, R, 0, TAU); ctx.fill();
+
+      /* 2. THE LINE, lit behind the head as a fading tail. */
+      ctx.lineWidth = 1.4 * dpr; ctx.lineCap = 'round';
+      var g = ctx.createLinearGradient(0, s.y - s.tail, 0, s.y);
+      g.addColorStop(0, 'rgba(113,78,255,0)');
+      g.addColorStop(0.72, 'rgba(140,120,255,' + (0.34 * s.b) + ')');
+      g.addColorStop(1, 'rgba(214,206,255,' + (0.95 * s.b) + ')');
+      ctx.strokeStyle = g;
+      ctx.beginPath(); ctx.moveTo(s.x, s.y - s.tail); ctx.lineTo(s.x, s.y); ctx.stroke();
+
+      /* 3. A short reach AHEAD of the head, so the line is faintly visible just before
+         the light arrives. Light falls forward; without this the column below the head
+         is pure black and the reveal reads as a wipe rather than as a lamp. */
+      var ahead = ctx.createLinearGradient(0, s.y, 0, s.y + 56 * dpr);
+      ahead.addColorStop(0, 'rgba(190,175,255,' + (0.30 * s.b) + ')');
+      ahead.addColorStop(1, 'rgba(113,78,255,0)');
+      ctx.strokeStyle = ahead;
+      ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x, s.y + 56 * dpr); ctx.stroke();
+
+      /* 4. The head itself. */
+      ctx.shadowColor = 'rgba(150,130,255,0.9)'; ctx.shadowBlur = 14 * dpr;
+      ctx.fillStyle = 'rgba(234,230,255,' + s.b + ')';
+      ctx.beginPath(); ctx.arc(s.x, s.y, 2.2 * dpr, 0, TAU); ctx.fill();
+      ctx.shadowBlur = 0;
+
+      if (s.y - s.tail > this.H) this.surges[i] = this.mk(false);
+    }
+  };
+
+  var fields = nodes.map(function (c) { var f = new Field(c); f.resize(); return f; });
+  function resizeAll() { for (var i = 0; i < fields.length; i++) fields[i].resize(); }
+  /* ONE rAF loop for every field, not one per canvas: three independent loops would
+     each schedule their own frame and triple the scheduling cost for identical work. */
+  function frame() {
+    for (var i = 0; i < fields.length; i++) fields[i].draw();
+    requestAnimationFrame(frame);
+  }
+  addEventListener('resize', resizeAll, { passive: true });
+  addEventListener('load', resizeAll);
+  if (!reduce) requestAnimationFrame(frame);
+})();
+
+/* ═══ BAND 4 · ELECTRICITY WALKING THE CROSSHATCH ═══ Quinten, 2026-09-08: "the grid has
+   no light riding effect like we had it on the presentation".
+
+   Ported from the deck's section 03 canvas, with its measured parameters, NOT from an
+   impression of it. This is a GRID-WALKER, a different simulation from the hero's falling
+   surges: a bolt starts on an edge cell and hops cell to cell along the 46px lattice,
+   turning 90 degrees at about a third of the hops, dragging a fading trail, then dying and
+   respawning. That is what makes it read as current finding a path through a circuit
+   rather than as rain.
+
+   Deck parameters, kept: 46px lattice · count = max(6, cols/2) · hop 0.02-0.045 of a cell
+   per frame (roughly 55-124 px/s, deliberately far slower than the hero's 300-660) · 0.34
+   turn probability · 13-node trail · 16-32 hop lifespan · 1.6px stroke · trail alpha
+   ramping to 0.55 · 2px head with a 12px bloom.
+
+   Slower and dimmer than the hero on purpose: this band carries the densest reading on the
+   page, so the motion has to be noticeable without ever competing with the copy. ═══ */
+(function () {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var c = document.querySelector('canvas.bolt-bg'); if (!c) return;
+  var ctx = c.getContext('2d'); var GAP = 46, TAU = Math.PI * 2;
+  var W, H, dpr, cols, rows, bolts;
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+  function ri(a, b) { return Math.floor(rnd(a, b + 1)); }
+
+  function mk() {
+    /* Start on an edge cell so a bolt always enters the frame rather than blinking into
+       existence in the middle of the copy. */
+    var edge = ri(0, 3), cx, cy, dx, dy;
+    /* The heading MUST point into the frame. Picking a random direction here spawned a
+       left-edge bolt walking left, which left the lattice on its first hop and died, so
+       the field collected against the borders and the middle stayed empty. Caught by
+       LOOKING at the render: the lit-pixel count was healthy and told me nothing. */
+    if (edge === 0)      { cx = 0;             cy = ri(0, rows); dx =  1; dy = 0; }
+    else if (edge === 1) { cx = cols;          cy = ri(0, rows); dx = -1; dy = 0; }
+    else if (edge === 2) { cx = ri(0, cols);   cy = 0;           dx =  0; dy = 1; }
+    else                 { cx = ri(0, cols);   cy = rows;        dx =  0; dy = -1; }
+    return { cx: cx, cy: cy, dx: dx, dy: dy, t: 0,
+             sp: rnd(0.02, 0.045), trail: [[cx * GAP * dpr, cy * GAP * dpr]],
+             hops: 0, max: ri(16, 32), dying: false, fade: 1, b: rnd(0.55, 1) };
+  }
+
+  function resize() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    var host = c.parentElement;
+    var cw = host.clientWidth || innerWidth, ch = host.clientHeight || innerHeight;
+    W = c.width = cw * dpr; H = c.height = ch * dpr;
+    cols = Math.max(4, Math.round(cw / GAP));
+    rows = Math.max(4, Math.round(ch / GAP));
+    var N = Math.max(6, Math.round(cols * 0.5));
+    bolts = [];
+    for (var i = 0; i < N; i++) {
+      var b = mk();
+      /* PRE-WALK. Without this every bolt is on an edge at t=0 and the band opens as a
+         ring of dots around an empty middle. Each one is walked forward by a random part
+         of its own lifespan so the field starts dispersed, mid-path and mid-trail. */
+      var pre = ri(0, Math.floor(b.max * 0.7));
+      for (var k = 0; k < pre; k++) { b.t = 1; step(b); if (b.dying) { b = mk(); break; } }
+      bolts.push(b);
+    }
+  }
+
+  function step(b) {
+    b.t += b.sp;
+    if (b.t < 1) return;
+    /* Arrived at the next cell. Commit it to the trail, then decide whether to turn. */
+    b.t = 0; b.cx += b.dx; b.cy += b.dy; b.hops++;
+    b.trail.push([b.cx * GAP * dpr, b.cy * GAP * dpr]);
+    if (b.trail.length > 13) b.trail.shift();
+    if (Math.random() < 0.34) {           /* 90 degrees only, never a reversal */
+      var turn = b.dx !== 0 ? [[0, 1], [0, -1]] : [[1, 0], [-1, 0]];
+      var t = turn[ri(0, 1)]; b.dx = t[0]; b.dy = t[1];
+    }
+    /* Die on lifespan, or the moment it walks off the lattice. */
+    if (b.hops >= b.max || b.cx < -1 || b.cx > cols + 1 || b.cy < -1 || b.cy > rows + 1) b.dying = true;
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineWidth = 1.6 * dpr; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    for (var i = 0; i < bolts.length; i++) {
+      var b = bolts[i];
+      if (b.dying) { b.fade -= 0.016; if (b.fade <= 0) { bolts[i] = mk(); continue; } }
+      else step(b);
+
+      var pts = b.trail.slice();
+      /* The head sits BETWEEN cells while t is mid-hop, so it moves continuously rather
+         than jumping a whole cell at a time. */
+      var hx = (b.cx + b.dx * b.t) * GAP * dpr, hy = (b.cy + b.dy * b.t) * GAP * dpr;
+      pts.push([hx, hy]);
+
+      for (var j = 0; j < pts.length - 1; j++) {
+        var op = ((j + 1) / pts.length) * b.b * b.fade;
+        ctx.strokeStyle = 'rgba(132,98,255,' + (0.62 * op) + ')';
+        ctx.beginPath(); ctx.moveTo(pts[j][0], pts[j][1]); ctx.lineTo(pts[j + 1][0], pts[j + 1][1]); ctx.stroke();
+      }
+      ctx.shadowColor = 'rgba(138,104,255,' + (0.95 * b.fade) + ')'; ctx.shadowBlur = 14 * dpr;
+      ctx.fillStyle = 'rgba(196,172,255,' + (b.b * b.fade) + ')';
+      ctx.beginPath(); ctx.arc(hx, hy, 2 * dpr, 0, TAU); ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+    requestAnimationFrame(frame);
+  }
+  resize(); addEventListener('resize', resize, { passive: true });
+  addEventListener('load', resize);
+  requestAnimationFrame(frame);
+})();
+
+/* ═══ HOVER PILLS ═══ builder notes: "Tap-to-open and tap-to-dismiss on mobile, or they're
+   invisible to half the traffic." Hover alone reaches neither touch nor keyboard, so the
+   definitions live here and the open state is a class, not a :hover. Copy is injected from
+   this map rather than sitting in the markup, so a definition has exactly ONE home. ═══ */
+(function () {
+  var DEFS = {
+    'erp': 'The system that runs your orders, inventory and jobs. Think SAP, NetSuite, or whatever your shop has been on for years.',
+    'machine-logs': 'The records your equipment writes automatically as it runs. Cycle times, temperatures, alarms, faults.',
+    'prediction-models': 'Software that looks at what happened before and works out what is likely to happen next, based on your own history rather than an industry average.',
+    'trained-history': 'We feed the model your past records so it learns your operation specifically. Your parts, your machines, your customers, not a generic template.'
+  };
+  var pills = [].slice.call(document.querySelectorAll('.pill[data-def]'));
+  if (!pills.length) return;
+  pills.forEach(function (el) {
+    var copy = DEFS[el.getAttribute('data-def')];
+    if (!copy) return;
+    el.setAttribute('data-copy', copy);
+    el.setAttribute('aria-label', el.textContent.trim() + ': ' + copy);
+  });
+  function closeAll(except) {
+    pills.forEach(function (el) {
+      if (el === except) return;
+      el.classList.remove('is-open');
+      el.setAttribute('aria-expanded', 'false');
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var pill = e.target.closest ? e.target.closest('.pill[data-def]') : null;
+    if (!pill) { closeAll(null); return; }
+    e.preventDefault();
+    var open = pill.classList.toggle('is-open');
+    pill.setAttribute('aria-expanded', open ? 'true' : 'false');
+    closeAll(pill);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeAll(null);
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('pill')) {
+      e.preventDefault(); e.target.click();
+    }
+  });
+})();
+
+/* ═══ BAND 5 CAROUSEL ═══ Swiper 11.2.6 supplies the track, drag, keyboard and a11y; this
+   wires the custom nav bar to it and keeps the two in sync in BOTH directions, so dragging
+   the cards moves the rail and clicking the rail moves the cards.
+
+   The typeof guard is not ceremony. `defer` guarantees Swiper is parsed before this runs,
+   but if the CDN is blocked or the SRI hash fails, `Swiper` is undefined and without the
+   guard this throws and the band ships as a dead 5-wide flex row with four reasons off
+   screen. The fallback unwraps to a stack: lose the carousel, keep the content. ═══ */
+(function () {
+  /* DEFERRED SCRIPTS RUN AFTER INLINE ONES. The Swiper tag carries `defer`, and this block is
+     a plain inline script, so at parse time `Swiper` is still undefined. First cut ran the
+     init immediately, hit the CDN-blocked guard, and silently shipped the static fallback
+     with a hidden nav bar: the carousel never initialized and clicking a segment did nothing.
+     Caught by DRIVING the nav in a probe, not by looking at it -- the fallback renders as a
+     perfectly tidy stack, so a screenshot showed nothing wrong.
+     Deferred scripts are guaranteed to finish BEFORE DOMContentLoaded, so waiting for it is
+     the correct barrier. readyState is checked first in case it already fired. */
+  function boot() {
+  var root = document.querySelector('.reasons-swiper');
+  if (!root) return;
+  var nav = document.querySelector('.cnav');
+
+  if (typeof Swiper === 'undefined') {
+    root.classList.add('is-static');
+    if (nav) nav.hidden = true;
+    return;
+  }
+
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var segs = [].slice.call(document.querySelectorAll('.cnav__seg'));
+  var arrows = [].slice.call(document.querySelectorAll('.cnav__arrow'));
+
+  var sw = new Swiper(root, {
+    slidesPerView: 1.06,
+    /* CENTERED, and this is load-bearing rather than cosmetic. With slidesPerView 2.6 and
+       five slides, Swiper clamps activeIndex at 2 because the track cannot scroll further,
+       so nav segments 04 and 05 were UNREACHABLE: clicking them landed on slide 3 and
+       highlighted the wrong segment. Centering lets every index become active, which the
+       nav bar promises. Caught by clicking the last segment in a probe; a screenshot of the
+       first slide would never have shown it. */
+    centeredSlides: true,
+    spaceBetween: 21,                 /* 3 x 7 */
+    speed: reduce ? 0 : 600,          /* 0.6s, on the DNA grid. 0 under reduced motion:
+                                         the carousel still WORKS, it just stops sliding. */
+    watchSlidesProgress: true,
+    keyboard: { enabled: true, onlyInViewport: true },
+    a11y: { enabled: true },
+    grabCursor: !reduce,
+    /* A fractional slidesPerView is deliberate at every width: a partial card at the edge is
+       what tells a reader there is more to the right. Five equal cards that exactly fill the
+       row read as a finished grid and nobody drags it. */
+    breakpoints: {
+      700:  { slidesPerView: 1.5, spaceBetween: 21 },
+      1000: { slidesPerView: 2.1, spaceBetween: 28 },
+      1300: { slidesPerView: 2.6, spaceBetween: 35 }
+    }
+  });
+
+  function sync() {
+    var i = sw.activeIndex;
+    segs.forEach(function (b, n) {
+      b.setAttribute('aria-selected', n === i ? 'true' : 'false');
+    });
+    arrows.forEach(function (a) {
+      a.disabled = a.getAttribute('data-dir') === 'prev' ? sw.isBeginning : sw.isEnd;
+    });
+  }
+  sw.on('slideChange', sync);
+  sync();
+
+  /* TELL THE SCROLLBAR THE PAGE GREW. ag-scrollbar v2.0 measures section positions once at
+     init and re-measures ONLY on resize (no ResizeObserver, no MutationObserver). This
+     carousel initializes on DOMContentLoaded, AFTER the scrollbar has already measured, and
+     laying out the slides changes band 5's height -- so every checkpoint below it was
+     positioned against a stale document height. Measured drift was 13-20px on a ~700px rail
+     for the last two sections.
+     Dispatching the event the component already listens for, rather than editing the
+     component: ag-scrollbar is a registered primitive, and hand-patching a copy of it inside
+     one build is exactly the fork that decision #44 had to undo. */
+  requestAnimationFrame(function () { dispatchEvent(new Event('resize')); });
+
+  if (nav) {
+    nav.addEventListener('click', function (e) {
+      var seg = e.target.closest && e.target.closest('.cnav__seg');
+      if (seg) { sw.slideTo(Number(seg.getAttribute('data-go'))); return; }
+      var arrow = e.target.closest && e.target.closest('.cnav__arrow');
+      if (arrow) {
+        if (arrow.getAttribute('data-dir') === 'prev') { sw.slidePrev(); } else { sw.slideNext(); }
+      }
+    });
+  }
+  }
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', boot); }
+  else { boot(); }
+})();
+
+/* ═══ VSL facade. The iframe is only created on click, so it can never block `load`. ═══ */
+(function () {
+  var vsl = document.getElementById('vsl'); if (!vsl) return;
+  var btn = vsl.querySelector('.vsl__btn'); if (!btn) return;
+  btn.addEventListener('click', function () {
+    var id = vsl.getAttribute('data-yt');
+    if (!id) { return; }
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1';
+    f.title = 'Cogentic walkthrough';
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture';
+    f.allowFullscreen = true;
+    /* Reveal only once YouTube has actually painted. If the network is slow this keeps the
+       violet-wrapped poster on screen for the whole wait instead of showing an empty black
+       frame with YouTube's spinner in it. */
+    f.addEventListener('load', function () { vsl.classList.add('is-playing'); });
+    vsl.appendChild(f);
+    btn.remove();
+  });
+})();
+
+/* ═══ BUTTON RADIAL ORIGIN ═══ ag-button.css:68 draws the hover circle from
+   `left: var(--mx, 50%); top: var(--my, 50%)`, but NOTHING in this build ever set those,
+   so the fallback applied and the circle always grew from the dead centre of the button
+   no matter where the pointer entered. This publishes the pointer position onto the
+   button so the circle originates under the cursor, which is what the standard's radial
+   was designed to do.
+
+   ONE delegated listener rather than a per-button binding, so it also covers the drawer
+   CTA and anything added later. Fine-pointer only, matching the Cursor and Scrollbar
+   standards; on touch there is no hover state for it to serve. */
+(function () {
+  if (!window.matchMedia || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  document.addEventListener('pointermove', function (e) {
+    var el = e.target;
+    if (!el || !el.closest) return;
+    var b = el.closest('.ag-button');
+    if (!b) return;
+    var r = b.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    b.style.setProperty('--mx', (((e.clientX - r.left) / r.width) * 100).toFixed(2) + '%');
+    b.style.setProperty('--my', (((e.clientY - r.top) / r.height) * 100).toFixed(2) + '%');
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>

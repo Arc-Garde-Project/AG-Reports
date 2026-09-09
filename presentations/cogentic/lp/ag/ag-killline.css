@@ -1,0 +1,209 @@
+/* =========================================================== */
+/* AG Kill-Line + Tier Ladder — Cogentic                        */
+/* Ported 2026-09-04 from the client's OWN infographic engine:   */
+/*   Infographics/Batch 1/extras/engine-workspace/               */
+/*     cogentic-infographics-073026/frames.html      (.card-foot,*/
+/*     .ladder/.lad, .timeline/.tl-step)                         */
+/*     extras-out-of-batch.html                      (.row.is-dead)*/
+/*                                                               */
+/* Not invented here. BRANDKIT names the kill-line as the house  */
+/* supporting signature, and the landing copy was written to it. */
+/* Porting it makes the website and the 24 shipped infographics  */
+/* one system, which is the point.                               */
+/*                                                               */
+/* Register rules applied (AG ENTERPRISE-EFFECTS-GUIDE):         */
+/*   §8  the Data Grid REPLACES tables: no column borders,       */
+/*       alignment alone makes the table, hairline under each    */
+/*       row, row numbers in ghost text to the left.             */
+/*   §7  colour carries meaning and appears ONLY in its context. */
+/*   §12 hairlines at 1px / 6-12%, never full-width grey rules.  */
+/* =========================================================== */
+
+:root {
+  /* Semantic tier scale. From the infographics, where these are annotated
+     "the colour states which tier you are on" and are NOT decorative. */
+  --bronze: #CD7F32;
+  --silver: #C6C9D1;
+  --gold:   #E3B341;
+  --strike: #FF4D57;
+  --live:   #45DE8A;
+
+  --kl-hair:  rgba(255, 255, 255, 0.09);
+  --kl-ghost: rgba(255, 255, 255, 0.20);
+  --kl-rule:  3px;
+  --kl-strike-ink: rgba(255, 255, 255, 0.34);
+  --kl-why:        rgba(255, 255, 255, 0.38);
+  --kl-mask:       #000;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   DATA GRID. §8: alignment makes the table, not borders.
+   Used by both the tier ladder and the comparison band.
+   ───────────────────────────────────────────────────────────── */
+.dg { display: flex; flex-direction: column; align-items: stretch; }
+
+.dg__row {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  align-items: start;
+  gap: 0 21px;
+  padding: 28px 0;
+  border-top: 1px solid var(--kl-hair);
+}
+.dg:last-child .dg__row:last-child { border-bottom: 1px solid var(--kl-hair); }
+
+/* Ghost row numbers, left. Tabular so the column stays a column. */
+.dg__idx {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.14em;
+  line-height: 1.6;
+  color: var(--kl-ghost);
+}
+
+.dg__key {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: var(--text-eyebrow);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.21em;
+  text-transform: uppercase;
+  color: var(--paper-mute);
+  margin: 0 0 10px;
+}
+
+.dg__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-h4);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  margin: 0;
+}
+
+.dg__body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--paper-soft);
+  max-width: 64ch;
+  margin: 10px 0 0;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   THE KILL-LINE. BRANDKIT: "the old way struck through in grey
+   under a hairline rule." Lifted verbatim in intent from
+   .card-foot / .row.is-dead.
+   ───────────────────────────────────────────────────────────── */
+.kl {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  color: var(--paper-soft);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--kl-strike-ink);
+  margin: 0;
+}
+/* The heavy variant, for a rejected option rather than a footnote. */
+.kl--hard { text-decoration-color: var(--strike); }
+
+.kl__why {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--kl-why);
+  margin: 7px 0 0;
+  max-width: 60ch;
+}
+
+/* The live counterpart. No strike, and it is the only thing in the band
+   allowed to carry the live colour. */
+.kl--live {
+  text-decoration: none;
+  color: var(--paper);
+  font-weight: 700;
+}
+.kl--live::before {
+  content: '';
+  display: inline-block;
+  width: 7px; height: 7px; border-radius: 50%;
+  background-color: var(--live);
+  margin-right: 10px;
+  vertical-align: 0.12em;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TIER LADDER. The one twist.
+   Rank is legible from shape and scale before a word is read:
+   a 3px rule in the step's own metal, and the title stepping up
+   through the locked type scale.
+   ───────────────────────────────────────────────────────────── */
+.tier { --tier-color: var(--kl-hair); }
+
+.tier .dg__row {
+  position: relative;
+  padding-left: 28px;
+  border-top-color: var(--kl-hair);
+}
+
+/* The spine segment. Solid across the bounded build phase. */
+.tier .dg__row::before {
+  content: '';
+  position: absolute;
+  left: 0; top: -1px; bottom: 0;
+  width: var(--kl-rule);
+  background-color: var(--tier-color);
+}
+
+/* The open-ended phase breaks to a dash and fades, exactly as the
+   infographic timeline does: a bounded BUILD, then the same system
+   still running with no end date. */
+.tier .dg__row.is-open::before {
+  background-color: transparent;
+  background-image: repeating-linear-gradient(
+    180deg, var(--tier-color) 0 9px, transparent 9px 21px);
+  -webkit-mask-image: linear-gradient(180deg, var(--kl-mask) 0%, var(--kl-mask) 62%, transparent 100%);
+          mask-image: linear-gradient(180deg, var(--kl-mask) 0%, var(--kl-mask) 62%, transparent 100%);
+}
+
+.tier .dg__row.t-pre    { --tier-color: rgba(255, 255, 255, 0.22); }
+.tier .dg__row.t-bronze { --tier-color: var(--bronze); }
+.tier .dg__row.t-silver { --tier-color: var(--silver); }
+.tier .dg__row.t-gold   { --tier-color: var(--gold); }
+.tier .dg__row.t-run    { --tier-color: var(--pale); }
+
+.tier .dg__row.t-bronze .dg__key { color: var(--bronze); }
+.tier .dg__row.t-silver .dg__key { color: var(--silver); }
+.tier .dg__row.t-gold   .dg__key { color: var(--gold); }
+.tier .dg__row.t-run    .dg__key { color: var(--pale); }
+
+/* The staircase, carried by type scale rather than chrome.
+   Component-scoped clamp rather than --text-h3 straight: the locked h3 min of 21px
+   puts "Cleaned, deduplicated, validated" at 336px needed against 287px available at
+   350px viewport, and a THREE-word phrase split over two lines always strands one
+   word whichever way it breaks. It has to hold one line, which needs 17.5px.
+   Max is unchanged at the locked 35px. */
+.tier .dg__title { font-size: clamp(1.09375rem, 0.729rem + 1.667vw, 2.1875rem); }
+.tier .t-run    .dg__title { letter-spacing: -0.02em; }
+
+/* ─────────────────────────────────────────────────────────────
+   COMPARISON. Three columns, no column borders.
+   ───────────────────────────────────────────────────────────── */
+.vs .dg__row { grid-template-columns: 42px minmax(0, 1fr) minmax(0, 1.15fr); }
+.vs .dg__what { min-width: 0; }
+
+@media (max-width: 900px) {
+  .dg__row,
+  .vs .dg__row,
+  .tier .dg__row { grid-template-columns: 1fr; gap: 7px; }
+  .dg__idx { margin-bottom: 3px; }
+  .tier .dg__row { padding-left: 21px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dg__row { transition: none; }
+}
