@@ -333,8 +333,13 @@ body::before {
 .hero {
   position: relative;
   min-height: min(100svh, 940px);
-  display: flex; align-items: center;
-  padding-block: clamp(35px, 7.5vh, 126px) clamp(28px, 6vh, 105px);
+  /* TOP ALIGNED, not centered. Centering the stack inside a 940px hero put
+     ~198px of dead space above the mark while the gap down to the scroll cue
+     was only ~128px, so the whole composition read as sitting low. The cue is
+     absolutely positioned against the hero's BOTTOM, so it does not move with
+     this. MEASURED before: 198 above at 1440x900. */
+  display: flex; align-items: flex-start;
+  padding-block: clamp(42px, 11vh, 126px) clamp(28px, 6vh, 105px);
 }
 .hero > .wrap { position: relative; z-index: 1; display: flex; }
 .hero-stack {
