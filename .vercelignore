@@ -1,3 +1,11 @@
 presentations/muevelo-simplified
 
 _brand-source/
+
+# --- Batch 1B: internal material must not enter the deploy artifact ---
+# Loose research/audit markdown under reports/ is internal source, not a client
+# deliverable. Client-facing reports are the HTML under reports/<client>/.
+reports/*.md
+# Frozen snapshots never ship.
+_history/
+**/_history/
