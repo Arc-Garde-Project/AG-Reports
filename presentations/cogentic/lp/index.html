@@ -2065,10 +2065,19 @@ main .band .row{justify-content:center}
     var id = vsl.getAttribute('data-yt');
     if (!id) { return; }
     var f = document.createElement('iframe');
-    f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1';
+    f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1&origin=' + encodeURIComponent(location.origin);
     f.title = 'Cogentic walkthrough';
     f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture';
     f.allowFullscreen = true;
+    /* YOUTUBE ERROR 153 FIX. When this page is served behind the ag-reports magic-link gate
+       the middleware sets Referrer-Policy: no-referrer on every private route. YouTube uses
+       the referrer to verify which domain is embedding, and with none sent it refuses the
+       video with error 153 -- the player loads, then says the video is unavailable.
+       An element-level referrerPolicy overrides the DOCUMENT policy for this one request:
+       every other request on the page still sends nothing. strict-origin-when-cross-origin
+       sends only "https://ag-reports.vercel.app" and never the path, so the magic-link
+       secret in the URL is not handed to YouTube. */
+    f.referrerPolicy = 'strict-origin-when-cross-origin';
     /* Reveal only once YouTube has actually painted. If the network is slow this keeps the
        violet-wrapped poster on screen for the whole wait instead of showing an empty black
        frame with YouTube's spinner in it. */
