@@ -1,2 +1,14 @@
+# Crawling is ALLOWED, deliberately.
+#
+# Link unfurlers (Slack, Facebook, X, LinkedIn) honour robots.txt. A blanket
+# Disallow stopped them before they ever fetched the page, so every shared magic
+# link previewed as a bare URL with no card.
+#
+# Nothing becomes indexable by this. Every gated route answers with the same
+# branded page carrying X-Robots-Tag: noindex, nofollow, and authorized content
+# needs a signed cookie no crawler has. The hub answers 401.
+#
+# Disallow plus noindex was in fact self-defeating: a crawler that is forbidden
+# to fetch the page never sees the noindex it carries.
 User-agent: *
-Disallow: /
+Allow: /
