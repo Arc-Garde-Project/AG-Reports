@@ -916,6 +916,56 @@ body::before {
 }
 .foot-line b { color: var(--calm); font-weight: 600; }
 
+
+/* ---------- Mini platform rail ----------
+   A small sibling of the wood ticker, sitting on the page ground rather
+   than in a band. Same construction lesson: the fade lives on a STATIC
+   inner window, never on the moving track and never on the rail itself,
+   so only the chips fade and they fade into the page's own cream.
+   Two platforms is the whole truthful set (Meta only), so the group
+   repeats them three times and the loop reads as a continuous run. */
+.mini-rail {
+  max-width: 720px; margin: var(--v-md) auto var(--v-lg);
+}
+.mini-mask {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+}
+.mini-track {
+  display: flex; align-items: center; width: max-content;
+  animation: tick 42s linear infinite;   /* 3 x 14 */
+}
+.mini-group { display: flex; align-items: center; flex-shrink: 0; }
+.plat {
+  display: inline-flex; align-items: center; gap: 9px;
+  margin-inline: clamp(7px, 0.8vw, 12px);
+  padding: 9px clamp(14px, 1.5vw, 20px);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  box-shadow: var(--shadow-card);
+  white-space: nowrap;
+  transition: transform var(--duration-quick) var(--ease-snap),
+              border-color var(--duration-quick) var(--ease-soft),
+              box-shadow var(--duration-quick) var(--ease-settle);
+}
+.plat-ico { display: block; width: 19px; height: 19px; color: var(--metal-text); flex: none; }
+.plat-n {
+  font-family: var(--font-body); font-weight: 600;
+  font-size: clamp(0.75rem, 0.72rem + 0.16vw, 0.875rem);
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent-text);
+}
+@media (hover: hover) and (pointer: fine) {
+  .mini-rail:hover .mini-track { animation-play-state: paused; }
+  .plat:hover { transform: translateY(-2px); border-color: var(--line-gold); box-shadow: var(--shadow-lift); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mini-track { animation: none; }
+  .plat { transition: none; }
+}
+
 /* A second figure row, this one inside a band rather than under the hero. */
 .figs--band { margin-inline: auto; margin-top: var(--v-lg); border-top: 1px solid var(--rule); }
 
@@ -1280,6 +1330,16 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
         </h2>
         <p class="sec-sub">Facebook and Instagram&nbsp;only.</p>
       </header>
+
+      <div class="mini-rail reveal" role="img" aria-label="The ads run on Facebook and Instagram">
+        <div class="mini-mask">
+          <div class="mini-track">
+            <div class="mini-group"><span class="plat"><svg class="plat-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="11.6"/><path d="M19.1 11.4h-1.9a2.5 2.5 0 0 0-2.5 2.5v10.7"/><path d="M12.4 17h5.6"/></svg><span class="plat-n">Facebook</span></span><span class="plat"><svg class="plat-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="22" height="22" rx="6.6"/><circle cx="16" cy="16" r="5.1"/><circle cx="22.7" cy="9.3" r="1.35" fill="currentColor" stroke="none"/></svg><span class="plat-n">Instagram</span></span><span class="plat"><svg class="plat-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="11.6"/><path d="M19.1 11.4h-1.9a2.5 2.5 0 0 0-2.5 2.5v10.7"/><path d="M12.4 17h5.6"/></svg><span class="plat-n">Facebook</span></span><span class="plat"><svg class="plat-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="22" height="22" rx="6.6"/><circle cx="16" cy="16" r="5.1"/><circle cx="22.7" cy="9.3" r="1.35" fill="currentColor" stroke="none"/></svg><span class="plat-n">Instagram</span></span><span class="plat"><svg class="plat-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="11.6"/><path d="M19.1 11.4h-1.9a2.5 2.5 0 0 0-2.5 2.5v10.7"/><path d="M12.4 17h5.6"/></svg><span class="plat-n">Facebook</span></span><span class="plat"><svg class="plat-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="22" height="22" rx="6.6"/><circle cx="16" cy="16" r="5.1"/><circle cx="22.7" cy="9.3" r="1.35" fill="currentColor" stroke="none"/></svg><span class="plat-n">Instagram</span></span></div>
+            <div class="mini-group"><span class="plat"><svg class="plat-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="11.6"/><path d="M19.1 11.4h-1.9a2.5 2.5 0 0 0-2.5 2.5v10.7"/><path d="M12.4 17h5.6"/></svg><span class="plat-n">Facebook</span></span><span class="plat"><svg class="plat-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="22" height="22" rx="6.6"/><circle cx="16" cy="16" r="5.1"/><circle cx="22.7" cy="9.3" r="1.35" fill="currentColor" stroke="none"/></svg><span class="plat-n">Instagram</span></span><span class="plat"><svg class="plat-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="11.6"/><path d="M19.1 11.4h-1.9a2.5 2.5 0 0 0-2.5 2.5v10.7"/><path d="M12.4 17h5.6"/></svg><span class="plat-n">Facebook</span></span><span class="plat"><svg class="plat-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="22" height="22" rx="6.6"/><circle cx="16" cy="16" r="5.1"/><circle cx="22.7" cy="9.3" r="1.35" fill="currentColor" stroke="none"/></svg><span class="plat-n">Instagram</span></span><span class="plat"><svg class="plat-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="11.6"/><path d="M19.1 11.4h-1.9a2.5 2.5 0 0 0-2.5 2.5v10.7"/><path d="M12.4 17h5.6"/></svg><span class="plat-n">Facebook</span></span><span class="plat"><svg class="plat-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="22" height="22" rx="6.6"/><circle cx="16" cy="16" r="5.1"/><circle cx="22.7" cy="9.3" r="1.35" fill="currentColor" stroke="none"/></svg><span class="plat-n">Instagram</span></span></div>
+          </div>
+        </div>
+      </div>
+
 
       <div class="roadmap reveal-stagger">
         <div class="step">
