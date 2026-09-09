@@ -2,18 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<base href="/presentations/cogentic/lp/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
 <meta name="theme-color" content="#0F0E1A">
 
 <title>Free Predictive Assessment for Your Data | Cogentic</title>
 <meta name="description" content="Find out what your data can already predict, before you spend a dollar finding out. We organize what you have and set up models your team runs on your hardware.">
+<link rel="icon" href="assets/cogentic-mark-violet.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="canonical" href="https://ag-reports.vercel.app/presentations/cogentic/lp">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Free Predictive Assessment for Your Data | Cogentic">
 <meta property="og:description" content="Find out what your data can already predict, before you spend a dollar finding out. We organize what you have and set up models your team runs on your hardware.">
-<meta property="og:image" content="https://ag-reports.vercel.app/presentations/cogentic/lp/assets/vsl-poster.webp">
+<meta property="og:image" content="https://cogentichq.com/assets/vsl-poster.webp">
 <meta property="og:url" content="https://ag-reports.vercel.app/presentations/cogentic/lp">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -160,10 +164,6 @@
      defensive first; motion owns --duration/--ease/--dist and is consumed unfallbacked by
      cursor/header/button/footer; cursor AFTER defensive, because defensive sets
      svg{max-width:100%} and the cursor fights it with max-width:none at equal specificity. -->
-<!-- Swiper SELF-HOSTED, byte-identical to the CDN build (sha384 re-verified after copy).
-     ag-reports' shared CSP is style-src 'self' 'unsafe-inline' fonts.googleapis.com --
-     it does NOT allow jsdelivr for STYLES, only scripts, so the CDN stylesheet would have
-     been blocked and the carousel would have rendered unstyled while looking installed. -->
 <link rel="stylesheet" href="vendor/swiper-bundle.min.css">
 <link rel="stylesheet" href="ag/ag-defensive.css">
 <link rel="stylesheet" href="ag/ag-motion.css">
@@ -289,29 +289,6 @@ main,footer{position:relative;z-index:1}
    very surge light that replaced it. Deleting rather than leaving it dead: decision #34
    already had to clean orphaned rules out of this build twice. */
 
-/* ═══ THE STROKED MARQUEE ═══ the deck's display band. Outlined letterforms via
-   -webkit-text-stroke on transparent fill, alternating paper / violet. The track holds
-   the group TWICE so a -50% translate loops seamlessly with no visible seam.
-   21s, the same house loop as the trace and the ring field. */
-.jumbo{
-  position:relative;overflow:hidden;background-color:var(--ink);
-  border-block:1px solid var(--rule-2);
-  padding-block:clamp(1.1rem,.7rem + 1.6vw,2rem);
-  -webkit-mask-image:linear-gradient(90deg,transparent,var(--shade) 7%,var(--shade) 93%,transparent);
-  mask-image:linear-gradient(90deg,transparent,var(--shade) 7%,var(--shade) 93%,transparent);
-}
-.jumbo-track{display:flex;width:max-content;animation:jumboRoll 21s linear infinite}
-.jumbo-group{display:flex;align-items:center;flex-shrink:0}
-.jumbo-word{
-  font-family:var(--font-display);font-weight:var(--fw-hero);
-  font-size:clamp(1.9rem,1.1rem + 4vw,4.4rem);line-height:1;letter-spacing:.01em;
-  text-transform:uppercase;white-space:nowrap;
-  padding-inline:clamp(.7rem,.4rem + 1vw,1.5rem);
-  color:transparent;-webkit-text-stroke:1.3px var(--paper-soft);
-}
-.jumbo-word.lit{-webkit-text-stroke:1.5px var(--violet-lift)}
-.jumbo-sep{color:var(--accent);font-size:clamp(.85rem,.5rem + 1.1vw,1.5rem)}
-@keyframes jumboRoll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* THE DRAWING GRID. Promoted from atmosphere to instrument rule now that no
    particle field rides it. Vertical lines on the module, with coordinate ticks. */
@@ -449,44 +426,7 @@ main,footer{position:relative;z-index:1}
   .glass{background:var(--ink-2)}
 }
 
-/* ═══ WHO IS ON THE OTHER END ═══ three facts as a row of figures rather than three
-   more sentences of body copy. The numeral carries the meaning and the label names it,
-   which is the deck's own treatment for its prices. Tabular figures so the row aligns. */
-/* 62ch -> 77ch, 2026-09-08. This block carried the build's two standing orphan BLOCKERS
-   (a WIDOW on "Engineers", an INTERIOR on "Contracted", both failing at all 22 widths).
-   The cause is measurable, not aesthetic: .who__k is MONO, uppercase, at .14em tracking,
-   so a character costs ~1.14x its own width, and at 62ch the three grid columns resolve
-   to about 20 characters each. "CONTRACTED ENGINEERS" is exactly 20, so it could never
-   sit on one line and the phrase always stranded a word.
-   Glue was the WRONG fix and was tried first: &nbsp; made the pair unbreakable, it
-   overflowed the column by a hair, and the browser broke the WORD instead, shipping
-   "ENGINE / ERS" — a WORD-BREAK, which outranks the widow it replaced. Exactly the trap
-   in reference_ag_typography_glue_container_overflow. Widen the container instead. */
-.who{margin:var(--space-lg) auto 0;padding-top:21px;border-top:1px solid var(--rule);max-width:100ch}
-.who__label{justify-content:center;margin:0 0 21px}
-.who__grid{
-  list-style:none;margin:0;padding:0;
-  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(21px,3vw,42px);
-}
-.who__item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px}
-.who__fig{
-  font-family:var(--font-display);font-weight:700;line-height:1;
-  font-size:clamp(1.75rem,1.3rem + 1.6vw,2.4rem);
-  color:var(--paper);font-variant-numeric:tabular-nums;letter-spacing:-.02em;
-}
-.who__op{color:var(--accent);margin-inline:.12em;font-weight:500}
-.who__k{
-  font-family:var(--font-mono);font-weight:500;font-size:var(--text-eyebrow);
-  letter-spacing:.14em;text-transform:uppercase;color:var(--violet-lift);
-  /* max-width REMOVED. It was 22ch, and it -- not the grid column -- was what forced
-     the three-line break: at .14em tracking a mono character costs ~1.14x its width,
-     so 22ch of cap held about 19 characters and the 31-character label could never
-     reach two lines. The column now governs. */
-  max-width:none;text-wrap:balance;
-}
-.who__v{font-size:var(--text-sm);line-height:1.5;color:var(--paper-mute);max-width:24ch}
 @media (max-width:900px){
-  .who__grid{grid-template-columns:1fr;gap:28px}
 }
 
 /* ═══ BAND 2 · THE LIVING LIGHT ═══ Quinten, 2026-09-08: "i like the light effect, lets
@@ -726,7 +666,6 @@ main,footer{position:relative;z-index:1}
 /* One treatment, every band. Uniform, not alternating. */
 
 /* ═══ BAND 3 · HOW IT WORKS ═══ section 16 layout C: data display. ═══ */
-.pipe-intro{margin:0 0 var(--space-lg)}
 .pipe-close{
   margin:var(--space-lg) 0 0;padding-top:21px;border-top:1px solid var(--rule-2);
   font-size:var(--text-base);line-height:1.7;color:var(--paper-soft);max-width:var(--measure);
@@ -815,13 +754,10 @@ main .band .wrap-tight{text-align:center}
 
 /* Components that set their own alignment, brought back in line. Measures keep their
    caps and are centred in the column rather than left-packed. */
-.dg,.dg__row,.dg__what,.dg__title,
-.row,.kl,.kl__why,
-.pipe-intro,.pipe-close,
 .fig__cap,.fig__legend,
-.close-body,.close-who{text-align:center}
+.close-body{text-align:center}
 
-.pipe-intro,.pipe-close,.dg__what,.kl__why,.close-body{margin-inline:auto}
+.close-body{margin-inline:auto}
 
 /* Flex rows that packed to the start now centre their own children. */
 main .band [class*="__row"],
@@ -831,7 +767,7 @@ main .band .row{justify-content:center}
   /* Every device added in the deck-register pass kills its own motion. The bloom
      LAYERS stay: they are static atmosphere, not animation, and removing them would
      take the page back to the flat ground that failed. Only the movement stops. */
-  .jumbo-track,.band--alt::after,.ag-footer-min .ag-footer-logo img{animation:none}
+  .band--alt::after,.ag-footer-min .ag-footer-logo img{animation:none}
   /* THE LIT GROUND NEEDS A STATIC FALLBACK, or it ships an empty room.
      Bands 1, 3 and 5 hide their grid lines and let the canvas surge reveal them. The
      surge script does not start under reduced motion (`if (!reduce)`), so without this
@@ -1291,7 +1227,7 @@ main .band .row{justify-content:center}
    a struck line and a ghost numeral only read as a table when their edges align.
    At 900 and below the rows collapse to a single stack and 6C centring applies. */
 @media (min-width:901px) and (max-width:1200px){
-  .dg,.dg__row,.close-body,.close-who{text-align:center}
+  .close-body{text-align:center}
 }
 
 /* ══ ACCESSIBILITY ══ measured, not assumed.
@@ -1692,7 +1628,68 @@ main .band .row{justify-content:center}
 </footer>
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"Cogentic","url":"https://cogentichq.com","logo":"https://cogentichq.com/assets/cogentic-mark-violet.svg","description":"Cogentic organizes the data a business already has and sets up prediction models its own team runs, on its own hardware.","address":{"@type":"PostalAddress","addressLocality":"San Francisco","addressRegion":"CA","addressCountry":"US"},"sameAs":["https://www.linkedin.com/company/cogenticai"]}
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Cogentic",
+      "url": "https://cogentichq.com",
+      "logo": "https://cogentichq.com/assets/cogentic-mark-violet.svg",
+      "description": "Cogentic organizes the data a business already has and sets up prediction models its own team runs, on its own hardware.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "San Francisco",
+        "addressRegion": "CA",
+        "addressCountry": "US"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/cogenticai"
+      ],
+      "@id": "https://cogentichq.com#organization"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://ag-reports.vercel.app/presentations/cogentic/lp#webpage",
+      "url": "https://ag-reports.vercel.app/presentations/cogentic/lp",
+      "name": "Free Predictive Assessment for Your Data | Cogentic",
+      "description": "Find out what your data can already predict, before you spend a dollar finding out. We organize what you have and set up models your team runs on your hardware.",
+      "isPartOf": {
+        "@id": "https://cogentichq.com#organization"
+      },
+      "about": {
+        "@id": "https://cogentichq.com#organization"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          ".hero__lede",
+          ".find-intro",
+          ".steps__line"
+        ]
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ag-reports.vercel.app/presentations/cogentic/lp#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Cogentic",
+          "item": "https://cogentichq.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Free Predictive Assessment",
+          "item": "https://ag-reports.vercel.app/presentations/cogentic/lp"
+        }
+      ]
+    }
+  ]
+}
 </script>
 
 <script src="ag/ag-error-handler.js" data-project="Cogentic"></script>
