@@ -496,6 +496,10 @@ body::before {
    proposal with the smallest phrase that makes it mean something, so the
    strip has a scoreboard texture instead of eight equal sentences. */
 .tick-item {
+  /* The wrapper paints no text of its own today, so it inherited --body and
+     computed 2.04:1 against the wood. Harmless now, a trap the moment anyone
+     adds a bare text node here. Pinned to the on-wood color, 17.09:1. */
+  color: var(--on-wood);
   display: flex; align-items: baseline; gap: 0.5em;
   padding-inline: clamp(0.8rem, 0.5rem + 1.1vw, 1.6rem);
   white-space: nowrap;
