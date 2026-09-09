@@ -12,10 +12,10 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="robots" content="noindex, nofollow">
 <!-- Chrome tint matches the top of the page. Warm paper, not white. -->
-<meta name="theme-color" content="#fbf8f3">
+<meta name="theme-color" content="#f7f5f0">
 
 <title>Yoga Circle LA | Growth Proposal - Arc Garde</title>
-<meta name="description" content="Arc Garde growth proposal for Yoga Circle LA: filling the 99 seat group Zoom room. Meta ads on Facebook and Instagram, an entry level subscription offer, a custom coded funnel and checkout, 14 ads tested per 28 day cycle, retargeting, and about 12 organic videos a month. Three month minimum runway.">
+<meta name="description" content="Arc Garde growth proposal for Yoga Circle LA. Facebook and Instagram ads with 14 ads tested a round, a sign-up page and booking system built for her, every new student tracked start to finish, and content twice a day across seven platforms. Three months recommended.">
 
 <!-- Banner law -->
 <link rel="icon" href="/assets/favicon.png" type="image/png">
@@ -23,7 +23,7 @@
 <link rel="canonical" href="https://ag-reports.vercel.app/presentations/yoga-circle-la">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Yoga Circle LA | Growth Proposal - Arc Garde">
-<meta property="og:description" content="Meta ads and organic content to fill the group Zoom classes. Ninety nine seats are already paid for. Three to four of them are filled.">
+<meta property="og:description" content="The students she is missing are already scrolling. 14 ads tested a round, a sign-up page built for her, and content twice a day across seven platforms.">
 <meta property="og:url" content="https://ag-reports.vercel.app/presentations/yoga-circle-la">
 <meta property="og:image" content="https://ag-reports.vercel.app/presentations/yoga-circle-la/og-banner.png">
 <meta property="og:image:width" content="1200">
@@ -48,19 +48,7 @@
 <link rel="stylesheet" href="ag-motion.css">
 <link rel="stylesheet" href="ag-scroll.css">
 <link rel="stylesheet" href="ag-cursor.css">
-
-<script>
-/* Runs before any paint. Reading the stored choice after the stylesheet has
-   applied would show one frame of the wrong ground. Wrapped because storage
-   throws in some privacy modes, and the catch leaves the light default in
-   place. LIGHT IS THE DEFAULT here: the brand ground is warm paper. */
-(function () {
-  try {
-    var t = localStorage.getItem('ycla-theme');
-    document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
-  } catch (e) {}
-})();
-</script>
+<link rel="stylesheet" href="ag-scrollbar.css">
 
 <style>
 /* ===========================================================
@@ -78,53 +66,83 @@
    A Greater Hope look: that one is condensed uppercase sans on glass panes
    over a moving field. This one is a large mixed-case serif on still linen,
    and it breathes instead of scrolling.
+
+   SINGLE THEME (2026-09-08). The light/dark switch was removed on Quinten's
+   direction: the deck now holds the client's own warm-paper ground at all
+   times, matching the live yogacirclela.com site rather than offering a
+   second look the brand does not have. The AG curtain stays dark, because
+   that is house chrome and not a theme.
    =========================================================== */
 
 :root {
-  /* ---- The mark ---- */
-  --ycla-ember:      #ea5604;   /* the seal, sampled. DECORATIVE ONLY.
-                                 3.38:1 on paper - it cannot carry body text. */
-  --ycla-ember-deep: #b23f02;   /* same hue, two steps down. 5.46:1 on paper.
-                                 This is the one that carries text on light. */
+  /* ---- The site's own tokens, lifted VERBATIM from
+          Website/deploy/build/Knekoh-Homepage-Unified.html :root.
+          Names below are this deck's; the VALUES are hers. ---- */
+  --ycla-sage:       #5b7c6b;   /* site --primary-sage. THE action color.
+                                   4.25:1 on cream - fills and decoration only. */
+  --ycla-sage-dark:  #4a6758;   /* site --primary-sage-dark. 5.72:1 - the TEXT sage. */
+  --ycla-sage-deep:  #3f5a4b;   /* 6.94:1 - sage where it has to carry small type */
+  --ycla-sage-lt:    #6b8c7b;   /* site --primary-sage-light */
+  --ycla-gold:       #c9a86c;   /* site --warm-gold. 2.07:1 - ORNAMENT ONLY. */
+  --ycla-gold-lt:    #d4b87a;   /* site --warm-gold-light */
+  --ycla-gold-deep:  #7d6329;   /* 5.23:1 - the text-safe gold. Not a site token:
+                                   the site never sets gold on cream as text. */
+  --ycla-terracotta: #d4a574;   /* site --soft-terracotta */
+
+  /* The mark. Sampled off Brandkit/Yoga Circle Logo.png. The SITE carries no
+     orange at all, so ember is held back to the two places it IS the logo:
+     the seal, and the lit seats. Everything structural is sage and gold. */
+  --ycla-ember:      #ea5604;   /* 3.31:1 on cream - never text */
+  --ycla-ember-deep: #b23f02;   /* 5.35:1 - the text-safe ember */
   --ycla-ember-soft: #f8dcc9;
 
-  /* ---- The site's earth half ---- */
-  --ycla-sage:       #4a6b5a;   /* 5.61:1 on paper */
-  --ycla-sage-lt:    #6b8c7b;
-  --ycla-sage-pale:  #dfe7e1;
-  --ycla-gold:       #c9a861;   /* 2.14:1 - DECORATIVE ONLY */
-  --ycla-gold-deep:  #8a6e2e;   /* 4.56:1 - the text-safe gold */
-  --ycla-cocoa:      #3d3029;
+  /* ---- Grounds: her cream / white / wood ---- */
+  --ycla-paper:      #f7f5f0;   /* site --cream-bg */
+  --ycla-white:      #ffffff;   /* site --white-pure */
+  --ycla-warm-white: #faf8f5;   /* site --white-warm */
+  --ycla-sand:       #e5e0d8;   /* site --light-border */
+  --ycla-wood:       #1a1511;   /* site --wood-dark */
+  --ycla-wood-med:   #3d3029;   /* site --wood-medium */
+  --ycla-ink:        #2d2d2d;   /* site --deep-charcoal */
 
-  /* ---- Grounds ---- */
-  --ycla-paper:      #fbf8f3;
-  --ycla-linen:      #f2ece1;
-  --ycla-sand:       #e5e0d8;
-  --ycla-ink:        #1a1511;
-
-  /* ---- Semantic slots. Everything below reads these, never the raw
-          brand names, so the dark block only has to redefine these. ---- */
+  /* ---- Semantic slots. Everything below reads these. ---- */
   --ground:        var(--ycla-paper);
-  --ground-2:      var(--ycla-linen);
-  --surface:       rgba(255, 255, 255, 0.72);
-  --surface-solid: #fffdfa;
-  --surface-line:  rgba(74, 107, 90, 0.18);
-  --rule:          rgba(61, 48, 41, 0.14);
-  --ink:           var(--ycla-ink);
-  --body:          #3d3029;
-  --muted:         #6b5d52;      /* 6.0:1 on paper */
-  --accent:        var(--ycla-ember);
-  --accent-text:   var(--ycla-ember-deep);
-  --calm:          var(--ycla-sage);
-  --calm-soft:     var(--ycla-sage-pale);
+  --ground-2:      var(--ycla-white);
+  --surface:       var(--ycla-white);   /* solid, like her cards. Was glass. */
+  --surface-solid: var(--ycla-white);
+  --surface-line:  var(--ycla-sand);
+  --rule:          var(--ycla-sand);
+  --ink:           var(--ycla-ink);     /* 12.64:1 */
+  --body:          #4a4a4a;             /* site --body-text, 8.13:1 */
+  --muted:         #6b6b6b;             /* site --muted-text override, 4.89:1 */
+  --accent:        var(--ycla-sage);         /* fills, rails, bars */
+  --accent-text:   var(--ycla-sage-dark);    /* 5.72:1 */
+  --calm:          var(--ycla-sage-dark);
+  --calm-soft:     rgba(91, 124, 107, 0.10);
   --metal:         var(--ycla-gold);
-  --metal-text:    var(--ycla-gold-deep);
-  --seat-off:      rgba(74, 107, 90, 0.20);
+  --metal-text:    var(--ycla-gold-deep);    /* 5.23:1 */
+  --live:          var(--ycla-ember);        /* the logo's own color */
+  --live-text:     var(--ycla-ember-deep);   /* 5.35:1 */
+  --seat-off:      rgba(91, 124, 107, 0.52);
   --seat-on:       var(--ycla-ember);
-  --shadow-card:   0 1px 2px rgba(61, 48, 41, 0.05), 0 12px 34px -18px rgba(61, 48, 41, 0.22);
-  --shadow-lift:   0 2px 6px rgba(61, 48, 41, 0.07), 0 26px 54px -22px rgba(61, 48, 41, 0.30);
-  --glass:         saturate(1.06) blur(9px);
-  --halo:          rgba(234, 86, 4, 0.10);
+  --on-wood:       var(--ycla-warm-white);
+
+  /* ---- Shadow: her scale, not a made-up one ---- */
+  --shadow-card:   0 4px 24px rgba(0, 0, 0, 0.06);    /* site --shadow-card */
+  --shadow-lift:   0 12px 40px rgba(0, 0, 0, 0.12);   /* site --shadow-card-hover */
+  --shadow-deep:   0 24px 64px rgba(0, 0, 0, 0.12);   /* site --shadow-hover */
+  --shadow-sage:   0 6px 24px rgba(91, 124, 107, 0.35);
+  --shadow-sage-h: 0 10px 32px rgba(91, 124, 107, 0.45);
+  --halo:          rgba(91, 124, 107, 0.10);
+  --halo-warm:     rgba(201, 168, 108, 0.16);
+
+  /* Hairlines, so no rule below carries a raw hex */
+  --line-sage:     rgba(91, 124, 107, 0.34);
+  --line-sage-soft:rgba(91, 124, 107, 0.20);
+  --line-gold:     rgba(201, 168, 108, 0.38);
+  --line-ember:    rgba(234, 86, 4, 0.26);
+  --wash-sage:     rgba(91, 124, 107, 0.055);
+  --wash-gold:     rgba(201, 168, 108, 0.07);
 
   /* ---- Type: the client's real pairing ---- */
   --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
@@ -137,44 +155,14 @@
   --v-md: clamp(18px, 2.1vw, 28px);
   --v-lg: clamp(28px, 3.2vw, 49px);
   --v-section: clamp(63px, 8vw, 126px);
-  --radius-lg: 21px;
-  --radius-pill: 999px;
-}
+  --radius-lg: 24px;    /* site --radius-lg */
+  --radius-xl: 32px;    /* site --radius-xl */
+  --radius-pill: 100px; /* site --radius-full */
 
-:root[data-theme="dark"] {
-  --ground:        #14100c;
-  --ground-2:      #1c1712;
-  --surface:       rgba(255, 253, 250, 0.055);
-  --surface-solid: #201a14;
-  --surface-line:  rgba(143, 179, 160, 0.20);
-  --rule:          rgba(242, 236, 225, 0.13);
-  --ink:           #f2ece1;      /* 16.2:1 on the dark ground */
-  --body:          #ded5c7;
-  --muted:         #b5a899;      /* 8.19:1 */
-  --accent:        #ff6a1c;
-  --accent-text:   #ff7f3c;      /* ember is text-safe on dark: 5.3:1+ */
-  --calm:          #8fb3a0;      /* 8.27:1 */
-  --calm-soft:     rgba(143, 179, 160, 0.16);
-  --metal:         var(--ycla-gold);
-  --metal-text:    var(--ycla-gold);   /* 8.42:1 on dark */
-  --seat-off:      rgba(143, 179, 160, 0.22);
-  --seat-on:       #ff6a1c;
-  --shadow-card:   0 1px 2px rgba(0, 0, 0, 0.30), 0 14px 38px -20px rgba(0, 0, 0, 0.70);
-  --shadow-lift:   0 2px 8px rgba(0, 0, 0, 0.36), 0 28px 60px -24px rgba(0, 0, 0, 0.80);
-  --halo:          rgba(255, 106, 28, 0.16);
-}
-
-/* Themes cross-fade rather than snap. Named properties only - transitioning
-   `all` would drag every hover and reveal through the same ease. */
-html, body, .pane, .pillar, .ledger, .step, .seatfield {
-  transition:
-    background-color 0.42s var(--ease-soft),
-    border-color 0.42s var(--ease-soft),
-    color 0.42s var(--ease-soft),
-    box-shadow 0.42s var(--ease-soft);
-}
-@media (prefers-reduced-motion: reduce) {
-  html, body, .pane, .pillar, .ledger, .step, .seatfield { transition: none; }
+  /* ---- The rail wears her gold, exactly as it does on the live site,
+          where #ag-craft-css sets --accent:#C9A86C for the scrollbar. ---- */
+  --sb-accent:     var(--ycla-gold);
+  --sb-on-accent:  var(--ycla-wood);   /* 8.02:1 on gold */
 }
 
 /* ---------- Ground ---------- */
@@ -206,16 +194,7 @@ body::before {
     repeating-linear-gradient(0deg, rgba(61, 48, 41, 0.024) 0 1px, rgba(0, 0, 0, 0) 1px 3px);
   opacity: 1;
 }
-:root[data-theme="dark"] body::before {
-  background:
-    radial-gradient(52% 38% at 18% 8%, var(--halo) 0%, rgba(0, 0, 0, 0) 62%),
-    radial-gradient(46% 40% at 86% 78%, var(--calm-soft) 0%, rgba(0, 0, 0, 0) 66%),
-    repeating-linear-gradient(90deg, rgba(242, 236, 225, 0.020) 0 1px, rgba(0, 0, 0, 0) 1px 3px),
-    repeating-linear-gradient(0deg, rgba(242, 236, 225, 0.020) 0 1px, rgba(0, 0, 0, 0) 1px 3px);
-}
-
 ::selection { background: var(--ycla-ember-soft); color: var(--ycla-ink); }
-:root[data-theme="dark"] ::selection { background: rgba(255, 106, 28, 0.34); color: #fffdfa; }
 
 /* ---------- Layout ---------- */
 .wrap {
@@ -270,8 +249,6 @@ body::before {
   border: 1px solid var(--surface-line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
-  backdrop-filter: var(--glass);
-  -webkit-backdrop-filter: var(--glass);
   padding: clamp(24px, 2.8vw, 42px) clamp(21px, 2.6vw, 42px);
 }
 
@@ -356,12 +333,12 @@ body::before {
   position: relative;
   min-height: min(100svh, 940px);
   display: flex; align-items: center;
-  padding-block: clamp(84px, 12vh, 147px) clamp(70px, 10vh, 119px);
+  padding-block: clamp(35px, 7.5vh, 126px) clamp(28px, 6vh, 105px);
 }
 .hero > .wrap { position: relative; z-index: 1; display: flex; }
 .hero-stack {
   display: flex; flex-direction: column; align-items: center;
-  gap: var(--v-md); width: 100%;
+  gap: clamp(9px, min(2.1vw, 2.2vh), 28px); width: 100%;
 }
 
 /* THE BREATH. Three concentric rings behind the seal, scaling on a 14s cycle
@@ -372,7 +349,7 @@ body::before {
 .hero-mark-wrap {
   position: relative;
   display: grid; place-items: center;
-  width: clamp(148px, 17vw, 231px); aspect-ratio: 1;
+  width: clamp(84px, min(17vw, 20vh), 231px); aspect-ratio: 1;
 }
 .hero-mark-wrap span {
   position: absolute; inset: 0; border-radius: 50%;
@@ -380,19 +357,44 @@ body::before {
   animation: breathe 14s var(--ease-soft) infinite;
 }
 .hero-mark-wrap span:nth-child(1) { inset: 0;     animation-delay: 0s; }
-.hero-mark-wrap span:nth-child(2) { inset: 11.2%; animation-delay: 0.7s; border-color: rgba(234, 86, 4, 0.22); }
-.hero-mark-wrap span:nth-child(3) { inset: 22.4%; animation-delay: 1.4s; border-color: rgba(201, 168, 97, 0.34); }
+.hero-mark-wrap span:nth-child(2) { inset: 11.2%; animation-delay: 0.7s; border-color: var(--line-sage-soft); }
+.hero-mark-wrap span:nth-child(3) { inset: 22.4%; animation-delay: 1.4s; border-color: var(--line-gold); }
 @keyframes breathe {
   0%, 100% { transform: scale(1);    opacity: 0.72; }
   50%      { transform: scale(1.05); opacity: 1; }
 }
+/* A FOURTH ring, dashed and turning once every 63s. The mark is a circle drawn
+   in one unbroken line, so a slowly rotating dashed ring reads as that line
+   still being drawn. Slow enough that it is felt rather than watched. */
+.hero-mark-wrap::before {
+  content: ""; position: absolute; inset: -9.8%;
+  border-radius: 50%;
+  border: 1px dashed var(--line-gold);
+  opacity: 0.62;
+  animation: mark-draw 63s linear infinite;
+  pointer-events: none;
+}
+@keyframes mark-draw { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) {
   .hero-mark-wrap span { animation: none; opacity: 1; }
+  .hero-mark-wrap::before { animation: none; }
 }
 .hero-mark {
   position: relative; z-index: 1;
   width: 58%; height: auto;
   filter: drop-shadow(0 8px 24px rgba(234, 86, 4, 0.18));
+  transition: transform var(--duration-long) var(--ease-satisfying),
+              filter var(--duration-long) var(--ease-satisfying);
+}
+/* The seal answers the pointer: it lifts a little and its own ember glow
+   deepens. The rings behind it widen at the same time. */
+@media (hover: hover) and (pointer: fine) {
+  .hero-mark-wrap:hover .hero-mark {
+    transform: scale(1.04);
+    filter: drop-shadow(0 12px 34px rgba(234, 86, 4, 0.34));
+  }
+  .hero-mark-wrap:hover span { border-color: var(--line-gold); }
+  .hero-mark-wrap:hover::before { opacity: 1; border-color: var(--metal); }
 }
 .hero-name {
   font-family: var(--font-body); font-weight: 500;
@@ -402,7 +404,7 @@ body::before {
 }
 .hero-title {
   font-family: var(--font-display); font-weight: 600;
-  font-size: clamp(2.75rem, 1.3rem + 6.2vw, 5.75rem);
+  font-size: clamp(1.875rem, min(1.3rem + 6.2vw, 8.4vh), 5.75rem);
   line-height: 1.02; letter-spacing: -0.012em;
   color: var(--ink); text-align: center; max-width: 100%;
 }
@@ -418,7 +420,7 @@ body::before {
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(12px, 2vw, 34px);
   width: 100%; max-width: 820px;
-  margin-top: var(--v-sm); padding-top: var(--v-md);
+  margin-top: 0; padding-top: clamp(11px, min(2.1vw, 2.2vh), 28px);
   border-top: 1px solid var(--rule);
 }
 .fig { display: flex; flex-direction: column; align-items: center; gap: 3px; text-align: center; }
@@ -455,31 +457,85 @@ body::before {
    this brand, so it is a quiet running line instead. Two identical groups
    translating by exactly -50% so the loop is seamless. Direct child of the
    page, not of .wrap, so it runs true edge to edge. */
+/* THE WOOD BAND. Her site bookends every page in a wood-dark surface with a
+   grain scanline over it, and this page had no dark note anywhere between a
+   dark curtain and a light hero. So the ticker becomes that band: one deep
+   strip that gives the deck contrast and reads as her furniture rather than
+   as a stray strip of text. Grain is CSS, not the site's Supabase photo, so
+   the band costs no request and has no broken-asset state. */
 .ticker {
   position: relative; z-index: 1;
   overflow: hidden;
-  padding-block: clamp(14px, 1.6vw, 21px);
-  border-block: 1px solid var(--rule);
-  background: var(--ground-2);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
-          mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  padding-block: clamp(17px, 2vw, 26px);
+  background-color: var(--ycla-wood);
+  background-image:
+    radial-gradient(120% 140% at 18% 0%, rgba(201, 168, 108, 0.13), rgba(0, 0, 0, 0) 62%),
+    radial-gradient(120% 140% at 88% 100%, rgba(91, 124, 107, 0.13), rgba(0, 0, 0, 0) 60%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
 }
-.tick-track { display: flex; align-items: center; width: max-content; animation: tick 42s linear infinite; }
+/* Her wood-grain scanline, lifted at the same 2px/4px rhythm and opacity. */
+.ticker::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 2px, rgba(0, 0, 0, 0.15) 2px 4px);
+  opacity: 0.4;
+}
+/* Her fading hairline, the motif she uses on every header and footer edge. */
+.ticker::after {
+  content: ""; position: absolute; left: 8%; right: 8%; top: 0; height: 1px;
+  pointer-events: none; z-index: 2;
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(201, 168, 108, 0.44) 50%, rgba(0,0,0,0) 100%);
+}
+.tick-track {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; width: max-content;
+  animation: tick 63s linear infinite;   /* 3 x 21. Was 42s on narrower items. */
+}
 .tick-group { display: flex; align-items: center; flex-shrink: 0; }
-.tick-word {
-  font-family: var(--font-display); font-style: italic; font-weight: 500;
-  font-size: clamp(1.125rem, 0.9rem + 1.1vw, 1.75rem);
-  line-height: 1.2; letter-spacing: 0.004em; white-space: nowrap;
-  padding-inline: clamp(0.7rem, 0.4rem + 1vw, 1.4rem);
-  color: var(--muted);
+
+/* A FIGURE LEADS, A LABEL FOLLOWS. Every entry is a number out of the
+   proposal with the smallest phrase that makes it mean something, so the
+   strip has a scoreboard texture instead of eight equal sentences. */
+.tick-item {
+  display: flex; align-items: baseline; gap: 0.5em;
+  padding-inline: clamp(0.8rem, 0.5rem + 1.1vw, 1.6rem);
+  white-space: nowrap;
+  transition: transform var(--duration-quick) var(--ease-snap);
 }
-.tick-word.lit { color: var(--accent-text); }
+.tick-n {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.25rem);
+  line-height: 1; letter-spacing: -0.01em;
+  color: var(--ycla-gold);              /* 8.02:1 on wood */
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+  transition: color var(--duration-quick) var(--ease-soft);
+}
+.tick-l {
+  font-family: var(--font-body); font-weight: 600;
+  font-size: clamp(0.6875rem, 0.65rem + 0.16vw, 0.8125rem);
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(250, 248, 245, 0.72);     /* warm white, 12:1+ on wood */
+  transition: color var(--duration-quick) var(--ease-soft);
+}
 .tick-sep {
   flex: none; width: 7px; height: 7px; border-radius: 50%;
-  border: 1px solid var(--metal); opacity: 0.8;
+  border: 1px solid rgba(201, 168, 108, 0.62);
+  transition: background-color var(--duration-quick) var(--ease-soft);
 }
+.tick-sep.is-on { background: rgba(201, 168, 108, 0.62); }
 @keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@media (prefers-reduced-motion: reduce) { .tick-track { animation: none; } }
+@media (hover: hover) and (pointer: fine) {
+  .ticker:hover .tick-track { animation-play-state: paused; }
+  .tick-item:hover { transform: translateY(-2px); }
+  .tick-item:hover .tick-n { color: var(--ycla-gold-lt); }
+  .tick-item:hover .tick-l { color: var(--ycla-warm-white); }
+  .ticker:hover .tick-sep { background: rgba(201, 168, 108, 0.62); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tick-track { animation: none; }
+  .tick-item, .tick-n, .tick-l, .tick-sep { transition: none; }
+}
 
 /* ---------- Roadmap: the numbered approach ---------- */
 .roadmap {
@@ -487,19 +543,28 @@ body::before {
   max-width: 900px; margin-inline: auto;
 }
 .step {
+  position: relative; overflow: hidden;
   display: grid; grid-template-columns: auto minmax(0, 1fr);
   gap: clamp(16px, 2vw, 28px); align-items: center;
   background: var(--surface);
   border: 1px solid var(--surface-line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
-  backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass);
   padding: clamp(17px, 1.9vw, 26px) clamp(18px, 2.2vw, 32px);
-  transition: transform var(--duration-quick) var(--ease-satisfying),
-              box-shadow var(--duration-quick) var(--ease-satisfying),
+  transition: transform var(--duration-quick) var(--ease-settle),
+              box-shadow var(--duration-quick) var(--ease-settle),
               border-color var(--duration-quick) var(--ease-soft);
 }
+/* The sage edge. Wipes down the left rim on hover, the way her class cards
+   reveal their sage-to-gold bar. */
+.step::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--metal) 100%);
+  transform: scaleY(0); transform-origin: top center;
+  transition: transform var(--duration-medium) var(--ease-satisfying);
+}
 .step-n {
+  position: relative;
   display: grid; place-items: center; flex: none;
   width: clamp(42px, 4.2vw, 56px); aspect-ratio: 1; border-radius: 50%;
   border: 1.4px solid var(--surface-line);
@@ -508,15 +573,43 @@ body::before {
   color: var(--metal-text); font-variant-numeric: tabular-nums;
   transition: border-color var(--duration-quick) var(--ease-soft),
               color var(--duration-quick) var(--ease-soft),
+              transform var(--duration-medium) var(--ease-snap),
               background-color var(--duration-quick) var(--ease-soft);
+}
+/* A gold arc that sweeps once around the number ring on hover. conic-gradient
+   masked to a 1.4px annulus, so it draws the ring rather than filling it. */
+.step-n::after {
+  content: ""; position: absolute; inset: -1.4px; border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0deg, var(--metal) 84deg, var(--accent) 168deg, transparent 210deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.6px), #000 calc(100% - 1.6px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 1.6px), #000 calc(100% - 1.6px));
+  opacity: 0; transform: rotate(-90deg);
+  transition: opacity var(--duration-quick) var(--ease-soft);
 }
 .step-t {
   font-size: clamp(1rem, 0.95rem + 0.3vw, 1.1875rem);
   line-height: 1.5; color: var(--body); text-wrap: pretty;
+  transition: transform var(--duration-medium) var(--ease-settle),
+              color var(--duration-quick) var(--ease-soft);
 }
 @media (hover: hover) and (pointer: fine) {
-  .step:hover { transform: translate3d(0, -3px, 0); box-shadow: var(--shadow-lift); border-color: rgba(234, 86, 4, 0.34); }
-  .step:hover .step-n { border-color: var(--accent); color: var(--accent-text); background: var(--halo); }
+  .step:hover {
+    transform: translate3d(0, -6px, 0);
+    box-shadow: var(--shadow-lift);
+    border-color: var(--line-sage);
+  }
+  .step:hover::before { transform: scaleY(1); }
+  .step:hover .step-n {
+    border-color: var(--line-sage); color: var(--accent-text);
+    background: var(--halo); transform: scale(1.06);
+  }
+  .step:hover .step-n::after { opacity: 1; animation: ring-sweep 900ms var(--ease-satisfying); }
+  .step:hover .step-t { transform: translateX(3px); color: var(--ink); }
+}
+@keyframes ring-sweep { from { transform: rotate(-90deg); } to { transform: rotate(270deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .step, .step-n, .step-t, .step::before { transition: none; }
+  .step-n::after { animation: none !important; }
 }
 
 /* ---------- The seat field: this deck's one piece of data-viz ----------
@@ -525,22 +618,26 @@ body::before {
    stands today, drawn at 1:1. The dots are in the HTML, not generated by
    script, so a script failure still leaves the right picture on screen. */
 .seatfield {
-  max-width: 900px; margin-inline: auto;
+  max-width: 640px; margin-inline: auto;
   background: var(--surface);
   border: 1px solid var(--surface-line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
-  backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass);
   padding: clamp(26px, 3vw, 46px) clamp(21px, 2.8vw, 46px);
   margin-top: var(--v-lg);
 }
+/* SEVEN COLUMNS OF TWO. Each column is one round: the two ads that run head
+   to head for four days. Seven of those columns is the 28 day cycle, so the
+   whole shape of the testing plan is one picture. Fourteen circles, not the
+   ninety nine of the earlier draft, so each one can be read at a glance. */
 .seat-grid {
   display: grid;
-  grid-template-columns: repeat(11, minmax(0, 1fr));
-  gap: clamp(7px, 1.1vw, 15px);
-  max-width: 616px; margin-inline: auto;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: clamp(12px, 2.2vw, 26px);
+  max-width: 448px; margin-inline: auto;
 }
 .seat {
+  position: relative;
   aspect-ratio: 1; border-radius: 50%;
   border: 1.4px solid var(--seat-off);
   transform: scale(0.5); opacity: 0;
@@ -550,9 +647,36 @@ body::before {
   transition-delay: calc(var(--s, 0) * 9ms);
 }
 .in-view .seat { transform: scale(1); opacity: 1; }
-.seat.on { border-color: var(--seat-on); background: var(--seat-on); box-shadow: 0 0 0 4px var(--halo); }
+.seat.on {
+  border-color: var(--seat-on); background: var(--seat-on);
+  box-shadow: 0 0 0 4px rgba(234, 86, 4, 0.12);
+}
+/* THE FOUR THAT ARE FILLED BREATHE. A filled seat is a person on the mat, so
+   the four lit dots carry a slow halo on a 4.2s cycle (3 x 1.4) while the
+   ninety five empty ones sit dead still. The contrast between the two IS the
+   argument the section is making. Ring only, so it stays on the compositor. */
+.seat.on::after {
+  content: ""; position: absolute; inset: -4px; border-radius: 50%;
+  border: 1.4px solid var(--seat-on);
+  opacity: 0; pointer-events: none;
+  animation: seat-live 4.2s var(--ease-soft) infinite;
+  animation-delay: calc(var(--s, 0) * 21ms);
+}
+@keyframes seat-live {
+  0%       { transform: scale(0.86); opacity: 0.62; }
+  70%,100% { transform: scale(1.9);  opacity: 0; }
+}
+/* Hovering the field makes the point out loud: the empty seats recede and the
+   four you already have step forward. */
+@media (hover: hover) and (pointer: fine) {
+  .seatfield:hover .seat { opacity: 0.58; }
+  .seatfield:hover .seat.on { opacity: 1; transform: scale(1.22); }
+  .seat:hover { transform: scale(1.5); border-color: var(--accent); opacity: 1; z-index: 1; }
+  .seat.on:hover { transform: scale(1.5); }
+}
 @media (prefers-reduced-motion: reduce) {
   .seat { transform: scale(1); opacity: 1; transition-delay: 0s; }
+  .seat.on::after { animation: none; }
 }
 .seat-key {
   display: flex; flex-wrap: wrap; justify-content: center;
@@ -580,35 +704,87 @@ body::before {
 /* ---------- Pillars: the ad system ---------- */
 .pillars {
   display: grid; gap: clamp(14px, 1.6vw, 21px);
-  /* 2x2, not 4 across. Four columns inside 1120px give each card 264px and
-     every list wraps to four lines; two columns inside 900px give 440px. */
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  max-width: 900px; margin-inline: auto;
+  /* THREE across, her site's own grid shape. Three columns inside 1140px give
+     each card about 355px, which holds every list item on one or two lines.
+     (The earlier 2x2 existed because there were four cards; there are three.) */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 1140px; margin-inline: auto;
 }
-@media (max-width: 760px) { .pillars { grid-template-columns: 1fr; max-width: 460px; } }
+@media (max-width: 1000px) { .pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 760px; } }
+@media (max-width: 760px)  { .pillars { grid-template-columns: 1fr; max-width: 460px; } }
 .pillar {
   position: relative; overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--surface-line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
-  backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass);
   padding: clamp(26px, 2.8vw, 40px) clamp(21px, 2.4vw, 34px) clamp(28px, 3vw, 42px);
   transition: transform var(--duration-quick) var(--ease-satisfying),
               box-shadow var(--duration-quick) var(--ease-satisfying),
               border-color var(--duration-quick) var(--ease-soft);
 }
+/* Her class cards carry a 4px sage-to-gold bar. This is that bar, drawn on
+   reveal and re-swept on hover. 200% wide so the sweep has somewhere to go. */
 .pillar::before {
-  content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
-  background: linear-gradient(90deg, var(--accent) 0%, var(--metal) 100%);
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 4px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--metal) 50%, var(--accent) 100%);
+  background-size: 200% 100%; background-position: 0% 0;
   transform: scaleX(0); transform-origin: left center;
-  transition: transform var(--duration-long) var(--ease-satisfying);
+  transition: transform var(--duration-long) var(--ease-satisfying),
+              background-position var(--duration-cinematic) var(--ease-soft);
 }
 .in-view .pillar::before, .pillar.in-view::before { transform: scaleX(1); }
-@media (hover: hover) and (pointer: fine) {
-  .pillar:hover { transform: translate3d(0, -4px, 0); box-shadow: var(--shadow-lift); border-color: rgba(234, 86, 4, 0.30); }
+.pillar-ico {
+  display: block; width: 52px; height: 52px;
+  padding: 11px; box-sizing: border-box;
+  border-radius: 50%;
+  background: var(--calm-soft);
+  border: 1px solid var(--line-sage-soft);
+  color: var(--accent-text); margin-bottom: var(--v-md);
+  transition: transform var(--duration-medium) var(--ease-snap),
+              background-color var(--duration-quick) var(--ease-soft),
+              border-color var(--duration-quick) var(--ease-soft),
+              color var(--duration-quick) var(--ease-soft);
 }
-.pillar-ico { display: block; width: 34px; height: 34px; color: var(--accent); margin-bottom: var(--v-sm); }
+/* The icons are single-stroke line art, so they can DRAW themselves. The dash
+   length is set per path from JS off getTotalLength(); without JS they simply
+   sit finished, which is the correct fallback. */
+.pillar-ico path, .pillar-ico rect, .pillar-ico circle {
+  stroke-dasharray: var(--len, 0);
+  stroke-dashoffset: var(--len, 0);
+  transition: stroke-dashoffset var(--duration-cinematic) var(--ease-satisfying);
+  transition-delay: calc(var(--p, 0) * 126ms);
+}
+.in-view .pillar-ico path, .in-view .pillar-ico rect, .in-view .pillar-ico circle,
+.pillar.in-view .pillar-ico path { stroke-dashoffset: 0; }
+/* No JS, or no --len set: nothing is dashed and the icon is simply drawn. */
+.pillar-ico:not([data-drawn]) path,
+.pillar-ico:not([data-drawn]) rect,
+.pillar-ico:not([data-drawn]) circle { stroke-dasharray: none; stroke-dashoffset: 0; }
+
+@media (hover: hover) and (pointer: fine) {
+  .pillar:hover {
+    transform: translate3d(0, -8px, 0);
+    box-shadow: var(--shadow-deep);
+    border-color: var(--line-sage);
+  }
+  .pillar:hover::before { background-position: -100% 0; }
+  .pillar:hover .pillar-ico {
+    transform: scale(1.08) translateY(-2px);
+    color: var(--metal-text);
+    background: var(--wash-gold); border-color: var(--line-gold);
+  }
+  /* The bullets fill left to right, one after another, so the list reads as
+     being ticked off rather than as four dots changing color at once. */
+  .pillar:hover .plist li::before {
+    background: var(--metal); border-color: var(--metal);
+    transform: scale(1.15);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pillar, .pillar::before, .pillar-ico,
+  .pillar-ico path, .pillar-ico rect, .pillar-ico circle { transition: none; }
+}
 .pillar h3 {
   font-family: var(--font-display); font-weight: 600;
   font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.875rem);
@@ -625,7 +801,13 @@ body::before {
 .plist li::before {
   content: ""; display: block; width: 7px; height: 7px; border-radius: 50%;
   border: 1.4px solid var(--metal); margin-top: 0.55em; flex: none;
+  background: transparent;
+  transition: background-color var(--duration-quick) var(--ease-snap),
+              border-color var(--duration-quick) var(--ease-soft),
+              transform var(--duration-quick) var(--ease-snap);
+  transition-delay: calc(var(--b, 0) * 63ms);
 }
+@media (prefers-reduced-motion: reduce) { .plist li::before { transition: none; } }
 
 /* ---------- Note strip ---------- */
 .note {
@@ -645,7 +827,6 @@ body::before {
   border: 1px solid var(--surface-line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
-  backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass);
   padding: clamp(30px, 3.4vw, 56px) clamp(21px, 3vw, 52px) clamp(32px, 3.6vw, 58px);
   color: var(--body);
 }
@@ -705,7 +886,7 @@ body::before {
 .lrow--stack { grid-template-columns: minmax(0, 34%) minmax(0, 1fr); }
 .lrow--stack .lrow-val { text-align: left; color: var(--muted); }
 .req { margin-top: var(--v-md); }
-.req-head {
+.req p.req-head {
   font-family: var(--font-body); font-weight: 600;
   font-size: clamp(0.6875rem, 0.66rem + 0.14vw, 0.8125rem);
   letter-spacing: 0.2em; text-transform: uppercase;
@@ -730,28 +911,207 @@ body::before {
 }
 .foot-line b { color: var(--calm); font-weight: 600; }
 
-/* ---------- Theme switch ----------
-   No header bar on an AG presentation, so the control floats. It is the only
-   fixed chrome on the page. */
-.theme-switch {
-  position: fixed; z-index: 20;
-  top: clamp(14px, 2vw, 24px); right: clamp(14px, 2vw, 24px);
-  display: grid; place-items: center;
-  width: 44px; height: 44px; border-radius: 50%;
-  background: var(--surface-solid);
+/* ---------- Platform row (section 3) ----------
+   Seven pills. Her site's radius-full chip, her sage on cream. They fill
+   left to right on reveal and answer the pointer one at a time. */
+.platforms {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: clamp(7px, 1vw, 12px);
+  max-width: 980px; margin: 0 auto var(--v-lg);
+  padding: 0; list-style: none;
+}
+.plat { list-style: none; }
+.plat span {
+  display: block;
+  padding: 10px clamp(14px, 1.6vw, 22px);
+  border-radius: var(--radius-pill);
   border: 1px solid var(--surface-line);
+  background: var(--surface);
   box-shadow: var(--shadow-card);
-  color: var(--calm); cursor: pointer;
+  font-family: var(--font-body); font-weight: 600;
+  font-size: clamp(0.75rem, 0.72rem + 0.16vw, 0.875rem);
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent-text); word-break: normal; white-space: nowrap;
   transition: transform var(--duration-quick) var(--ease-snap),
-              color var(--duration-quick) var(--ease-soft),
+              background-color var(--duration-quick) var(--ease-soft),
+              border-color var(--duration-quick) var(--ease-soft),
+              box-shadow var(--duration-quick) var(--ease-settle),
+              color var(--duration-quick) var(--ease-soft);
+}
+@media (hover: hover) and (pointer: fine) {
+  .plat span:hover {
+    transform: translateY(-3px);
+    background: var(--accent); color: var(--ycla-white);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-sage);
+  }
+}
+@media (prefers-reduced-motion: reduce) { .plat span { transition: none; } }
+
+/* A second figure row, this one inside a band rather than under the hero. */
+.figs--band { margin-inline: auto; margin-top: var(--v-lg); border-top: 1px solid var(--rule); }
+
+/* The lead note carries three lines of its own, so it sets a touch larger
+   than the compliance note and keeps its own measure. */
+.note--lead { max-width: 640px; font-size: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem); color: var(--body); }
+.note--lead strong { color: var(--accent-text); }
+
+/* ---------- Proof block ----------
+   Her site hangs a 120px Cormorant quote glyph in warm gold at opacity 0.2
+   above its featured quote. This is that treatment, at deck scale. */
+.proof {
+  position: relative;
+  max-width: 760px; margin: var(--v-lg) auto 0;
+  padding: clamp(30px, 3.4vw, 46px) clamp(24px, 3vw, 46px) clamp(28px, 3vw, 42px);
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: transform var(--duration-quick) var(--ease-settle),
+              box-shadow var(--duration-quick) var(--ease-settle),
               border-color var(--duration-quick) var(--ease-soft);
 }
-.theme-switch:hover { transform: scale(1.07); color: var(--accent-text); border-color: rgba(234, 86, 4, 0.34); }
-.theme-switch svg { width: 19px; height: 19px; }
-.theme-switch .moon { display: none; }
-:root[data-theme="dark"] .theme-switch .sun { display: none; }
-:root[data-theme="dark"] .theme-switch .moon { display: block; }
-@media (prefers-reduced-motion: reduce) { .theme-switch { transition: none; } }
+.proof::before {
+  content: "\201C";
+  position: absolute; top: 0.02em; right: 0.14em;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(6rem, 12vw, 9rem); line-height: 1;
+  color: var(--metal); opacity: 0.2; pointer-events: none;
+  transition: opacity var(--duration-medium) var(--ease-soft),
+              transform var(--duration-medium) var(--ease-settle);
+}
+.proof::after {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 4px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--metal) 100%);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform var(--duration-long) var(--ease-satisfying);
+}
+.proof.in-view::after, .in-view .proof::after { transform: scaleX(1); }
+.proof-head {
+  font-family: var(--font-body); font-weight: 600;
+  font-size: clamp(0.6875rem, 0.66rem + 0.14vw, 0.8125rem);
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--metal-text); margin-bottom: var(--v-sm); word-break: normal;
+}
+.proof blockquote {
+  margin: 0;
+  font-family: var(--font-display); font-style: italic; font-weight: 500;
+  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  line-height: 1.46; color: var(--ink);
+  max-width: 46ch; text-wrap: pretty;
+}
+@media (hover: hover) and (pointer: fine) {
+  .proof:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); border-color: var(--line-gold); }
+  .proof:hover::before { opacity: 0.34; transform: translateY(3px) rotate(-4deg); }
+}
+@media (prefers-reduced-motion: reduce) { .proof, .proof::before, .proof::after { transition: none; } }
+
+/* ---------- THE POINTER LIGHT ----------
+   One warm pool that follows the cursor inside any card. --mx/--my are set
+   from a single rAF-throttled pointermove handler, so ninety-odd elements
+   cost one listener. It is a ::after over the card's own background, under
+   the content, and it only exists on a fine pointer. Nothing here changes
+   layout, so it cannot reflow. */
+@media (hover: hover) and (pointer: fine) {
+  .pillar, .step, .ledger, .seatfield, .proof, .pane { position: relative; }
+  .pillar > *, .step > *, .ledger > *, .seatfield > *, .proof > * { position: relative; z-index: 1; }
+  .pillar::after, .step::after, .ledger::after, .seatfield::after, .pane::after {
+    content: ""; position: absolute; inset: 0; z-index: 0;
+    border-radius: inherit; pointer-events: none;
+    background: radial-gradient(
+      circle at var(--mx, 50%) var(--my, 0%),
+      var(--halo) 0%,
+      var(--wash-gold) 34%,
+      rgba(0, 0, 0, 0) 62%);
+    opacity: 0;
+    transition: opacity var(--duration-medium) var(--ease-soft);
+  }
+  .pillar:hover::after, .step:hover::after, .ledger:hover::after,
+  .seatfield:hover::after, .pane:hover::after { opacity: 1; }
+  /* .proof already spends its ::after on the top bar. */
+}
+@media (prefers-reduced-motion: reduce) {
+  .pillar::after, .step::after, .ledger::after, .seatfield::after, .pane::after { transition: none; }
+}
+
+/* ---------- Figures answer the pointer ----------
+   Her nav link draws a gold gradient underline out from the center. Same
+   move, under each figure. */
+.fig { position: relative; padding-bottom: 9px; }
+.fig::after {
+  content: ""; position: absolute; left: 50%; bottom: 0;
+  width: 70%; height: 2px; border-radius: var(--radius-pill);
+  transform: translateX(-50%) scaleX(0);
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, var(--metal) 20%, var(--metal) 80%, rgba(0,0,0,0) 100%);
+  transition: transform var(--duration-medium) var(--ease-satisfying);
+}
+.fig-term { transition: transform var(--duration-medium) var(--ease-snap), color var(--duration-quick) var(--ease-soft); }
+@media (hover: hover) and (pointer: fine) {
+  .fig:hover::after { transform: translateX(-50%) scaleX(1); }
+  .fig:hover .fig-term { transform: translateY(-3px); color: var(--accent-text); }
+  .fig:hover .fig-term span { color: var(--live-text); }
+}
+@media (prefers-reduced-motion: reduce) { .fig::after, .fig-term { transition: none; } }
+
+/* ---------- Ticker answers the pointer ----------
+   It stops when you point at it, so a word can actually be read, and each
+   word lifts to her gold on its own hover. */
+@media (hover: hover) and (pointer: fine) {
+  .ticker:hover .tick-track { animation-play-state: paused; }
+  .tick-word { transition: color var(--duration-quick) var(--ease-soft), transform var(--duration-quick) var(--ease-snap); }
+  .tick-word:hover { color: var(--metal-text); transform: scale(1.04); }
+  .tick-sep { transition: transform var(--duration-quick) var(--ease-snap), background-color var(--duration-quick) var(--ease-soft); }
+  .ticker:hover .tick-sep { background: var(--metal); transform: scale(1.2); }
+}
+
+/* ---------- Ledger rows answer the pointer ----------
+   A sage wash, a gold marker sliding in from the left rim, and the value
+   stepping toward it. Rows are the densest part of the deck, so this is the
+   place a pointer most needs help holding its line. */
+.lrow { position: relative; transition: background-color var(--duration-quick) var(--ease-soft); }
+.lrow::before {
+  content: ""; position: absolute; left: -14px; top: 50%;
+  width: 5px; height: 5px; margin-top: -2.5px; border-radius: 50%;
+  background: var(--metal);
+  opacity: 0; transform: translateX(-7px);
+  transition: opacity var(--duration-quick) var(--ease-soft),
+              transform var(--duration-quick) var(--ease-snap);
+}
+.lrow-term, .lrow-val { transition: color var(--duration-quick) var(--ease-soft), transform var(--duration-quick) var(--ease-settle); }
+@media (hover: hover) and (pointer: fine) {
+  .lrow:hover { background: var(--wash-sage); }
+  .lrow:hover::before { opacity: 1; transform: translateX(0); }
+  .lrow:hover .lrow-term { color: var(--accent-text); }
+  .lrow:hover .lrow-val { color: var(--ink); transform: translateX(-3px); }
+  .lrow.total:hover .lrow-val { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) { .lrow, .lrow::before, .lrow-term, .lrow-val { transition: none; } }
+
+/* ---------- The em on a section title gets a warm underglow ----------
+   Fades in after the masked line has finished rising, so it lands rather
+   than competing with the rise. */
+.sec-title em, .hero-title em { position: relative; }
+.sec-title em::after, .hero-title em::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0.1em; height: 0.34em;
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, var(--halo-warm) 22%, var(--halo-warm) 78%, rgba(0,0,0,0) 100%);
+  transform: scaleX(0); transform-origin: center;
+  transition: transform var(--duration-cinematic) var(--ease-satisfying) 420ms;
+  pointer-events: none; z-index: -1;
+}
+.in-view .sec-title em::after, .in-view .hero-title em::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .sec-title em::after, .hero-title em::after { transition: none; transform: scaleX(1); }
+}
+
+/* ---------- Focus ----------
+   The deck gained real interactive targets (the rail, its label), so it needs
+   a visible ring that is not the UA default. */
+:focus-visible {
+  outline: 2px solid var(--metal-text);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 
 /* ---------- Narrow ----------
    Literal centering at and below 900, per the AG mobile gate. Everything on
@@ -772,21 +1132,20 @@ body::before {
   .plist li::before { display: none; }
   .note { text-align: center; }
 }
-@media (max-width: 620px) {
+@media (max-width: 760px) {
   /* THE FIGURES COLLIDED. Tracked-out uppercase overflows its grid column
      instead of wrapping, so at 390px "ROOM ALREADY" and "THROUGH SATURDAY"
      overprinted each other at the Y. The labels need about 130px and three
      columns give about 110px. Stacking removes the constraint rather than
      shrinking the type to hide it. */
   .figs { grid-template-columns: 1fr; max-width: 330px; gap: 17px; }
-  /* Eleven columns of dots go under 20px each below about 560px, which reads
-     as noise rather than as seats. Nine columns of eleven rows is the same
-     ninety nine circles at a size a thumb can still resolve. */
-  .seat-grid { grid-template-columns: repeat(9, minmax(0, 1fr)); max-width: 340px; }
+  /* Seven columns hold fine at fourteen dots: at 330px each ring is still
+     about 34px. Only the gap needs to come in. */
+  .seat-grid { max-width: 300px; gap: 11px; }
   .figs { gap: 10px; }
 }
 @media (max-width: 420px) {
-  .hero-title { font-size: 12.4vw; }
+  .hero-title { font-size: min(10.5vw, 8.4vh); }
   .sec-title { font-size: 9.6vw; }
 }
 
@@ -886,15 +1245,11 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
 
 <a class="skip" href="#what-we-do">Skip to content</a>
 
-<button class="theme-switch" type="button" id="themeSwitch" aria-label="Switch color theme">
-  <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.4M12 19v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.6 12h2.4M19 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
-  <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.4 14.6A8.4 8.4 0 0 1 9.4 3.6a8.4 8.4 0 1 0 11 11z"/></svg>
-</button>
 
 <main>
 
   <!-- ============ HERO ============ -->
-  <section class="hero" aria-labelledby="deck-title">
+  <section class="hero" aria-labelledby="deck-title" data-sb-label="Start">
     <div class="wrap">
       <div class="hero-stack reveal-stagger">
 
@@ -907,24 +1262,22 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
         <p class="hero-name">Yoga Circle&nbsp;LA</p>
 
         <h1 class="hero-title" id="deck-title">
-          <span class="l1"><span class="t">Filling Your Group</span></span>
-          <span class="l2"><span class="t"><em>Yoga Classes</em></span></span>
+          <span class="l1"><span class="t">The Students You&rsquo;re Missing</span></span>
+          <span class="l2"><span class="t">Are Already <em>Scrolling</em></span></span>
         </h1>
-
-        <p class="hero-lede">Ninety nine seats are already paid for. Three to four of them are&nbsp;filled.</p>
 
         <div class="figs">
           <div class="fig">
-            <p class="fig-term"><span data-count="99">99</span>&nbsp;Seats</p>
-            <p class="fig-desc">In the room&nbsp;already</p>
+            <p class="fig-term"><span data-count="14">14</span>&nbsp;Ads</p>
+            <p class="fig-desc">Per testing&nbsp;round</p>
           </div>
           <div class="fig">
-            <p class="fig-term"><span data-count="6">6</span>&nbsp;Days</p>
-            <p class="fig-desc">Monday through&nbsp;Saturday</p>
+            <p class="fig-term"><span data-count="28">28</span>&nbsp;Days</p>
+            <p class="fig-desc">Per&nbsp;round</p>
           </div>
           <div class="fig">
-            <p class="fig-term"><span data-count="3">3</span>&nbsp;Months</p>
-            <p class="fig-desc">Minimum&nbsp;runway</p>
+            <p class="fig-term"><span>Daily</span></p>
+            <p class="fig-desc">Tracking</p>
           </div>
         </div>
 
@@ -939,72 +1292,50 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
 
   <div class="ticker" aria-hidden="true">
     <div class="tick-track">
-      <div class="tick-group"><span class="tick-word lit">Meta only</span><i class="tick-sep"></i><span class="tick-word">Facebook and Instagram</span><i class="tick-sep"></i><span class="tick-word lit">Ninety nine seats to fill</span><i class="tick-sep"></i><span class="tick-word">14 ads per testing cycle</span><i class="tick-sep"></i><span class="tick-word lit">Forty five minute classes</span><i class="tick-sep"></i><span class="tick-word">Every step tracked</span><i class="tick-sep"></i></div>
-      <div class="tick-group"><span class="tick-word lit">Meta only</span><i class="tick-sep"></i><span class="tick-word">Facebook and Instagram</span><i class="tick-sep"></i><span class="tick-word lit">Ninety nine seats to fill</span><i class="tick-sep"></i><span class="tick-word">14 ads per testing cycle</span><i class="tick-sep"></i><span class="tick-word lit">Forty five minute classes</span><i class="tick-sep"></i><span class="tick-word">Every step tracked</span><i class="tick-sep"></i></div>
+      <div class="tick-group"><span class="tick-item"><b class="tick-n">14</b><span class="tick-l">Ads&nbsp;a&nbsp;round</span></span><i class="tick-sep"></i><span class="tick-item"><b class="tick-n">2</b><span class="tick-l">Head&nbsp;to&nbsp;head</span></span><i class="tick-sep is-on"></i><span class="tick-item"><b class="tick-n">4</b><span class="tick-l">Days&nbsp;a&nbsp;test</span></span><i class="tick-sep"></i><span class="tick-item"><b class="tick-n">7</b><span class="tick-l">Rounds&nbsp;a&nbsp;cycle</span></span><i class="tick-sep is-on"></i><span class="tick-item"><b class="tick-n">28</b><span class="tick-l">Days&nbsp;in&nbsp;total</span></span><i class="tick-sep"></i><span class="tick-item"><b class="tick-n">2</b><span class="tick-l">Posts&nbsp;a&nbsp;day</span></span><i class="tick-sep is-on"></i><span class="tick-item"><b class="tick-n">7</b><span class="tick-l">Platforms</span></span><i class="tick-sep"></i><span class="tick-item"><b class="tick-n">420</b><span class="tick-l">Posts&nbsp;a&nbsp;month</span></span><i class="tick-sep is-on"></i></div>
+      <div class="tick-group"><span class="tick-item"><b class="tick-n">14</b><span class="tick-l">Ads&nbsp;a&nbsp;round</span></span><i class="tick-sep"></i><span class="tick-item"><b class="tick-n">2</b><span class="tick-l">Head&nbsp;to&nbsp;head</span></span><i class="tick-sep is-on"></i><span class="tick-item"><b class="tick-n">4</b><span class="tick-l">Days&nbsp;a&nbsp;test</span></span><i class="tick-sep"></i><span class="tick-item"><b class="tick-n">7</b><span class="tick-l">Rounds&nbsp;a&nbsp;cycle</span></span><i class="tick-sep is-on"></i><span class="tick-item"><b class="tick-n">28</b><span class="tick-l">Days&nbsp;in&nbsp;total</span></span><i class="tick-sep"></i><span class="tick-item"><b class="tick-n">2</b><span class="tick-l">Posts&nbsp;a&nbsp;day</span></span><i class="tick-sep is-on"></i><span class="tick-item"><b class="tick-n">7</b><span class="tick-l">Platforms</span></span><i class="tick-sep"></i><span class="tick-item"><b class="tick-n">420</b><span class="tick-l">Posts&nbsp;a&nbsp;month</span></span><i class="tick-sep is-on"></i></div>
     </div>
   </div>
 
   <!-- ============ 1 - WHAT WE DO ============ -->
-  <section class="band pad-section" id="what-we-do" aria-labelledby="h-approach">
+  <section class="band pad-section" id="what-we-do" aria-labelledby="h-approach" data-sb-label="What We Do">
     <div class="wrap">
       <header class="sec-head reveal">
         <div class="ring-rule" aria-hidden="true"><i></i><b></b><i></i></div>
         <p class="sec-eyebrow">1. What We Do</p>
         <p class="sec-label">The Approach</p>
         <h2 class="sec-title" id="h-approach">
-          <span class="l1"><span class="t">Here&rsquo;s What</span></span>
-          <span class="l2"><span class="t">We&rsquo;d <em>Build</em></span></span>
+          <span class="l1"><span class="t">Here&rsquo;s What We&rsquo;d <em>Build</em></span></span>
+          <span class="l2"><span class="t">For Yoga Circle&nbsp;LA</span></span>
         </h2>
-        <p class="sec-sub">Meta only, Facebook and&nbsp;Instagram.</p>
+        <p class="sec-sub">Facebook and Instagram&nbsp;only.</p>
       </header>
 
       <div class="roadmap reveal-stagger">
         <div class="step">
           <div class="step-n" aria-hidden="true">01</div>
-          <p class="step-t">A no brainer entry level offer, crystallized together. Likely $29.99 to $49.99 a&nbsp;month.</p>
+          <p class="step-t">A simple sign-up page for her classes, built by&nbsp;us.</p>
         </div>
         <div class="step">
           <div class="step-n" aria-hidden="true">02</div>
-          <p class="step-t">Two funnels tested head to head: direct to checkout, and lead&nbsp;capture.</p>
+          <p class="step-t">Every new student tracked, start to&nbsp;finish.</p>
         </div>
         <div class="step">
           <div class="step-n" aria-hidden="true">03</div>
-          <p class="step-t">Retargeting to recapture the people who engaged but did not&nbsp;convert.</p>
+          <p class="step-t">Ads aimed at people dealing with the exact pain she treats: neck, back and&nbsp;stress.</p>
         </div>
         <div class="step">
           <div class="step-n" aria-hidden="true">04</div>
-          <p class="step-t">A refreshed Instagram, so they can verify credibility before they&nbsp;buy.</p>
+          <p class="step-t">14 fresh ads every&nbsp;round.</p>
+        </div>
+        <div class="step">
+          <div class="step-n" aria-hidden="true">05</div>
+          <p class="step-t">Keep what works, drop what&nbsp;doesn&rsquo;t.</p>
         </div>
       </div>
 
       <div class="seatfield reveal">
-        <div class="seat-grid" role="img" aria-label="Ninety nine seats in the Zoom room. Four are currently filled.">
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat on"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
+        <div class="seat-grid" role="img" aria-label="Fourteen ads in a testing round, arranged as seven pairs. One pair runs head to head at a time.">
           <span class="seat"></span>
           <span class="seat"></span>
           <span class="seat"></span>
@@ -1015,118 +1346,59 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
           <span class="seat"></span>
           <span class="seat"></span>
           <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
           <span class="seat on"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat on"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
-          <span class="seat"></span>
           <span class="seat"></span>
           <span class="seat"></span>
           <span class="seat"></span>
         </div>
         <div class="seat-key">
-          <div class="key on"><i aria-hidden="true"></i><p>3 to 4 filled&nbsp;today</p></div>
-          <div class="key"><i aria-hidden="true"></i><p>99 seats already paid&nbsp;for</p></div>
+          <div class="key on"><i aria-hidden="true"></i><p>Head to head right&nbsp;now</p></div>
+          <div class="key"><i aria-hidden="true"></i><p>14 ads in the&nbsp;round</p></div>
         </div>
-        <p class="seat-note">The room, the schedule and the teaching are already in place. This is only&nbsp;visibility.</p>
+        <p class="seat-note">7 rounds per cycle, 4 days each, 28 days in&nbsp;total.</p>
       </div>
     </div>
   </section>
 
   <!-- ============ 2 - HOW IT WORKS ============ -->
-  <section class="band pad-section" id="how-it-works" aria-labelledby="h-system">
+  <section class="band pad-section" id="how-it-works" aria-labelledby="h-system" data-sb-label="How It Works">
     <div class="wrap">
       <header class="sec-head reveal">
         <div class="ring-rule" aria-hidden="true"><i></i><b></b><i></i></div>
         <p class="sec-eyebrow">2. How It Works</p>
         <p class="sec-label">The System</p>
         <h2 class="sec-title" id="h-system">
-          <span class="l1"><span class="t">Your Ad System,</span></span>
-          <span class="l2"><span class="t">Built To <em>Fill The Room</em></span></span>
+          <span class="l1"><span class="t">One System,</span></span>
+          <span class="l2"><span class="t">Built To <em>Fill Her Classes</em></span></span>
         </h2>
-        <p class="sec-sub">Everything below is included in the monthly&nbsp;fee.</p>
+        <p class="sec-sub">Everything below is included in one&nbsp;fee.</p>
       </header>
 
       <div class="pillars reveal-stagger">
 
         <article class="pillar">
           <svg class="pillar-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3.5" y="6.5" width="25" height="19" rx="3"/><path d="M13 12.5v7l6-3.5z"/>
+            <rect x="3.5" y="6.5" width="25" height="19" rx="4"/><path d="M13 12.5v7l6-3.5z"/>
           </svg>
-          <h3>Creative&nbsp;Production</h3>
+          <h3>Making the&nbsp;Ads</h3>
           <ul class="plist">
-            <li>14 ads per testing&nbsp;cycle</li>
-            <li>Scripts written word for word for every&nbsp;ad</li>
-            <li>2 ads head to head, 4 days per&nbsp;sprint</li>
-            <li>7 sprints per cycle, 14 creatives over 28&nbsp;days</li>
+            <li>14 ads every&nbsp;round</li>
+            <li>Every ad scripted, word for&nbsp;word</li>
+            <li>2 ads tested against each other, 4 days at a&nbsp;time</li>
+            <li>7 rounds per cycle, 28 days in&nbsp;total</li>
           </ul>
         </article>
 
         <article class="pillar">
           <svg class="pillar-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 6.5h24l-9 10.5v8l-6 3v-11z"/>
+            <path d="M6.5 4.5h13l6 6v17a2 2 0 0 1-2 2h-17a2 2 0 0 1-2-2v-21a2 2 0 0 1 2-2z"/><path d="M19 4.5v6h6"/><path d="M11.5 20l3 3 6-6.5"/>
           </svg>
-          <h3>Funnel and&nbsp;Checkout</h3>
+          <h3>Sign-Ups and&nbsp;Bookings</h3>
           <ul class="plist">
-            <li>Landing page and checkout flow, custom&nbsp;coded</li>
-            <li>No separate build&nbsp;fee</li>
-            <li>Direct to checkout and lead capture, both&nbsp;tested</li>
-            <li>Retargeting held at $5 a day inside the&nbsp;spend</li>
+            <li>A sign-up page and booking system, built for&nbsp;her</li>
+            <li>No extra charge to build&nbsp;it</li>
+            <li>New students land straight in the&nbsp;system</li>
+            <li>Every step&nbsp;tracked</li>
           </ul>
         </article>
 
@@ -1134,25 +1406,13 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
           <svg class="pillar-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M4.5 26.5h23"/><path d="M8 26.5v-8M14.5 26.5v-14M21 26.5v-6M27.5 26.5v-17"/>
           </svg>
-          <h3>Tracking and&nbsp;Reporting</h3>
+          <h3>Watching the&nbsp;Results</h3>
           <ul class="plist">
-            <li>In depth daily&nbsp;tracking</li>
+            <li>Checked every&nbsp;day</li>
             <li>Reports every 4 days while&nbsp;testing</li>
-            <li>Every 7 days once there is a&nbsp;winner</li>
-            <li>Know which ads your subscribers came&nbsp;from</li>
-          </ul>
-        </article>
-
-        <article class="pillar">
-          <svg class="pillar-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="4.5" y="4.5" width="23" height="23" rx="6"/><circle cx="16" cy="16" r="5.6"/><circle cx="23.2" cy="8.8" r="1.4" fill="currentColor" stroke="none"/>
-          </svg>
-          <h3>Organic&nbsp;Content</h3>
-          <ul class="plist">
-            <li>About 12 finished videos a&nbsp;month</li>
-            <li>3 a week minimum, on&nbsp;Instagram</li>
-            <li>Cut from footage of your own&nbsp;classes</li>
-            <li>We film, edit and deliver. You&nbsp;post.</li>
+            <li>Reports every 7 days once we find a&nbsp;winner</li>
+            <li>We know exactly which ad brings in each&nbsp;student</li>
+            <li>Coaching for her team on responding&nbsp;fast</li>
           </ul>
         </article>
 
@@ -1162,45 +1422,98 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
     </div>
   </section>
 
-  <!-- ============ 3 - WHAT IT COSTS ============ -->
-  <section class="band pad-section" id="what-it-costs" aria-labelledby="h-cost">
+  <!-- ============ 3 - CONTENT THAT NEVER STOPS ============ -->
+  <section class="band pad-section" id="content" aria-labelledby="h-content" data-sb-label="Content">
     <div class="wrap">
       <header class="sec-head reveal">
         <div class="ring-rule" aria-hidden="true"><i></i><b></b><i></i></div>
-        <p class="sec-eyebrow">3. What It Costs</p>
+        <p class="sec-eyebrow">3. Content That Never Stops</p>
+        <p class="sec-label">Always On</p>
+        <h2 class="sec-title" id="h-content">
+          <span class="l1"><span class="t">Two Times a Day,</span></span>
+          <span class="l2"><span class="t"><em>Seven Places</em></span></span>
+        </h2>
+        <p class="sec-sub">A separate system from the ads, part of the same fee. Reported every&nbsp;month.</p>
+      </header>
+
+      <ul class="platforms reveal-stagger" aria-label="The seven platforms every piece is posted to">
+        <li class="plat"><span>Facebook</span></li>
+        <li class="plat"><span>Instagram</span></li>
+        <li class="plat"><span>TikTok</span></li>
+        <li class="plat"><span>YouTube</span></li>
+        <li class="plat"><span>LinkedIn</span></li>
+        <li class="plat"><span>X</span></li>
+        <li class="plat"><span>Threads</span></li>
+      </ul>
+
+      <div class="figs figs--band reveal">
+        <div class="fig">
+          <p class="fig-term"><span data-count="2">2</span>&nbsp;a&nbsp;Day</p>
+          <p class="fig-desc">60 a&nbsp;month</p>
+        </div>
+        <div class="fig">
+          <p class="fig-term"><span data-count="7">7</span>&nbsp;Platforms</p>
+          <p class="fig-desc">Every piece,&nbsp;everywhere</p>
+        </div>
+        <div class="fig">
+          <p class="fig-term"><span data-count="420">420</span>&nbsp;Posts</p>
+          <p class="fig-desc">Every&nbsp;month</p>
+        </div>
+      </div>
+
+      <p class="note note--lead reveal">We handle it all: the ideas, the filming plan, the editing, the captions, the posting.<br>
+        She just needs to show up and teach. We&rsquo;ll be there with a&nbsp;camera.<br>
+        <strong>40 videos and 20 pictures a month, ready to&nbsp;post.</strong></p>
+
+      <figure class="proof reveal">
+        <p class="proof-head">Proof It&nbsp;Works</p>
+        <blockquote>We&rsquo;ve been running ads since around March for another local client, a dentist, using this same approach: test, find what works, then spend more on it. Strong results so&nbsp;far.</blockquote>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ 4 - WHAT IT COSTS ============ -->
+  <section class="band pad-section" id="what-it-costs" aria-labelledby="h-cost" data-sb-label="What It Costs">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <div class="ring-rule" aria-hidden="true"><i></i><b></b><i></i></div>
+        <p class="sec-eyebrow">4. What It Costs</p>
         <p class="sec-label">Investment</p>
         <h2 class="sec-title" id="h-cost">
-          <span class="l1"><span class="t">The <em>Investment</em></span></span>
+          <span class="l1"><span class="t">One Package,</span></span>
+          <span class="l2"><span class="t"><em>Everything In</em></span></span>
         </h2>
       </header>
 
       <div class="ledger reveal">
-        <p class="price"><span data-count="3450" data-prefix="$">$3,450</span> to <span data-count="3600" data-prefix="$">$3,600</span></p>
-        <p class="price-sub">Estimated monthly&nbsp;total</p>
+        <p class="price"><span data-count="5100" data-prefix="$">$5,100</span> to <span data-count="8670" data-prefix="$">$8,670</span></p>
+        <p class="price-sub">Per&nbsp;month</p>
 
         <div class="ledger-block reveal-stagger">
-          <div class="lrow"><p class="lrow-term">Ads management retainer</p><p class="lrow-val">$1,500</p></div>
-          <div class="lrow"><p class="lrow-term">Meta ad spend</p><p class="lrow-val">$1,200 to&nbsp;$1,350</p></div>
-          <div class="lrow"><p class="lrow-term">Organic content package</p><p class="lrow-val">About&nbsp;$750</p></div>
-          <div class="lrow total"><p class="lrow-term">Estimated monthly total</p><p class="lrow-val">$3,450 to&nbsp;$3,600</p></div>
-        </div>
-
-        <div class="ledger-block reveal-stagger">
-          <div class="lrow"><p class="lrow-term">Recommended minimum runway</p><p class="lrow-val">3&nbsp;months</p></div>
-          <div class="lrow total"><p class="lrow-term">Total estimated 3 month investment</p><p class="lrow-val">$10,350 to&nbsp;$10,800</p></div>
+          <div class="lrow"><p class="lrow-term">Ads tested</p><p class="lrow-val">14 per&nbsp;round</p></div>
+          <div class="lrow"><p class="lrow-term">New ads</p><p class="lrow-val">Every 28&nbsp;days</p></div>
+          <div class="lrow"><p class="lrow-term">Reports</p><p class="lrow-val">Every 4 days while&nbsp;testing</p></div>
+          <div class="lrow"><p class="lrow-term">Posting</p><p class="lrow-val">2 a day, 7&nbsp;platforms</p></div>
+          <div class="lrow"><p class="lrow-term">Content made</p><p class="lrow-val">40 videos, 20 pictures a&nbsp;month</p></div>
+          <div class="lrow"><p class="lrow-term">Content reports</p><p class="lrow-val">Monthly</p></div>
         </div>
 
         <div class="req">
-          <p class="req-head">Ad Spend Requirement</p>
-          <p>$40 to $45 a day on Meta, paid straight to Meta, including $5 a day for&nbsp;retargeting.</p>
-          <p>Management fees are separate from ad spend and never pass through&nbsp;us.</p>
+          <p class="req-head">Ad Money</p>
+          <p>Paid straight to Facebook, separate from our fee. Amount still to be&nbsp;decided.</p>
+        </div>
+
+        <div class="req">
+          <p class="req-head">Booking Software</p>
+          <p>She&rsquo;ll need a simple system to manage students and bookings. We recommend GoHighLevel. It stays in her name, paid by her&nbsp;directly.</p>
+          <p>We build and run everything inside&nbsp;it.</p>
         </div>
 
         <div class="ledger-block reveal-stagger">
-          <div class="lrow lrow--stack"><p class="lrow-term">Not&nbsp;included</p><p class="lrow-val">Ad spend. CRM or checkout subscription. Website work outside the&nbsp;funnel.</p></div>
-          <div class="lrow lrow--stack"><p class="lrow-term">You give&nbsp;us</p><p class="lrow-val">Ad account access, social account access, offer sign off, and raw class&nbsp;footage.</p></div>
-          <div class="lrow lrow--stack"><p class="lrow-term">You&nbsp;keep</p><p class="lrow-val">Every account, pixel, page and file. In your name from day&nbsp;1.</p></div>
-          <div class="lrow lrow--stack"><p class="lrow-term">Minimum&nbsp;term</p><p class="lrow-val">3&nbsp;months.</p></div>
+          <div class="lrow lrow--stack"><p class="lrow-term">Not&nbsp;included</p><p class="lrow-val">Ad money. Booking software cost. Anything outside the ads and sign-up&nbsp;page.</p></div>
+          <div class="lrow lrow--stack"><p class="lrow-term">She gives&nbsp;us</p><p class="lrow-val">Access to her ad account, her booking system, and her social media pages. One day for&nbsp;filming.</p></div>
+          <div class="lrow lrow--stack"><p class="lrow-term">She&nbsp;keeps</p><p class="lrow-val">Every account, every page, every file. Hers from day&nbsp;one.</p></div>
+          <div class="lrow lrow--stack"><p class="lrow-term">Recommended&nbsp;time</p><p class="lrow-val">3&nbsp;months.</p></div>
         </div>
       </div>
     </div>
@@ -1209,7 +1522,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
   <footer class="deck-foot">
     <div class="wrap">
       <div class="foot-rule" aria-hidden="true"></div>
-      <p class="foot-line">Presentation made by <b>Arc&nbsp;Garde</b> &nbsp;//&nbsp; Prepared for <b>Yoga Circle&nbsp;LA</b> &nbsp;//&nbsp; August&nbsp;2026</p>
+      <p class="foot-line">Presentation made by <b>Arc&nbsp;Garde</b> &nbsp;//&nbsp; Prepared for <b>Yoga Circle&nbsp;LA</b> &nbsp;//&nbsp; September&nbsp;2026</p>
     </div>
   </footer>
 
@@ -1219,6 +1532,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
         integrity="sha384-ClD7pCgIUz5M81HT8aZmMxCsWmfsycmBiwL5gy1pUbdWHvICIbea22N9sTtAFotA"
         crossorigin="anonymous"></script>
 <script src="ag-scroll.js"></script>
+<script src="ag-scrollbar.js" defer></script>
 <script>
 /* ag-motion.js is injected on ag:ready, not parsed inline. See note above. */
 (function () {
@@ -1243,35 +1557,73 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
 <script>
 /* ===========================================================
    Deck engagement layer.
-   Net-new: no library primitive covers count-ups, the seat
-   stagger index or the theme switch. Every figure it animates
-   is already correct in the HTML, and every seat is already
-   drawn in the markup, so a script failure leaves the right
-   page on screen rather than an empty one.
+   Net-new: no library primitive covers count-ups, the ring
+   stagger index, the icon draw-on or the pointer light. Every
+   figure it animates is already correct in the HTML, every ring
+   is already drawn in the markup and every icon is already a
+   finished shape, so a script failure leaves the right page on
+   screen rather than an empty one.
    =========================================================== */
 (function () {
   'use strict';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  /* ---- Theme ---- */
-  var sw = document.getElementById('themeSwitch');
-  if (sw) {
-    sw.addEventListener('click', function () {
-      var root = document.documentElement;
-      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      var meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute('content', next === 'dark' ? '#14100c' : '#fbf8f3');
-      try { localStorage.setItem('ycla-theme', next); } catch (e) {}
+  /* ---- Ring stagger index ----
+     The delay is set from JS rather than written into inline styles.
+     Without it every ring still appears, just all at once. */
+  var seats = document.querySelectorAll('.seat');
+  for (var s = 0; s < seats.length; s++) { seats[s].style.setProperty('--s', s); }
+
+  /* ---- Bullet index, so a pillar's list ticks off in order on hover ---- */
+  document.querySelectorAll('.plist').forEach(function (list) {
+    [].slice.call(list.children).forEach(function (li, i) { li.style.setProperty('--b', i); });
+  });
+
+  /* ---- Icon draw-on ----
+     Measures each sub-path and hands CSS its own length, so the stroke can
+     retract and redraw. Guarded: getTotalLength throws on a detached or
+     zero-length node in some engines, and an icon that cannot be measured is
+     simply left as the finished shape it already is. */
+  if (!reduced) {
+    document.querySelectorAll('.pillar-ico').forEach(function (svg) {
+      var shapes = svg.querySelectorAll('path, rect, circle'), ok = false;
+      [].slice.call(shapes).forEach(function (el, i) {
+        var len = 0;
+        try { len = el.getTotalLength ? el.getTotalLength() : 0; } catch (e) { len = 0; }
+        if (!len || !isFinite(len)) return;
+        el.style.setProperty('--len', Math.ceil(len));
+        el.style.setProperty('--p', i);
+        ok = true;
+      });
+      if (ok) svg.setAttribute('data-drawn', '');
     });
   }
 
-  /* ---- Seat stagger index ----
-     The delay is set from JS rather than written into 99 inline styles,
-     which would add about 2KB of markup for something purely decorative.
-     Without it every seat still appears, just all at once. */
-  var seats = document.querySelectorAll('.seat');
-  for (var s = 0; s < seats.length; s++) { seats[s].style.setProperty('--s', s); }
+  /* ---- The pointer light ----
+     ONE listener for every card on the page, coalesced to a frame. The card
+     under the pointer is found with closest(), so cost does not grow with
+     card count. Skipped entirely on a coarse pointer, where there is no
+     cursor for the light to follow. */
+  if (fine && !reduced) {
+    var LIT = '.pillar, .step, .ledger, .seatfield, .pane';
+    var pending = false, lastEv = null;
+    function paint() {
+      pending = false;
+      var e = lastEv; if (!e) return;
+      var card = e.target && e.target.closest ? e.target.closest(LIT) : null;
+      if (!card) return;
+      var r = card.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      card.style.setProperty('--mx', (((e.clientX - r.left) / r.width) * 100).toFixed(2) + '%');
+      card.style.setProperty('--my', (((e.clientY - r.top) / r.height) * 100).toFixed(2) + '%');
+    }
+    document.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') return;
+      lastEv = e;
+      if (!pending) { pending = true; requestAnimationFrame(paint); }
+    }, { passive: true });
+  }
 
   /* ---- Count-ups ----
      The element already contains its final, formatted value. The count only

@@ -1,0 +1,116 @@
+/* =========================================================== */
+/* AG Scrollbar: canonical primitive                           */
+/* AG Scrollbar Standard v2.0 (2026-09-07)                     */
+/*                                                             */
+/* THE FORM IS THE STANDARD. THE COLOR IS NOT.                 */
+/* v1.x locked the thumb to the house gold thread and made     */
+/* recoloring a BLOCKER. v2.0 reverses that: every AG website  */
+/* ships this rail, and every rail wears its own brand accent. */
+/* Brandkit colors win over the gold thread (AG DNA).          */
+/*                                                             */
+/* Consumes: --accent, --ink, --font-mono, --text-eyebrow,     */
+/*           --ease-settle, --ease-satisfying                  */
+/* Every one has a fallback, so the file is drop-in standalone.*/
+/* The fallback accent is a NEUTRAL slate on purpose: an unset */
+/* --accent must look unset, never like a brand decision.      */
+/* =========================================================== */
+
+:root {
+  /* Version contract. A comment cannot be authoritative, it does not
+     survive minification. A custom property does, and is readable at
+     runtime. The standards gate reads this. Do not remove or rename. */
+  --ag-scrollbar-version: "2.0";
+
+  --sb-accent: var(--accent, #7C7C88);
+  /* Label text sits ON the accent fill. MUST clear 4.5:1 against
+     --sb-accent. On a light accent this stays ink; on a dark accent the
+     build overrides it to paper. Checked at the gate, not assumed. */
+  --sb-on-accent: var(--ink, #0A0A0A);
+  --sb-label-size: var(--text-eyebrow, clamp(0.68rem, 0.64rem + 0.18vw, 0.76rem));
+  --sb-ease: var(--ease-settle, cubic-bezier(.22, 1, .36, 1));
+  --sb-ease-out: var(--ease-satisfying, cubic-bezier(0.16, 1, 0.3, 1));
+  --sb-shade: #000;
+  --sb-drop: rgba(0, 0, 0, .30);
+}
+
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { width: 0; height: 0; }
+
+.ag-sb {
+  position: fixed; top: 0; right: 0; width: 18px; height: 100%;
+  z-index: 2147483640; opacity: 0; pointer-events: none;
+  transition: opacity 300ms var(--sb-ease-out);
+}
+.ag-sb.is-active { opacity: 1; }
+
+.ag-sb__track {
+  position: absolute; top: 21px; bottom: 21px; right: 7px; width: 3px; border-radius: 7px;
+  background-color: color-mix(in oklch, var(--sb-accent) 16%, transparent);
+  pointer-events: auto; cursor: pointer;
+}
+
+.ag-sb__tick {
+  position: absolute; left: 50%; width: 5px; height: 2px; border-radius: 3px;
+  transform: translate(-50%, -50%);
+  background-color: color-mix(in oklch, var(--sb-accent) 50%, transparent);
+  transition: width 300ms var(--sb-ease),
+              height 300ms var(--sb-ease),
+              background-color 300ms var(--sb-ease),
+              box-shadow 300ms var(--sb-ease);
+}
+.ag-sb__tick.is-active {
+  width: 7px; height: 3px;
+  background-color: var(--sb-accent);
+  box-shadow: 0 0 9px var(--sb-accent);
+}
+
+/* Opaque fill goes in background-color, the gradient in background-image.
+   NEVER a `background:` shorthand carrying color-mix. One unsupported value
+   invalidates the ENTIRE declaration, and the thumb then has no fill at all
+   and disappears. Split this way it degrades to a solid accent bar, which is
+   a wrong shade rather than an invisible scrollbar. v1.x shipped the
+   shorthand; this is the reason v2.0 does not. */
+.ag-sb__thumb {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  width: 7px; border-radius: 7px;
+  background-color: var(--sb-accent);
+  background-image: linear-gradient(180deg, var(--sb-accent), color-mix(in oklch, var(--sb-accent) 62%, var(--sb-shade)));
+  box-shadow: 0 0 9px color-mix(in oklch, var(--sb-accent) 60%, transparent);
+  pointer-events: auto; cursor: grab;
+  transition: width 300ms var(--sb-ease),
+              box-shadow 300ms var(--sb-ease);
+}
+.ag-sb:hover .ag-sb__thumb,
+.ag-sb.is-drag .ag-sb__thumb { width: 11px; box-shadow: 0 0 16px var(--sb-accent); }
+.ag-sb.is-drag .ag-sb__thumb { cursor: grabbing; }
+
+/* The checkpoint bubble. Mono, uppercase, tracked, it is a LABEL, not a
+   sentence, and the label layer is mono across AG. */
+.ag-sb__label {
+  position: absolute; right: 24px; transform-origin: right center;
+  padding: 6px 12px; border-radius: 7px; white-space: nowrap;
+  background-color: var(--sb-accent);
+  color: var(--sb-on-accent);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--sb-label-size); font-weight: 500; letter-spacing: .12em;
+  text-transform: uppercase; line-height: 1;
+  border: 1px solid color-mix(in oklch, var(--sb-accent) 75%, var(--sb-shade));
+  box-shadow: 0 6px 21px var(--sb-drop), 0 0 16px color-mix(in oklch, var(--sb-accent) 45%, transparent);
+  opacity: 0; pointer-events: none; cursor: grab;
+  transition: opacity 210ms var(--sb-ease);
+}
+.ag-sb__label.is-show { opacity: 1; pointer-events: auto; }
+.ag-sb.is-drag .ag-sb__label { cursor: grabbing; }
+.ag-sb__label::after {
+  content: ''; position: absolute; right: -4px; top: 50%; width: 8px; height: 8px;
+  background-color: inherit; border-top: inherit; border-right: inherit;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+@media (hover: none), (pointer: coarse) {
+  html { scrollbar-width: auto; }
+  .ag-sb { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ag-sb, .ag-sb__thumb, .ag-sb__label, .ag-sb__tick { transition: none; }
+}
