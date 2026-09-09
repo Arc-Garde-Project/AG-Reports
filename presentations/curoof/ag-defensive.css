@@ -1,0 +1,119 @@
+/* =========================================================== */
+/* AG Defensive v1.1 — first stylesheet (CANONICAL DROP-IN)    */
+/* The AG System Defaults Discipline (core/AG-DNA.md) + web-css rule, as one    */
+/* defensive base. Load FIRST, before tokens and components. Prevents the       */
+/* recurring box-model / overflow / text / tap / motion bugs.                   */
+/* Promoted 2026-06-26 from the scaffold (closes the "ag-defensive was a        */
+/* documented-but-uncreated canonical" gap, Learning Log 2026-06-20).           */
+/* v1.1 2026-08-21: completes the block from 9 rules to 16 — the z-index scale, */
+/* scrollbar-gutter, [hidden], role="list" reset, table defaults, flex/grid     */
+/* min-width, the focus-not-focus-visible reset, a transform-driven skip link,  */
+/* and reduced-motion DELAY zeroing.                                            */
+/* =========================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+* { margin: 0; }
+
+/* ---- The z-index scale. Every layer in an AG build resolves to one of these.
+        Hand-picked integers scattered across component files are exactly how a
+        drawer ends up under its own backdrop. ---- */
+:root {
+  --z-base:       0;
+  --z-raised:     1;
+  --z-sticky:     10;
+  --z-header:     100;
+  --z-backdrop:   101;
+  --z-rail:       102;
+  --z-drawer:     110;
+  --z-curtain:    9000;
+  --z-skip:       2147483647;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: hidden;             /* no horizontal blowout */
+  -webkit-tap-highlight-color: transparent;
+  /* Reserve the scrollbar gutter so locking body scroll (drawer, curtain)
+     cannot shift the whole page sideways by the scrollbar's width. */
+  scrollbar-gutter: stable;
+}
+
+body {
+  min-height: 100svh;
+  overflow-wrap: break-word;      /* long words never overflow */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.5;
+  background: var(--paper, #fafafa);
+  color: var(--text-primary, #0a0a0a);
+  font-family: var(--font-body, system-ui, sans-serif);
+}
+
+/* Media never overflows its container */
+img, picture, video, canvas, svg { display: block; max-width: 100%; height: auto; }
+
+/* Form elements inherit type */
+input, button, textarea, select { font: inherit; color: inherit; }
+
+/* [hidden] must actually hide. Any display declaration on the element beats
+   the UA sheet's [hidden] rule, which is how "hidden" drawers stay visible. */
+[hidden] { display: none !important; }
+
+/* A list that has been given role="list" is a list semantically and must not
+   also carry markers. Safari drops list semantics when list-style is none, so
+   the role is the fix and this is its matching reset. */
+ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
+
+/* Table defaults. A bare <table> ships with 2px of UA cell spacing and
+   collapses its own borders inconsistently across engines. */
+table { border-collapse: collapse; border-spacing: 0; width: 100%; }
+th, td { text-align: left; vertical-align: top; }
+
+/* A flex or grid child defaults to min-width:auto, which refuses to shrink
+   below its content and is the single most common source of overflow. */
+:where(.flex, .grid) > * { min-width: 0; }
+
+/* Orphan prevention (AG-DNA) */
+h1, h2, h3, h4, h5, h6 { text-wrap: balance; line-height: 1.1; }
+p, li, blockquote, figcaption { text-wrap: pretty; }
+
+/* Interactive defaults */
+a, button, [role="button"], input, label[for], select, summary {
+  touch-action: manipulation;     /* removes the 300ms tap delay */
+}
+a { color: inherit; text-decoration: none; }
+button { background: none; border: 0; cursor: pointer; }
+
+/* Visible keyboard focus everywhere */
+:focus-visible { outline: 3px solid var(--accent, #c9a861); outline-offset: 3px; }
+/* ...and never a ring on a mouse click. */
+:focus:not(:focus-visible) { outline: none; }
+
+/* Skip link (revealed on focus).
+   Driven by TRANSFORM, not by `top`. Animating `top` is a layout property and
+   runs on the main thread every frame; the transform is composited. */
+.ag-skip-link {
+  position: absolute; left: 7px; top: 7px; z-index: var(--z-skip, 2147483647);
+  padding: 10px 18px; border-radius: 8px;
+  background: var(--ink, #0a0a0a); color: var(--paper, #fafafa);
+  transform: translateY(-140px);
+  transition: transform var(--duration-quick, 0.3s) var(--ease-satisfying, cubic-bezier(0.16, 1, 0.3, 1));
+}
+.ag-skip-link:focus-visible { transform: translateY(0); }
+
+/* Global reduced-motion guard (components also honor it individually) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    /* DELAY must be zeroed too. Zeroing only the duration leaves an element
+       with a 900ms transition-delay measurably invisible for 900ms under
+       `reduce` — the exact failure this guard exists to prevent. */
+    transition-delay: 0s !important;
+    animation-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,30 @@
+/* =========================================================== */
+/* AG Scroll v1.2 — required CSS infrastructure (CANONICAL DROP-IN) */
+/* Source of truth: sectors/web/standards/AG-SCROLL-STANDARD.md (v1.2) */
+/* Extracted 2026-06-26. Pairs with ag-scroll.js. Without these rules Lenis  */
+/* fights the project's default scroll-behavior and the body scroll-lock      */
+/* jumps to the top.                                                          */
+/* =========================================================== */
+
+/* Lenis runtime classes (Lenis adds .lenis / .lenis-smooth / .lenis-stopped to <html>) */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }
+
+/* Body scroll lock — AGScroll.lock()/unlock() add/remove .is-locked and set --scroll-y */
+body.is-locked {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  top: calc(-1 * var(--scroll-y, 0px));
+}
+
+/* Native momentum scrolling inside any overflow container on touch (carousels, long modals) */
+.scrollable-container { -webkit-overflow-scrolling: touch; }
+
+/* Required ONLY for Transition Standard v1.3 Variant A (Horizontal Push): the body
+   translates 100% off-screen during slide-out; clip prevents a horizontal scrollbar
+   without establishing a scroll container (so it doesn't conflict with Lenis). */
+/* html { overflow-x: clip; } */

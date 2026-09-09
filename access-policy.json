@@ -1,312 +1,318 @@
 {
- "_comment": "Authoritative deck-access policy. Generated from the deployed tree. Unknown routes fail closed.",
- "version": 1,
- "default": "DENY",
- "hub": {
-  "paths": [
-   "/",
-   "/index.html",
-   "/index",
-   "/showcase"
+  "_comment": "Authoritative deck-access policy. Generated from the deployed tree. Unknown routes fail closed.",
+  "version": 1,
+  "default": "DENY",
+  "hub": {
+    "paths": [
+      "/",
+      "/index.html",
+      "/index",
+      "/showcase"
+    ],
+    "type": "INTERNAL",
+    "access": "HUB_PASSWORD",
+    "_note": "existing login behaviour, preserved unchanged"
+  },
+  "openAssets": [
+    "/assets/",
+    "/ag-cursor.js",
+    "/ag-curtain.js",
+    "/ag-motion.js",
+    "/ag-scroll.js",
+    "/ag-defensive.css",
+    "/robots.txt",
+    "/favicon.ico"
   ],
-  "type": "INTERNAL",
-  "access": "HUB_PASSWORD",
-  "_note": "existing login behaviour, preserved unchanged"
- },
- "openAssets": [
-  "/assets/",
-  "/ag-cursor.js",
-  "/ag-curtain.js",
-  "/ag-motion.js",
-  "/ag-scroll.js",
-  "/ag-defensive.css",
-  "/robots.txt",
-  "/favicon.ico"
- ],
- "routes": {
-  "/presentations/a-greater-hope": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/ally-towne": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/americana-tax": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/anthony-victor-plumbing": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/arbor-growth-roadmap": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/arbor-wealth": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/c-design": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/california-landlords-union": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/casa-mate": {
-   "type": "PITCH_DECK",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/charles-real-estate": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/clinic-of-angels": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/cogentic": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/concierge-dental": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/construction-unlimited": {
-   "type": "SUPERSEDED",
-   "access": "DENY"
-  },
-  "/presentations/dannielle": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/dental-ads": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/dr-dani-b": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/ellery-wolcott": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/eterna-motorworks": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/gold-coast-roofing": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/joseph": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/kayla": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/krazy-trompos": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/lashingona": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/leonardo-trindade": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/liminal-means": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/marcus-dove": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/marks": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/mike-growth": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/mike-organic": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/mike-paid-ads": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/moneyboymax": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/mpwhite": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/muevelo": {
-   "type": "PITCH_DECK",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/muevelo-simplified": {
-   "type": "NOT_DEPLOYED",
-   "access": "DENY"
-  },
-  "/presentations/owl-hoot": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/posh-n-polished": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/scaled-llc": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/service-scope": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/spine-doctor": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/swedlund": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/syndra": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/tooth-place": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/tr-spring": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/viktor-vodnik": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/presentations/yoga-circle-la": {
-   "type": "PRESENTATION",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/reports/24hourfunding-proposal": {
-   "type": "CLIENT_REPORT",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/reports/Research-Two-Sided-Marketplace-Models-2026-03-27.md": {
-   "type": "INTERNAL",
-   "access": "DENY"
-  },
-  "/reports/adjacent-loyalty-programs-deep-research-2026-03-27.md": {
-   "type": "INTERNAL",
-   "access": "DENY"
-  },
-  "/reports/americana-tax": {
-   "type": "CLIENT_REPORT",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/reports/angi-homeadvisor-failures-forensic-report-2026-03-27.md": {
-   "type": "INTERNAL",
-   "access": "DENY"
-  },
-  "/reports/arbor-wealth": {
-   "type": "CLIENT_REPORT",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/reports/competitive-landscape-home-services-2026-03-27.md": {
-   "type": "INTERNAL",
-   "access": "DENY"
-  },
-  "/reports/contractor-supply-side-research-2026-03-27.md": {
-   "type": "INTERNAL",
-   "access": "DENY"
-  },
-  "/reports/data-accuracy-audit-2026-03-04.md": {
-   "type": "INTERNAL",
-   "access": "DENY"
-  },
-  "/reports/dr-bob": {
-   "type": "CLIENT_REPORT",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/reports/exhaustive-home-services-competitor-landscape-2026-03-27.md": {
-   "type": "INTERNAL",
-   "access": "DENY"
-  },
-  "/reports/hitch-academy": {
-   "type": "CLIENT_REPORT",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/reports/home-services-investment-landscape-2026-03-27.md": {
-   "type": "INTERNAL",
-   "access": "DENY"
-  },
-  "/reports/home-services-platform-tech-research-2026-03-27.md": {
-   "type": "INTERNAL",
-   "access": "DENY"
-  },
-  "/reports/idwip-presentations-2026-03-14.md": {
-   "type": "INTERNAL",
-   "access": "DENY"
-  },
-  "/reports/robopromo": {
-   "type": "CLIENT_REPORT",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/reports/samir-proposal": {
-   "type": "CLIENT_REPORT",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/reports/tooth-place": {
-   "type": "CLIENT_REPORT",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/reports/us-home-services-market-research-2026-03-27.md": {
-   "type": "INTERNAL",
-   "access": "DENY"
-  },
-  "/preview/CO": {
-   "type": "WEBSITE_PREVIEW",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/preview/arc-garde": {
-   "type": "WEBSITE_PREVIEW",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/preview/master-dental": {
-   "type": "WEBSITE_PREVIEW",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/arborwealth": {
-   "type": "DASHBOARD",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/hitch-academy": {
-   "type": "DASHBOARD",
-   "access": "PRIVATE_MAGIC_LINK"
-  },
-  "/_brand-source": {
-   "type": "INTERNAL",
-   "access": "DENY"
+  "routes": {
+    "/_brand-source": {
+      "type": "INTERNAL",
+      "access": "DENY"
+    },
+    "/arborwealth": {
+      "type": "DASHBOARD",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/hitch-academy": {
+      "type": "DASHBOARD",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/a-greater-hope": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/ally-towne": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/americana-tax": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/anthony-victor-plumbing": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/arbor-growth-roadmap": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/arbor-wealth": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/c-design": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/california-landlords-union": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/casa-mate": {
+      "type": "PITCH_DECK",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/charles-real-estate": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/clinic-of-angels": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/cogentic": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/concierge-dental": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/construction-unlimited": {
+      "type": "SUPERSEDED",
+      "access": "DENY"
+    },
+    "/presentations/curoof": {
+      "access": "PRIVATE_MAGIC_LINK",
+      "kind": "PITCH_DECK",
+      "label": "Construction Unlimited website build proposal (Salvatore Cataldo)",
+      "note": "Migrated 2026-09-09 from the standalone curoofpresentation project, whose production alias was publicly readable. /presentations/construction-unlimited stays DENY: that is the superseded path and the other session builds under it."
+    },
+    "/presentations/dannielle": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/dental-ads": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/dr-dani-b": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/ellery-wolcott": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/eterna-motorworks": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/gold-coast-roofing": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/joseph": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/kayla": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/krazy-trompos": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/lashingona": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/leonardo-trindade": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/liminal-means": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/marcus-dove": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/marks": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/mike-growth": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/mike-organic": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/mike-paid-ads": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/moneyboymax": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/mpwhite": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/muevelo": {
+      "type": "PITCH_DECK",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/muevelo-simplified": {
+      "type": "NOT_DEPLOYED",
+      "access": "DENY"
+    },
+    "/presentations/owl-hoot": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/posh-n-polished": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/scaled-llc": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/service-scope": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/spine-doctor": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/swedlund": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/syndra": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/tooth-place": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/tr-spring": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/viktor-vodnik": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/presentations/yoga-circle-la": {
+      "type": "PRESENTATION",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/preview/CO": {
+      "type": "WEBSITE_PREVIEW",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/preview/arc-garde": {
+      "type": "WEBSITE_PREVIEW",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/preview/master-dental": {
+      "type": "WEBSITE_PREVIEW",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/reports/24hourfunding-proposal": {
+      "type": "CLIENT_REPORT",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/reports/Research-Two-Sided-Marketplace-Models-2026-03-27.md": {
+      "type": "INTERNAL",
+      "access": "DENY"
+    },
+    "/reports/adjacent-loyalty-programs-deep-research-2026-03-27.md": {
+      "type": "INTERNAL",
+      "access": "DENY"
+    },
+    "/reports/americana-tax": {
+      "type": "CLIENT_REPORT",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/reports/angi-homeadvisor-failures-forensic-report-2026-03-27.md": {
+      "type": "INTERNAL",
+      "access": "DENY"
+    },
+    "/reports/arbor-wealth": {
+      "type": "CLIENT_REPORT",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/reports/competitive-landscape-home-services-2026-03-27.md": {
+      "type": "INTERNAL",
+      "access": "DENY"
+    },
+    "/reports/contractor-supply-side-research-2026-03-27.md": {
+      "type": "INTERNAL",
+      "access": "DENY"
+    },
+    "/reports/data-accuracy-audit-2026-03-04.md": {
+      "type": "INTERNAL",
+      "access": "DENY"
+    },
+    "/reports/dr-bob": {
+      "type": "CLIENT_REPORT",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/reports/exhaustive-home-services-competitor-landscape-2026-03-27.md": {
+      "type": "INTERNAL",
+      "access": "DENY"
+    },
+    "/reports/hitch-academy": {
+      "type": "CLIENT_REPORT",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/reports/home-services-investment-landscape-2026-03-27.md": {
+      "type": "INTERNAL",
+      "access": "DENY"
+    },
+    "/reports/home-services-platform-tech-research-2026-03-27.md": {
+      "type": "INTERNAL",
+      "access": "DENY"
+    },
+    "/reports/idwip-presentations-2026-03-14.md": {
+      "type": "INTERNAL",
+      "access": "DENY"
+    },
+    "/reports/robopromo": {
+      "type": "CLIENT_REPORT",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/reports/samir-proposal": {
+      "type": "CLIENT_REPORT",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/reports/tooth-place": {
+      "type": "CLIENT_REPORT",
+      "access": "PRIVATE_MAGIC_LINK"
+    },
+    "/reports/us-home-services-market-research-2026-03-27.md": {
+      "type": "INTERNAL",
+      "access": "DENY"
+    }
   }
- }
 }
