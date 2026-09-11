@@ -15,7 +15,7 @@
 <meta name="theme-color" content="#f7f5f0">
 
 <title>Yoga Circle LA | Growth Proposal - Arc Garde</title>
-<meta name="description" content="Arc Garde growth proposal for Yoga Circle LA. Two phases over nine months: three months of organic content, then at least six months of Meta ads, 14 per testing cycle.">
+<meta name="description" content="Arc Garde growth proposal for Yoga Circle LA. Two phases: three months of organic content, then at least six months of Meta ads, 14 per testing cycle.">
 
 <!-- Banner law -->
 <link rel="icon" href="/assets/favicon.png" type="image/png">
@@ -423,6 +423,9 @@ body::before {
   margin-top: 0; padding-top: clamp(11px, min(2.1vw, 2.2vh), 28px);
   border-top: 1px solid var(--rule);
 }
+/* The hero lost its third figure ("6 Months / Start to finish", Quinten 2026-09-11), so it
+   runs two-up and narrower. Scoped to the hero: the organic section's .figs still holds three. */
+.hero .figs { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 560px; }
 .fig { display: flex; flex-direction: column; align-items: center; gap: 3px; text-align: center; }
 .fig-term {
   font-family: var(--font-display); font-weight: 600;
@@ -866,7 +869,7 @@ body::before {
   padding: clamp(26px, 3vw, 46px) clamp(21px, 2.8vw, 46px);
 }
 .tl-grid { display: grid; gap: 9px; }
-/* Seven tracks, not six: months 1 to 6 plus an open-ended "7+" track, so the
+/* Ten tracks: months 1 to 9 plus an open-ended "10+" track, so the
    optional organic run and the ads run can both continue past month 6 without
    the grid implying they stop there. The 7th is narrower because it is a
    direction, not a duration. */
@@ -1395,10 +1398,6 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
             <p class="fig-term"><span data-count="14">14</span>&nbsp;Ads</p>
             <p class="fig-desc">Per testing&nbsp;cycle</p>
           </div>
-          <div class="fig">
-            <p class="fig-term"><span data-count="6">6</span>&nbsp;Months</p>
-            <p class="fig-desc">Start to&nbsp;finish</p>
-          </div>
         </div>
 
       </div>
@@ -1424,7 +1423,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
     <div class="wrap">
       <header class="sec-head reveal">
         <div class="ring-rule" aria-hidden="true"><i></i><b></b><i></i></div>
-        <p class="sec-label">Two Phases, Nine Months</p>
+        <p class="sec-label">Two Phases</p>
         <h2 class="sec-title" id="h-plan">
           <span class="l1"><span class="t">Content First,</span></span>
           <span class="l2"><span class="t">Then <em>Paid Reach</em></span></span>
@@ -1619,7 +1618,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
         <p class="sec-label">Investment</p>
         <h2 class="sec-title" id="h-cost">
           <span class="l1"><span class="t">Two Phases,</span></span>
-          <span class="l2"><span class="t">One <em>Nine Month Plan</em></span></span>
+          <span class="l2"><span class="t">One <em>Plan</em></span></span>
         </h2>
       </header>
 
@@ -1659,7 +1658,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
           <div class="lrow lrow--stack"><p class="lrow-term">Not&nbsp;included</p><p class="lrow-val">Booking software subscription. Anything outside the ads and sign-up&nbsp;page.</p></div>
           <div class="lrow lrow--stack"><p class="lrow-term">You provide&nbsp;us</p><p class="lrow-val">Access to your ad account, your booking system, and your social media pages. One day for&nbsp;filming.</p></div>
           <div class="lrow lrow--stack"><p class="lrow-term">You&nbsp;keep</p><p class="lrow-val">Every account, every page, every file. Yours from day&nbsp;one.</p></div>
-          <div class="lrow lrow--stack"><p class="lrow-term">Recommended&nbsp;time</p><p class="lrow-val">9 months. Three of organic, then at least six of&nbsp;ads.</p></div>
+          <div class="lrow lrow--stack"><p class="lrow-term">Recommended&nbsp;time</p><p class="lrow-val">Three months of organic, then at least six months of&nbsp;ads.</p></div>
         </div>
       </div>
     </div>
