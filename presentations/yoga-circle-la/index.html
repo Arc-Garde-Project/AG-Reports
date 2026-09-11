@@ -621,7 +621,7 @@ body::before {
 }
 
 /* ---------- Legend keys ----------
-   Geometry only. The plan timeline is the sole user and recolours both
+   Geometry only. The plan timeline is the sole user and recolors both
    dots in its own .tl-key block. */
 .key { display: flex; align-items: center; gap: 9px; }
 .key i { display: block; width: 13px; height: 13px; border-radius: 50%; border: 1.4px solid var(--key-off); flex: none; }
@@ -866,8 +866,12 @@ body::before {
   padding: clamp(26px, 3vw, 46px) clamp(21px, 2.8vw, 46px);
 }
 .tl-grid { display: grid; gap: 9px; }
+/* Seven tracks, not six: months 1 to 6 plus an open-ended "7+" track, so the
+   optional organic run and the ads run can both continue past month 6 without
+   the grid implying they stop there. The 7th is narrower because it is a
+   direction, not a duration. */
 .tl-lane {
-  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)) 0.62fr;
   gap: clamp(7px, 1vw, 14px);
 }
 .tl-bar {
@@ -893,19 +897,33 @@ body::before {
   background: var(--accent); color: var(--ycla-white);
   box-shadow: var(--shadow-sage);
 }
+/* The optional organic continuation. Same lane as phase one, picking up where
+   it ends and running open-ended. Dashed hairline plus a wash rather than a
+   solid fill, because "optional" has to be legible as subordinate to the solid
+   committed phase beside it without being decoration. Sage-dark text on a 0.10
+   sage wash over white stays well clear of 4.5:1. */
+.tl-bar--optional {
+  grid-column: 4 / -1;
+  background: var(--calm-soft);
+  border: 1px dashed var(--line-sage);
+  color: var(--accent-text);
+  box-shadow: none;
+  transition-delay: 420ms;               /* 3 x 140, lands after the ads bar */
+}
 .tl-bar--ads {
-  grid-column: 4 / -1;                   /* months 4 to 6, starts where organic ends */
+  grid-column: 4 / -1;                   /* month 4 onward, starts where phase one ends */
   background: linear-gradient(90deg, var(--ycla-gold) 0%, var(--ycla-gold-lt) 100%);
   color: var(--ycla-wood);
   transition-delay: 210ms;
 }
 
 .tl-months {
-  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)) 0.62fr;
   gap: clamp(4px, 0.6vw, 8px);
   list-style: none; padding: 0; margin-top: 7px;
   border-top: 1px solid var(--rule); padding-top: 9px;
 }
+.tl-months li.is-on span { color: var(--metal-text); font-weight: 700; }
 .tl-months li { display: grid; place-items: center; position: relative; }
 .tl-months span {
   font-family: var(--font-display); font-weight: 600;
@@ -922,10 +940,47 @@ body::before {
   margin-top: var(--v-md); padding-top: var(--v-md);
   border-top: 1px solid var(--rule);
 }
+/* Three states now, so each key names its own color. The old rule was
+   `.key:not(.on)` = gold, which with a third key would have painted the
+   optional dot gold as well and put it in the ads phase by implication. */
 .tl-key .key i { border-color: var(--accent); }
-.tl-key .key.on i { background: var(--accent); border-color: var(--accent); }
-.tl-key .key:not(.on) i { background: var(--ycla-gold); border-color: var(--ycla-gold); }
+.tl-key .key--organic i { background: var(--accent); border-color: var(--accent); }
+.tl-key .key--optional i { background: var(--calm-soft); border-style: dashed; border-color: var(--accent); }
+.tl-key .key--ads i { background: var(--ycla-gold); border-color: var(--ycla-gold); }
+
+/* The switch moment. The boundary rule at month 4 already existed; this is the
+   node that sits on it, so "the ads turn on here" is a point you can see
+   rather than an inference from where a bar happens to begin. */
+.tl-months li.is-turn::after {
+  content: ""; position: absolute;
+  left: calc(-1 * clamp(2px, 0.3vw, 4px)); top: -13px;
+  width: 9px; height: 9px; margin-left: -4px;
+  border-radius: 50%; background: var(--ycla-gold);
+  box-shadow: 0 0 0 3px var(--wash-gold);
+}
+/* Cost carried under the axis rather than inside the bars. MEASURED
+   constraint: at 390 the bar label already fills 104px of a 150px bar, which
+   is why .tl-bar-p is hidden there, so a price set inside a bar would clip. */
+.tl-cost {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: clamp(11px, 2.1vw, 28px);
+  margin-top: var(--v-sm);
+}
+.tl-cost p {
+  font-family: var(--font-body); font-weight: 500;
+  font-size: clamp(0.75rem, 0.72rem + 0.16vw, 0.8125rem);
+  color: var(--muted); text-wrap: pretty;
+}
+.tl-cost b { font-weight: 700; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
 .tl-bar-p { font-weight: 600; opacity: 0.7; margin-right: 0.5em; }
+/* The 0.7 prefix opacity is fine on the saturated sage and gold bars, where it
+   sits on a strong ground. On the light optional bar it MEASURED 2.98:1,
+   under the 4.5:1 floor. It is also the wrong word to fade: "Optional" is the
+   word carrying the meaning here, not a quiet lead-in like "Phase one". */
+.tl-bar--optional .tl-bar-p { opacity: 1; }
+/* The separator is generated, not baked into the text, so the phone rule below
+   can drop it cleanly without leaving a dangling slash. */
+.tl-bar--optional .tl-bar-p::after { content: " / "; opacity: 0.7; }
 /* Below ~760 each bar is only half a phone wide, so the "Phase one /" prefix
    no longer fits beside the name and the nowrap label was being clipped by
    the bar's own overflow. The prefix goes; the phase is already named by the
@@ -934,6 +989,13 @@ body::before {
 @media (max-width: 760px) {
   .tl-bar { font-size: 0.625rem; letter-spacing: 0.06em; padding-inline: 7px; }
   .tl-bar-p { display: none; }
+  /* The other two bars lose their prefix here because the month scale already
+     names the phase. This one is the opposite case: "Optional" IS the meaning
+     and "Continues" is the filler, so keep the prefix and drop the noun.
+     Without this the phone read just "CONTINUES". */
+  .tl-bar--optional .tl-bar-p { display: inline; }
+  .tl-bar--optional .tl-bar-p::after,
+  .tl-bar--optional .tl-bar-w { display: none; }
 }
 @media (max-width: 380px) {
   .tl-bar { font-size: 0.5625rem; letter-spacing: 0.04em; padding-inline: 7px; }
@@ -1365,21 +1427,28 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
       </header>
 
       <div class="timeline reveal">
-        <div class="tl-grid" role="img" aria-label="Six month plan in two phases that do not overlap. Organic content runs in months one to three. Paid ads run in months four to six. Only one phase runs at a time.">
+        <div class="tl-grid" role="img" aria-label="Plan timeline. Organic content runs as the committed phase in months one to three. At month four the paid ads switch on and run from there onward. Organic content continues past month three as an optional track for as long as it is wanted.">
           <div class="tl-lane tl-lane--organic">
             <span class="tl-bar tl-bar--organic"><span class="tl-bar-l"><b class="tl-bar-p">Phase one&nbsp;/</b>Organic&nbsp;content</span></span>
+            <span class="tl-bar tl-bar--optional"><span class="tl-bar-l"><b class="tl-bar-p">Optional</b><span class="tl-bar-w">Continues</span></span></span>
           </div>
           <div class="tl-lane tl-lane--ads">
             <span class="tl-bar tl-bar--ads"><span class="tl-bar-l"><b class="tl-bar-p">Phase two&nbsp;/</b>Paid&nbsp;ads</span></span>
           </div>
           <ol class="tl-months">
             <li><span>1</span></li><li><span>2</span></li><li><span>3</span></li>
-            <li class="is-turn"><span>4</span></li><li><span>5</span></li><li><span>6</span></li>
+            <li class="is-turn is-on"><span>4</span></li><li><span>5</span></li><li><span>6</span></li>
+            <li><span>7+</span></li>
           </ol>
         </div>
+        <div class="tl-cost">
+          <p>Months 1 to 3, <b>$750</b> a&nbsp;month</p>
+          <p>Month 4 onward, <b>$2,700 to $2,850</b> a&nbsp;month</p>
+        </div>
         <div class="tl-key">
-          <div class="key on"><i aria-hidden="true"></i><p>Organic only, months 1 to&nbsp;3</p></div>
-          <div class="key"><i aria-hidden="true"></i><p>Paid ads only, months 4 to&nbsp;6</p></div>
+          <div class="key key--organic"><i aria-hidden="true"></i><p>Organic, months 1 to&nbsp;3</p></div>
+          <div class="key key--ads"><i aria-hidden="true"></i><p>Paid ads on, from month&nbsp;4</p></div>
+          <div class="key key--optional"><i aria-hidden="true"></i><p>Organic optional, month 4&nbsp;onward</p></div>
         </div>
         <p class="phase-note">One phase at a time. The ads do not start until the content phase is&nbsp;finished.</p>
       </div>
