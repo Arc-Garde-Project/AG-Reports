@@ -15,7 +15,7 @@
 <meta name="theme-color" content="#f7f5f0">
 
 <title>Yoga Circle LA | Growth Proposal - Arc Garde</title>
-<meta name="description" content="Arc Garde growth proposal for Yoga Circle LA. Two phases over six months: three months of organic content, then three months of Meta ads, 14 per testing cycle.">
+<meta name="description" content="Arc Garde growth proposal for Yoga Circle LA. Two phases over nine months: three months of organic content, then at least six months of Meta ads, 14 per testing cycle.">
 
 <!-- Banner law -->
 <link rel="icon" href="/assets/favicon.png" type="image/png">
@@ -23,7 +23,7 @@
 <link rel="canonical" href="https://ag-reports.vercel.app/presentations/yoga-circle-la">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Yoga Circle LA | Growth Proposal - Arc Garde">
-<meta property="og:description" content="The students you are missing are already scrolling. Three months of organic content first, then three months of paid ads. 14 ads tested every cycle.">
+<meta property="og:description" content="The students you are missing are already scrolling. Three months of organic content first, then at least six months of paid ads. 14 ads tested every cycle.">
 <meta property="og:url" content="https://ag-reports.vercel.app/presentations/yoga-circle-la">
 <meta property="og:image" content="https://ag-reports.vercel.app/presentations/yoga-circle-la/og-banner.png">
 <meta property="og:image:width" content="1200">
@@ -852,7 +852,7 @@ body::before {
 
 
 /* ---------- The six month timeline ----------
-   The whole positioning in one picture: organic runs the full six months,
+   The whole positioning in one picture: organic runs the first three months and continues as optional,
    ads are ADDED for the last three. Two lanes on one six column grid, so
    the ads bar starting at column four and the organic bar running the full
    width is the argument, not a caption about it. The step in the ledger
@@ -871,7 +871,7 @@ body::before {
    the grid implying they stop there. The 7th is narrower because it is a
    direction, not a duration. */
 .tl-lane {
-  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)) 0.62fr;
+  display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)) 0.62fr;
   gap: clamp(7px, 1vw, 14px);
 }
 .tl-bar {
@@ -918,7 +918,7 @@ body::before {
 }
 
 .tl-months {
-  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)) 0.62fr;
+  display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)) 0.62fr;
   gap: clamp(4px, 0.6vw, 8px);
   list-style: none; padding: 0; margin-top: 7px;
   border-top: 1px solid var(--rule); padding-top: 9px;
@@ -973,6 +973,11 @@ body::before {
 }
 .tl-cost b { font-weight: 700; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
 .tl-bar-p { font-weight: 600; opacity: 0.7; margin-right: 0.5em; }
+/* The organic bar is 3 of 10 tracks since the ads run went to six months, and
+   "Phase one / Organic content" MEASURED wider than the bar at 1440 and
+   clipped to "ASE ONE / ORGANIC CONTE". The month scale and the key already
+   name phase one, so the prefix goes at every width on this bar only. */
+.tl-bar--organic .tl-bar-p { display: none; }
 /* The 0.7 prefix opacity is fine on the saturated sage and gold bars, where it
    sits on a strong ground. On the light optional bar it MEASURED 2.98:1,
    under the 4.5:1 floor. It is also the wrong word to fade: "Optional" is the
@@ -995,7 +1000,8 @@ body::before {
      Without this the phone read just "CONTINUES". */
   .tl-bar--optional .tl-bar-p { display: inline; }
   .tl-bar--optional .tl-bar-p::after,
-  .tl-bar--optional .tl-bar-w { display: none; }
+  .tl-bar--optional .tl-bar-w,
+  .tl-bar--organic .tl-bar-w { display: none; }
 }
 @media (max-width: 380px) {
   .tl-bar { font-size: 0.5625rem; letter-spacing: 0.04em; padding-inline: 7px; }
@@ -1418,18 +1424,18 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
     <div class="wrap">
       <header class="sec-head reveal">
         <div class="ring-rule" aria-hidden="true"><i></i><b></b><i></i></div>
-        <p class="sec-label">Two Phases, Six Months</p>
+        <p class="sec-label">Two Phases, Nine Months</p>
         <h2 class="sec-title" id="h-plan">
           <span class="l1"><span class="t">Content First,</span></span>
           <span class="l2"><span class="t">Then <em>Paid Reach</em></span></span>
         </h2>
-        <p class="sec-sub">Three months of organic content. Then, and only then, three months of paid&nbsp;ads.</p>
+        <p class="sec-sub">Three months of organic content. Then, and only then, at least six months of paid&nbsp;ads.</p>
       </header>
 
       <div class="timeline reveal">
-        <div class="tl-grid" role="img" aria-label="Plan timeline. Organic content runs as the committed phase in months one to three. At month four the paid ads switch on and run from there onward. Organic content continues past month three as an optional track for as long as it is wanted.">
+        <div class="tl-grid" role="img" aria-label="Plan timeline. Organic content runs as the committed phase in months one to three. At month four the paid ads switch on and run for at least six months, months four to nine. Organic content continues past month three as an optional track for as long as it is wanted.">
           <div class="tl-lane tl-lane--organic">
-            <span class="tl-bar tl-bar--organic"><span class="tl-bar-l"><b class="tl-bar-p">Phase one&nbsp;/</b>Organic&nbsp;content</span></span>
+            <span class="tl-bar tl-bar--organic"><span class="tl-bar-l"><b class="tl-bar-p">Phase one&nbsp;/</b>Organic<span class="tl-bar-w">&nbsp;content</span></span></span>
             <span class="tl-bar tl-bar--optional"><span class="tl-bar-l"><b class="tl-bar-p">Optional</b><span class="tl-bar-w">Continues</span></span></span>
           </div>
           <div class="tl-lane tl-lane--ads">
@@ -1438,7 +1444,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
           <ol class="tl-months">
             <li><span>1</span></li><li><span>2</span></li><li><span>3</span></li>
             <li class="is-turn is-on"><span>4</span></li><li><span>5</span></li><li><span>6</span></li>
-            <li><span>7+</span></li>
+            <li><span>7</span></li><li><span>8</span></li><li><span>9</span></li><li><span>10+</span></li>
           </ol>
         </div>
         <div class="tl-cost">
@@ -1447,7 +1453,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
         </div>
         <div class="tl-key">
           <div class="key key--organic"><i aria-hidden="true"></i><p>Organic, months 1 to&nbsp;3</p></div>
-          <div class="key key--ads"><i aria-hidden="true"></i><p>Paid ads on, from month&nbsp;4</p></div>
+          <div class="key key--ads"><i aria-hidden="true"></i><p>Paid ads on, months 4 to 9 at&nbsp;least</p></div>
           <div class="key key--optional"><i aria-hidden="true"></i><p>Organic optional, month 4&nbsp;onward</p></div>
         </div>
         <p class="phase-note">One phase at a time. The ads do not start until the content phase is&nbsp;finished.</p>
@@ -1501,7 +1507,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
     <div class="wrap">
       <header class="sec-head reveal">
         <div class="ring-rule" aria-hidden="true"><i></i><b></b><i></i></div>
-        <p class="sec-label">Months 4 to 6</p>
+        <p class="sec-label">Months 4 to 9</p>
         <h2 class="sec-title" id="h-approach">
           <span class="l1"><span class="t">Then We Put Spend</span></span>
           <span class="l2"><span class="t">Behind <em>What Works</em></span></span>
@@ -1613,7 +1619,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
         <p class="sec-label">Investment</p>
         <h2 class="sec-title" id="h-cost">
           <span class="l1"><span class="t">Two Phases,</span></span>
-          <span class="l2"><span class="t">One <em>Six Month Plan</em></span></span>
+          <span class="l2"><span class="t">One <em>Nine Month Plan</em></span></span>
         </h2>
       </header>
 
@@ -1630,7 +1636,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
         </div>
 
         <div class="ledger-block reveal-stagger">
-          <p class="ledger-head">Phase Two &nbsp;/&nbsp; Months 4 to&nbsp;6, paid ads&nbsp;only</p>
+          <p class="ledger-head">Phase Two &nbsp;/&nbsp; Months 4 to&nbsp;9, paid ads&nbsp;only</p>
           <div class="lrow"><p class="lrow-term">Ads management retainer</p><p class="lrow-val">$1,500 a&nbsp;month</p></div>
           <div class="lrow"><p class="lrow-term">Meta ad spend</p><p class="lrow-val">$1,200 to $1,350 a&nbsp;month</p></div>
           <div class="lrow"><p class="lrow-term">Ads tested</p><p class="lrow-val">14 per testing&nbsp;cycle</p></div>
@@ -1653,7 +1659,7 @@ html.is-ready .ag-curtain { opacity: 0; pointer-events: none; }
           <div class="lrow lrow--stack"><p class="lrow-term">Not&nbsp;included</p><p class="lrow-val">Booking software subscription. Anything outside the ads and sign-up&nbsp;page.</p></div>
           <div class="lrow lrow--stack"><p class="lrow-term">You provide&nbsp;us</p><p class="lrow-val">Access to your ad account, your booking system, and your social media pages. One day for&nbsp;filming.</p></div>
           <div class="lrow lrow--stack"><p class="lrow-term">You&nbsp;keep</p><p class="lrow-val">Every account, every page, every file. Yours from day&nbsp;one.</p></div>
-          <div class="lrow lrow--stack"><p class="lrow-term">Recommended&nbsp;time</p><p class="lrow-val">6 months. Three of organic, then three of&nbsp;ads.</p></div>
+          <div class="lrow lrow--stack"><p class="lrow-term">Recommended&nbsp;time</p><p class="lrow-val">9 months. Three of organic, then at least six of&nbsp;ads.</p></div>
         </div>
       </div>
     </div>
