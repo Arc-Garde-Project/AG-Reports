@@ -4128,6 +4128,14 @@ button, a, .kpi-toggle, .heatmap-cell, .stat, .diag-card {
   .menu-tooltip { right: auto; left: 16px; top: 76px; white-space: normal; max-width: 260px; }
   .menu-tooltip::after { display: none; }
 }
+/* Mobile menu button: top-center on 350-900 so it never sits over the cover text (Quinten 2026-09-12) */
+@media (max-width: 900px) {
+  .reports-btn { left: 50%; transform: translateX(-50%); }
+  .reports-btn.is-pushed { transform: translateX(calc(-50% + min(360px, 86vw) - 20px)); }
+  #the-number { padding-top: calc(89px + env(safe-area-inset-top)); }
+  /* the 7s "View all weekly reports" nudge would cover the brand line and logo under a centered button; the centered Reports button is the affordance on phones, so the nudge is desktop-only */
+  .menu-tooltip, .menu-tooltip.is-visible { display: none; }
+}
 </style>
 </head>
 <body>
